@@ -1,0 +1,10 @@
+.preview*
+.metadata*
+*.sublime-workspace
+
+### OSX ###
+.DS_Store
+
+
+# Thumbnails
+._*
