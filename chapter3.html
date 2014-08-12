@@ -524,7 +524,7 @@ span.line-numbers { border-right: 1px solid #E5E5E5; color: #999; display: inlin
 </ul>
 </div>
 <div class="paragraph">
-<p>Let’s fill the class <code>VideoGame</code> with some content. This class may have several methods, which can tell <em>what an object of this class can do</em>: start the game, stop it, save the score, ask for additionals lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class <code>VideoGame</code> can look like this:</p>
+<p>Let’s fill the class <code>VideoGame</code> with some content. This class may have several methods, which can tell <em>what an object of this class can do</em>: start the game, stop it, save the score, ask for additional lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class <code>VideoGame</code> can look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -565,6 +565,12 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <div class="paragraph">
 <p>Our class <code>VideoGame</code> can be used as a starting building block for pretty much any video game – all game consoles have the color attribute, all of them allow to save score, and all of them have price tags.</p>
 </div>
+<div id="FIG3-1" class="imageblock">
+<div class="content">
+<img src="./chapter3_files/fig_3_01.png" alt="fig 3 01" width="400" height="550">
+</div>
+<div class="title">Figure 1. The Video Game Object</div>
+</div>
 <div class="paragraph">
 <p>We can be more specific and create another Java class called <code>PlayStation4</code>. It also belongs to the family of video games, but has some properties that are specific to the model Play Station 4, for example sharing on Facebook and Twitter. So among other things, the class <code>PlayStation4</code> will have methods <code>shareOnFacebook</code> and <code>shareOnTwitter</code>.</p>
 </div>
@@ -596,14 +602,17 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <div class="paragraph">
 <p>The factory description of <code>PlayStation4</code> relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  <code>PlayStation4</code> objects in Java.</p>
 </div>
-<div id="FIG3-6" class="imageblock">
-<div class="content">
-<img src="./chapter3_files/fig_3_instances.png" alt="fig 3 instances" width="400" height="550">
+<div class="paragraph">
+<p>In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different <em>values</em> in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB.</p>
 </div>
-<div class="title">Figure 1. One Class, Three Instances</div>
+<div id="FIG3-2" class="imageblock">
+<div class="content">
+<img src="./chapter3_files/fig_3_02.png" alt="fig 3 02" width="400" height="550">
+</div>
+<div class="title">Figure 2. One Class, Three Instances</div>
 </div>
 <div class="paragraph">
-<p>In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different <em>values</em> in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB. In programmer’s jargon, you can create multiple instances of the <code>PlayStation4</code> objects with different values in the <code>hardDiskSize</code> attribute.</p>
+<p>In programmer’s jargon, you can create multiple instances of the <code>PlayStation4</code> objects with different values in the <code>hardDiskSize</code> attribute.</p>
 </div>
 </div>
 </div>
@@ -671,11 +680,11 @@ myScore=myScore/<span class="integer">3</span>;
 <div class="paragraph">
 <p>What do you think this code prints? IntelliJ IDEA has a useful tool called Groovy Console (it’s under the Tools menu). It allows you to test any code snippet (like the one above) without even creating a class or methods. If you’ll copy the above code fragment into Groovy Console and hit the green button play, you see that the value of the variable <code>myScore</code> is 6.</p>
 </div>
-<div id="FIG3-2" class="imageblock">
+<div id="FIG3-3" class="imageblock">
 <div class="content">
-<img src="./chapter3_files/fig_3_02.png" alt="fig 3 02">
+<img src="./chapter3_files/fig_3_03.png" alt="fig 3 03">
 </div>
-<div class="title">Figure 2. Running the code fragment in Groovy Console</div>
+<div class="title">Figure 3. Running the code fragment in Groovy Console</div>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -691,11 +700,13 @@ myScore=myScore/<span class="integer">3</span>;
 <div class="paragraph">
 <p>Look at some other ways of changing the values of the variables:</p>
 </div>
-<div class="paragraph">
-<p><code>myScore=myScore*2</code>; is the same as <code>myScore*=2</code>;
-<code>myScore=myScore+2</code>; is the same as <code>myScore+=2</code>;
-<code>myScore=myScore-2</code>; is the same as <code>myScore-=2</code>;
-<code>myScore=myScore/2</code>; is the same as <code>myScore/=2</code>;</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay"><code class="java language-java">myScore=myScore*<span class="integer">2</span>; <span class="comment">// it's the same as `myScore*=2;</span>
+myScore=myScore+<span class="integer">2</span>; <span class="comment">// it's the same as `myScore+=2;</span>
+myScore=myScore-<span class="integer">2</span>; <span class="comment">// it's the same as `myScore-=2;</span>
+myScore=myScore/<span class="integer">2</span>; <span class="comment">// it's the same as `myScore/=2;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>There are eight primitive data types in Java, and you have to decide which ones to use depending on the type and size of data you are planning to store in your variables. These are Java primitives:</p>
@@ -719,13 +730,15 @@ myScore=myScore/<span class="integer">3</span>;
 <div class="paragraph">
 <p>You can assign an initial value to a variable during its declaration, and this is called <em>variable initialization</em>, for example:</p>
 </div>
-<div class="paragraph">
-<p><code>char grade = 'A';</code>
-<code>int chairs = 12; `
-`boolean playSound = false;</code>
-<code>double nationalIncome = 23863494965745.78;</code>
-<code>float gamePrice = 12.50f;</code>
-<code>long totalCars =4637283648392l;</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay"><code class="java language-java"><span class="type">char</span> grade = <span class="string"><span class="delimiter">'</span><span class="content">A</span><span class="delimiter">'</span></span>;
+<span class="type">int</span> chairs = <span class="integer">12</span>;
+<span class="type">boolean</span> playSound = <span class="predefined-constant">false</span>;
+<span class="type">double</span> nationalIncome = <span class="float">23863494965745.78</span>;
+<span class="type">float</span> gamePrice = <span class="float">12.50f</span>;
+<span class="type">long</span> totalCars =<span class="integer">4637283648392l</span>;</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>In the last two lines the values have letters at the end. The <code>f</code> is for <code>float</code> and <code>l</code> means long.</p>
@@ -794,11 +807,11 @@ myScore=myScore/<span class="integer">3</span>;
 <div class="paragraph">
 <p>Your screen should look similar to this one:</p>
 </div>
-<div id="FIG3-9" class="imageblock">
+<div id="FIG3-4" class="imageblock">
 <div class="content">
-<img src="./chapter3_files/fig_3_09.png" alt="fig 3 09">
+<img src="./chapter3_files/fig_3_04.png" alt="fig 3 04">
 </div>
-<div class="title">Figure 3. ???</div>
+<div class="title">Figure 4. MyPet Project</div>
 </div>
 <div class="paragraph">
 <p>Now we are ready to declare attributes and methods in the class <code>Pet</code>.  Java classes and methods enclose their bodies in curly braces.</p>
@@ -863,13 +876,13 @@ myScore=myScore/<span class="integer">3</span>;
 </div>
 </div>
 <div class="paragraph">
-<p>This class represents this friendly little monster from the real world:</p>
+<p>This class represents these friendly little monsters from the "real world":</p>
 </div>
-<div id="FIG3-13" class="imageblock">
+<div id="FIG3-5" class="imageblock">
 <div class="content">
-<img src="./chapter3_files/fig_3_13.png" alt="fig 3 13" width="400" height="550">
+<img src="./chapter3_files/fig_3_05.png" alt="fig 3 05">
 </div>
-<div class="title">Figure 4. Little Monster</div>
+<div class="title">Figure 5. Little Monster</div>
 </div>
 <div class="paragraph">
 <p>Let’s talk now about the signatures of each methods in detail starting with the method <code>sleep</code>:</p>
@@ -878,13 +891,13 @@ myScore=myScore/<span class="integer">3</span>;
 <p><code>public void sleep()</code></p>
 </div>
 <div class="paragraph">
-<p>This method signature tells us that <code>sleep</code> can be called from any other Java class ( because it’s <code>public</code>). This method does not return any data (the keyword <code>void</code>).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text.</p>
+<p>This method signature tells us that <code>sleep()</code> can be called from any other Java class ( because it’s <code>public</code>). This method does not return any data (the keyword <code>void</code>).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text.</p>
 </div>
 <div class="paragraph">
-<p>The signature of the method <code>eat</code> is similar to <code>sleep</code>.</p>
+<p>The signature of the method <code>eat()</code> is similar to <code>sleep()</code>.</p>
 </div>
 <div class="paragraph">
-<p>The signature of the method <code>say</code> looks like this:</p>
+<p>The signature of the method <code>say()</code> looks like this:</p>
 </div>
 <div class="paragraph">
 <p><code>public String say(String aWord)</code></p>
@@ -892,17 +905,17 @@ myScore=myScore/<span class="integer">3</span>;
 <div class="paragraph">
 <p>This method can also be called from any other Java class, but has to return some text, which is prescribed by the keyword <code>String</code> in front of the method name. Besides, it expects some text data from outside, hence the argument <code>String aWord</code>.</p>
 </div>
-<div id="FIG3-14" class="imageblock">
+<div id="FIG3-6" class="imageblock">
 <div class="content">
-<img src="./chapter3_files/fig_3_14.png" alt="fig 3 14" width="400" height="550">
+<img src="./chapter3_files/fig_3_06.png" alt="fig 3 06" width="400" height="550">
 </div>
-<div class="title">Figure 5. Little Monster eats</div>
+<div class="title">Figure 6. Little Monster eats</div>
 </div>
 <div class="paragraph">
 <p>How do you decide if a method should or should not return a value? If a method performs some data manipulations and has to give the result of these  manipulations back to the  calling class, it has to return a value.  You may say, that the class <code>Pet</code> does not have any calling class! That’s correct, so let’s create one called <code>PetMaster</code>. We’ll create it in the same IDEA project MyPet.</p>
 </div>
 <div class="paragraph">
-<p>This class will need a method <code>main</code> to become a runnable program (the class <code>Pet</code> didn’t have one). Remember from Chapter 2, typing <em>psvm</em> followed by the Tab key will quickly create the method <code>main</code>. We’ll place the code communicating with the class <code>Pet</code> inside the method <code>main</code>.</p>
+<p>This class will need a method <code>main()</code> to become a runnable program (the class <code>Pet</code> didn’t have one). Remember from Chapter 2, typing <em>psvm</em> followed by the Tab key will quickly create the method <code>main()</code>. We’ll place the code communicating with the class <code>Pet</code> inside the method <code>main()</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -933,7 +946,6 @@ Do not forget to press <em>Ctrl-S</em> (<em>CMD-S</em> on Mac) to save and compi
         <span class="predefined-type">System</span>.out.println(petReaction);  <i class="conum" data-value="5"></i><b>(5)</b>
 
         myPet.sleep();        <i class="conum" data-value="6"></i><b>(6)</b>
-
     }
 }</code></pre>
 </div>
@@ -950,7 +962,7 @@ Do not forget to press <em>Ctrl-S</em> (<em>CMD-S</em> on Mac) to save and compi
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Calling the method <code>eat</code> on the object <code>Pet</code>. After the instance of <code>Pet</code> was created, the variable <code>myPet</code> knows its address in memory. So you can call the method <code>eat</code> (as well as any other) on this particular instance of <code>Pet</code>.</td>
+<td>Calling the method <code>eat()</code> on the object <code>Pet</code>. After the instance of <code>Pet</code> was created, the variable <code>myPet</code> knows its address in memory. So you can call the method <code>eat()</code> (as well as any other) on this particular instance of <code>Pet</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -962,7 +974,7 @@ Do not forget to press <em>Ctrl-S</em> (<em>CMD-S</em> on Mac) to save and compi
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>Calling the method <code>sleep</code> on the object <code>Pet</code>.</td>
+<td>Calling the method <code>sleep()</code> on the object <code>Pet</code>.</td>
 </tr>
 </tbody></table>
 </div>
@@ -974,14 +986,14 @@ Do not forget to press <em>Ctrl-S</em> (<em>CMD-S</em> on Mac) to save and compi
 OK!! OK!! Tweet!! Tweet!!
 Good night, see you tomorrow!</em></p>
 </div>
-<div id="FIG3-16" class="imageblock">
+<div id="FIG3-7" class="imageblock">
 <div class="content">
-<img src="./chapter3_files/fig_3_16.png" alt="fig 3 16" width="400" height="550">
+<img src="./chapter3_files/fig_3_07.png" alt="fig 3 07" width="400" height="550">
 </div>
-<div class="title">Figure 6. Tweet, Tweet!</div>
+<div class="title">Figure 7. Tweet, Tweet!</div>
 </div>
 <div class="paragraph">
-<p>At this point the project MyPet consistes of two Java classes: <code>Pet</code> and <code>PetMaster</code>. The role of the class <code>Pet</code> is to represent attributes and behavior of a pet, while the class <code>PetMaster</code> starts the program, <em>instantiates</em> the class <code>Pet</code> and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the <code>main</code> method, which is the entry point of the application.</p>
+<p>At this point the project MyPet consists of two Java classes: <code>Pet</code> and <code>PetMaster</code>. The role of the class <code>Pet</code> is to represent attributes and behavior of a pet, while the class <code>PetMaster</code> starts the program, <em>instantiates</em> the class <code>Pet</code> and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the <code>main()</code> method, which is the entry point of the application.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1006,7 +1018,7 @@ Good night, see you tomorrow!</em></p>
 <p>This class <code>Fish</code> is a <em>subclass</em> of the class <code>Pet</code>. AAccordingly, the class <code>Pet</code> is a <em>superclass</em> of the class <code>Fish</code>. In other words, you use the class <code>Pet</code> as a template for creating a class <code>Fish</code>.</p>
 </div>
 <div class="paragraph">
-<p>Even if you will leave the class <code>Fish</code> empty as it is now, you can still use every method and attribute inherited from  the class <code>Pet</code>. Take a look, we’re creating an instance of the object <code>Fish</code> and are calling its method <code>sleep</code>:</p>
+<p>Even if you will leave the class <code>Fish</code> empty as it is now, you can still use every method and attribute inherited from  the class <code>Pet</code>. Take a look, we’re creating an instance of the object <code>Fish</code> and are calling its method <code>sleep()</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1017,11 +1029,11 @@ myLittleFish.sleep();</code></pre>
 <div class="paragraph">
 <p>Even though we have not declared any methods in the class <code>Fish</code> yet, we call the method <code>sleep()</code>, which was declared in its superclass <code>Pet</code>! In Java all classes are automatically inherited from the class <code>Object</code>. Even though we’ve declared the class <code>Pet</code> without using the keyword <code>extends</code> it still extends the class <code>Object</code>. With the keyword <code>extends</code> you can build class hierarchies. For example, many animal classes can extend the class <code>Pet</code>.</p>
 </div>
-<div id="FIG3-18" class="imageblock">
+<div id="FIG3-8" class="imageblock">
 <div class="content">
-<img src="./chapter3_files/fig_3_18.png" alt="fig 3 18" width="400" height="550">
+<img src="./chapter3_files/fig_3_08.png" alt="fig 3 08" width="400" height="550">
 </div>
-<div class="title">Figure 7. Class Hierarchy</div>
+<div class="title">Figure 8. Class Hierarchy</div>
 </div>
 <div class="paragraph">
 <p>Let’s not forget, however, that we’ve  created the class <code>Fish</code> as a subclass of <code>Pet</code>, because we wanted to add some additional features that only fish have and reuse some of  the code that we wrote for a <em>general pet</em>.For instance, not all pets can dive, but fish certainly can. Let’s add a new method <code>dive()</code> to the class <code>Fish</code>.</p>
@@ -1035,18 +1047,18 @@ myLittleFish.sleep();</code></pre>
    <span class="directive">public</span> <span class="type">int</span> dive(<span class="type">int</span> howDeep){
 
     currentDepth=currentDepth + howDeep;
-        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">"</span><span class="content">Diving for </span><span class="delimiter">"</span></span> +
+          <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">"</span><span class="content">Diving for </span><span class="delimiter">"</span></span> +
                            howDeep + <span class="string"><span class="delimiter">"</span><span class="content"> feet</span><span class="delimiter">"</span></span>);
     <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">"</span><span class="content">I'm at </span><span class="delimiter">"</span></span> + currentDepth +
                              <span class="string"><span class="delimiter">"</span><span class="content"> feet below sea level</span><span class="delimiter">"</span></span>);
 
-        <span class="keyword">return</span> currentDepth;
-   }
+          <span class="keyword">return</span> currentDepth;
+  }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>dive()</code> has an <em>argument</em> <code>howDeep</code> that tells the fish how deep it should go. We’ve also declared a class variable <code>currentDepth</code> that will store and update the current depth every time you call the method <code>dive()</code>. This method returns the current value of the variable <code>currenDepth</code> to the calling class. The plus sign in the <code>pintln</code> methods is not about addition - we’re building a string of characters by concatenating it pieces.</p>
+<p>The method <code>dive()</code> has an <em>argument</em> <code>howDeep</code> that tells the fish how deep it should go. We’ve also declared a class variable <code>currentDepth</code> that will store and update the current depth every time you call the method <code>dive()</code>. This method returns the current value of the variable <code>currenDepth</code> to the calling class. The plus signs in the <code>pintln()</code> lines are not about addition - we’re building strings of characters by concatenating their pieces.</p>
 </div>
 <div class="paragraph">
 <p>Using IDEA create another class <code>FishMaster</code> that will look like this:</p>
@@ -1071,20 +1083,20 @@ myLittleFish.sleep();</code></pre>
 <p>The method <code>main()</code> instantiates the object <code>Fish</code> and calls its method <code>dive()</code> twice with different arguments - two and three. After that, it calls the method <code>sleep()</code>. When you run the program <code>FishMaster</code>, it will print the following messages:</p>
 </div>
 <div class="paragraph">
-<p><em>Diving for 2 feet
-I’m at 2 feet below sea level
-Diving for 3 feet
-I’m at 5 feet below sea level
-Good night, see you tomorrow</em></p>
+<p><em>Diving for 2 feet</em>
+<em>I’m at 2 feet below sea level</em>
+<em>Diving for 3 feet</em>
+<em>I’m at 5 feet below sea level</em>
+<em>Good night, see you tomorrow</em></p>
 </div>
 <div class="paragraph">
-<p>Have you noticed that beside the methods defined in the class <code>Fish</code>, the <code>FishMaster</code> also calls method <code>sleep</code>  from its superclass <code>Pet?</code> This is what inheritance is all about – you do not have to copy and paste code from the class <code>Pet</code> – just use the keyword <code>extends</code>, and the class <code>Fish</code> can use <code>Pet</code>’s methods!</p>
+<p>Have you noticed that beside the methods defined in the class <code>Fish</code>, the <code>FishMaster</code> also calls method <code>sleep()</code>  from its superclass <code>Pet</code>? This is what inheritance is all about – you do not have to copy and paste code from the class <code>Pet</code> – just use the keyword <code>extends</code>, and the class <code>Fish</code> can use <code>Pet</code>’s methods!</p>
 </div>
-<div id="FIG3-22" class="imageblock">
+<div id="FIG3-9" class="imageblock">
 <div class="content">
-<img src="./chapter3_files/fig_3_22.png" alt="fig 3 22" width="400" height="550">
+<img src="./chapter3_files/fig_3_09.png" alt="fig 3 09" width="400" height="550">
 </div>
-<div class="title">Figure 8. What’s the current depth?</div>
+<div class="title">Figure 9. What’s the current depth?</div>
 </div>
 <div class="paragraph">
 <p>One more thing, even though the method <code>dive()</code> returns the value of  <code>currentDepth</code>, our <code>FishMaster</code> does not use it. That’s fine, -  our <code>FishMaster</code> does not need this value, but there may be some other classes that will also use the class <code>Fish</code>, and they may find knowing the current depth  useful. For example, think of a class <code>FishTrafficDispatcher</code> that has to know positions of other fish under the sea before giving permissions to dive to avoid traffic accidents.</p>
@@ -1096,7 +1108,7 @@ Good night, see you tomorrow</em></p>
 <p>As you know, fish do not speak (at least they do not do it aloud). But our class <code>Fish</code> has been inherited from the class <code>Pet</code> that has the method <code>say()</code>. This means that nothing stops you from writing <code>myFish.say();</code>.</p>
 </div>
 <div class="paragraph">
-<p>Do you really want our fish to talk? If you do not want this to happen, the class <code>Fish</code> has to <em>override</em> the <code>Pet</code>’s snadrard behavior - the method <code>say()</code>. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method <code>say()</code> to the class <code>Fish</code>.</p>
+<p>Do you really want our fish to talk? If you do not want this to happen, the class <code>Fish</code> has to <em>override</em> the <code>Pet</code>’s typical behavior - the method <code>say()</code>. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method <code>say()</code> to the class <code>Fish</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1134,7 +1146,7 @@ Good night, see you tomorrow</em></p>
 <p>We’ve  used the variable of type <code>int</code> to to store the price in the class <code>VideoGame</code>. Is there a more suitable primitive data type for storing prices?</p>
 </li>
 <li>
-<p>Create a new class <code>Car</code> with the following methods:</p>
+<p>Create a new project in IDEA named chapter3 and a new Java class <code>Car</code> with the following methods:</p>
 <div class="paragraph">
 <p><code>public void start()</code></p>
 </div>
@@ -1145,17 +1157,23 @@ Good night, see you tomorrow</em></p>
 <p><code>public int drive(int howlong)</code></p>
 </div>
 <div class="paragraph">
-<p>The method <code>drive()</code> has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: <code>distance = howlong*60;</code></p>
+<p>The method <code>drive()</code> has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: <code>distance = howlong*60;</code>. Use the statement <code>return distance</code> as the last line in the method <code>drive()</code>.</p>
 </div>
 </li>
 <li>
-<p>Write another class <code>CarOwner</code> and that creates an instance of the object <code>Car`and call its methods.  The result of each method call has to be printed using `System.out.println()</code>.</p>
+<p>Run this program by using the menu Run in IDEA.</p>
 </li>
 <li>
-<p>Create a subclass of <code>Car</code> named <code>JamesBondCar</code> and override the method <code>drive()</code> there. Use the following formula to calculate the distance: <code>distance = howlong*180;</code></p>
+<p>Write another class <code>CarOwner</code> with the method <code>main()</code> that creates an instance of the object <code>Car`and call its methods.  The result of each method call has to be printed using `System.out.println()</code>.</p>
+</li>
+<li>
+<p>Create a subclass of <code>Car</code> named <code>JamesBondCar</code> and override the method <code>drive()</code> there. Now use the following formula to calculate the distance: <code>distance = howlong*180;</code></p>
 <div class="paragraph">
-<p>Be creative, print some funny messages from the method <code>drive</code>!</p>
+<p>Be creative, print some funny messages from the method <code>drive()</code>!</p>
 </div>
+</li>
+<li>
+<p>Create an instance of the class <code>JamesBondCar</code> in the <code>main()</code> method of <code>CarOwner</code>. Re-run the program <code>CarOwner</code> to see that it calls the overriden method <code>drive()</code>.</p>
 </li>
 </ol>
 </div>
@@ -1165,7 +1183,7 @@ Good night, see you tomorrow</em></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-04-17 18:19:50 EDT
+Last updated 2014-08-12 18:14:16 EDT
 </div>
 </div>
 
