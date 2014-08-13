@@ -211,7 +211,7 @@ http://www.jetbrains.com/idea/webhelp/keyboard-shortcuts-you-cannot-miss.html[Ke
 [[FIG-Practice]]
 image::images/fig_practice.png[]
 
-[.left] 	
+[.left]     
 
 Change the class `HelloWorld` to print your address by calling the method `println` several times. Use the shortcut _sout_ to help with typing.
 --
