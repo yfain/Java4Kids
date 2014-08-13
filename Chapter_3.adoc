@@ -21,7 +21,7 @@ Let's see what Java classes can consist of. Actually a very simple class can hav
 [source, java]
 ----
 class VideoGame {
-	
+  
 }
 ----
 
@@ -30,7 +30,7 @@ This class is empty - it knows nothing and can't do anything, because there is n
 * Methods define actions that a class can perform.
 * Attributes describe various properties of a class.
 
-Let’s fill the class `VideoGame` with some content. This class may have several methods, which can tell _what an object of this class can do_: start the game, stop it, save the score, ask for additionals lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class `VideoGame` can look like this:
+Let’s fill the class `VideoGame` with some content. This class may have several methods, which can tell _what an object of this class can do_: start the game, stop it, save the score, ask for additional lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class `VideoGame` can look like this:
 
 [source, java]
 ----
@@ -58,6 +58,10 @@ This class has two attributes `color` and `price`. The color attribute has the `
 NOTE: If a line starts with two slashes, it contains a _single line comment_ - just the description of a code fragment. If you need to write several lines of comments, just type in a slash followed by the asterisk `/*`, then key in as many lines of a text as you want followed by `*/`. 
 
 Our class `VideoGame` can be used as a starting building block for pretty much any video game – all game consoles have the color attribute, all of them allow to save score, and all of them have price tags.  
+
+[[FIG3-1]]
+.The Video Game Object
+image::images/fig_3_01.png[width=400, height=550]
  
 We can be more specific and create another Java class called `PlayStation4`. It also belongs to the family of video games, but has some properties that are specific to the model Play Station 4, for example sharing on Facebook and Twitter. So among other things, the class `PlayStation4` will have methods `shareOnFacebook` and `shareOnTwitter`.
 
@@ -67,15 +71,15 @@ class PlayStation4{
      
     int hardDiskSize;
 
-	// Some other attributes and methods go here
+  // Some other attributes and methods go here
 
-	void shareOnFacebook(){
-	   // Code to share on Facebook go here
-	}
+  void shareOnFacebook(){
+     // Code to share on Facebook go here
+  }
 
-	void shareOnTwitter(){
-	   // Code to share on Twitter go here
-	}
+  void shareOnTwitter(){
+     // Code to share on Twitter go here
+  }
 
 }
 ----
@@ -86,11 +90,13 @@ We'll often use the phrase _create an instance of an object_, which means to cre
 
 The factory description of `PlayStation4` relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  `PlayStation4` objects in Java.
 
-[[FIG3-6]]
-.One Class, Three Instances
-image::images/fig_3_instances.png[width=400, height=550]
+In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different _values_ in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB. 
 
-In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different _values_ in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB. In programmer's jargon, you can create multiple instances of the `PlayStation4` objects with different values in the `hardDiskSize` attribute.  
+[[FIG3-2]]
+.One Class, Three Instances
+image::images/fig_3_02.png[width=400, height=550]
+
+In programmer's jargon, you can create multiple instances of the `PlayStation4` objects with different values in the `hardDiskSize` attribute.  
 
 === Java Data Types and Variables
 
@@ -141,9 +147,9 @@ System.out.println("My score is " + myScore);
 
 What do you think this code prints? IntelliJ IDEA has a useful tool called Groovy Console (it's under the Tools menu). It allows you to test any code snippet (like the one above) without even creating a class or methods. If you'll copy the above code fragment into Groovy Console and hit the green button play, you see that the value of the variable `myScore` is 6. 
 
-[[FIG3-2]]
+[[FIG3-3]]
 .Running the code fragment in Groovy Console
-image::images/fig_3_02.png[]
+image::images/fig_3_03.png[]
 
 
 [source, java]
@@ -156,10 +162,13 @@ In this example the argument of the method `println()` was constructed from two 
 
 Look at some other ways of changing the values of the variables:
 
-`myScore=myScore*2`; is the same as `myScore*=2`;
-`myScore=myScore+2`; is the same as `myScore+=2`;
-`myScore=myScore-2`; is the same as `myScore-=2`;
-`myScore=myScore/2`; is the same as `myScore/=2`;
+[source, java]
+----
+myScore=myScore*2; // it's the same as `myScore*=2;
+myScore=myScore+2; // it's the same as `myScore+=2;
+myScore=myScore-2; // it's the same as `myScore-=2;
+myScore=myScore/2; // it's the same as `myScore/=2;
+----
 
 There are eight primitive data types in Java, and you have to decide which ones to use depending on the type and size of data you are planning to store in your variables. These are Java primitives:
 
@@ -173,12 +182,15 @@ There are eight primitive data types in Java, and you have to decide which ones 
 
 You can assign an initial value to a variable during its declaration, and this is called _variable initialization_, for example:
 
-`char grade = 'A';`
-`int chairs = 12; `                          
-`boolean playSound = false;`         
-`double nationalIncome = 23863494965745.78;`
-`float gamePrice = 12.50f;`      
-`long totalCars =4637283648392l;` 
+[source, java]
+----
+char grade = 'A';
+int chairs = 12;                           
+boolean playSound = false;         
+double nationalIncome = 23863494965745.78;
+float gamePrice = 12.50f;      
+long totalCars =4637283648392l; 
+----
 
 In the last two lines the values have letters at the end. The `f` is for `float` and `l` means long.
 
@@ -226,9 +238,9 @@ It's time for hands-on work. Start IDEA IDE and create a new project as explaine
 
 Your screen should look similar to this one:
 
-[[FIG3-9]]
-.??? 
-image::images/fig_3_09.png[]
+[[FIG3-4]]
+.MyPet Project 
+image::images/fig_3_04.png[]
 
 Now we are ready to declare attributes and methods in the class `Pet`.  Java classes and methods enclose their bodies in curly braces. 
 
@@ -281,34 +293,33 @@ public class Pet {
 }
 ----
 
+This class represents these friendly little monsters from the "real world":
 
-This class represents this friendly little monster from the real world:
-
-[[FIG3-13]]
+[[FIG3-5]]
 .Little Monster
-image::images/fig_3_13.png[width=400, height=550]
+image::images/fig_3_05.png[]
 
 Let’s talk now about the signatures of each methods in detail starting with the method `sleep`:
 
 `public void sleep()`
 
-This method signature tells us that `sleep` can be called from any other Java class ( because it's `public`). This method does not return any data (the keyword `void`).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text. 
+This method signature tells us that `sleep()` can be called from any other Java class ( because it's `public`). This method does not return any data (the keyword `void`).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text. 
 
-The signature of the method `eat` is similar to `sleep`. 
+The signature of the method `eat()` is similar to `sleep()`. 
 
-The signature of the method `say` looks like this:
+The signature of the method `say()` looks like this:
 
 `public String say(String aWord)`
 
 This method can also be called from any other Java class, but has to return some text, which is prescribed by the keyword `String` in front of the method name. Besides, it expects some text data from outside, hence the argument `String aWord`.
 
-[[FIG3-14]]
+[[FIG3-6]]
 .Little Monster eats
-image::images/fig_3_14.png[width=400, height=550]
+image::images/fig_3_06.png[width=400, height=550]
 
 How do you decide if a method should or should not return a value? If a method performs some data manipulations and has to give the result of these  manipulations back to the  calling class, it has to return a value.  You may say, that the class `Pet` does not have any calling class! That’s correct, so let’s create one called `PetMaster`. We'll create it in the same IDEA project MyPet. 
 
-This class will need a method `main` to become a runnable program (the class `Pet` didn't have one). Remember from Chapter 2, typing _psvm_ followed by the Tab key will quickly create the method `main`. We'll place the code communicating with the class `Pet` inside the method `main`.
+This class will need a method `main()` to become a runnable program (the class `Pet` didn't have one). Remember from Chapter 2, typing _psvm_ followed by the Tab key will quickly create the method `main()`. We'll place the code communicating with the class `Pet` inside the method `main()`.
 
 NOTE: Do not forget to press _Ctrl-S_ (_CMD-S_ on Mac) to save and compile this class! 
 
@@ -329,7 +340,6 @@ public class PetMaster {
         System.out.println(petReaction);  <5>
 
         myPet.sleep();        <6>
-
     }
 }
 ----
@@ -338,13 +348,13 @@ public class PetMaster {
 
 <2> This is how to create an instance of the object `Pet` using the Java operator `new`. This line declares a variable of type `Pet`  - that’s right, you can treat any classes created by you as new Java data types.
 
-<3>	Calling the method `eat` on the object `Pet`. After the instance of `Pet` was created, the variable `myPet` knows its address in memory. So you can call the method `eat` (as well as any other) on this particular instance of `Pet`. 
+<3> Calling the method `eat()` on the object `Pet`. After the instance of `Pet` was created, the variable `myPet` knows its address in memory. So you can call the method `eat()` (as well as any other) on this particular instance of `Pet`. 
 
 <4> If a method returns a value,  specify a variable that will store returned value to the left of the equal sign. In out code it's `petReaction` of type `String`.  Such variable should have the same type as the return value of the method. 
 
 <5> The value of the variable `petReaction` is passed as an argument to the method `prinln` for output.
 
-<6> Calling the method `sleep` on the object `Pet`.
+<6> Calling the method `sleep()` on the object `Pet`.
 
 To run the class `PetMaster` right-click on its name in the Project view in IDEA, and select the option _Run PetMaster.main()_. This program will output the following:
 
@@ -353,11 +363,11 @@ OK!! OK!! Tweet!! Tweet!!
 Good night, see you tomorrow!_
 
 
-[[FIG3-16]]
+[[FIG3-7]]
 .Tweet, Tweet!
-image::images/fig_3_16.png[width=400, height=550]
+image::images/fig_3_07.png[width=400, height=550]
   
-At this point the project MyPet consistes of two Java classes: `Pet` and `PetMaster`. The role of the class `Pet` is to represent attributes and behavior of a pet, while the class `PetMaster` starts the program, _instantiates_ the class `Pet` and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the `main` method, which is the entry point of the application.  
+At this point the project MyPet consists of two Java classes: `Pet` and `PetMaster`. The role of the class `Pet` is to represent attributes and behavior of a pet, while the class `PetMaster` starts the program, _instantiates_ the class `Pet` and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the `main()` method, which is the entry point of the application.  
 
 === Inheritance – a Fish Can Be a Pet Too
 
@@ -376,7 +386,7 @@ class Fish extends Pet{
 
 This class `Fish` is a _subclass_ of the class `Pet`. AAccordingly, the class `Pet` is a _superclass_ of the class `Fish`. In other words, you use the class `Pet` as a template for creating a class `Fish`.
 
-Even if you will leave the class `Fish` empty as it is now, you can still use every method and attribute inherited from  the class `Pet`. Take a look, we're creating an instance of the object `Fish` and are calling its method `sleep`:
+Even if you will leave the class `Fish` empty as it is now, you can still use every method and attribute inherited from  the class `Pet`. Take a look, we're creating an instance of the object `Fish` and are calling its method `sleep()`:
 
 [source, java]
 ----
@@ -386,9 +396,9 @@ myLittleFish.sleep();
 
 Even though we have not declared any methods in the class `Fish` yet, we call the method `sleep()`, which was declared in its superclass `Pet`! In Java all classes are automatically inherited from the class `Object`. Even though we've declared the class `Pet` without using the keyword `extends` it still extends the class `Object`. With the keyword `extends` you can build class hierarchies. For example, many animal classes can extend the class `Pet`. 
 
-[[FIG3-18]]
+[[FIG3-8]]
 .Class Hierarchy
-image::images/fig_3_18.png[width=400, height=550]
+image::images/fig_3_08.png[width=400, height=550]
 
 Let’s not forget, however, that we’ve  created the class `Fish` as a subclass of `Pet`, because we wanted to add some additional features that only fish have and reuse some of  the code that we wrote for a _general pet_.For instance, not all pets can dive, but fish certainly can. Let’s add a new method `dive()` to the class `Fish`. 
 
@@ -401,17 +411,17 @@ public class Fish extends Pet {
    public int dive(int howDeep){
     
     currentDepth=currentDepth + howDeep;
-	System.out.println("Diving for " + 
-	                   howDeep + " feet");
+    System.out.println("Diving for " + 
+                     howDeep + " feet");
     System.out.println("I'm at " + currentDepth +
-	                     " feet below sea level");
-	
-	return currentDepth; 
-   }
+                       " feet below sea level");
+  
+    return currentDepth; 
+  }
 }
 ----
 
-The method `dive()` has an _argument_ `howDeep` that tells the fish how deep it should go. We’ve also declared a class variable `currentDepth` that will store and update the current depth every time you call the method `dive()`. This method returns the current value of the variable `currenDepth` to the calling class. The plus sign in the `pintln` methods is not about addition - we're building a string of characters by concatenating it pieces. 
+The method `dive()` has an _argument_ `howDeep` that tells the fish how deep it should go. We’ve also declared a class variable `currentDepth` that will store and update the current depth every time you call the method `dive()`. This method returns the current value of the variable `currenDepth` to the calling class. The plus signs in the `pintln()` lines are not about addition - we're building strings of characters by concatenating their pieces. 
 
 Using IDEA create another class `FishMaster` that will look like this:
 
@@ -419,39 +429,39 @@ Using IDEA create another class `FishMaster` that will look like this:
 ----
 public class FishMaster {
 
-	public static void main(String[] args) {
-		
-		Fish myFish = new Fish();
-		
-		myFish.dive(2);
-		myFish.dive(3);
-		
-		myFish.sleep();
-	}
+  public static void main(String[] args) {
+    
+    Fish myFish = new Fish();
+    
+    myFish.dive(2);
+    myFish.dive(3);
+    
+    myFish.sleep();
+  }
 }
 ----
 
 The method `main()` instantiates the object `Fish` and calls its method `dive()` twice with different arguments - two and three. After that, it calls the method `sleep()`. When you run the program `FishMaster`, it will print the following messages:
 
-_Diving for 2 feet
-I'm at 2 feet below sea level
-Diving for 3 feet
-I'm at 5 feet below sea level
-Good night, see you tomorrow_
+_Diving for 2 feet_
+_I'm at 2 feet below sea level_
+_Diving for 3 feet_
+_I'm at 5 feet below sea level_
+_Good night, see you tomorrow_
 
-Have you noticed that beside the methods defined in the class `Fish`, the `FishMaster` also calls method `sleep`  from its superclass `Pet?` This is what inheritance is all about – you do not have to copy and paste code from the class `Pet` – just use the keyword `extends`, and the class `Fish` can use `Pet`’s methods! 
+Have you noticed that beside the methods defined in the class `Fish`, the `FishMaster` also calls method `sleep()`  from its superclass `Pet`? This is what inheritance is all about – you do not have to copy and paste code from the class `Pet` – just use the keyword `extends`, and the class `Fish` can use `Pet`’s methods! 
 
-[[FIG3-22]]
+[[FIG3-9]]
 .What's the current depth?
-image::images/fig_3_22.png[width=400, height=550]
+image::images/fig_3_09.png[width=400, height=550]
 
 One more thing, even though the method `dive()` returns the value of  `currentDepth`, our `FishMaster` does not use it. That’s fine, -  our `FishMaster` does not need this value, but there may be some other classes that will also use the class `Fish`, and they may find knowing the current depth  useful. For example, think of a class `FishTrafficDispatcher` that has to know positions of other fish under the sea before giving permissions to dive to avoid traffic accidents.
 
 === Method Overriding
 
-As you know, fish do not speak (at least they do not do it aloud). But our class `Fish` has been inherited from the class `Pet` that has a method `say()`. This means that nothing stops you from writing `myFish.say();`.
+As you know, fish do not speak (at least they do not do it aloud). But our class `Fish` has been inherited from the class `Pet` that has the method `say()`. This means that nothing stops you from writing `myFish.say();`.
 
-Do you really want our fish to talk? If you do not want this to happen, the class `Fish` has to _override_ the `Pet`’s snadrard behavior - the method `say()`. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method `say()` to the class `Fish`.
+Do you really want our fish to talk? If you do not want this to happen, the class `Fish` has to _override_ the `Pet`’s typical behavior - the method `say()`. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method `say()` to the class `Fish`.
 
 [source, java]
 ----
@@ -479,7 +489,7 @@ Wow!  We’ve learned a lot in this chapter – let’s just take a break.
 
 1. We've  used the variable of type `int` to to store the price in the class `VideoGame`. Is there a more suitable primitive data type for storing prices?
 
-2. Create a new class `Car` with the following methods:
+2. Create a new project in IDEA named chapter3 and a new Java class `Car` with the following methods:
 +
 `public void start()`
 +
@@ -487,10 +497,14 @@ Wow!  We’ve learned a lot in this chapter – let’s just take a break.
 +
 `public int drive(int howlong)`
 +
-The method `drive()` has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: `distance = howlong*60;`
+The method `drive()` has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: `distance = howlong*60;`. Use the statement `return distance` as the last line in the method `drive()`. 
 
-3. Write another class `CarOwner` and that creates an instance of the object `Car`and call its methods.  The result of each method call has to be printed using `System.out.println()`.
+3. Run this program by using the menu Run in IDEA.
 
-4. Create a subclass of `Car` named `JamesBondCar` and override the method `drive()` there. Use the following formula to calculate the distance: `distance = howlong*180;`
+4. Write another class `CarOwner` with the method `main()` that creates an instance of the object `Car`and call its methods.  The result of each method call has to be printed using `System.out.println()`.
+
+5. Create a subclass of `Car` named `JamesBondCar` and override the method `drive()` there. Now use the following formula to calculate the distance: `distance = howlong*180;`
 +
-Be creative, print some funny messages from the method `drive`!
+Be creative, print some funny messages from the method `drive()`!
+
+6. Create an instance of the class `JamesBondCar` in the `main()` method of `CarOwner`. Re-run the program `CarOwner` to see that it calls the overriden method `drive()`.

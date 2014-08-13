@@ -15,7 +15,7 @@ Third, Java can be embedded in tiny microchips that control various home applian
 Forth, learning Java is not difficult, because it is _object-oriented_ language. Java's program elements (_classes_) represent objects from the real world. For example, you can create a class called `Car` and give it attributes  like doors, wheels, similarly to what the real cars have. After that, based on the `Car` class you can create another class, for example `Tesla`, which will have all the features of the class `Car` (doors, wheels, body) plus something that only Teslas have (electric engine).   
 
 Fifth, if a Java program that runs on remote servers need to process requests of thousands users, such a program can run use multiple parallel processors or even servers. For example, http://www.forbes.com/sites/michaelkanellos/2013/03/21/ebays-mpg-for-data-centers/[eBay runs thousands of servers] in parallel (a.k.a. _concurrently_), and many of them run Java applications.
-	
+    
 Sixth, from day one the software required to write Java programs was free. There are more than nine million professional Java programmers in the world, and they publish on the Internet lots and lots of program samples so if you're run into a problem, you can either find the solution by searching online or ask your question in one of the popular online forums like http://stackoverflow.com/questions/tagged/java[Stack Overflow], and someone will answer your question! 
 
 This list can go on and on. Besides, if you are planning to work as a computer programmer, Java skills in the industry are in high demand. Enough talking, let's install some software to start learning Java.  
@@ -90,11 +90,11 @@ Here is the program that prints the words _Hello World!_ on your computer's scre
 ----
 public class HelloWorld{
 
-	public static void main(String[] args){
+    public static void main(String[] args){
 
-	   System.out.println("Hello World!");
-	
-	}
+       System.out.println("Hello World!");
+    
+    }
 }
 ----
 
