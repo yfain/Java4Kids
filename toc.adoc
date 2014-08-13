@@ -23,7 +23,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * Chapter 11. Saving the Game Score in Files
 * Chapter 12. Networking: Downloading Stuff From Internet
 * Chapter 13. Multi-Threading: The Ping Pong Game
-* <<Appendix_A.adoc#, Publishing Your Code Online: GitHub>>
+* Appendix_A. Publishing Your Code Online: GitHub
 
 Yuri Fain is creating illustrations for this book. This is how a an early version of the cover looked like. The real one will look differently.  
 

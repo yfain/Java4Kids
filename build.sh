@@ -56,7 +56,7 @@ if [ "$1" = "html" ]; then
     makeDir $OUT_DIR
 
     # list all asciidoc files in the DOCS_DIR
-    adoc_files=(./Chapter_1.adoc ./Chapter_2.adoc ./Chapter_3.adoc ./Chapter_4.adoc ./Appendix_A.adoc )
+    adoc_files=(./Chapter_1.adoc ./Chapter_2.adoc ./Chapter_3.adoc ./Chapter_4.adoc )
 
     convert `printf "%s " "${adoc_files[@]}" | cut -d " " -f 1-${#adoc_files[@]}`
 
