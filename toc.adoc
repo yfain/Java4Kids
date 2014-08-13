@@ -14,7 +14,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * <<Chapter_2.adoc#,Chapter 2. Getting Comfy In IDEA IDE>>
 * <<Chapter_3.adoc#,Chapter 3. Meet Pet And Fish, The Java Classes>>
 * <<Chapter_4.adoc#,Chapter 4. Java Building Blocks>>
-* Chapter 5. Interfaces and Lambdas
+* <<Chapter_5.adoc#,Chapter 5. Interfaces, Lambdas, and Abstract Classes (Work in Progress...)>>
 * Chapter 6. Data Collections and Generics
 * Chapter 7. Creating Graphical Calculator with JavaFX
 * Chapter 8. Reacting to JavaFX Events 

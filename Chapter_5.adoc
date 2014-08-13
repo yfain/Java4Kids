@@ -1,0 +1,194 @@
+:toc:
+:toclevels: 4
+:imagesdir: ./
+
+== Chapter 5. Interfaces, Lambdas, and Abstract Classes
+
+In this chapter we'll focus on discussing how you can program behavior in Java.  Remember, classes have attributes (e.g. color, number of doors) and can do stuff (e.g. eat, sleep, or dive). There is a special group of programming languages that are called functional (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like `eat()`, `sleep()`, or `dive()`, and these functions can live their independent lives and don't have to be declared in classes.
+
+On the other hand, in object-oriented languages behavior is programmed in methods defined in classes. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. So far I was declaring and implementing the behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation.
+
+=== Java Interfaces
+
+For years, Java _interfaces_ were used mainly for holding just method declarations and final static variables. For example, the interface `Talkable` can just contain the declaration of the method `talk()`:
+
+[source, java]
+----
+interface Talkable{
+	public void talk();
+}
+----
+
+Since the method talk is not implemented here, it's called abstract. 
+
+NOTE: To create a new interface in IDEA, select the menu File | New | Java class and select Interface in the Kind box.
+
+[[FIG5-1]]
+.Creating an interface in IDEA
+image::images/fig_5_01.png[]
+
+You should be thinking, "What's the point of simply declaring a method without implementing it?" The thing is that more than one class can exhibit the same behavior. For example, a dog, a cat, and a parrot can "talk". But they "implement it" differently. A parrot can repeat words, while dogs implement this behavior differently - they bark. Cats talk by meowing. Accordingly you can declare three classes that will _implement_ `Talkative` interface differently, as in three classes below:
+
+[source, java]
+----
+public class Parrot implements Talkative {
+    public void talk(){
+        System.out.println("My name is Kesha.");
+    }
+}
+
+public class Dog implements Talkative {
+    public void talk(){
+        System.out.println("Bark! Bark-bark!");
+    }
+}
+
+public class Cat implements Talkative {
+    public void talk(){
+        System.out.println("Meow! Meow!");
+    }
+}
+----
+
+These three classes use the Java keyword `implements`, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword `implements` otherwise the Java compiler will complain, "You promised to implement all abstract methods from `Talkable`, but I dont see them." 
+
+What if we need to create the class `Fish` that uses interfaces? Fish don't talk. But they swim. Dogs can talk and swim, right?  Why won't we declare yet another interface `Swimmable` with the methods `swim()` and `dive()`?
+
+[source, java]
+----
+public interface Swimmable {
+
+    public void swim(int howFar);
+
+    public void dive(int howDeep);
+}
+----
+
+Let's leave parrots alone, but will create a new class `Fish` and change the class `Dog` just a little bit:
+
+[source, java]
+----
+public class Fish implements Swimmable {
+    public void swim(int howFar){
+        System.out.println("OK, will swim " + howFar + " feet");
+    }
+    public void dive(int howDeep){
+        System.out.println("OK, will dive " + howDeep + " feet");
+    }
+}
+
+public class Dog implements Talkative, Swimmable {
+    public void talk(){
+        System.out.println("Bark! Bark-bark!");
+    }
+
+    public void swim(int howFar){
+        System.out.println("Will swim about a half of this distance: " + howFar/2 + " feet");
+    }
+
+    public void dive(int howDeep){
+        System.out.println("C'mon, don't ask a dog to dive, please!");
+    }
+}
+----
+
+Have you noticed that the class `Dog` can implement several interfaces. Just make sure to implement in the class each and every abstract method declared in these interfaces. I'll tell you more: a class can extend another class and implement interfaces, for example:
+
+[source, java]
+----
+class Fish extends Pet implements Swimmable{
+  
+  // your code implementing swim(), dive() 
+  // and any other methods goes here
+}
+----
+
+To tell you the truth, I don't like the fact that I had to implement the method `dive()` in the class `Dog`. The dogs I've seen can't dive. Can the interface `Swimmable` be changed so I'm not forced to write the implementation of the method `dive()` in the class `Dog`? Yes, it can. Java 8 introduced a new keyword `default`. Now you're allowed to write a default implementation of a method in the interface. Such a method won't be considered abstract anymore, and you won't be forced to implement it in your class. Let's do it.
+
+[source, java]
+----
+public interface Swimmable {
+
+    public void swim(int howFar);
+
+    public default void dive(int howDeep){
+        System.out.println("Can't dive, sorry");
+    };
+}    
+----
+
+Now the class `Dog` doesn't have to implement the method `dive()`, and the compiler won't complain.
+
+[source, java]
+----
+public class Dog implements Talkative, Swimmable {
+    public void talk(){
+        System.out.println("Bark! Bark-bark!");
+    }
+
+    public void swim(int howFar){
+        System.out.println("Will swim about a half of this distance: " + howFar/2 + " feet");
+    }
+}
+----
+
+There is no need to change the class `Fish` - it has implemented the method `dive()`, which will override the default implementation of the `dive()` in `Swimmable`. You can still call the method `dive()` on the instance of the `Dog` class - the default implementation will be invoked. The next class `PetMaster` will demonstrate this.
+
+[source, java]
+----
+public class PetMaster {
+    public static void main(String[] args) {
+
+        Dog myDog = new Dog();
+        myDog.talk();
+        myDog.swim(7);
+        myDog.dive(2);
+
+        Fish myFish = new Fish();
+        myFish.swim(50);
+        myFish.dive(20);
+    }
+}
+----
+Run this program and you'll see the following output on the console:
+
+_Bark! Bark-bark!_
+_Will swim about a half of this distance: 3 feet_
+_Can't dive, sorry_
+_OK, will swim 50 feet_
+_OK, will dive 20 feet_
+
+Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other interfaces methods. You can't override interface static methods in classes.
+
+
+
+==== Functional Interfaces
+
+If an interface has only one abstract method declared (default and static methods don't count) it's called _functional interface_. `Talkative` is an example of a functional interface. Java 8 introduced a special way of implementing functional interfaces using lambda expressions. 
+
+=== Lambda Expressions
+
+
+
+NOTE: IntelliJ IDEA supports the syntax of lambda expressions. Just make sure to visit the menu File | Project Structure and select the project language level to be 8.0.
+
+
+== Challenge Yourself
+
+Part 1. In this part you'll do an exercise to prove that you understand Java interfaces. 
+
+1. Create a new IDEA project
+
+2. Recreate the final from versions of classes `Dog`, `Fish` and interfaces `Swimmable` and `Talkable` from the section Interfaces.
+
+3. Create a new class `Pet` with a constructor that will take a name of the pet (a `String`) as an argument.
+
+4. Change the declarations of the classes `Dog` and `Fish` so each of them extends `Pet` while implementing `Talkable` and `Swimable` interfaces.
+
+5. Create the class `PetMaster` from the section Interfaces, but give pets names while instantiating `Dog` and `Fish`.
+
+6. Modify implementations of the methods `talk()` and `swim()` so they would print the pet's name as a part of the output in `System.out.println()`.
+
+7. Run and test `PetMaster`. 
+
+Part 2. In this part you'll do an exercise to prove that you understand Java lambda expressions.
