@@ -25,7 +25,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * Chapter 13. Multi-Threading: The Ping Pong Game
 * Appendix_A. Publishing Your Code Online: GitHub
 
-Yuri Fain is creating illustrations for this book. This is how a an early version of the cover looked like. The real one will look differently.  
+http://instagram.com/yurifain[Yuri Fain] is creating illustrations for this book. This is how a an early version of the cover looked like. The real one will look differently.  
 
 [[FIG0-0]]
 image::images/JavaKidsCover.png[width=485, height=667] 
