@@ -876,7 +876,7 @@ long totalCars =4637283648392l;</code></pre>
 <p>The same is true for the method <code>eat()</code>.It will print the message <em>I’m so hungry, let me have a snack like nachos!</em>.</p>
 </li>
 <li>
-<p>The method <code>say()</code> will not be printing any messages, but will the prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program.</p>
+<p>The method <code>talk()</code> will not be printing any messages, but will the prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program.</p>
 </li>
 </ul>
 </div>
@@ -902,7 +902,7 @@ long totalCars =4637283648392l;</code></pre>
          "I’m so hungry, let me have a snack like nachos!");
     }
 
-    public String say(String aWord){
+    public String talk(String aWord){
         String petResponse = "OK!! OK!! " +aWord;
         return petResponse;
     }
@@ -931,10 +931,10 @@ long totalCars =4637283648392l;</code></pre>
 <p>The signature of the method <code>eat()</code> is similar to <code>sleep()</code>.</p>
 </div>
 <div class="paragraph">
-<p>The signature of the method <code>say()</code> looks like this:</p>
+<p>The signature of the method <code>talk()</code> looks like this:</p>
 </div>
 <div class="paragraph">
-<p><code>public String say(String aWord)</code></p>
+<p><code>public String talk(String aWord)</code></p>
 </div>
 <div class="paragraph">
 <p>This method can also be called from any other Java class, but has to return some text, which is prescribed by the keyword <code>String</code> in front of the method name. Besides, it expects some text data from outside, hence the argument <code>String aWord</code>.</p>
@@ -975,7 +975,7 @@ Do not forget to press <em>Ctrl-S</em> (<em>CMD-S</em> on Mac) to save and compi
 
         myPet.eat();             <i class="conum" data-value="3"></i><b>(3)</b>
 
-        petReaction = myPet.say("Tweet!! Tweet!!"); <i class="conum" data-value="4"></i><b>(4)</b>
+        petReaction = myPet.talk("Tweet!! Tweet!!"); <i class="conum" data-value="4"></i><b>(4)</b>
 
         System.out.println(petReaction);  <i class="conum" data-value="5"></i><b>(5)</b>
 
@@ -1139,14 +1139,14 @@ myLittleFish.sleep();</code></pre>
 <div class="sect2">
 <h3 id="_method-overriding"><a class="anchor" href="#_method-overriding"></a>Method Overriding</h3>
 <div class="paragraph">
-<p>As you know, fish do not speak (at least they do not do it aloud). But our class <code>Fish</code> has been inherited from the class <code>Pet</code> that has the method <code>say()</code>. This means that nothing stops you from writing <code>myFish.say();</code>.</p>
+<p>As you know, fish do not speak (at least they do not do it aloud). But our class <code>Fish</code> has been inherited from the class <code>Pet</code> that has the method <code>talk()</code>. This means that nothing stops you from writing <code>myFish.talk();</code>.</p>
 </div>
 <div class="paragraph">
-<p>Do you really want our fish to talk? If you do not want this to happen, the class <code>Fish</code> has to <em>override</em> the <code>Pet</code>’s typical behavior - the method <code>say()</code>. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method <code>say()</code> to the class <code>Fish</code>.</p>
+<p>Do you really want our fish to talk? If you do not want this to happen, the class <code>Fish</code> has to <em>override</em> the <code>Pet</code>’s typical behavior - the method <code>talk()</code>. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method <code>talk()</code> to the class <code>Fish</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">public String say(String something){
+<pre class="highlight"><code class="java language-java">public String talk(String something){
   return "Don't you know that fish do not talk?";
 }</code></pre>
 </div>
@@ -1156,7 +1156,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 <div class="paragraph">
 <p><code>String fishReaction;</code>
-<code>fishReaction = myFish.say("Hello");</code>
+<code>fishReaction = myFish.talk("Hello");</code>
 <code>System.out.println(fishReaction);</code></p>
 </div>
 <div class="paragraph">
@@ -1166,7 +1166,7 @@ myLittleFish.sleep();</code></pre>
 <p><code>Don't you know that fish do not talk?</code></p>
 </div>
 <div class="paragraph">
-<p>This proves that <code>Pet</code>’s method <code>say()</code> has been <em>overridden</em>, or in other words, suppressed.</p>
+<p>This proves that <code>Pet</code>’s method <code>talk()</code> has been <em>overridden</em>, or in other words, suppressed.</p>
 </div>
 <div class="paragraph">
 <p>Wow!  We’ve learned a lot in this chapter – let’s just take a break.</p>
@@ -1217,7 +1217,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-13 09:48:39 EDT
+Last updated 2014-08-13 11:39:20 EDT
 </div>
 </div>
 </body>

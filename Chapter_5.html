@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 4. Java Building Blocks</title>
+<title>Chapter 5. Interfaces, Lambdas, and Abstract Classes</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,790 +487,274 @@ p { margin-bottom: 1.25rem; }
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_chapter-4-java-building-blocks">Chapter 4. Java Building Blocks</a></li>
+<li><a href="#_chapter-5-interfaces-lambdas-and-abstract-classes">Chapter 5. Interfaces, Lambdas, and Abstract Classes</a></li>
 <li>
 <ul class="sectlevel2">
-<li><a href="#_program-comments">Program Comments</a></li>
-<li><a href="#_making-decisions">Making Decisions</a></li>
+<li><a href="#_java-interfaces">Java Interfaces</a></li>
 <li>
 <ul class="sectlevel3">
-<li><a href="#_the-if-statement">The if Statement</a></li>
-<li><a href="#_logical-operators">Logical Operators</a></li>
-<li><a href="#_conditional-operator">Conditional operator</a></li>
-<li><a href="#_using-code-else-if-code">Using <code>else if</code></a></li>
-<li><a href="#_the-code-switch-code-statement">The <code>switch</code> Statement</a></li>
+<li><a href="#_functional-interfaces">Functional Interfaces</a></li>
 </ul>
 </li>
-<li><a href="#_how-long-variables-live">How Long Variables Live?</a></li>
-<li>
-<ul class="sectlevel3">
-<li><a href="#_the-keyword-code-static-code">The Keyword <code>static</code></a></li>
+<li><a href="#_lambda-expressions">Lambda Expressions</a></li>
 </ul>
 </li>
-<li><a href="#_special-methods-constructors">Special Methods: Constructors</a></li>
-<li><a href="#_the-keyword-code-this-code">The Keyword <code>this</code></a></li>
-<li><a href="#_arrays">Arrays</a></li>
-<li><a href="#_repeating-actions-with-loops">Repeating Actions with Loops</a></li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-4-java-building-blocks"><a class="anchor" href="#_chapter-4-java-building-blocks"></a>Chapter 4. Java Building Blocks</h2>
+<h2 id="_chapter-5-interfaces-lambdas-and-abstract-classes"><a class="anchor" href="#_chapter-5-interfaces-lambdas-and-abstract-classes"></a>Chapter 5. Interfaces, Lambdas, and Abstract Classes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Classes are the major constructs in Java. But you need to know smaller elements that help you out to program the behavior and the flow of the program.  You need to know how commented your program so other people can understand your intentions (programmers often work in teams and help each other). You need to know how to write code that will invoke one method or the other depending on certain conditions. So in this chapter I&#8217;ll show you some Java elements that you have to know and apply in pretty much any project.</p>
+<p>In this chapter we&#8217;ll focus on discussing how you can program behavior in Java.  Remember, classes have attributes (e.g. color, number of doors) and can do stuff (e.g. eat, sleep, or dive). There is a special group of programming languages that are called functional (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like <code>eat()</code>, <code>sleep()</code>, or <code>dive()</code>, and these functions can live their independent lives and don&#8217;t have to be declared in classes.</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, in object-oriented languages behavior is programmed in methods defined in classes. Starting from Java 8 you can also program behavior in so called <em>lambda expressions</em> covered later in this chapter. So far I was declaring and implementing the behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation.</p>
 </div>
 <div class="sect2">
-<h3 id="_program-comments"><a class="anchor" href="#_program-comments"></a>Program Comments</h3>
+<h3 id="_java-interfaces"><a class="anchor" href="#_java-interfaces"></a>Java Interfaces</h3>
 <div class="paragraph">
-<p>You can add any text comments to your program to explain what a particular line, method or a class is for. First of all, someone else may read your program so comments would help in understanding your intentions. Second, even the  author of the code can&#8217;t remember every program he or she wrote. Besides, if a professional programmer decides to change the employer, if would be nice to leave well-commented code behind.</p>
-</div>
-<div class="paragraph">
-<p>There are three different types of comments - single-line comments, block comments, and a javadoc comments. Here&#8217;s what they are for:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If your comment fits in one line, start it with two slashes:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">// This method calculates the distance between A and B.</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire  text with these symbols: <code>/*</code> and <code>*/</code>, for example:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">/* Now we'll handle the current
-   position of the Fish.
-*/</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Java comes with a special program <code>javadoc</code> that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a <em>technical documentation</em> for your programs. Such comments are enclosed in  symbols <code>/* *</code> and   <code>*/</code>. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">/** This method calculates the discount that depends
-on the price paid. If the price is more than $100,
-give the user 20% off, otherwise only 10%.
-*/</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The javadoc tool can process your code, extract all comments that start with <code>/**</code> and create program documentation that can be published online or kept locally on the company server. We are not going to use javadoc in this book, but if you&#8217;re interested to learn more about this tool, read Oracle&#8217;s tutorial <a href="http://goo.gl/Bwm6Cb">How to Write Doc Comments for the Javadoc Tool</a>.</p>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>From now on, I’ll be adding comments to code samples to  give you a better idea how and where to use them.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_making-decisions"><a class="anchor" href="#_making-decisions"></a>Making Decisions</h3>
-<div class="paragraph">
-<p>We always make decisions in our life: <em>If she is going to tell me  this</em> – <em>I’m going to answer  that, otherwise I’ll do something else</em>. You can write a Java program that will "make decisions" with the help of <code>if</code> and <code>switch</code> statements. You can also build more complex either-or conditions using logical operators.</p>
-</div>
-<div class="sect3">
-<h4 id="_the-if-statement"><a class="anchor" href="#_the-if-statement"></a>The if Statement</h4>
-<div class="paragraph">
-<p>Java has an <code>if</code> statement that checks if a particular expression is <code>true</code> or <code>false</code>.</p>
-</div>
-<div class="paragraph">
-<p>Based on the result of evaluating this expression, your program execution forks, and only the relevant portion of the code will be invoked.</p>
-</div>
-<div class="paragraph">
-<p>For example, if the expression <em>Do I want to go to grandma&#8217;s?</em> is <code>true</code>,  turn to the left, otherwise turn to the right.</p>
-</div>
-<div id="FIG4-1" class="imageblock">
-<div class="content">
-<img src="./images/fig_4_01.png" alt="fig 4 01">
-</div>
-<div class="title">Figure 1. The fork</div>
-</div>
-<div class="paragraph">
-<p>Take a look at the following code sample.  If an expression inside the parentheses is <code>true</code>, JVM will execute the code between the first pair of curly braces, otherwise it goes to the code after the <code>else</code> statement. In other words, if the value of the variable  <code>totalSpent</code> is more than a hundred, give a 20% discount, otherwise take only 10% off.</p>
+<p>For years, Java <em>interfaces</em> were used mainly for holding just method declarations and final static variables. For example, the interface <code>Talkable</code> can just contain the declaration of the method <code>talk()</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">// Assume that the method getTotalAmount()
-// adds up the prices from your shopping cart
-
-int totalSpent = getTotalAmount();
-float discountedPrice;
-
-if (totalSpent &gt; 100){
-  discountedPrice=totalSpent*0.8;
-  System.out.println("You’ll get a 20% discount”);
-}
-else{
-  discountedPrice=totalSpent*0.9;
-  System.out.println("You’ll get a 10% discount”);
+<pre class="highlight"><code class="java language-java">interface Talkable{
+	public void talk();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since the method talk is not implemented here, it&#8217;s called abstract.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+To create a new interface in IDEA, select the menu File | New | Java class and select Interface in the Kind box.
+</td>
+</tr>
+</table>
+</div>
+<div id="FIG5-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_5_01.png" alt="fig 5 01">
+</div>
+<div class="title">Figure 1. Creating an interface in IDEA</div>
+</div>
+<div class="paragraph">
+<p>You should be thinking, "What&#8217;s the point of simply declaring a method without implementing it?" The thing is that more than one class can exhibit the same behavior. For example, a dog, a cat, and a parrot can "talk". But they "implement it" differently. A parrot can repeat words, while dogs implement this behavior differently - they bark. Cats talk by meowing. Accordingly you can declare three classes that will <em>implement</em> <code>Talkative</code> interface differently, as in three classes below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Parrot implements Talkative {
+    public void talk(){
+        System.out.println("My name is Kesha.");
+    }
 }
 
-System.out.println("Your discounted price is ” + discountedPrice);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Let’s modify the method <code>dive()</code> in the class <code>Fish</code> from Chapter 3 to make sure that our fish is not allowed to dive below 100 feet:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public class Fish extends Pet {
+public class Dog implements Talkative {
+    public void talk(){
+        System.out.println("Bark! Bark-bark!");
+    }
+}
 
-  int currentDepth=0;
-
-  public int dive(int howDeep){
-    currentDepth=currentDepth + howDeep;
-      if (currentDepth &gt; 100){
-          System.out.println("I am a little fish and "
-                      + " can't dive below 100 feet");
-          currentDepth=currentDepth - howDeep;
-      }else{
-        System.out.println("Diving for " + howDeep +
-                                             " feet");
-        System.out.println("I'm at " + currentDepth +
-                        " feet below the sea level");
-      }
-      return currentDepth;
-	}
-
-	public String talk(String something){
-       return "Don't you know that fish do not talk?";
-	}
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now just make a small change in the class <code>FishMaster</code> – let it  try  to make  our fish go deep under the sea:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public class FishMaster {
-
-  public static void main(String[] args) {
-
-    Fish myFish = new Fish();
-
-  // Try to have the fish go below 100 feet
-
-  myFish.dive(2);  // go 2 feet down
-	myFish.dive(97); // go another 97 feet down
-	myFish.dive(3);  // go 3 more feet down
-
-	myFish.sleep();
-  }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Run this program and it’ll print the following on the system console:</p>
-</div>
-<div class="paragraph">
-<p><em>Diving for 2 feet.</em>
-<em>I&#8217;m at 2 feet below the sea level.</em>
-<em>Diving for 97 feet.</em>
-<em>I&#8217;m at 99 feet below the sea level.</em>
-<em>I am a little fish and can&#8217;t dive below 100 feet.</em>
-<em>Good night, see you tomorrow.</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_logical-operators"><a class="anchor" href="#_logical-operators"></a>Logical Operators</h4>
-<div class="paragraph">
-<p>Sometimes, to make a decision you may need to check more than just one conditional expression, for example if the name of the state is Texas or California, add the state sales tax to the price of every item in the store. This is an example of the <em>logical or</em> case – either Texas or California.</p>
-</div>
-<div class="paragraph">
-<p>In Java the sign for a logical <code>or</code> is one or two vertical bars. It works like this – if any of the two conditions is <code>true</code>, the result of the entire expression is also <code>true</code>.</p>
-</div>
-<div class="paragraph">
-<p>In the following examples I use a variable of type <code>String</code>, which has a method <code>equals()</code> that compares the values of two strings. I use it to see the value of the variable <code>state</code> is <em>"Texas"</em> or  <em>"California"</em>:</p>
-</div>
-<div class="paragraph">
-<p><code>if (state.equals("Texas") | state.equals("California"))</code></p>
-</div>
-<div class="paragraph">
-<p>You can also rewrite this <code>if</code> statement using two vertical bars:</p>
-</div>
-<div class="paragraph">
-<p><code>if (state.equals("Texas") || state.equals("California"))</code></p>
-</div>
-<div class="paragraph">
-<p>The difference between these two examples is that if you use two bars, and the first expression is <code>true</code>, the second expression won’t  even be  checked.  If you place just a single bar, JVM will evaluate both expressions anyway.</p>
-</div>
-<div class="paragraph">
-<p>The <em>logical and</em> is represented by one or two ampersands (<code>&amp;&amp;</code>) and each expression in the parentheses must be <code>true</code> to make the entire expression <code>true</code>. For example, charge the sales tax only if the state is New York and the price is more than $110. Both conditions must be <code>true</code> <em>at the same time</em>:</p>
-</div>
-<div class="paragraph">
-<p><code>if (state.equals("New York") &amp;&amp; price &gt;110)</code></p>
-</div>
-<div class="paragraph">
-<p>or</p>
-</div>
-<div class="paragraph">
-<p><code>if (state.equals("New York") &amp; price &gt;110)</code></p>
-</div>
-<div class="paragraph">
-<p>If you use double ampersand and the first expression is <code>false</code>, the second one won’t even be checked, because the entire expression will be <code>false</code> anyway.  With the single ampersand both expressions will be evaluated.</p>
-</div>
-<div class="paragraph">
-<p>The <em>logical not</em> is also known as <code>negation</code> and is  represented by the exclamation point. The logical <em>not</em>  changes  expression to the opposite meaning. For example, if you want to perform some actions only if the state is not New York, use this syntax:</p>
-</div>
-<div class="paragraph">
-<p><code>if (!state.equals("New York"))</code></p>
-</div>
-<div class="paragraph">
-<p>The following two expressions will produce the same result, because <em>more than 50</em> and <em>not less or or equal to 50</em> have the same meaning:</p>
-</div>
-<div class="paragraph">
-<p><code>if (price &gt; 50)</code></p>
-</div>
-<div class="paragraph">
-<p><code>if (!(price &lt;=50))</code></p>
-</div>
-<div class="paragraph">
-<p>In the second example the <em>logical not</em> is applied to the expression in parentheses.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_conditional-operator"><a class="anchor" href="#_conditional-operator"></a>Conditional operator</h4>
-<div class="paragraph">
-<p>There is another flavor of an if statement called <em>conditional operator</em>, which allows to assign a value to a variable based on the expression that ends with a question mark. It&#8217;s like you&#8217;re asking, "Is this true?". If such an  expression is <code>true</code>, the value after the question mark is used, otherwise the value after the colon is assigned to the variable on the left:</p>
-</div>
-<div class="paragraph">
-<p><code>discount = price &gt; 50? 10:5;</code></p>
-</div>
-<div class="paragraph">
-<p>If the price is greater than fifty, the variable <code>discount</code> will get the value of 10, otherwise the value of 5. It’s just a shorter replacement of the following if statement:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">if (price &gt; 50){
-   discount = 10;
-} else {
-   discount = 5;
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_using-code-else-if-code"><a class="anchor" href="#_using-code-else-if-code"></a>Using <code>else if</code></h4>
-<div class="paragraph">
-<p>You are also allowed to build more complex <code>if</code> statements with several <code>else if</code> blocks. To illustrate this technique let&#8217;s create a new class called <code>ReportCard</code>. This class will have two methods: <code>main()</code> and  <code>convertGrades()</code> with one argument  - the school test result. Depending on the number, it should print your grade like A, B, C, or D.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public class ReportCard {
-
-  String studentName;
-
-/**
- The method convertGrades has one integer argument - the result of the school test.  The method returns one letter A, B, C or D depending on the argument's value.
-*/
- public char convertGrades( int testResult){
-
-	char grade;
-
-	if (testResult &gt;= 90){
-		grade = 'A';
-	} else if (testResult &gt;= 80 &amp;&amp; testResult &lt; 90){
-	      grade = 'B';
-    }else if (testResult &gt;= 70 &amp;&amp; testResult &lt; 80){
-	    	grade = 'C';
-	}else {
-	    	grade = 'D';
-	}
-
-	return grade;
-
- }
-
- public static void main(String[] args){
-
-	ReportCard rc = new ReportCard();
-
-	char yourGrade = rc.convertGrades(88);
-	System.out.println("Your first grade is " +
-                                          yourGrade);
-
-	yourGrade = rc.convertGrades(79);
-	System.out.println("Your second grade is " +
-                                          yourGrade);
- }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Beside using the <code>else if</code> condition, this example also shows you how to use variables of type <code>char</code>. You can also see that with the <code>&amp;&amp;</code> operator you can check if a number falls into some range. You can not just write <em>if testResult between 80 and 89</em>,  but with <em>logical and</em> you can check the condition when <code>testResult</code> is greater or equal to 80 and less then 89 at the same time:</p>
-</div>
-<div class="paragraph">
-<p><code>testResult &gt;= 80 &amp;&amp; testResult &lt; 89</code></p>
-</div>
-<div class="paragraph">
-<p>Take a guess, why we could not use the <em>logical or</em> operator here? Say the <code>testResult</code> is 100. It&#8217;s greater than 80, and the above expression would evaluate to true, because for  the || operator having one <code>true</code> is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of <code>testResult</code> is between 80 and 89. The <em>logiacl and</em> operator does the job by ensuring that both conditions are true.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_the-code-switch-code-statement"><a class="anchor" href="#_the-code-switch-code-statement"></a>The <code>switch</code> Statement</h4>
-<div class="paragraph">
-<p>The <code>switch</code> statement sometimes can be used as an alternative to <code>if</code>. The variable after the keyword <code>switch</code>  is evaluated, and program goes only to one of the <code>case</code>  statements:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public static void main(String[] args){
-
- ReportCard rc = new ReportCard();
- rc.studentName = "Jerry Lee";
-
- char yourGrade = rc.convertGrades(88);
-
-  switch (yourGrade){
-
-   case 'A':
-     System.out.println("Excellent Job!");
-	   break;
-   case 'B':
-	   System.out.println("Good Job!");
-	   break;
-   case 'C':
-	   System.out.println("Need to work more!");
- 	   break;
-   case 'D':
-     System.out.println("Change your attitude!");
-	 break;
- }
- // Some other program code goes here
-
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Say, the value of <code>yourGrade</code> is <code>B</code>. Then the above code will print "Good Job!" and will break out of the <code>switch</code> statement to continue executing the rest of the program code if any.</p>
-</div>
-<div class="paragraph">
-<p>Do not forget to put the keyword <code>break</code> at the end of each <code>case</code> statement to make the code jump out of the <code>switch</code>. For example, if you forget to put the <code>break</code> in the <code>case 'B'</code> block, the above code would print "Good Job!" followed by "You need to work more!".</p>
-</div>
-<div id="FIG4-2" class="imageblock">
-<div class="content">
-<img src="./images/fig_4_02.png" alt="fig 4 02">
-</div>
-<div class="title">Figure 2. The switch statement</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_how-long-variables-live"><a class="anchor" href="#_how-long-variables-live"></a>How Long Variables Live?</h3>
-<div class="paragraph">
-<p>Class <code>ReportCard</code> declares a variable <code>grade</code> inside the method <code>convertGrades()</code>. If you declare a variable inside any method, such variable is called  <em>local</em>. This means that this variable is available only for the code <em>within this method</em>. When the method completes, this variable automatically gets removed from memory.</p>
-</div>
-<div class="paragraph">
-<p>Programmers use the word <em>scope</em> to say how long a variable will live, for example you can say that variables declared inside a method have a local scope. If a variable is declared within the code block surrounded with curly braces (e.g. in the if statement), it has a block scope and won&#8217;t be visible outside of this block.</p>
-</div>
-<div class="paragraph">
-<p>If a variable has to be reused by several method calls, or it has to be visible from more than one method in a class, you should declare such a variable outside of any method. In the class <code>Fish</code> from Chapter 3, the <code>currentDepth</code> is a <em>member variable</em>. The member variable <code>currentDepth</code> is  alive until the instance of the object <code>Fish</code> exists in memory. You can call <code>currentDepth</code> <em>a instance variable</em>, because its declaration doesn&#8217;t include the keyword <code>static</code>, which we&#8217;ll discuss shortly.</p>
-</div>
-<div class="paragraph">
-<p>Member variables can be shared and reused by all methods of the class, and we can make them visible from external classes too, if need be. For example the method <code>main()</code> of the class <code>ReportCard</code> includes the statement <code>System.out.println()</code>. It uses the class variable <code>out</code> that was declared in the Java class <code>System</code>.</p>
-</div>
-<div class="sect3">
-<h4 id="_the-keyword-code-static-code"><a class="anchor" href="#_the-keyword-code-static-code"></a>The Keyword <code>static</code></h4>
-<div class="paragraph">
-<p>Wait a minute! Can we use a member variable <code>out</code> from the class <code>System</code> if we have not even created an instance of this class?  Yes we can, if the class <code>System</code> declares the variable <code>out</code> with a keyword <code>static</code>.</p>
-</div>
-<div class="paragraph">
-<p>When you start any Java program if <em>loads</em> the definition of the required classes in memory. The definition of a class can be used for creating of one or mode instances of this class for example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">ReportCard rc = new ReportCard();
-rc1.studentName = "Jerry Lee";
-
-ReportCard rc2 = new ReportCard();
-rc2.studentName = "Sarah Smith";</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In this example we have two instances of the class <code>ReportCard</code>, and each of them has its own value in the variable <code>studentName</code>, which is an instance variable. Now, let&#8217;s change the declaration of this variable by adding the  keyword <code>static</code>:</p>
-</div>
-<div class="paragraph">
-<p><code>static String studentName;</code></p>
-</div>
-<div class="paragraph">
-<p>In this case both instances of the <code>ReportCard</code> would share the same variable <code>studentName</code>, and the above code would first assign "Jerry Lee" to this variable, and then it would be replaced with "Sarah Smith". This is not a good idea, is it?</p>
-</div>
-<div class="paragraph">
-<p>Moreover, if the declaration of a member variable or a method starts with <code>static</code>, you do not have to create an instance of this class to use such a variable or a method. Static members of a class are used to store the values that are the same for all instances of the class.</p>
-</div>
-<div class="paragraph">
-<p>For example, the method <code>convertGrades()</code> should be declared as <code>static</code> in the class <code>ReportCard</code>, because its code does not use  member variables to store values specific to a particular instance of the class.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="code language-code">public static char convertGrades( int testResult){
-   // the code of this method goes here
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>There is no need to create instances to call static methods or access static variables. Just write the name of the class followed by the dot and the name of the static member:</p>
-</div>
-<div class="paragraph">
-<p><code>char yourGrade = ReportCard.convertGrades(88);</code></p>
-</div>
-<div class="paragraph">
-<p>Here’s another example: Java has a class <code>Math</code> that contains several dozens of mathematical methods like <code>sqrt()</code>,  <code>sin()</code>, <code>abs()</code> and others. All these methods are <code>static</code> and you do not need to create an instance of the class <code>Math</code> to call them, for example:</p>
-</div>
-<div class="paragraph">
-<p><code>double squareRoot = Math.sqrt(4.0);</code></p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_special-methods-constructors"><a class="anchor" href="#_special-methods-constructors"></a>Special Methods: Constructors</h3>
-<div class="paragraph">
-<p>You&#8217;ve already learned that Java uses the operator <code>new</code> to create instances of  objects in memory, for example:</p>
-</div>
-<div class="paragraph">
-<p><code>Fish myFish = new Fish();</code></p>
-</div>
-<div class="paragraph">
-<p>Parentheses after the word <code>Fish</code> tell us that this class has some method called <code>Fish()</code>. Yes, there are special methods that are  called  <em>constructors</em>, and these methods have the following features:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Constructors are special methods that are called only once  during construction of the object in memory.</p>
-</li>
-<li>
-<p>They must have the same name as the class itself.</p>
-</li>
-<li>
-<p>They do not return a value, and you do not even have to  use  the keyword  <code>void</code> in the constructor’s declaration.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Any class can have more than one constructor. If you do not create a constructor for the class, Java automatically creates one during the compilation time - it&#8217;s so-called <em>default no-argument constructor</em>.  That’s why Java compiler has never complained about the statements  <code>new Fish()</code> or <code>new ReportCard()</code>, even though neither class <code>Fish</code> nor class <code>ReportCard</code> has any explicitly declared constructor.</p>
-</div>
-<div class="paragraph">
-<p>In general, constructors are used to assign initial values to  member variables of the class, for example the next version of class <code>Fish</code> has a one-argument constructor that  just assigns the argument’s value to the instance variable <code>currentDepth</code> for future  use.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public class Fish extends Pet {
-    int currentDepth;
-
-	// This is constructor
-  Fish(int startingPosition){
-		currentDepth=startingPosition;
-	}
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now the class <code>FishMaster</code> can create an instance of the <code>Fish</code> and assign the initial position of the fish. The next example creates an instance of the <code>Fish</code> that is “submerged”  20 feet under the sea:</p>
-</div>
-<div class="paragraph">
-<p><code>Fish myFish = new Fish(20);</code></p>
-</div>
-<div class="paragraph">
-<p>If a constructor with arguments has been defined in a class, you can no longer use the default no-argument constructor. If you’d like to have a constructor without arguments - write one.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_the-keyword-code-this-code"><a class="anchor" href="#_the-keyword-code-this-code"></a>The Keyword <code>this</code></h3>
-<div class="paragraph">
-<p>The keyword <code>this</code> is useful when your code needs to refer to the  instance of the object, where this code is running.  Look at the next code example, which is a slight modification of the previous one:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">class Fish {
-  int currentDepth ;
-
-  Fish(int currentDepth){
-	this.currentDepth = currentDepth;
-  }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Have you noticed that the member variable and the constructor&#8217;s argument have the same name? The keyword <code>this</code> helps to avoid name conflicts. In this code sample <code>this.currentDepth</code> refers to the object&#8217;s member variable <code>currentDepth</code>, while the <code>currentDepth</code> refers to the argument’s value. In other words, the code points at the current instance of the <code>Fish</code> object.</p>
-</div>
-<div id="FIG4-3" class="imageblock">
-<div class="content">
-<img src="./images/fig_4_03.png" alt="fig 4 03">
-</div>
-<div class="title">Figure 3. I&#8217;m this object</div>
-</div>
-<div class="paragraph">
-<p>You’ll see another important example of using the keyword <code>this</code> in Chapter 6 in the section <em>How to Pass Data Between  Classes</em>.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_arrays"><a class="anchor" href="#_arrays"></a>Arrays</h3>
-<div class="paragraph">
-<p>An array is an object that holds several values of the same type - primitives or objects. Let’s say your program has to store the names of four game players. Instead of declaring four different <code>String</code> variables, you can declare one <code>String</code> <em>array</em> that has four <em>elements</em>. Arrays are marked by placing square brackets either after the variable name, or after the data type:</p>
-</div>
-<div class="paragraph">
-<p><code>String [] players;</code></p>
-</div>
-<div class="paragraph">
-<p>or</p>
-</div>
-<div class="paragraph">
-<p><code>String players[];</code></p>
-</div>
-<div class="paragraph">
-<p>These declarations just tell the Java compiler that you are planning to store several text strings in the array <code>players</code>.  Each element has its own index (the position number) starting from zero. The next sample actually creates an instance of an array that can store four <code>String</code> elements and assigns the values to the elements of this array:</p>
-</div>
-<div class="paragraph">
-<p><code>players = new String [4];</code></p>
-</div>
-<div class="paragraph">
-<p><code>players[0] = "David";</code>
-<code>players[1] = "Daniel";</code>
-<code>players[2] = "Anna";</code>
-<code>players[3] = "Gregory";</code></p>
-</div>
-<div class="paragraph">
-<p>You must declare the size of the array before assigning values to its elements. If you do not know in advance how many elements you are going to have, you cannot use arrays, but should look into other classes - Java collections. For example the <code>ArrayList</code> object does not require you to announce the exact number of elements in advance. I&#8217;ll show you some example of using the <code>ArrayList</code> collection in Chapter 10 about data collections.</p>
-</div>
-<div class="paragraph">
-<p>Any array has an attribute called <code>length</code> that stores the  number of elements in this array, and you can always find out how many elements are there:</p>
-</div>
-<div class="paragraph">
-<p><code>int  totalPlayers = players.length;</code></p>
-</div>
-<div class="paragraph">
-<p>If you know all the values that will be stored in the array at the time when you declare it, Java allows you to declare and initialize such array in one shot:</p>
-</div>
-<div class="paragraph">
-<p><code>String [] players = {"David", "Daniel", "Anna", "Gregory"};</code></p>
-</div>
-<div id="FIG4-4" class="imageblock">
-<div class="content">
-<img src="./images/fig_4_04.png" alt="fig 4 04">
-</div>
-<div class="title">Figure 4. The array of playes</div>
-</div>
-<div class="paragraph">
-<p>Imagine that the second player is a winner and you’d like to write the code to congratulate this kid. If the players’ names are stored in an array get its second element:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="Java language-Java">String theWinner = players[1];
-System.out.println("Congratulations, " + theWinner + "!");</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The output from these two lines of code will look like this:</p>
-</div>
-<div class="paragraph">
-<p><em>Congratulations, Daniel!</em></p>
-</div>
-<div class="paragraph">
-<p>Do you know why the second element has the index [1]? Of course you do, because the index of the first element is always [0].</p>
-</div>
-<div class="paragraph">
-<p>The array of players in our example is called <em>one-dimensional array</em>. Imagine the players sitting like ducks in a row. The single dimension is the seat number here. If the players (or game spectators) will occupy several rows, then we&#8217;ll have two dimensions - the row number and a set number within the row. This is the case where we&#8217;d need to declare a two-dimensional array. Java allows creation of <em>multi-dimensional</em> arrays, and I’ll show you how to do this in Chapter 10.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_repeating-actions-with-loops"><a class="anchor" href="#_repeating-actions-with-loops"></a>Repeating Actions with Loops</h3>
-<div class="paragraph">
-<p>A loop is a language construct that allows to repeat the same action multiple times. For example, if we need to print congratulation to several winners, the printing code should be invokes several times <em>in a loop</em>. When you know in advance how many times this action has to be repeated, you can use a loop with a keyword <code>for</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">int  totalPlayers = players.length;
-int counter;
-
-for (counter=0; counter &lt; totalPlayers; counter++){
- String thePlayer = players[counter];
- System.out.println("Congratulations,"+
-                                    thePlayer+"!");
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The above code means the following:</p>
-</div>
-<div class="paragraph">
-<p><em>Print the value of the element from the <code>players</code> array  whose number is the same as the current value of the</em> <code>counter</code>. <em>Start from the element number 0: _ <code>counter=0)</code>, _and  increment the value of the</em> <code>counter</code>  <em>by one:</em> <code>(counter++)</code>. <em>Keep doing this  while the</em> <code>counter</code> <em>is less than</em>  <code>totalPlayers`_:_ `counter&lt;totalPlayers</code>.</p>
-</div>
-<div class="paragraph">
-<p>JVM executes every line between the curly braces and then returns back to the first line of the loop to increment the counter and check the conditional expression.</p>
-</div>
-<div class="paragraph">
-<p>There is another flavor of the <code>for</code> loop that&#8217;s called <em>for each loop</em>. It allows to repeat the same action to every element of the collection without even knowing how many are there. You are basically saying, do this for each element.The for-each loop allows to congratulate players in a more concise manner:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">for (String pl: players){
- System.out.println("Congratulations," + pl +"!");
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can read the above code as follows:</p>
-</div>
-<div class="paragraph">
-<p><em>The variable</em> <code>pl</code> <em>has the same type as the array&#8217;s elements:</em> <code>String</code> <em>. Use this variable as a cursor, point it to each element in the array</em> <code>players</code> <em>one by one and repeatedly execute the code inside the curly brackets for the current element.</em></p>
-</div>
-<div class="paragraph">
-<p>There is another keyword for writing loops - <code>while</code>. In these loops you do not have to declare exactly how many times to repeat the action, but you still need to know when to end the loop.  Let’s see how we can congratulate players using the <code>while</code> loop that will end when the value of the variable <code>counter</code> becomes equal to the value of  <code>totalPlayers</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">int  totalPlayers = players.length;
-int counter=0;
-
-while (counter&lt; totalPlayers){
-  String thePlayer = players[counter];
-  System.out.println("Congratulations, "
-                                + thePlayer + "!");
-  counter++;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In Chapter 9 you’ll learn how to save the data on the disk and how to read the saved data back into computer’s memory. If you read game scores from the disk file, you do not know in advance how many scores were saved there. Most likely you’ll be reading the scores using the <code>while</code> or for-each loop, which don&#8217;t require you to state the number of iterations upfront.</p>
-</div>
-<div class="paragraph">
-<p>You can also use two important keywords with loops: <code>break</code> and <code>continue</code>.</p>
-</div>
-<div class="paragraph">
-<p>As with <code>switch</code> statements, the keyword <code>break</code> is used to jump out of the loop when some particular condition is <code>true</code>. Let’s say we do not want to print more than 3 congratulations, regardless of how many players we’ve got. In the next example, after printing the array elements 0, 1 and 2, the <code>break</code> will make the code go out of the loop and the program will continue from the line after the closing curly brace.</p>
-</div>
-<div class="paragraph">
-<p>The next code sample has the double equal sign <code>==</code> in the <code>if</code> statement. This means that you are comparing the value of the variable <code>counter</code> with number 3.  A single equal sign in the here would mean assignment of the value of 3 to the variable <code>counter</code>.  Placing <code>=</code> in an <code>if</code> statement instead of <code>==</code> is a very tricky mistake, and it can lead to unpredictable program errors that may not be so easy to find.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">int counter =0;
-while (counter&lt; totalPlayers){
-
-  if (counter == 3){
-   break; // Jump out of the loop
-  }
-  String thePlayer = players[counter];
-  System.out.println("Congratulations, "+thePlayer+ "!");
-  counter++;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The keyword <code>continue</code> allows the code to skip some code lines and return back to the beginning of the loop.  Imagine that you want to congratulate everyone but David – the keyword <code>continue</code> will return the program back to the beginning of the loop:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">while (counter&lt; totalPlayers){
-  counter++;
-
-  String thePlayer = players[counter];
-
-  if (thePlayer.equals("David"){
-      continue;
-  }
-  System.out.println("Congratulations, "+ thePlayer+ !");
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>There is yet another flavor of the <code>while</code> loop that starts with the word <code>do</code>, for example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">do {
-   System.out.println("Congratulations, "+
-                         players[counter] + !");
-   counter++;
-
- } while (counter&lt; totalPlayers);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Such loops check an expression <em>after</em> executing the code between curly braces, which means that code in the loop will  be executed <em>at least once</em>.  Loops that start with the keyword <code>while</code> might not be executed at all if the loop expression is false to begin with.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create a new IntelliJ Idea Java project as described in Chapter 2. Name it Chapter4.</p>
-</li>
-<li>
-<p>In the src directory of the project create a new class (the menu File | New) named <em>TemperatureConverter</em>.</p>
-</li>
-<li>
-<p>Add the method <code>convertTemp()</code> so the code of the class looks like this:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public class TemperatureConverter {
-    public static float convertTemp (float temperature,
-                               char convertTo) {
-
+public class Cat implements Talkative {
+    public void talk(){
+        System.out.println("Meow! Meow!");
     }
 }</code></pre>
 </div>
 </div>
-</li>
-<li>
-<p>Write the if statement inside the method <code>convertTemp()</code> to check the value of the argument <code>convertTo</code>. If it&#8217;s <code>F</code>, the temperature has to be converted to Fahrenheit, and if it’s <code>C</code>, convert it to Celsius. Return the result. The method convertTemp() should look like this:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">    public static String convertTemp (float temperature, char convertTo) {
-
-        if (convertTo=='F'){
-             return "The temperature in Fahrenheit is " + (9*temperature/5 + 32);
-         } else if(convertTo=='C') {
-            return "The temperature in Celsius is " + (temperature - 32)*5/9;
-        }  else{
-            return "You can enter either F or C as convertTo argument";
-        }
-    }</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Add a method main() using the shortcut psvm + Tab as explained in Chapter 2. It should look like this:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">    public static void main(String[] args) {
-
-        System.out.println("Converting 21C to Fahrenheit. " +  convertTemp(21,'F'));
-        System.out.println("Converting 70F to Celsius. " +  convertTemp(70,'C'));
-
-    }</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Run the program <code>TemperatureConverter</code> using the IDEA menu Run | Run TemperatureConverter. If you did everything right, you should see the following output on the IDEA console:</p>
 <div class="paragraph">
-<p><em>Converting 21C to Fahrenheit. The temperature in Fahrenheit is 69.8
-Converting 70F to Celsius. The temperature in Celsius is 21.11111</em></p>
+<p>These three classes use the Java keyword <code>implements</code>, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword <code>implements</code> otherwise the Java compiler will complain, "You promised to implement all abstract methods from <code>Talkable</code>, but I dont see them."</p>
 </div>
+<div class="paragraph">
+<p>What if we need to create the class <code>Fish</code> that uses interfaces? Fish don&#8217;t talk. But they swim. Dogs can talk and swim, right?  Why won&#8217;t we declare yet another interface <code>Swimmable</code> with the methods <code>swim()</code> and <code>dive()</code>?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public interface Swimmable {
+
+    public void swim(int howFar);
+
+    public void dive(int howDeep);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s leave parrots alone, but will create a new class <code>Fish</code> and change the class <code>Dog</code> just a little bit:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Fish implements Swimmable {
+    public void swim(int howFar){
+        System.out.println("OK, will swim " + howFar + " feet");
+    }
+    public void dive(int howDeep){
+        System.out.println("OK, will dive " + howDeep + " feet");
+    }
+}
+
+public class Dog implements Talkative, Swimmable {
+    public void talk(){
+        System.out.println("Bark! Bark-bark!");
+    }
+
+    public void swim(int howFar){
+        System.out.println("Will swim about a half of this distance: " + howFar/2 + " feet");
+    }
+
+    public void dive(int howDeep){
+        System.out.println("C'mon, don't ask a dog to dive, please!");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Have you noticed that the class <code>Dog</code> can implement several interfaces. Just make sure to implement in the class each and every abstract method declared in these interfaces. I&#8217;ll tell you more: a class can extend another class and implement interfaces, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">class Fish extends Pet implements Swimmable{
+
+  // your code implementing swim(), dive()
+  // and any other methods goes here
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To tell you the truth, I don&#8217;t like the fact that I had to implement the method <code>dive()</code> in the class <code>Dog</code>. The dogs I&#8217;ve seen can&#8217;t dive. Can the interface <code>Swimmable</code> be changed so I&#8217;m not forced to write the implementation of the method <code>dive()</code> in the class <code>Dog</code>? Yes, it can. Java 8 introduced a new keyword <code>default</code>. Now you&#8217;re allowed to write a default implementation of a method in the interface. Such a method won&#8217;t be considered abstract anymore, and you won&#8217;t be forced to implement it in your class. Let&#8217;s do it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public interface Swimmable {
+
+    public void swim(int howFar);
+
+    public default void dive(int howDeep){
+        System.out.println("Can't dive, sorry");
+    };
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now the class <code>Dog</code> doesn&#8217;t have to implement the method <code>dive()</code>, and the compiler won&#8217;t complain.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Dog implements Talkative, Swimmable {
+    public void talk(){
+        System.out.println("Bark! Bark-bark!");
+    }
+
+    public void swim(int howFar){
+        System.out.println("Will swim about a half of this distance: " + howFar/2 + " feet");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is no need to change the class <code>Fish</code> - it has implemented the method <code>dive()</code>, which will override the default implementation of the <code>dive()</code> in <code>Swimmable</code>. You can still call the method <code>dive()</code> on the instance of the <code>Dog</code> class - the default implementation will be invoked. The next class <code>PetMaster</code> will demonstrate this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class PetMaster {
+    public static void main(String[] args) {
+
+        Dog myDog = new Dog();
+        myDog.talk();
+        myDog.swim(7);
+        myDog.dive(2);
+
+        Fish myFish = new Fish();
+        myFish.swim(50);
+        myFish.dive(20);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run this program and you&#8217;ll see the following output on the console:</p>
+</div>
+<div class="paragraph">
+<p><em>Bark! Bark-bark!</em>
+<em>Will swim about a half of this distance: 3 feet</em>
+<em>Can&#8217;t dive, sorry</em>
+<em>OK, will swim 50 feet</em>
+<em>OK, will dive 20 feet</em></p>
+</div>
+<div class="paragraph">
+<p>Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other interfaces methods. You can&#8217;t override interface static methods in classes.</p>
+</div>
+<div class="sect3">
+<h4 id="_functional-interfaces"><a class="anchor" href="#_functional-interfaces"></a>Functional Interfaces</h4>
+<div class="paragraph">
+<p>If an interface has only one abstract method declared (default and static methods don&#8217;t count) it&#8217;s called <em>functional interface</em>. <code>Talkative</code> is an example of a functional interface. Java 8 introduced a special way of implementing functional interfaces using lambda expressions.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lambda-expressions"><a class="anchor" href="#_lambda-expressions"></a>Lambda Expressions</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+IntelliJ IDEA supports the syntax of lambda expressions. Just make sure to visit the menu File | Project Structure and select the project language level to be 8.0.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Part 1. In this part you&#8217;ll do an exercise to prove that you understand Java interfaces.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a new IDEA project</p>
 </li>
 <li>
-<p>Do a little research to change this program so it always prints the temperature with two digits after the decimal point. Study Oracle&#8217;s tutorial about formatting numeric output: <a href="http://goo.gl/3riLIZ">http://goo.gl/3riLIZ</a>.</p>
+<p>Recreate the final from versions of classes <code>Dog</code>, <code>Fish</code> and interfaces <code>Swimmable</code> and <code>Talkable</code> from the section Interfaces.</p>
+</li>
+<li>
+<p>Create a new class <code>Pet</code> with a constructor that will take a name of the pet (a <code>String</code>) as an argument.</p>
+</li>
+<li>
+<p>Change the declarations of the classes <code>Dog</code> and <code>Fish</code> so each of them extends <code>Pet</code> while implementing <code>Talkable</code> and <code>Swimable</code> interfaces.</p>
+</li>
+<li>
+<p>Create the class <code>PetMaster</code> from the section Interfaces, but give pets names while instantiating <code>Dog</code> and <code>Fish</code>.</p>
+</li>
+<li>
+<p>Modify implementations of the methods <code>talk()</code> and <code>swim()</code> so they would print the pet&#8217;s name as a part of the output in <code>System.out.println()</code>.</p>
+</li>
+<li>
+<p>Run and test <code>PetMaster</code>.</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>Part 2. In this part you&#8217;ll do an exercise to prove that you understand Java lambda expressions.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-13 11:37:52 EDT
+Last updated 2014-08-13 16:58:14 EDT
 </div>
 </div>
 </body>
