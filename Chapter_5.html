@@ -574,7 +574,7 @@ public class Cat implements Talkative {
 </div>
 </div>
 <div class="paragraph">
-<p>These three classes use the Java keyword <code>implements</code>, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword <code>implements</code> otherwise the Java compiler will complain, "You promised to implement all abstract methods from <code>Talkable</code>, but I dont see them."</p>
+<p>These three classes use the Java keyword <code>implements</code>, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword <code>implements</code> otherwise the Java compiler will complain, "You promised to implement all abstract methods from <code>Talkable</code>, but I don&#8217;t see them."</p>
 </div>
 <div class="paragraph">
 <p>What if we need to create the class <code>Fish</code> that uses interfaces? Fish don&#8217;t talk. But they swim. Dogs can talk and swim, right?  Why won&#8217;t we declare yet another interface <code>Swimmable</code> with the methods <code>swim()</code> and <code>dive()</code>?</p>
@@ -770,8 +770,21 @@ import java.time.Month;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Packages correspond to directories and subdirectories on the disk. If you see a full class name <code>java.time.LocalDate</code> it means that this class was created in the subdirectory <em>time</em> of the directory <em>java</em>.
-From now on we&#8217;ll use packages and import statement in every chapter of this book.</p>
+<p>Packages correspond to directories and subdirectories on the disk. If you see a full class name <code>java.time.LocalDate</code> it means that this class was created in the subdirectory <em>time</em> of the directory <em>java</em>.</p>
+</div>
+<div class="paragraph">
+<p>From now on we&#8217;ll use packages and import statement in every chapter of this book.</p>
+</div>
+<div class="paragraph">
+<p>One last thing: Lazy kids use the wild cards in import statements. Instead of writing one import statement per class, they would use an asterisk:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.time.*;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This means that definitions needed for my program are located in the package <code>java.time</code>. Of course, writing one import statement instead of several ones looks appealing, but the readability of the program suffers. Packages can have dozens of classes and it&#8217;s better to explicitly state which classes your program uses.</p>
 </div>
 </div>
 </div>
@@ -779,13 +792,32 @@ From now on we&#8217;ll use packages and import statement in every chapter of th
 <div class="sect3">
 <h4 id="_final-static-variables-in-interfaces"><a class="anchor" href="#_final-static-variables-in-interfaces"></a>Final Static Variables in Interfaces</h4>
 <div class="paragraph">
-<p>Beside method declarations, default and static methods you can add <code>static final</code> variables to the interface declaration.</p>
+<p>Beside method declarations, default and static methods you can add <code>static final</code> variables to the interface declaration.  Such variables can be used by the code inside the interface or in the classes that implements it. For example, the interface <code>Swimmable</code> can define the maximum depth allowed for diving. Here&#8217;s yet another version of the interface <code>Swimmable</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public interface Swimmable {
+
+    static final MAX_DEPTH = 10; // in feet
+
+    public void swim(int howFar);
+
+    public default void dive(int howDeep){
+        if (howDeep &gt; MAX_DEPTH){
+           System.out.println("Can't dive, sorry");
+        }
+    };
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a class implements <code>Swimmable</code> it can use the value of <code>MAX_DEPTH</code> too.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_functional-interfaces"><a class="anchor" href="#_functional-interfaces"></a>Functional Interfaces</h4>
 <div class="paragraph">
-<p>If an interface has only one abstract method declared (default and static methods don&#8217;t count) it&#8217;s called <em>functional interface</em>. <code>Talkative</code> is an example of a functional interface. Java 8 introduced a special way of implementing functional interfaces using lambda expressions.</p>
+<p>If an interface has only one abstract method declared (default and static methods don&#8217;t count) it&#8217;s called <em>functional interface</em>. <code>Talkative</code> is an example of a functional interface. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we&#8217;ll discuss next.</p>
 </div>
 </div>
 </div>
@@ -845,7 +877,7 @@ IntelliJ IDEA supports the syntax of lambda expressions. Just make sure to visit
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-13 22:03:36 EDT
+Last updated 2014-08-14 08:55:44 EDT
 </div>
 </div>
 </body>
