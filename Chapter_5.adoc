@@ -50,7 +50,7 @@ public class Cat implements Talkative {
 }
 ----
 
-These three classes use the Java keyword `implements`, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword `implements` otherwise the Java compiler will complain, "You promised to implement all abstract methods from `Talkable`, but I dont see them." 
+These three classes use the Java keyword `implements`, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword `implements` otherwise the Java compiler will complain, "You promised to implement all abstract methods from `Talkable`, but I don't see them." 
 
 What if we need to create the class `Fish` that uses interfaces? Fish don't talk. But they swim. Dogs can talk and swim, right?  Why won't we declare yet another interface `Swimmable` with the methods `swim()` and `dive()`?
 
@@ -224,19 +224,47 @@ Now you can use just the class name without the need to specify the package name
 [source, java]
 ----
 LocalDate todaysDate = LocalDate.now();
+---- 
+
+Packages correspond to directories and subdirectories on the disk. If you see a full class name `java.time.LocalDate` it means that this class was created in the subdirectory _time_ of the directory _java_. 
+
+From now on we'll use packages and import statement in every chapter of this book. 
+
+One last thing: Lazy kids use the wild cards in import statements. Instead of writing one import statement per class, they would use an asterisk:
+
+[source, java]
+----
+import java.time.*;
 ----
 
-Packages correspond to directories and subdirectories on the disk. If you see a full class name `java.time.LocalDate` it means that this class was created in the subdirectory _time_ of the directory _java_.  
-From now on we'll use packages and import statement in every chapter of this book. 
+This means that definitions needed for my program are located in the package `java.time`. Of course, writing one import statement instead of several ones looks appealing, but the readability of the program suffers. Packages can have dozens of classes and it's better to explicitly state which classes your program uses.  
 *******************************
 
 ==== Final Static Variables in Interfaces
 
-Beside method declarations, default and static methods you can add `static final` variables to the interface declaration.  
+Beside method declarations, default and static methods you can add `static final` variables to the interface declaration.  Such variables can be used by the code inside the interface or in the classes that implements it. For example, the interface `Swimmable` can define the maximum depth allowed for diving. Here's yet another version of the interface `Swimmable`:
+
+[source, java]
+----
+public interface Swimmable {
+    
+    static final MAX_DEPTH = 10; // in feet
+
+    public void swim(int howFar);
+
+    public default void dive(int howDeep){
+        if (howDeep > MAX_DEPTH){
+           System.out.println("Can't dive, sorry");
+        }
+    };
+}    
+----
+
+If a class implements `Swimmable` it can use the value of `MAX_DEPTH` too.
 
 ==== Functional Interfaces
 
-If an interface has only one abstract method declared (default and static methods don't count) it's called _functional interface_. `Talkative` is an example of a functional interface. Java 8 introduced a special way of implementing functional interfaces using lambda expressions. 
+If an interface has only one abstract method declared (default and static methods don't count) it's called _functional interface_. `Talkative` is an example of a functional interface. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we'll discuss next. 
 
 === Lambda Expressions
 
