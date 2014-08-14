@@ -493,6 +493,9 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_java-interfaces">Java Interfaces</a></li>
 <li>
 <ul class="sectlevel3">
+<li><a href="#_default-methods-in-interfaces">Default Methods in Interfaces</a></li>
+<li><a href="#_static-methods-in-interfaces">Static Methods in Interfaces</a></li>
+<li><a href="#_final-static-variables-in-interfaces">Final Static Variables in Interfaces</a></li>
 <li><a href="#_functional-interfaces">Functional Interfaces</a></li>
 </ul>
 </li>
@@ -526,7 +529,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 </div>
 <div class="paragraph">
-<p>Since the method talk is not implemented here, it&#8217;s called abstract.</p>
+<p>Since the method <code>talk()</code> is not implemented here, it&#8217;s called <em>abstract</em>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -627,6 +630,8 @@ public class Dog implements Talkative, Swimmable {
 }</code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_default-methods-in-interfaces"><a class="anchor" href="#_default-methods-in-interfaces"></a>Default Methods in Interfaces</h4>
 <div class="paragraph">
 <p>To tell you the truth, I don&#8217;t like the fact that I had to implement the method <code>dive()</code> in the class <code>Dog</code>. The dogs I&#8217;ve seen can&#8217;t dive. Can the interface <code>Swimmable</code> be changed so I&#8217;m not forced to write the implementation of the method <code>dive()</code> in the class <code>Dog</code>? Yes, it can. Java 8 introduced a new keyword <code>default</code>. Now you&#8217;re allowed to write a default implementation of a method in the interface. Such a method won&#8217;t be considered abstract anymore, and you won&#8217;t be forced to implement it in your class. Let&#8217;s do it.</p>
 </div>
@@ -688,8 +693,94 @@ public class Dog implements Talkative, Swimmable {
 <em>OK, will swim 50 feet</em>
 <em>OK, will dive 20 feet</em></p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_static-methods-in-interfaces"><a class="anchor" href="#_static-methods-in-interfaces"></a>Static Methods in Interfaces</h4>
 <div class="paragraph">
-<p>Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other interfaces methods. You can&#8217;t override interface static methods in classes.</p>
+<p>Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. You can&#8217;t override the interface&#8217;s static methods in classes.</p>
+</div>
+<div class="paragraph">
+<p>The following example illustrates the use of a static method in the interface. in this version the default implementation of the method <code>dive()</code> won&#8217;t just reject an offer to swim, but will check the current month: if it&#8217;s June, July, or August then diving is allowed because the water should be warm.</p>
+</div>
+<div class="paragraph">
+<p>The modify version of the <code>Swimmable</code> interface includes a static method <code>isSummer()</code> that checks the current month and returns <code>true</code> if it&#8217;s June, July, or August. I&#8217;m using the Java Date and Time API here. The defaule method <code>dive()</code> calls the static method <code>isSummer()</code> and either agrees or disagrees to dive depending on the time of the year.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.time.LocalDate;
+import java.time.Month;
+
+public interface Swimmable {
+
+    public void swim(int howFar);
+
+    public default void dive(int howDeep){
+
+        if (isSummer()){
+            System.out.println("OK, will dive. The water should be warm.");
+        } else {
+            System.out.println("Can't dive, sorry. The water's cold for diving.");
+        }
+    };
+
+    // Check if it's summer now
+     static boolean isSummer(){
+        Month month = LocalDate.now().getMonth();
+        if (month == Month.JUNE || month == Month.JULY || month == Month.AUGUST){
+            return true;
+        } else{
+            return false;
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The method <code>isSummer()</code> uses the class <code>LocalTime</code> to get <code>Month</code>, which has a data type <code>enum</code> that you haven&#8217;t used so far. It&#8217;s a special type to represent a fixed number of some values, like months in this case. There are only 12 months, and Java Date and Time API listed them by name in the <code>enum</code> called <code>Month</code>. The only values that are allowed here are <code>Month.JANUARY</code> to <code>Month.DECEMBER</code>. Using enums makes the programs more readable - it&#8217;s easier to deal with months by names than by numbers.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Packages and import statements</div>
+<div class="paragraph">
+<p>Java comes with many useful classes that are organized in packages. Some packages include classes responsible for drawing, while other packages have classes to work with the Internet, and so on. For example the class <code>LocalDate</code> is located in the package called <code>java.time</code>, and the full name of the class <code>LocalDate</code> is <code>java.time.LocalDate</code>.</p>
+</div>
+<div class="paragraph">
+<p>To let the compiler know where the class <code>LocalDate</code> is located you could have specify the full class name, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">java.time.LocalDate todaysDate = java.time.LocalDate.now();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But this syntax is difficult to read so we use the <code>import</code> statements above the class declaration to let the compiler know the location of the class, interface, or enumeration. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.time.LocalDate;
+import java.time.Month;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can use just the class name without the need to specify the package name:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">LocalDate todaysDate = LocalDate.now();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Packages correspond to directories and subdirectories on the disk. If you see a full class name <code>java.time.LocalDate</code> it means that this class was created in the subdirectory <em>time</em> of the directory <em>java</em>.
+From now on we&#8217;ll use packages and import statement in every chapter of this book.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_final-static-variables-in-interfaces"><a class="anchor" href="#_final-static-variables-in-interfaces"></a>Final Static Variables in Interfaces</h4>
+<div class="paragraph">
+<p>Beside method declarations, default and static methods you can add <code>static final</code> variables to the interface declaration.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_functional-interfaces"><a class="anchor" href="#_functional-interfaces"></a>Functional Interfaces</h4>
@@ -754,7 +845,7 @@ IntelliJ IDEA supports the syntax of lambda expressions. Just make sure to visit
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-13 16:58:14 EDT
+Last updated 2014-08-13 22:03:36 EDT
 </div>
 </div>
 </body>
