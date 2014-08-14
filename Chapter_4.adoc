@@ -421,7 +421,7 @@ If you know all the values that will be stored in the array at the time when you
 `String [] players = {"David", "Daniel", "Anna", "Gregory"};`
 
 [[FIG4-4]]
-.The array of playes
+.The array of players
 image::images/fig_4_04.png[]
 
 Imagine that the second player is a winner and you’d like to write the code to congratulate this kid. If the players’ names are stored in an array get its second element:

@@ -216,7 +216,7 @@ Java also has a special keyword `final`, and if it’s used in a declaration of 
 
 ==== How Much Memory is Needed 
 
-Variables are stored in computer's memory, and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), bygabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists or eight bits.
+Variables are stored in computer's memory, and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), gigabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists or eight bits.
 
 A `char` variable occupies two bytes in memory.
 
@@ -507,4 +507,4 @@ The method `drive()` has one argument - the driving time. The method has to retu
 +
 Be creative, print some funny messages from the method `drive()`!
 
-6. Create an instance of the class `JamesBondCar` in the `main()` method of `CarOwner`. Re-run the program `CarOwner` to see that it calls the overriden method `drive()`.
+6. Create an instance of the class `JamesBondCar` in the `main()` method of `CarOwner`. Re-run the program `CarOwner` to see that it calls the overridden method `drive()`.
