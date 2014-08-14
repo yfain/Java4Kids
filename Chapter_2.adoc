@@ -121,7 +121,7 @@ As your project become larger, it’ll have several files and compiler may catch
 .The Problems View
 image::images/fig_2_10.png[]
 
-In our case we have only one compiler error. Java reached the end of file while parsing (trying to understand your code), and something could not be found - the curly brace, of course. But what this misterious _(8,6)_ means? The error was found in the line number 8 around the sixth character from the left. To see line numbers, right-click on the gray vertical bar to the left of the code editor and select the option Show Line Numbers. Now it's easier to map the error messages to the lines in the source code:
+In our case we have only one compiler error. Java reached the end of file while parsing (trying to understand your code), and something could not be found - the curly brace, of course. But what this mysterious _(8,6)_ means? The error was found in the line number 8 around the sixth character from the left. To see line numbers, right-click on the gray vertical bar to the left of the code editor and select the option Show Line Numbers. Now it's easier to map the error messages to the lines in the source code:
 
 [[FIG2-11]]
 .Displaying the line numbers
@@ -182,7 +182,7 @@ We call it a _dot notation_. We write _class_name.method_name_ or _variable_name
 
 `PingPongGame.saveScore("Dave", 3);`
 
-In this example, the argumets may be given to the method for some kind of processing like saving the score on the disk. Since the name Dave was placed in parentheses, we can guess  that the type of the first argument was `String`, which is used for texts. The second arguments is clearly of a numeric type but we can tell what's the exact type only after reading the declaration of the method `saveScore` inside the source code of the class `PingPongGame`. 
+In this example, the arguments may be given to the method for some kind of processing like saving the score on the disk. Since the name Dave was placed in parentheses, we can guess  that the type of the first argument was `String`, which is used for texts. The second arguments is clearly of a numeric type but we can tell what's the exact type only after reading the declaration of the method `saveScore` inside the source code of the class `PingPongGame`. 
 
 In the next chapter we'll spend a lot more time seeing what Java classes consist of. Meanwhile do some reading and coding. Every chapter will have a regular assignment in the section Practice. If you find it too easy, do the assignment from the section Practice for Smarty Pants. 
   
