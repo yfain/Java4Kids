@@ -154,11 +154,14 @@ public class PetMaster {
 ----
 Run this program and you'll see the following output on the console:
 
-_Bark! Bark-bark!_
-_Will swim about a half of this distance: 3 feet_
-_Can't dive, sorry_
-_OK, will swim 50 feet_
-_OK, will dive 20 feet_
+[source, java]
+----
+_Bark! Bark-bark!
+Will swim about a half of this distance: 3 feet
+Can't dive, sorry
+OK, will swim 50 feet
+OK, will dive 20 feet
+----
 
 ==== Static Methods in Interfaces
 
@@ -228,7 +231,17 @@ LocalDate todaysDate = LocalDate.now();
 
 Packages correspond to directories and subdirectories on the disk. If you see a full class name `java.time.LocalDate` it means that this class was created in the subdirectory _time_ of the directory _java_. 
 
-From now on we'll use packages and import statement in every chapter of this book. 
+From now on we'll use packages and import statement in every chapter of this book. If you want to place your class into a package, just create a subdirectory (e.g. _pets_) and add a `package` statement on the top of your class definition, for example:
+
+[source, java]
+----
+package pets;
+
+class Dog{
+	// your code goes here
+}
+
+---- 
 
 One last thing: Lazy kids use the wild cards in import statements. Instead of writing one import statement per class, they would use an asterisk:
 
@@ -238,6 +251,8 @@ import java.time.*;
 ----
 
 This means that definitions needed for my program are located in the package `java.time`. Of course, writing one import statement instead of several ones looks appealing, but the readability of the program suffers. Packages can have dozens of classes and it's better to explicitly state which classes your program uses.  
+
+
 *******************************
 
 ==== Final Static Variables in Interfaces
@@ -264,10 +279,15 @@ If a class implements `Swimmable` it can use the value of `MAX_DEPTH` too.
 
 ==== Functional Interfaces
 
-If an interface has only one abstract method declared (default and static methods don't count) it's called _functional interface_. `Talkative` is an example of a functional interface. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we'll discuss next. 
+If an interface has only one abstract method declared (default and static methods don't count) it's called _functional interface_. Both `Talkative` and `Swimmable` are  examples of a functional interface - each has only one abstract method. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we'll discuss next. 
 
 === Lambda Expressions
 
+Up till now, to invoke a method we've been creating classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to write a method wrapped it into a class.
+
+A lambda expression is an anonymous function that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java only you could pass a value to a method only if this value is an object or a primitive. But now a function (a piece of code) to execute becomes a value that can be passed around. 
+
+Let's say I want to write a program that will add two numbers and print a result. 
 
 
 NOTE: IntelliJ IDEA supports the syntax of lambda expressions. Just make sure to visit the menu File | Project Structure and select the project language level to be 8.0.
