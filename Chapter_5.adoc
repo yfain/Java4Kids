@@ -19,7 +19,7 @@ interface Talkable{
 }
 ----
 
-Since the method talk is not implemented here, it's called abstract. 
+Since the method `talk()` is not implemented here, it's called _abstract_. 
 
 NOTE: To create a new interface in IDEA, select the menu File | New | Java class and select Interface in the Kind box.
 
@@ -103,6 +103,8 @@ class Fish extends Pet implements Swimmable{
 }
 ----
 
+==== Default Methods in Interfaces
+
 To tell you the truth, I don't like the fact that I had to implement the method `dive()` in the class `Dog`. The dogs I've seen can't dive. Can the interface `Swimmable` be changed so I'm not forced to write the implementation of the method `dive()` in the class `Dog`? Yes, it can. Java 8 introduced a new keyword `default`. Now you're allowed to write a default implementation of a method in the interface. Such a method won't be considered abstract anymore, and you won't be forced to implement it in your class. Let's do it.
 
 [source, java]
@@ -158,9 +160,79 @@ _Can't dive, sorry_
 _OK, will swim 50 feet_
 _OK, will dive 20 feet_
 
-Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other interfaces methods. You can't override interface static methods in classes.
+==== Static Methods in Interfaces
 
+Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. You can't override the interface's static methods in classes.
 
+The following example illustrates the use of a static method in the interface. in this version the default implementation of the method `dive()` won't just reject an offer to swim, but will check the current month: if it's June, July, or August then diving is allowed because the water should be warm. 
+
+The modify version of the `Swimmable` interface includes a static method `isSummer()` that checks the current month and returns `true` if it's June, July, or August. I'm using the Java Date and Time API here. The defaule method `dive()` calls the static method `isSummer()` and either agrees or disagrees to dive depending on the time of the year.
+
+[source, java]
+----
+import java.time.LocalDate;
+import java.time.Month;
+
+public interface Swimmable {
+
+    public void swim(int howFar);
+
+    public default void dive(int howDeep){
+
+        if (isSummer()){
+            System.out.println("OK, will dive. The water should be warm.");
+        } else {
+            System.out.println("Can't dive, sorry. The water's cold for diving.");
+        }
+    };
+
+    // Check if it's summer now
+     static boolean isSummer(){
+        Month month = LocalDate.now().getMonth();
+        if (month == Month.JUNE || month == Month.JULY || month == Month.AUGUST){
+            return true;
+        } else{
+            return false;
+        }
+    }
+}
+----
+
+The method `isSummer()` uses the class `LocalTime` to get `Month`, which has a data type `enum` that you haven't used so far. It's a special type to represent a fixed number of some values, like months in this case. There are only 12 months, and Java Date and Time API listed them by name in the `enum` called `Month`. The only values that are allowed here are `Month.JANUARY` to `Month.DECEMBER`. Using enums makes the programs more readable - it's easier to deal with months by names than by numbers.
+
+.Packages and import statements
+*******************************
+Java comes with many useful classes that are organized in packages. Some packages include classes responsible for drawing, while other packages have classes to work with the Internet, and so on. For example the class `LocalDate` is located in the package called `java.time`, and the full name of the class `LocalDate` is `java.time.LocalDate`.  
+
+To let the compiler know where the class `LocalDate` is located you could have specify the full class name, for example:
+
+[source, java]
+----
+java.time.LocalDate todaysDate = java.time.LocalDate.now();
+----
+
+But this syntax is difficult to read so we use the `import` statements above the class declaration to let the compiler know the location of the class, interface, or enumeration. For example:
+
+[source, java]
+----
+import java.time.LocalDate;
+import java.time.Month;
+----
+
+Now you can use just the class name without the need to specify the package name:
+
+[source, java]
+----
+LocalDate todaysDate = LocalDate.now();
+----
+
+Packages correspond to directories and subdirectories on the disk. If you see a full class name `java.time.LocalDate` it means that this class was created in the subdirectory _time_ of the directory _java_.  
+From now on we'll use packages and import statement in every chapter of this book. 
+*******************************
+
+==== Final Static Variables in Interfaces
+
+Beside method declarations, default and static methods you can add `static final` variables to the interface declaration.  
 
 ==== Functional Interfaces
 
