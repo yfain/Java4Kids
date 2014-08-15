@@ -2,11 +2,11 @@
 :toclevels: 4
 :imagesdir: ./
 
-== Chapter 5. Interfaces, Lambdas, and Abstract Classes
+== Chapter 5. Interfaces, Lambdas, and Anonymous Classes
 
-In this chapter we'll focus on discussing how you can program behavior in Java.  Remember, classes have attributes (e.g. color, number of doors) and can do stuff (e.g. eat, sleep, or dive). There is a special group of programming languages that are called functional (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like `eat()`, `sleep()`, or `dive()`, and these functions can live their independent lives and don't have to be declared in classes.
+In this chapter I'll focus on discussing how you can program _behavior_ in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called _functional_ (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like `eat()`, `sleep()`, or `dive()`, and these functions can live their independent lives and don't have to be declared in classes. In _object-oriented_ languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. 
 
-On the other hand, in object-oriented languages behavior is programmed in methods defined in classes. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. So far I was declaring and implementing the behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation.
+So far I was declaring and implementing behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation. Such separation can be done using _interfaces_.
 
 === Java Interfaces
 
@@ -27,7 +27,7 @@ NOTE: To create a new interface in IDEA, select the menu File | New | Java class
 .Creating an interface in IDEA
 image::images/fig_5_01.png[]
 
-You should be thinking, "What's the point of simply declaring a method without implementing it?" The thing is that more than one class can exhibit the same behavior. For example, a dog, a cat, and a parrot can "talk". But they "implement it" differently. A parrot can repeat words, while dogs implement this behavior differently - they bark. Cats talk by meowing. Accordingly you can declare three classes that will _implement_ `Talkative` interface differently, as in three classes below:
+You should be thinking, "What's the point of simply declaring a method without implementing it?" The thing is that more than one class can exhibit the same behavior. For example, a dog, a cat, and a parrot can "talk". But they "implement it" differently. A parrot can repeat words, while dogs bark. Cats talk by meowing. Accordingly you can declare three classes that will _implement_ `Talkative` interface differently, as shown below:
 
 [source, java]
 ----
@@ -50,7 +50,7 @@ public class Cat implements Talkative {
 }
 ----
 
-These three classes use the Java keyword `implements`, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword `implements` otherwise the Java compiler will complain, "You promised to implement all abstract methods from `Talkable`, but I don't see them." 
+These three classes use the Java keyword `implements`, which means they promise to implement all abstract methods in the interface(s) listed after the keyword `implements` otherwise the Java compiler will complain: "You promised to implement all abstract methods from `Talkable`, where are they? Keep the promise!" 
 
 What if we need to create the class `Fish` that uses interfaces? Fish don't talk. But they swim. Dogs can talk and swim, right?  Why won't we declare yet another interface `Swimmable` with the methods `swim()` and `dive()`?
 
@@ -64,7 +64,7 @@ public interface Swimmable {
 }
 ----
 
-Let's leave parrots alone, but will create a new class `Fish` and change the class `Dog` just a little bit:
+Now let's leave the parrots alone. Let's create a new class `Fish` and change the class `Dog` just a little bit. The `Fish` will implement `Swimmable` and the `Dog` will implement two interfaces:
 
 [source, java]
 ----
@@ -92,7 +92,7 @@ public class Dog implements Talkative, Swimmable {
 }
 ----
 
-Have you noticed that the class `Dog` can implement several interfaces. Just make sure to implement in the class each and every abstract method declared in these interfaces. I'll tell you more: a class can extend another class and implement interfaces, for example:
+When a class implements several interfaces, make sure to implement each and every abstract method declared in these interfaces. I'll tell you more: a class can extend another class and implement interfaces at the same time, for example:
 
 [source, java]
 ----
@@ -103,9 +103,11 @@ class Fish extends Pet implements Swimmable{
 }
 ----
 
+NOTE: Java includes several interfaces that don't declare any methods (e.g. `Serializable). They are called _marker interfaces_. You don't need to implement any methods in classes that implement marker interfaces. They are used by the Java compiler internally to generate the byte code in a special way.
+
 ==== Default Methods in Interfaces
 
-To tell you the truth, I don't like the fact that I had to implement the method `dive()` in the class `Dog`. The dogs I've seen can't dive. Can the interface `Swimmable` be changed so I'm not forced to write the implementation of the method `dive()` in the class `Dog`? Yes, it can. Java 8 introduced a new keyword `default`. Now you're allowed to write a default implementation of a method in the interface. Such a method won't be considered abstract anymore, and you won't be forced to implement it in your class. Let's do it.
+To tell you the truth, I don't like the fact that I had to implement the method `dive()` in the class `Dog`. The dogs I've seen can't dive. Can the interface `Swimmable` be changed so I'm not forced to write the implementation of the method `dive()` in the class `Dog`? Yes, it can. Java 8 introduced a new keyword `default`. Now you're allowed to write a default implementation of a method in the interface. Such a method won't be considered abstract anymore, and you won't be forced to implement it in your class. Let's add a default implementation of the method `dive()` to `Swimmable`.
 
 [source, java]
 ----
@@ -119,7 +121,7 @@ public interface Swimmable {
 }    
 ----
 
-Now the class `Dog` doesn't have to implement the method `dive()`, and the compiler won't complain.
+Now the class `Dog` doesn't have to implement the method `dive()` - the compiler will see a default implementation and won't complain. The next version of the class `Dog` implements only the method `swim()` from `Swimmable`.
 
 [source, java]
 ----
@@ -134,7 +136,7 @@ public class Dog implements Talkative, Swimmable {
 }
 ----
 
-There is no need to change the class `Fish` - it has implemented the method `dive()`, which will override the default implementation of the `dive()` in `Swimmable`. You can still call the method `dive()` on the instance of the `Dog` class - the default implementation will be invoked. The next class `PetMaster` will demonstrate this.
+There is no need to change the class `Fish`. It also implements `Swimmable`, but has its own version of the method `dive()`, which will override the default implementation of the `dive()` from `Swimmable`. You can still call the method `dive()` on the instance of the `Dog` class - the default implementation will be invoked. The next class `PetMaster` will demonstrate this.
 
 [source, java]
 ----
@@ -144,7 +146,7 @@ public class PetMaster {
         Dog myDog = new Dog();
         myDog.talk();
         myDog.swim(7);
-        myDog.dive(2);
+        myDog.dive(2);  // will use default method
 
         Fish myFish = new Fish();
         myFish.swim(50);
@@ -163,13 +165,13 @@ OK, will swim 50 feet
 OK, will dive 20 feet
 ----
 
+The message "Can't dive, sorry" was printed by the default method `dive()` from the interface `Swimmable`.
+
 ==== Static Methods in Interfaces
 
-Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. You can't override the interface's static methods in classes.
+Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. The following example illustrates the use of a static method in the interface. Now the default implementation of the method `dive()` won't just reject an offer to swim, but will check the current month: if it's June, July, or August then diving is allowed because the water should be warm. 
 
-The following example illustrates the use of a static method in the interface. in this version the default implementation of the method `dive()` won't just reject an offer to swim, but will check the current month: if it's June, July, or August then diving is allowed because the water should be warm. 
-
-The modify version of the `Swimmable` interface includes a static method `isSummer()` that checks the current month and returns `true` if it's June, July, or August. I'm using the Java Date and Time API here. The defaule method `dive()` calls the static method `isSummer()` and either agrees or disagrees to dive depending on the time of the year.
+The modified version of the `Swimmable` interface includes a static method `isSummer()` that checks the current month and returns `true` if it's June, July, or August. I'm using the Java Date and Time API here. The default method `dive()` calls the static method `isSummer()` and either agrees or disagrees to dive depending on the time of the year.
 
 [source, java]
 ----
@@ -201,13 +203,13 @@ public interface Swimmable {
 }
 ----
 
-The method `isSummer()` uses the class `LocalTime` to get `Month`, which has a data type `enum` that you haven't used so far. It's a special type to represent a fixed number of some values, like months in this case. There are only 12 months, and Java Date and Time API listed them by name in the `enum` called `Month`. The only values that are allowed here are `Month.JANUARY` to `Month.DECEMBER`. Using enums makes the programs more readable - it's easier to deal with months by names than by numbers.
+The method `isSummer()` uses the class `LocalTime` to get `Month`, which has a data type `enum` that I haven't used so far. It's a special data type to represent a fixed number of some values, like months in this case. There are only 12 months, and Java Date and Time API listed them by name in the `enum` called `Month`. The only values that are allowed here are `Month.JANUARY` to `Month.DECEMBER`. Using enums makes the programs more readable - it's easier to deal with months by names than by numbers.
 
 .Packages and import statements
 *******************************
 Java comes with many useful classes that are organized in packages. Some packages include classes responsible for drawing, while other packages have classes to work with the Internet, and so on. For example the class `LocalDate` is located in the package called `java.time`, and the full name of the class `LocalDate` is `java.time.LocalDate`.  
 
-To let the compiler know where the class `LocalDate` is located you could have specify the full class name, for example:
+To let the compiler know where the class `LocalDate` is located you could specify the full class name, for example:
 
 [source, java]
 ----
@@ -219,7 +221,6 @@ But this syntax is difficult to read so we use the `import` statements above the
 [source, java]
 ----
 import java.time.LocalDate;
-import java.time.Month;
 ----
 
 Now you can use just the class name without the need to specify the package name:
@@ -229,7 +230,7 @@ Now you can use just the class name without the need to specify the package name
 LocalDate todaysDate = LocalDate.now();
 ---- 
 
-Packages correspond to directories and subdirectories on the disk. If you see a full class name `java.time.LocalDate` it means that this class was created in the subdirectory _time_ of the directory _java_. 
+The packages are stored in directories and subdirectories on the disk. If you see a full class name `java.time.LocalDate` it means that this class was originally created in the subdirectory _time_ of the directory _java_. 
 
 From now on we'll use packages and import statement in every chapter of this book. If you want to place your class into a package, just create a subdirectory (e.g. _pets_) and add a `package` statement on the top of your class definition, for example:
 
@@ -275,10 +276,7 @@ public interface Swimmable {
 }    
 ----
 
-If a class implements `Swimmable` it can use the value of `MAX_DEPTH` too.
-
-
-If you need an object of certain type
+A class that implements `Swimmable` can use the value of `MAX_DEPTH` too.
 
 ==== Functional Interfaces
 
