@@ -850,20 +850,12 @@ class Dog{
 <div class="paragraph">
 <p>If you need to use an object of certain type only once, you can kill two birds with one stone: declare an anonymous class and create an instance of it. In this case you don&#8217;t even need to give a class a name, hence it&#8217;s <em>anonymous</em>.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_lambda-expressions"><a class="anchor" href="#_lambda-expressions"></a>Lambda Expressions</h3>
 <div class="paragraph">
-<p>Up till now, to invoke a method we&#8217;ve been creating classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to write a method wrapped it into a class.</p>
+<p>Usually, anonymous classes are presented in the context of event processing in the programs that have In Chapter 7 you&#8217;ll learn how to create a Graphical User Interface (GUI), and I&#8217;ll show you how you could use an anonymous class there too. But for now I&#8217;ll show you another example of a program that&#8217;s first written without and then with anonymous classes.
+Let&#8217;s say I want to write a simple calculator in Java. It won&#8217;t have any GUI, but I&#8217;ll show you how you can you can program such operations as addition and subtraction. The multiplication and division operations can be programmed  similarly, so I won&#8217;t be implementing these operations.</p>
 </div>
 <div class="paragraph">
-<p>A lambda expression is an anonymous function that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java only you could pass a value to a method only if this value is an object or a primitive. But now a function (a piece of code) to execute becomes a value that can be passed around. I&#8217;ll explain what all this means by example.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s say I want to write a simple calculator in Java. In Chapter 7 you&#8217;ll learn how to create a Graphical User Interface (GUI) for the calculator, but for now let&#8217;s just see how you can program such operations as addition and  subtraction with and without using lambda expressions. The multiplication and division operations can be implemented similarly.</p>
-</div>
-<div class="paragraph">
-<p>I want to keep these examples in the package called <code>lambdas</code>. As I said earlier, you can create a subdirectory named <em>lambdas</em> in your project and save your classes there. The other choice is to right-click on the folder <em>src</em> in your IDEA project and select the menu New | Package and enter the package name:</p>
+<p>I want to keep these examples in the package called <code>calc</code>. As I said earlier, you can create a subdirectory named <em>calc</em> in your project and save your classes there. The other choice is to right-click on the folder <em>src</em> in your IDEA project and select the menu New | Package and enter the package name:</p>
 </div>
 <div id="FIG5-2" class="imageblock">
 <div class="content">
@@ -872,11 +864,11 @@ class Dog{
 <div class="title">Figure 2. Creating a new package in IDEA</div>
 </div>
 <div class="paragraph">
-<p>First comes the version that doesn&#8217;t use lambdas - we&#8217;ll just use one method for each operation. The code of the class <code>Calculator</code> is pretty simple. Note the first line that declares the package where the class <code>Calculator</code> belongs.</p>
+<p>First comes the version that doesn&#8217;t use anonymous classes - I&#8217;ll just use one method for each operation. The code of the class <code>Calculator</code> is pretty simple. Note the first line that declares the package where the class <code>Calculator</code> belongs.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">package lambdas;
+<pre class="highlight"><code class="java language-java">package calc;
 
 public class Calculator {
 
@@ -905,7 +897,7 @@ public class Calculator {
 </div>
 </div>
 <div class="paragraph">
-<p>This class has four methods that manipulate numbers (one per operation), and its <code>main()</code> method invokes each method  passing the same values as arguments. Running this program prints the following on the console:</p>
+<p>This class has two methods that manipulate numbers (one per operation), and its <code>main()</code> method invokes each method  passing the same values as arguments. Running this program prints the following on the console:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -914,26 +906,31 @@ public class Calculator {
 </div>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s redesign this application. I want to write a method that will have three arguments: the arithmetic operation and the first and the second numbers to be operated upon. Prior to Java 8, to represent an operation we&#8217;d need to wrap it as a method inside the Java object. With lambda expressions, you don&#8217;t need to create wrapper classes. I&#8217;ll show you both ways of doing this staring from the old fashioned way.</p>
+<p>Now let&#8217;s redesign this application. I want to write a method that will have three arguments: the arithmetic operation and the first and the second numbers to be operated upon.</p>
 </div>
 <div class="paragraph">
 <p>The operation is a behavior, so let&#8217;s declare an interface to represent it. This will be a functional interface with a single abstract method:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">public interface ArithmeticOperation {
+<pre class="highlight"><code class="java language-java">package calc;
+
+public interface ArithmeticOperation {
 
   public double performOperation(double a, double b);
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>I&#8217;ll write two implementations of the <code>ArithmeticOperation</code> interface using anonymous classes - one for addition and one for subtraction. I will also write a method <code>calculate()</code>  method that will take three arguments: the object that implements <code>ArithmeticOperation</code> that knows how to manipulate the numbers, and two numbers to be manipulated.</p>
+<p>I&#8217;ll write two implementations of the <code>ArithmeticOperation</code> interface using anonymous classes - one for addition and one for subtraction. I will also write a method <code>calculate()</code>   that will take three arguments: the object that implements <code>ArithmeticOperation</code> and knows how to manipulate the numbers; other arguments are two numbers to be manipulated.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">public class CalculatorWithAnonymousClasses {
+<pre class="highlight"><code class="java language-java">package calc;
 
+public class CalculatorWithAnonymousClasses {
+
+    // Anonymous class one
     static ArithmeticOperation addition = new ArithmeticOperation() {
         public double performOperation(double first, double second) {
             double result = first + second;
@@ -943,6 +940,7 @@ public class Calculator {
         }
     };
 
+    // Anonymous class two
     static ArithmeticOperation subtraction = new ArithmeticOperation() {
         public double performOperation(double first, double second) {
             double result = first - second;
@@ -970,10 +968,22 @@ public class Calculator {
 </div>
 </div>
 <div class="paragraph">
-<p>The output of the <code>CalculatorWithAnonymousClasses</code> program will be the same as from <code>Calculator</code>. What did we achieve by re-writing calculator this way? The behavior is declared in the interface, and if more than one class would need to implement <code>ArithmeticOperation</code>, we&#8217;ll reuse this interface.</p>
+<p>The output of the <code>CalculatorWithAnonymousClasses</code> program will be the same as from <code>Calculator</code>. What did we achieve by re-writing calculator this way? We separad the declaration of the behavior and its implementation.  The behavior is declared in the interface, and if more than one class would need to implement <code>ArithmeticOperation</code>, we&#8217;ll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method <code>performOperation()</code>, so this object could be passes as an argument to the method <code>calculate()</code>. In the next section I&#8217;ll re-implement this calculator in a more elegant way with lambda expressions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lambda-expressions"><a class="anchor" href="#_lambda-expressions"></a>Lambda Expressions</h3>
+<div class="paragraph">
+<p>Up till now, to invoke a method we&#8217;ve been creating classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to write a method wrapped it into a class.</p>
 </div>
 <div class="paragraph">
-<p>Now you&#8217;ll see how to move from anonymous classes to lambdas. This time I&#8217;ll declare each arithmetic operation as a lambda expression. I will use the same method <code>calcuate()</code> that will take three arguments: the lambda expression that implements <code>ArithmeticOperation</code> and two numbers to be operated on.</p>
+<p>A lambda expression is an anonymous function that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java only you could pass a value to a method only if this value is an object or a primitive. But now a function (a piece of code) to execute becomes a value that can be passed around. I&#8217;ll explain what all this means by example.</p>
+</div>
+<div class="paragraph">
+<p>Prior to Java 8, to represent an operation we&#8217;d need to wrap it as a method inside the Java object. With lambda expressions, you don&#8217;t need to create wrapper classes.</p>
+</div>
+<div class="paragraph">
+<p>Now I&#8217;ll write yet another version of the calculator to replace the anonymous classes with shorter lambdas. This time I&#8217;ll declare each arithmetic operation as a lambda expression. I will use the same method <code>calcuate()</code> that will take three arguments: the lambda expression that implements <code>ArithmeticOperation</code> and two numbers to be operated on.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1011,7 +1021,7 @@ public class Calculator {
 </div>
 </div>
 <div class="paragraph">
-<p>The difference between <code>CalculatorWithAnonymousClasses</code> and <code>CalculatorWithLambdas</code> is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces.</p>
+<p>The difference between <code>CalculatorWithAnonymousClasses</code> fro previous section and <code>CalculatorWithLambdas</code> is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1067,7 +1077,7 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-15 11:33:19 EDT
+Last updated 2014-08-15 12:18:11 EDT
 </div>
 </div>
 </body>
