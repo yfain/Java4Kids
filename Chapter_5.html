@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 5. Interfaces, Lambdas, and Abstract Classes</title>
+<title>Chapter 5. Interfaces, Lambdas, and Anonymous Classes</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,7 +487,7 @@ p { margin-bottom: 1.25rem; }
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_chapter-5-interfaces-lambdas-and-abstract-classes">Chapter 5. Interfaces, Lambdas, and Abstract Classes</a></li>
+<li><a href="#_chapter-5-interfaces-lambdas-and-anonymous-classes">Chapter 5. Interfaces, Lambdas, and Anonymous Classes</a></li>
 <li>
 <ul class="sectlevel2">
 <li><a href="#_java-interfaces">Java Interfaces</a></li>
@@ -509,13 +509,13 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-5-interfaces-lambdas-and-abstract-classes"><a class="anchor" href="#_chapter-5-interfaces-lambdas-and-abstract-classes"></a>Chapter 5. Interfaces, Lambdas, and Abstract Classes</h2>
+<h2 id="_chapter-5-interfaces-lambdas-and-anonymous-classes"><a class="anchor" href="#_chapter-5-interfaces-lambdas-and-anonymous-classes"></a>Chapter 5. Interfaces, Lambdas, and Anonymous Classes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we&#8217;ll focus on discussing how you can program behavior in Java.  Remember, classes have attributes (e.g. color, number of doors) and can do stuff (e.g. eat, sleep, or dive). There is a special group of programming languages that are called functional (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like <code>eat()</code>, <code>sleep()</code>, or <code>dive()</code>, and these functions can live their independent lives and don&#8217;t have to be declared in classes.</p>
+<p>In this chapter I&#8217;ll focus on discussing how you can program <em>behavior</em> in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called <em>functional</em> (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like <code>eat()</code>, <code>sleep()</code>, or <code>dive()</code>, and these functions can live their independent lives and don&#8217;t have to be declared in classes. In <em>object-oriented</em> languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called <em>lambda expressions</em> covered later in this chapter.</p>
 </div>
 <div class="paragraph">
-<p>On the other hand, in object-oriented languages behavior is programmed in methods defined in classes. Starting from Java 8 you can also program behavior in so called <em>lambda expressions</em> covered later in this chapter. So far I was declaring and implementing the behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation.</p>
+<p>So far I was declaring and implementing behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation. Such separation can be done using <em>interfaces</em>.</p>
 </div>
 <div class="sect2">
 <h3 id="_java-interfaces"><a class="anchor" href="#_java-interfaces"></a>Java Interfaces</h3>
@@ -551,7 +551,7 @@ To create a new interface in IDEA, select the menu File | New | Java class and s
 <div class="title">Figure 1. Creating an interface in IDEA</div>
 </div>
 <div class="paragraph">
-<p>You should be thinking, "What&#8217;s the point of simply declaring a method without implementing it?" The thing is that more than one class can exhibit the same behavior. For example, a dog, a cat, and a parrot can "talk". But they "implement it" differently. A parrot can repeat words, while dogs implement this behavior differently - they bark. Cats talk by meowing. Accordingly you can declare three classes that will <em>implement</em> <code>Talkative</code> interface differently, as in three classes below:</p>
+<p>You should be thinking, "What&#8217;s the point of simply declaring a method without implementing it?" The thing is that more than one class can exhibit the same behavior. For example, a dog, a cat, and a parrot can "talk". But they "implement it" differently. A parrot can repeat words, while dogs bark. Cats talk by meowing. Accordingly you can declare three classes that will <em>implement</em> <code>Talkative</code> interface differently, as shown below:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -575,7 +575,7 @@ public class Cat implements Talkative {
 </div>
 </div>
 <div class="paragraph">
-<p>These three classes use the Java keyword <code>implements</code>, which means they swear to write implementation for all abstract methods in the interfaces listed after the keyword <code>implements</code> otherwise the Java compiler will complain, "You promised to implement all abstract methods from <code>Talkable</code>, but I don&#8217;t see them."</p>
+<p>These three classes use the Java keyword <code>implements</code>, which means they promise to implement all abstract methods in the interface(s) listed after the keyword <code>implements</code> otherwise the Java compiler will complain: "You promised to implement all abstract methods from <code>Talkable</code>, where are they? Keep the promise!"</p>
 </div>
 <div class="paragraph">
 <p>What if we need to create the class <code>Fish</code> that uses interfaces? Fish don&#8217;t talk. But they swim. Dogs can talk and swim, right?  Why won&#8217;t we declare yet another interface <code>Swimmable</code> with the methods <code>swim()</code> and <code>dive()</code>?</p>
@@ -591,7 +591,7 @@ public class Cat implements Talkative {
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s leave parrots alone, but will create a new class <code>Fish</code> and change the class <code>Dog</code> just a little bit:</p>
+<p>Now let&#8217;s leave the parrots alone. Let&#8217;s create a new class <code>Fish</code> and change the class <code>Dog</code> just a little bit. The <code>Fish</code> will implement <code>Swimmable</code> and the <code>Dog</code> will implement two interfaces:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -620,7 +620,7 @@ public class Dog implements Talkative, Swimmable {
 </div>
 </div>
 <div class="paragraph">
-<p>Have you noticed that the class <code>Dog</code> can implement several interfaces. Just make sure to implement in the class each and every abstract method declared in these interfaces. I&#8217;ll tell you more: a class can extend another class and implement interfaces, for example:</p>
+<p>When a class implements several interfaces, make sure to implement each and every abstract method declared in these interfaces. I&#8217;ll tell you more: a class can extend another class and implement interfaces at the same time, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -631,10 +631,22 @@ public class Dog implements Talkative, Swimmable {
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+Java includes several interfaces that don&#8217;t declare any methods (e.g. `Serializable). They are called <em>marker interfaces</em>. You don&#8217;t need to implement any methods in classes that implement marker interfaces. They are used by the Java compiler internally to generate the byte code in a special way.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
 <h4 id="_default-methods-in-interfaces"><a class="anchor" href="#_default-methods-in-interfaces"></a>Default Methods in Interfaces</h4>
 <div class="paragraph">
-<p>To tell you the truth, I don&#8217;t like the fact that I had to implement the method <code>dive()</code> in the class <code>Dog</code>. The dogs I&#8217;ve seen can&#8217;t dive. Can the interface <code>Swimmable</code> be changed so I&#8217;m not forced to write the implementation of the method <code>dive()</code> in the class <code>Dog</code>? Yes, it can. Java 8 introduced a new keyword <code>default</code>. Now you&#8217;re allowed to write a default implementation of a method in the interface. Such a method won&#8217;t be considered abstract anymore, and you won&#8217;t be forced to implement it in your class. Let&#8217;s do it.</p>
+<p>To tell you the truth, I don&#8217;t like the fact that I had to implement the method <code>dive()</code> in the class <code>Dog</code>. The dogs I&#8217;ve seen can&#8217;t dive. Can the interface <code>Swimmable</code> be changed so I&#8217;m not forced to write the implementation of the method <code>dive()</code> in the class <code>Dog</code>? Yes, it can. Java 8 introduced a new keyword <code>default</code>. Now you&#8217;re allowed to write a default implementation of a method in the interface. Such a method won&#8217;t be considered abstract anymore, and you won&#8217;t be forced to implement it in your class. Let&#8217;s add a default implementation of the method <code>dive()</code> to <code>Swimmable</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -649,7 +661,7 @@ public class Dog implements Talkative, Swimmable {
 </div>
 </div>
 <div class="paragraph">
-<p>Now the class <code>Dog</code> doesn&#8217;t have to implement the method <code>dive()</code>, and the compiler won&#8217;t complain.</p>
+<p>Now the class <code>Dog</code> doesn&#8217;t have to implement the method <code>dive()</code> - the compiler will see a default implementation and won&#8217;t complain. The next version of the class <code>Dog</code> implements only the method <code>swim()</code> from <code>Swimmable</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -665,7 +677,7 @@ public class Dog implements Talkative, Swimmable {
 </div>
 </div>
 <div class="paragraph">
-<p>There is no need to change the class <code>Fish</code> - it has implemented the method <code>dive()</code>, which will override the default implementation of the <code>dive()</code> in <code>Swimmable</code>. You can still call the method <code>dive()</code> on the instance of the <code>Dog</code> class - the default implementation will be invoked. The next class <code>PetMaster</code> will demonstrate this.</p>
+<p>There is no need to change the class <code>Fish</code>. It also implements <code>Swimmable</code>, but has its own version of the method <code>dive()</code>, which will override the default implementation of the <code>dive()</code> from <code>Swimmable</code>. You can still call the method <code>dive()</code> on the instance of the <code>Dog</code> class - the default implementation will be invoked. The next class <code>PetMaster</code> will demonstrate this.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -675,7 +687,7 @@ public class Dog implements Talkative, Swimmable {
         Dog myDog = new Dog();
         myDog.talk();
         myDog.swim(7);
-        myDog.dive(2);
+        myDog.dive(2);  // will use default method
 
         Fish myFish = new Fish();
         myFish.swim(50);
@@ -696,17 +708,17 @@ OK, will swim 50 feet
 OK, will dive 20 feet</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The message "Can&#8217;t dive, sorry" was printed by the default method <code>dive()</code> from the interface <code>Swimmable</code>.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_static-methods-in-interfaces"><a class="anchor" href="#_static-methods-in-interfaces"></a>Static Methods in Interfaces</h4>
 <div class="paragraph">
-<p>Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. You can&#8217;t override the interface&#8217;s static methods in classes.</p>
+<p>Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. The following example illustrates the use of a static method in the interface. Now the default implementation of the method <code>dive()</code> won&#8217;t just reject an offer to swim, but will check the current month: if it&#8217;s June, July, or August then diving is allowed because the water should be warm.</p>
 </div>
 <div class="paragraph">
-<p>The following example illustrates the use of a static method in the interface. in this version the default implementation of the method <code>dive()</code> won&#8217;t just reject an offer to swim, but will check the current month: if it&#8217;s June, July, or August then diving is allowed because the water should be warm.</p>
-</div>
-<div class="paragraph">
-<p>The modify version of the <code>Swimmable</code> interface includes a static method <code>isSummer()</code> that checks the current month and returns <code>true</code> if it&#8217;s June, July, or August. I&#8217;m using the Java Date and Time API here. The defaule method <code>dive()</code> calls the static method <code>isSummer()</code> and either agrees or disagrees to dive depending on the time of the year.</p>
+<p>The modified version of the <code>Swimmable</code> interface includes a static method <code>isSummer()</code> that checks the current month and returns <code>true</code> if it&#8217;s June, July, or August. I&#8217;m using the Java Date and Time API here. The default method <code>dive()</code> calls the static method <code>isSummer()</code> and either agrees or disagrees to dive depending on the time of the year.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -739,7 +751,7 @@ public interface Swimmable {
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>isSummer()</code> uses the class <code>LocalTime</code> to get <code>Month</code>, which has a data type <code>enum</code> that you haven&#8217;t used so far. It&#8217;s a special type to represent a fixed number of some values, like months in this case. There are only 12 months, and Java Date and Time API listed them by name in the <code>enum</code> called <code>Month</code>. The only values that are allowed here are <code>Month.JANUARY</code> to <code>Month.DECEMBER</code>. Using enums makes the programs more readable - it&#8217;s easier to deal with months by names than by numbers.</p>
+<p>The method <code>isSummer()</code> uses the class <code>LocalTime</code> to get <code>Month</code>, which has a data type <code>enum</code> that I haven&#8217;t used so far. It&#8217;s a special data type to represent a fixed number of some values, like months in this case. There are only 12 months, and Java Date and Time API listed them by name in the <code>enum</code> called <code>Month</code>. The only values that are allowed here are <code>Month.JANUARY</code> to <code>Month.DECEMBER</code>. Using enums makes the programs more readable - it&#8217;s easier to deal with months by names than by numbers.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -748,7 +760,7 @@ public interface Swimmable {
 <p>Java comes with many useful classes that are organized in packages. Some packages include classes responsible for drawing, while other packages have classes to work with the Internet, and so on. For example the class <code>LocalDate</code> is located in the package called <code>java.time</code>, and the full name of the class <code>LocalDate</code> is <code>java.time.LocalDate</code>.</p>
 </div>
 <div class="paragraph">
-<p>To let the compiler know where the class <code>LocalDate</code> is located you could have specify the full class name, for example:</p>
+<p>To let the compiler know where the class <code>LocalDate</code> is located you could specify the full class name, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -760,8 +772,7 @@ public interface Swimmable {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">import java.time.LocalDate;
-import java.time.Month;</code></pre>
+<pre class="highlight"><code class="java language-java">import java.time.LocalDate;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -773,7 +784,7 @@ import java.time.Month;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Packages correspond to directories and subdirectories on the disk. If you see a full class name <code>java.time.LocalDate</code> it means that this class was created in the subdirectory <em>time</em> of the directory <em>java</em>.</p>
+<p>The packages are stored in directories and subdirectories on the disk. If you see a full class name <code>java.time.LocalDate</code> it means that this class was originally created in the subdirectory <em>time</em> of the directory <em>java</em>.</p>
 </div>
 <div class="paragraph">
 <p>From now on we&#8217;ll use packages and import statement in every chapter of this book. If you want to place your class into a package, just create a subdirectory (e.g. <em>pets</em>) and add a <code>package</code> statement on the top of your class definition, for example:</p>
@@ -824,10 +835,7 @@ class Dog{
 </div>
 </div>
 <div class="paragraph">
-<p>If a class implements <code>Swimmable</code> it can use the value of <code>MAX_DEPTH</code> too.</p>
-</div>
-<div class="paragraph">
-<p>If you need an object of certain type</p>
+<p>A class that implements <code>Swimmable</code> can use the value of <code>MAX_DEPTH</code> too.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1059,7 +1067,7 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-14 21:42:22 EDT
+Last updated 2014-08-15 11:33:19 EDT
 </div>
 </div>
 </body>
