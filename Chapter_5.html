@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 5. Interfaces, Lambdas, and Anonymous Classes</title>
+<title>Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,7 +487,7 @@ p { margin-bottom: 1.25rem; }
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_chapter-5-interfaces-lambdas-and-anonymous-classes">Chapter 5. Interfaces, Lambdas, and Anonymous Classes</a></li>
+<li><a href="#_chapter-5-interfaces-lambdas-abstract-and-anonymous-classes">Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes</a></li>
 <li>
 <ul class="sectlevel2">
 <li><a href="#_java-interfaces">Java Interfaces</a></li>
@@ -500,8 +500,18 @@ p { margin-bottom: 1.25rem; }
 </ul>
 </li>
 <li><a href="#_abstract-classes">Abstract Classes</a></li>
+<li>
+<ul class="sectlevel3">
+<li><a href="#_what-s-the-difference-between-abstract-classes-and-interfaces">What&#8217;s the difference between abstract classes and interfaces?</a></li>
+</ul>
+</li>
 <li><a href="#_anonymous-classes">Anonymous Classes</a></li>
 <li><a href="#_lambda-expressions">Lambda Expressions</a></li>
+<li>
+<ul class="sectlevel3">
+<li><a href="#_simplifying-code-with-lambdas">Simplifying Code With Lambdas</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
@@ -510,7 +520,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-5-interfaces-lambdas-and-anonymous-classes"><a class="anchor" href="#_chapter-5-interfaces-lambdas-and-anonymous-classes"></a>Chapter 5. Interfaces, Lambdas, and Anonymous Classes</h2>
+<h2 id="_chapter-5-interfaces-lambdas-abstract-and-anonymous-classes"><a class="anchor" href="#_chapter-5-interfaces-lambdas-abstract-and-anonymous-classes"></a>Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this chapter I&#8217;ll focus on discussing how you can program <em>behavior</em> in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called <em>functional</em> (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like <code>eat()</code>, <code>sleep()</code>, or <code>dive()</code>, and these functions can live their independent lives and don&#8217;t have to be declared in classes. In <em>object-oriented</em> languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called <em>lambda expressions</em> covered later in this chapter.</p>
@@ -521,7 +531,10 @@ p { margin-bottom: 1.25rem; }
 <div class="sect2">
 <h3 id="_java-interfaces"><a class="anchor" href="#_java-interfaces"></a>Java Interfaces</h3>
 <div class="paragraph">
-<p>For years, Java <em>interfaces</em> were used mainly for holding just method declarations and final static variables. For example, the interface <code>Talkable</code> can just contain the declaration of the method <code>talk()</code>:</p>
+<p>While you can just create a Java class and implements all its methods there, a more formal way of declaring the behavior of the class in a separate <code>interface</code>. Then a class declaration would include the keyword <code>implements</code> followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.</p>
+</div>
+<div class="paragraph">
+<p>For years, Java <em>interfaces</em> were used mainly for holding method declarations and <code>final</code> <code>static</code> variables. For example, the interface <code>Talkable</code> contains the declaration of just one method <code>talk()</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -899,11 +912,14 @@ class Dog{
 <div class="paragraph">
 <p>And again you might be wondering, "Why complicating programmer&#8217;s life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from <code>Animal</code> you might want to declare an unified method signature, so each class (<code>Dog</code>, <code>Parrot</code>, <code>Fish</code> et al.) will have the same way of initiating the talk.</p>
 </div>
+<div class="sect3">
+<h4 id="_what-s-the-difference-between-abstract-classes-and-interfaces"><a class="anchor" href="#_what-s-the-difference-between-abstract-classes-and-interfaces"></a>What&#8217;s the difference between abstract classes and interfaces?</h4>
 <div class="paragraph">
 <p>Abstract classes and interfaces allow to create classes that implement <em>polymorphism</em>, which is an advanced topic and will not be covered in this book. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. <code>setName()</code> and <code>sleep()</code> in the vertical class hierarchy.</p>
 </div>
 <div class="paragraph">
 <p>Interfaces can&#8217;t have instance methods, but they don&#8217;t enforce any class hierarchy. So you can have a class <code>Dog</code> that extends any class, while implementing an interface <code>Talkative</code> that declares the method <code>talk()</code>.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1109,8 +1125,88 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 </tr>
 </table>
 </div>
+<div class="sect3">
+<h4 id="_simplifying-code-with-lambdas"><a class="anchor" href="#_simplifying-code-with-lambdas"></a>Simplifying Code With Lambdas</h4>
 <div class="paragraph">
-<p>In Chapter 7 I&#8217;ll show you more lambda expression while explaining how to process GUI events (e.g. the user clicked on the button).</p>
+<p>Let&#8217;s return to our examples with pets. I&#8217;d like to show you how lambda expressions can simplify your code by reducing the number of required classes. Earlier in this chapter we&#8217;ve created the classes <code>Dog</code>, <code>Parrot</code> and the only difference between them was the implementation of the interface <code>Talkative</code>. But we can declare just one class with a method that can take the implementation of the <code>Talkative</code> in a form of lambda expression.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start with defining the functional interface <code>Talkative</code>. This time I&#8217;ll slightly change the signature of the method <code>talk()</code> comparing to the version shown earlier in this chapter. I do it just to show you how to write a lambda expression that implements a method that has an argument and returns some value.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public interface Talkative {
+    public String talk(String petName);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s write the class <code>Pet</code> with a method <code>speakup()</code> that will take implementation of the <code>Talkative</code> interface as the first argument and the pet&#8217;s name as a second one. The class <code>Pet</code> may have many other useful methods, but I&#8217;d like to focus on the <code>speakup()</code> that can receive a piece of code defining the rules of talking and apply this code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Pet {
+
+    // Some other code can go here
+
+    public String speakup(Talkative talkRules, String name){
+        return talkRules.talk(name);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The only other class we need to create is <code>PetMasterLambda</code> that will create instances of <code>Pet</code> representing both dogs and parrots, but passing different implementation of the <code>Talkative</code> interface. Here it comes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class PetMasterLambda {
+  public static void main(String[] args) {
+
+     // dogs
+     Pet myDog = new Pet();
+
+     Talkative dogTalkRules = (name) -&gt; {
+         return  "I'm a dog. My name is " + name;
+     };
+
+     System.out.println(myDog.speakup(dogTalkRules, "Sammy"));
+
+     // parrots
+     Pet myParrot = new Pet();
+
+     Talkative parrotTalkRules = (name) -&gt; {
+         return  "I'm a parrot. Don't call me " + name;
+     };
+
+     System.out.println(myDog.speakup(parrotTalkRules, "Charlie"));
+     }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve defined different rules for talking parrots and dogs as lambdas in variables <code>parrotTalkRules</code> and dogTalkRules accordingly. Not that I have not specified the data type of the variable <code>name</code>. It&#8217;s yet another example of the inferred typing - the <code>Talkative</code> interface has a single abstract method with the argument of type <code>String</code>. The second argument of the method <code>speakup()</code> will be passed to the method <code>talk()</code>. Run this program and it&#8217;ll print the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">I'm a dog. My name is Sammy
+I'm a parrot. Don't call me Charlie</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By using lambda expressions I was able to eliminate the need of creating a separate class for each animal. Of course, this is possible only if the only difference between classes <code>Dog</code> and <code>Parrot</code> was implementation of the talking behavior.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;d like to draw your attention to the fact, that my class Pet has no state - it doesn&#8217;t define any class variables. This means that we don&#8217;t even need to create instances of the class <code>Pet</code>, but could simply define its method <code>speakup()</code> as <code>static</code> and call it just like this</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Pet.saySomething(dogTalkRules, "Mary")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Chapter 7 I&#8217;ll show you more lambda expressions while explaining how to process GUI <em>events</em> such as click on a button or a mouse move. In the Part 2 of the assignment that you&#8217;re about to make I&#8217;ll challenge you to re-write the class <code>Pet</code> so it&#8217;ll keep the rules of talking in its class variable.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1119,42 +1215,87 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 <h2 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Part 1. In this part you&#8217;ll do an exercise to prove that you understand Java interfaces.</p>
+<p><strong>Part 1.</strong> In this part you&#8217;ll do an exercise to prove that you understand Java interfaces.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create a new IDEA project</p>
+<p>Create a new IDEA project named <em>chapter5</em>.</p>
 </li>
 <li>
-<p>Recreate the final from versions of classes <code>Dog</code>, <code>Fish</code> and interfaces <code>Swimmable</code> and <code>Talkable</code> from the section Interfaces.</p>
+<p>Create a package named <em>pets</em>.</p>
 </li>
 <li>
-<p>Create a new class <code>Pet</code> with a constructor that will take a name of the pet (a <code>String</code>) as an argument.</p>
+<p>In the package <em>pets</em> recreate the final versions of classes <code>Dog</code>, <code>Fish</code> and interfaces <code>Swimmable</code> and <code>Talkable</code> from the section Interfaces.</p>
+</li>
+<li>
+<p>In the package <em>pets</em> create a new class <code>Pet</code> with a constructor that will take the name of the pet (of type <code>String</code>) as an argument.</p>
 </li>
 <li>
 <p>Change the declarations of the classes <code>Dog</code> and <code>Fish</code> so each of them extends <code>Pet</code> while implementing <code>Talkable</code> and <code>Swimable</code> interfaces.</p>
 </li>
 <li>
-<p>Create the class <code>PetMaster</code> from the section Interfaces, but give pets names while instantiating <code>Dog</code> and <code>Fish</code>.</p>
+<p>Create the class <code>PetMaster</code> from the section "Interfaces", but give pets names while instantiating classes <code>Dog</code> and <code>Fish</code>.</p>
 </li>
 <li>
-<p>Modify implementations of the methods <code>talk()</code> and <code>swim()</code> so they would print the pet&#8217;s name as a part of the output in <code>System.out.println()</code>.</p>
+<p>Modify the implementations of the methods <code>talk()</code> and <code>swim()</code> so they would print the pet&#8217;s name as a part of the output in <code>System.out.println()</code>. For example, "My name is Sammy. Bark-Bark-Bark!"</p>
 </li>
 <li>
-<p>Run and test <code>PetMaster</code>.</p>
+<p>Run and test the <code>PetMaster</code> program.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Part 2. In this part you&#8217;ll do an exercise to prove that you understand Java lambda expressions.</p>
+<p><strong>Part 2.</strong> In this part you&#8217;ll do an exercise to prove that you understand the basics of lambda expressions.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the project <em>chapter5</em> create a new package called <em>lambdapets</em>.</p>
+</li>
+<li>
+<p>In the package <em>lambdapets</em> declare the following  <code>Talkative</code> interface:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public interface Talkative {
+    public String talk(String petName);
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a new version of the class <code>Pet</code> with the constructor that takes the rules of talking and pet&#8217;s name as arguments. Its method <code>speakup()</code> will not have arguments. This is how the code of the new <code>Pet</code> should look like:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Pet {
+
+    String name;
+    Talkative myTalkingRules;
+
+    Pet(Talkative talkRules, String name){
+        this.name = name;
+        myTalkingRules = talkRules;
+    }
+
+    public String speakup(){
+
+        return myTalkingRules.talk(name);
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Write the new version of the class <code>PetMasterLambda</code> that will define the talking rules for dogs and parrots. It should create two instances of <code>Pet</code> (one for a dog, and one for a parrot) and invoke the method <code>speakup()</code> on each instance.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-18 12:53:09 EDT
+Last updated 2014-08-18 19:27:57 EDT
 </div>
 </div>
 </body>
