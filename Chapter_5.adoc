@@ -586,17 +586,17 @@ In Chapter 7 I'll show you more lambda expressions while explaining how to proce
 
 2. Create a package named _pets_.
 
-2. In the package _pets_ recreate the final versions of classes `Dog`, `Fish` and interfaces `Swimmable` and `Talkable` from the section Interfaces. 
+3. In the package _pets_ recreate the final versions of classes `Dog`, `Fish` and interfaces `Swimmable` and `Talkable` from the section Interfaces. 
 
-3. In the package _pets_ create a new class `Pet` with a constructor that will take the name of the pet (of type `String`) as an argument.
+4. In the package _pets_ create a new class `Pet` with a constructor that will take the name of the pet (of type `String`) as an argument.
 
-4. Change the declarations of the classes `Dog` and `Fish` so each of them extends `Pet` while implementing `Talkable` and `Swimable` interfaces.
+5. Change the declarations of the classes `Dog` and `Fish` so each of them extends `Pet` while implementing `Talkable` and `Swimable` interfaces.
 
-5. Create the class `PetMaster` from the section "Interfaces", but give pets names while instantiating classes `Dog` and `Fish`.
+6. Create the class `PetMaster` from the section "Interfaces", but give pets names while instantiating classes `Dog` and `Fish`.
 
-6. Modify the implementations of the methods `talk()` and `swim()` so they would print the pet's name as a part of the output in `System.out.println()`. For example, "My name is Sammy. Bark-Bark-Bark!"
+7. Modify the implementations of the methods `talk()` and `swim()` so they would print the pet's name as a part of the output in `System.out.println()`. For example, "My name is Sammy. Bark-Bark-Bark!"
 
-7. Run and test the `PetMaster` program. 
+8. Run and test the `PetMaster` program. 
 
 *Part 2.* In this part you'll do an exercise to prove that you understand the basics of lambda expressions.
 
@@ -632,4 +632,4 @@ public class Pet {
 }
 ----
 
-3. Write the new version of the class `PetMasterLambda` that will define the talking rules for dogs and parrots. It should create two instances of `Pet` (one for a dog, and one for a parrot) and invoke the method `speakup()` on each instance.
+4. Write the new version of the class `PetMasterLambda` that will define the talking rules for dogs and parrots. It should create two instances of `Pet` (one for a dog, and one for a parrot) and invoke the method `speakup()` on each instance.
