@@ -280,7 +280,60 @@ A class that implements `Swimmable` can use the value of `MAX_DEPTH` too.
 
 ==== Functional Interfaces
 
-If an interface has only one abstract method declared (default and static methods don't count) it's called _functional interface_. Both `Talkative` and `Swimmable` are  examples of a functional interface - each has only one abstract method. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we'll discuss next. 
+If an interface has only one abstract method declared (default and static methods don't count) it's called _functional interface_. Both `Talkative` and `Swimmable` are  examples of a functional interface - each has only one abstract method. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we'll discuss later in this lesson. 
+
+=== Abstract Classes
+
+If a method is not implemented we call it abstract. But classes can be declared abstract too, and Java has the keyword `abstract` for this. An abstract class is called abstract if it was declared with the keyword `abstract`, for example: 
+
+[source,java]
+----
+public abstract class Animal{
+    // some code goes here
+}
+---- 
+
+If a class declared as abstract, you can't create an instance of it. Typically, abstract classes have some non-implemented methods that are also declared with the `abstract` keyword:
+
+[source, java]
+----
+public abstract class Animal {
+
+    String animalClass;
+    String name;
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void sleep(){
+        System.out.println("The " + name + 
+                " is tired and goes to sleep.");
+    }
+
+    abstract public void talk();
+}
+----
+
+The class `Animal` has two implemented methods: `setName()` and `sleep()` and one abstract method `talk()`. Since the abstract class can not be instantiated, the programmer has to create a descendant class and implement the method `talk()` there if he or she wants to create an instance of such a class, for example:
+
+[source, java]
+----
+public class Dog extends Animal{
+    public void talk(){
+       System.out.println("Bark! Bark-bark!");
+    }
+} 
+----
+
+Strictly speaking, it's not a must to implement the method `talk()` in the class `Dog`, but in this case `Dog` remains  abstract and can't be instantiated. Maybe the programmer wants to create a class `Puppy` that extends `Dog` and implement the `talk()` there?
+
+And again you might be wondering, "Why complicating programmer's life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from `Animal` you might want to declare an unified method signature, so each class (`Dog`, `Parrot`, `Fish` et al.) will have the same way of initiating the talk.
+
+Abstract classes and interfaces allow to create classes that implement _polymorphism_, which is an advanced topic and will not be covered in this book. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. `setName()` and `sleep()` in the vertical class hierarchy. 
+
+Interfaces can't have instance methods, but they don't enforce any class hierarchy. So you can have a class `Dog` that extends any class, while implementing an interface `Talkative` that declares the method `talk()`. 
+
 
 === Anonymous Classes
 
