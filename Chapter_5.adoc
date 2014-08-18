@@ -286,10 +286,11 @@ If an interface has only one abstract method declared (default and static method
 
 If you need to use an object of certain type only once, you can kill two birds with one stone: declare an anonymous class and create an instance of it. In this case you don't even need to give a class a name, hence it's _anonymous_.
 
-Usually, anonymous classes are presented in the context of event processing in the programs that have In Chapter 7 you'll learn how to create a Graphical User Interface (GUI), and I'll show you how you could use an anonymous class there too. But for now I'll show you another example of a program that's first written without and then with anonymous classes. 
-Let's say I want to write a simple calculator in Java. It won't have any GUI, but I'll show you how you can you can program such operations as addition and subtraction. The multiplication and division operations can be programmed  similarly, so I won't be implementing these operations. 
+Usually Java tutorials introduce anonymous classes by showing examples of event processing in the programs that have Graphical User Interface (GUI). In Chapter 7 you'll learn how to create GUI, and you'll see another example of anonymous classes. But for now I'll show you another example of a program that's first written without and then with anonymous classes. 
 
-I want to keep these examples in the package called `calc`. As I said earlier, you can create a subdirectory named _calc_ in your project and save your classes there. The other choice is to right-click on the folder _src_ in your IDEA project and select the menu New | Package and enter the package name: 
+Let's say I want to write a simple calculator in Java. It won't have any GUI, but I'll show you how you can program such operations as addition and subtraction. The multiplication and division operations can be programmed  similarly, so I won't be implementing these operations. 
+
+I want to keep these examples in the package called `calc`. You can create a subdirectory named _calc_ in your project and save your classes there. The other choice is to right-click on the folder _src_ in your IDEA project and select the menu New | Package and enter the package name there: 
 
 [[FIG5-2]]
 .Creating a new package in IDEA
@@ -327,7 +328,7 @@ public class Calculator {
 }
 ---- 
 
-This class has two methods that manipulate numbers (one per operation), and its `main()` method invokes each method  passing the same values as arguments. Running this program prints the following on the console:
+This class has two methods that manipulate numbers (one per operation), and its `main()` method invokes each method  passing the same values as arguments. After performing the arithmetic operation each method prints the result. Running this program produces the following output:
 
 [source,java]
 ----
@@ -335,9 +336,9 @@ This class has two methods that manipulate numbers (one per operation), and its 
 3.55 - 50.0 = -46.45
 ----
 
-Now let's redesign this application. I want to write a method that will have three arguments: the arithmetic operation and the first and the second numbers to be operated upon. 
+Now let's redesign this application. Instead of writing a separate method for each operation, I want to write a generic method that can receive the code of the operation and two numbers to be operated upon. This method will have three arguments: the arithmetic operation, the first and the second number. 
 
-The operation is a behavior, so let's declare an interface to represent it. This will be a functional interface with a single abstract method:
+The operation is a behavior, so let's declare an interface to represent it using a functional interface with a single abstract method:
 
 [source, java]
 ----
@@ -349,7 +350,7 @@ public interface ArithmeticOperation {
 }
 ----
 
-I'll write two implementations of the `ArithmeticOperation` interface using anonymous classes - one for addition and one for subtraction. I will also write a method `calculate()`   that will take three arguments: the object that implements `ArithmeticOperation` and knows how to manipulate the numbers; other arguments are two numbers to be manipulated.
+I'll write two implementations of the `ArithmeticOperation` interface using anonymous classes - one for addition and one for subtraction. I will also write a method `calculate()`   that will take three arguments: the object that implements `ArithmeticOperation` and two numbers.
 
 [source, java]
 ----
@@ -357,7 +358,7 @@ package calc;
 
 public class CalculatorWithAnonymousClasses {
 
-    // Anonymous class one
+    // The first anonymous class for addition
     static ArithmeticOperation addition = new ArithmeticOperation() {
         public double performOperation(double first, double second) {
             double result = first + second;
@@ -367,7 +368,7 @@ public class CalculatorWithAnonymousClasses {
         }
     };
 
-    // Anonymous class two 
+    // The second anonymous class for subtraction 
     static ArithmeticOperation subtraction = new ArithmeticOperation() {
         public double performOperation(double first, double second) {
             double result = first - second;
@@ -377,9 +378,6 @@ public class CalculatorWithAnonymousClasses {
         }
     };
 
-    // This method performs a given arithmetic operation on the provided numbers
-    // The first argument is an instance of the anonymous 
-    // class that implements ArithmeticOperation
     
     public static double calculate(ArithmeticOperation whatToDo, double a, double b ){
 
@@ -394,24 +392,22 @@ public class CalculatorWithAnonymousClasses {
 }
 ----
 
-The output of the `CalculatorWithAnonymousClasses` program will be the same as from `Calculator`. What did we achieve by re-writing calculator this way? We separad the declaration of the behavior and its implementation.  The behavior is declared in the interface, and if more than one class would need to implement `ArithmeticOperation`, we'll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method `performOperation()`, so this object could be passes as an argument to the method `calculate()`. In the next section I'll re-implement this calculator in a more elegant way with lambda expressions.
+The output of the `CalculatorWithAnonymousClasses` program will be the same as from `Calculator`. What did we achieve by re-writing calculator this way? We separated the declaration of the behavior and its implementation. The behavior is declared in the interface, and if more than one class needs to implement `ArithmeticOperation`, we'll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method `performOperation()`, so this object could be passes as an argument to the method `calculate()`. In the next section I'll rewrite this calculator again in a more elegant way with lambda expressions.
 
 
 === Lambda Expressions
 
-Up till now, to invoke a method we've been creating classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to write a method wrapped it into a class.
+Up till now, to invoke a method we've been creating named or anonymous classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to wrap a method inside the class.
 
-A lambda expression is an anonymous function that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java only you could pass a value to a method only if this value is an object or a primitive. But now a function (a piece of code) to execute becomes a value that can be passed around. I'll explain what all this means by example.
-  
-Prior to Java 8, to represent an operation we'd need to wrap it as a method inside the Java object. With lambda expressions, you don't need to create wrapper classes.  
+A lambda expression is an _anonymous function_ that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java you could pass a value to a method only if this value was an object or a primitive. But now a function (a piece of code) becomes a value that can be passed around. Let's see it in action.
 
-Now I'll write yet another version of the calculator to replace the anonymous classes with shorter lambdas. This time I'll declare each arithmetic operation as a lambda expression. I will use the same method `calcuate()` that will take three arguments: the lambda expression that implements `ArithmeticOperation` and two numbers to be operated on.   
+In the new version of calculator I'll declare each arithmetic operation as a lambda expression. I will reuse the same functional interface with the three-argument method `calcuate()`, but will pass the lambda expression that implements `ArithmeticOperation` as the first argument.   
 
 [source, java]
 ----
 public class CalculatorWithLambdas {
 
-    // Declaring lambda expressions
+    // Implementing addition as a lambda expression
     static ArithmeticOperation addition = (first, second) -> {
         double result = first + second;
         System.out.println("" + first + " + " +
@@ -419,15 +415,13 @@ public class CalculatorWithLambdas {
         return result;
     };
 
+    // Implementing addition as a lambda expression
     static ArithmeticOperation subtraction = (first, second) -> {
         double result = first - second;
         System.out.println("" + first + " - " +
                 second + " = " + result );
         return result;
     };
-
-    // This method performs a given arithmetic operation on the provided numbers
-    // The first argument can be implemented as lambda expression
     
     public static double calculate(ArithmeticOperation whatToDo, double a, double b ){
 
@@ -442,10 +436,20 @@ public class CalculatorWithLambdas {
 }
 ----
 
-The difference between `CalculatorWithAnonymousClasses` fro previous section and `CalculatorWithLambdas` is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces.   
+The difference between `CalculatorWithAnonymousClasses` from the previous section and `CalculatorWithLambdas` is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces. To write a lambda expression you need the play by the following rules:
 
-NOTE: IntelliJ IDEA can automatically convert anonymous classes that implement functional interfaces into lambda expressions. Just make sure to visit the menu File | Project Structure and select the project language level to be 8.0.
+1. Declare an the interface that has only one abstract method. 
+2. Make sure that the arguments of your lambda expression match the argument of the abstract method.
+3. Make sure that the return value of your lambda expression matches the return value of the abstract method.
 
+Review the code of the `CalculatorWithLambdas`. Both lambdas `addition` and `subtraction` abide by these rules.
+
+You may say, "Why there are no data types specified for the lambda parameters first and second?" The reason being that Java compiler is smart enough to guess their data types because it knows which abstract method this lambda implements. Such an educated guess is called _type inference_.  
+
+
+NOTE: IntelliJ IDEA can automatically convert anonymous classes that implement functional interfaces into lambda expressions. Just make sure that your project language level is 8.0. You can do this by selecting the menu File | Project Structure.
+
+In Chapter 7 I'll show you more lambda expression while explaining how to process GUI events (e.g. the user clicked on the button).
 
 == Challenge Yourself
 
