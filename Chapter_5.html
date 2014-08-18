@@ -499,6 +499,7 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_functional-interfaces">Functional Interfaces</a></li>
 </ul>
 </li>
+<li><a href="#_abstract-classes">Abstract Classes</a></li>
 <li><a href="#_anonymous-classes">Anonymous Classes</a></li>
 <li><a href="#_lambda-expressions">Lambda Expressions</a></li>
 </ul>
@@ -841,8 +842,68 @@ class Dog{
 <div class="sect3">
 <h4 id="_functional-interfaces"><a class="anchor" href="#_functional-interfaces"></a>Functional Interfaces</h4>
 <div class="paragraph">
-<p>If an interface has only one abstract method declared (default and static methods don&#8217;t count) it&#8217;s called <em>functional interface</em>. Both <code>Talkative</code> and <code>Swimmable</code> are  examples of a functional interface - each has only one abstract method. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we&#8217;ll discuss next.</p>
+<p>If an interface has only one abstract method declared (default and static methods don&#8217;t count) it&#8217;s called <em>functional interface</em>. Both <code>Talkative</code> and <code>Swimmable</code> are  examples of a functional interface - each has only one abstract method. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we&#8217;ll discuss later in this lesson.</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_abstract-classes"><a class="anchor" href="#_abstract-classes"></a>Abstract Classes</h3>
+<div class="paragraph">
+<p>If a method is not implemented we call it abstract. But classes can be declared abstract too, and Java has the keyword <code>abstract</code> for this. An abstract class is called abstract if it was declared with the keyword <code>abstract</code>, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public abstract class Animal{
+    // some code goes here
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a class declared as abstract, you can&#8217;t create an instance of it. Typically, abstract classes have some non-implemented methods that are also declared with the <code>abstract</code> keyword:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public abstract class Animal {
+
+    String animalClass;
+    String name;
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void sleep(){
+        System.out.println("The " + name +
+                " is tired and goes to sleep.");
+    }
+
+    abstract public void talk();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The class <code>Animal</code> has two implemented methods: <code>setName()</code> and <code>sleep()</code> and one abstract method <code>talk()</code>. Since the abstract class can not be instantiated, the programmer has to create a descendant class and implement the method <code>talk()</code> there if he or she wants to create an instance of such a class, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Dog extends Animal{
+    public void talk(){
+       System.out.println("Bark! Bark-bark!");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Strictly speaking, it&#8217;s not a must to implement the method <code>talk()</code> in the class <code>Dog</code>, but in this case <code>Dog</code> remains  abstract and can&#8217;t be instantiated. Maybe the programmer wants to create a class <code>Puppy</code> that extends <code>Dog</code> and implement the <code>talk()</code> there?</p>
+</div>
+<div class="paragraph">
+<p>And again you might be wondering, "Why complicating programmer&#8217;s life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from <code>Animal</code> you might want to declare an unified method signature, so each class (<code>Dog</code>, <code>Parrot</code>, <code>Fish</code> et al.) will have the same way of initiating the talk.</p>
+</div>
+<div class="paragraph">
+<p>Abstract classes and interfaces allow to create classes that implement <em>polymorphism</em>, which is an advanced topic and will not be covered in this book. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. <code>setName()</code> and <code>sleep()</code> in the vertical class hierarchy.</p>
+</div>
+<div class="paragraph">
+<p>Interfaces can&#8217;t have instance methods, but they don&#8217;t enforce any class hierarchy. So you can have a class <code>Dog</code> that extends any class, while implementing an interface <code>Talkative</code> that declares the method <code>talk()</code>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1093,7 +1154,7 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-18 08:39:15 EDT
+Last updated 2014-08-18 12:53:09 EDT
 </div>
 </div>
 </body>
