@@ -2,7 +2,7 @@
 :toclevels: 4
 :imagesdir: ./
 
-== Chapter 5. Interfaces, Lambdas, and Anonymous Classes
+== Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes
 
 In this chapter I'll focus on discussing how you can program _behavior_ in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called _functional_ (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like `eat()`, `sleep()`, or `dive()`, and these functions can live their independent lives and don't have to be declared in classes. In _object-oriented_ languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. 
 
@@ -10,7 +10,9 @@ So far I was declaring and implementing behavior in methods located inside Java 
 
 === Java Interfaces
 
-For years, Java _interfaces_ were used mainly for holding just method declarations and final static variables. For example, the interface `Talkable` can just contain the declaration of the method `talk()`:
+While you can just create a Java class and implements all its methods there, a more formal way of declaring the behavior of the class in a separate `interface`. Then a class declaration would include the keyword `implements` followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.   
+
+For years, Java _interfaces_ were used mainly for holding method declarations and `final` `static` variables. For example, the interface `Talkable` contains the declaration of just one method `talk()`:
 
 [source, java]
 ----
@@ -330,6 +332,8 @@ Strictly speaking, it's not a must to implement the method `talk()` in the class
 
 And again you might be wondering, "Why complicating programmer's life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from `Animal` you might want to declare an unified method signature, so each class (`Dog`, `Parrot`, `Fish` et al.) will have the same way of initiating the talk.
 
+==== What's the difference between abstract classes and interfaces?
+
 Abstract classes and interfaces allow to create classes that implement _polymorphism_, which is an advanced topic and will not be covered in this book. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. `setName()` and `sleep()` in the vertical class hierarchy. 
 
 Interfaces can't have instance methods, but they don't enforce any class hierarchy. So you can have a class `Dog` that extends any class, while implementing an interface `Talkative` that declares the method `talk()`. 
@@ -499,27 +503,133 @@ Review the code of the `CalculatorWithLambdas`. Both lambdas `addition` and `sub
 
 You may say, "Why there are no data types specified for the lambda parameters first and second?" The reason being that Java compiler is smart enough to guess their data types because it knows which abstract method this lambda implements. Such an educated guess is called _type inference_.  
 
-
 NOTE: IntelliJ IDEA can automatically convert anonymous classes that implement functional interfaces into lambda expressions. Just make sure that your project language level is 8.0. You can do this by selecting the menu File | Project Structure.
 
-In Chapter 7 I'll show you more lambda expression while explaining how to process GUI events (e.g. the user clicked on the button).
+==== Simplifying Code With Lambdas
+
+Let's return to our examples with pets. I'd like to show you how lambda expressions can simplify your code by reducing the number of required classes. Earlier in this chapter we've created the classes `Dog`, `Parrot` and the only difference between them was the implementation of the interface `Talkative`. But we can declare just one class with a method that can take the implementation of the `Talkative` in a form of lambda expression. 
+
+Let's start with defining the functional interface `Talkative`. This time I'll slightly change the signature of the method `talk()` comparing to the version shown earlier in this chapter. I do it just to show you how to write a lambda expression that implements a method that has an argument and returns some value.
+
+[source, java]
+----
+public interface Talkative {
+    public String talk(String petName);
+}
+----
+Now let's write the class `Pet` with a method `speakup()` that will take implementation of the `Talkative` interface as the first argument and the pet's name as a second one. The class `Pet` may have many other useful methods, but I'd like to focus on the `speakup()` that can receive a piece of code defining the rules of talking and apply this code.
+
+[source, java]
+----
+public class Pet {
+   
+    // Some other code can go here  
+   
+    public String speakup(Talkative talkRules, String name){
+        return talkRules.talk(name);
+    }
+}
+----
+
+The only other class we need to create is `PetMasterLambda` that will create instances of `Pet` representing both dogs and parrots, but passing different implementation of the `Talkative` interface. Here it comes:
+
+[source, java]
+----
+public class PetMasterLambda {
+  public static void main(String[] args) {
+
+     // dogs
+     Pet myDog = new Pet();
+
+     Talkative dogTalkRules = (name) -> {
+         return  "I'm a dog. My name is " + name;
+     };
+
+     System.out.println(myDog.speakup(dogTalkRules, "Sammy"));
+
+     // parrots
+     Pet myParrot = new Pet();
+
+     Talkative parrotTalkRules = (name) -> {
+         return  "I'm a parrot. Don't call me " + name;
+     };
+
+     System.out.println(myDog.speakup(parrotTalkRules, "Charlie"));
+     }
+}
+----
+
+We've defined different rules for talking parrots and dogs as lambdas in variables `parrotTalkRules` and dogTalkRules accordingly. Not that I have not specified the data type of the variable `name`. It's yet another example of the inferred typing - the `Talkative` interface has a single abstract method with the argument of type `String`. The second argument of the method `speakup()` will be passed to the method `talk()`. Run this program and it'll print the following:
+
+[source, java]
+----
+I'm a dog. My name is Sammy
+I'm a parrot. Don't call me Charlie
+----
+
+By using lambda expressions I was able to eliminate the need of creating a separate class for each animal. Of course, this is possible only if the only difference between classes `Dog` and `Parrot` was implementation of the talking behavior.
+
+I'd like to draw your attention to the fact, that my class Pet has no state - it doesn't define any class variables. This means that we don't even need to create instances of the class `Pet`, but could simply define its method `speakup()` as `static` and call it just like this
+
+[source, java]
+----
+Pet.saySomething(dogTalkRules, "Mary")
+----
+
+In Chapter 7 I'll show you more lambda expressions while explaining how to process GUI _events_ such as click on a button or a mouse move. In the Part 2 of the assignment that you're about to make I'll challenge you to re-write the class `Pet` so it'll keep the rules of talking in its class variable.
 
 == Challenge Yourself
 
-Part 1. In this part you'll do an exercise to prove that you understand Java interfaces. 
+*Part 1.* In this part you'll do an exercise to prove that you understand Java interfaces. 
 
-1. Create a new IDEA project
+1. Create a new IDEA project named _chapter5_.
 
-2. Recreate the final from versions of classes `Dog`, `Fish` and interfaces `Swimmable` and `Talkable` from the section Interfaces.
+2. Create a package named _pets_.
 
-3. Create a new class `Pet` with a constructor that will take a name of the pet (a `String`) as an argument.
+2. In the package _pets_ recreate the final versions of classes `Dog`, `Fish` and interfaces `Swimmable` and `Talkable` from the section Interfaces. 
+
+3. In the package _pets_ create a new class `Pet` with a constructor that will take the name of the pet (of type `String`) as an argument.
 
 4. Change the declarations of the classes `Dog` and `Fish` so each of them extends `Pet` while implementing `Talkable` and `Swimable` interfaces.
 
-5. Create the class `PetMaster` from the section Interfaces, but give pets names while instantiating `Dog` and `Fish`.
+5. Create the class `PetMaster` from the section "Interfaces", but give pets names while instantiating classes `Dog` and `Fish`.
 
-6. Modify implementations of the methods `talk()` and `swim()` so they would print the pet's name as a part of the output in `System.out.println()`.
+6. Modify the implementations of the methods `talk()` and `swim()` so they would print the pet's name as a part of the output in `System.out.println()`. For example, "My name is Sammy. Bark-Bark-Bark!"
 
-7. Run and test `PetMaster`. 
+7. Run and test the `PetMaster` program. 
 
-Part 2. In this part you'll do an exercise to prove that you understand Java lambda expressions.
+*Part 2.* In this part you'll do an exercise to prove that you understand the basics of lambda expressions.
+
+1. In the project _chapter5_ create a new package called _lambdapets_.
+
+2. In the package _lambdapets_ declare the following  `Talkative` interface: 
++
+[source, java]
+----
+public interface Talkative {
+    public String talk(String petName);
+}
+----
+
+3. Create a new version of the class `Pet` with the constructor that takes the rules of talking and pet's name as arguments. Its method `speakup()` will not have arguments. This is how the code of the new `Pet` should look like:
++
+[source, java]
+----
+public class Pet {
+
+    String name;
+    Talkative myTalkingRules;
+
+    Pet(Talkative talkRules, String name){
+        this.name = name;
+        myTalkingRules = talkRules;
+    }
+
+    public String speakup(){
+
+        return myTalkingRules.talk(name);
+    }
+}
+----
+
+3. Write the new version of the class `PetMasterLambda` that will define the talking rules for dogs and parrots. It should create two instances of `Pet` (one for a dog, and one for a parrot) and invoke the method `speakup()` on each instance.
