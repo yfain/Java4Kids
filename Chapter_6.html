@@ -513,60 +513,166 @@ p { margin-bottom: 1.25rem; }
 <div class="sect2">
 <h3 id="_access-levels"><a class="anchor" href="#_access-levels"></a>Access Levels</h3>
 <div class="paragraph">
-<p>In many code samples I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be access only from the code located in the same package ( directory).</p>
+<p>In code samples from previous chapters I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be access only from the code located in the same package ( directory).</p>
 </div>
 <div class="paragraph">
-<p>Let’s make a simple experiment – remove the keyword public from the declaration of the class PingPongEngine.  Now the class PingPongTable won’t even compile giving an error PingPongEngine can not be resolved or is not a type. This means that the class PingPongTable does not see the class PingPongEngine anymore.</p>
+<p>One of the main features of object-oriented languages is <em>encapsulation</em> - an ability to hide and protect data or code. But who do you need to hide or protect the code from? This is not a protection from bad guys who are not allowed to see your code. You hide and protect the code from misuse.</p>
 </div>
 <div class="paragraph">
-<p>Similarly, if  you forget to give a public access to  methods of the class PingPongEngine, the PingPongTable will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.</p>
+<p>Let&#8217;s consider an example from the real world. Think of a car – most people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal. If car designers would not be hiding control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges on the car&#8217;s dashboard.</p>
+</div>
+<div id="FIG6-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_6_01.png" alt="fig 6 01">
+</div>
+<div class="title">Figure 1. The "public user interface" in a car</div>
 </div>
 <div class="paragraph">
-<p>The private access level is used to hide class variables or  methods from the outside world. Think of a car – most of the people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal.</p>
+<p>When you design a  class, hide methods and class member variables that should not be visible from outside. Some of the methods of member variables are meant to be used internally and not to be exposed to other classes.</p>
 </div>
 <div class="paragraph">
-<p>Look at the next code sample - in Java, we can say that the object Car exposes only one public method – brake(), which internally  may  call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as Mars rovers, let alone simple cars.</p>
+<p>We&#8217;ll start learning about hiding and protecting data with the <code>private</code> access level. If a variable or a method are declared private, they can be used only within the class where they were declared. The next code sample - it represent a car, and declares some of its elements as <code>private</code>. Note that I&#8217;ve created this class in the package <code>vehicles</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package vehicles;
+
+public class Car {
+
+ // This private variable is visible only inside this class
+  private String brakesCondition;
+
+ // The public method brake() calls private methods
+ // to decide which brakes to use
+  public void brake(int pedalPressure){
+    boolean useRegularBrakes;
+    useRegularBrakes=
+              checkForAntiLockBrakes (pedalPressure);
+
+    if (useRegularBrakes==true){
+    useRegularBrakes();
+    }else{
+    useAntiLockBrakes();
+    }
+  }
+
+  // This private method can be called inside
+  // this class only
+  private boolean checkForAntiLockBrakes(int pressure){
+    if (pressure &gt; 100){
+      return true;
+    }else {
+      return false;
+    }
+  }
+
+   // This private method can be called inside this
+   // class only
+  private void useRegularBrakes(){
+   // code that sends a signal to regular brakes
+  }
+
+   // This private method can be called inside this
+   // class only
+  private void useAntiLockBrakes(){
+   // code that sends a signal to anti-lock brakes
+   //
+  }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>There is one more Java keyword protected that controls access level. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package. But it won’t be available for independent classes located in other packages.</p>
+<p>By looking at this code I can say that the class <code>Car</code> exposes only one public method – <code>brake()</code>, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods.</p>
 </div>
 <div class="paragraph">
-<p>When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges.</p>
+<p>I took the next screenshot in IntelliJ IDEA while writing a class <code>CarMaster</code> that uses <code>Car</code>. IDEA helps me with suggesting the <code>Car</code> class members that I can use in this context. Only the method <code>brake()</code> is visible from the class <code>Car</code> (other methods are from the class <code>Object</code>).</p>
+</div>
+<div id="FIG6-2" class="imageblock">
+<div class="content">
+<img src="./images/fig_6_02.png" alt="fig 6 02">
+</div>
+<div class="title">Figure 2. Can use the brake() method only</div>
+</div>
+<div class="paragraph">
+<p>The <code>private</code> access level is the most restrictive one. If you&#8217;re not sure when to use it, just declare all of your call member variables and methods as private, and loosen this restriction if other classes need to use these members.</p>
+</div>
+<div id="FIG6-3" class="imageblock">
+<div class="content">
+<img src="./images/fig_6_03.png" alt="fig 6 03">
+</div>
+<div class="title">Figure 3. Private is the most restrictive access</div>
+</div>
+<div class="paragraph">
+<p>What do you think will happen if you simply remove the <code>private</code> keyword from one of the methods of the class <code>Car</code>? Will the <code>CarMaster</code> see it? No, it won&#8217;t because the absence of the access qualifier gives a package access level to this member. Only classes that are located in the package <code>vehicles</code> can access it, and <code>CarMaster</code> is not one of them.</p>
+</div>
+<div class="paragraph">
+<p>The class members declared with the <code>protected</code> keyword can be accessed from other members of the same class, from its descendants or classes located in the same package. Even if a descendant class is located in a different package, it&#8217;ll be able to access <code>protected</code> methods of its ancestors.</p>
+</div>
+<div class="paragraph">
+<p>Some software developer are creating libraries or frameworks of classes to be used by other developers. These classes can be extended, and their creators may use the keyword <code>protected</code> trying to allow access to certain member only descendant classes. But in the real world no one can predict what the developer may want to do with there libraries, and the keyword <code>protected</code> may become an obstacle in achieving of their goals. I do not use the keyword <code>protected</code> in my projects. As you gain more experience with Java, see for yourself if the keyword <code>protected</code> brings some value to your programs.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_collections"><a class="anchor" href="#_collections"></a>Collections</h3>
+<div class="paragraph">
+<p>Now let&#8217;s see how to work with collections of data. Java  packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
+</div>
+<div class="paragraph">
+<p>The package <code>java.util.concurrent</code> has collections that are useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don&#8217;t belong to the introductory book like this one.</p>
+</div>
 <div class="sect3">
 <h4 id="_class-arraylist"><a class="anchor" href="#_class-arraylist"></a>Class ArrayList</h4>
 <div class="paragraph">
-<p>The package java.util includes  classes that are quite handy when a program needs to store several instances (a collection) of some objects   in  memory. Some of the popular collection classes from this package are ArrayList, Vector, HashTable, HashMap and List. I’ll show you how to use the class java.util.ArrayList.</p>
+<p>In Chapter 4 you got familiar with Java arrays, which have a restriction - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change multiple times a day. The class <code>java.util.ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed.</p>
 </div>
 <div class="paragraph">
-<p>The drawback of regular arrays is  that you have to know the number of array elements in advance. Remember, to create an instance of an array you have to put a number between the brackets:</p>
+<p>Why use arrays, then?  Let’s just always use <code>ArrayList</code>! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The <code>ArrayList</code> objects works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.</p>
 </div>
 <div class="paragraph">
-<p>String[] myFriends = new String[5];</p>
+<p>To create and populate an <code>ArrayList</code> object, you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the <code>ArrayList</code> by calling its method <code>add()</code>. The next little program will populate an <code>ArrayList</code>  with <code>String</code> objects and print the content of this collection.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.util.ArrayList;
+
+public class ArrayListDemo {
+
+  public static void main(String[] args) {
+    // Create and populate an ArrayList
+    ArrayList friends = new ArrayList();
+    friends.add("Mary");
+    friends.add("Ann");
+    friends.add("David");
+    friends.add("Roy");
+
+    // How many friends are there?
+    int friendsCount = friends.size();
+
+    // Print the content of the ArrayList
+    for (int i=0; i&lt;friendsCount; i++){
+        System.out.println("Friend #" + i + " is "
+            + friends.get(i));
+    }
+  }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Class ArrayList  does not have this restriction – you can create an instance of this collection without knowing how many objects will be there – just add more elements as needed.</p>
+<p>This program will print the following:</p>
 </div>
-<div class="paragraph">
-<p>Why use arrays, let’s just always use ArrayList! Unfortunately, nothing  comes for free, and  you have to pay the price for a convenience – ArrayList is a little slower than a regular array, and you could only store objects there, for example you can not just store a bunch of int numbers in an ArrayList.</p>
-</div>
-<div class="paragraph">
-<p>To create and populate an  ArrayList  object, you should instantiate it first, create instances of the objects you are planning to store there, and add them to the ArrayList by calling its method add(). The next little program will populate  an ArrayList with String objects and print the content of this collection.</p>
-</div>
-<div class="paragraph">
-<p>This program will print the following lines:</p>
-</div>
-<div class="paragraph">
-<p>Friend #0 is Mary
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Friend #0 is Mary
 Friend #1 is Ann
 Friend #2 is David
-Friend #3 is Roy</p>
+Friend #3 is Roy</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The method get()extracts from an ArrayList the element located at a particular position. Since you can store any objects in a collection, the method get() returns each element as a Java Object, and it’s a responsibility of the program to cast this object to a proper data type. We did not have to do it in the previous example only because we stored  String objects in the collection friends, and Java converts an Object to a String automatically. But if you decide to store in ArrayList some other objects, for example instances of  the class Fish, the proper code to add and extract a particular Fish may look as in the program FishTank that comes next. First, this program creates a couple of instances of the class Fish, assigns some value to color, weight and current depth and stores them in the ArrayList called fishTank. Then, the program gets the objects from this collection, casts them to the class Fish and prints their values.</p>
+<p>The method <code>get()</code> extracts the element located at a particular position in the <code>ArrayList</code> object. Since you can store any objects in a collection, the method <code>get()</code> returns each element as a Java <code>Object</code> , and it’s a responsibility of the program to <em>cast</em> this object to a proper data type. We did not have to do it in the previous example only because we stored <code>String</code> objects in the collection <code>friends</code>, and Java know how to convert an <code>Object</code> to a <code>String</code> automatically.</p>
+</div>
+<div class="paragraph">
+<p>But if you decide to store some other objects in <code>ArrayList</code>, for example instances of the class <code>Fish</code>, the proper code to add and extract a particular <code>Fish</code> may look as in the program <code>FishTank</code> that comes next. First, this program creates a couple of instances of the class <code>Fish</code>, assigns some value to color, weight and current depth and stores them in the <code>ArrayList</code> called <code>fishTank</code>. Then, the program gets the objects from this collection, casts them to the class <code>Fish</code> and prints their values.</p>
 </div>
 <div class="paragraph">
 <p>Here’s an output of the program FishTank:</p>
@@ -593,7 +699,7 @@ Got the Green fish that weighs 5.0 pounds. Depth:10</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-19 10:02:08 EDT
+Last updated 2014-08-19 13:22:33 EDT
 </div>
 </div>
 </body>
