@@ -243,7 +243,6 @@ package pets;
 class Dog{
 	// your code goes here
 }
-
 ---- 
 
 One last thing: Lazy kids use the wild cards in import statements. Instead of writing one import statement per class, they would use an asterisk:
@@ -254,8 +253,6 @@ import java.time.*;
 ----
 
 This means that definitions needed for my program are located in the package `java.time`. Of course, writing one import statement instead of several ones looks appealing, but the readability of the program suffers. Packages can have dozens of classes and it's better to explicitly state which classes your program uses.  
-
-
 *******************************
 
 ==== Final Static Variables in Interfaces
@@ -451,6 +448,29 @@ public class CalculatorWithAnonymousClasses {
 
 The output of the `CalculatorWithAnonymousClasses` program will be the same as from `Calculator`. What did we achieve by re-writing calculator this way? We separated the declaration of the behavior and its implementation. The behavior is declared in the interface, and if more than one class needs to implement `ArithmeticOperation`, we'll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method `performOperation()`, so this object could be passes as an argument to the method `calculate()`. In the next section I'll rewrite this calculator again in a more elegant way with lambda expressions.
 
+.Access Levels
+**********************
+In many code samples I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be access only from the code located in the same package ( directory). 
+
+Let’s make a simple experiment – remove the keyword public from the declaration of the class PingPongEngine.  Now the class PingPongTable won’t even compile giving an error PingPongEngine can not be resolved or is not a type. This means that the class PingPongTable does not see the class PingPongEngine anymore.
+
+
+Similarly, if  you forget to give a public access to  methods of the class PingPongEngine, the PingPongTable will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.
+ 
+ 
+
+The private access level is used to hide class variables or  methods from the outside world. Think of a car – most of the people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal. 
+
+Look at the next code sample - in Java, we can say that the object Car exposes only one public method – brake(), which internally  may  call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as Mars rovers, let alone simple cars.
+ 
+
+There is one more Java keyword protected that controls access level. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package. But it won’t be available for independent classes located in other packages.
+
+When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges. 
+
+In the next section you can find a class Score that hides its attributes in private variables. 
+**********************
+
 
 === Lambda Expressions
 
@@ -578,7 +598,7 @@ Pet.saySomething(dogTalkRules, "Mary")
 
 In Chapter 7 I'll show you more lambda expressions while explaining how to process GUI _events_ such as click on a button or a mouse move. In the Part 2 of the assignment that you're about to make I'll challenge you to re-write the class `Pet` so it'll keep the rules of talking in its class variable.
 
-== Challenge Yourself
+=== Challenge Yourself
 
 *Part 1.* In this part you'll do an exercise to prove that you understand Java interfaces. 
 
@@ -632,4 +652,4 @@ public class Pet {
 }
 ----
 
-4. Write the new version of the class `PetMasterLambda` that will define the talking rules for dogs and parrots. It should create two instances of `Pet` (one for a dog, and one for a parrot) and invoke the method `speakup()` on each instance.
+4. Write a new version of the class `PetMasterLambda` that will define talking rules for dogs and parrots. It should create two instances of `Pet` (one for a dog, and one for a parrot) and invoke the method `speakup()` on each instance.

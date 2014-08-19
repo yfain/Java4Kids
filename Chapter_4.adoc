@@ -12,7 +12,7 @@ You can add any text comments to your program to explain what a particular line,
 
 There are three different types of comments - single-line comments, block comments, and a javadoc comments. Here's what they are for:
 
-* If your comment fits in one line, start it with two slashes: 
+1. If your comment fits in one line, start it with two slashes: 
 +
 [source,java]
 ----
@@ -22,26 +22,28 @@ There are three different types of comments - single-line comments, block commen
 +
 [source, java]
 ----
-/* Now we'll handle the current 
-   position of the Fish. 
-*/ 
+_/* Now we'll handle the current 
+   position of the Fish.
+*/_ 
 ----
+
 * Java comes with a special program `javadoc` that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a _technical documentation_ for your programs. Such comments are enclosed in  symbols `/* *` and   `*/`. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.
 +
 [source, java]
 ----
-/** This method calculates the discount that depends  
+_/** This method calculates the discount that depends  
 on the price paid. If the price is more than $100,
 give the user 20% off, otherwise only 10%.
-*/
+*/_
 ----
+
 The javadoc tool can process your code, extract all comments that start with `/**` and create program documentation that can be published online or kept locally on the company server. We are not going to use javadoc in this book, but if you're interested to learn more about this tool, read Oracle's tutorial http://goo.gl/Bwm6Cb[How to Write Doc Comments for the Javadoc Tool].
 
 From now on, I’ll be adding comments to code samples to  give you a better idea how and where to use them.
 
 === Making Decisions 
 
-We always make decisions in our life: _If she is going to tell me  this_ – _I’m going to answer  that, otherwise I’ll do something else_. You can write a Java program that will "make decisions" with the help of `if` and `switch` statements. You can also build more complex either-or conditions using logical operators.
+We always make decisions in our life: _If she is going to tell me  this_ – _I’m going to answer that, otherwise I’ll do something else_. You can write a Java program that will "make decisions" with the help of `if` and `switch` statements. You can also build more complex either-or conditions using logical operators.
 
 ==== The if Statement 
 
@@ -539,8 +541,7 @@ do {
  } while (counter< totalPlayers);
 ----
 
-Such loops check an expression _after_ executing the code between curly braces, which means that code in the loop will  be executed _at least once_.  Loops that start with the keyword `while` might not be executed at all if the loop expression is false to begin with.
-
+Such loops check an expression _after_ executing the code between curly braces, which means that code in the loop will  be executed _at least once_.  Loops that start with the keyword `while` might not be executed at all if the loop expression is `false` to begin with.
 
 === Challenge Yourself
 

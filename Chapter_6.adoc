@@ -1,0 +1,113 @@
+:toc:
+:toclevels: 4
+:imagesdir: ./
+
+== Chapter 6. Access Levels, Collections, and Generics 
+
+I'll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple elements of the same type. Remember arrays and their limitations? Java collections offer an alternative to arrays and have other ways of storing similar objects. Finally, you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects.
+
+=== Access Levels 
+
+In many code samples I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be access only from the code located in the same package ( directory). 
+
+Let’s make a simple experiment – remove the keyword public from the declaration of the class PingPongEngine.  Now the class PingPongTable won’t even compile giving an error PingPongEngine can not be resolved or is not a type. This means that the class PingPongTable does not see the class PingPongEngine anymore.
+
+
+Similarly, if  you forget to give a public access to  methods of the class PingPongEngine, the PingPongTable will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.
+ 
+ 
+
+The private access level is used to hide class variables or  methods from the outside world. Think of a car – most of the people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal. 
+
+Look at the next code sample - in Java, we can say that the object Car exposes only one public method – brake(), which internally  may  call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as Mars rovers, let alone simple cars.
+ 
+
+There is one more Java keyword protected that controls access level. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package. But it won’t be available for independent classes located in other packages.
+
+When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges. 
+
+=== Collections
+
+==== Class ArrayList
+
+The package java.util includes  classes that are quite handy when a program needs to store several instances (a collection) of some objects   in  memory. Some of the popular collection classes from this package are ArrayList, Vector, HashTable, HashMap and List. I’ll show you how to use the class java.util.ArrayList.
+
+The drawback of regular arrays is  that you have to know the number of array elements in advance. Remember, to create an instance of an array you have to put a number between the brackets:
+
+String[] myFriends = new String[5];
+
+Class ArrayList  does not have this restriction – you can create an instance of this collection without knowing how many objects will be there – just add more elements as needed.
+
+Why use arrays, let’s just always use ArrayList! Unfortunately, nothing  comes for free, and  you have to pay the price for a convenience – ArrayList is a little slower than a regular array, and you could only store objects there, for example you can not just store a bunch of int numbers in an ArrayList.   
+
+To create and populate an  ArrayList  object, you should instantiate it first, create instances of the objects you are planning to store there, and add them to the ArrayList by calling its method add(). The next little program will populate  an ArrayList with String objects and print the content of this collection.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+This program will print the following lines:
+
+Friend #0 is Mary
+Friend #1 is Ann
+Friend #2 is David
+Friend #3 is Roy
+
+The method get()extracts from an ArrayList the element located at a particular position. Since you can store any objects in a collection, the method get() returns each element as a Java Object, and it’s a responsibility of the program to cast this object to a proper data type. We did not have to do it in the previous example only because we stored  String objects in the collection friends, and Java converts an Object to a String automatically. But if you decide to store in ArrayList some other objects, for example instances of  the class Fish, the proper code to add and extract a particular Fish may look as in the program FishTank that comes next. First, this program creates a couple of instances of the class Fish, assigns some value to color, weight and current depth and stores them in the ArrayList called fishTank. Then, the program gets the objects from this collection, casts them to the class Fish and prints their values.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Here’s an output of the program FishTank:
+
+Got the Red fish that weighs 2.0 pounds. Depth:20
+Got the Green fish that weighs 5.0 pounds. Depth:10
+
+
+Now that you’ve read about the Java access levels,  classes Pet and  Fish can be modified a bit. Such variables as age, color, weight and height should be declared  as protected, and the variable currentDepth should be private. You should add  new public methods such as getAge() to return the value of the variable age, and  setAge() has to set the value of this variable, an so on.  
+
+Programmers with good manners do not allow one class directly modify properties of another one – the class should provide methods that  modify its internals.  That’s why the class Score from the previous section was designed with private variables, which could  be changed with setters and getters. 
+
+
+
+== Challenge Yourself
+
