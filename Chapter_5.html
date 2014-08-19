@@ -512,9 +512,9 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_simplifying-code-with-lambdas">Simplifying Code With Lambdas</a></li>
 </ul>
 </li>
+<li><a href="#_challenge-yourself">Challenge Yourself</a></li>
 </ul>
 </li>
-<li><a href="#_challenge-yourself">Challenge Yourself</a></li>
 </ul>
 </div>
 </div>
@@ -809,8 +809,7 @@ public interface Swimmable {
 
 class Dog{
 	// your code goes here
-}
-</code></pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1046,6 +1045,35 @@ public class CalculatorWithAnonymousClasses {
 <div class="paragraph">
 <p>The output of the <code>CalculatorWithAnonymousClasses</code> program will be the same as from <code>Calculator</code>. What did we achieve by re-writing calculator this way? We separated the declaration of the behavior and its implementation. The behavior is declared in the interface, and if more than one class needs to implement <code>ArithmeticOperation</code>, we&#8217;ll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method <code>performOperation()</code>, so this object could be passes as an argument to the method <code>calculate()</code>. In the next section I&#8217;ll rewrite this calculator again in a more elegant way with lambda expressions.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Access Levels</div>
+<div class="paragraph">
+<p>In many code samples I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be access only from the code located in the same package ( directory).</p>
+</div>
+<div class="paragraph">
+<p>Let’s make a simple experiment – remove the keyword public from the declaration of the class PingPongEngine.  Now the class PingPongTable won’t even compile giving an error PingPongEngine can not be resolved or is not a type. This means that the class PingPongTable does not see the class PingPongEngine anymore.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, if  you forget to give a public access to  methods of the class PingPongEngine, the PingPongTable will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.</p>
+</div>
+<div class="paragraph">
+<p>The private access level is used to hide class variables or  methods from the outside world. Think of a car – most of the people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal.</p>
+</div>
+<div class="paragraph">
+<p>Look at the next code sample - in Java, we can say that the object Car exposes only one public method – brake(), which internally  may  call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as Mars rovers, let alone simple cars.</p>
+</div>
+<div class="paragraph">
+<p>There is one more Java keyword protected that controls access level. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package. But it won’t be available for independent classes located in other packages.</p>
+</div>
+<div class="paragraph">
+<p>When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges.</p>
+</div>
+<div class="paragraph">
+<p>In the next section you can find a class Score that hides its attributes in private variables.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_lambda-expressions"><a class="anchor" href="#_lambda-expressions"></a>Lambda Expressions</h3>
@@ -1209,11 +1237,8 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h3>
 <div class="paragraph">
 <p><strong>Part 1.</strong> In this part you&#8217;ll do an exercise to prove that you understand Java interfaces.</p>
 </div>
@@ -1286,16 +1311,17 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 </li>
 <li>
-<p>Write the new version of the class <code>PetMasterLambda</code> that will define the talking rules for dogs and parrots. It should create two instances of <code>Pet</code> (one for a dog, and one for a parrot) and invoke the method <code>speakup()</code> on each instance.</p>
+<p>Write a new version of the class <code>PetMasterLambda</code> that will define talking rules for dogs and parrots. It should create two instances of <code>Pet</code> (one for a dog, and one for a parrot) and invoke the method <code>speakup()</code> on each instance.</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-18 19:30:53 EDT
+Last updated 2014-08-19 09:40:41 EDT
 </div>
 </div>
 </body>
