@@ -492,7 +492,7 @@ p { margin-bottom: 1.25rem; }
 <ul class="sectlevel2">
 <li><a href="#_access-levels">Access Levels</a></li>
 <li><a href="#_casting">Casting</a></li>
-<li><a href="#_data-collections">Data Collections</a></li>
+<li><a href="#_selected-data-collections">Selected Data Collections</a></li>
 <li>
 <ul class="sectlevel3">
 <li><a href="#_the-class-arraylist">The Class ArrayList</a></li>
@@ -516,7 +516,7 @@ p { margin-bottom: 1.25rem; }
 <div class="sect2">
 <h3 id="_access-levels"><a class="anchor" href="#_access-levels"></a>Access Levels</h3>
 <div class="paragraph">
-<p>In code samples from previous chapters I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be access only from the code located in the same package ( directory).</p>
+<p>In code samples from previous chapters I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be accessed only from the code located in the same package (directory).</p>
 </div>
 <div class="paragraph">
 <p>One of the main features of object-oriented languages is <em>encapsulation</em> - an ability to hide and protect data or code. But who do you need to hide or protect the code from? This is not a protection from bad guys who are not allowed to see your code. You hide and protect the code from misuse.</p>
@@ -671,7 +671,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_data-collections"><a class="anchor" href="#_data-collections"></a>Data Collections</h3>
+<h3 id="_selected-data-collections"><a class="anchor" href="#_selected-data-collections"></a>Selected Data Collections</h3>
 <div class="paragraph">
 <p>Now let&#8217;s see how to work with collections of data. Java  packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
 </div>
@@ -911,7 +911,7 @@ public class HashTableDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>The parameter(s) goes in the angle brackets right after the data type. Note so called <em>dimond operator &lt;&gt;</em> on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right. Now, if by mistake you&#8217;ll try to add an object of another type to <code>friends</code> the Java compiler will complain.</p>
+<p>The parameter(s) goes in the angle brackets right after the data type. Note so called <em>diamond operator &lt;&gt;</em> on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It&#8217;s also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you&#8217;ll try to add an object of another type to <code>friends</code> the Java compiler will complain.</p>
 </div>
 <div class="paragraph">
 <p>I was able to specify a parameter for <code>ArrayList</code> only because it was created with this ability. If you&#8217;ll read the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">online documentation</a> for <code>ArrayList</code> you&#8217;ll see that it&#8217;s declared as follows:</p>
@@ -972,7 +972,7 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>HashTableBrokenDemo</code> add the first object (for Jackie) of type <code>ContactDetail</code> to the <code>friends</code> collection, but the contact details for Art are added in the form of a String:</p>
+<p>The <code>HashTableBrokenDemo</code> adds the first object (for Jackie) of type <code>ContactDetail</code> to the <code>friends</code> collection, but the contact details for Art are added in the form of a <code>String</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1000,7 +1000,7 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>Now I&#8217;m explicitly stating that my intention is to use the <code>String</code> objects  for keys, and <code>ContactDevail</code> as a values. The program <code>HashTableGenericsDemo</code> is shown next - it won&#8217;t even compile.</p>
+<p>Now I&#8217;m explicitly stating that my intention is to use the <code>String</code> objects for keys, and <code>ContactDetail</code> objects as values. The program <code>HashTableGenericsDemo</code> is shown next - it won&#8217;t even compile, yay!</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1016,23 +1016,25 @@ public class HashTableBrokenDemo {
         Hashtable&lt;String, ContactDetail&gt; friends = new Hashtable&lt;&gt;();
         friends.put("Jackie", friend1);
 
-        // this is a time bomb
+        // compiler will complain about this line
        friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
 
-        // Cast from Object to ContactDetail
-        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+        // No casting from Object to ContactDetail needed
+        String jackiesPhone = friends.get("Jackie").phone;
 
-        System.out.println("Art's phone number is " + artsPhone);
-
+        System.out.println("Jackie's phone number is " + jackiesPhone);
     }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The compiler will complain about the line where I&#8217;m trying to call the method <code>put()</code> with two strings as arguments. The Java compiler will generate an error message that it can&#8217;t apply to <code>String</code> parameters to a <code>Hashtable</code> that was declared with parameters <code>&lt;String, ContactDetail&gt;</code>.</p>
+<p>The compiler will complain about the line, where I&#8217;m trying to call the method <code>put()</code> with two <code>String</code> objects as arguments. The Java compiler will generate an error message that it can&#8217;t apply two <code>String</code> parameters to a <code>Hashtable</code> that was declared with parameters <code>&lt;String, ContactDetail&gt;</code>.</p>
 </div>
 <div class="paragraph">
-<p>What did we gain? If the program <code>HashTableBrokenDemo</code> allowed us to store anything in the collection but crashed during the runtime, the program <code>HashTableGenericsDemo</code> prevented me from this error. Having a compiler&#8217;s error it&#8217;s a lot better than getting surprises during the runtime, isn&#8217;t it?</p>
+<p>Another important thing to note is that there is no casting needed when the program gets the information about Jackie&#8217;s phone. Now the <code>friends</code> collection knows from the very beginning that it stores not just some <code>Object</code> types, but the <code>ContactDetail</code> instances.</p>
+</div>
+<div class="paragraph">
+<p>What have we achieved? The program <code>HashTableBrokenDemo</code> allowed us to store anything in the collection but crashed during the runtime, but <code>HashTableGenericsDemo</code> prevented this error from happening. Having a compiler&#8217;s error it&#8217;s a lot better than getting surprises during the runtime, isn&#8217;t it? Besides, with generics we&#8217;ve eliminating the need to cast objects.</p>
 </div>
 <div class="paragraph">
 <p>I&#8217;ve been using parameterized data type <code>Hashtable</code> that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won&#8217;t be covering it in this book.</p>
@@ -1043,12 +1045,69 @@ public class HashTableBrokenDemo {
 <div class="sect1">
 <h2 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise I&#8217;d like you to try create your own collection that uses <code>ArrayList</code>, generics, private variables and public getters and setters.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a new IDEA project named Chapter6.</p>
+</li>
+<li>
+<p>Create a package named <em>contacts</em>.</p>
+</li>
+<li>
+<p>In the package <em>contacts</em> create the class <code>ContactDetail</code> that looks like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class ContactDetail {
+    private String fullName;
+    private String facebookID;
+    private String phone;
+    private String email;
+
+    public String toString(){
+    return "Name: " + getFullName() + ", Facebook ID:  " + facebookID +", phone: " + phone + ", email: " + email;
+
+    };
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that I&#8217;m overriding the method <code>toString()</code> that exists in the class <code>Object</code>.</p>
+</div>
+</li>
+<li>
+<p>In IntelliJ IDEA right-click on the class name and select the options Refactor | Encapsulate Fields to generate public getters and setters for all fields.</p>
+</li>
+<li>
+<p>In the package contacts write a program <code>MyContacts</code> that will declare and instantiate an <code>ArrayList</code> called <code>friends</code> it should  allow only the objects of type <code>ContactDetail</code>.</p>
+</li>
+<li>
+<p>Create two or more instances of <code>ContactDetail</code> object and populated them with your friends' data using setters.</p>
+</li>
+<li>
+<p>Add all instances of <code>ContactDetail</code> to the <code>friends</code> collection by using the method <code>add()</code>.</p>
+</li>
+<li>
+<p>Write a for-each loop that will iterate through the collection friends and print all their contact information
+by simply printing each object from the collection <code>friends</code>. Since the class <code>ContactDetails</code> has an overriden method <code>toString()</code>, you can simply print the objects as shown below - the method <code>toString()</code> will be invoked automatically:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">for (ContactDetail friend: friends){
+    System.out.println(friend);
+}</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-20 15:01:39 EDT
+Last updated 2014-08-20 16:15:05 EDT
 </div>
 </div>
 </body>
