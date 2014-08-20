@@ -473,8 +473,10 @@ public class ContactDetail {
     private String email;
 
     public String toString(){
-    return "Name: " + getFullName() + ", Facebook ID:  " + facebookID +", phone: " + phone + ", email: " + email;
-
+      return "Name: " + fullName + 
+             ", Facebook ID:  " + facebookID +
+             ", phone: " + phone + 
+             ", email: " + email;
     };
 }
 ----
@@ -497,4 +499,12 @@ by simply printing each object from the collection `friends`. Since the class `C
 for (ContactDetail friend: friends){
     System.out.println(friend);
 }
+----
+
+9. The output of the program `MyContacts` should look similar to this one:
++
+[source, java]
+----
+Name: Jackie Allen, Facebook ID:  jallen, phone: 212-545-5545, email: jallen@gmail.com
+Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.com
 ----
