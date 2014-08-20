@@ -4,7 +4,7 @@
 
 == Chapter 6. Access Levels, Collections, and Generics 
 
-I'll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple elements of the same type. Remember arrays and their limitations? Java collections offer an alternative to arrays and have other ways of storing similar objects. Finally, you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects.
+I'll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Finally, you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects.
 
 === Access Levels 
 
@@ -20,7 +20,7 @@ image::images/fig_6_01.png[]
 
 When you design a  class, hide methods and class member variables that should not be visible from outside. Some of the methods of member variables are meant to be used internally and not to be exposed to other classes.
 
-We'll start learning about hiding and protecting data with the `private` access level. If a variable or a method are declared private, they can be used only within the class where they were declared. The next code sample - it represent a car, and declares some of its elements as `private`. Note that I've created this class in the package `vehicles`.
+We'll start learning about hiding and protecting data with the `private` access level. If a variable or a method are declared private, they can be used only within the class where they were declared. The next code sample represents the class `Car` and declares some of its members as `private`. Note that I've created this class in the package `vehicles`.
 
 [source, java]
 ----
@@ -69,9 +69,9 @@ public class Car {
   }
 }
 ----
-By looking at this code I can say that the class `Car` exposes only one public method – `brake()`, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods. 
+By looking at this code I can say that the class `Car` exposes only one public method `brake()`, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods. 
 
-I took the next screenshot in IntelliJ IDEA while writing a class `CarMaster` that uses `Car`. IDEA helps me with suggesting the `Car` class members that I can use in this context. Only the method `brake()` is visible from the class `Car` (other methods are from the class `Object`).
+I took the next screen shot in IntelliJ IDEA while writing a class `CarMaster` that uses `Car`. IDEA helps me with suggesting the `Car` class members that I can use in this context. Only the method `brake()` is visible from the class `Car` (other methods are from the class `Object`).
 
 [[FIG6-2]]
 .Can use the brake() method only
@@ -90,19 +90,23 @@ The class members declared with the `protected` keyword can be accessed from oth
 
 Some software developer are creating libraries or frameworks of classes to be used by other developers. These classes can be extended, and their creators may use the keyword `protected` trying to allow access to certain member only descendant classes. But in the real world no one can predict what the developer may want to do with there libraries, and the keyword `protected` may become an obstacle in achieving of their goals. I do not use the keyword `protected` in my projects. As you gain more experience with Java, see for yourself if the keyword `protected` brings some value to your programs. 
 
+=== Casting
+
+
+
 === Collections
 
 Now let's see how to work with collections of data. Java  packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
 
-The package `java.util.concurrent` has collections that are useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don't belong to the introductory book like this one.
+The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don't belong to the introductory book like this one.
 
 ==== Class ArrayList
 
-In Chapter 4 you got familiar with Java arrays, which have a restriction - you have to specify the number of array elements during the declaration of array. But often you don't know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change multiple times a day. The class `java.util.ArrayList` can give you more flexibility - it can grow or shrink in size as needed.
+In Chapter 4 you've got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don't know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class `java.util.ArrayList` can give you more flexibility - it can grow or shrink in size as needed.
 
-Why use arrays, then?  Let’s just always use `ArrayList`! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The `ArrayList` objects works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.   
+Why use arrays, then?  Let’s just always use `ArrayList`! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The `ArrayList` works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.   
 
-To create and populate an `ArrayList` object, you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the `ArrayList` by calling its method `add()`. The next little program will populate an `ArrayList`  with `String` objects and print the content of this collection.
+To create and populate an `ArrayList` you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the `ArrayList` by calling its method `add()`. The next little program will populate an `ArrayList`  with `String` objects and then print each element of this collection.
 
 [source, java]
 ----
@@ -140,25 +144,93 @@ Friend #2 is David
 Friend #3 is Roy
 ----
 
-The method `get()` extracts the element located at a particular position in the `ArrayList` object. Since you can store any objects in a collection, the method `get()` returns each element as a Java `Object` , and it’s a responsibility of the program to _cast_ this object to a proper data type. We did not have to do it in the previous example only because we stored `String` objects in the collection `friends`, and Java know how to convert an `Object` to a `String` automatically. 
+The method `get()` extracts the element located at the specified position in the `ArrayList`. Since you can store any objects in this collection, the method `get()` returns each element of the `Object` type. The program to _cast_ this object to a proper data type. We did not have to do it in the previous example only because we stored `String` objects in the collection `friends`, and Java knows how to convert an `Object` to a `String` automatically. 
 
-But if you decide to store some other objects in `ArrayList`, for example instances of the class `Fish`, the proper code to add and extract a particular `Fish` may look as in the program `FishTank` that comes next. First, this program creates a couple of instances of the class `Fish`, assigns some value to color, weight and current depth and stores them in the `ArrayList` called `fishTank`. Then, the program gets the objects from this collection, casts them to the class `Fish` and prints their values.
+Let's see how you can work with some other objects in `ArrayList`, for example instances of the class `Fish` shown next. 
 
+[source, java]
+----
+package pets;
 
+public class Fish {
+      private float weight;
+      private String color;
 
+    // constructor
 
+    Fish(float weight, String color){
+        this.setWeight(weight);
+        this.setColor(color);
+    }
 
+    // getters and setters
 
-Here’s an output of the program FishTank:
+    public float getWeight() {
+        return weight;
+    }
 
-Got the Red fish that weighs 2.0 pounds. Depth:20
-Got the Green fish that weighs 5.0 pounds. Depth:10
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
 
+    public String getColor() {
+        return color;
+    }
 
-Now that you’ve read about the Java access levels,  classes Pet and  Fish can be modified a bit. Such variables as age, color, weight and height should be declared  as protected, and the variable currentDepth should be private. You should add  new public methods such as getAge() to return the value of the variable age, and  setAge() has to set the value of this variable, an so on.  
+    public void setColor(String color) {
+        this.color = color;
+    }
+}
+----
 
-Programmers with good manners do not allow one class directly modify properties of another one – the class should provide methods that  modify its internals.  That’s why the class Score from the previous section was designed with private variables, which could  be changed with setters and getters. 
+Note that the class fields `color` and `weight` are `private` variables. But this class also defines `public` _getters and setters_ - the methods that read or modify the fields. In this example the setters and getters don't contain any application logic, but they could. For example, you could encapsulate the logic that checks the credentials of the users of this class so not everyone can modify the weight property. By Java naming conventions the setter name starts with the prefix `set` followed by the capitalized letter of the corresponding `private` variable. Accordingly, the getter starts with `get`.
 
+NOTE: IntelliJ IDEA can automatically generate setters and getters for the class. Just right-click on the class name and select the options Refactor | Encapsulate Fields. 
+
+The code to add (and extract) a particular `Fish` to the `ArrayList` collection may look as in the program `FishTank` that comes next. 
+
+[source, java]
+----
+package pets;
+
+import java.util.ArrayList;
+
+public class FishTank {
+ public static void main(String[] args) {
+     ArrayList fishTank = new ArrayList();
+
+     Fish fish1 = new Fish(2.5f, "Red");
+     Fish fish2 = new Fish(5, "Green");
+
+     Fish theFish;
+
+     fishTank.add(fish1);
+     fishTank.add(fish2);
+
+     int fishCount = fishTank.size();
+
+     for (int i=0;i<fishCount; i++){
+
+         theFish = (Fish) fishTank.get(i);  // casting
+         System.out.println("Got the " +
+            theFish.getColor() + " fish that weighs " +
+            theFish.getWeight() + " pounds.");
+     }
+ }
+}
+----
+
+First, this program creates a couple of instances of the class `Fish` passing the values for the fields via constructor. Note the letter _f_ in the weight value of the first fish: `2.5f`. In Java all decimals have the type `double` unless you mark it with the suffix _f_ for `float`. 
+
+Each instance is added to the collection `fishTank`. Then, the program gets the objects from this collection, casts them to the class `Fish` and prints their values using getters. Here’s the output of the program `FishTank`:
+
+[source, java]
+----
+Got the Red fish that weighs 2.5 pounds.
+Got the Green fish that weighs 5.0 pounds.
+----
+
+The `ArrayList` collection uses Java arrays internally and initially creates an array for 10 elements. But if you keep adding more elements to `ArrayList` it internally will create another array of the larger size and copy all existing elements there. Because of this additional memory allocations and data copying `ArrayList` collections works a little slower than arrays, which allocate enough memory in advance.
 
 
 == Challenge Yourself
