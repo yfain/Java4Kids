@@ -499,7 +499,7 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_the-class-hashtable">The Class Hashtable</a></li>
 </ul>
 </li>
-<li><a href="#_generics">Generics</a></li>
+<li><a href="#_introduction-to-generics">Introduction to Generics</a></li>
 </ul>
 </li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
@@ -893,7 +893,150 @@ public class HashTableDemo {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_generics"><a class="anchor" href="#_generics"></a>Generics</h3>
+<h3 id="_introduction-to-generics"><a class="anchor" href="#_introduction-to-generics"></a>Introduction to Generics</h3>
+<div class="paragraph">
+<p>Java generics is a feature that allow to create so called <code>parameterized data types</code>. For example, instead of just declaring a creating a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. For example, declaring and instantiating general collection to store friends like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">  ArrayList friends = new ArrayList();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you can do it with a parameter so it can store only <code>String</code> object like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">  ArrayList&lt;String&gt; friends = new ArrayList&lt;&gt;();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The parameter(s) goes in the angle brackets right after the data type. Note so called <em>dimond operator &lt;&gt;</em> on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right. Now, if by mistake you&#8217;ll try to add an object of another type to <code>friends</code> the Java compiler will complain.</p>
+</div>
+<div class="paragraph">
+<p>I was able to specify a parameter for <code>ArrayList</code> only because it was created with this ability. If you&#8217;ll read the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">online documentation</a> for <code>ArrayList</code> you&#8217;ll see that it&#8217;s declared as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class ArrayList&lt;E&gt;
+extends AbstractList&lt;E&gt;
+implements List&lt;E&gt;, RandomAccess, Cloneable, Serializable</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That <code>&lt;E&gt;</code> means that you&#8217;re allowed to specify a parameter type of elements that will be stored in the the <code>ArrayList</code>. In case of the <code>friends</code> collection the Java compiler would see that in this collection <code>&lt;String&gt;</code> should be the <code>&lt;E&gt;</code>.
+The <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html">online documentation</a> for the class <code>Hashtable</code> looks even scarier:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Hashtable&lt;K,V&gt;
+extends Dictionary&lt;K,V&gt;
+implements Map&lt;K,V&gt;, Cloneable, Serializable</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But <code>&lt;K,V&gt;</code> simply means that you can specify two parameters: <code>K</code> is the the key data type, and <code>V</code> for value.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s write a program that illustrates the advantages of using generics. I&#8217;ll reuse the example from the previous section called <code>HashTableDemo</code> that stored <code>ContactDetail</code> instances. Actually, I&#8217;ll create two new versions of this program. The first one will be called <code>HashTableBrokenDemo</code>, and I&#8217;ll show how to break this program so it crashes during the runtime if we don&#8217;t use generics. After that, I&#8217;ll rewrite it as <code>HashTableGenericsDemo</code>, where I&#8217;ll use generics to show how to prevent the runtime errors from happening. Here&#8217;s the broken program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.util.Hashtable;
+
+/**
+ * Created by NewProgrammer on 3/28/15.
+ */
+public class HashTableBrokenDemo {
+    public static void main(String[] args) {
+
+        ContactDetail friend1 = new ContactDetail();
+        friend1.fullName = "Jackie Allen";
+        friend1.email = "jallen@gmail.com";
+        friend1.facebookID = "jallen";
+        friend1.phone="212-545-5545";
+
+        Hashtable friends = new Hashtable();
+        friends.put("Jackie", friend1);
+
+        // this is a time bomb
+        friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
+
+        // Cast from Object to ContactDetail
+        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+
+        System.out.println("Art's phone number is " + artsPhone);
+
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>HashTableBrokenDemo</code> add the first object (for Jackie) of type <code>ContactDetail</code> to the <code>friends</code> collection, but the contact details for Art are added in the form of a String:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">"Art Jones, ajones@gmail.com, ajones, 212-333-2121"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Java compiler sees no crime here - the <code>Hashtable</code> can store any descendants of the class <code>Object</code>.  But if you&#8217;ll run this program, you&#8217;ll get an error in the line that tries to cast the collection element to <code>ContactDetail</code> type. This is how my IntelliJ IDEA screen with the error look like:</p>
+</div>
+<div id="FIG6-6" class="imageblock">
+<div class="content">
+<img src="./images/fig_6_06.png" alt="fig 6 06">
+</div>
+<div class="title">Figure 6. The runtime exception: ClassCastException</div>
+</div>
+<div class="paragraph">
+<p>The program failed on line 24 with the error <code>ClassCastException</code>. The runtime errors are called exceptions in Java, and I&#8217;ll explain error handling in Chapter 10. But my main point is that this program has crashed during the runtime just because I "forgot" that only the objects of type <code>ContactDetail</code> should be stored in the collection <code>friends</code>.</p>
+</div>
+<div class="paragraph">
+<p>Now I&#8217;ll copy the code of <code>HashTableBrokenDemo</code> into the new class called <code>HashTableGenericsDemo</code>. I&#8217;ll make a small change there - I will declare the collection <code>friends</code> with parameters:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Hashtable&lt;String, ContactDetail&gt; friends = new Hashtable&lt;&gt;();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now I&#8217;m explicitly stating that my intention is to use the <code>String</code> objects  for keys, and <code>ContactDevail</code> as a values. The program <code>HashTableGenericsDemo</code> is shown next - it won&#8217;t even compile.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class HashTableGenericsDemo {
+    public static void main(String[] args) {
+
+        ContactDetail friend1 = new ContactDetail();
+        friend1.fullName = "Jackie Allen";
+        friend1.email = "jallen@gmail.com";
+        friend1.facebookID = "jallen";
+        friend1.phone="212-545-5545";
+
+        Hashtable&lt;String, ContactDetail&gt; friends = new Hashtable&lt;&gt;();
+        friends.put("Jackie", friend1);
+
+        // this is a time bomb
+       friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
+
+        // Cast from Object to ContactDetail
+        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+
+        System.out.println("Art's phone number is " + artsPhone);
+
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The compiler will complain about the line where I&#8217;m trying to call the method <code>put()</code> with two strings as arguments. The Java compiler will generate an error message that it can&#8217;t apply to <code>String</code> parameters to a <code>Hashtable</code> that was declared with parameters <code>&lt;String, ContactDetail&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>What did we gain? If the program <code>HashTableBrokenDemo</code> allowed us to store anything in the collection but crashed during the runtime, the program <code>HashTableGenericsDemo</code> prevented me from this error. Having a compiler&#8217;s error it&#8217;s a lot better than getting surprises during the runtime, isn&#8217;t it?</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ve been using parameterized data type <code>Hashtable</code> that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won&#8217;t be covering it in this book.</p>
+</div>
 </div>
 </div>
 </div>
@@ -905,7 +1048,7 @@ public class HashTableDemo {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-20 11:48:16 EDT
+Last updated 2014-08-20 15:01:39 EDT
 </div>
 </div>
 </body>
