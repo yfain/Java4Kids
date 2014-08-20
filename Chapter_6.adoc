@@ -92,15 +92,55 @@ Some software developer are creating libraries or frameworks of classes to be us
 
 === Casting
 
+In Java all classes are directly or indirectly inherited from the class `Object`, which is the root of the class hierarchy. In Figure 2 you've seen a class `Car` that has number of methods that we've never declared - they belong to the class `Object`, and the class `Car` extends `Object` even though we've never asked for it.  So any of your application classes has an ancestor - `Object`.
+
+When you declare a variable to represent an instance of your class, you can give it a type either of your class or any of its ancestors. For example, both of the following declarations are correct:
+
+[source, java]
+----
+Car myCar = new Car();
+
+Object myOtherCar = new Car();
+----
+
+Java compiler can _cast_ (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called _upcasting_. But if a variable has the type of a super class, it won't see any members of teh subclass. The next screen shot shows that the variable `myOtherCar` doesn't see the method `brake()` declared in the class `Car`.
 
 
-=== Collections
+[[FIG6-4]]
+.The Object type variable doesn't see Car's members
+image::images/fig_6_04.png[]
+
+But you can say, "Doesn't the variable `myOtherCar` point at the instance of the class `Car`, which has a public method `brake()`?" That's right, but since I declared this variable of the type `Object` the variable `myOtherCar` assumes that its just a general object.  The programmer can _downcast_ the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example: 
+
+[source, java]
+----
+Object myOtherCar = new Car();
+
+Car myOtherCarAfterCasting = (Car) myOtherCar;
+----
+
+It's like you're saying, "I know that the variable `myOtherCar` is of type ``Object`, but it actually points at the `Car` instance". Now the variable `myOtherCarAfterCasting` will see the method `brake()` declared in the class `Car`:
+
+[[FIG6-5]]
+.The Car type variable sees Car's members
+image::images/fig_6_05.png[]
+
+Why do we need all these complications? Can't we just always declare variables of the specific types? Sometimes we can't. For example, JDK comes with lots of other classes that were written to work with the `Object` data types. Data collection classes were written to be able to store instances of any objects. 
+
+Creators of data collections had no idea that you might need to store instances of `Car` or `Fish` there. But when you use the data collection object in your program, the data type is known. In the next section you'll see an example of a `FishTank` program that stores instances of the class `Fish` in the `ArrayList` and then casts them back to the type `Fish`:
+
+[source, java]
+----
+theFish = (Fish) fishTank.get(i);
+----  
+
+=== Data Collections
 
 Now let's see how to work with collections of data. Java  packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
 
 The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don't belong to the introductory book like this one.
 
-==== Class ArrayList
+==== The Class ArrayList
 
 In Chapter 4 you've got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don't know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class `java.util.ArrayList` can give you more flexibility - it can grow or shrink in size as needed.
 
@@ -220,7 +260,7 @@ public class FishTank {
 }
 ----
 
-First, this program creates a couple of instances of the class `Fish` passing the values for the fields via constructor. Note the letter _f_ in the weight value of the first fish: `2.5f`. In Java all decimals have the type `double` unless you mark it with the suffix _f_ for `float`. 
+First, this program creates a couple of instances of the class `Fish` passing the values for the fields via constructor. Note the letter _f_ in the weight value of the first fish: `2.5f`. In Java all decimal literals have the type `double` unless you mark it with the suffix _f_ for `float`. 
 
 Each instance is added to the collection `fishTank`. Then, the program gets the objects from this collection, casts them to the class `Fish` and prints their values using getters. Here’s the output of the program `FishTank`:
 
@@ -231,6 +271,62 @@ Got the Green fish that weighs 5.0 pounds.
 ----
 
 The `ArrayList` collection uses Java arrays internally and initially creates an array for 10 elements. But if you keep adding more elements to `ArrayList` it internally will create another array of the larger size and copy all existing elements there. Because of this additional memory allocations and data copying `ArrayList` collections works a little slower than arrays, which allocate enough memory in advance.
+
+==== The Class Hashtable
+
+While the `ArrayList` collection only allows referencing its elements by index (e.g. `fishTank.get(i)`), sometimes it would be easier to reference collection elements by names as _key/value_ pairs. I'll illustrate by storing my friends' contact information in a `HashTable` collection that allows accessing objects by key names. Let's declare a simple class `ContactDetail`, which can store contact details of one person.
+
+[source, java]
+----
+public class ContactDetail {
+    String fullName;
+    String facebookID;
+    String phone;
+    String email;
+}
+----
+
+The program `HashTableDemo` will create and populate two instances of `ContactDetail`, will add them to the `Hashtable` collection by names (the keys), and then will print the phone number of the second contact.
+
+[source, java]
+----
+import java.util.Hashtable;
+
+public class HashTableDemo {
+    public static void main(String[] args) {
+
+        ContactDetail friend1 = new ContactDetail();
+        friend1.fullName = "Jackie Allen";
+        friend1.email = "jallen@gmail.com";
+        friend1.facebookID = "jallen";
+        friend1.phone="212-545-5545";
+
+        ContactDetail friend2 = new ContactDetail();
+        friend2.fullName = "Art Jones";
+        friend2.email = "ajones@gmail.com";
+        friend2.facebookID = "ajones";
+        friend2.phone="212-333-2121";
+
+        Hashtable friends = new Hashtable();
+        friends.put("Jackie", friend1);
+        friends.put("Art", friend2);
+
+        // Cast from Object to ContactDetail
+        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+
+        System.out.println("Art's phone number is " + artsPhone);
+    }
+}
+----
+
+In this example I used the first name as the key in the method `put()` that adds elements to a `Hashtable`.  Hence one contact can be referred by the key `get("Jackie")`, and the other one as `get("Art")`. The method `get()` returns the collection element as the `Object` type, so I had to cast it to `ContactDetail` to be able to see the field `phone`.
+
+`HashTable` requires each key to be unique. Say you have another contact named `Art` and will create a new instance of the `ContactDetail` object. If you'll add it to the same collection under the same key - `friends.put("Art", friend3);`  it'll replace the contact details of the first Art with the data of the second one. This happens because Java `Hashtable` internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like `ArtFromNYC` or use another Java collection like `ArrayList` to store your contacts. By the way, `ArrayList` even allows you to store duplicates (objects with the same values), while `Hashtable` doesn't. 
+
+I'm not going to cover other Java collections here, but if you'd like to do your own research, read about such collections from the `java.util` package as `HashMap`, `HashSet`, and `LinkedList`. There is also a class `Collections` that has a bunch of useful static methods to operate on your data collections (e.g. `sort()`, `copy()`, `binarySearch()` et al.). 
+
+=== Generics
+
 
 
 == Challenge Yourself
