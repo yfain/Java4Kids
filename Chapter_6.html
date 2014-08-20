@@ -491,6 +491,7 @@ p { margin-bottom: 1.25rem; }
 <li>
 <ul class="sectlevel2">
 <li><a href="#_access-levels">Access Levels</a></li>
+<li><a href="#_casting">Casting</a></li>
 <li><a href="#_collections">Collections</a></li>
 <li>
 <ul class="sectlevel3">
@@ -508,7 +509,7 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-6-access-levels-collections-and-generics"><a class="anchor" href="#_chapter-6-access-levels-collections-and-generics"></a>Chapter 6. Access Levels, Collections, and Generics</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>I&#8217;ll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we&#8217;ll experiment with Java collections - the language elements that can store multiple elements of the same type. Remember arrays and their limitations? Java collections offer an alternative to arrays and have other ways of storing similar objects. Finally, you&#8217;ll get familiar with the mechanism of <em>generics</em> that allows Java compiler to ensure that you won&#8217;t be using the wrong data types with data collections or other objects.</p>
+<p>I&#8217;ll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we&#8217;ll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Finally, you&#8217;ll get familiar with the mechanism of <em>generics</em> that allows Java compiler to ensure that you won&#8217;t be using the wrong data types with data collections or other objects.</p>
 </div>
 <div class="sect2">
 <h3 id="_access-levels"><a class="anchor" href="#_access-levels"></a>Access Levels</h3>
@@ -531,7 +532,7 @@ p { margin-bottom: 1.25rem; }
 <p>When you design a  class, hide methods and class member variables that should not be visible from outside. Some of the methods of member variables are meant to be used internally and not to be exposed to other classes.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll start learning about hiding and protecting data with the <code>private</code> access level. If a variable or a method are declared private, they can be used only within the class where they were declared. The next code sample - it represent a car, and declares some of its elements as <code>private</code>. Note that I&#8217;ve created this class in the package <code>vehicles</code>.</p>
+<p>We&#8217;ll start learning about hiding and protecting data with the <code>private</code> access level. If a variable or a method are declared private, they can be used only within the class where they were declared. The next code sample represents the class <code>Car</code> and declares some of its members as <code>private</code>. Note that I&#8217;ve created this class in the package <code>vehicles</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -582,10 +583,10 @@ public class Car {
 </div>
 </div>
 <div class="paragraph">
-<p>By looking at this code I can say that the class <code>Car</code> exposes only one public method – <code>brake()</code>, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods.</p>
+<p>By looking at this code I can say that the class <code>Car</code> exposes only one public method <code>brake()</code>, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods.</p>
 </div>
 <div class="paragraph">
-<p>I took the next screenshot in IntelliJ IDEA while writing a class <code>CarMaster</code> that uses <code>Car</code>. IDEA helps me with suggesting the <code>Car</code> class members that I can use in this context. Only the method <code>brake()</code> is visible from the class <code>Car</code> (other methods are from the class <code>Object</code>).</p>
+<p>I took the next screen shot in IntelliJ IDEA while writing a class <code>CarMaster</code> that uses <code>Car</code>. IDEA helps me with suggesting the <code>Car</code> class members that I can use in this context. Only the method <code>brake()</code> is visible from the class <code>Car</code> (other methods are from the class <code>Object</code>).</p>
 </div>
 <div id="FIG6-2" class="imageblock">
 <div class="content">
@@ -613,23 +614,26 @@ public class Car {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_casting"><a class="anchor" href="#_casting"></a>Casting</h3>
+</div>
+<div class="sect2">
 <h3 id="_collections"><a class="anchor" href="#_collections"></a>Collections</h3>
 <div class="paragraph">
 <p>Now let&#8217;s see how to work with collections of data. Java  packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
 </div>
 <div class="paragraph">
-<p>The package <code>java.util.concurrent</code> has collections that are useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don&#8217;t belong to the introductory book like this one.</p>
+<p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don&#8217;t belong to the introductory book like this one.</p>
 </div>
 <div class="sect3">
 <h4 id="_class-arraylist"><a class="anchor" href="#_class-arraylist"></a>Class ArrayList</h4>
 <div class="paragraph">
-<p>In Chapter 4 you got familiar with Java arrays, which have a restriction - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change multiple times a day. The class <code>java.util.ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed.</p>
+<p>In Chapter 4 you&#8217;ve got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class <code>java.util.ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed.</p>
 </div>
 <div class="paragraph">
-<p>Why use arrays, then?  Let’s just always use <code>ArrayList</code>! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The <code>ArrayList</code> objects works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.</p>
+<p>Why use arrays, then?  Let’s just always use <code>ArrayList</code>! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The <code>ArrayList</code> works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.</p>
 </div>
 <div class="paragraph">
-<p>To create and populate an <code>ArrayList</code> object, you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the <code>ArrayList</code> by calling its method <code>add()</code>. The next little program will populate an <code>ArrayList</code>  with <code>String</code> objects and print the content of this collection.</p>
+<p>To create and populate an <code>ArrayList</code> you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the <code>ArrayList</code> by calling its method <code>add()</code>. The next little program will populate an <code>ArrayList</code>  with <code>String</code> objects and then print each element of this collection.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -669,23 +673,109 @@ Friend #3 is Roy</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>get()</code> extracts the element located at a particular position in the <code>ArrayList</code> object. Since you can store any objects in a collection, the method <code>get()</code> returns each element as a Java <code>Object</code> , and it’s a responsibility of the program to <em>cast</em> this object to a proper data type. We did not have to do it in the previous example only because we stored <code>String</code> objects in the collection <code>friends</code>, and Java know how to convert an <code>Object</code> to a <code>String</code> automatically.</p>
+<p>The method <code>get()</code> extracts the element located at the specified position in the <code>ArrayList</code>. Since you can store any objects in this collection, the method <code>get()</code> returns each element of the <code>Object</code> type. The program to <em>cast</em> this object to a proper data type. We did not have to do it in the previous example only because we stored <code>String</code> objects in the collection <code>friends</code>, and Java knows how to convert an <code>Object</code> to a <code>String</code> automatically.</p>
 </div>
 <div class="paragraph">
-<p>But if you decide to store some other objects in <code>ArrayList</code>, for example instances of the class <code>Fish</code>, the proper code to add and extract a particular <code>Fish</code> may look as in the program <code>FishTank</code> that comes next. First, this program creates a couple of instances of the class <code>Fish</code>, assigns some value to color, weight and current depth and stores them in the <code>ArrayList</code> called <code>fishTank</code>. Then, the program gets the objects from this collection, casts them to the class <code>Fish</code> and prints their values.</p>
+<p>Let&#8217;s see how you can work with some other objects in <code>ArrayList</code>, for example instances of the class <code>Fish</code> shown next.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package pets;
+
+public class Fish {
+      private float weight;
+      private String color;
+
+    // constructor
+
+    Fish(float weight, String color){
+        this.setWeight(weight);
+        this.setColor(color);
+    }
+
+    // getters and setters
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Here’s an output of the program FishTank:</p>
+<p>Note that the class fields <code>color</code> and <code>weight</code> are <code>private</code> variables. But this class also defines <code>public</code> <em>getters and setters</em> - the methods that read or modify the fields. In this example the setters and getters don&#8217;t contain any application logic, but they could. For example, you could encapsulate the logic that checks the credentials of the users of this class so not everyone can modify the weight property. By Java naming conventions the setter name starts with the prefix <code>set</code> followed by the capitalized letter of the corresponding <code>private</code> variable. Accordingly, the getter starts with <code>get</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+IntelliJ IDEA can automatically generate setters and getters for the class. Just right-click on the class name and select the options Refactor | Encapsulate Fields.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Got the Red fish that weighs 2.0 pounds. Depth:20
-Got the Green fish that weighs 5.0 pounds. Depth:10</p>
+<p>The code to add (and extract) a particular <code>Fish</code> to the <code>ArrayList</code> collection may look as in the program <code>FishTank</code> that comes next.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package pets;
+
+import java.util.ArrayList;
+
+public class FishTank {
+ public static void main(String[] args) {
+     ArrayList fishTank = new ArrayList();
+
+     Fish fish1 = new Fish(2.5f, "Red");
+     Fish fish2 = new Fish(5, "Green");
+
+     Fish theFish;
+
+     fishTank.add(fish1);
+     fishTank.add(fish2);
+
+     int fishCount = fishTank.size();
+
+     for (int i=0;i&lt;fishCount; i++){
+
+         theFish = (Fish) fishTank.get(i);  // casting
+         System.out.println("Got the " +
+            theFish.getColor() + " fish that weighs " +
+            theFish.getWeight() + " pounds.");
+     }
+ }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Now that you’ve read about the Java access levels,  classes Pet and  Fish can be modified a bit. Such variables as age, color, weight and height should be declared  as protected, and the variable currentDepth should be private. You should add  new public methods such as getAge() to return the value of the variable age, and  setAge() has to set the value of this variable, an so on.</p>
+<p>First, this program creates a couple of instances of the class <code>Fish</code> passing the values for the fields via constructor. Note the letter <em>f</em> in the weight value of the first fish: <code>2.5f</code>. In Java all decimals have the type <code>double</code> unless you mark it with the suffix <em>f</em> for <code>float</code>.</p>
 </div>
 <div class="paragraph">
-<p>Programmers with good manners do not allow one class directly modify properties of another one – the class should provide methods that  modify its internals.  That’s why the class Score from the previous section was designed with private variables, which could  be changed with setters and getters.</p>
+<p>Each instance is added to the collection <code>fishTank</code>. Then, the program gets the objects from this collection, casts them to the class <code>Fish</code> and prints their values using getters. Here’s the output of the program <code>FishTank</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Got the Red fish that weighs 2.5 pounds.
+Got the Green fish that weighs 5.0 pounds.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>ArrayList</code> collection uses Java arrays internally and initially creates an array for 10 elements. But if you keep adding more elements to <code>ArrayList</code> it internally will create another array of the larger size and copy all existing elements there. Because of this additional memory allocations and data copying <code>ArrayList</code> collections works a little slower than arrays, which allocate enough memory in advance.</p>
 </div>
 </div>
 </div>
@@ -699,7 +789,7 @@ Got the Green fish that weighs 5.0 pounds. Depth:10</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-19 13:22:33 EDT
+Last updated 2014-08-19 21:58:52 EDT
 </div>
 </div>
 </body>
