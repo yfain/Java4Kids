@@ -495,9 +495,11 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_data-collections">Data Collections</a></li>
 <li>
 <ul class="sectlevel3">
-<li><a href="#_class-arraylist">Class ArrayList</a></li>
+<li><a href="#_the-class-arraylist">The Class ArrayList</a></li>
+<li><a href="#_the-class-hashtable">The Class Hashtable</a></li>
 </ul>
 </li>
+<li><a href="#_generics">Generics</a></li>
 </ul>
 </li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
@@ -638,7 +640,7 @@ Object myOtherCar = new Car();</code></pre>
 <div class="title">Figure 4. The Object type variable doesn&#8217;t see Car&#8217;s members</div>
 </div>
 <div class="paragraph">
-<p>But you can say, "Dont&#8217;s the variable <code>myOtherCar</code> points at the instance of the class <code>Car</code>, which has a public method <code>brake()</code>?" That&#8217;s right, but since I declared this variable of the type <code>Object</code> the variable <code>myOtherCar</code> assumes that its just a general object.  The programmer can <em>downcast</em> the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example:</p>
+<p>But you can say, "Doesn&#8217;t the variable <code>myOtherCar</code> point at the instance of the class <code>Car</code>, which has a public method <code>brake()</code>?" That&#8217;s right, but since I declared this variable of the type <code>Object</code> the variable <code>myOtherCar</code> assumes that its just a general object.  The programmer can <em>downcast</em> the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -648,7 +650,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now the variable <code>myOtherCarAfterCasting</code> will see the method <code>brake()</code> declared in the class <code>Car</code>:</p>
+<p>It&#8217;s like you&#8217;re saying, "I know that the variable <code>myOtherCar</code> is of type ``Object`, but it actually points at the <code>Car</code> instance". Now the variable <code>myOtherCarAfterCasting</code> will see the method <code>brake()</code> declared in the class <code>Car</code>:</p>
 </div>
 <div id="FIG6-5" class="imageblock">
 <div class="content">
@@ -677,7 +679,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don&#8217;t belong to the introductory book like this one.</p>
 </div>
 <div class="sect3">
-<h4 id="_class-arraylist"><a class="anchor" href="#_class-arraylist"></a>Class ArrayList</h4>
+<h4 id="_the-class-arraylist"><a class="anchor" href="#_the-class-arraylist"></a>The Class ArrayList</h4>
 <div class="paragraph">
 <p>In Chapter 4 you&#8217;ve got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class <code>java.util.ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed.</p>
 </div>
@@ -830,6 +832,68 @@ Got the Green fish that weighs 5.0 pounds.</code></pre>
 <p>The <code>ArrayList</code> collection uses Java arrays internally and initially creates an array for 10 elements. But if you keep adding more elements to <code>ArrayList</code> it internally will create another array of the larger size and copy all existing elements there. Because of this additional memory allocations and data copying <code>ArrayList</code> collections works a little slower than arrays, which allocate enough memory in advance.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_the-class-hashtable"><a class="anchor" href="#_the-class-hashtable"></a>The Class Hashtable</h4>
+<div class="paragraph">
+<p>While the <code>ArrayList</code> collection only allows referencing its elements by index (e.g. <code>fishTank.get(i)</code>), sometimes it would be easier to reference collection elements by names as <em>key/value</em> pairs. I&#8217;ll illustrate by storing my friends' contact information in a <code>HashTable</code> collection that allows accessing objects by key names. Let&#8217;s declare a simple class <code>ContactDetail</code>, which can store contact details of one person.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class ContactDetail {
+    String fullName;
+    String facebookID;
+    String phone;
+    String email;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The program <code>HashTableDemo</code> will create and populate two instances of <code>ContactDetail</code>, will add them to the <code>Hashtable</code> collection by names (the keys), and then will print the phone number of the second contact.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.util.Hashtable;
+
+public class HashTableDemo {
+    public static void main(String[] args) {
+
+        ContactDetail friend1 = new ContactDetail();
+        friend1.fullName = "Jackie Allen";
+        friend1.email = "jallen@gmail.com";
+        friend1.facebookID = "jallen";
+        friend1.phone="212-545-5545";
+
+        ContactDetail friend2 = new ContactDetail();
+        friend2.fullName = "Art Jones";
+        friend2.email = "ajones@gmail.com";
+        friend2.facebookID = "ajones";
+        friend2.phone="212-333-2121";
+
+        Hashtable friends = new Hashtable();
+        friends.put("Jackie", friend1);
+        friends.put("Art", friend2);
+
+        // Cast from Object to ContactDetail
+        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+
+        System.out.println("Art's phone number is " + artsPhone);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example I used the first name as the key in the method <code>put()</code> that adds elements to a <code>Hashtable</code>.  Hence one contact can be referred by the key <code>get("Jackie")</code>, and the other one as <code>get("Art")</code>. The method <code>get()</code> returns the collection element as the <code>Object</code> type, so I had to cast it to <code>ContactDetail</code> to be able to see the field <code>phone</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>HashTable</code> requires each key to be unique. Say you have another contact named <code>Art</code> and will create a new instance of the <code>ContactDetail</code> object. If you&#8217;ll add it to the same collection under the same key - <code>friends.put("Art", friend3);</code>  it&#8217;ll replace the contact details of the first Art with the data of the second one. This happens because Java <code>Hashtable</code> internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like <code>ArtFromNYC</code> or use another Java collection like <code>ArrayList</code> to store your contacts. By the way, <code>ArrayList</code> even allows you to store duplicates (objects with the same values), while <code>Hashtable</code> doesn&#8217;t.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;m not going to cover other Java collections here, but if you&#8217;d like to do your own research, read about such collections from the <code>java.util</code> package as <code>HashMap</code>, <code>HashSet</code>, and <code>LinkedList</code>. There is also a class <code>Collections</code> that has a bunch of useful static methods to operate on your data collections (e.g. <code>sort()</code>, <code>copy()</code>, <code>binarySearch()</code> et al.).</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generics"><a class="anchor" href="#_generics"></a>Generics</h3>
 </div>
 </div>
 </div>
@@ -841,7 +905,7 @@ Got the Green fish that weighs 5.0 pounds.</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-20 10:35:23 EDT
+Last updated 2014-08-20 11:48:16 EDT
 </div>
 </div>
 </body>
