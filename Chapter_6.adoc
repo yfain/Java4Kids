@@ -325,8 +325,133 @@ In this example I used the first name as the key in the method `put()` that adds
 
 I'm not going to cover other Java collections here, but if you'd like to do your own research, read about such collections from the `java.util` package as `HashMap`, `HashSet`, and `LinkedList`. There is also a class `Collections` that has a bunch of useful static methods to operate on your data collections (e.g. `sort()`, `copy()`, `binarySearch()` et al.). 
 
-=== Generics
+=== Introduction to Generics
 
+Java generics is a feature that allow to create so called `parameterized data types`. For example, instead of just declaring a creating a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. For example, declaring and instantiating general collection to store friends like this:
+
+[source, java]
+----
+  ArrayList friends = new ArrayList();
+----
+
+you can do it with a parameter so it can store only `String` object like this:
+
+[source, java]
+----
+  ArrayList<String> friends = new ArrayList<>();
+----
+
+The parameter(s) goes in the angle brackets right after the data type. Note so called _dimond operator <>_ on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right. Now, if by mistake you'll try to add an object of another type to `friends` the Java compiler will complain. 
+
+I was able to specify a parameter for `ArrayList` only because it was created with this ability. If you'll read the http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html[online documentation] for `ArrayList` you'll see that it's declared as follows:
+
+[source, java]
+----
+public class ArrayList<E>
+extends AbstractList<E>
+implements List<E>, RandomAccess, Cloneable, Serializable
+----
+
+That `<E>` means that you're allowed to specify a parameter type of elements that will be stored in the the `ArrayList`. In case of the `friends` collection the Java compiler would see that in this collection `<String>` should be the `<E>`.   
+The http://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html[online documentation] for the class `Hashtable` looks even scarier:
+
+[source, java]
+----
+public class Hashtable<K,V>
+extends Dictionary<K,V>
+implements Map<K,V>, Cloneable, Serializable
+----
+
+But `<K,V>` simply means that you can specify two parameters: `K` is the the key data type, and `V` for value.
+
+Let's write a program that illustrates the advantages of using generics. I'll reuse the example from the previous section called `HashTableDemo` that stored `ContactDetail` instances. Actually, I'll create two new versions of this program. The first one will be called `HashTableBrokenDemo`, and I'll show how to break this program so it crashes during the runtime if we don't use generics. After that, I'll rewrite it as `HashTableGenericsDemo`, where I'll use generics to show how to prevent the runtime errors from happening. Here's the broken program:
+
+[source, java]
+----
+import java.util.Hashtable;
+
+/**
+ * Created by NewProgrammer on 3/28/15.
+ */
+public class HashTableBrokenDemo {
+    public static void main(String[] args) {
+
+        ContactDetail friend1 = new ContactDetail();
+        friend1.fullName = "Jackie Allen";
+        friend1.email = "jallen@gmail.com";
+        friend1.facebookID = "jallen";
+        friend1.phone="212-545-5545";
+
+        Hashtable friends = new Hashtable();
+        friends.put("Jackie", friend1);
+
+        // this is a time bomb
+        friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
+
+        // Cast from Object to ContactDetail
+        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+
+        System.out.println("Art's phone number is " + artsPhone);
+
+    }
+}
+----
+
+The `HashTableBrokenDemo` add the first object (for Jackie) of type `ContactDetail` to the `friends` collection, but the contact details for Art are added in the form of a String: 
+
+[source, java]
+----
+"Art Jones, ajones@gmail.com, ajones, 212-333-2121"
+----
+
+Java compiler sees no crime here - the `Hashtable` can store any descendants of the class `Object`.  But if you'll run this program, you'll get an error in the line that tries to cast the collection element to `ContactDetail` type. This is how my IntelliJ IDEA screen with the error look like:
+
+[[FIG6-6]]
+.The runtime exception: ClassCastException
+image::images/fig_6_06.png[]
+
+The program failed on line 24 with the error `ClassCastException`. The runtime errors are called exceptions in Java, and I'll explain error handling in Chapter 10. But my main point is that this program has crashed during the runtime just because I "forgot" that only the objects of type `ContactDetail` should be stored in the collection `friends`.
+
+Now I'll copy the code of `HashTableBrokenDemo` into the new class called `HashTableGenericsDemo`. I'll make a small change there - I will declare the collection `friends` with parameters:
+
+[source, java]
+----
+Hashtable<String, ContactDetail> friends = new Hashtable<>();
+----
+
+Now I'm explicitly stating that my intention is to use the `String` objects  for keys, and `ContactDevail` as a values. The program `HashTableGenericsDemo` is shown next - it won't even compile. 
+
+[source, java]
+----
+public class HashTableGenericsDemo {
+    public static void main(String[] args) {
+
+        ContactDetail friend1 = new ContactDetail();
+        friend1.fullName = "Jackie Allen";
+        friend1.email = "jallen@gmail.com";
+        friend1.facebookID = "jallen";
+        friend1.phone="212-545-5545";
+
+        Hashtable<String, ContactDetail> friends = new Hashtable<>();
+        friends.put("Jackie", friend1);
+
+        // this is a time bomb
+       friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
+
+        // Cast from Object to ContactDetail
+        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+
+        System.out.println("Art's phone number is " + artsPhone);
+
+    }
+}
+----
+
+The compiler will complain about the line where I'm trying to call the method `put()` with two strings as arguments. The Java compiler will generate an error message that it can't apply to `String` parameters to a `Hashtable` that was declared with parameters `<String, ContactDetail>`.  
+
+What did we gain? If the program `HashTableBrokenDemo` allowed us to store anything in the collection but crashed during the runtime, the program `HashTableGenericsDemo` prevented me from this error. Having a compiler's error it's a lot better than getting surprises during the runtime, isn't it?
+
+I've been using parameterized data type `Hashtable` that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book.  
 
 
 == Challenge Yourself
