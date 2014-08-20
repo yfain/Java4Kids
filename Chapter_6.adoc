@@ -8,7 +8,7 @@ I'll start this chapter with the explanation of how to hide and protect data usi
 
 === Access Levels 
 
-In code samples from previous chapters I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be access only from the code located in the same package ( directory).
+In code samples from previous chapters I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be accessed only from the code located in the same package (directory).
 
 One of the main features of object-oriented languages is _encapsulation_ - an ability to hide and protect data or code. But who do you need to hide or protect the code from? This is not a protection from bad guys who are not allowed to see your code. You hide and protect the code from misuse.
 
@@ -134,7 +134,7 @@ Creators of data collections had no idea that you might need to store instances 
 theFish = (Fish) fishTank.get(i);
 ----  
 
-=== Data Collections
+=== Selected Data Collections
 
 Now let's see how to work with collections of data. Java  packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
 
@@ -341,7 +341,7 @@ you can do it with a parameter so it can store only `String` object like this:
   ArrayList<String> friends = new ArrayList<>();
 ----
 
-The parameter(s) goes in the angle brackets right after the data type. Note so called _dimond operator <>_ on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right. Now, if by mistake you'll try to add an object of another type to `friends` the Java compiler will complain. 
+The parameter(s) goes in the angle brackets right after the data type. Note so called _diamond operator <>_ on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It's also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you'll try to add an object of another type to `friends` the Java compiler will complain. 
 
 I was able to specify a parameter for `ArrayList` only because it was created with this ability. If you'll read the http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html[online documentation] for `ArrayList` you'll see that it's declared as follows:
 
@@ -397,7 +397,7 @@ public class HashTableBrokenDemo {
 }
 ----
 
-The `HashTableBrokenDemo` add the first object (for Jackie) of type `ContactDetail` to the `friends` collection, but the contact details for Art are added in the form of a String: 
+The `HashTableBrokenDemo` adds the first object (for Jackie) of type `ContactDetail` to the `friends` collection, but the contact details for Art are added in the form of a `String`: 
 
 [source, java]
 ----
@@ -419,7 +419,7 @@ Now I'll copy the code of `HashTableBrokenDemo` into the new class called `HashT
 Hashtable<String, ContactDetail> friends = new Hashtable<>();
 ----
 
-Now I'm explicitly stating that my intention is to use the `String` objects  for keys, and `ContactDevail` as a values. The program `HashTableGenericsDemo` is shown next - it won't even compile. 
+Now I'm explicitly stating that my intention is to use the `String` objects for keys, and `ContactDetail` objects as values. The program `HashTableGenericsDemo` is shown next - it won't even compile, yay! 
 
 [source, java]
 ----
@@ -435,24 +435,66 @@ public class HashTableGenericsDemo {
         Hashtable<String, ContactDetail> friends = new Hashtable<>();
         friends.put("Jackie", friend1);
 
-        // this is a time bomb
+        // compiler will complain about this line
        friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
 
-        // Cast from Object to ContactDetail
-        String artsPhone = ((ContactDetail) friends.get("Art")).phone;
+        // No casting from Object to ContactDetail needed
+        String jackiesPhone = friends.get("Jackie").phone;
 
-        System.out.println("Art's phone number is " + artsPhone);
-
+        System.out.println("Jackie's phone number is " + jackiesPhone);
     }
 }
 ----
 
-The compiler will complain about the line where I'm trying to call the method `put()` with two strings as arguments. The Java compiler will generate an error message that it can't apply to `String` parameters to a `Hashtable` that was declared with parameters `<String, ContactDetail>`.  
+The compiler will complain about the line, where I'm trying to call the method `put()` with two `String` objects as arguments. The Java compiler will generate an error message that it can't apply two `String` parameters to a `Hashtable` that was declared with parameters `<String, ContactDetail>`. 
 
-What did we gain? If the program `HashTableBrokenDemo` allowed us to store anything in the collection but crashed during the runtime, the program `HashTableGenericsDemo` prevented me from this error. Having a compiler's error it's a lot better than getting surprises during the runtime, isn't it?
+Another important thing to note is that there is no casting needed when the program gets the information about Jackie's phone. Now the `friends` collection knows from the very beginning that it stores not just some `Object` types, but the `ContactDetail` instances.
+
+What have we achieved? The program `HashTableBrokenDemo` allowed us to store anything in the collection but crashed during the runtime, but `HashTableGenericsDemo` prevented this error from happening. Having a compiler's error it's a lot better than getting surprises during the runtime, isn't it? Besides, with generics we've eliminating the need to cast objects.
 
 I've been using parameterized data type `Hashtable` that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book.  
 
-
 == Challenge Yourself
 
+In this exercise I'd like you to try create your own collection that uses `ArrayList`, generics, private variables and public getters and setters.
+
+1. Create a new IDEA project named Chapter6.
+
+2. Create a package named _contacts_.
+
+3. In the package _contacts_ create the class `ContactDetail` that looks like this:
++
+[source, java]
+----
+public class ContactDetail {
+    private String fullName;
+    private String facebookID;
+    private String phone;
+    private String email;
+
+    public String toString(){
+    return "Name: " + getFullName() + ", Facebook ID:  " + facebookID +", phone: " + phone + ", email: " + email;
+
+    };
+}
+----
++
+Note that I'm overriding the method `toString()` that exists in the class `Object`.
+
+4. In IntelliJ IDEA right-click on the class name and select the options Refactor | Encapsulate Fields to generate public getters and setters for all fields.
+
+5. In the package contacts write a program `MyContacts` that will declare and instantiate an `ArrayList` called `friends` it should  allow only the objects of type `ContactDetail`.
+
+6. Create two or more instances of `ContactDetail` object and populated them with your friends' data using setters.
+
+7. Add all instances of `ContactDetail` to the `friends` collection by using the method `add()`.
+
+8. Write a for-each loop that will iterate through the collection friends and print all their contact information 
+by simply printing each object from the collection `friends`. Since the class `ContactDetails` has an overriden method `toString()`, you can simply print the objects as shown below - the method `toString()` will be invoked automatically:
++
+[source, java]
+---- 
+for (ContactDetail friend: friends){
+    System.out.println(friend);
+}
+----
