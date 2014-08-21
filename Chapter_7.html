@@ -493,7 +493,9 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_introduction-to-javafx">Introduction to JavaFX</a></li>
 <li><a href="#_brief-overview-of-javafx-layouts">Brief Overview of JavaFX Layouts</a></li>
 <li><a href="#_getting-started-with-scene-builder">Getting Started With Scene Builder</a></li>
+<li><a href="#_gridpane-layout">GridPane Layout</a></li>
 <li><a href="#_styling-with-css">Styling with CSS</a></li>
+<li><a href="#_developing-gui-for-calculator">Developing GUI for Calculator</a></li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
 </ul>
 </li>
@@ -714,7 +716,6 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 &lt;?import javafx.scene.control.Button?&gt;
 &lt;?import javafx.scene.control.Label?&gt;
 
-
 &lt;GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sample.Controller"&gt;
    &lt;columnConstraints&gt;
       &lt;ColumnConstraints /&gt;
@@ -731,6 +732,81 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 &lt;/GridPane&gt;</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>I&#8217;ll go through the details of the <code>GridPane</code> layout in the next section, but please note that Scene Builder created some tags to specify the constraints for the rows and columns of the grid. The <code>Button</code> component is placed inside the grid in the cell located in the intersection of the column 1 and row 1.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gridpane-layout"><a class="anchor" href="#_gridpane-layout"></a>GridPane Layout</h3>
+<div class="paragraph">
+<p>I&#8217;m not going to cover each JavaFX layout in details, but will show you how to use a pretty powerful layout - <code>GridPane</code>. When we&#8217;ll work on the GUI for the calculator, I&#8217;ll also show you how to design a scene using a combination of layouts.</p>
+</div>
+<div class="paragraph">
+<p>GridPane divides the area into rows and columns and places GUI components (the nodes) into the grid cells. With <code>GridPane</code> layout cells don&#8217;t have to have the same size - nodes can span. If the screen size changes, the content won&#8217;t be rearranged and will maintain the grid look.</p>
+</div>
+<div class="paragraph">
+<p>Before placing the node into a cell you have to specify grid constraints such as <code>rowIndex</code> and <code>columnIndex</code> (the coordinate of the cell, which starts with 0,0). The <code>rowSpans</code> and <code>columnSpan</code> allow to make the cell as wide (or as tall) as several other cells. The <code>GridPane</code> <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/GridPane.html">documentation</a> describes lots of various constraints that can define the behavior of each cell&#8217;s content if the windows gets resized. I&#8217;ll show you a basic example that uses some of these constraints.</p>
+</div>
+<div class="paragraph">
+<p>I want to create a Login window where the user can enter the id, password and press the button Sign In. The scene will use <code>GridPane</code> layout. The first row will contain a <code>Label</code> and <code>TextField</code> for user id, the second row will have a similar pair for the password, and the third row of the grid will have one <code>Button</code> Sign In that should span two columns. This is how this window should look like:</p>
+</div>
+<div id="FIG7-7" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_07.png" alt="fig 7 07">
+</div>
+<div class="title">Figure 7. Sign In GUI</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll start with creating a new IDEA JavaFX project (menus File | New Project |JavaFX Application)giving it a name Signin. The project with classes <code>Main</code>, <code>Controller</code> and the file <em>sample.fxml</em> will be generated. Let&#8217;s rename this FXML file into <em>signin.fxml</em>. IDEA will automatically change the corresponding line in the <code>Main</code> class to load this file instead of <em>sample.fxml</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rename the package from <em>sample</em> to <em>signin</em> (right-click menu, Refactor | Rename). Now open the file signin.fxml in Scene Builder and start thinking about laying out the components of our Sign In scene. Let&#8217;s take another look at the image of the Sign In window. I can clearly see that GUI component are placed in three rows. The first two have a <code>Label</code> and <code>TextField</code> and the third one has a <code>Button</code>.</p>
+</div>
+<div class="paragraph">
+<p>I can also recognize two columns in the layout of the Sign In window. The first column has two <code>Label</code> components and the left side of the <code>Button</code>. The second column has two <code>TextFiled</code> components and the right size of the <code>Button</code>. We can also say that the <code>Button</code> <em>spans</em> two columns. We&#8217;ve got a 2x3 grid!</p>
+</div>
+<div class="paragraph">
+<p>Open the generated <code>signin.fxml</code> in Scene Builder. Since this file has already empty <code>&lt;GrigPane&gt;</code> tag, you&#8217;ll see GridPane(0,0) as the root of the hierarchy in the bottom left corner as in Figure 4 above. So far this grid has zero rows and zero columns. Right-click in the middle of the screen and add three rows and two columns to the grid using the menus Add Row Below and Add Column After. When the GridPane is selected The Scene Builder&#8217;s window may look similar to this:</p>
+</div>
+<div id="FIG7-8" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_08.png" alt="fig 7 08">
+</div>
+<div class="title">Figure 8. A GridPane (2,3)</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s drag from the Controls section on the left two <code>Label</code> controls and a <code>Button</code> and drop them into the appropriate cells in the first grid column. Change the text on these component to be UserID:, Password, and Sign In.
+Then we could drag and drop two <code>TextField</code> objects in the top two cells in the second column. Actually, it&#8217;s not a good idea to enter password in the clear text. I&#8217;ll use the <code>TextField</code> for the user ID, and the <code>PasswordField</code> (it marks user&#8217;s input) for password.</p>
+</div>
+<div id="FIG7-9" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_09.png" alt="fig 7 09">
+</div>
+<div class="title">Figure 9. A GridPane with nodes in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>Note that the hierarchy of nodes is shown in the bottom left corner. On complex GUI layout it might be easier to select the GUI control in the Hierarchy panel than in the design area in the middle. Now select the menu Preview | Show Preview in Window and you&#8217;ll see the following window:</p>
+</div>
+<div id="FIG7-10" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_10.png" alt="fig 7 10">
+</div>
+<div class="title">Figure 10. Previwing in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>This window doesn&#8217;t look exactly as we wanted, there are some issues with alignments, there is no spacing between the container and components, and the button Sign In doesn&#8217;t span. But on the bright side, the <code>GridPane</code> controls the layout and if you&#8217;ll try to stretch this window, GUI components won&#8217;t change their relative positioning:</p>
+</div>
+<div id="FIG7-11" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_11.png" alt="fig 7 11">
+</div>
+<div class="title">Figure 11. Streching the preview window in Scene Builder</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling with CSS</h3>
@@ -744,6 +820,9 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_developing-gui-for-calculator"><a class="anchor" href="#_developing-gui-for-calculator"></a>Developing GUI for Calculator</h3>
+</div>
+<div class="sect2">
 <h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h3>
 </div>
 </div>
@@ -751,7 +830,7 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-21 10:30:45 EDT
+Last updated 2014-08-21 16:21:18 EDT
 </div>
 </div>
 </body>
