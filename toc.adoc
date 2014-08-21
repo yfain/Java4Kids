@@ -18,7 +18,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * <<Chapter_4.adoc#,Chapter 4. Java Building Blocks>>
 * <<Chapter_5.adoc#,Chapter 5. Interfaces, Lambdas, and Anonymous Classes >>
 * <<Chapter_6.adoc#,Chapter 6. Access Levels, Collections, and Generics>>
-* Chapter 7. Creating Graphical Calculator with JavaFX  (Work in Progress...)
+*  <<Chapter_7.adoc#,Chapter 7. Creating Graphical Calculator with JavaFX  (Work in Progress...)>>
 * Chapter 8. Reacting to JavaFX Events 
 * Chapter 9. Creating a Tic-Tac-Toe Game
 * Chapter 10. Exceptions: Dealing with Errors 
