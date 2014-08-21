@@ -563,7 +563,7 @@ Then the program loads <em>sample.fxml</em>, sets the title of the stage and cre
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">&lt;?import javafx.geometry.Insets?&gt;
+<pre class="highlight"><code class="xml language-xml">&lt;?import javafx.geometry.Insets?&gt;
 &lt;?import javafx.scene.layout.GridPane?&gt;
 
 &lt;?import javafx.scene.control.Button?&gt;
@@ -706,7 +706,7 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
 &lt;?import javafx.scene.control.*?&gt;
 &lt;?import java.lang.*?&gt;
@@ -807,6 +807,81 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 </div>
 <div class="title">Figure 11. Streching the preview window in Scene Builder</div>
 </div>
+<div class="paragraph">
+<p>Let&#8217;s do a couple of more property changes before we&#8217;ll run this application from IDEA. The properties panel is located on the right and has three sections: Properties, Layout, and Code, and you&#8217;ll find the properties to be change in n of these sections.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>On the left panel of Scene Builder select the <code>GridPane</code> and on the right panel change alignment to be TOP_LEFT.</p>
+</li>
+<li>
+<p>Enter 10 for the padding on top, right, bottom and left for the <code>GridPane</code>. We need some spacing between the borders of the scene and the grid.</p>
+</li>
+<li>
+<p>Select the <code>Button</code> on the left and then change the column span to be 2 and the preferred width to be a large number, say 300. This will make the button wide.</p>
+</li>
+<li>
+<p>Select the first column of the grid row by clicking on the little 0 on top of the grid. Set the both preferred and maximum width for this column to be 70.</p>
+</li>
+<li>
+<p>Select the second column of the grid row by clicking on the little 1 on top of the grid. Set the both preferred and maximum width for this column to be 100.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After you do all these changes and save them, the file <code>signin.fxml</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.geometry.*?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.layout.GridPane?&gt;
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+
+&lt;GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller"&gt;
+   &lt;rowConstraints&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+   &lt;/rowConstraints&gt;
+   &lt;columnConstraints&gt;
+      &lt;ColumnConstraints maxWidth="70.0" minWidth="10.0" prefWidth="70.0" /&gt;
+      &lt;ColumnConstraints maxWidth="100.0" minWidth="10.0" prefWidth="100.0" /&gt;
+   &lt;/columnConstraints&gt;
+   &lt;children&gt;
+      &lt;Label alignment="CENTER" text="User ID:" /&gt;
+      &lt;Label text="Password:" GridPane.rowIndex="1" /&gt;
+      &lt;Button mnemonicParsing="false" prefWidth="300.0" text="Sign In" GridPane.columnSpan="2" GridPane.rowIndex="2" /&gt;
+      &lt;TextField GridPane.columnIndex="1" /&gt;
+      &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" /&gt;
+   &lt;/children&gt;
+   &lt;padding&gt;
+      &lt;Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /&gt;
+   &lt;/padding&gt;
+&lt;/GridPane&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is a declarative way of creating GUI in FXML. No Java coding was required to create the GUI for this application.</p>
+</div>
+<div class="paragraph">
+<p>Finally, let&#8217;s set the size of the stage so it can accommodate our scene. In IDEA, open the class <code>Main</code> and the code set the size of the scene to be 400x250 pixels.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">primaryStage.setScene(new Scene(root, 400, 250));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the <code>Main</code> program and you&#8217;ll see the window that looks like in Figure 7 above. The work that we&#8217;ve done in Scene Builder was a little tedious, but it didn&#8217;t require any knowledge of Java. This means that this work can be given to a UI designer, while you&#8217;ll concentrate on programming the application logic in Java.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling with CSS</h3>
@@ -830,7 +905,7 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-21 16:21:18 EDT
+Last updated 2014-08-21 18:32:05 EDT
 </div>
 </div>
 </body>
