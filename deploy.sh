@@ -28,6 +28,8 @@ cd $DIR
 # Delete everything
 rm -rf *
 
+touch .nojekyll
+
 # Copy website files from real repo
 cp -R ../out/*.html .
 
