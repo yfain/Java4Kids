@@ -494,7 +494,13 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_brief-overview-of-javafx-layouts">Brief Overview of JavaFX Layouts</a></li>
 <li><a href="#_getting-started-with-scene-builder">Getting Started With Scene Builder</a></li>
 <li><a href="#_gridpane-layout">GridPane Layout</a></li>
-<li><a href="#_styling-with-css">Styling with CSS</a></li>
+<li>
+<ul class="sectlevel3">
+<li><a href="#_designing-a-sign-in-window-in-scene-builder">Designing a Sign In Window in Scene Builder</a></li>
+<li><a href="#_programming-sign-in-window-in-java">Programming Sign In Window in Java</a></li>
+</ul>
+</li>
+<li><a href="#_styling-with-css">Styling With CSS</a></li>
 <li><a href="#_developing-gui-for-calculator">Developing GUI for Calculator</a></li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
 </ul>
@@ -507,10 +513,10 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-7-creating-graphical-calculator-with-javafx"><a class="anchor" href="#_chapter-7-creating-graphical-calculator-with-javafx"></a>Chapter 7. Creating Graphical Calculator with JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After lots of of code example producing boring outputs to the system console, it&#8217;s time for creating a nice looking GUI. We&#8217;re accustomed to programs that open a window with buttons, text fields, menus and the likes.</p>
+<p>After lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking GUI. We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and the likes.</p>
 </div>
 <div class="paragraph">
-<p>Java has an old library of components called Swing, and the new one called JavaFX framework. We&#8217;ll use only JavaFX in this book.</p>
+<p>Java has an old library of GUI components called <a href="http://docs.oracle.com/javase/tutorial/uiswing/">Swing</a>, and the new one called <a href="http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm">JavaFX</a>. We&#8217;ll use only JavaFX in this book.</p>
 </div>
 <div class="paragraph">
 <p>In this chapter I&#8217;ll explain you the basics of GUI programming with JavaFX. You&#8217;ll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you&#8217;ll learn how to write code that reacts on user&#8217;s actions (a.k.a. events) like a click on the button or a mouse move.</p>
@@ -747,8 +753,10 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 <div class="paragraph">
 <p>Before placing the node into a cell you have to specify grid constraints such as <code>rowIndex</code> and <code>columnIndex</code> (the coordinate of the cell, which starts with 0,0). The <code>rowSpans</code> and <code>columnSpan</code> allow to make the cell as wide (or as tall) as several other cells. The <code>GridPane</code> <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/GridPane.html">documentation</a> describes lots of various constraints that can define the behavior of each cell&#8217;s content if the windows gets resized. I&#8217;ll show you a basic example that uses some of these constraints.</p>
 </div>
+<div class="sect3">
+<h4 id="_designing-a-sign-in-window-in-scene-builder"><a class="anchor" href="#_designing-a-sign-in-window-in-scene-builder"></a>Designing a Sign In Window in Scene Builder</h4>
 <div class="paragraph">
-<p>I want to create a Login window where the user can enter the id, password and press the button Sign In. The scene will use <code>GridPane</code> layout. The first row will contain a <code>Label</code> and <code>TextField</code> for user id, the second row will have a similar pair for the password, and the third row of the grid will have one <code>Button</code> Sign In that should span two columns. This is how this window should look like:</p>
+<p>I want to create a Sign In window where the user can enter the id, password and press the button Sign In. The scene will use <code>GridPane</code> layout. The first row will contain a <code>Label</code> and <code>TextField</code> for user id, the second row will have a similar pair for the password, and the third row of the grid will have one <code>Button</code> Sign In that should span two columns. This is how this window should look like:</p>
 </div>
 <div id="FIG7-7" class="imageblock">
 <div class="content">
@@ -872,26 +880,77 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 <p>This is a declarative way of creating GUI in FXML. No Java coding was required to create the GUI for this application.</p>
 </div>
 <div class="paragraph">
-<p>Finally, let&#8217;s set the size of the stage so it can accommodate our scene. In IDEA, open the class <code>Main</code> and the code set the size of the scene to be 400x250 pixels.</p>
+<p>Finally, let&#8217;s set the size of the stage so it can accommodate our scene. In IDEA, open the class <code>Main</code> and the code set the size of the scene to be 200x150 pixels.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">primaryStage.setScene(new Scene(root, 400, 250));</code></pre>
+<pre class="highlight"><code class="java language-java">primaryStage.setScene(new Scene(root, 200, 150));</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Run the <code>Main</code> program and you&#8217;ll see the window that looks like in Figure 7 above. The work that we&#8217;ve done in Scene Builder was a little tedious, but it didn&#8217;t require any knowledge of Java. This means that this work can be given to a UI designer, while you&#8217;ll concentrate on programming the application logic in Java.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling with CSS</h3>
+<div class="sect3">
+<h4 id="_programming-sign-in-window-in-java"><a class="anchor" href="#_programming-sign-in-window-in-java"></a>Programming Sign In Window in Java</h4>
 <div class="paragraph">
-<p>Each node can be styled using the Cascading Style Sheet (CSS) file. CSS are widely used for styling Web applications. On the top of the scene graph you&#8217;ll create a root node.</p>
+<p>Some people like visual design tools, but some people don&#8217;t. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I&#8217;ve written in Java. It&#8217;ll produce the same output as in Figure 7.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>In addition to built in layouts you can customize the positioning of the nodes on the scene using CSS.</pre>
+<pre class="highlight"><code class="java language-java">public class GridPaneSample extends Application {
+
+  public void start(Stage primaryStage) {
+
+      final int TWO_COLUMN_SPAN = 2;
+
+      Label userIdLbl = new Label("User ID:");
+      TextField userIdTxt = new TextField();
+      Label userPwdLbl = new Label("Password:");
+      PasswordField userPwdTxt = new PasswordField();
+
+      GridPane root = new GridPane();
+      root.setVgap(10);
+      root.setPadding(new Insets(10));
+      root.setAlignment(Pos.CENTER);
+
+      // Using static methods for setting node constraints
+      GridPane.setConstraints(userIdLbl, 0, 0);
+      GridPane.setConstraints(userIdTxt, 1, 0);
+      GridPane.setConstraints(userPwdLbl, 0, 1);
+      GridPane.setConstraints(userPwdTxt, 1, 1);
+
+      root.getChildren().addAll(userIdLbl, userIdTxt,
+                                userPwdLbl, userPwdTxt);
+
+      Button signInBtn = new Button ("Sign In");
+
+      // Allow the button to be wider overriding preferred width
+      signInBtn.setPrefWidth(Double.MAX_VALUE);
+
+      // using instance method for directly adding the node
+      root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);
+
+      Scene scene = new Scene(root,250,150);
+      primaryStage.setScene(scene);
+      primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>After all your efforts in Scene Builder, this Java program shouldn&#8217;t be difficult for you to understand. As you see, there are classes named similarly to FXML tags. FXML tags can have attributes (e.g. <code>vgap="10" `), and in Java you'd need to call the corresponding setter (e.g. `root.setVgap(10)</code>). So the choice is yours - FXML or Java. If you have <em>visual personality</em> use FXML, otherwise use Java.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling With CSS</h3>
+<div class="paragraph">
+<p>Each node can be styled using the Cascading Style Sheets (CSS) file. CSS are widely used for styling Web applications created with HTML and JavaScript. But JavaFX supports styling too.</p>
 </div>
 </div>
 <div class="sect2">
@@ -905,7 +964,7 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-21 18:32:05 EDT
+Last updated 2014-08-22 10:48:18 EDT
 </div>
 </div>
 </body>
