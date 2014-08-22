@@ -4,9 +4,9 @@
 
 == Chapter 7. Creating Graphical Calculator with JavaFX 
 
-After lots of of code example producing boring outputs to the system console, it's time for creating a nice looking GUI. We're accustomed to programs that open a window with buttons, text fields, menus and the likes. 
+After lots of code samples producing outputs to the system console, it's time for creating a nice looking GUI. We're accustomed to programs that open windows with buttons, text fields, menus and the likes. 
 
-Java has an old library of components called Swing, and the new one called JavaFX framework. We'll use only JavaFX in this book.
+Java has an old library of GUI components called http://docs.oracle.com/javase/tutorial/uiswing/[Swing], and the new one called http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm[JavaFX]. We'll use only JavaFX in this book.
 
 In this chapter I'll explain you the basics of GUI programming with JavaFX. You'll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you'll learn how to write code that reacts on user's actions (a.k.a. events) like a click on the button or a mouse move. 
 
@@ -167,7 +167,9 @@ GridPane divides the area into rows and columns and places GUI components (the n
 
 Before placing the node into a cell you have to specify grid constraints such as `rowIndex` and `columnIndex` (the coordinate of the cell, which starts with 0,0). The `rowSpans` and `columnSpan` allow to make the cell as wide (or as tall) as several other cells. The `GridPane` http://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/GridPane.html[documentation] describes lots of various constraints that can define the behavior of each cell's content if the windows gets resized. I'll show you a basic example that uses some of these constraints.
 
-I want to create a Login window where the user can enter the id, password and press the button Sign In. The scene will use `GridPane` layout. The first row will contain a `Label` and `TextField` for user id, the second row will have a similar pair for the password, and the third row of the grid will have one `Button` Sign In that should span two columns. This is how this window should look like:
+==== Designing a Sign In Window in Scene Builder
+
+I want to create a Sign In window where the user can enter the id, password and press the button Sign In. The scene will use `GridPane` layout. The first row will contain a `Label` and `TextField` for user id, the second row will have a similar pair for the password, and the third row of the grid will have one `Button` Sign In that should span two columns. This is how this window should look like:
 
 [[FIG7-7]]
 .Sign In GUI
@@ -261,21 +263,71 @@ After you do all these changes and save them, the file `signin.fxml` will look l
 
 This is a declarative way of creating GUI in FXML. No Java coding was required to create the GUI for this application.
 
-Finally, let's set the size of the stage so it can accommodate our scene. In IDEA, open the class `Main` and the code set the size of the scene to be 400x250 pixels.
+Finally, let's set the size of the stage so it can accommodate our scene. In IDEA, open the class `Main` and the code set the size of the scene to be 200x150 pixels.
 
 [source, java]
 ----
-primaryStage.setScene(new Scene(root, 400, 250));
+primaryStage.setScene(new Scene(root, 200, 150));
 ----
 
 Run the `Main` program and you'll see the window that looks like in Figure 7 above. The work that we've done in Scene Builder was a little tedious, but it didn't require any knowledge of Java. This means that this work can be given to a UI designer, while you'll concentrate on programming the application logic in Java. 
 
+==== Programming Sign In Window in Java
 
-=== Styling with CSS
+Some people like visual design tools, but some people don't. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I've written in Java. It'll produce the same output as in Figure 7.
 
-Each node can be styled using the Cascading Style Sheet (CSS) file. CSS are widely used for styling Web applications. On the top of the scene graph you'll create a root node. 
+[source, java]
+----
+public class GridPaneSample extends Application {
 
- In addition to built in layouts you can customize the positioning of the nodes on the scene using CSS.
+  public void start(Stage primaryStage) {
+      
+      final int TWO_COLUMN_SPAN = 2; 
+      
+      Label userIdLbl = new Label("User ID:");
+      TextField userIdTxt = new TextField();
+      Label userPwdLbl = new Label("Password:");
+      PasswordField userPwdTxt = new PasswordField();
+
+      GridPane root = new GridPane();
+      root.setVgap(10);
+      root.setPadding(new Insets(10));
+      root.setAlignment(Pos.CENTER);
+      
+      // Using static methods for setting node constraints 
+      GridPane.setConstraints(userIdLbl, 0, 0);
+      GridPane.setConstraints(userIdTxt, 1, 0);
+      GridPane.setConstraints(userPwdLbl, 0, 1);
+      GridPane.setConstraints(userPwdTxt, 1, 1);
+
+      root.getChildren().addAll(userIdLbl, userIdTxt, 
+                                userPwdLbl, userPwdTxt);
+      
+      Button signInBtn = new Button ("Sign In");
+      
+      // Allow the button to be wider overriding preferred width       
+      signInBtn.setPrefWidth(Double.MAX_VALUE);
+ 
+      // using instance method for directly adding the node
+      root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1); 
+  
+      Scene scene = new Scene(root,250,150);
+      primaryStage.setScene(scene);
+      primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}
+----
+
+After all your efforts in Scene Builder, this Java program shouldn't be difficult for you to understand. As you see, there are classes named similarly to FXML tags. FXML tags can have attributes (e.g. `vgap="10" `), and in Java you'd need to call the corresponding setter (e.g. `root.setVgap(10)`). So the choice is yours - FXML or Java. If you have _visual personality_ use FXML, otherwise use Java.
+
+=== Styling With CSS
+
+Each node can be styled using the Cascading Style Sheets (CSS) file. CSS are widely used for styling Web applications created with HTML and JavaScript. But JavaFX supports styling too. 
+
 
 === Developing GUI for Calculator
 
