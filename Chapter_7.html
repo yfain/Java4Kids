@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 7. Creating Graphical Calculator with JavaFX</title>
+<title>Chapter 7. Introduction to GUI with JavaFX</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,7 +487,7 @@ p { margin-bottom: 1.25rem; }
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_chapter-7-creating-graphical-calculator-with-javafx">Chapter 7. Creating Graphical Calculator with JavaFX</a></li>
+<li><a href="#_chapter-7-introduction-to-gui-with-javafx">Chapter 7. Introduction to GUI with JavaFX</a></li>
 <li>
 <ul class="sectlevel2">
 <li><a href="#_introduction-to-javafx">Introduction to JavaFX</a></li>
@@ -497,11 +497,11 @@ p { margin-bottom: 1.25rem; }
 <li>
 <ul class="sectlevel3">
 <li><a href="#_designing-a-sign-in-window-in-scene-builder">Designing a Sign In Window in Scene Builder</a></li>
-<li><a href="#_programming-sign-in-window-in-java">Programming Sign In Window in Java</a></li>
+<li><a href="#_programming-the-sign-in-window-in-java">Programming the Sign In Window in Java</a></li>
 </ul>
 </li>
 <li><a href="#_styling-with-css">Styling With CSS</a></li>
-<li><a href="#_developing-gui-for-calculator">Developing GUI for Calculator</a></li>
+<li><a href="#_borderpane-layout">BorderPane Layout</a></li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
 </ul>
 </li>
@@ -510,7 +510,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-7-creating-graphical-calculator-with-javafx"><a class="anchor" href="#_chapter-7-creating-graphical-calculator-with-javafx"></a>Chapter 7. Creating Graphical Calculator with JavaFX</h2>
+<h2 id="_chapter-7-introduction-to-gui-with-javafx"><a class="anchor" href="#_chapter-7-introduction-to-gui-with-javafx"></a>Chapter 7. Introduction to GUI with JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking GUI. We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and the likes.</p>
@@ -522,16 +522,13 @@ p { margin-bottom: 1.25rem; }
 <p>In this chapter I&#8217;ll explain you the basics of GUI programming with JavaFX. You&#8217;ll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you&#8217;ll learn how to write code that reacts on user&#8217;s actions (a.k.a. events) like a click on the button or a mouse move.</p>
 </div>
 <div class="paragraph">
-<p>By the end of this chapter we&#8217;ll create a GUI for the calculator that will look like this:</p>
+<p>By the end of this chapter you should be ready to work on the following assignment: "Create the GUI for a calculator that will look like this":</p>
 </div>
 <div id="FIG7-1" class="imageblock">
 <div class="content">
 <img src="./images/fig_7_01.png" alt="fig 7 01">
 </div>
 <div class="title">Figure 1. The Calculator</div>
-</div>
-<div class="paragraph">
-<p>This is just the GUI part. The working version of the calculator will be finished in Chapter 8.</p>
 </div>
 <div class="sect2">
 <h3 id="_introduction-to-javafx"><a class="anchor" href="#_introduction-to-javafx"></a>Introduction to JavaFX</h3>
@@ -762,7 +759,7 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 <div class="content">
 <img src="./images/fig_7_07.png" alt="fig 7 07">
 </div>
-<div class="title">Figure 7. Sign In GUI</div>
+<div class="title">Figure 7. The Sign In Window</div>
 </div>
 <div class="paragraph">
 <p>I&#8217;ll start with creating a new IDEA JavaFX project (menus File | New Project |JavaFX Application)giving it a name Signin. The project with classes <code>Main</code>, <code>Controller</code> and the file <em>sample.fxml</em> will be generated. Let&#8217;s rename this FXML file into <em>signin.fxml</em>. IDEA will automatically change the corresponding line in the <code>Main</code> class to load this file instead of <em>sample.fxml</em>:</p>
@@ -892,9 +889,9 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 </div>
 </div>
 <div class="sect3">
-<h4 id="_programming-sign-in-window-in-java"><a class="anchor" href="#_programming-sign-in-window-in-java"></a>Programming Sign In Window in Java</h4>
+<h4 id="_programming-the-sign-in-window-in-java"><a class="anchor" href="#_programming-the-sign-in-window-in-java"></a>Programming the Sign In Window in Java</h4>
 <div class="paragraph">
-<p>Some people like visual design tools, but some people don&#8217;t. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I&#8217;ve written in Java. It&#8217;ll produce the same output as in Figure 7.</p>
+<p>Some people like visual design tools, but others don&#8217;t. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I&#8217;ve written in Java. It&#8217;ll produce the same output as in Figure 7.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -950,21 +947,197 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 <div class="sect2">
 <h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling With CSS</h3>
 <div class="paragraph">
-<p>Each node can be styled using the Cascading Style Sheets (CSS) file. CSS are widely used for styling Web applications created with HTML and JavaScript. But JavaFX supports styling too.</p>
+<p>It would be boring if all applications would look the same. Application windows may have different colors, fonts, buttons with rounded corners or use special visual effects. In other words, applications have different styles. Even though you can style JavaFX GUI components programmatically (e.g. by calling methods <code>setFont()</code> or <code>setFill()</code>) separating styling from programming allows professional UI designers to take care of the look and feel while software developers implement application logic.</p>
+</div>
+<div class="paragraph">
+<p>Separating the work of programmers and designers became  popular in Web applications. Cascading Style Sheets (CSS) is a special language for styling UI. Styles of GUI components are stored in separate <em>.css</em> files and are loaded and applied to components by the application&#8217;s code. Sometimes this process is called <em>skinning</em> - you can create an application that can "wear different skins" changing its look to the user&#8217;s liking.</p>
+</div>
+<div class="paragraph">
+<p>Covering CSS in detail would require a separate book, but I&#8217;ll show you a simple example of how the look of the GUI can be changed without the need to modify the Java code.</p>
+</div>
+<div class="paragraph">
+<p>You can either create so-called <em>CSS selectors</em> to style a specific GUI component, a type of components (e.g. all buttons), or create a reusable style that can be applied programmatically to a selected component.</p>
+</div>
+<div class="paragraph">
+<p>To style a specific component it has to have a unique id. If you program GUI in Java, set in your Java code using the method <code>setId()</code>, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Button signInBtn = new Button ("Sign In");
+signInBtn.setId("submitBtn");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In FXML just add an <code>id</code> attribute to the tag of the component:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;Button id="submitBtn" text="Sign In"&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a button with an id <code>submitBtn</code> you can add the following section to the CSS file to make its background color red:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">#submitBtn{
+  -fx-background-color: red;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find the names of the main CSS colors <a href="http://www.w3schools.com/cssref/css_colornames.asp">online</a>. In CSS the id type selectors start with the #-sign as in <code>#submitBtn</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you want to apply a style to several components of the same type, you need to define a type selector. For example, to make the text of all <code>Label</code> components red, you can define the following CSS type selector:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">.label{
+  -fx-text-fill: red;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that CSS type selectors start with the dot. To create a <em>CSS class selector</em> that can be applied to any component, define under the selector under an arbitrary name and apply it programmatically to the components of your choice.  For example, you can specify the following class selector:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This class selector defines the rules that will display text of the component in blue <strong>bold</strong> verdana font in <em>italic</em> style. Typically, you&#8217;ll be loading the entire CSS file when the application starts so all styles are available for use. If you use Java for GUI programming, you can apply a class selector to a specific button just like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Label userPwdLbl = new Label("Password:");
+userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In FXML assigning a CSS class selector is done by adding the attribute <code>styleClass</code> to the tag element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;Label text="Password:" styleClass="bluelabel" GridPane.rowIndex="1" /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may ask, "How am I supposed to know which style properties are available for a given JavaFX component?" All JavaFX styles are described in the online document titled <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html">"JavaFX CSS Reference Guide"</a>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s learn apply all these styling techniques to the Sign In window from the previous section. In IDEA Signin project create a new file <em>signin.css</em> with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">#submitBtn{
+    -fx-background-color: lightskyblue;
+    -fx-font-family:verdana;
+    -fx-font-size:20;
+    -fx-font-weight: bold;
+    -fx-stroke:navy;
+    -fx-font-style:italic;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.label{
+    -fx-text-fill: red;
+}
+
+.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file defines three styles:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an id selector for the component with the id <code>submitBtn</code></p>
+</li>
+<li>
+<p>a type selector for all <code>Label</code> components</p>
+</li>
+<li>
+<p>a class selector <code>bluelabel</code> that we can be applied to certain labels.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To apply this CSS file to our Sign In application add the attribute <code>id="submitBtn"</code> to the <code>&lt;Button&gt;</code> element in <em>signin.fxml</em>.</p>
+</div>
+<div class="paragraph">
+<p>The add the attribute <code>styleClass="bluelabel"</code> to the <code>&lt;Password&gt;</code> tag in <code>signin.fxml</code>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, in <code>Main.java</code> load the <code>signin.css</code> and apply it to the scene. The new version of <code>Main.java</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
+      primaryStage.setTitle("Sign In");
+
+      Scene scene  = new Scene(root, 200, 150);
+        scene.getStylesheets().add(getClass()
+              .getResource("signin.css").toExternalForm());
+
+      primaryStage.setScene(scene);
+      primaryStage.show();
+    }
+
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the <code>Main</code> application and you&#8217;ll see a differently styled Sign In window:</p>
+</div>
+<div id="FIG7-12" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_12.png" alt="fig 7 12">
+</div>
+<div class="title">Figure 12. Styled Sign In Window</div>
+</div>
+<div class="paragraph">
+<p>When the application loads our CSS file it see that all labels must be red because of the type selector for labels. But then the application notices that the style for the label Password was overriden by <code>styleClass="bluelabel"</code>, so it paints the password with the blue color.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_developing-gui-for-calculator"><a class="anchor" href="#_developing-gui-for-calculator"></a>Developing GUI for Calculator</h3>
+<h3 id="_borderpane-layout"><a class="anchor" href="#_borderpane-layout"></a>BorderPane Layout</h3>
+<div class="paragraph">
+<p>Now I&#8217;d like to show you how to use yet another layout that you&#8217;ll need do the assignment in at the end of this chapter. The <code>BorderPane</code> layout can split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h3>
+<div class="paragraph">
+<p>Using a combination of the <code>BorderPane</code> and <code>GridPane</code> layout create GUI for the calculator that looks as in Figure 1.  Add the <code>TextField</code> to the <code>north</code> of the <code>BorderPane</code> container and the <code>center</code> area should have the <code>GridPane</code> container with buttons. Then create a CSS file to add some cool styling to the calculator&#8217;s buttons.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-22 10:48:18 EDT
+Last updated 2014-08-24 00:39:05 EDT
 </div>
 </div>
 </body>
