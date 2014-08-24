@@ -2,7 +2,7 @@
 :toclevels: 4
 :imagesdir: ./
 
-== Chapter 7. Creating Graphical Calculator with JavaFX 
+== Chapter 7. Introduction to GUI with JavaFX 
 
 After lots of code samples producing outputs to the system console, it's time for creating a nice looking GUI. We're accustomed to programs that open windows with buttons, text fields, menus and the likes. 
 
@@ -10,13 +10,11 @@ Java has an old library of GUI components called http://docs.oracle.com/javase/t
 
 In this chapter I'll explain you the basics of GUI programming with JavaFX. You'll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you'll learn how to write code that reacts on user's actions (a.k.a. events) like a click on the button or a mouse move. 
 
-By the end of this chapter we'll create a GUI for the calculator that will look like this:
+By the end of this chapter you should be ready to work on the following assignment: "Create the GUI for a calculator that will look like this":
 
 [[FIG7-1]]
 .The Calculator
 image::images/fig_7_01.png[]
-
-This is just the GUI part. The working version of the calculator will be finished in Chapter 8.
 
 === Introduction to JavaFX
 
@@ -172,7 +170,7 @@ Before placing the node into a cell you have to specify grid constraints such as
 I want to create a Sign In window where the user can enter the id, password and press the button Sign In. The scene will use `GridPane` layout. The first row will contain a `Label` and `TextField` for user id, the second row will have a similar pair for the password, and the third row of the grid will have one `Button` Sign In that should span two columns. This is how this window should look like:
 
 [[FIG7-7]]
-.Sign In GUI
+.The Sign In Window
 image::images/fig_7_07.png[]
 
 I'll start with creating a new IDEA JavaFX project (menus File | New Project |JavaFX Application)giving it a name Signin. The project with classes `Main`, `Controller` and the file _sample.fxml_ will be generated. Let's rename this FXML file into _signin.fxml_. IDEA will automatically change the corresponding line in the `Main` class to load this file instead of _sample.fxml_:
@@ -272,9 +270,9 @@ primaryStage.setScene(new Scene(root, 200, 150));
 
 Run the `Main` program and you'll see the window that looks like in Figure 7 above. The work that we've done in Scene Builder was a little tedious, but it didn't require any knowledge of Java. This means that this work can be given to a UI designer, while you'll concentrate on programming the application logic in Java. 
 
-==== Programming Sign In Window in Java
+==== Programming the Sign In Window in Java
 
-Some people like visual design tools, but some people don't. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I've written in Java. It'll produce the same output as in Figure 7.
+Some people like visual design tools, but others don't. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I've written in Java. It'll produce the same output as in Figure 7.
 
 [source, java]
 ----
@@ -326,11 +324,153 @@ After all your efforts in Scene Builder, this Java program shouldn't be difficul
 
 === Styling With CSS
 
-Each node can be styled using the Cascading Style Sheets (CSS) file. CSS are widely used for styling Web applications created with HTML and JavaScript. But JavaFX supports styling too. 
+It would be boring if all applications would look the same. Application windows may have different colors, fonts, buttons with rounded corners or use special visual effects. In other words, applications have different styles. Even though you can style JavaFX GUI components programmatically (e.g. by calling methods `setFont()` or `setFill()`) separating styling from programming allows professional UI designers to take care of the look and feel while software developers implement application logic. 
+
+Separating the work of programmers and designers became  popular in Web applications. Cascading Style Sheets (CSS) is a special language for styling UI. Styles of GUI components are stored in separate _.css_ files and are loaded and applied to components by the application's code. Sometimes this process is called _skinning_ - you can create an application that can "wear different skins" changing its look to the user's liking.  
+
+Covering CSS in detail would require a separate book, but I'll show you a simple example of how the look of the GUI can be changed without the need to modify the Java code. 
+
+You can either create so-called _CSS selectors_ to style a specific GUI component, a type of components (e.g. all buttons), or create a reusable style that can be applied programmatically to a selected component. 
+
+To style a specific component it has to have a unique id. If you program GUI in Java, set in your Java code using the method `setId()`, for example:
+
+[source,java]
+----
+Button signInBtn = new Button ("Sign In");
+signInBtn.setId("submitBtn"); 
+----
+
+In FXML just add an `id` attribute to the tag of the component:
+
+[source,xml]
+----
+<Button id="submitBtn" text="Sign In"> 
+----
+
+For a button with an id `submitBtn` you can add the following section to the CSS file to make its background color red:
+
+[source, css]
+----
+#submitBtn{
+  -fx-background-color: red;
+}
+----
+
+You can find the names of the main CSS colors http://www.w3schools.com/cssref/css_colornames.asp[online]. In CSS the id type selectors start with the #-sign as in `#submitBtn`. 
+
+If you want to apply a style to several components of the same type, you need to define a type selector. For example, to make the text of all `Label` components red, you can define the following CSS type selector:
+
+[source, xml]
+----
+.label{
+  -fx-text-fill: red;
+} 
+----
+
+Note that CSS type selectors start with the dot. To create a _CSS class selector_ that can be applied to any component, define under the selector under an arbitrary name and apply it programmatically to the components of your choice.  For example, you can specify the following class selector:
+
+[source, xml]
+----
+.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}
+----
+
+This class selector defines the rules that will display text of the component in blue *bold* verdana font in _italic_ style. Typically, you'll be loading the entire CSS file when the application starts so all styles are available for use. If you use Java for GUI programming, you can apply a class selector to a specific button just like this:
+
+[source, java]
+----
+Label userPwdLbl = new Label("Password:");
+userPwdLbl.getStyleClass().add("bluelabel");
+----
+
+In FXML assigning a CSS class selector is done by adding the attribute `styleClass` to the tag element:
+
+[source, xml]
+----
+<Label text="Password:" styleClass="bluelabel" GridPane.rowIndex="1" />
+----
+
+You may ask, "How am I supposed to know which style properties are available for a given JavaFX component?" All JavaFX styles are described in the online document titled http://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html["JavaFX CSS Reference Guide"].  
+
+Let's learn apply all these styling techniques to the Sign In window from the previous section. In IDEA Signin project create a new file _signin.css_ with the following content:
+
+[source, css]
+----
+#submitBtn{
+    -fx-background-color: lightskyblue;
+    -fx-font-family:verdana;
+    -fx-font-size:20;
+    -fx-font-weight: bold;
+    -fx-stroke:navy;
+    -fx-font-style:italic;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.label{
+    -fx-text-fill: red;
+}    
+
+.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}
+----
+
+This file defines three styles:
+
+* an id selector for the component with the id `submitBtn`
+* a type selector for all `Label` components
+* a class selector `bluelabel` that we can be applied to certain labels.
+
+To apply this CSS file to our Sign In application add the attribute `id="submitBtn"` to the `<Button>` element in _signin.fxml_.
+
+The add the attribute `styleClass="bluelabel"` to the `<Password>` tag in `signin.fxml`.
+
+Finally, in `Main.java` load the `signin.css` and apply it to the scene. The new version of `Main.java` will look like this:
+
+[source, java]
+----
+public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
+      primaryStage.setTitle("Sign In");
+
+      Scene scene  = new Scene(root, 200, 150);
+        scene.getStylesheets().add(getClass()
+              .getResource("signin.css").toExternalForm());
+
+      primaryStage.setScene(scene);
+      primaryStage.show();
+    }
 
 
-=== Developing GUI for Calculator
+  public static void main(String[] args) {
+      launch(args);
+  }
+}
+----
+
+Run the `Main` application and you'll see a differently styled Sign In window: 
+
+[[FIG7-12]]
+.Styled Sign In Window
+image::images/fig_7_12.png[]
+
+When the application loads our CSS file it see that all labels must be red because of the type selector for labels. But then the application notices that the style for the label Password was overriden by `styleClass="bluelabel"`, so it paints the password with the blue color. 
+
+=== BorderPane Layout
+
+Now I'd like to show you how to use yet another layout that you'll need do the assignment in at the end of this chapter. The `BorderPane` layout can split the scene into up to five regions called `left`, `top`, `right`, `bottom`, and `center`. 
 
 
 === Challenge Yourself
 
+Using a combination of the `BorderPane` and `GridPane` layout create GUI for the calculator that looks as in Figure 1.  Add the `TextField` to the `north` of the `BorderPane` container and the `center` area should have the `GridPane` container with buttons. Then create a CSS file to add some cool styling to the calculator's buttons. 
