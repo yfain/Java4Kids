@@ -513,6 +513,9 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-7-introduction-to-gui-with-javafx"><a class="anchor" href="#_chapter-7-introduction-to-gui-with-javafx"></a>Chapter 7. Introduction to GUI with JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>Hello JCrete</p>
+</div>
+<div class="paragraph">
 <p>After lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking GUI. We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and the likes.</p>
 </div>
 <div class="paragraph">
@@ -1123,7 +1126,19 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 <div class="sect2">
 <h3 id="_borderpane-layout"><a class="anchor" href="#_borderpane-layout"></a>BorderPane Layout</h3>
 <div class="paragraph">
-<p>Now I&#8217;d like to show you how to use yet another layout that you&#8217;ll need do the assignment in at the end of this chapter. The <code>BorderPane</code> layout can split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
+<p>Pretty often you see applications that split the several distinct areas - a header on top, some navigation bar on the left (or right), the footer at the bottom of the page and a large content area in the middle. The <code>BorderPane</code> layout allows you to do exactly this - split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>. You&#8217;ll need to know how <code>BorderPane</code> works to complete the assignment at the end of this chapter.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag <code>BorderPane</code> from the left and drop in the middle. Click on the <code>BorderPane</code> and you&#8217;ll see a screen that can look as follows:</p>
+</div>
+<div id="FIG7-13" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_13.png" alt="fig 7 13">
+</div>
+<div class="title">Figure 13. An Empty BorderPane</div>
+</div>
+<div class="paragraph">
+<p>Now select Insert TOP at the bottom left, and then drag add drop a <code>Label</code> from the Controls section on the onto the middle section of Screen Builder. Set the label&#8217;s title "This is the Header". This text will be displayed at the top.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1137,7 +1152,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-24 00:39:05 EDT
+Last updated 2014-08-26 08:52:58 EDT
 </div>
 </div>
 </body>
