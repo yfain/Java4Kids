@@ -4,6 +4,8 @@
 
 == Chapter 7. Introduction to GUI with JavaFX 
 
+Hello JCrete
+
 After lots of code samples producing outputs to the system console, it's time for creating a nice looking GUI. We're accustomed to programs that open windows with buttons, text fields, menus and the likes. 
 
 Java has an old library of GUI components called http://docs.oracle.com/javase/tutorial/uiswing/[Swing], and the new one called http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm[JavaFX]. We'll use only JavaFX in this book.
@@ -468,7 +470,16 @@ When the application loads our CSS file it see that all labels must be red becau
 
 === BorderPane Layout
 
-Now I'd like to show you how to use yet another layout that you'll need do the assignment in at the end of this chapter. The `BorderPane` layout can split the scene into up to five regions called `left`, `top`, `right`, `bottom`, and `center`. 
+Pretty often you see applications that split the several distinct areas - a header on top, some navigation bar on the left (or right), the footer at the bottom of the page and a large content area in the middle. The `BorderPane` layout allows you to do exactly this - split the scene into up to five regions called `left`, `top`, `right`, `bottom`, and `center`. You'll need to know how `BorderPane` works to complete the assignment at the end of this chapter.
+
+Let's open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag `BorderPane` from the left and drop in the middle. Click on the `BorderPane` and you'll see a screen that can look as follows:
+
+[[FIG7-13]]
+.An Empty BorderPane
+image::images/fig_7_13.png[]
+
+Now select Insert TOP at the bottom left, and then drag add drop a `Label` from the Controls section on the onto the middle section of Screen Builder. Set the label's title "This is the Header". This text will be displayed at the top.
+
 
 
 === Challenge Yourself
