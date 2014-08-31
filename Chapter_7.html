@@ -501,7 +501,7 @@ p { margin-bottom: 1.25rem; }
 </ul>
 </li>
 <li><a href="#_styling-with-css">Styling With CSS</a></li>
-<li><a href="#_borderpane-layout">BorderPane Layout</a></li>
+<li><a href="#_borderpane-and-combining-layouts">BorderPane and Combining Layouts</a></li>
 <li><a href="#_challenge-yourself">Challenge Yourself</a></li>
 </ul>
 </li>
@@ -513,10 +513,7 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-7-introduction-to-gui-with-javafx"><a class="anchor" href="#_chapter-7-introduction-to-gui-with-javafx"></a>Chapter 7. Introduction to GUI with JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Hello JCrete</p>
-</div>
-<div class="paragraph">
-<p>After lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking GUI. We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and the likes.</p>
+<p>After lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking Graphic User Interface (GUI). We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and other GUI components.</p>
 </div>
 <div class="paragraph">
 <p>Java has an old library of GUI components called <a href="http://docs.oracle.com/javase/tutorial/uiswing/">Swing</a>, and the new one called <a href="http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm">JavaFX</a>. We&#8217;ll use only JavaFX in this book.</p>
@@ -1120,16 +1117,19 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 <div class="title">Figure 12. Styled Sign In Window</div>
 </div>
 <div class="paragraph">
-<p>When the application loads our CSS file it see that all labels must be red because of the type selector for labels. But then the application notices that the style for the label Password was overriden by <code>styleClass="bluelabel"</code>, so it paints the password with the blue color.</p>
+<p>When the application loads our CSS file it see that all labels must be red because of the type selector for labels. But then the application notices that the style for the <code>Label</code> Password was overriden by <code>styleClass="bluelabel"</code>, so it paints the text <em>Password</em> in blue.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_borderpane-layout"><a class="anchor" href="#_borderpane-layout"></a>BorderPane Layout</h3>
+<h3 id="_borderpane-and-combining-layouts"><a class="anchor" href="#_borderpane-and-combining-layouts"></a>BorderPane and Combining Layouts</h3>
 <div class="paragraph">
-<p>Pretty often you see applications that split the several distinct areas - a header on top, some navigation bar on the left (or right), the footer at the bottom of the page and a large content area in the middle. The <code>BorderPane</code> layout allows you to do exactly this - split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>. You&#8217;ll need to know how <code>BorderPane</code> works to complete the assignment at the end of this chapter.</p>
+<p>Pretty often you see applications that split the window into several distinct areas - the header goes on top, the navigation bar is on the left (or right), the footer&#8217;s at the bottom of the page and a large content area occupies the middle portion of the window. The <code>BorderPane</code> layout allows you to do exactly this - split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag <code>BorderPane</code> from the left and drop in the middle. Click on the <code>BorderPane</code> and you&#8217;ll see a screen that can look as follows:</p>
+<p>Each of these regions can contain either a single GUI component or a container that will have "children" - components allocated in their own container, e.g. inside a <code>GridPane</code>. You&#8217;ll use <code>BorderPane</code> layout with a nested <code>GridPane</code> while working on the calculator following instructions from the Challenge Yourself" section. Meanwhile, let&#8217;s create a very basic window illustrating how the <code>BorderPane</code> layout works.</p>
+</div>
+<div class="paragraph">
+<p>Open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag <code>BorderPane</code> from the left and drop in the middle. Click on the <code>BorderPane</code> and you&#8217;ll see a screen that can look as follows:</p>
 </div>
 <div id="FIG7-13" class="imageblock">
 <div class="content">
@@ -1140,11 +1140,97 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 <div class="paragraph">
 <p>Now select Insert TOP at the bottom left, and then drag add drop a <code>Label</code> from the Controls section on the onto the middle section of Screen Builder. Set the label&#8217;s title "This is the Header". This text will be displayed at the top.</p>
 </div>
+<div class="paragraph">
+<p>Now select Insert LEFT and then drag and drop <code>VBox</code> from the Containers area to the left side of the middle section of the Screen Builder. The <code>VBox</code> is a container for arranging GUI components vertically, which is what we need for creating a navigation menu. You&#8217;ll see an empty gray area on the left.</p>
+</div>
+<div id="FIG7-14" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_14.png" alt="fig 7 14">
+</div>
+<div class="title">Figure 14. Adding a VBox for navigation</div>
+</div>
+<div class="paragraph">
+<p>Now select <code>VBOX</code> at the bottom left and add a couple of menu items to the empty <code>VBox</code>. Drag a <code>Button</code> from the Controls section and drop it onto the <code>VBox</code>. Change its text to read "Menu 1", and make it a little wider so it fits the <code>VBox</code> nicely. Add two more buttons labeled "Menu 2" and "Menu 3".</p>
+</div>
+<div id="FIG7-15" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_15.png" alt="fig 7 15">
+</div>
+<div class="title">Figure 15. Adding buttons to VBox</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add a footer to the window now. Select Insert BOTTOM at the bottom left and then drag the <code>HBox</code> from the Containers area to the middle section. It&#8217;ll look like a gray area at the bottom. Adjust its height so the footer doesn&#8217;t take too much real estate in our scene. Now add three <code>Hyperlink</code> components from the Contols section to the footer and set their text to "Link 1", "Link 2", and "Link 3" correspondingly. The Scene Builder&#8217;s window should look like this:</p>
+</div>
+<div id="FIG7-16" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_16.png" alt="fig 7 16">
+</div>
+<div class="title">Figure 16. Adding a footer with links</div>
+</div>
+<div class="paragraph">
+<p>Select the menu Preview | Show Preview in Window will help you to see how the window will look during the runtime:</p>
+</div>
+<div id="FIG7-17" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_17.png" alt="fig 7 17">
+</div>
+<div class="title">Figure 17. Previewing the window</div>
+</div>
+<div class="paragraph">
+<p>Of course, this window may need more work on styling controls and adjusting sizes and alignments, but as long as you understand how to lay out a scene, the shouldn&#8217;t be too difficult. Creating and applying CSS styles can may this windows a lot prettier.</p>
+</div>
+<div class="paragraph">
+<p>Using Scene Builder&#8217;s menu File | Save save the layout in a file <em>border.fxml</em>. If you open this file in any text editor, its content may look similar to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.scene.image.*?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+
+&lt;BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"&gt;
+   &lt;top&gt;
+      &lt;Label text="This is the Header" BorderPane.alignment="CENTER" /&gt;
+   &lt;/top&gt;
+   &lt;left&gt;
+      &lt;VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER"&gt;
+         &lt;children&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 1" /&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 2" /&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 3" /&gt;
+         &lt;/children&gt;
+      &lt;/VBox&gt;
+   &lt;/left&gt;
+   &lt;bottom&gt;
+      &lt;HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER"&gt;
+         &lt;children&gt;
+            &lt;Hyperlink text="Link 1" /&gt;
+            &lt;Hyperlink text="Link 2" /&gt;
+            &lt;Hyperlink text="Link 3" /&gt;
+         &lt;/children&gt;
+      &lt;/HBox&gt;
+   &lt;/bottom&gt;
+&lt;/BorderPane&gt;
+</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can clearly see the regions of the <code>BorderPane</code> layout. The <code>&lt;top&gt;</code> region contains a label, while the <code>left</code> and <code>&lt;bottom&gt;</code> have container with their own layouts. In this example I have not used the <code>&lt;center&gt;</code> and <code>&lt;right&gt;</code> regions. Typically your program will be changing the content of the central area based on the user actions. For example, if the user clicks on the "Menu 1" button, JavaFX will generate a <em>clicked event</em> and you&#8217;ll show the content required for this selection.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll learn how to process events in the next chapter. Now it&#8217;s time to practice in working with combined layouts.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h3>
 <div class="paragraph">
-<p>Using a combination of the <code>BorderPane</code> and <code>GridPane</code> layout create GUI for the calculator that looks as in Figure 1.  Add the <code>TextField</code> to the <code>north</code> of the <code>BorderPane</code> container and the <code>center</code> area should have the <code>GridPane</code> container with buttons. Then create a CSS file to add some cool styling to the calculator&#8217;s buttons.</p>
+<p>Using a combination of the <code>BorderPane</code> and <code>GridPane</code> layout create GUI for the calculator that looks as in Figure 1.  Add the <code>TextField</code> to the <code>north</code> of the <code>BorderPane</code> container and the <code>center</code> area should have a <code>GridPane</code> container with buttons. Most of the calculators have a display field on top and the buttons just below it. Then create a CSS file to add some cool styling to the calculator&#8217;s buttons.</p>
+</div>
+<div class="paragraph">
+<p>After completing this assignment your buttons won&#8217;t work just yet. We&#8217;ll make them work in the next chapter.</p>
 </div>
 </div>
 </div>
@@ -1152,7 +1238,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-26 08:52:58 EDT
+Last updated 2014-08-31 04:47:13 EDT
 </div>
 </div>
 </body>
