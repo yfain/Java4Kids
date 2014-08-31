@@ -4,9 +4,7 @@
 
 == Chapter 7. Introduction to GUI with JavaFX 
 
-Hello JCrete
-
-After lots of code samples producing outputs to the system console, it's time for creating a nice looking GUI. We're accustomed to programs that open windows with buttons, text fields, menus and the likes. 
+After lots of code samples producing outputs to the system console, it's time for creating a nice looking Graphic User Interface (GUI). We're accustomed to programs that open windows with buttons, text fields, menus and other GUI components. 
 
 Java has an old library of GUI components called http://docs.oracle.com/javase/tutorial/uiswing/[Swing], and the new one called http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm[JavaFX]. We'll use only JavaFX in this book.
 
@@ -466,13 +464,15 @@ Run the `Main` application and you'll see a differently styled Sign In window:
 .Styled Sign In Window
 image::images/fig_7_12.png[]
 
-When the application loads our CSS file it see that all labels must be red because of the type selector for labels. But then the application notices that the style for the label Password was overriden by `styleClass="bluelabel"`, so it paints the password with the blue color. 
+When the application loads our CSS file it see that all labels must be red because of the type selector for labels. But then the application notices that the style for the `Label` Password was overriden by `styleClass="bluelabel"`, so it paints the text _Password_ in blue. 
 
-=== BorderPane Layout
+=== BorderPane and Combining Layouts
 
-Pretty often you see applications that split the several distinct areas - a header on top, some navigation bar on the left (or right), the footer at the bottom of the page and a large content area in the middle. The `BorderPane` layout allows you to do exactly this - split the scene into up to five regions called `left`, `top`, `right`, `bottom`, and `center`. You'll need to know how `BorderPane` works to complete the assignment at the end of this chapter.
+Pretty often you see applications that split the window into several distinct areas - the header goes on top, the navigation bar is on the left (or right), the footer's at the bottom of the page and a large content area occupies the middle portion of the window. The `BorderPane` layout allows you to do exactly this - split the scene into up to five regions called `left`, `top`, `right`, `bottom`, and `center`. 
 
-Let's open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag `BorderPane` from the left and drop in the middle. Click on the `BorderPane` and you'll see a screen that can look as follows:
+Each of these regions can contain either a single GUI component or a container that will have "children" - components allocated in their own container, e.g. inside a `GridPane`. You'll use `BorderPane` layout with a nested `GridPane` while working on the calculator following instructions from the Challenge Yourself" section. Meanwhile, let's create a very basic window illustrating how the `BorderPane` layout works.
+
+Open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag `BorderPane` from the left and drop in the middle. Click on the `BorderPane` and you'll see a screen that can look as follows:
 
 [[FIG7-13]]
 .An Empty BorderPane
@@ -480,8 +480,76 @@ image::images/fig_7_13.png[]
 
 Now select Insert TOP at the bottom left, and then drag add drop a `Label` from the Controls section on the onto the middle section of Screen Builder. Set the label's title "This is the Header". This text will be displayed at the top.
 
+Now select Insert LEFT and then drag and drop `VBox` from the Containers area to the left side of the middle section of the Screen Builder. The `VBox` is a container for arranging GUI components vertically, which is what we need for creating a navigation menu. You'll see an empty gray area on the left.
 
+[[FIG7-14]]
+.Adding a VBox for navigation 
+image::images/fig_7_14.png[]
+
+Now select `VBOX` at the bottom left and add a couple of menu items to the empty `VBox`. Drag a `Button` from the Controls section and drop it onto the `VBox`. Change its text to read "Menu 1", and make it a little wider so it fits the `VBox` nicely. Add two more buttons labeled "Menu 2" and "Menu 3".
+
+[[FIG7-15]]
+.Adding buttons to VBox 
+image::images/fig_7_15.png[]
+
+Let's add a footer to the window now. Select Insert BOTTOM at the bottom left and then drag the `HBox` from the Containers area to the middle section. It'll look like a gray area at the bottom. Adjust its height so the footer doesn't take too much real estate in our scene. Now add three `Hyperlink` components from the Contols section to the footer and set their text to "Link 1", "Link 2", and "Link 3" correspondingly. The Scene Builder's window should look like this: 
+
+[[FIG7-16]]
+.Adding a footer with links 
+image::images/fig_7_16.png[]
+
+Select the menu Preview | Show Preview in Window will help you to see how the window will look during the runtime:
+
+[[FIG7-17]]
+.Previewing the window 
+image::images/fig_7_17.png[]
+
+Of course, this window may need more work on styling controls and adjusting sizes and alignments, but as long as you understand how to lay out a scene, the shouldn't be too difficult. Creating and applying CSS styles can may this windows a lot prettier.
+
+Using Scene Builder's menu File | Save save the layout in a file _border.fxml_. If you open this file in any text editor, its content may look similar to this:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label text="This is the Header" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 1" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 2" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 3" />
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+      <HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Hyperlink text="Link 1" />
+            <Hyperlink text="Link 2" />
+            <Hyperlink text="Link 3" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
+
+----
+
+You can clearly see the regions of the `BorderPane` layout. The `<top>` region contains a label, while the `left` and `<bottom>` have container with their own layouts. In this example I have not used the `<center>` and `<right>` regions. Typically your program will be changing the content of the central area based on the user actions. For example, if the user clicks on the "Menu 1" button, JavaFX will generate a _clicked event_ and you'll show the content required for this selection. 
+
+You'll learn how to process events in the next chapter. Now it's time to practice in working with combined layouts. 
 
 === Challenge Yourself
 
-Using a combination of the `BorderPane` and `GridPane` layout create GUI for the calculator that looks as in Figure 1.  Add the `TextField` to the `north` of the `BorderPane` container and the `center` area should have the `GridPane` container with buttons. Then create a CSS file to add some cool styling to the calculator's buttons. 
+Using a combination of the `BorderPane` and `GridPane` layout create GUI for the calculator that looks as in Figure 1.  Add the `TextField` to the `north` of the `BorderPane` container and the `center` area should have a `GridPane` container with buttons. Most of the calculators have a display field on top and the buttons just below it. Then create a CSS file to add some cool styling to the calculator's buttons. 
+
+After completing this assignment your buttons won't work just yet. We'll make them work in the next chapter.
+

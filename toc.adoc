@@ -4,9 +4,9 @@
 
 = Java for Kids
 
-This Web site contains the drafts of the book "Java for Kids" by Yakov Fain. The book will be published by http://www.nostarch.com/[No Starch Press] by the end of 2014. The publisher has allowed posting this content online so we can get your comments even before the book goes to print. You can either email your comments directly to Yakov at yakovfain@gmail.com or open an issue at the https://github.com/yfain/Java4Kids_NoStarchPress[book repository] on GitHub. 
+This Web site contains the drafts of the book "Java for Kids" by Yakov Fain. The book will be published by http://www.nostarch.com/[No Starch Press] by the end of 2014. The publisher has allowed posting this content online so the author can get your comments even before the book goes to print. You can either email your comments directly to Yakov at yakovfain@gmail.com or open an issue at the https://github.com/yfain/Java4Kids_NoStarchPress[book repository] on GitHub. 
 
-If this material looks too easy for you, watch my https://www.youtube.com/playlist?list=PLkKunJj_bZefJ4gej5Fuq0XR0FzzXLCMB[Java video lessons] on Youtube.
+While this book is written for 12 year old kids and older, adults looking for an easy intro to Java may find this book useful too.  If this material looks too easy for you, watch my https://www.youtube.com/playlist?list=PLkKunJj_bZefJ4gej5Fuq0XR0FzzXLCMB[Java video lessons] on Youtube.
 
 == TOC 
 
