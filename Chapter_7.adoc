@@ -10,7 +10,7 @@ Java has an old library of GUI components called http://docs.oracle.com/javase/t
 
 In this chapter I'll explain you the basics of GUI programming with JavaFX. You'll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you'll learn how to write code that reacts on user's actions (a.k.a. events) like a click on the button or a mouse move. 
 
-By the end of this chapter you should be ready to work on the following assignment: "Create the GUI for a calculator that will look like this":
+By the end of this chapter you should be ready to work on the following assignment: "Create the GUI for a calculator that will look similar to the calculator that comes with MAC OS":
 
 [[FIG7-1]]
 .The Calculator
@@ -549,7 +549,68 @@ You'll learn how to process events in the next chapter. Now it's time to practic
 
 === Challenge Yourself
 
-Using a combination of the `BorderPane` and `GridPane` layout create GUI for the calculator that looks as in Figure 1.  Add the `TextField` to the `north` of the `BorderPane` container and the `center` area should have a `GridPane` container with buttons. Most of the calculators have a display field on top and the buttons just below it. Then create a CSS file to add some cool styling to the calculator's buttons. 
+Using Scene Builder and a combination of the `BorderPane` and `GridPane` layout create GUI for the calculator that looks as on Figure 1.  Add the `TextField` to the `north` of the `BorderPane`. Then add a `GridPane` container to the `center` area - you'll add buttons to the grid. 
 
-After completing this assignment your buttons won't work just yet. We'll make them work in the next chapter.
+Most of the calculators have a display field on top and the buttons just below it. As you can see on Figure 1, the grid with buttons has four columns and six rows. The default `GridPane` contains two columns and three rows. You'll need to right-click on the grid and use the menus GridPane | Add Row Above and Add Column After to until you see a 4x6 grid as shown below.
+
+[[FIG7-18]]
+.The 4x6 GridPane in the center 
+image::images/fig_7_18.png[]
+
+Note that I set the `Padding` property to be 10 for all sides of the grid and the `Hgap` and `Vgap` to 5 (the gap between the cells).
+
+Save the layout in the file _calculator.fxml_. The drop a Button in the top left cell of the grid. Set the `Margin` property to 5 for each side of the button - this is the distance between the button and cell borders. Drag the button's border to make it larger. This is what you should see:
+
+[[FIG7-19]]
+.The grid with one button 
+image::images/fig_7_19.png[]
+
+If you're curious how this button looks in the _calculator.fxml_, open this file in any text editor and note the section `<children>` that in my case looks like this:
+
+[source, xml]
+----
+<children>
+   <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="132.0" text="Button">
+      <GridPane.margin>
+         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </GridPane.margin>
+   </Button>  
+</children>
+----
+
+There is no indication of the cell (0,0) because these are the default values for `GridPane.columnIndex` and `GridPane.rowIndex` properties. Now you need to replicate this button in other cells. You can use multiple Ctrl-C/Ctrl-V commands and then drag/drop the buttons into other cells. See how the content of the _calculator.fxml_ changes as you add more buttons. I find it faster copy/pasting the generated code in the FXML file than using Scene Builder for mass duplication.
+
+Note that on Figure 1, the button with coordinates (0,5) spans two columns, and the button with coordinates (3,4) spans two rows. For these buttons you'll need to enter 2 as the row (or column) span, and select `MAX_VALUE` as maximum width (or height).  This is what you should see by now:
+
+[[FIG7-20]]
+.Replicated buttons 
+image::images/fig_7_20.png[]
+
+Change the text of each button to look as in Figure 1, and the layout is done.
+
+Then create a new JavaFX project Calculator in IDEA and replace the generated _sample.fxml_ with _calculator.fxml_. Modify the generated class `Main` to use _calculator.fxml_. Rename the package from _sample_ to _mycalculator_. Set the size of the scene to be large enough to accommodate your design. This is how my class `Main` looks like:
+
+[source, java]
+----
+public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+      Parent root = FXMLLoader.load(getClass().getResource("calculator.fxml"));
+      primaryStage.setTitle("My JavaFX Calculator");
+      primaryStage.setScene(new Scene(root,650,600));
+      primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}
+----
+
+Run the `Main` program from IDEA to ensure that your calculator looks as expected.
+
+Then create a CSS file to add some cool styling to the calculator's buttons. Save the CSS file in your IDEA project and modify the code of the `Main` class to use your CSS file similarly to how it was done in the section "Styling With CSS" above. Make your calculator look better than mine - it's not too difficult.
+
+After completing this assignment your buttons won't work just yet. We'll make them work in the next chapter. My goal in this chapter was to introduce you to basic rules of designing JavaFX GUI with the help of Scene Builder. 
 
