@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 1. Writing Your First Program</title>
+<title>Chapter 8. Programming User Interaction in JavaFX</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -482,269 +482,272 @@ p { margin-bottom: 1.25rem; }
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </head>
-<body class="book toc2 toc-right">
+<body class="book">
 <div id="header">
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_chapter-1-writing-your-first-program">Chapter 1. Writing Your First Program</a></li>
-<li>
-<ul class="sectlevel2">
-<li><a href="#_installing-java-on-your-computer">Installing Java on Your Computer</a></li>
-<li>
-<ul class="sectlevel3">
-<li><a href="#_for-windows-users-only">For Windows Users Only</a></li>
-</ul>
-</li>
-<li><a href="#_three-main-steps-in-java-programming">Three Main Steps in Java Programming</a></li>
-<li>
-<ul class="sectlevel3">
-<li><a href="#_command-window">Command Window</a></li>
-<li><a href="#_step-1-write-the-program">Step 1 – Write the Program</a></li>
-<li><a href="#_step-2-compile-the-program">Step 2 – Compile the Program</a></li>
-<li><a href="#_step-3-run-the-program">Step 3 – Run the Program</a></li>
-</ul>
-</li>
-<li><a href="#_additional-reading">Additional Reading</a></li>
-</ul>
-</li>
-</ul>
-</div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-1-writing-your-first-program"><a class="anchor" href="#_chapter-1-writing-your-first-program"></a>Chapter 1. Writing Your First Program</h2>
+<h2 id="_chapter-8-programming-user-interaction-in-javafx"><a class="anchor" href="#_chapter-8-programming-user-interaction-in-javafx"></a>Chapter 8. Programming User Interaction in JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>People talk to each other using different languages. Programmers write computer programs like games, calculators, text editors using different programming languages too. Without programs,the screen of your computer, smartphone or a game console would always be black. All these devices are often called <em>hardware</em>, and programs are known as <em>software</em>. For many many years Java remains one of the most popular computer languages. Just check out this <a href="http://www.tiobe.com/content/paperinfo/tpci/index.html">popularity index</a> by Tiobe. I&#8217;m not sure when are you looking at this chart, but I can bet that Java is among the top three languages there. What makes the Java language so hot?</p>
+<p>After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator window windows from Chapter 7 looks good, but none of them would react on user&#8217;s actions. No matter how hard you click on the Sign In or calculator&#8217;s buttons, nothing will happen because we didn&#8217;t teach these application how to react on user-generated events (e.g. button clicks).</p>
 </div>
 <div class="paragraph">
-<p>First of all, the same Java program can <em>run</em> (work) on different devices like PC, MacBook, or larger computers. As a matter of fact, Java programs do not even know where they run, because they run inside of a special software shell known as Java Virtual Machine (JVM). If, for example, your Java program needs to print some messages, it asks JVM to do this, and JVM knows how to deal with your printer.</p>
-</div>
-<div class="paragraph">
-<p>Second, you can write programs in Java for various mobile devices.</p>
-</div>
-<div class="paragraph">
-<p>Third, Java can be embedded in tiny microchips that control various home appliances or industrial devices. You probably heard about smart homes where the heater or light can be programmed remotely from your phone. The time will come soon when a teapot will automatically start boiling at the time set in your phone&#8217;s alarm. There is even a term for this - Internet of Things, and these things can be programmed in Java.</p>
-</div>
-<div class="paragraph">
-<p>Forth, learning Java is not difficult, because it is <em>object-oriented</em> language. Java&#8217;s program elements (<em>classes</em>) represent objects from the real world. For example, you can create a class called <code>Car</code> and give it attributes  like doors, wheels, similarly to what the real cars have. After that, based on the <code>Car</code> class you can create another class, for example <code>Tesla</code>, which will have all the features of the class <code>Car</code> (doors, wheels, body) plus something that only Teslas have (electric engine).</p>
-</div>
-<div class="paragraph">
-<p>Fifth, if a Java program that runs on remote servers need to process requests of thousands users, such a program can run use multiple parallel processors or even servers. For example, <a href="http://www.forbes.com/sites/michaelkanellos/2013/03/21/ebays-mpg-for-data-centers/">eBay runs thousands of servers</a> in parallel (a.k.a. <em>concurrently</em>), and many of them run Java applications.</p>
-</div>
-<div class="paragraph">
-<p>Sixth, from day one the software required to write Java programs was free. There are more than nine million professional Java programmers in the world, and they publish on the Internet lots and lots of program samples so if you&#8217;re run into a problem, you can either find the solution by searching online or ask your question in one of the popular online forums like <a href="http://stackoverflow.com/questions/tagged/java">Stack Overflow</a>, and someone will answer your question!</p>
-</div>
-<div class="paragraph">
-<p>This list can go on and on. Besides, if you are planning to work as a computer programmer, Java skills in the industry are in high demand. Enough talking, let&#8217;s install some software to start learning Java.</p>
+<p>Events are notifications that something important for the application has happened. In this chapter you&#8217;ll learn what kind of events may happen in a JavaFX application and how to write code to handle these events.  The generated class`Controller` is empty as of yet, but we&#8217;ll add some code to it to communicate with the GUI components.</p>
 </div>
 <div class="sect2">
-<h3 id="_installing-java-on-your-computer"><a class="anchor" href="#_installing-java-on-your-computer"></a>Installing Java on Your Computer</h3>
+<h3 id="_events"><a class="anchor" href="#_events"></a>Events</h3>
 <div class="paragraph">
-<p>To start programming in Java you need to download Java Development Kit (JDK) from the company called Oracle, which leads most of the Java-related work and makes releases and updates of Java versions. The full name of the software to download is Java SE Development Kit. We&#8217;ll download the  Java SE 8, which is the latest version at the time of this writing. Just visit this
-<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Oracle&#8217;s Web site</a>. Accept the license agreement and select the proper link depending on the Operational System (OS) installed on your computer.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="icon-note" title="Note"></i>
-</td>
-<td class="content">
-While Java programmers need JDK installed, the users of your applications need to have Java Runtime Environment (JRE) installed on their machines. JRE is included in JDK, but can be downloaded separately too.
-</td>
-</tr>
-</table>
-</div>
-<div id="FIG1-1" class="imageblock">
-<div class="content">
-<img src="./images/fig_1_01.png" alt="fig 1 01">
-</div>
-<div class="title">Figure 1. Selecting the Java SE version</div>
+<p>JavaFX applications have to deal with various events. FOr example, a button click, a mouse move etc. In JavaFX an event object is represented by the instance of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You&#8217;ll always write event handlers in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you&#8217;ll need to specify the name of your controller class right in the FXML.</p>
 </div>
 <div class="paragraph">
-<p>If you use Windows OS, download the file named jdk-8-windows-i586.exe. Since I work with Apple computers with Mac OS X, the file&#8217;jdk-8-macosx-x64.dmg' is my Java installer. Run your installer program, agree with all default answers (just press the button Next) and you&#8217;re almost ready to go.</p>
-</div>
-<div class="paragraph">
-<p>In Mac OS Java is installed in the folder <em>/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk</em>. On Windows computers it&#8217;ll be installed under
-<em>c:\Program Files\Java\jdk1.8.0</em>, where <em>c:</em> is the name of your hard drive or SSD. If you use Mac OS, your installation is complete.</p>
+<p>You can either create with <code>new</code> or <em>inject</em> an instance of your controller class into Java code. I&#8217;ll explain you what injection means in a bit.</p>
 </div>
 <div class="sect3">
-<h4 id="_for-windows-users-only"><a class="anchor" href="#_for-windows-users-only"></a>For Windows Users Only</h4>
+<h4 id="_assigning-event-handlers-in-fxml"><a class="anchor" href="#_assigning-event-handlers-in-fxml"></a>Assigning Event Handlers in FXML</h4>
 <div class="paragraph">
-<p>If you use Windows, you&#8217;ll also need to add Java to the environment  variable <code>Path</code>. Click on the menu Start, Control Panel, System and search for <em>Environment Variables</em>. You&#8217;ll see all system variables that exist in your OS As shown on the screenshot <a href="#FIG1-4">Windows OS - System Variables</a>. If you have administrator&#8217;s rights on your Windows PC, you can set user variables that will apply only when a certain user logs into your PC, or system variables that will apply to all users.</p>
-</div>
-<div id="FIG1-4" class="imageblock">
-<div class="content">
-<img src="./images/fig_1_04.png" alt="fig 1 04">
-</div>
-<div class="title">Figure 2. Windows OS - System Variables</div>
+<p>Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We&#8217;ll stick to our principles of separating GUI and application logic, and will keep the GUI in .fxml file, but processing in Java.</p>
 </div>
 <div class="paragraph">
-<p>Press the lower button <em>Edit</em> - you need to add the <em>bin</em> directory from your JDK at the beginning of the <code>Path</code> variable value. For example, add  <em>c:\Program Files\java\jdk1.8.0\bin;</em> if this is where your JDK is installed:</p>
-</div>
-<div id="FIG1-5" class="imageblock">
-<div class="content">
-<img src="./images/fig_1_05.png" alt="fig 1 05">
-</div>
-<div class="title">Figure 3. Adding the bin directory Path variable</div>
+<p>In Scene Builder you may have noticed the <em>Controller</em> bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic.</p>
 </div>
 <div class="paragraph">
-<p>Now the Windows installation of JDK is complete! I&#8217;m sure you&#8217;re eager to start writing your first program now. Let&#8217;s do it.</p>
+<p>At the bottom right corner of Scene Builder you may notice a tab titled Code. This is where you can assign event handler methods to selected GUI component after assigning the controller class. So you could select have selected, say a button in the central canvas and assign its click handler right in the <em>Code</em> section for this button.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_three-main-steps-in-java-programming"><a class="anchor" href="#_three-main-steps-in-java-programming"></a>Three Main Steps in Java Programming</h3>
+<h3 id="_hooking-up-a-controller-to-gui"><a class="anchor" href="#_hooking-up-a-controller-to-gui"></a>Hooking up a Controller to GUI</h3>
 <div class="paragraph">
-<p>If you have an idea <em>what</em> to program, typically you&#8217;ll need to perform the following three steps:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><em>Write</em> the program in Java programming language and save it in a file.</p>
-</li>
-<li>
-<p><em>Compile</em> the program to translate it from Java language into a special <em>byte code</em> that JVM understands.</p>
-</li>
-<li>
-<p><em>Run</em> the program.</p>
-</li>
-</ol>
+<p>Since we&#8217;re separating the GUI code form the application logic, we need a way to specify that a particular FXML file should use a particular controller. In Chapter 7 I didn&#8217;t bring your attention to where it&#8217;s done in FXML, but if you&#8217;ll look at any of the FXML files, you&#8217;ll see that the name of the controller was specified there when IDEA generated the project for us.</p>
 </div>
 <div class="sect3">
-<h4 id="_command-window"><a class="anchor" href="#_command-window"></a>Command Window</h4>
+<h4 id="_adding-controller-to-sign-in-application"><a class="anchor" href="#_adding-controller-to-sign-in-application"></a>Adding Controller to Sign In application</h4>
 <div class="paragraph">
-<p>In this chapter we&#8217;ll compile and run Hello World program in the Command window if you use Microsoft Windows or from Terminal application if you&#8217;re on Mac OS.</p>
-</div>
-<div class="paragraph">
-<p>In Windows to open the Command window click on the <em>Start</em> menu and enter the letters <em>cmd</em> in the field that read <em>Search programs and files</em> . On Mac, open the Spotlight window by clicking on the looking glass icon at the top right corner of the screen, type the word Terminal and hit the button Return on the keyboard.</p>
-</div>
-<div class="paragraph">
-<p>First, create a folder name <em>practice</em> by entering the following command:</p>
-</div>
-<div class="paragraph">
-<p><em>mkdir practice</em></p>
-</div>
-<div class="paragraph">
-<p>This will be the place, where we&#8217;ll store all our Java programs.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_step-1-write-the-program"><a class="anchor" href="#_step-1-write-the-program"></a>Step 1 – Write the Program</h4>
-<div class="paragraph">
-<p>Starting from Chapter 2 will use a special application  called Integrated Development Environment (IDE) to write, compile, and run programs. But to get a better understanding of how things work, let&#8217;s use any plain text editor (e.g. Notepad, TextEdit et al.) to type in the code of our first Java program. Then you need to save the code in a text file with a name ending in <em>.java</em>.</p>
-</div>
-<div id="FIG1-8" class="imageblock">
-<div class="content">
-<img src="./images/fig_1_08.png" alt="fig 1 08">
-</div>
-<div class="title">Figure 4. Typing the code</div>
-</div>
-<div class="paragraph">
-<p>For example, if you want to write a program called <code>HelloWorld</code>, enter its code in a text editor.
-Here is the program that prints the words <em>Hello World!</em> on your computer&#8217;s screen:</p>
+<p>To illustrate the use of controllers, I&#8217;ll continue working on the sample Sign In project from Chapter 7. It has a file signin.fxml that includes the following <code>GridPane</code> tag:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">public class HelloWorld{
+<pre class="highlight"><code class="xml language-xml">&lt;GridPane hgap="10" vgap="10"
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller"&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>hgap</code> and <code>vgap</code> attributes specify the padding between the grid grid columns and rows. The <code>xmlns</code> attributes specify so called namespaces required for proper parsing of FXML files. And the attribute <code>fx:controller</code> specifies the full name of the class <code>Controller</code>, which in our project is located in the package <code>signin</code>.</p>
+</div>
+<div class="paragraph">
+<p>When the file signin.fxml is loaded, JavaFX runtime creates an instance of the class <code>signin.Controller</code> and injects it in the instance of the GUI class generated from FXML. The word injection describes the situation when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to create an instance of the <code>signin.Controller</code> manually by using the <code>new</code> operator.</p>
+</div>
+<div class="paragraph">
+<p>The first version of our controller class is shown next:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package signin;
 
-    public static void main(String[] args){
+import javafx.event.ActionEvent;
 
-       System.out.println("Hello World!");
+public class Controller {
 
-    }
+  public void signInClicked(ActionEvent evt){
+
+    System.out.println("Hello from signInClicked method in controller");
+  }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Save the above code in this folder in the file named <code>HelloWorld.java</code> in folder <em>practice</em>. Keep in mind that you are not allowed to use blanks in Java file names.</p>
+<p>The class <code>Controller</code> uses the class <code>ActionEvent</code> from package <code>javafx.event</code>, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an <code>ActionEvent</code> in the package <code>java.awt.event</code>, which we don&#8217;t want in this case.</p>
 </div>
 <div class="paragraph">
-<p>I’ll explain how this program works a little later in this chapter. For now just trust me – this program will print the words <em>Hello World</em> on the screen in the step 3, which will happen pretty soon.</p>
+<p>We want the method <code>signInClicked</code> to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the <code>onAction</code> event in the Button element in signin.fxml as shown on Figure 8-1.</p>
+</div>
+<div id="FIG8-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_8_01.png" alt="fig 8 01">
+</div>
+<div class="title">Figure 1. Mapping onAction event to signInClicked method</div>
 </div>
 <div class="paragraph">
-<p>Programmers often use the words <em>the source code</em> to refer to a program. So it&#8217;s safe to say the we wrote the source code of the program Hello World. Unless you&#8217;re experienced Java programmer, you can&#8217;s just say if this program is written correctly. Let&#8217;s proceed to Step 2 to find out.</p>
+<p>If you run the <code>Main</code> program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-2.</p>
+</div>
+<div id="FIG8-2" class="imageblock">
+<div class="content">
+<img src="./images/fig_8_02.png" alt="fig 8 02">
+</div>
+<div class="title">Figure 2. After clicking 3 times on Sign In button</div>
+</div>
+<div class="paragraph">
+<p>So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the <code>ActionEvent</code> object as an argument. Its property <code>target</code> identifies, well the target of the event, which is a Sign In button in our case.</p>
+</div>
+<div class="paragraph">
+<p>I ran our application in the debug mode just to show you that the <code>target</code> property on the <code>ActionEvent</code> correctly recognizes the event target shown in Figure 8-3.</p>
+</div>
+<div id="FIG8-3" class="imageblock">
+<div class="content">
+<img src="./images/fig_8_03.png" alt="fig 8 03">
+</div>
+<div class="title">Figure 3. Viewing properties of ActionEvent in debugger</div>
+</div>
+<div class="paragraph">
+<p>There is another event property <code>source</code>, which has the same value as <code>target</code> in our application. There are cases when <code>source</code> and <code>target</code> are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration.</p>
+</div>
+<div class="paragraph">
+<p>When you want to handle button clicks, you don&#8217;t really care in which area inside the button was the mouse pointer when the user clicked on the button. So handing <code>ActionEvent</code> was sufficient. But there is another event called <code>MouseEvent</code>, which gives you more details on the click event.</p>
+</div>
+<div class="paragraph">
+<p>In your signin.fxml you&#8217;re allowed to use <code>onMouseClicked</code> instead of <code>onAction</code> for the button. But if you do so, the <code>Button</code> will be considered a container for a special skin class <code>LabeledText</code> with the text <em>Sign In</em>, and if you click on the words <em>Sign In</em> the source of the event will be <code>Button</code>, and the target would be the class <code>LabeledSkin</code>. I&#8217;ve created an event handler <code>signInMouseClicked</code> and ran it through a debugger. Now the source and target of the event are different.</p>
+</div>
+<div id="FIG8-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_8_04.png" alt="fig 8 04">
+</div>
+<div class="title">Figure 4. Viewing properties of MouseEvent in debugger</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_step-2-compile-the-program"><a class="anchor" href="#_step-2-compile-the-program"></a>Step 2 – Compile the Program</h4>
+<h4 id="_data-exchange-between-gui-components-and-controller"><a class="anchor" href="#_data-exchange-between-gui-components-and-controller"></a>Data Exchange Between GUI Components And Controller</h4>
 <div class="paragraph">
-<p>Now you need to start Java compiler asking to turn the source code of Hello World program into byte code that JRE  understands. The program named <em>javac</em> is Java compiler, which is installed on your computer as a part of the JDK and is located in the <em>bin</em> folder in your JDK.</p>
+<p>No that we know how to link controller&#8217;s event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/Password the user entered and update the GUI from the controller accordingly.</p>
 </div>
-<div id="FIG1-10" class="imageblock">
+<div class="paragraph">
+<p>To read the values from GUI components we&#8217;ll need to give them unique id&#8217;s in the FXML file. We don&#8217;t need to give id&#8217;s to all component - only to those that have values for handling. Take a look at the <code>&lt;childrens&gt;</code> section of signin.fxml:</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<img src="./images/fig_1_10.png" alt="fig 1 10" width="400" height="550">
+<pre class="highlight"><code class="xml language-xml">&lt;children&gt;
+   &lt;Label alignment="CENTER" text="User ID:" /&gt;
+   &lt;Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" /&gt;
+   &lt;Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
+           GridPane.columnSpan="2" GridPane.rowIndex="2"
+           onAction="#signInClicked"/&gt;
+   &lt;TextField GridPane.columnIndex="1" fx:id="id" /&gt;
+   &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/&gt;
+&lt;/children&gt;</code></pre>
 </div>
-<div class="title">Figure 5. Compiling the source code</div>
 </div>
 <div class="paragraph">
-<p>Change the directory to <em>practice</em> with the command <em>cd practice</em>. If you never used the command <em>cd</em> before, read  the online instructions on how to do it on <a href="http://www.wikihow.com/Change-Directories-in-Command-Prompt">Windows</a> or on <a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line">Mac OS</a>. Now compile the program using the following command:</p>
+<p>Only the <code>TextField</code> and <code>PasswordField</code> have an attribute <code>fx:id</code> - this is how we can assign id&#8217;s in fxml.</p>
 </div>
 <div class="paragraph">
-<p><em>javac HelloWorld.java</em></p>
+<p>The next step is to inject them into the variables in the <code>signin.Controller</code> class. The following code fragment shows how to inject component references into the <code>id</code> and <code>pwd</code> fields. This is how I&#8217;ll declared two Java variables in the <code>Controller</code> clas with the names that match those from signin.fxml:</p>
 </div>
-<div class="paragraph">
-<p>You won’t see any confirmation message that your program <code>HelloWorld</code> has been compiled successfully. Having no messages means there is no problems. Type a command <em>dir</em> on Windows or <em>ls</em> on Mac and you&#8217;ll see the list of files in folder <em>practice</em>. This is how it looks in my Terminal window:</p>
-</div>
-<div id="FIG1-11" class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/fig_1_11.png" alt="fig 1 11">
+<pre class="highlight"><code class="java language-java">@FXML private TextField id;
+
+@FXML private PasswordField pwd;</code></pre>
 </div>
-<div class="title">Figure 6. HelloWorld compiled successfully</div>
 </div>
 <div class="paragraph">
-<p>First, I&#8217;ve entered the <em>pwd</em> command to make sure I&#8217;m in the <em>practice</em> folder. You should see there a new file named <code>HelloWorld.class</code>. This proves that your program has been successfully compiled. Your original file <code>HelloWorld.java</code> is also there, and you can modify this file later to print <em>Hello Mom</em> or something else.</p>
+<p>Java has so called annotations (not covered in this book). They start with <code>@</code> sign and can be placed in front of the variable, class, or a method declaration depending on how  the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation <code>@FXML</code> instructs runtime to inject the references to the specifies GUI objects into the variables.</p>
 </div>
 <div class="paragraph">
-<p>If the program has syntax errors, let’s say you forgot to type the last curly brace, Java compiler will print an error message. Now you’d need to fix the error, and recompile the program again. If you have several errors, you may need to repeat these actions more than once until the file <code>HelloWorld.class</code> is created.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_step-3-run-the-program"><a class="anchor" href="#_step-3-run-the-program"></a>Step 3 – Run the Program</h4>
-<div class="paragraph">
-<p>Now let’s run the program. In the same Command or Terminal window enter the following:</p>
+<p>In other words, JavaFX runtime will read the first line as follows: "I need to get the object that I created after loading signin.fxml file, and then inside this object find the component with an the <code>fx:id="id"</code>. Finally, I need to insert the reference to this component into the Java variable <code>id</code>". The same applies to the variable <code>pwd</code>.</p>
 </div>
 <div class="paragraph">
-<p><em>java HelloWorld</em></p>
+<p>The rest is easy. Just use the injected values in you event handler. The code of our <code>Controller</code> is shown next. Its method <code>signInClicked</code> checks the value entered in the User ID field in the GUI, and if it&#8217;s not equal to "Yakov", then the code sets the background of the GUI component to pink color.</p>
 </div>
-<div class="paragraph">
-<p>After running this command, you&#8217;ll see the text <em>Hello World!</em> printed in the Terminal window as shown on <a href="#FIG1-12">Running HelloWorld</a>. Have you noticed that this time you’ve used the program <em>java</em> and not <em>javac</em>?  This is how you start JRE providing it the name of the application to run (HelloWorld in this case).</p>
-</div>
-<div id="FIG1-12" class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/fig_1_12.png" alt="fig 1 12">
+<pre>public class Controller {
+
+  @FXML private TextField id;            //  <i class="conum" data-value="1"></i><b>(1)</b>
+
+  @FXML private PasswordField pwd;       //  <i class="conum" data-value="1"></i><b>(1)</b>
+
+  public void signInClicked(ActionEvent evt){
+
+    String userID = id.getText();      //   <i class="conum" data-value="2"></i><b>(2)</b>
+    String password = pwd.getText();   //   <i class="conum" data-value="2"></i><b>(2)</b>
+
+    if (!"Yakov".equals(userID)){      //    <i class="conum" data-value="3"></i><b>(3)</b>
+      id.setStyle("-fx-background-color:lightpink;"); <i class="conum" data-value="4"></i><b>(4)</b>
+    } else{
+      id.setStyle("-fx-background-color:white;");    <i class="conum" data-value="5"></i><b>(5)</b>
+    }
+
+    System.out.println("got id:" + userID + ", got password: " + password);
+
+    System.out.println("Hello from signInClicked method in controller");
+  }
+}</pre>
 </div>
-<div class="title">Figure 7. Running HelloWorld</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Inject the references to GUI components into member variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Extract the text from the GUI objects</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Has the user not entered Yakov in the User ID field? We use the negation operator ! here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the background color to <code>lightpink</code> if the entered user id is not Yakov. You can find major CSS color names at <a href="http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Set the background color to back to <code>white</code> if the entered user id is not Yakov.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Keep in mind that Java does not treat capital and small letters the same, which means that if you named the program <code>HelloWorld</code> with a capital <code>H</code> and a capital <code>W</code>, do not try to start the program <code>helloworld</code> or <code>helloWorld</code> – the JRE will complain. The file name should match the class name too. Typically, each file of your application contains the code of one class even though you can keep the code of more than one class in the same file.</p>
+<p>If you run the Main program now and enter the wrong user id, the window will look as follows:</p>
 </div>
-<div class="paragraph">
-<p>Now let’s have some fun - try to guess how to modify the code of the program that prints Hello World.  I’ll explain how this program works in the next chapter, but still, try to guess what has to be done to say hello to your pet, friend or print your address. Go through all three steps to see if the program still works after your changes. If you don&#8217;t have a pet, you can always say hello to my puppy - his name is Sammy. Are you up for the challenge to write a program that prints Hello Sammy! on the screen?</p>
-</div>
-<div id="FIG1-07" class="imageblock">
+<div id="FIG8-5" class="imageblock">
 <div class="content">
-<img src="./images/fig_1_07_.png" alt="fig 1 07 ">
+<img src="./images/fig_8_05.png" alt="fig 8 05">
 </div>
-<div class="title">Figure 8. Sammy is 4 months old here</div>
-</div>
-<div class="paragraph">
-<p>In the next chapter you&#8217;ll learn how to write, compile and run your programs in a more convenient environment than just a text editor and a Command window.</p>
+<div class="title">Figure 5. After entering wrong user id</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_additional-reading"><a class="anchor" href="#_additional-reading"></a>Additional Reading</h3>
-<div id="FIG1-13" class="imageblock" style="float: left">
-<div class="content">
-<img src="./images/fig_reading.png" alt="fig reading" width="200" height="275">
+<h3 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>Assigning Event Handlers in Java</h3>
+<div class="paragraph">
+<p>If your program is written in Java, you can process events using anonymous classes, lambda expressions, or method references (not covered in this book). We&#8217;ll be implementing event handlers as lambda expressions as they are easier to write. Typically, you&#8217;ll be writing code to react if some event has happened. For example, if you have a button represented by a variable <code>myButton</code> you can write an event handler for the click event:</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">myButton.setOnAction(evt -&gt;
+    System.out.println("My button was clicked.")
+);</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>Further Reading on Event Handling</h4>
+<div class="paragraph">
+<p>In this section I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are <code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer),  <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data-binding"><a class="anchor" href="#_data-binding"></a>Data Binding</h3>
+</div>
+<div class="sect2">
+<h3 id="_deploying-with-javafx-packager"><a class="anchor" href="#_deploying-with-javafx-packager"></a>Deploying With JavaFX Packager</h3>
+<div class="paragraph">
+<p><a href="http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm">http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm</a>.</p>
 </div>
 <div class="paragraph">
-<p>Oracle Tutorial <a href="http://docs.oracle.com/javase/tutorial/getStarted/index.html">Getting Started</a></p>
+<p>I&#8217;m sure many of you want to know if it&#8217;s possible to use JavaFX for writing applications for smart phones. Oracle doesn&#8217;t offer the JavaFX libraries for mobile platforms, but it&#8217;s still possible.</p>
 </div>
+<div class="paragraph">
+<p>To develop JavaFX applications for iOS, you&#8217;d need to install and learn on your own some additional software, namely RoboVM[<a href="http://www.robovm.com/">http://www.robovm.com/</a>] is an SDK for converting Java bytecode into a native device code as if it was written in C programming language, which makes it deployable on iOS devices.</p>
+</div>
+<div class="paragraph">
+<p>There is also a community site JavaFXPorts[ <a href="http://javafxports.org/page/home">http://javafxports.org/page/home</a>] where people are working on deployment of JavaFX applications on iOS and Android devices.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_project"><a class="anchor" href="#_project"></a>Project</h3>
 </div>
 </div>
 </div>

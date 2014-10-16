@@ -522,7 +522,7 @@ p { margin-bottom: 1.25rem; }
 <p>Java defines a number of data types. Some of them are simple, like <code>int</code>, which represents integer numbers. Some of them are more complex - they are called <em>classes</em>, like <code>System</code>, which can be used for things like printing texts on the screen, exiting a program or cleaning computer&#8217;s memory.</p>
 </div>
 <div class="paragraph">
-<p>When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of <em>classes</em> that can represent <em>objects</em> from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the  class Dogs.</p>
+<p>When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of <em>classes</em> that can represent <em>objects</em> from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the  class <code>Dog</code>.</p>
 </div>
 <div class="paragraph">
 <p>Programmers start working on any application with deciding  which Java classes to include in the program and how many objects of each type to create. Say, they can define a class <code>Player</code> in the gaming application and create two object instances of this type.</p>
@@ -634,7 +634,22 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <p>We&#8217;ll often use the phrase <em>create an instance of an object</em>, which means to create an object in computer&#8217;s memory based on some class declaration. If a game factory will produce ten thousand of such games, a programmer can say that they created ten thousand instances of the class <code>PlayStation4</code>.</p>
 </div>
 <div class="paragraph">
-<p>The factory description of <code>PlayStation4</code> relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  <code>PlayStation4</code> objects in Java.</p>
+<p>The factory description of <code>PlayStation4</code> relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  <code>PlayStation4</code> objects in Java. For example, the next code sample creates one instance of the class <code>PlayStation4</code> and calls its method <code>shareOnFacebook</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class CreatePlayStation4Objects {
+
+  public static void main(String[] args) {
+
+    // create one instance of PlayStation4 class
+    PlayStation4 firstPlayStation = new PlayStation4();
+
+    // call the method shareOnFacebook
+    firstPlayStation.shareOnFacebook();
+  }
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different <em>values</em> in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB.</p>
@@ -1217,7 +1232,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-14 15:56:06 EDT
+Last updated 2014-10-15 21:56:12 EDT
 </div>
 </div>
 </body>
