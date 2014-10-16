@@ -651,7 +651,10 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>But it&#8217;s easier to create layouts and components using a visual tool, and this is what we&#8217;ll do next.</p>
+<p>In this chapter we&#8217;ll use only some of the JavaFX layouts, but for detailed coverage of layouts visit Oracle tutorial at <a href="http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm">http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm</a>.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s easier to create layouts and components using a visual tool, and this is what we&#8217;ll do next.</p>
 </div>
 </div>
 <div class="sect2">
@@ -755,10 +758,8 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Rename the package from <em>sample</em> to <em>signin</em> (right-click menu, Refactor | Rename). Now open the file signin.fxml in Scene Builder and start thinking about laying out the components of our Sign In scene. Let&#8217;s take another look at the image of the Sign In window. I can clearly see that GUI components are placed in three rows. The first two have a <code>Label</code> and <code>TextField</code> and the third one has a wide <code>Button</code>.</p>
-</div>
-<div class="paragraph">
-<p>I can also recognize two columns in the layout of the Sign In window. The first column has two <code>Label</code> components and the left side of the <code>Button</code>. The second column has two <code>TextFiled</code> components and the right side of the <code>Button</code>. We can also say that the <code>Button</code> <em>spans</em> two columns. We&#8217;ve got a 2x3 grid!</p>
+<p>Rename the package from <em>sample</em> to <em>signin</em> (right-click menu, Refactor | Rename). Now open the file signin.fxml in Scene Builder and start thinking about laying out the components of our Sign In scene. Let&#8217;s take another look at the image of the Sign In window. I can clearly see that GUI components are placed in three rows. The first two have a <code>Label</code> and <code>TextField</code> and the third one has a wide <code>Button</code>.
+I can also recognize two columns in the layout of the Sign In window. The first column has two <code>Label</code> components and the left side of the <code>Button</code>. The second column has two <code>TextFiled</code> components and the right side of the <code>Button</code>. We can also say that the <code>Button</code> <em>spans</em> two columns. We&#8217;ve got a 2x3 grid!</p>
 </div>
 <div class="paragraph">
 <p>Open the generated <code>signin.fxml</code> in Scene Builder. Since this file has already empty <code>&lt;GrigPane&gt;</code> tag, you&#8217;ll see GridPane(0,0) as the root of the hierarchy in the bottom left corner as in Figure 4 above. So far this grid has zero rows and zero columns. Right-click on the grid in the middle of the screen and add three rows and two columns to the grid by using the right-click menus GridPane | Add Row Below and Add Column After. When the GridPane is selected The Scene Builder&#8217;s window may look similar to this:</p>
@@ -1306,7 +1307,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-15 21:56:12 EDT
+Last updated 2014-10-15 22:04:37 EDT
 </div>
 </div>
 </body>
