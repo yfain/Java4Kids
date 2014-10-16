@@ -1,10 +1,197 @@
-:toc:
-:toclevels: 4
+:toc-placement!:
 :imagesdir: ./
 
-== Chapter 8. User Interaction with Java FX
+== Chapter 8. Programming User Interaction in JavaFX
+
+After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator window windows from Chapter 7 looks good, but none of them would react on user's actions. No matter how hard you click on the Sign In or calculator's buttons, nothing will happen because we didn't teach these application how to react on user-generated events (e.g. button clicks). 
+
+Events are notifications that something important for the application has happened. In this chapter you'll learn what kind of events may happen in a JavaFX application and how to write code to handle these events.  The generated class`Controller` is empty as of yet, but we'll add some code to it to communicate with the GUI components.  
+
+
+=== Events
+
+JavaFX applications have to deal with various events. FOr example, a button click, a mouse move etc. In JavaFX an event object is represented by the instance of the class `Event` located in the packages `javafx.event` and `javafx.scene.input`. You'll always write event handlers in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you'll need to specify the name of your controller class right in the FXML. 
+
+You can either create with `new` or _inject_ an instance of your controller class into Java code. I'll explain you what injection means in a bit. 
+
+==== Assigning Event Handlers in FXML
+
+Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We'll stick to our principles of separating GUI and application logic, and will keep the GUI in .fxml file, but processing in Java. 
+
+In Scene Builder you may have noticed the _Controller_ bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic.
+
+At the bottom right corner of Scene Builder you may notice a tab titled Code. This is where you can assign event handler methods to selected GUI component after assigning the controller class. So you could select have selected, say a button in the central canvas and assign its click handler right in the _Code_ section for this button. 
+
+
+=== Hooking up a Controller to GUI
+
+Since we're separating the GUI code form the application logic, we need a way to specify that a particular FXML file should use a particular controller. In Chapter 7 I didn't bring your attention to where it's done in FXML, but if you'll look at any of the FXML files, you'll see that the name of the controller was specified there when IDEA generated the project for us. 
+
+==== Adding Controller to Sign In application
+
+To illustrate the use of controllers, I'll continue working on the sample Sign In project from Chapter 7. It has a file signin.fxml that includes the following `GridPane` tag:
+
+[source, xml]
+----
+<GridPane hgap="10" vgap="10" 
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller">
+----
+
+The `hgap` and `vgap` attributes specify the padding between the grid grid columns and rows. The `xmlns` attributes specify so called namespaces required for proper parsing of FXML files. And the attribute `fx:controller` specifies the full name of the class `Controller`, which in our project is located in the package `signin`. 
+
+When the file signin.fxml is loaded, JavaFX runtime creates an instance of the class `signin.Controller` and injects it in the instance of the GUI class generated from FXML. The word injection describes the situation when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to create an instance of the `signin.Controller` manually by using the `new` operator. 
+
+The first version of our controller class is shown next: 
+
+[source, java]
+----
+package signin;
+
+import javafx.event.ActionEvent;
+
+public class Controller {
+
+  public void signInClicked(ActionEvent evt){
+
+    System.out.println("Hello from signInClicked method in controller");  
+  }
+}
+----
+
+The class `Controller` uses the class `ActionEvent` from package `javafx.event`, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an `ActionEvent` in the package `java.awt.event`, which we don't want in this case.
+
+We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the `onAction` event in the Button element in signin.fxml as shown on Figure 8-1.
+
+[[FIG8-1]]
+.Mapping onAction event to signInClicked method 
+image::images/fig_8_01.png[]
+
+If you run the `Main` program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-2.
+
+[[FIG8-2]]
+.After clicking 3 times on Sign In button 
+image::images/fig_8_02.png[]
+
+So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the `ActionEvent` object as an argument. Its property `target` identifies, well the target of the event, which is a Sign In button in our case. 
+
+I ran our application in the debug mode just to show you that the `target` property on the `ActionEvent` correctly recognizes the event target shown in Figure 8-3.   
+
+[[FIG8-3]]
+.Viewing properties of ActionEvent in debugger 
+image::images/fig_8_03.png[]
+
+There is another event property `source`, which has the same value as `target` in our application. There are cases when `source` and `target` are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration. 
+
+When you want to handle button clicks, you don't really care in which area inside the button was the mouse pointer when the user clicked on the button. So handing `ActionEvent` was sufficient. But there is another event called `MouseEvent`, which gives you more details on the click event. 
+
+In your signin.fxml you're allowed to use `onMouseClicked` instead of `onAction` for the button. But if you do so, the `Button` will be considered a container for a special skin class `LabeledText` with the text _Sign In_, and if you click on the words _Sign In_ the source of the event will be `Button`, and the target would be the class `LabeledSkin`. I've created an event handler `signInMouseClicked` and ran it through a debugger. Now the source and target of the event are different.
+
+[[FIG8-4]]
+.Viewing properties of MouseEvent in debugger 
+image::images/fig_8_04.png[]
+
+==== Data Exchange Between GUI Components And Controller
+
+No that we know how to link controller's event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/Password the user entered and update the GUI from the controller accordingly.
+
+To read the values from GUI components we'll need to give them unique id's in the FXML file. We don't need to give id's to all component - only to those that have values for handling. Take a look at the `<childrens>` section of signin.fxml:
+
+[source, xml]
+----
+<children>
+   <Label alignment="CENTER" text="User ID:" />
+   <Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" />
+   <Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
+           GridPane.columnSpan="2" GridPane.rowIndex="2"
+           onAction="#signInClicked"/>
+   <TextField GridPane.columnIndex="1" fx:id="id" />
+   <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/>
+</children>
+----
+
+Only the `TextField` and `PasswordField` have an attribute `fx:id` - this is how we can assign id's in fxml.
+
+The next step is to inject them into the variables in the `signin.Controller` class. The following code fragment shows how to inject component references into the `id` and `pwd` fields. This is how I'll declared two Java variables in the `Controller` clas with the names that match those from signin.fxml:
+
+[source, java]
+----
+@FXML private TextField id;
+
+@FXML private PasswordField pwd;
+----
+
+Java has so called annotations (not covered in this book). They start with `@` sign and can be placed in front of the variable, class, or a method declaration depending on how  the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation `@FXML` instructs runtime to inject the references to the specifies GUI objects into the variables. 
+
+In other words, JavaFX runtime will read the first line as follows: "I need to get the object that I created after loading signin.fxml file, and then inside this object find the component with an the `fx:id="id"`. Finally, I need to insert the reference to this component into the Java variable `id`". The same applies to the variable `pwd`.
+
+The rest is easy. Just use the injected values in you event handler. The code of our `Controller` is shown next. Its method `signInClicked` checks the value entered in the User ID field in the GUI, and if it's not equal to "Yakov", then the code sets the background of the GUI component to pink color.
+
+[java, source]
+----
+public class Controller {
+
+  @FXML private TextField id;            //  <1>
+
+  @FXML private PasswordField pwd;       //  <1>
+
+  public void signInClicked(ActionEvent evt){
+
+    String userID = id.getText();      //   <2> 
+    String password = pwd.getText();   //   <2>
+
+    if (!"Yakov".equals(userID)){      //    <3>
+      id.setStyle("-fx-background-color:lightpink;"); //<4>
+    } else{
+      id.setStyle("-fx-background-color:white;");    // <5>
+    }
+
+    System.out.println("got id:" + userID + ", got password: " + password);
+
+    System.out.println("Hello from signInClicked method in controller");
+  }
+}
+----
+
+<1> Inject the references to GUI components into member variables.  
+<2>  Extract the text from the GUI objects 
+<3>  Has the user not entered Yakov in the User ID field? We use the negation operator ! here.
+<4>  Set the background color to `lightpink` if the entered user id is not Yakov. You can find major CSS color names at http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html   
+<5>  Set the background color to back to `white` if the entered user id is not Yakov. 
+
+If you run the Main program now and enter the wrong user id, the window will look as follows:
+
+[[FIG8-5]]
+.After entering wrong user id 
+image::images/fig_8_05.png[]
+
+
+=== Assigning Event Handlers in Java
+
+If your program is written in Java, you can process events using anonymous classes, lambda expressions, or method references (not covered in this book). We'll be implementing event handlers as lambda expressions as they are easier to write. Typically, you'll be writing code to react if some event has happened. For example, if you have a button represented by a variable `myButton` you can write an event handler for the click event:
+
+[source, java]
+----
+myButton.setOnAction(evt -> 
+    System.out.println("My button was clicked.")
+);
+----
+
+==== Further Reading on Event Handling
+
+In this section I've explained you the basics of event handling using the `ActionEvent` and `onAction` event handler as an example. Some other examples of the events are `KeyEvent` (e.g. the user pressed a key on the keyboard), `MouseEvent`(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer),  `WindowEvent` (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle's tutorial about handling events at http://docs.oracle.com/javafx/2/events/jfxpub-events.htm.
+
 
 
 === Data Binding
 
-=== Challenge Yourself 
+=== Deploying With JavaFX Packager
+
+http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm.
+
+I'm sure many of you want to know if it's possible to use JavaFX for writing applications for smart phones. Oracle doesn't offer the JavaFX libraries for mobile platforms, but it's still possible. 
+
+To develop JavaFX applications for iOS, you'd need to install and learn on your own some additional software, namely RoboVM[http://www.robovm.com/] is an SDK for converting Java bytecode into a native device code as if it was written in C programming language, which makes it deployable on iOS devices. 
+
+There is also a community site JavaFXPorts[ http://javafxports.org/page/home] where people are working on deployment of JavaFX applications on iOS and Android devices.
+
+=== Project 

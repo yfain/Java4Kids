@@ -6,7 +6,7 @@
 
 Java defines a number of data types. Some of them are simple, like `int`, which represents integer numbers. Some of them are more complex - they are called _classes_, like `System`, which can be used for things like printing texts on the screen, exiting a program or cleaning computer's memory. 
 
-When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of _classes_ that can represent _objects_ from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the  class Dogs. 
+When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of _classes_ that can represent _objects_ from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the  class `Dog`. 
 
 Programmers start working on any application with deciding  which Java classes to include in the program and how many objects of each type to create. Say, they can define a class `Player` in the gaming application and create two object instances of this type. 
 
@@ -88,7 +88,22 @@ class PlayStation4{
 
 We'll often use the phrase _create an instance of an object_, which means to create an object in computer's memory based on some class declaration. If a game factory will produce ten thousand of such games, a programmer can say that they created ten thousand instances of the class `PlayStation4`. 
 
-The factory description of `PlayStation4` relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  `PlayStation4` objects in Java.
+The factory description of `PlayStation4` relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  `PlayStation4` objects in Java. For example, the next code sample creates one instance of the class `PlayStation4` and calls its method `shareOnFacebook`.
+
+[source, java]
+----
+public class CreatePlayStation4Objects {
+
+  public static void main(String[] args) {
+
+    // create one instance of PlayStation4 class
+    PlayStation4 firstPlayStation = new PlayStation4();
+
+    // call the method shareOnFacebook
+    firstPlayStation.shareOnFacebook();
+  }
+}
+----
 
 In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different _values_ in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB. 
 
