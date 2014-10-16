@@ -102,7 +102,9 @@ If you'd be writing the code manually in Java, you'd be going through the follow
 
 4. If this layout instance needs to be used inside another layout (e.g. an `HBox` can be placed inside the `BorderPane`) add the instance created in Step 1 to the parent container by using the method `add()`.
 
-But it's easier to create layouts and components using a visual tool, and this is what we'll do next.
+In this chapter we'll use only some of the JavaFX layouts, but for detailed coverage of layouts visit Oracle tutorial at http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm.
+ 
+It's easier to create layouts and components using a visual tool, and this is what we'll do next.
 
 === Getting Started With Scene Builder
 
@@ -185,7 +187,6 @@ Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
 ----
 
 Rename the package from _sample_ to _signin_ (right-click menu, Refactor | Rename). Now open the file signin.fxml in Scene Builder and start thinking about laying out the components of our Sign In scene. Let's take another look at the image of the Sign In window. I can clearly see that GUI components are placed in three rows. The first two have a `Label` and `TextField` and the third one has a wide `Button`.  
-
 I can also recognize two columns in the layout of the Sign In window. The first column has two `Label` components and the left side of the `Button`. The second column has two `TextFiled` components and the right side of the `Button`. We can also say that the `Button` _spans_ two columns. We've got a 2x3 grid!
 
 Open the generated `signin.fxml` in Scene Builder. Since this file has already empty `<GrigPane>` tag, you'll see GridPane(0,0) as the root of the hierarchy in the bottom left corner as in Figure 4 above. So far this grid has zero rows and zero columns. Right-click on the grid in the middle of the screen and add three rows and two columns to the grid by using the right-click menus GridPane | Add Row Below and Add Column After. When the GridPane is selected The Scene Builder's window may look similar to this:

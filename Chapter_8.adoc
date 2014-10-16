@@ -126,7 +126,7 @@ In other words, JavaFX runtime will read the first line as follows: "I need to g
 
 The rest is easy. Just use the injected values in you event handler. The code of our `Controller` is shown next. Its method `signInClicked` checks the value entered in the User ID field in the GUI, and if it's not equal to "Yakov", then the code sets the background of the GUI component to pink color.
 
-[java, source]
+[source, java]
 ----
 public class Controller {
 
