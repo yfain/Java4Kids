@@ -699,7 +699,7 @@ public class Controller {
 </table>
 </div>
 <div class="paragraph">
-<p>If you run the Main program now and enter the wrong user id, the window will look as follows:</p>
+<p>If you run the <code>Main</code> program and enter the wrong user id, the window will look as follows:</p>
 </div>
 <div id="FIG8-5" class="imageblock">
 <div class="content">
@@ -712,19 +712,149 @@ public class Controller {
 <div class="sect2">
 <h3 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>Assigning Event Handlers in Java</h3>
 <div class="paragraph">
-<p>If your program is written in Java, you can process events using anonymous classes, lambda expressions, or method references (not covered in this book). We&#8217;ll be implementing event handlers as lambda expressions as they are easier to write. Typically, you&#8217;ll be writing code to react if some event has happened. For example, if you have a button represented by a variable <code>myButton</code> you can write an event handler for the click event:</p>
+<p>If your program is written completely in Java without any use of FXML, you&#8217;ll be assigning event handlers using so called <a href="http://docs.oracle.com/javafx/2/events/convenience_methods.htm">convenience methods</a> that have names that start with <code>setOn</code> like <code>setOnAction</code>, <code>setOnKeyTyped</code>, <code>setOnEditStart</code> etc. Each of the GUI components has has several of such methods.</p>
+</div>
+<div class="paragraph">
+<p>You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or method references (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you&#8217;ll be writing code to react if some event has happened. For example, if you have a button represented by a variable <code>myButton</code> you can write an event handler for the click event:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">myButton.setOnAction(evt -&gt;
-    System.out.println("My button was clicked.")
+<pre class="highlight"><code class="java language-java">Button signInButton = new Button("Sign In");
+signInButton.setOnAction(evt -&gt;
+    System.out.println("The Sign In button was clicked.")
 );</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ve got introduced lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but don&#8217;t really uses its values but just prints the message that the button was clicked.</p>
+</div>
+<div class="paragraph">
+<p>What&#8217;s the type of the <code>evt</code> argument? Java compiler will figure it out automatically. Since the method <code>setOnAction</code> expects to get the <code>ActionEvent</code> object from the JVM, compiler guesses that the type of the <code>evt</code> is <code>ActionEvent</code> so you don&#8217;t even need to write it in the program code. You&#8217;ve seen a similar example of of type inference in Chapter 5.</p>
+</div>
+<div class="paragraph">
+<p>To bring all pieces of the puzzle together, I&#8217;ll show you another version of the Sign In application that will look the same, but won&#8217;t use FXML - everything will be programmed in Java. The following class <code>MainPureJava</code> and <code>signin.css</code> is all we need for programming the functionality of our Sign In window. There is not need to use <code>signin.fxml</code> or <code>Controller.java</code> in this case.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package signin;
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+
+public class MainPureJava extends Application {
+
+  public void start(Stage primaryStage) {
+
+    final int TWO_COLUMN_SPAN = 2;               <i class="conum" data-value="1"></i><b>(1)</b>
+
+    Label userIdLbl = new Label("User ID:");     <i class="conum" data-value="2"></i><b>(2)</b>
+    TextField userIdTxt = new TextField();
+    Label userPwdLbl = new Label("Password:");
+    userPwdLbl.getStyleClass().add("bluelabel");
+    PasswordField userPwdTxt = new PasswordField();
+
+    GridPane root = new GridPane();              //  <i class="conum" data-value="3"></i><b>(3)</b>
+    root.setVgap(20);
+    root.setPadding(new Insets(10));
+    root.setAlignment(Pos.CENTER);
+    root.setId("root");
+
+    // Setting constraints for firs 2 rows
+    GridPane.setConstraints(userIdLbl, 0, 0);    //  <i class="conum" data-value="4"></i><b>(4)</b>
+    GridPane.setConstraints(userIdTxt, 1, 0);
+    GridPane.setConstraints(userPwdLbl, 0, 1);
+    GridPane.setConstraints(userPwdTxt, 1, 1);
+
+    root.getChildren().addAll(userIdLbl, userIdTxt,
+    userPwdLbl, userPwdTxt);                      //  <i class="conum" data-value="5"></i><b>(5)</b>
+
+
+    Button signInBtn = new Button ("Sign In");    //  <i class="conum" data-value="6"></i><b>(6)</b>
+    signInBtn.setId("submitBtn");  // used in CSS
+
+    // Event handler with lambda expression
+    signInBtn.setOnAction(evt -&gt; {                 //  <i class="conum" data-value="7"></i><b>(7)</b>
+
+        String userID = userIdTxt.getText();
+        String password = userPwdTxt.getText();
+        if (!"Yakov".equals(userID)){
+            userIdTxt.setStyle("-fx-background-color: lightpink;");
+        } else{
+            userIdTxt.setStyle("-fx-background-color: white;");
+        }
+
+        System.out.println("Got id " + userID +
+                           " and password " + password);
+    });
+
+    // Allow the button to be wider
+    signInBtn.setPrefWidth(Double.MAX_VALUE);
+
+    // Adding a wide button to the third row
+    root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);
+
+    Scene scene = new Scene(root,250,180);
+    scene.getStylesheets()                         <i class="conum" data-value="8"></i><b>(8)</b>
+         .add(getClass()
+         .getResource("signin.css")
+         .toExternalForm());
+
+    primaryStage.setScene(scene);                 //  <i class="conum" data-value="9"></i><b>(9)</b>
+    primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This programs uses the <code>GridPane</code> layout with three rows and two column. Since the Sign In button will span tho columns, I declared a final variable <code>TWO_COLUMN_SPAN</code> that will be used when the button will be added to the grid.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Then I instantiate labels and text fields.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>After that I create an instance of the <code>GridPane</code> container.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>To add the labels and text fields to the proper cells of the first two rows of the grid, I set the constraints on the <code>GridPane</code> object.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The GUI components for the first two rows are instantiated, constraints are set so I add them as children to the root of the <em>scene graph</em> - the <code>GridPane</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Now I create the instance if the Sign In button and assign the id to it. This was explained in the Styling with CSS section in Chapter 7.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The lambda expression implements the application logic to be invoked as a reaction to the <code>ActionEvent</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The we create a scene object an apply the CSS to it. This is probably the first time you see the method chaining. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Finally, the scene is added to the stage and the curtain goes up.</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>Further Reading on Event Handling</h4>
 <div class="paragraph">
-<p>In this section I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are <code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer),  <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
+<p>In this section I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:<code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (e.g. the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
 </div>
 </div>
 </div>
@@ -737,13 +867,28 @@ public class Controller {
 <p><a href="http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm">http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm</a>.</p>
 </div>
 <div class="paragraph">
+<p>The <code>Application</code> class has a method <code>getParameters</code>, which is a JavaFX way of getting command line arguments that might be passed to your application during its launch .</p>
+</div>
+<div class="paragraph">
 <p>I&#8217;m sure many of you want to know if it&#8217;s possible to use JavaFX for writing applications for smart phones. Oracle doesn&#8217;t offer the JavaFX libraries for mobile platforms, but it&#8217;s still possible.</p>
 </div>
 <div class="paragraph">
 <p>To develop JavaFX applications for iOS, you&#8217;d need to install and learn on your own some additional software, namely RoboVM[<a href="http://www.robovm.com/">http://www.robovm.com/</a>] is an SDK for converting Java bytecode into a native device code as if it was written in C programming language, which makes it deployable on iOS devices.</p>
 </div>
 <div class="paragraph">
-<p>There is also a community site JavaFXPorts[ <a href="http://javafxports.org/page/home">http://javafxports.org/page/home</a>] where people are working on deployment of JavaFX applications on iOS and Android devices.</p>
+<p>There is also a community site JavaFX Ports[ <a href="http://javafxports.org/page/home">http://javafxports.org/page/home</a>] where people are working on deployment of JavaFX applications on iOS and Android devices.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_first-look-at-multi-threading"><a class="anchor" href="#_first-look-at-multi-threading"></a>First Look at Multi-Threading</h3>
+</div>
+<div class="sect2">
+<h3 id="_what-to-study-next-about-javafx"><a class="anchor" href="#_what-to-study-next-about-javafx"></a>What to Study Next About JavaFX</h3>
+<div class="paragraph">
+<p>In Chapter 7 and 8 I gave you a very brief introduction to JavaFX. We&#8217;ll use it more while working on Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
+</div>
+<div class="paragraph">
+<p>Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress.</p>
 </div>
 </div>
 <div class="sect2">
@@ -754,7 +899,7 @@ public class Controller {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-15 21:58:37 EDT
+Last updated 2014-10-16 22:00:37 EDT
 </div>
 </div>
 </body>

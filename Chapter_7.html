@@ -493,7 +493,7 @@ p { margin-bottom: 1.25rem; }
 <p>After creating lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking Graphic User Interface (GUI). We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and other GUI components.</p>
 </div>
 <div class="paragraph">
-<p>Java has an older library of GUI components called <a href="http://docs.oracle.com/javase/tutorial/uiswing/">Swing</a>, and the new one called <a href="http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm">JavaFX</a>. We&#8217;ll use only JavaFX in this book.</p>
+<p>Java has an older library of GUI components called <a href="http://docs.oracle.com/javase/tutorial/uiswing/">Swing</a>, and the new one called <a href="http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm">JavaFX</a>. We&#8217;ll use only JavaFX in this book. JavaFX is also a library that&#8217;s included with JDK, and you can write your GUI programs using familiar Java language. On the other hand, JavaFX allows to create and arrange GUI components in a special FXML format, while writing application logic in Java.</p>
 </div>
 <div class="paragraph">
 <p>In this chapter I&#8217;ll explain you the basics of GUI programming with JavaFX. You&#8217;ll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you&#8217;ll learn how to write code that reacts on user&#8217;s actions (a.k.a. events) like a click on the button or a mouse move.</p>
@@ -535,10 +535,7 @@ p { margin-bottom: 1.25rem; }
 <div class="title">Figure 2. The newly generated IDEA project</div>
 </div>
 <div class="paragraph">
-<p>The <code>Main</code> class of a JavaFX application extends <code>Application</code> and is an entry point of your application. JavaFX classes are located in the packages <code>javafx.stage</code> and <code>javafx.scene</code>.The <code>main</code> method invokes the method <code>launch</code> from <code>Application</code>, which creates stage will call its own method <code>start</code>.</p>
-</div>
-<div class="paragraph">
-<p>But the method <code>start</code> in our <code>Main</code> class overrides its ancestor&#8217;s method with the same name, so all the code written in our application&#8217;s <code>start</code> will be automatically invoked. When the method <code>start</code> is invoked, it&#8217;ll receive a reference to the <code>Stage</code> object - this is where your GUI  components will live and perform.</p>
+<p>The <code>Main</code> class of a JavaFX application extends <code>Application</code> and is an entry point of your application. JavaFX classes are located in the packages whose names start with <code>javafx</code> (e.g. <code>javafx.stage</code> and <code>javafx.scene</code>).The <code>main</code> method invokes the method <code>launch</code> from <code>Application</code>, which creates stage by calling its method <code>start</code>, which was was declared as <code>abstract</code>. Hence, we must override <code>start</code> in our <code>Main</code> class. When the method <code>start</code> is invoked, it&#8217;ll receive a reference to the <code>Stage</code> object - this is where your GUI  components will live and perform.</p>
 </div>
 <div class="paragraph">
 <p>Pretend that you&#8217;re a play director and need to set up one or more <em>scenes</em> (views) on stage. But if in a real scene you&#8217;d expect to see some chairs, tables and other pieces of furniture, each JavaFX scene consists of GUI nodes (containers and components). In JavaFX you&#8217;ll create components, add them the a scene and then add a scene to the stage. When the stage is ready, open the curtain by calling the method <code>show</code>.</p>
@@ -1293,7 +1290,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Run the <code>Main</code> program from IDEA to ensure that your calculator looks as expected.</p>
+<p>Run the <code>Main</code> program from IDEA to ensure that your calculator looks as expected. Don&#8217;t allow the users to resize your calculator by invoking the method <code>setResizable</code> on the stage object.</p>
 </div>
 <div class="paragraph">
 <p>Then create a CSS file to add some cool styling to the calculator&#8217;s buttons. Save the CSS file in your IDEA project and modify the code of the <code>Main</code> class to use your CSS file similarly to how it was done in the section "Styling With CSS" above. Make your calculator look better than mine - it&#8217;s not too difficult.</p>
@@ -1307,7 +1304,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-15 22:04:37 EDT
+Last updated 2014-10-16 16:51:41 EDT
 </div>
 </div>
 </body>
