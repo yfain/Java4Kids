@@ -5,7 +5,7 @@
 
 After creating lots of code samples producing outputs to the system console, it's time for creating a nice looking Graphic User Interface (GUI). We're accustomed to programs that open windows with buttons, text fields, menus and other GUI components. 
 
-Java has an older library of GUI components called http://docs.oracle.com/javase/tutorial/uiswing/[Swing], and the new one called http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm[JavaFX]. We'll use only JavaFX in this book.
+Java has an older library of GUI components called http://docs.oracle.com/javase/tutorial/uiswing/[Swing], and the new one called http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm[JavaFX]. We'll use only JavaFX in this book. JavaFX is also a library that's included with JDK, and you can write your GUI programs using familiar Java language. On the other hand, JavaFX allows to create and arrange GUI components in a special FXML format, while writing application logic in Java.
 
 In this chapter I'll explain you the basics of GUI programming with JavaFX. You'll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you'll learn how to write code that reacts on user's actions (a.k.a. events) like a click on the button or a mouse move. 
 
@@ -31,9 +31,7 @@ IntelliJ IDEA will helps you to get stated quickly. Just  create a new project (
 .The newly generated IDEA project
 image::images/fig_7_02.png[]
 
-The `Main` class of a JavaFX application extends `Application` and is an entry point of your application. JavaFX classes are located in the packages `javafx.stage` and `javafx.scene`.The `main` method invokes the method `launch` from `Application`, which creates stage will call its own method `start`.
-
-But the method `start` in our `Main` class overrides its ancestor's method with the same name, so all the code written in our application's `start` will be automatically invoked. When the method `start` is invoked, it'll receive a reference to the `Stage` object - this is where your GUI  components will live and perform.
+The `Main` class of a JavaFX application extends `Application` and is an entry point of your application. JavaFX classes are located in the packages whose names start with `javafx` (e.g. `javafx.stage` and `javafx.scene`).The `main` method invokes the method `launch` from `Application`, which creates stage by calling its method `start`, which was was declared as `abstract`. Hence, we must override `start` in our `Main` class. When the method `start` is invoked, it'll receive a reference to the `Stage` object - this is where your GUI  components will live and perform.
 
 Pretend that you're a play director and need to set up one or more _scenes_ (views) on stage. But if in a real scene you'd expect to see some chairs, tables and other pieces of furniture, each JavaFX scene consists of GUI nodes (containers and components). In JavaFX you'll create components, add them the a scene and then add a scene to the stage. When the stage is ready, open the curtain by calling the method `show`.
 
@@ -617,9 +615,10 @@ public class Main extends Application {
 }
 ----
 
-Run the `Main` program from IDEA to ensure that your calculator looks as expected.
+Run the `Main` program from IDEA to ensure that your calculator looks as expected. Don't allow the users to resize your calculator by invoking the method `setResizable` on the stage object.
 
 Then create a CSS file to add some cool styling to the calculator's buttons. Save the CSS file in your IDEA project and modify the code of the `Main` class to use your CSS file similarly to how it was done in the section "Styling With CSS" above. Make your calculator look better than mine - it's not too difficult.
+
 
 After completing this assignment your buttons won't work just yet. In the next chapter you'll learn how to make the buttons (or other components) to react on user actions, so you'll be able to complete the calculator. In this chapter my goal was to introduce you to basic rules of designing JavaFX GUI with the help of Scene Builder. Watch http://www.youtube.com/watch?v=ij0HwRAlCmo[this YouTube video] to see how easy it is to design more complex views with Scene Builder.
 

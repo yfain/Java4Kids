@@ -158,7 +158,7 @@ public class Controller {
 <4>  Set the background color to `lightpink` if the entered user id is not Yakov. You can find major CSS color names at http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html   
 <5>  Set the background color to back to `white` if the entered user id is not Yakov. 
 
-If you run the Main program now and enter the wrong user id, the window will look as follows:
+If you run the `Main` program and enter the wrong user id, the window will look as follows:
 
 [[FIG8-5]]
 .After entering wrong user id 
@@ -167,18 +167,122 @@ image::images/fig_8_05.png[]
 
 === Assigning Event Handlers in Java
 
-If your program is written in Java, you can process events using anonymous classes, lambda expressions, or method references (not covered in this book). We'll be implementing event handlers as lambda expressions as they are easier to write. Typically, you'll be writing code to react if some event has happened. For example, if you have a button represented by a variable `myButton` you can write an event handler for the click event:
+If your program is written completely in Java without any use of FXML, you'll be assigning event handlers using so called http://docs.oracle.com/javafx/2/events/convenience_methods.htm[convenience methods] that have names that start with `setOn` like `setOnAction`, `setOnKeyTyped`, `setOnEditStart` etc. Each of the GUI components has has several of such methods.   
+
+You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or method references (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you'll be writing code to react if some event has happened. For example, if you have a button represented by a variable `myButton` you can write an event handler for the click event:
 
 [source, java]
 ----
-myButton.setOnAction(evt -> 
-    System.out.println("My button was clicked.")
+Button signInButton = new Button("Sign In");
+signInButton.setOnAction(evt -> 
+    System.out.println("The Sign In button was clicked.")
 );
 ----
 
+You've got introduced lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but don't really uses its values but just prints the message that the button was clicked. 
+
+What's the type of the `evt` argument? Java compiler will figure it out automatically. Since the method `setOnAction` expects to get the `ActionEvent` object from the JVM, compiler guesses that the type of the `evt` is `ActionEvent` so you don't even need to write it in the program code. You've seen a similar example of of type inference in Chapter 5.  
+
+To bring all pieces of the puzzle together, I'll show you another version of the Sign In application that will look the same, but won't use FXML - everything will be programmed in Java. The following class `MainPureJava` and `signin.css` is all we need for programming the functionality of our Sign In window. There is not need to use `signin.fxml` or `Controller.java` in this case. 
+
+[source, java]
+----
+package signin;
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+
+public class MainPureJava extends Application {
+
+  public void start(Stage primaryStage) {
+
+    final int TWO_COLUMN_SPAN = 2;               // <1>
+
+    Label userIdLbl = new Label("User ID:");     // <2> 
+    TextField userIdTxt = new TextField();
+    Label userPwdLbl = new Label("Password:");
+    userPwdLbl.getStyleClass().add("bluelabel");
+    PasswordField userPwdTxt = new PasswordField();
+
+    GridPane root = new GridPane();              //  <3> 
+    root.setVgap(20);
+    root.setPadding(new Insets(10));
+    root.setAlignment(Pos.CENTER);
+    root.setId("root");
+
+    // Setting constraints for firs 2 rows
+    GridPane.setConstraints(userIdLbl, 0, 0);    //  <4>
+    GridPane.setConstraints(userIdTxt, 1, 0);
+    GridPane.setConstraints(userPwdLbl, 0, 1);
+    GridPane.setConstraints(userPwdTxt, 1, 1);
+
+    root.getChildren().addAll(userIdLbl, userIdTxt, 
+    userPwdLbl, userPwdTxt);                      //  <5>
+
+
+    Button signInBtn = new Button ("Sign In");    //  <6>
+    signInBtn.setId("submitBtn");  // used in CSS
+
+    // Event handler with lambda expression
+    signInBtn.setOnAction(evt -> {                 //  <7> 
+
+        String userID = userIdTxt.getText();
+        String password = userPwdTxt.getText();
+        if (!"Yakov".equals(userID)){
+            userIdTxt.setStyle("-fx-background-color: lightpink;");
+        } else{
+            userIdTxt.setStyle("-fx-background-color: white;");
+        }
+
+        System.out.println("Got id " + userID +
+                           " and password " + password);
+    });
+
+    // Allow the button to be wider
+    signInBtn.setPrefWidth(Double.MAX_VALUE); 
+
+    // Adding a wide button to the third row
+    root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);     
+
+    Scene scene = new Scene(root,250,180);
+    scene.getStylesheets()                         // <8>
+         .add(getClass()
+         .getResource("signin.css")              
+         .toExternalForm());
+    
+    primaryStage.setScene(scene);                 //  <9>
+    primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}
+----
+
+<1> This programs uses the `GridPane` layout with three rows and two column. Since the Sign In button will span tho columns, I declared a final variable `TWO_COLUMN_SPAN` that will be used when the button will be added to the grid. 
+<2> Then I instantiate labels and text fields.
+
+<3> After that I create an instance of the `GridPane` container.
+
+<4> To add the labels and text fields to the proper cells of the first two rows of the grid, I set the constraints on the `GridPane` object.
+
+<5> The GUI components for the first two rows are instantiated, constraints are set so I add them as children to the root of the _scene graph_ - the `GridPane`.
+
+<6> Now I create the instance if the Sign In button and assign the id to it. This was explained in the Styling with CSS section in Chapter 7.
+
+<7> The lambda expression implements the application logic to be invoked as a reaction to the `ActionEvent`.    
+
+<8> The we create a scene object an apply the CSS to it. This is probably the first time you see the method chaining. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object. 
+
+<9> Finally, the scene is added to the stage and the curtain goes up.
+
+
 ==== Further Reading on Event Handling
 
-In this section I've explained you the basics of event handling using the `ActionEvent` and `onAction` event handler as an example. Some other examples of the events are `KeyEvent` (e.g. the user pressed a key on the keyboard), `MouseEvent`(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer),  `WindowEvent` (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle's tutorial about handling events at http://docs.oracle.com/javafx/2/events/jfxpub-events.htm.
+In this section I've explained you the basics of event handling using the `ActionEvent` and `onAction` event handler as an example. Some other examples of the events are:`KeyEvent` (e.g. the user pressed a key on the keyboard), `MouseEvent`(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), `TouchEvent` (e.g. the user touched the screen), `WindowEvent` (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle's tutorial about handling events at http://docs.oracle.com/javafx/2/events/jfxpub-events.htm.
 
 
 
@@ -188,10 +292,21 @@ In this section I've explained you the basics of event handling using the `Actio
 
 http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm.
 
+The `Application` class has a method `getParameters`, which is a JavaFX way of getting command line arguments that might be passed to your application during its launch .
+
 I'm sure many of you want to know if it's possible to use JavaFX for writing applications for smart phones. Oracle doesn't offer the JavaFX libraries for mobile platforms, but it's still possible. 
 
 To develop JavaFX applications for iOS, you'd need to install and learn on your own some additional software, namely RoboVM[http://www.robovm.com/] is an SDK for converting Java bytecode into a native device code as if it was written in C programming language, which makes it deployable on iOS devices. 
 
-There is also a community site JavaFXPorts[ http://javafxports.org/page/home] where people are working on deployment of JavaFX applications on iOS and Android devices.
+There is also a community site JavaFX Ports[ http://javafxports.org/page/home] where people are working on deployment of JavaFX applications on iOS and Android devices.
+
+=== First Look at Multi-Threading 
+
+=== What to Study Next About JavaFX
+
+In Chapter 7 and 8 I gave you a very brief introduction to JavaFX. We'll use it more while working on Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package `javafx.animation`.
+
+Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress. 
+
 
 === Project 
