@@ -512,7 +512,7 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_simplifying-code-with-lambdas">Simplifying Code With Lambdas</a></li>
 </ul>
 </li>
-<li><a href="#_challenge-yourself">Challenge Yourself</a></li>
+<li><a href="#_project-java-interfaces-and-lambda-expressions">Project: Java Interfaces and Lambda Expressions</a></li>
 </ul>
 </li>
 </ul>
@@ -725,6 +725,12 @@ OK, will dive 20 feet</code></pre>
 <div class="paragraph">
 <p>The message "Can&#8217;t dive, sorry" was printed by the default method <code>dive()</code> from the interface <code>Swimmable</code>.</p>
 </div>
+<div id="FIG5-1-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_5-01-1.png" alt="fig 5 01 1">
+</div>
+<div class="title">Figure 2. Dogs can&#8217;t dive</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_static-methods-in-interfaces"><a class="anchor" href="#_static-methods-in-interfaces"></a>Static Methods in Interfaces</h4>
@@ -822,6 +828,12 @@ class Dog{
 </div>
 <div class="paragraph">
 <p>This means that definitions needed for my program are located in the package <code>java.time</code>. Of course, writing one import statement instead of several ones looks appealing, but the readability of the program suffers. Packages can have dozens of classes and it&#8217;s better to explicitly state which classes your program uses.</p>
+</div>
+<div id="FIG5-1-2" class="imageblock">
+<div class="content">
+<img src="./images/fig_5-01-2.png" alt="fig 5 01 2">
+</div>
+<div class="title">Figure 3. Java packages</div>
 </div>
 </div>
 </div>
@@ -939,7 +951,7 @@ class Dog{
 <div class="content">
 <img src="./images/fig_5_02.png" alt="fig 5 02">
 </div>
-<div class="title">Figure 2. Creating a new package in IDEA</div>
+<div class="title">Figure 4. Creating a new package in IDEA</div>
 </div>
 <div class="paragraph">
 <p>First comes the version that doesn&#8217;t use anonymous classes - I&#8217;ll just use one method for each operation. The code of the class <code>Calculator</code> is pretty simple. Note the first line that declares the package where the class <code>Calculator</code> belongs.</p>
@@ -1082,6 +1094,12 @@ public class CalculatorWithAnonymousClasses {
 </div>
 <div class="paragraph">
 <p>A lambda expression is an <em>anonymous function</em> that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java you could pass a value to a method only if this value was an object or a primitive. But now a function (a piece of code) becomes a value that can be passed around. Let&#8217;s see it in action.</p>
+</div>
+<div id="FIG5-3" class="imageblock">
+<div class="content">
+<img src="./images/fig_5-03.png" alt="fig 5 03">
+</div>
+<div class="title">Figure 5. The Lambda sign</div>
 </div>
 <div class="paragraph">
 <p>In the new version of calculator I&#8217;ll declare each arithmetic operation as a lambda expression. I will reuse the same functional interface with the three-argument method <code>calcuate()</code>, but will pass the lambda expression that implements <code>ArithmeticOperation</code> as the first argument.</p>
@@ -1233,12 +1251,12 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In Chapter 7 I&#8217;ll show you more lambda expressions while explaining how to process GUI <em>events</em> such as click on a button or a mouse move. In the Part 2 of the assignment that you&#8217;re about to make I&#8217;ll challenge you to re-write the class <code>Pet</code> so it&#8217;ll keep the rules of talking in its class variable.</p>
+<p>In Chapter 8 I&#8217;ll show you more lambda expressions while explaining how to process GUI <em>events</em> such as click on a button or a mouse move. In the Part 2 of the assignment that you&#8217;re about to make I&#8217;ll challenge you to re-write the class <code>Pet</code> so it&#8217;ll keep the rules of talking in its class variable.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h3>
+<h3 id="_project-java-interfaces-and-lambda-expressions"><a class="anchor" href="#_project-java-interfaces-and-lambda-expressions"></a>Project: Java Interfaces and Lambda Expressions</h3>
 <div class="paragraph">
 <p><strong>Part 1.</strong> In this part you&#8217;ll do an exercise to prove that you understand Java interfaces.</p>
 </div>
@@ -1321,7 +1339,7 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-15 21:56:12 EDT
+Last updated 2014-10-19 17:08:16 EDT
 </div>
 </div>
 </body>

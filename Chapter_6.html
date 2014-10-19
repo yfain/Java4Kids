@@ -502,7 +502,7 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_introduction-to-generics">Introduction to Generics</a></li>
 </ul>
 </li>
-<li><a href="#_challenge-yourself">Challenge Yourself</a></li>
+<li><a href="#_project-using-arraylist-and-generics">Project: Using ArrayList and Generics</a></li>
 </ul>
 </div>
 </div>
@@ -526,9 +526,9 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="FIG6-1" class="imageblock">
 <div class="content">
-<img src="./images/fig_6_01.png" alt="fig 6 01">
+<img src="./images/fig_6-01.png" alt="fig 6 01">
 </div>
-<div class="title">Figure 1. The "public user interface" in a car</div>
+<div class="title">Figure 1. Overwhelmed by the "public user interface"</div>
 </div>
 <div class="paragraph">
 <p>When you design a  class, hide methods and class member variables that should not be visible from outside. Some of the methods of member variables are meant to be used internally and not to be exposed to other classes.</p>
@@ -601,7 +601,7 @@ public class Car {
 </div>
 <div id="FIG6-3" class="imageblock">
 <div class="content">
-<img src="./images/fig_6_03.png" alt="fig 6 03">
+<img src="./images/fig_6-03.png" alt="fig 6 03">
 </div>
 <div class="title">Figure 3. Private is the most restrictive access</div>
 </div>
@@ -633,11 +633,10 @@ Object myOtherCar = new Car();</code></pre>
 <div class="paragraph">
 <p>Java compiler can <em>cast</em> (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called <em>upcasting</em>. But if a variable has the type of a super class, it won&#8217;t see any members of teh subclass. The next screen shot shows that the variable <code>myOtherCar</code> doesn&#8217;t see the method <code>brake()</code> declared in the class <code>Car</code>.</p>
 </div>
-<div id="FIG6-4" class="imageblock">
-<div class="content">
-<img src="./images/fig_6_04.png" alt="fig 6 04">
-</div>
-<div class="title">Figure 4. The Object type variable doesn&#8217;t see Car&#8217;s members</div>
+<div class="paragraph">
+<p><strong><a id="FIG6-4"></a>
+.The Object type variable doesn&#8217;t see Car&#8217;s members
+image::images/fig_6_04.png[]</strong></p>
 </div>
 <div class="paragraph">
 <p>But you can say, "Doesn&#8217;t the variable <code>myOtherCar</code> point at the instance of the class <code>Car</code>, which has a public method <code>brake()</code>?" That&#8217;s right, but since I declared this variable of the type <code>Object</code> the variable <code>myOtherCar</code> assumes that its just a general object.  The programmer can <em>downcast</em> the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example:</p>
@@ -656,7 +655,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <div class="content">
 <img src="./images/fig_6_05.png" alt="fig 6 05">
 </div>
-<div class="title">Figure 5. The Car type variable sees Car&#8217;s members</div>
+<div class="title">Figure 4. The Car type variable sees Car&#8217;s members</div>
 </div>
 <div class="paragraph">
 <p>Why do we need all these complications? Can&#8217;t we just always declare variables of the specific types? Sometimes we can&#8217;t. For example, JDK comes with lots of other classes that were written to work with the <code>Object</code> data types. Data collection classes were written to be able to store instances of any objects.</p>
@@ -884,6 +883,12 @@ public class HashTableDemo {
 <div class="paragraph">
 <p>In this example I used the first name as the key in the method <code>put()</code> that adds elements to a <code>Hashtable</code>.  Hence one contact can be referred by the key <code>get("Jackie")</code>, and the other one as <code>get("Art")</code>. The method <code>get()</code> returns the collection element as the <code>Object</code> type, so I had to cast it to <code>ContactDetail</code> to be able to see the field <code>phone</code>.</p>
 </div>
+<div id="FIG6-4-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_6-04-1.png" alt="fig 6 04 1">
+</div>
+<div class="title">Figure 5. Contacts can be programmed with Hashtable</div>
+</div>
 <div class="paragraph">
 <p><code>HashTable</code> requires each key to be unique. Say you have another contact named <code>Art</code> and will create a new instance of the <code>ContactDetail</code> object. If you&#8217;ll add it to the same collection under the same key - <code>friends.put("Art", friend3);</code>  it&#8217;ll replace the contact details of the first Art with the data of the second one. This happens because Java <code>Hashtable</code> internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like <code>ArtFromNYC</code> or use another Java collection like <code>ArrayList</code> to store your contacts. By the way, <code>ArrayList</code> even allows you to store duplicates (objects with the same values), while <code>Hashtable</code> doesn&#8217;t.</p>
 </div>
@@ -1043,7 +1048,7 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h2>
+<h2 id="_project-using-arraylist-and-generics"><a class="anchor" href="#_project-using-arraylist-and-generics"></a>Project: Using ArrayList and Generics</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this exercise I&#8217;d like you to try create your own collection that uses <code>ArrayList</code>, generics, private variables and public getters and setters.</p>
@@ -1118,7 +1123,7 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-15 21:56:12 EDT
+Last updated 2014-10-19 17:21:39 EDT
 </div>
 </div>
 </body>
