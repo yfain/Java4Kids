@@ -801,7 +801,7 @@ public class MainPureJava extends Application {
          .getResource("signin.css")
          .toExternalForm());
 
-    primaryStage.setScene(scene);                 //  <i class="conum" data-value="9"></i><b>(9)</b>
+    primaryStage.setScene(scene);                  <i class="conum" data-value="9"></i><b>(9)</b>
     primaryStage.show();
   }
 
@@ -851,15 +851,150 @@ public class MainPureJava extends Application {
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Some programmers like GUI designer tools where they can drag and drop components. Some prefer writing Java code. I prefer working with FXML, because it greatly simplifies  design of the complex windows. Besides separating the design from the application logic is also a good idea because a person who doesn&#8217;t know programming can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.</p>
+</div>
 <div class="sect3">
 <h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>Further Reading on Event Handling</h4>
 <div class="paragraph">
-<p>In this section I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:<code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (e.g. the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
+<p>I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:<code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (e.g. the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_data-binding"><a class="anchor" href="#_data-binding"></a>Data Binding</h3>
+<h3 id="_data-binding-and-properties"><a class="anchor" href="#_data-binding-and-properties"></a>Data Binding and Properties</h3>
+<div class="paragraph">
+<p>JavaFX has an interface <code>Property</code> located in the package <code>javafx.beans.property</code>, which defines a very useful functionality allowing to <em>bind</em> the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.</p>
+</div>
+<div class="paragraph">
+<p>Imagine that you&#8217;re developing a multi-player game that has a Java object receiving the moves of other gamers from a central server. When a Java object receives a new move, you need to modify the content of the corresponding GUI component of the game. With JavaFX you can simply bind a property of a Java class that stores player&#8217;s moves (e.g. <code>playersMove</code>) to the property of, say a <code>Label</code> component on the GUI. No more coding required. As soon as the <code>playersMove</code> value changes, the <code>Label</code> will be automatically updated.  JavaFX properties greatly simplify the process of synchronization of the data and the GUI.</p>
+</div>
+<div class="paragraph">
+<p>Existing implementations of the <code>Property</code> interface add  the change notification functionality to regular class attributes. The interface <code>Property</code> declares the following methods: <code>bind</code>, <code>unbind</code>, <code>bindBidirectional</code> , <code>unbindBidirctional</code>, and <code>isBound</code>. You can bind to a JavaFX property only the value of an <code>ObservableValue</code> type, which is explained in the sidebar.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Design Patterns Briefly</div>
+<div class="paragraph">
+<p>Over the years software developers came up with a number of <em>design patterns</em>, which have names and descriptions of how to program certain scenarios. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You&#8217;d better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you&#8217;ll be a little better prepared for chatting with programmers.</p>
+</div>
+<div class="paragraph">
+<p><strong>MVC</strong> stands for Mode View Controller. This design patter recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we&#8217;ve almost implemented MVC in one of the versions of the Sign In application. The file <em>signin.fxml</em> was a view, and the class <code>signin.Controller</code> played a role of a controller. Since this example had just two variables (<code>id</code> and <code>pwd</code>) we didn&#8217;t created a special model class for them.</p>
+</div>
+<div class="paragraph">
+<p><strong>Observer</strong> design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you&#8217;ll see in this chapter.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re interested in detailed coverage of design patters, get the book "Head First Design Patterns" published by O&#8217;Reilly Media.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Classes that implement <code>Property</code> interface are located in the package <code>javafx.beans.property</code>. For each property type there are two classes: one that allows only reading property values and the other one for read and writing (changing the values). For example, if you need a <code>String</code> property, use either <code>ReadOnlyStringWrapper</code> or <code>SimpleStringProperty</code>. Similarly named classes exist for other data types and some collections too.</p>
+</div>
+<div class="paragraph">
+<p>As we always do in this book, let&#8217;s learn by coding. I&#8217;ll continue adding features to our Sign In application. This time I&#8217;ll add a <code>Label</code> component with <code>fx:id="errMsg"</code> to the view in FXML file to display sign in error messages if any. In the controller class I&#8217;ll add a corresponding variable <code>errMsg</code> and will inject a reference to the <code>Label</code> into this variable.</p>
+</div>
+<div class="paragraph">
+<p>The next step is to declare a bindable property <code>signinError</code> in the class <code>Controller</code> that will get the value of the error message if any. But since a regular <code>String</code> can&#8217;t be bindable, we&#8217;ll use the data type <code>SimpleStringProperty</code></p>
+</div>
+<div class="paragraph">
+<p>Finally, I&#8217;ll bind the label and the variable to insure that an error message is immediately displayed on the screen as soon as its value changes.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s place an additional <code>Label</code> component at the bottom of the Sign In window. I&#8217;ll add another row to the <code>GridPane</code> and place there a <code>Label</code> that will span two columns. This label will have <code>fx:id="errMsg"</code> and initially won&#8217;t  have any text - it&#8217;ll be invisible. The <code>&lt;children&gt;</code> section of the FXML file will look as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;children&gt;
+      &lt;Label alignment="CENTER" text="User ID:" /&gt;
+      &lt;TextField GridPane.columnIndex="1"  fx:id="id" /&gt;
+      &lt;Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" /&gt;
+      &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/&gt;
+      &lt;Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
+              GridPane.columnSpan="2" GridPane.rowIndex="2"
+              onAction="#signInClicked"/&gt;
+       &lt;Label alignment="CENTER" GridPane.rowIndex="3"
+              GridPane.columnSpan="2" prefWidth="300.0" fx:id="errMsg"/&gt;
+   &lt;/children&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Injecting a reference of the new label into controller and declaring a property to store the error message will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">@FXML private Label errMsg;
+
+SimpleStringProperty signinError =
+                        new SimpleStringProperty();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The next question is when and where do the binding? If I&#8217;d be creating an instance of the <code>Controller</code> with the <code>new</code> operator I could have done it in the class constructor after the GUI component are created. But JavaFX runtime instantiates the <code>Controller</code> for us, so how can we catch the moment when the GUI components are ready?</p>
+</div>
+<div class="paragraph">
+<p>Luckily, Java comes with a handy annotation <code>@PostConstruct</code> defined in the package <code>javax.annotation</code>. This annotation is a part of a library called Context Dependency Injection (CDI). In CDI you can place the annotation <code>@PostConstruct</code> in front of any method declaration to request that this method must be called right after the object is constructor. In JavaFX there is a small restriction - such a method must be called <code>initialize</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">@PostConstruct
+public void initialize() {
+
+  errMsg.textProperty().bind(signinError);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>JavaFX properties are observables. So you can read the above the above code as follows: "I want the text property of the label <code>errMsg</code> to be the observer (a.k.a. listener) to the property <code>signinError</code> (observable). So whenever <code>signinError</code> changes, the text property of the label will get the latest value.</p>
+</div>
+<div class="paragraph">
+<p>To complete the binding Sign In example, the event handler for the Sign In button should not only paint the wronn ID in light pink, but also modify the value of the <code>signinError</code> property. The complete code of the class <code>BindableController</code> is shown next.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class BindingController {
+
+    @FXML
+    private TextField id;
+
+    @FXML
+    private PasswordField pwd;
+
+    @FXML private Label errMsg;
+
+    SimpleStringProperty signinError = new SimpleStringProperty();
+
+    @PostConstruct
+    public void initialize() {
+        System.out.println("Controller's ready. Let's bind some components");
+
+        errMsg.textProperty().bind(signinError);
+    }
+
+    public void signInClicked(ActionEvent evt){
+
+        String userID = id.getText();
+        String password = pwd.getText();
+        if (!"Yakov".equals(userID)){
+            id.setStyle("-fx-background-color: lightpink;");
+            signinError.set("Wrong id:" + userID);
+
+        } else{
+            id.setStyle("-fx-background-color: white;");
+            signinError.set("");
+        }
+
+        System.out.println("got id:" + userID + ", got password: " + password);
+
+        System.out.println("Hello from signInClicked method in controller");
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that in the if statement I set the error message when the ID is wrong, and reset the <code>signinError</code> to an empty string when the ID is correct.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_deploying-with-javafx-packager"><a class="anchor" href="#_deploying-with-javafx-packager"></a>Deploying With JavaFX Packager</h3>
@@ -880,12 +1015,48 @@ public class MainPureJava extends Application {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_first-look-at-multi-threading"><a class="anchor" href="#_first-look-at-multi-threading"></a>First Look at Multi-Threading</h3>
+<h3 id="_the-first-look-at-multi-threading"><a class="anchor" href="#_the-first-look-at-multi-threading"></a>The First Look at Multi-Threading</h3>
+<div class="paragraph">
+<p>So far, all our programs perform actions in a sequence – one after another. If a program calls two methods, the second method waits until the first one completes. In other words, such a program has only one <em>thread of execution</em>.</p>
+</div>
+<div class="paragraph">
+<p>In a real life though, we can do several things inn parallel like eat, talk on the phone, watch TV, and do the homework. To do all these actions in parallel we use several "processors":  hands, eyes, and mouth.</p>
+</div>
+<div class="paragraph">
+<p>Today, only your grandma&#8217;s computer might have a single processor (a.k.a. Central Processing Unit or CPU). But most likely your computer has at least two CPU&#8217;s and a GPU for graphics processing. A CPU performs calculations, sends commands to the monitor, hard disk or solid state drive, remote computers on the Internet, and so on.</p>
+</div>
+<div class="paragraph">
+<p>But even a single processor can perform several actions at once if a program uses <em>multiple threads</em>. One Java class can start several threads of execution that will take turns in getting slices of the processor’s time.</p>
+</div>
+<div class="paragraph">
+<p>A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution in parallel.</p>
+</div>
+<div class="paragraph">
+<p>JavaFX also runs more than one thread. Imagine a program with a GUI that&#8217;s constantly is being updated based on the intensive calculations. It could be a game with multiple moving characters, balls, squares or other shapes. It could be an application for a TV channel that shows a video, a running commercial, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window.</p>
+</div>
+<div class="paragraph">
+<p>Updates of the GUI in JavaFX are done in a so called  application thread. The idea is to separate intensive calculations from the GUI updates. Say, the user pressed the button Play on JavaFX video portal application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy every time there was a delay in getting content. The screen would be "frozen" and the user wouldn&#8217;t be able to use any screen components.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;d better see it to believe it, right? I can easily demonstrate you a "frozen GUI" effect by making a small change in the class <code>signin.Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the the executing thread to sleep.</p>
+</div>
+<div class="paragraph">
+<p>Hence the long running processes shouldn&#8217;t be running on the application thread, but have a dedicated one. The application thread should be mainly updating the GUI, and not running long processes. All requests for the scene updates have to be placed into a special event queue in the application thread.</p>
+</div>
+<div class="paragraph">
+<p>The method <code>runLater</code> defined in the class <code>Platform</code> places the <code>Runnable</code> object into an event queue.</p>
+</div>
+<div class="paragraph">
+<p>In the chapter on Ping-Pong game I&#8217;ll show you how your program can creates multiple threads too. One thread will be responsible for displaying the table, while the other one  will calculate coordinates of the ball and paddles and will send commands to the first thread to repaint the window.</p>
+</div>
+<div class="paragraph">
+<p>To be continued&#8230;</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_what-to-study-next-about-javafx"><a class="anchor" href="#_what-to-study-next-about-javafx"></a>What to Study Next About JavaFX</h3>
 <div class="paragraph">
-<p>In Chapter 7 and 8 I gave you a very brief introduction to JavaFX. We&#8217;ll use it more while working on Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
+<p>In Chapter 7 and 8 I gave you a very brief introduction to JavaFX. You&#8217;ll be writing  more of JavaFX code while working on the Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
 </div>
 <div class="paragraph">
 <p>Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress.</p>
@@ -899,7 +1070,7 @@ public class MainPureJava extends Application {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-16 22:00:37 EDT
+Last updated 2014-10-19 11:01:38 EDT
 </div>
 </div>
 </body>
