@@ -169,6 +169,10 @@ OK, will dive 20 feet
 
 The message "Can't dive, sorry" was printed by the default method `dive()` from the interface `Swimmable`.
 
+[[FIG5-1-1]]
+.Dogs can't dive
+image::images/fig_5-01-1.png[]
+
 ==== Static Methods in Interfaces
 
 Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. The following example illustrates the use of a static method in the interface. Now the default implementation of the method `dive()` won't just reject an offer to swim, but will check the current month: if it's June, July, or August then diving is allowed because the water should be warm. 
@@ -252,7 +256,11 @@ One last thing: Lazy kids use the wild cards in import statements. Instead of wr
 import java.time.*;
 ----
 
-This means that definitions needed for my program are located in the package `java.time`. Of course, writing one import statement instead of several ones looks appealing, but the readability of the program suffers. Packages can have dozens of classes and it's better to explicitly state which classes your program uses.  
+This means that definitions needed for my program are located in the package `java.time`. Of course, writing one import statement instead of several ones looks appealing, but the readability of the program suffers. Packages can have dozens of classes and it's better to explicitly state which classes your program uses. 
+
+[[FIG5-1-2]]
+.Java packages
+image::images/fig_5-01-2.png[]
 *******************************
 
 ==== Final Static Variables in Interfaces
@@ -478,6 +486,10 @@ Up till now, to invoke a method we've been creating named or anonymous classes a
 
 A lambda expression is an _anonymous function_ that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java you could pass a value to a method only if this value was an object or a primitive. But now a function (a piece of code) becomes a value that can be passed around. Let's see it in action.
 
+[[FIG5-3]]
+.The Lambda sign
+image::images/fig_5-03.png[]
+
 In the new version of calculator I'll declare each arithmetic operation as a lambda expression. I will reuse the same functional interface with the three-argument method `calcuate()`, but will pass the lambda expression that implements `ArithmeticOperation` as the first argument.   
 
 [source, java]
@@ -596,9 +608,9 @@ I'd like to draw your attention to the fact, that my class Pet has no state - it
 Pet.saySomething(dogTalkRules, "Mary")
 ----
 
-In Chapter 7 I'll show you more lambda expressions while explaining how to process GUI _events_ such as click on a button or a mouse move. In the Part 2 of the assignment that you're about to make I'll challenge you to re-write the class `Pet` so it'll keep the rules of talking in its class variable.
+In Chapter 8 I'll show you more lambda expressions while explaining how to process GUI _events_ such as click on a button or a mouse move. In the Part 2 of the assignment that you're about to make I'll challenge you to re-write the class `Pet` so it'll keep the rules of talking in its class variable.
 
-=== Challenge Yourself
+=== Project: Java Interfaces and Lambda Expressions
 
 *Part 1.* In this part you'll do an exercise to prove that you understand Java interfaces. 
 

@@ -161,7 +161,7 @@ public class Controller {
 If you run the `Main` program and enter the wrong user id, the window will look as follows:
 
 [[FIG8-5]]
-.After entering wrong user id 
+.After entering the wrong user id 
 image::images/fig_8_05.png[]
 
 
@@ -398,7 +398,13 @@ public class BindingController {
 }
 ----
 
-Note that in the if statement I set the error message when the ID is wrong, and reset the `signinError` to an empty string when the ID is correct. 
+Note that in the if statement I set the error message when the ID is wrong, and reset the `signinError` to an empty string when the ID is correct. After I ran the Sign In application the above controller, entered Alex as the user ID and clicked the button Sign In, my window looked like this:
+
+[[FIG8-6]]
+.Binding in action after entering the wrong user id 
+image::images/fig_8_06.png[]
+
+Enter the right user ID, click on Sign In again, and the binding mechanism will remove the error message from the window.
 
 === Deploying With JavaFX Packager
 

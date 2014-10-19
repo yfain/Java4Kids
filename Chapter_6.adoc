@@ -15,8 +15,8 @@ One of the main features of object-oriented languages is _encapsulation_ - an ab
 Let's consider an example from the real world. Think of a car – most people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal. If car designers would not be hiding control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges on the car's dashboard.
 
 [[FIG6-1]]
-.The "public user interface" in a car
-image::images/fig_6_01.png[]
+.Overwhelmed by the "public user interface"
+image::images/fig_6-01.png[]
 
 When you design a  class, hide methods and class member variables that should not be visible from outside. Some of the methods of member variables are meant to be used internally and not to be exposed to other classes.
 
@@ -82,7 +82,7 @@ The `private` access level is the most restrictive one. If you're not sure when 
 
 [[FIG6-3]]
 .Private is the most restrictive access
-image::images/fig_6_03.png[]
+image::images/fig_6-03.png[]
 
 What do you think will happen if you simply remove the `private` keyword from one of the methods of the class `Car`? Will the `CarMaster` see it? No, it won't because the absence of the access qualifier gives a package access level to this member. Only classes that are located in the package `vehicles` can access it, and `CarMaster` is not one of them.
 
@@ -106,9 +106,9 @@ Object myOtherCar = new Car();
 Java compiler can _cast_ (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called _upcasting_. But if a variable has the type of a super class, it won't see any members of teh subclass. The next screen shot shows that the variable `myOtherCar` doesn't see the method `brake()` declared in the class `Car`.
 
 
-[[FIG6-4]]
+*[[FIG6-4]]
 .The Object type variable doesn't see Car's members
-image::images/fig_6_04.png[]
+image::images/fig_6_04.png[]*
 
 But you can say, "Doesn't the variable `myOtherCar` point at the instance of the class `Car`, which has a public method `brake()`?" That's right, but since I declared this variable of the type `Object` the variable `myOtherCar` assumes that its just a general object.  The programmer can _downcast_ the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example: 
 
@@ -321,6 +321,11 @@ public class HashTableDemo {
 
 In this example I used the first name as the key in the method `put()` that adds elements to a `Hashtable`.  Hence one contact can be referred by the key `get("Jackie")`, and the other one as `get("Art")`. The method `get()` returns the collection element as the `Object` type, so I had to cast it to `ContactDetail` to be able to see the field `phone`.
 
+[[FIG6-4-1]]
+.Contacts can be programmed with Hashtable
+image::images/fig_6-04-1.png[]
+
+
 `HashTable` requires each key to be unique. Say you have another contact named `Art` and will create a new instance of the `ContactDetail` object. If you'll add it to the same collection under the same key - `friends.put("Art", friend3);`  it'll replace the contact details of the first Art with the data of the second one. This happens because Java `Hashtable` internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like `ArtFromNYC` or use another Java collection like `ArrayList` to store your contacts. By the way, `ArrayList` even allows you to store duplicates (objects with the same values), while `Hashtable` doesn't. 
 
 I'm not going to cover other Java collections here, but if you'd like to do your own research, read about such collections from the `java.util` package as `HashMap`, `HashSet`, and `LinkedList`. There is also a class `Collections` that has a bunch of useful static methods to operate on your data collections (e.g. `sort()`, `copy()`, `binarySearch()` et al.). 
@@ -454,7 +459,7 @@ What have we achieved? The program `HashTableBrokenDemo` allowed us to store any
 
 I've been using parameterized data type `Hashtable` that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book.  
 
-== Challenge Yourself
+== Project: Using ArrayList and Generics
 
 In this exercise I'd like you to try create your own collection that uses `ArrayList`, generics, private variables and public getters and setters.
 
