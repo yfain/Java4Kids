@@ -498,7 +498,13 @@ p { margin-bottom: 1.25rem; }
 <div class="sect2">
 <h3 id="_events"><a class="anchor" href="#_events"></a>Events</h3>
 <div class="paragraph">
-<p>JavaFX applications have to deal with various events. FOr example, a button click, a mouse move etc. In JavaFX an event object is represented by the instance of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You&#8217;ll always write event handlers in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you&#8217;ll need to specify the name of your controller class right in the FXML.</p>
+<p>JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You&#8217;ll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you&#8217;ll need to specify the name of your controller class right in the FXML file.</p>
+</div>
+<div id="FIG8-1-0" class="imageblock">
+<div class="content">
+<img src="./images/fig_8-01-1.png" alt="fig 8 01 1">
+</div>
+<div class="title">Figure 1. Event listeners</div>
 </div>
 <div class="paragraph">
 <p>You can either create with <code>new</code> or <em>inject</em> an instance of your controller class into Java code. I&#8217;ll explain you what injection means in a bit.</p>
@@ -566,7 +572,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_01.png" alt="fig 8 01">
 </div>
-<div class="title">Figure 1. Mapping onAction event to signInClicked method</div>
+<div class="title">Figure 2. Mapping onAction event to signInClicked method</div>
 </div>
 <div class="paragraph">
 <p>If you run the <code>Main</code> program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-2.</p>
@@ -575,7 +581,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_02.png" alt="fig 8 02">
 </div>
-<div class="title">Figure 2. After clicking 3 times on Sign In button</div>
+<div class="title">Figure 3. After clicking 3 times on Sign In button</div>
 </div>
 <div class="paragraph">
 <p>So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the <code>ActionEvent</code> object as an argument. Its property <code>target</code> identifies, well the target of the event, which is a Sign In button in our case.</p>
@@ -587,7 +593,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_03.png" alt="fig 8 03">
 </div>
-<div class="title">Figure 3. Viewing properties of ActionEvent in debugger</div>
+<div class="title">Figure 4. Viewing properties of ActionEvent in debugger</div>
 </div>
 <div class="paragraph">
 <p>There is another event property <code>source</code>, which has the same value as <code>target</code> in our application. There are cases when <code>source</code> and <code>target</code> are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration.</p>
@@ -602,7 +608,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_04.png" alt="fig 8 04">
 </div>
-<div class="title">Figure 4. Viewing properties of MouseEvent in debugger</div>
+<div class="title">Figure 5. Viewing properties of MouseEvent in debugger</div>
 </div>
 </div>
 <div class="sect3">
@@ -705,7 +711,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_05.png" alt="fig 8 05">
 </div>
-<div class="title">Figure 5. After entering the wrong user id</div>
+<div class="title">Figure 6. After entering the wrong user id</div>
 </div>
 </div>
 </div>
@@ -999,7 +1005,7 @@ public void initialize() {
 <div class="content">
 <img src="./images/fig_8_06.png" alt="fig 8 06">
 </div>
-<div class="title">Figure 6. Binding in action after entering the wrong user id</div>
+<div class="title">Figure 7. Binding in action after entering the wrong user id</div>
 </div>
 <div class="paragraph">
 <p>Enter the right user ID, click on Sign In again, and the binding mechanism will remove the error message from the window.</p>
@@ -1079,7 +1085,7 @@ public void initialize() {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-19 16:50:19 EDT
+Last updated 2014-10-19 23:31:30 EDT
 </div>
 </div>
 </body>
