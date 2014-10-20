@@ -64,13 +64,13 @@ public class Controller {
 
 The class `Controller` uses the class `ActionEvent` from package `javafx.event`, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an `ActionEvent` in the package `java.awt.event`, which we don't want in this case.
 
-We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the `onAction` event in the Button element in signin.fxml as shown on Figure 8-1.
+We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the `onAction` event in the Button element in signin.fxml as shown on Figure 8-2.
 
 [[FIG8-1]]
 .Mapping onAction event to signInClicked method 
 image::images/fig_8_01.png[]
 
-If you run the `Main` program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-2.
+If you run the `Main` program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-3.
 
 [[FIG8-2]]
 .After clicking 3 times on Sign In button 
@@ -78,7 +78,7 @@ image::images/fig_8_02.png[]
 
 So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the `ActionEvent` object as an argument. Its property `target` identifies, well the target of the event, which is a Sign In button in our case. 
 
-I ran our application in the debug mode just to show you that the `target` property on the `ActionEvent` correctly recognizes the event target shown in Figure 8-3.   
+I ran our application in the debug mode just to show you that the `target` property on the `ActionEvent` correctly recognizes the event target shown in Figure 8-4.   
 
 [[FIG8-3]]
 .Viewing properties of ActionEvent in debugger 
