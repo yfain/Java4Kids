@@ -105,7 +105,7 @@ class Fish extends Pet implements Swimmable{
 }
 ----
 
-NOTE: Java includes several interfaces that don't declare any methods (e.g. `Serializable). They are called _marker interfaces_. You don't need to implement any methods in classes that implement marker interfaces. They are used by the Java compiler internally to generate the byte code in a special way.
+NOTE: Java includes several interfaces that don't declare any methods (e.g. `Serializable`). They are called _marker interfaces_. You don't need to implement any methods in classes that implement marker interfaces. They are used by the Java compiler internally to generate the byte code in a special way.
 
 ==== Default Methods in Interfaces
 
