@@ -882,7 +882,7 @@ public class MainPureJava extends Application {
 <div class="content">
 <div class="title">Design Patterns Briefly</div>
 <div class="paragraph">
-<p>Over the years software developers came up with a number of <em>design patterns</em>, which have names and descriptions of how to program certain scenarios. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You&#8217;d better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you&#8217;ll be a little better prepared for chatting with programmers.</p>
+<p>Over the years software developers came up with a number of <em>design patterns</em>, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You&#8217;d better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you&#8217;ll be a little better prepared for chatting with programmers.</p>
 </div>
 <div class="paragraph">
 <p><strong>MVC</strong> stands for Mode View Controller. This design patter recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we&#8217;ve almost implemented MVC in one of the versions of the Sign In application. The file <em>signin.fxml</em> was a view, and the class <code>signin.Controller</code> played a role of a controller. Since this example had just two variables (<code>id</code> and <code>pwd</code>) we didn&#8217;t created a special model class for them.</p>
@@ -940,12 +940,11 @@ SimpleStringProperty signinError =
 <p>The next question is when and where do the binding? If I&#8217;d be creating an instance of the <code>Controller</code> with the <code>new</code> operator I could have done it in the class constructor after the GUI component are created. But JavaFX runtime instantiates the <code>Controller</code> for us, so how can we catch the moment when the GUI components are ready?</p>
 </div>
 <div class="paragraph">
-<p>Luckily, Java comes with a handy annotation <code>@PostConstruct</code> defined in the package <code>javax.annotation</code>. This annotation is a part of a library called Context Dependency Injection (CDI). In CDI you can place the annotation <code>@PostConstruct</code> in front of any method declaration to request that this method must be called right after the object is constructor. In JavaFX there is a small restriction - such a method must be called <code>initialize</code>.</p>
+<p>In JavaFX if you&#8217;ll add to the controller the method <code>initialize</code> annotated with @FXML, <code>FXMLLoader</code> will invoke it after the GUI components are constructed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">@PostConstruct
-public void initialize() {
+<pre class="highlight"><code class="java language-java">@FXML public void initialize() {
 
   errMsg.textProperty().bind(signinError);
 }</code></pre>
@@ -961,40 +960,39 @@ public void initialize() {
 <div class="content">
 <pre class="highlight"><code class="java language-java">public class BindingController {
 
-    @FXML
-    private TextField id;
+  @FXML
+  private TextField id;
 
-    @FXML
-    private PasswordField pwd;
+  @FXML
+  private PasswordField pwd;
 
-    @FXML private Label errMsg;
+  @FXML private Label errMsg;
 
-    SimpleStringProperty signinError = new SimpleStringProperty();
+  SimpleStringProperty signinError = new SimpleStringProperty();
 
-    @PostConstruct
-    public void initialize() {
-        System.out.println("Controller's ready. Let's bind some components");
+  @FXML public void initialize() {
+      System.out.println("Controller's ready. Let's bind some components");
 
-        errMsg.textProperty().bind(signinError);
-    }
+      errMsg.textProperty().bind(signinError);
+  }
 
-    public void signInClicked(ActionEvent evt){
+  public void signInClicked(ActionEvent evt){
 
-        String userID = id.getText();
-        String password = pwd.getText();
-        if (!"Yakov".equals(userID)){
-            id.setStyle("-fx-background-color: lightpink;");
-            signinError.set("Wrong id:" + userID);
+      String userID = id.getText();
+      String password = pwd.getText();
+      if (!"Yakov".equals(userID)){
+          id.setStyle("-fx-background-color: lightpink;");
+          signinError.set("Wrong id:" + userID);
 
-        } else{
-            id.setStyle("-fx-background-color: white;");
-            signinError.set("");
-        }
+      } else{
+          id.setStyle("-fx-background-color: white;");
+          signinError.set("");
+      }
 
-        System.out.println("got id:" + userID + ", got password: " + password);
+      System.out.println("got id:" + userID + ", got password: " + password);
 
-        System.out.println("Hello from signInClicked method in controller");
-    }
+      System.out.println("Hello from signInClicked method in controller");
+  }
 }</code></pre>
 </div>
 </div>
@@ -1085,7 +1083,7 @@ public void initialize() {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-19 23:35:32 EDT
+Last updated 2014-10-20 23:41:04 EDT
 </div>
 </div>
 </body>
