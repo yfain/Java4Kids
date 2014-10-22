@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 6. Access Levels, Collections, and Generics</title>
+<title>Chapter 6. Access Levels, Collections, Generics, and Multi-Threading</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,7 +487,7 @@ p { margin-bottom: 1.25rem; }
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_chapter-6-access-levels-collections-and-generics">Chapter 6. Access Levels, Collections, and Generics</a></li>
+<li><a href="#_chapter-6-access-levels-collections-generics-and-multi-threading">Chapter 6. Access Levels, Collections, Generics, and Multi-Threading</a></li>
 <li>
 <ul class="sectlevel2">
 <li><a href="#_access-levels">Access Levels</a></li>
@@ -500,18 +500,27 @@ p { margin-bottom: 1.25rem; }
 </ul>
 </li>
 <li><a href="#_introduction-to-generics">Introduction to Generics</a></li>
+<li><a href="#_the-first-look-at-multi-threading">The First Look at Multi-Threading</a></li>
+<li>
+<ul class="sectlevel3">
+<li><a href="#_how-to-create-a-thread">How to Create a Thread</a></li>
 </ul>
 </li>
 <li><a href="#_project-using-arraylist-and-generics">Project: Using ArrayList and Generics</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-6-access-levels-collections-and-generics"><a class="anchor" href="#_chapter-6-access-levels-collections-and-generics"></a>Chapter 6. Access Levels, Collections, and Generics</h2>
+<h2 id="_chapter-6-access-levels-collections-generics-and-multi-threading"><a class="anchor" href="#_chapter-6-access-levels-collections-generics-and-multi-threading"></a>Chapter 6. Access Levels, Collections, Generics, and Multi-Threading</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>I&#8217;ll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we&#8217;ll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Finally, you&#8217;ll get familiar with the mechanism of <em>generics</em> that allows Java compiler to ensure that you won&#8217;t be using the wrong data types with data collections or other objects.</p>
+<p>I&#8217;ll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we&#8217;ll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Then you&#8217;ll get familiar with the mechanism of <em>generics</em> that allows Java compiler to ensure that you won&#8217;t be using the wrong data types with data collections or other objects.</p>
+</div>
+<div class="paragraph">
+<p>Finally, I&#8217;ll give you a very light introduction to parallel computing using multi-threading.</p>
 </div>
 <div class="sect2">
 <h3 id="_access-levels"><a class="anchor" href="#_access-levels"></a>Access Levels</h3>
@@ -1045,11 +1054,170 @@ public class HashTableBrokenDemo {
 <p>I&#8217;ve been using parameterized data type <code>Hashtable</code> that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won&#8217;t be covering it in this book.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_the-first-look-at-multi-threading"><a class="anchor" href="#_the-first-look-at-multi-threading"></a>The First Look at Multi-Threading</h3>
+<div class="paragraph">
+<p>So far, all our programs perform actions in a sequence – one after another. In such case if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one <em>thread of execution</em>, where the code works sequentially.</p>
+</div>
+<div class="paragraph">
+<p>In a real life though, we can do several things in parallel like eat, talk on the phone, watch TV, and do the homework. To do all these actions in parallel we use several "processors": hands, eyes, and mouth.</p>
+</div>
+<div class="paragraph">
+<p>Today, only your grandma&#8217;s computer might have a single processor (a.k.a. Central Processing Unit or CPU). But most likely your computer has at least two CPU&#8217;s and a GPU (Graphics Processing Unit) for processing graphics if any. A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on.</p>
+</div>
+<div class="paragraph">
+<p>But even a single processor can perform several actions at once if a program uses <em>multiple threads</em>. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time.</p>
+</div>
+<div class="paragraph">
+<p>A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel.</p>
+</div>
+<div class="sect3">
+<h4 id="_how-to-create-a-thread"><a class="anchor" href="#_how-to-create-a-thread"></a>How to Create a Thread</h4>
+<div class="paragraph">
+<p>All Java applications that we&#8217;ve created so far (even Hello World) were running in so called <em>main thread</em>. We didn&#8217;t need to do any special programming to create a main thread - Java runtime always create one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.</p>
+</div>
+<div class="paragraph">
+<p>There are different ways of creating threads. I won&#8217;t be explaining details of each method because it&#8217;s a pretty advanced topic and is not a good fit for this book. But I&#8217;ll just list some of the ways of creating threads and will illustrate it with just one simple example. These are the main method of creating Java threads:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can inherit your class from the Java class <code>Thread</code> and override its method <code>run</code>, which should contain the code to be executed in parallel.</p>
+</li>
+<li>
+<p>You can add <code>implements Runnable</code> to the declaration of and class and implement the method <code>run</code>, which, again, should contain the code to be executed in parralel.</p>
+</li>
+<li>
+<p>Instead of inheriting your class from the class <code>Thread</code> you can create the new instance of the <code>Thread</code> object</p>
+</li>
+<li>
+<p>You can add <code>implements Callable</code> to the declaration of your class and implement the method <code>call</code>, which plays a similar role to the method <code>run</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The easiest way of implementing multi-threading is by using lambda expressions that were introduced in Chapter 5.
+As a refresher, you can use lambdas to implement functional interfaces - those that have only one abstract method. The interface <code>Runnable</code> declares a single  abstract method <code>run</code>, which makes it a perfect candidate to be implemented with lambdas.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s learn by example. First, I&#8217;ll show you a pretty simple program that executes all code sequentially in one main thread, and then I&#8217;ll re-write it to be executed in parallel.</p>
+</div>
+<div class="paragraph">
+<p>The class <code>SingleThreadedDemo</code> executes two loops sequentially. First, it prints five value of i in power of 4, and then five values of k.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class SingleThreadedDemo {
+  public static void main(String[] args) {
+
+   for (int i=0; i&lt;5;i++){
+     System.out.println("The value of i in power of 4 is "
+                                             + i*i*i*i*i);
+   }
+
+   for (int k=0; k&lt;5;k++){
+      System.out.println("*** The value of k is " + k + "!");
+   }
+
+  }
+}</code></pre>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_project-using-arraylist-and-generics"><a class="anchor" href="#_project-using-arraylist-and-generics"></a>Project: Using ArrayList and Generics</h2>
-<div class="sectionbody">
+<div class="paragraph">
+<p>In first loop I simply multiply the variable <code>i</code> to itself four times. In the second loop I simply concatenate a String, the value of <code>k</code> and an exclamation point. The second loop will start only after the first loop is complete, and no matter how many times you&#8217;ll run this program, the output on the console will always look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">The value of i in power of 4 is 0
+The value of i in power of 4 is 1
+The value of i in power of 4 is 32
+The value of i in power of 4 is 243
+The value of i in power of 4 is 1024
+*** The value of k is 0!
+*** The value of k is 1!
+*** The value of k is 2!
+*** The value of k is 3!
+*** The value of k is 4!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This was an example of a sequential code execution in a single thread. But the actions that we do in each loop don&#8217;t depend on each other and can be executed in parallel, right?</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s change this example a little bit. The following class <code>MultiThreadedDemo</code> executes two loops in parallel. It creates a separate thread for the fist loop, and starts it in a separate thread so the main thread, which has the second loop doesn&#8217;t wait for the first on to complete.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class MultiThreadedDemo {
+  public static void main(String[] args) {
+
+   Thread myThread = new Thread(          // 1
+        () -&gt;{                            // 2
+          for (int i=0; i&lt;5;i++){
+             System.out.println("The value of i in power of 4 is " + i*i*i*i*i);
+          }
+        }                                 // 3
+      );
+
+   myThread.start();                      // 4
+
+   for (int k=0; k&lt;5;k++){
+    System.out.println("*** The value of k is " + k + "!");
+   }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We start the program with creating a new instance of the <code>Thread</code> class using its constructor that takes an object that implements <code>Runnable</code> interface.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Writing a lambda expression is the easiest way to implement <code>Runnable</code>. Note that the lambda expression doesn&#8217;t specify any parameter. Java compiler is smart enough to guess that since the constructor of <code>Thread</code> expects an instance of <code>Runnable</code> then our lambda expression implements this interface. The <code>for</code> loop automatically becomes an implementation of the method <code>run</code>. This is what we want to run in a separate thread</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The lambda expression ends here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>To start the execution of the thread, we need to call the method <code>start</code>, which is define in the class <code>Thread</code> and will internally invoke the method <code>run</code>, which is implemented as lambda. The method <code>start</code> doesn&#8217;t wait for the completion of the method <code>run</code> so the next line in our <code>main</code> method is executed.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you run the program <code>MultiThreadedDemo</code> several times, it&#8217;ll print the output differently depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">*** The value of k is 0!
+*** The value of k is 1!
+The value of i in power of 4 is 0
+The value of i in power of 4 is 1
+*** The value of k is 2!
+*** The value of k is 3!
+*** The value of k is 4!
+The value of i in power of 4 is 32
+The value of i in power of 4 is 243
+The value of i in power of 4 is 1024</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the first two lines print the output from the second loop! This means that after calling the method <code>start</code> on the thread <code>myThread</code> the program didn&#8217;t wait for the completion of the first loop, which ran in parallel thread. Then the first loop had something to print. Then the second, e.t.c. The entire console output is a mix of two parallel number-crunching threads.</p>
+</div>
+<div class="paragraph">
+<p>You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.</p>
+</div>
+<div class="paragraph">
+<p>For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I&#8217;ll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_project-using-arraylist-and-generics"><a class="anchor" href="#_project-using-arraylist-and-generics"></a>Project: Using ArrayList and Generics</h3>
 <div class="paragraph">
 <p>In this exercise I&#8217;d like you to try create your own collection that uses <code>ArrayList</code>, generics, private variables and public getters and setters.</p>
 </div>
@@ -1121,9 +1289,10 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-19 17:21:39 EDT
+Last updated 2014-10-22 18:53:39 EDT
 </div>
 </div>
 </body>
