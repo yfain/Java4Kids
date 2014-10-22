@@ -1151,15 +1151,15 @@ The value of i in power of 4 is 1024
 <pre class="highlight"><code class="java language-java">public class MultiThreadedDemo {
   public static void main(String[] args) {
 
-   Thread myThread = new Thread(          // 1
-        () -&gt;{                            // 2
+   Thread myThread = new Thread(          <i class="conum" data-value="1"></i><b>(1)</b>
+        () -&gt;{                            <i class="conum" data-value="2"></i><b>(2)</b>
           for (int i=0; i&lt;5;i++){
              System.out.println("The value of i in power of 4 is " + i*i*i*i*i);
           }
-        }                                 // 3
+        }                                 <i class="conum" data-value="3"></i><b>(3)</b>
       );
 
-   myThread.start();                      // 4
+   myThread.start();                      <i class="conum" data-value="4"></i><b>(4)</b>
 
    for (int k=0; k&lt;5;k++){
     System.out.println("*** The value of k is " + k + "!");
@@ -1292,7 +1292,7 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-22 18:53:39 EDT
+Last updated 2014-10-22 18:57:35 EDT
 </div>
 </div>
 </body>
