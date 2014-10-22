@@ -5,12 +5,15 @@
 
 After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator window windows from Chapter 7 looks good, but none of them would react on user's actions. No matter how hard you click on the Sign In or calculator's buttons, nothing will happen because we didn't teach these application how to react on user-generated events (e.g. button clicks). 
 
-Events are notifications that something important for the application has happened. In this chapter you'll learn what kind of events may happen in a JavaFX application and how to write code to handle these events.  The generated class`Controller` is empty as of yet, but we'll add some code to it to communicate with the GUI components.  
+Events are notifications that something important for the application has happened. In this chapter I'll explain you how to write code to handle some of such events.  
 
+When IDEA creates a new JavaFX project it generates an empty class `Controller`, which is a right place for the code that communicates with GUI components. In this chapter we'll establish a link between GUI and the controller. We'll also add event handlers and will right code to modify the GUI. I'll continue working with FXML samples created in the previous chapter, but this time the GUI events will be handled by the code from the controller class. 
+
+You'll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes. 
 
 === Events
 
-JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class `Event` located in the packages `javafx.event` and `javafx.scene.input`. You'll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you'll need to specify the name of your controller class right in the FXML file. 
+JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class `Event` located in the packages `javafx.event` and `javafx.scene.input`. You need to know what events are important to your program and, as the programmers say, "listen to events". You'll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you'll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is recommended for code that has to process multiple events.
 
 [[FIG8-1-0]]
 .Event listeners 
@@ -420,21 +423,12 @@ To develop JavaFX applications for iOS, you'd need to install and learn on your 
 
 There is also a community site JavaFX Ports[ http://javafxports.org/page/home] where people are working on deployment of JavaFX applications on iOS and Android devices.
 
-=== The First Look at Multi-Threading 
 
-So far, all our programs perform actions in a sequence – one after another. If a program calls two methods, the second method waits until the first one completes. In other words, such a program has only one _thread of execution_.
+=== Application Thread in JavaFX 
 
-In a real life though, we can do several things inn parallel like eat, talk on the phone, watch TV, and do the homework. To do all these actions in parallel we use several "processors":  hands, eyes, and mouth. 
+JavaFX also runs more than one thread. Imagine a program with a GUI that's constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or characters. It could be an application for a TV channel that shows a video, a running commercial, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction. 
 
-Today, only your grandma's computer might have a single processor (a.k.a. Central Processing Unit or CPU). But most likely your computer has at least two CPU's and a GPU for graphics processing. A CPU performs calculations, sends commands to the monitor, hard disk or solid state drive, remote computers on the Internet, and so on. 
-
-But even a single processor can perform several actions at once if a program uses _multiple threads_. One Java class can start several threads of execution that will take turns in getting slices of the processor’s time. 
-
-A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution in parallel. 
-
-JavaFX also runs more than one thread. Imagine a program with a GUI that's constantly is being updated based on the intensive calculations. It could be a game with multiple moving characters, balls, squares or other shapes. It could be an application for a TV channel that shows a video, a running commercial, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window. 
-
-Updates of the GUI in JavaFX are done in a so called  application thread. The idea is to separate intensive calculations from the GUI updates. Say, the user pressed the button Play on JavaFX video portal application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy every time there was a delay in getting content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
+Updates of the GUI in JavaFX are done in a so called  _application thread_. The idea is to separate intensive calculations from the GUI updates. Say, the user pressed the button Play on JavaFX video portal application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy every time there was a delay in getting content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
 
 I'd better see it to believe it, right? I can easily demonstrate you a "frozen GUI" effect by making a small change in the class `signin.Controller` in our Sign In application. The simplest way to emulate a long running process is to place the the executing thread to sleep.
 

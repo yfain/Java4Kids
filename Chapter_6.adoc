@@ -2,9 +2,11 @@
 :toclevels: 4
 :imagesdir: ./
 
-== Chapter 6. Access Levels, Collections, and Generics 
+== Chapter 6. Access Levels, Collections, Generics, and Multi-Threading 
 
-I'll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Finally, you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects.
+I'll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Then you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects. 
+
+Finally, I'll give you a very light introduction to parallel computing using multi-threading. 
 
 === Access Levels 
 
@@ -459,7 +461,130 @@ What have we achieved? The program `HashTableBrokenDemo` allowed us to store any
 
 I've been using parameterized data type `Hashtable` that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book.  
 
-== Project: Using ArrayList and Generics
+=== The First Look at Multi-Threading 
+
+So far, all our programs perform actions in a sequence – one after another. In such case if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one _thread of execution_, where the code works sequentially.
+
+In a real life though, we can do several things in parallel like eat, talk on the phone, watch TV, and do the homework. To do all these actions in parallel we use several "processors": hands, eyes, and mouth. 
+
+Today, only your grandma's computer might have a single processor (a.k.a. Central Processing Unit or CPU). But most likely your computer has at least two CPU's and a GPU (Graphics Processing Unit) for processing graphics if any. A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on. 
+
+But even a single processor can perform several actions at once if a program uses _multiple threads_. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. 
+
+A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel. 
+
+==== How to Create a Thread
+
+All Java applications that we've created so far (even Hello World) were running in so called _main thread_. We didn't need to do any special programming to create a main thread - Java runtime always create one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.
+
+There are different ways of creating threads. I won't be explaining details of each method because it's a pretty advanced topic and is not a good fit for this book. But I'll just list some of the ways of creating threads and will illustrate it with just one simple example. These are the main method of creating Java threads:
+
+* You can inherit your class from the Java class `Thread` and override its method `run`, which should contain the code to be executed in parallel. 
+
+* You can add `implements Runnable` to the declaration of and class and implement the method `run`, which, again, should contain the code to be executed in parralel. 
+
+* Instead of inheriting your class from the class `Thread` you can create the new instance of the `Thread` object 
+
+* You can add `implements Callable` to the declaration of your class and implement the method `call`, which plays a similar role to the method `run`.
+
+The easiest way of implementing multi-threading is by using lambda expressions that were introduced in Chapter 5.
+As a refresher, you can use lambdas to implement functional interfaces - those that have only one abstract method. The interface `Runnable` declares a single  abstract method `run`, which makes it a perfect candidate to be implemented with lambdas. 
+
+Let's learn by example. First, I'll show you a pretty simple program that executes all code sequentially in one main thread, and then I'll re-write it to be executed in parallel.
+
+The class `SingleThreadedDemo` executes two loops sequentially. First, it prints five value of i in power of 4, and then five values of k. 
+
+[source, java]
+----
+public class SingleThreadedDemo {
+  public static void main(String[] args) {
+
+   for (int i=0; i<5;i++){
+     System.out.println("The value of i in power of 4 is " 
+                                             + i*i*i*i*i);
+   }
+
+   for (int k=0; k<5;k++){
+      System.out.println("*** The value of k is " + k + "!");
+   }
+
+  }
+}
+----
+
+In first loop I simply multiply the variable `i` to itself four times. In the second loop I simply concatenate a String, the value of `k` and an exclamation point. The second loop will start only after the first loop is complete, and no matter how many times you'll run this program, the output on the console will always look like this:
+
+[source, java]
+----
+The value of i in power of 4 is 0
+The value of i in power of 4 is 1
+The value of i in power of 4 is 32
+The value of i in power of 4 is 243
+The value of i in power of 4 is 1024
+*** The value of k is 0!
+*** The value of k is 1!
+*** The value of k is 2!
+*** The value of k is 3!
+*** The value of k is 4!
+----
+
+This was an example of a sequential code execution in a single thread. But the actions that we do in each loop don't depend on each other and can be executed in parallel, right? 
+
+Let's change this example a little bit. The following class `MultiThreadedDemo` executes two loops in parallel. It creates a separate thread for the fist loop, and starts it in a separate thread so the main thread, which has the second loop doesn't wait for the first on to complete.
+
+[source, java]
+----
+public class MultiThreadedDemo {
+  public static void main(String[] args) {
+
+   Thread myThread = new Thread(          // 1
+        () ->{                            // 2
+          for (int i=0; i<5;i++){
+             System.out.println("The value of i in power of 4 is " + i*i*i*i*i);
+          }
+        }                                 // 3
+      );
+
+   myThread.start();                      // 4
+
+   for (int k=0; k<5;k++){
+    System.out.println("*** The value of k is " + k + "!");
+   }
+  }
+}
+----
+
+<1> We start the program with creating a new instance of the `Thread` class using its constructor that takes an object that implements `Runnable` interface. 
+
+<2> Writing a lambda expression is the easiest way to implement `Runnable`. Note that the lambda expression doesn't specify any parameter. Java compiler is smart enough to guess that since the constructor of `Thread` expects an instance of `Runnable` then our lambda expression implements this interface. The `for` loop automatically becomes an implementation of the method `run`. This is what we want to run in a separate thread
+
+<3> The lambda expression ends here.
+
+<4> To start the execution of the thread, we need to call the method `start`, which is define in the class `Thread` and will internally invoke the method `run`, which is implemented as lambda. The method `start` doesn't wait for the completion of the method `run` so the next line in our `main` method is executed.
+
+If you run the program `MultiThreadedDemo` several times, it'll print the output differently depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look: 
+
+[source, java]
+----
+*** The value of k is 0!
+*** The value of k is 1!
+The value of i in power of 4 is 0
+The value of i in power of 4 is 1
+*** The value of k is 2!
+*** The value of k is 3!
+*** The value of k is 4!
+The value of i in power of 4 is 32
+The value of i in power of 4 is 243
+The value of i in power of 4 is 1024
+----
+
+Note that the first two lines print the output from the second loop! This means that after calling the method `start` on the thread `myThread` the program didn't wait for the completion of the first loop, which ran in parallel thread. Then the first loop had something to print. Then the second, e.t.c. The entire console output is a mix of two parallel number-crunching threads.  
+
+You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.
+
+For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I'll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.
+
+=== Project: Using ArrayList and Generics
 
 In this exercise I'd like you to try create your own collection that uses `ArrayList`, generics, private variables and public getters and setters.
 
