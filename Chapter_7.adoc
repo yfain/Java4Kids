@@ -552,7 +552,7 @@ Using Scene Builder's menu File | Save save the layout in a file _border.fxml_. 
 
 Don't be overwhelmed with the amount of tags and attributes in the above code. You can identify the regions of the `BorderPane` layout. The `<top>` region contains a label, while the `left` and `<bottom>` regions have containers with their own layouts. In this example I have not used the `<center>` and `<right>` regions. Typically your program will be changing the content of the central area based on the user actions. For example, if the user clicks on the "Menu 1" button in the left region, JavaFX will generate a _clicked event_ and you'll show the content required for this selection in the central area. 
 
-You'll learn how to process events in the next chapter. Now it's time to practice in working with combined layouts. 
+You'll learn how to process events in the next chapter. Now it's time to practice in working with combined layouts 
 
 === Project: Creating a GUI for Calculator
 

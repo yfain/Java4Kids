@@ -411,11 +411,136 @@ image::images/fig_8_06.png[]
 
 Enter the right user ID, click on Sign In again, and the binding mechanism will remove the error message from the window.
 
+=== Application Thread in JavaFX 
+
+In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have separate between different threads the the code that updates the GUI from the code that performs application logic. Now I'll explain you why. 
+
+Imagine a program with a GUI that's constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction. 
+
+Updates of the GUI in JavaFX are done in so called  _application thread_. The idea is to separate intensive calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
+
+==== The Frozen Screen Demo
+
+I can easily demonstrate you a "frozen GUI" effect by making a small change in the class `signin.Controller` in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:
+
+[source, java]
+----
+try {
+    Thread.sleep(10000);  // Sleep for 10 sec
+
+} catch (InterruptedException interExp) {
+    interExp.printStackTrace();
+}
+----
+
+This code snippet has so-called try-catch block, which is required in some cases for error handling. The next chapter  explains the error processing subject in details. But at this point let's just concentrate at the code located inside the curly braces after the keyword `try`. 
+
+The method `sleep` of class `Thread` takes one argument - the sleeping time in milliseconds. There are 1000  milliseconds in one second, so the above code snippet will place the current thread to sleep for 10 second.
+
+Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I'll add the thread sleeping code to it to emulate the process that would perform actual sign in. As I wrote before, this is wrong - you should execute the application logic in a separate thread. But I do it on purpose to demonstrate the frozen effect.
+The following code fragment from the Controller class shows hos the event handler `signInClicked` invokes the method named `wrongStartOfLongRunningProcess`, which sleeps for 10 seconds and then checks if the entered user ID is Yakov.  
+
+[source, java]
+----
+public void signInClicked(ActionEvent evt){
+
+    String userID = id.getText();
+    String password = pwd.getText();
+
+    wrongStartOfLongRunningProcess(userID); 
+
+    System.out.println("got id:" + userID + ", got password: " + password);
+}
+
+private void wrongStartOfLongRunningProcess(String uID) {
+    try {
+        Thread.sleep(10000);  // Sleep for 10 sec
+    } catch (InterruptedException interExp) {
+        interExp.printStackTrace();
+    }
+
+    if (!"Yakov".equals(uID)){
+        id.setStyle("-fx-background-color: lightpink;");
+    } else{
+        id.setStyle("-fx-background-color: white;");
+    }
+}
+----
+
+Basically, when the user clicks on the Sign In button, the application thread will become busy for 10 seconds, and only then checks the user ID and set the background color of the `TextField` on the screen. If you'll run the Sign In sample with such event handler, the application window becomes frozen and unresponsive for 10 seconds. If the user will try to reenter the ID, he'll see a wait cursor. On MAC OS computers such a cursor looks as a spinning _wheel of death_ as shown on Figure 8-7.
+
+[[FIG8-7]]
+.Frozen Screen with a wheel of death 
+image::images/fig_8_07.png[]
+
+Ten seconds later, the application thread wakes up, and the GUI becomes responsive again. Let's fix this code and create a separate thread emulating the long running process so the application thread can continue working with GUI. The following code listing shows the complete code of the class `ControllerLongRunningThread`, which doesn't freeze the window.
+
+[source, java]
+----
+public class ControllerLongRunningThread {
+
+  @FXML private TextField id;
+
+  @FXML private PasswordField pwd;
+
+  public void signInClicked(ActionEvent evt){
+
+    String userID = id.getText();
+    String password = pwd.getText();
+
+    rightStartOfLongRunningProcess(userID);
+
+    System.out.println("got id:" + userID + 
+                       ", got password: " + password);
+  }
+
+  private void rightStartOfLongRunningProcess(String uID) {
+
+    Runnable loginTask = () -> {                       // <1>
+      try {
+        Thread.sleep(10000);                           // <2>
+
+        Platform.runLater(() -> {                      // <3>
+          if (!"Yakov".equals(uID)){
+            id.setStyle("-fx-background-color: lightpink;");
+          } else{
+            id.setStyle("-fx-background-color: white;");
+          }
+        });
+
+      } catch (InterruptedException interExp) {
+          interExp.printStackTrace();
+      }
+    };                                                //  <4>
+
+    Thread workerThread = new Thread(loginTask);      //  <5>
+    workerThread.start();                             //  <6>
+  }
+}
+----
+
+<1> The code in the method `rightStartOfLongRunningProcess` declares the lambda expression `loginTask` as implementation of the `Runnable` interface. At this point no thread is created yet - we'll do it at the end of the method `rightStartOfLongRunningProcess`.
+
+<2> The lambda expression places the current thread to sleep for 10 second, but it won't be the application thread, because we'll create a separate worker thread for it (see the notes 5 and 6 below).
+
+<3> When the sleep is over, we need to pass control back from the worker to application thread to update the GUI. For that, JavaFX has a special method `runLater` in the class `Platform`. The method `runLater` will place the request to update the GUI into a special event queue of the application thread.
+
+<4> End of the lambda expression declaration
+
+<5> Now we create the instance of the worker thread passing the lambda expression to it.
+
+<6> The method `start` of the class `Thread` starts the executing of the lambda's code in a separate worker thread. 
+
+
+In the chapter on Ping-Pong game we'll use multiple threads too.One thread will be responsible for displaying the ping-pong table, while the other one will calculate coordinates of the ball and paddles. 
+
 === Deploying With JavaFX Packager
 
-http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm.
+How do you start a JavaFX application? Well, you can start it either from the IDE or from a command line as any other Java application. But what if you want to give your application to your grandma, what may not be as good at Java as you are? Of course, you can pay her a visit, install the Java runtime on her computer, and teach her how to open a command ot Terminal window and enter `java signin.Main`. 
 
-The `Application` class has a method `getParameters`, which is a JavaFX way of getting command line arguments that might be passed to your application during its launch .
+You may even learn how to use scripting languages and create a file `signin.bat` on Windows or `signin.sh` on MAC OS that will have the java command inside. You can even create an icon that will run this script. But what if everyone in your school want to have your program installed on their computers? Now if becomes a time-consuming task.
+
+But the best way to prepare your JavaFX application for distribution is to create a self-contain file `signin.exe` for Windows or `signin.dmg` for MAC OS. This file will contain both the Java runtime and your application code. This process is described in details in Oracle's tutorial titled http://docs.oracle.com/javafx/2/deployment/self-contained-packaging.htm#BCGIBBCI["Self-Contained Application Packaging]. I'm not going to repeat this tutorial here, but will leave it for you as a self-study project. 
 
 I'm sure many of you want to know if it's possible to use JavaFX for writing applications for smart phones. Oracle doesn't offer the JavaFX libraries for mobile platforms, but it's still possible. 
 
@@ -423,45 +548,28 @@ To develop JavaFX applications for iOS, you'd need to install and learn on your 
 
 There is also a community site JavaFX Ports[ http://javafxports.org/page/home] where people are working on deployment of JavaFX applications on iOS and Android devices.
 
-=== Application Thread in JavaFX 
-
-In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have separate between different threads the the code that updates the GUI from the code that performs application logic. Now I'll explain you why. 
-
-Imagine a program with a GUI that's constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction. 
-
-Updates of the GUI in JavaFX are done in so called  _application thread_. The idea is to separate intensive calculations from the GUI updates. Say, the user pressed the button Play on JavaFX video portal application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
-
-You'd better see it to believe it, right? I can easily demonstrate you a "frozen GUI" effect by making a small change in the class `signin.Controller` in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep as if there is some application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:
-
-[source, java]
-----
-Thread.sleep(10000);
-----
-
-The method `sleep` takes one argument - the sleeping time in milliseconds. There is 100 milliseconds in one second, so the above code snippet will place the current thread to sleep for 10 second.
-
-
-
-
-Remember, the controller class has a handler for the button click? I'll 
-
-
-
-
-Hence the long running processes shouldn't be running on the application thread, but have a dedicated one. The application thread should be mainly updating the GUI, and not running long processes. All requests for the scene updates have to be placed into a special event queue in the application thread.  
-
-The method `runLater` defined in the class `Platform` places the `Runnable` object into an event queue.
-
-In the chapter on Ping-Pong game I'll show you how your program can creates multiple threads too. One thread will be responsible for displaying the table, while the other one  will calculate coordinates of the ball and paddles and will send commands to the first thread to repaint the window. 
-
-To be continued...
-
-
 === What to Study Next About JavaFX
 
 In Chapters 7 and 8 I gave you a very brief introduction to JavaFX. You'll be writing more of JavaFX code in Chapter 9 and while working on the Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package `javafx.animation`.
 
 Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress. 
 
+=== Project: Adding Events Handling for Calculator
 
-=== Project 
+The goal of this project is to complete the calculator program. If you completed the project from Chapter 7, you can continue working on it. But if you couldn't complete it on your own, download the version of the calculator GUI that comes with the sample code for this chapter.
+
+1. Create a Java class `CalculatorController` in the same IDEA project where the calculator's GUI is located. 
+
+2. Modify the file `calculator.fxml`: add to it the attribute `fx:controller="CalculatorController"` so it knows the name of the class with the application logic.  Use the code of the `signing.fxml` from this chapter for reference.
+
+3. Create two separate event handler methods in the class  `CalculatorController`. Name the first method `digitClickedHandler` - it will contain the code to process clicks on the digit buttons. Name the second method  `operationClickHandler` - it will contain the code to process clicks on such buttons as Plus, Minus, et al.
+
+4. Modify the file `calculator.fxml` and assign the name of the click handler method for each button using the attribute `onAction` as we did in the Sign In example.
+
+5. In each handler method add the code to recognize which button has been clicked. You can do the label of the clicked button by querying the `ActionEvent` object that will be provided for each event handler method, for example:
+
+[source, java]
+----
+Button clickedButton = (Button) evt.getTarget();
+String buttonLabel = clickedButton.getText();
+----  
