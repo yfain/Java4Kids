@@ -70,9 +70,9 @@ This means that the program started in the method `main`, then went to `init` wh
 
 Exceptions in Java are also classes, and some of them are shown in the following inheritance tree:
  
-[[FIG8-1]]
-.???
-image::images/fig_8_01.png[]
+[[FIG9-1]]
+.Exceptions Hierarchy
+image::images/fig_9_01.png[]
 
 
 Subclasses of the class `Exception` are called _checked exceptions_ and you must process them  in your code.
@@ -93,7 +93,7 @@ There are five Java keywords that can be used for error handling: `try`, `catch`
 
 After one `try` block you may put several `catch` blocks, if you believe that more than one error may happen. For example, when a program tries to read a file, the file may not be there, and you’ll get the `FileNotFoundException`, or the file is there, but the code keeps reading the file after reaching the end of  file – this generates `EOFException`. The next code fragment  will print messages in plain English if the program can’t find a file with game scores or reached the end of the file. For any other read errors it’ll print the message _Problem reading_ file and a technical description of the error. 
 
-[Souecw, Java]
+[source, Java]
 ----
 public void getScores(){ 
  try{
@@ -181,13 +181,7 @@ javax.swing.JOptionPane.showConfirmDialog(null,
 return;
 ----
 
-We’ve gotten rid of the scary stack trace error messages, and displayed a simple to understand  message _Please enter a Number_:
-
-[[FIG8-2]]
-.???
-image::images/fig_8_02.png[]
-
-Now the `NumberFormatException` is handled.
+We’ve gotten rid of the scary stack trace error messages, and displayed a simple to understand  message _Please enter a Number_. Now the `NumberFormatException` is handled.
 
 === The keyword `throws`
 
@@ -268,9 +262,9 @@ If an exception has happened in a method, but you believe that the caller should
 
 The statement `throw` is used to throw Java objects. The object that a program throws must be _throwable_. This means that you can only throw objects that are direct or indirect subclasses of the class `Throwable`, and all Java exceptions are its subclasses. 
 
-[[FIG8-3]]
-.???
-image::images/fig_8_03.png[]
+[[FIG9-3]]
+.Throwing exceptions
+image::images/fig_9_02.png[]
 
 The next code fragment shows how the method `getAllScores()` catches an `IOException` and creates a new `Exception` object with a more friendly description of the error, and re-throws it to the method `main()`.  Now the method `main()` won’t compile unless you put the line that calls `getAllScores` in the `try/catch` block, because this method may throw an `Exception` and it should be either handled or re-thrown again. The method `main` should not throw any exceptions, that’s why it should handle it.
 
@@ -303,9 +297,9 @@ class ScoreList{
 
 In case of a file error,  the main method will handle it,  and  the `e1.getMessage`   will return the _Dear Friend…_ message.   
 
-[[FIG8-4]]
-.???
-image::images/fig_8_04.png[]
+[[FIG8-3]]
+.Showing a user-friendly message
+image::images/fig_8_03.png[]
 
 === Creating New Exceptions 
 
