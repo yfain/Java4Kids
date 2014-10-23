@@ -140,7 +140,7 @@ theFish = (Fish) fishTank.get(i);
 
 Now let's see how to work with collections of data. Java  packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
 
-The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don't belong to the introductory book like this one.
+The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to the concept of multi-threadinglater in this chapter, but the coverage of  concurrent collections doesn't belong to the introductory book like this one.
 
 ==== The Class ArrayList
 
@@ -579,7 +579,7 @@ Note that the first two lines print the output from the second loop! This means 
 
 You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.
 
-For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 9 I'll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.
+For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I'll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.
 
 === Project: Using ArrayList and Generics
 

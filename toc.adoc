@@ -18,9 +18,9 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * <<Chapter_4.adoc#,Chapter 4. Java Building Blocks>>
 * <<Chapter_5.adoc#,Chapter 5. Interfaces, Lambdas, and Anonymous Classes >>
 * <<Chapter_6.adoc#,Chapter 6. Access Levels, Collections, Generics, and Multi-Threading >>
-*  <<Chapter_7.adoc#,Chapter 7. Exceptions: Dealing with Errors (work in progress)>>
-*  <<Chapter_8.adoc#,Chapter 8. Introduction to GUI with JavaFX>>
-* <<Chapter_9.adoc#,Chapter 9. User Interaction in JavaFX (work in progress)>> 
+*  <<Chapter_7.adoc#,Chapter 7. Introduction to GUI with JavaFX>>
+* <<Chapter_8.adoc#,Chapter 8. User Interaction in JavaFX (work in progress)>> 
+*  <<Chapter_9.adoc#,Chapter 9. Error Handling (work in progress)>>
 * Chapter 10. Creating a Tic-Tac-Toe Game
 * Chapter 11. Saving the Game Score in Files
 * Chapter 12. Networking: Downloading Stuff From Internet
