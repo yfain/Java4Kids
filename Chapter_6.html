@@ -658,7 +658,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It&#8217;s like you&#8217;re saying, "I know that the variable <code>myOtherCar</code> is of type ``Object`, but it actually points at the <code>Car</code> instance". Now the variable <code>myOtherCarAfterCasting</code> will see the method <code>brake()</code> declared in the class <code>Car</code>:</p>
+<p>It&#8217;s like you&#8217;re saying, "I know that the variable <code>myOtherCar</code> is of type ``Object`, but it actually points at the <code>Car</code> instance". Now the variable <code>myOtherCarAfterCasting</code> will see the method <code>brake</code> declared in the class <code>Car</code>:</p>
 </div>
 <div id="FIG6-5" class="imageblock">
 <div class="content">
@@ -1063,7 +1063,13 @@ public class HashTableBrokenDemo {
 <p>Today, only your grandma&#8217;s computer has a single processor (a.k.a. Central Processing Unit or CPU). A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on. Most likely your computer has at least two CPU&#8217;s and a GPU (Graphics Processing Unit) for processing graphics if any.</p>
 </div>
 <div class="paragraph">
-<p>But even a single processor can perform several actions at once if a program uses <em>multiple threads</em>. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. For example, the program asks the user a question and waits for the response. Meantime the CPU can be used for performing some other application logic instead of idling.</p>
+<p>But even a single processor can perform several actions at once if a program uses <em>multiple threads</em>. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. For example, the program asks the user a question and waits for the response. Meantime the CPU can be used for performing some other application logic instead of idling as shown in Figure 7.</p>
+</div>
+<div id="FIG6-7" class="imageblock">
+<div class="content">
+<img src="./images/fig_6_07.png" alt="fig 6 07">
+</div>
+<div class="title">Figure 7. Parallel processing</div>
 </div>
 <div class="paragraph">
 <p>A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel.</p>
@@ -1082,7 +1088,7 @@ public class HashTableBrokenDemo {
 <p>You can inherit your class from the Java class <code>Thread</code> and override its method <code>run</code>, which should contain the code to be executed in parallel.</p>
 </li>
 <li>
-<p>You can add <code>implements Runnable</code> to the declaration of a class and implement the method <code>run</code>, which, again, should contain the code to be executed in parralel.</p>
+<p>You can add <code>implements Runnable</code> to the declaration of a class and implement the method <code>run</code>, which, again, should contain the code to be executed in parallel.</p>
 </li>
 <li>
 <p>Instead of inheriting your class from the class <code>Thread</code> you can create the new instance of the <code>Thread</code> object</p>
@@ -1289,7 +1295,7 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 11:28:50 EDT
+Last updated 2014-10-23 16:53:39 EDT
 </div>
 </div>
 </body>
