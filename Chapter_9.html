@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 8. Error Handling</title>
+<title>Chapter 9. Programming User Interaction in JavaFX</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,482 +487,597 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-8-error-handling"><a class="anchor" href="#_chapter-8-error-handling"></a>Chapter 8. Error Handling</h2>
+<h2 id="_chapter-9-programming-user-interaction-in-javafx"><a class="anchor" href="#_chapter-9-programming-user-interaction-in-javafx"></a>Chapter 9. Programming User Interaction in JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter I&#8217;ll explain you how to handle run-time errors, which in Java are called <em>exceptions</em>.</p>
+<p>After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator windows from Chapter 8 looks good, but none of them would react on user&#8217;s actions. No matter how hard you click on the Sign In or calculator&#8217;s buttons, nothing will happen because we didn&#8217;t teach these application how to react on user-generated events (e.g. button clicks).</p>
 </div>
 <div class="paragraph">
-<p>Say you forgot to write one closing curly brace in your Java code. This will result in the compilation error that can be fixed easily. But there are so called <em>run-time errors</em>, when all of a sudden your program stops working properly.</p>
+<p>Events are notifications that something important for the application has happened. In this chapter I&#8217;ll explain you how to write code to handle some of such events.</p>
 </div>
 <div class="paragraph">
-<p>For example, a Java class reads a file with the game scores. What’s going to happen if someone will delete this file? Will the program crash with a scary error message, or will it stay alive displaying a user friendly message like this one: <em>Dear friend, for some reason I could not read the file scores.txt. Please make sure that the file exists?</em> This is an example of a situation when Java compiler won&#8217;t be able to help - the Java syntax was written properly.</p>
+<p>When IDEA creates a new JavaFX project it generates an empty class <code>Controller</code>, which is a right place for the code that communicates with GUI components. In this chapter we&#8217;ll establish a link between GUI and the controller. We&#8217;ll also add event handlers and will right code to modify the GUI. I&#8217;ll continue working with FXML samples created in the previous chapter, but this time the GUI events will be handled by the code from the controller class.</p>
 </div>
 <div class="paragraph">
-<p>You should make your programs ready for unexpected situations. you should foresee what might go wrong when the program will be running, and what to do if something went wrong. In many programming languages the programmer decides if he wants to add error processing code to a program. But in many cases Java forces you to include error processing code, otherwise the programs will not even compile.</p>
-</div>
-<div class="paragraph">
-<p>Runtime errors in Java are called exceptions, and error processing is called <em>exception handling</em>. You have to place code that may produce errors in so-called <code>try/catch</code> block. It’s as if you’re saying to JVM the following: <em>Try to read the file with scores, but if something happens, catch the error and execute the code that will deal with it:</em></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>try{
-  fileScores.read();
-}
-catch (IOException e){
-  System.out.println(
-       "Dear friend,I could not read the file scores.txt");
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We’ll learn how to work with files in Chapter 10, but at this point I&#8217;d like to introduce a new term <em>I/O</em> or <em>input/output</em>. Read and write operations (from/to disk or other device) are also known as I/O operations, and the class <code>IOException</code> is a class that contains information about input/output errors.</p>
-</div>
-<div class="paragraph">
-<p>In the Java world, a method <em>throws an exception</em> in case of a runtime error. Different exceptions will be thrown for different type of errors.  If the <code>catch</code> block exists in the program for this particular type of an error, it will be caught and the program will jump into the <code>catch</code> block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.</p>
-</div>
-<div class="paragraph">
-<p>The print statement from the code above will be executed only in case of the file read error.</p>
+<p>You&#8217;ll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes.</p>
 </div>
 <div class="sect2">
-<h3 id="_reading-the-stack-trace"><a class="anchor" href="#_reading-the-stack-trace"></a>Reading the Stack Trace</h3>
+<h3 id="_events"><a class="anchor" href="#_events"></a>Events</h3>
 <div class="paragraph">
-<p>If an unexpected exception occurs that is not handled by the program, it prints a multi-line error message on the screen. Such message is called stack trace. If your program  called several methods before it ran into a problem, the <em>stack trace</em> can help you to trace the program, and find the line that have caused the error.</p>
+<p>JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You need to know what events are important to your program and, as the programmers say, "listen to events". You&#8217;ll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you&#8217;ll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is recommended for code that has to process multiple events.</p>
 </div>
-<div class="paragraph">
-<p>We know that dividing by zero is illegal. But, for the illustration purposes, I wrote a program <code>TestStackTrace</code> that divides by zero on purpose  (line numbers are not the part of the code).</p>
-</div>
-<div class="listingblock">
+<div id="FIG8-1-0" class="imageblock">
 <div class="content">
-<pre>1 class TestStackTrace{
-2  TestStackTrace()
-3   {
-4    divideByZero();
-5   }
-6
-7  int divideByZero()
-8   {
-9      return 25/0;
-10  }
-11
-12  static void main(String[] args)
-13  {
-14    new TestStackTrace();
-15  }
-16 }</pre>
+<img src="./images/fig_8-01-1.png" alt="fig 8 01 1">
 </div>
+<div class="title">Figure 1. Event listeners</div>
 </div>
 <div class="paragraph">
-<p>The output of this program shows the sequence of method calls that were made up to the moment when the run-time error had happened. Start reading this output from the last line going up.</p>
+<p>You can either create with <code>new</code> or <em>inject</em> an instance of your controller class into Java code. I&#8217;ll explain you what injection means in a bit.</p>
+</div>
+<div class="sect3">
+<h4 id="_assigning-event-handlers-in-fxml"><a class="anchor" href="#_assigning-event-handlers-in-fxml"></a>Assigning Event Handlers in FXML</h4>
+<div class="paragraph">
+<p>Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We&#8217;ll stick to our principles of separating GUI and application logic, and will keep the GUI in .fxml file, but processing in Java.</p>
 </div>
 <div class="paragraph">
-<p><code>Exception in thread "main"</code>
-<code>java.lang.ArithmeticException: / by zero</code>
-   <code>at TestStackTrace.divideByZero(TestStackTrace.java:9)</code>
-   <code>at TestStackTrace.&lt;init&gt;(TestStackTrace.java:4)</code>
-   <code>at TestStackTrace.main(TestStackTrace.java:14)</code></p>
+<p>In Scene Builder you may have noticed the <em>Controller</em> bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic.</p>
 </div>
 <div class="paragraph">
-<p>This means that the program started in the method <code>main()</code>, then went to <code>init()</code> which is a constructor, and then called the method <code>divideByZero()</code>. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an <code>ArithmeticException</code> was thrown –the line number nine tried to divide by zero.</p>
+<p>At the bottom right corner of Scene Builder you may notice a tab titled Code. This is where you can assign event handler methods to selected GUI component after assigning the controller class. So you could select have selected, say a button in the central canvas and assign its click handler right in the <em>Code</em> section for this button.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_genealogical-tree-of-exceptions"><a class="anchor" href="#_genealogical-tree-of-exceptions"></a>Genealogical Tree of Exceptions</h3>
+<h3 id="_hooking-up-a-controller-to-gui"><a class="anchor" href="#_hooking-up-a-controller-to-gui"></a>Hooking up a Controller to GUI</h3>
 <div class="paragraph">
-<p>Exceptions in Java are also classes, and some of them are shown in the following inheritance tree:</p>
+<p>Since we&#8217;re separating the GUI code form the application logic, we need a way to specify that a particular FXML file should use a particular controller. In Chapter 8 I didn&#8217;t bring your attention to where it&#8217;s done in FXML, but if you&#8217;ll look at any of the FXML files, you&#8217;ll see that the name of the controller was specified there when IDEA generated the project for us.</p>
+</div>
+<div class="sect3">
+<h4 id="_adding-controller-to-sign-in-application"><a class="anchor" href="#_adding-controller-to-sign-in-application"></a>Adding Controller to Sign In application</h4>
+<div class="paragraph">
+<p>To illustrate the use of controllers, I&#8217;ll continue working on the sample Sign In project from Chapter 8. It has a file signin.fxml that includes the following <code>GridPane</code> tag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;GridPane hgap="10" vgap="10"
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller"&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>hgap</code> and <code>vgap</code> attributes specify the padding between the grid grid columns and rows. The <code>xmlns</code> attributes specify so called namespaces required for proper parsing of FXML files. And the attribute <code>fx:controller</code> specifies the full name of the class <code>Controller</code>, which in our project is located in the package <code>signin</code>.</p>
+</div>
+<div class="paragraph">
+<p>When the file signin.fxml is loaded, JavaFX runtime creates an instance of the class <code>signin.Controller</code> and injects it in the instance of the GUI class generated from FXML. The word injection describes the situation when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to create an instance of the <code>signin.Controller</code> manually by using the <code>new</code> operator.</p>
+</div>
+<div class="paragraph">
+<p>The first version of our controller class is shown next:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package signin;
+
+import javafx.event.ActionEvent;
+
+public class Controller {
+
+  public void signInClicked(ActionEvent evt){
+
+    System.out.println("Hello from signInClicked method in controller");
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The class <code>Controller</code> uses the class <code>ActionEvent</code> from package <code>javafx.event</code>, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an <code>ActionEvent</code> in the package <code>java.awt.event</code>, which we don&#8217;t want in this case.</p>
+</div>
+<div class="paragraph">
+<p>We want the method <code>signInClicked</code> to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the <code>onAction</code> event in the Button element in signin.fxml as shown on Figure 8-2.</p>
 </div>
 <div id="FIG8-1" class="imageblock">
 <div class="content">
 <img src="./images/fig_8_01.png" alt="fig 8 01">
 </div>
-<div class="title">Figure 1. ???</div>
+<div class="title">Figure 2. Mapping onAction event to signInClicked method</div>
 </div>
 <div class="paragraph">
-<p>Subclasses of the class <code>Exception</code> are called <em>checked exceptions</em> and you must process them  in your code.</p>
-</div>
-<div class="paragraph">
-<p>Subclasses of the class <code>Error</code> are fatal JVM errors and the running program can’t handle them.</p>
-</div>
-<div class="paragraph">
-<p>The <code>TooManyBikesException</code> is an example of exception that can be created by a programmer.</p>
-</div>
-<div class="paragraph">
-<p>How a programmer is supposed to know in advance if some Java method may throw an exception and that a <code>try/catch</code> block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one:</p>
-</div>
-<div class="paragraph">
-<p><code>"ScoreReader.java":  unreported exception: java.io.IOException; must be ``caught or declared to be thrown at line 57</code></p>
-</div>
-<div class="paragraph">
-<p>Of course you are welcome to read Java documentation that describes exceptions that may be thrown by any particular  method.  The rest of this chapter will explain how to deal with these exceptions.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_try-catch-block"><a class="anchor" href="#_try-catch-block"></a>Try/Catch Block</h3>
-<div class="paragraph">
-<p>There are five Java keywords that can be used for error handling: <code>try</code>, <code>catch</code>, <code>finally</code>, <code>throw</code>, and <code>throws</code>.</p>
-</div>
-<div class="paragraph">
-<p>After one <code>try</code> block you may put several <code>catch</code> blocks, if you believe that more than one error may happen. For example, when a program tries to read a file, the file may not be there, and you’ll get the <code>FileNotFoundException</code>, or the file is there, but the code keeps reading the file after reaching the end of  file – this generates <code>EOFException</code>. The next code fragment  will print messages in plain English if the program can’t find a file with game scores or reached the end of the file. For any other read errors it’ll print the message <em>Problem reading</em> file and a technical description of the error.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>public void getScores(){
- try{
-    fileScores.read();
-    System.out.println(“Scores loaded successfully”);
- }catch(FileNotFoundException e){
-     System.out.println(“Can not find file Scores”);
- }catch(EOFException e1){
-      System.out.println(“Reached end of file”);
- }catch(IOException e2){
-      System.out.println(“Problem reading  file “ +
-                                    e2.getMessage());
- }
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If the method <code>read()</code> fails, the program jumps over the line <code>println()</code>  and tries to land in the <code>catch</code> block that matches the error. If it finds such block, the appropriate println() will be executed, but if the matching catch block is not found, the method <code>getScores()</code> will re-throw this exception to its caller.</p>
-</div>
-<div class="paragraph">
-<p>If you write several <code>catch</code> blocks, you may need to place them in a particular order if these exceptions are inherited from each other. For example, since the <code>EOFException</code> is a subclass of the <code>IOException</code>, you have to put the <code>catch</code> block for the subclass first.  If you would put the <code>catch</code> for <code>IOException</code> first, the program would never reach the <code>FileNotFound</code> or <code>EOFException</code>, because the first <code>catch</code> would intercept them.</p>
-</div>
-<div class="paragraph">
-<p>Lazybones would program the method <code>getScores()</code> just like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>public void getScores(){
- try{
-  fileScores.read();
- }catch(Exception e){
-  System.out.println(“Problem reading  file ”+
-                                      e.getMessage());
-   }
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This is an example of a bad style of Java coding. When you write a program, always remember that someone else may read it, and you don’t want to be ashamed of your code.</p>
-</div>
-<div class="paragraph">
-<p>Catch blocks receive an instance of the object <code>Exception</code> that contains a short explanation of a problem, and its method <code>getMessage()</code> will return this info. Sometimes, if the description of an error is not clear, try the method <code>toString()</code> instead:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>catch(Exception e){
- System.out.println(“Problem reading file ”+ e.toString());
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you need more detailed information about the exception, use the method <code>printStackTrace()</code>. It will print the sequence of  method calls that lead to this exception  similar to an example from  the section <em>Reading Stack Trace</em>.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s try to “kill” the calculator program from Chapter 6. Run the class Calculator and enter from the keyboard the charactes <em>abc</em>. Press any of the action buttons, and you’ll see on the console screen something like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>java.lang.NumberFormatException: For input string: "abc"
-   at java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)
-   at java.lang.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1213)
-   at java.lang.Double.parseDouble(Double.java:202)
-   at CalculatorEngine.actionPerformed(CalculatorEngine.java:27)
-   at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1764)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This was an example of a non-handled exception. The class <code>CalculatorEngine</code> has the following line in its method <code>actionPerformed()</code>:</p>
-</div>
-<div class="paragraph">
-<p><code>displayValue= Double.parseDouble(dispFieldText);</code></p>
-</div>
-<div class="paragraph">
-<p>If the variable <code>dispFieldTest</code> has not a numeric value,  the method <code>parseDouble()</code> will not be anle to convert it to the <code>double</code> data type and will throw a <code>NumberFormatException</code>.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s handle this exception and display an error message that will explain the problem to the user.  The line with <code>parseDouble()</code> has to be placed in a <code>try/catch</code> block, and Eclipse will help you with this. Highlight this line and right-click on it with the mouse. In the popup menu select the items <em>Source</em> and <em>Surround with try/catch block</em>. Voila! The code is changed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>try {
-   displayValue= Double.parseDouble(dispFieldText);
-} catch (NumberFormatException e1) {
-   // TODO Auto-generated catch block
-   e1.printStackTrace();
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Replace the <code>printStackTrace()</code> line with the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>javax.swing.JOptionPane.showConfirmDialog(null,
-   "Please enter a Number", "Wrong input",
-   javax.swing.JOptionPane.PLAIN_MESSAGE);
-return;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We’ve gotten rid of the scary stack trace error messages, and displayed a simple to understand  message <em>Please enter a Number</em>:</p>
+<p>If you run the <code>Main</code> program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-3.</p>
 </div>
 <div id="FIG8-2" class="imageblock">
 <div class="content">
 <img src="./images/fig_8_02.png" alt="fig 8 02">
 </div>
-<div class="title">Figure 2. ???</div>
+<div class="title">Figure 3. After clicking 3 times on Sign In button</div>
 </div>
 <div class="paragraph">
-<p>Now the <code>NumberFormatException</code> is handled.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_the-keyword-code-throws-code"><a class="anchor" href="#_the-keyword-code-throws-code"></a>The keyword <code>throws</code></h3>
-<div class="paragraph">
-<p>In some cases, it makes more sense to handle the exception not in the method where it happened, but in the method’s caller.
-In such cases the method signature has to declare (warn) that it may throw a particular exception. This is done using a special keyword <code>throws</code>. Let’s use the same example that reads a file. Since the method <code>read()</code> may throw an <code>IOException</code>, you should either handle or declare it. In the next example we are  going to declare that the method <code>getAllScores()</code> may throw an IOException:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>class MySuperGame{
-
-  void getAllScores() throws IOException{
-   // …
-   // Do not use try/catch  if you are
-   // not handling exceptions in this method
-   file.read();
-  }
-
-  public static void main(String[] args){
-    MySuperGame msg = new MySuperGame();
-    System.out.println(“List of Scores”);
-
-    try{
-     // Since the  getAllScores()declares exception,
-     // we handle  it over here
-       msg.getAllScores();
-
-    }catch(IOException e){
-       System.out.println(
-       "Sorry, the list of scores is not available");
-    }
- }</pre>
-</div>
+<p>So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the <code>ActionEvent</code> object as an argument. Its property <code>target</code> identifies, well the target of the event, which is a Sign In button in our case.</p>
 </div>
 <div class="paragraph">
-<p>Since we are not even trying to catch exceptions here, the <code>IOException</code> will be  <em>propagated</em> from the <code>getAllScores()</code> to its caller - the method <code>main()</code>. Now the main method has to handle this exception.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_the-keyword-code-finally-code"><a class="anchor" href="#_the-keyword-code-finally-code"></a>The Keyword <code>finally</code></h3>
-<div class="paragraph">
-<p>Any code within a <code>try/catch</code> block can end in one of the following ways:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The code inside the <code>try</code> block successfully ended and the program continues.</p>
-</li>
-<li>
-<p>The code inside the <code>try</code> block runs into a <code>return</code> statement and the method is exited.</p>
-</li>
-<li>
-<p>The code in the <code>try</code> block throws an exception and control goes to the matching <code>catch</code> block, which either handles the error and the method execution continues, or it re-throws the exception to the caller of this method.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>If there is a piece of code that must be executed no matter what, put it under the keyword <code>finally</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>try{
-   file.read();
-}catch(Exception e){
-   printStackTrace();
-}finally{
-  // the code that must always be executed
-  // goes here, for example file.close();
-}
-</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The code above has to close the file regardless of success or failure of the read operation. Usually, you can find the code that releases some computer resources in the block <code>finally</code>, for example, disconnection from a network or file closing.</p>
-</div>
-<div class="paragraph">
-<p>If you are not planning to handle exceptions in the current method, they will be propagated to the caller. In this case, you can use the <code>finally</code> even without a <code>catch</code> block:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>void myMethod () throws IOException{
- try{
-   // your code that reads a file goes here
- }
- finally{
-   // your code that closes the file  goes here
- }
-}</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_the-keyword-code-throw-code"><a class="anchor" href="#_the-keyword-code-throw-code"></a>The Keyword <code>throw</code></h3>
-<div class="paragraph">
-<p>If an exception has happened in a method, but you believe that the caller should handle it, just re-throw it to the method’s caller. Sometimes, you might want to catch one exception but re-throw another one with a different description of the error like in the code snippet below.</p>
-</div>
-<div class="paragraph">
-<p>The statement <code>throw</code> is used to throw Java objects. The object that a program throws must be <em>throwable</em>. This means that you can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>, and all Java exceptions are its subclasses.</p>
+<p>I ran our application in the debug mode just to show you that the <code>target</code> property on the <code>ActionEvent</code> correctly recognizes the event target shown in Figure 8-4.</p>
 </div>
 <div id="FIG8-3" class="imageblock">
 <div class="content">
 <img src="./images/fig_8_03.png" alt="fig 8 03">
 </div>
-<div class="title">Figure 3. ???</div>
+<div class="title">Figure 4. Viewing properties of ActionEvent in debugger</div>
 </div>
 <div class="paragraph">
-<p>The next code fragment shows how the method <code>getAllScores()</code> catches an <code>IOException</code> and creates a new <code>Exception</code> object with a more friendly description of the error, and re-throws it to the method <code>main()</code>.  Now the method <code>main()</code> won’t compile unless you put the line that calls <code>getAllScores()</code> in the <code>try/catch</code> block, because this method may throw an <code>Exception</code> and it should be either handled or re-thrown again. The method <code>main()</code> should not throw any exceptions, that’s why it should handle it.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>class ScoreList{
-   // Additional code is needed to compile this class
-
-   static void getAllScores() throws Exception{
-     try{
-      file.read();//this line may throw an exception
-     } catch (IOException e) {
-      throw new  Exception (
-      "Dear Friend, the file Scores has problems");
-     }
-   }
-
-  public static void main(String[] args){
-    System.out.println("Scores");
-
-   try{
-       getAllScores();
-   }
-   catch(Exception e1){
-        System.out.println(e1.getMessage());
-   }
- }
-}</pre>
-</div>
+<p>There is another event property <code>source</code>, which has the same value as <code>target</code> in our application. There are cases when <code>source</code> and <code>target</code> are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration.</p>
 </div>
 <div class="paragraph">
-<p>In case of a file error,  the main method will handle it,  and  the <code>e1.getMessage()</code>   will return the <em>Dear Friend…</em> message.</p>
+<p>When you want to handle button clicks, you don&#8217;t really care in which area inside the button was the mouse pointer when the user clicked on the button. So handing <code>ActionEvent</code> was sufficient. But there is another event called <code>MouseEvent</code>, which gives you more details on the click event.</p>
+</div>
+<div class="paragraph">
+<p>In your signin.fxml you&#8217;re allowed to use <code>onMouseClicked</code> instead of <code>onAction</code> for the button. But if you do so, the <code>Button</code> will be considered a container for a special skin class <code>LabeledText</code> with the text <em>Sign In</em>, and if you click on the words <em>Sign In</em> the source of the event will be <code>Button</code>, and the target would be the class <code>LabeledSkin</code>. I&#8217;ve created an event handler <code>signInMouseClicked</code> and ran it through a debugger. Now the source and target of the event are different.</p>
 </div>
 <div id="FIG8-4" class="imageblock">
 <div class="content">
 <img src="./images/fig_8_04.png" alt="fig 8 04">
 </div>
-<div class="title">Figure 4. ???</div>
+<div class="title">Figure 5. Viewing properties of MouseEvent in debugger</div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_creating-new-exceptions"><a class="anchor" href="#_creating-new-exceptions"></a>Creating New Exceptions</h3>
+<div class="sect3">
+<h4 id="_data-exchange-between-gui-components-and-controller"><a class="anchor" href="#_data-exchange-between-gui-components-and-controller"></a>Data Exchange Between GUI Components And Controller</h4>
 <div class="paragraph">
-<p>Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. Create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes,  throw the this exception:</p>
+<p>No that we know how to link controller&#8217;s event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/Password the user entered and update the GUI from the controller accordingly.</p>
+</div>
+<div class="paragraph">
+<p>To read the values from GUI components we&#8217;ll need to give them unique id&#8217;s in the FXML file. We don&#8217;t need to give id&#8217;s to all component - only to those that have values for handling. Take a look at the <code>&lt;childrens&gt;</code> section of signin.fxml:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>class TooManyBikesException extends Exception{
+<pre class="highlight"><code class="xml language-xml">&lt;children&gt;
+   &lt;Label alignment="CENTER" text="User ID:" /&gt;
+   &lt;Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" /&gt;
+   &lt;Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
+           GridPane.columnSpan="2" GridPane.rowIndex="2"
+           onAction="#signInClicked"/&gt;
+   &lt;TextField GridPane.columnIndex="1" fx:id="id" /&gt;
+   &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/&gt;
+&lt;/children&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Only the <code>TextField</code> and <code>PasswordField</code> have an attribute <code>fx:id</code> - this is how we can assign id&#8217;s in fxml.</p>
+</div>
+<div class="paragraph">
+<p>The next step is to inject them into the variables in the <code>signin.Controller</code> class. The following code fragment shows how to inject component references into the <code>id</code> and <code>pwd</code> fields. This is how I&#8217;ll declared two Java variables in the <code>Controller</code> clas with the names that match those from signin.fxml:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">@FXML private TextField id;
 
-  // Constructor
-  TooManyBikesException (){
-  // Just call the constructor of the superclass
-  // and pass to it the error message to display
-  super("Can't ship this many bikes in one shipment.");
+@FXML private PasswordField pwd;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Java has so called annotations (not covered in this book). They start with <code>@</code> sign and can be placed in front of the variable, class, or a method declaration depending on how  the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation <code>@FXML</code> instructs runtime to inject the references to the specifies GUI objects into the variables.</p>
+</div>
+<div class="paragraph">
+<p>In other words, JavaFX runtime will read the first line as follows: "I need to get the object that I created after loading signin.fxml file, and then inside this object find the component with an the <code>fx:id="id"</code>. Finally, I need to insert the reference to this component into the Java variable <code>id</code>". The same applies to the variable <code>pwd</code>.</p>
+</div>
+<div class="paragraph">
+<p>The rest is easy. Just use the injected values in you event handler. The code of our <code>Controller</code> is shown next. Its method <code>signInClicked</code> checks the value entered in the User ID field in the GUI, and if it&#8217;s not equal to "Yakov", then the code sets the background of the GUI component to pink color.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Controller {
+
+  @FXML private TextField id;            //  <i class="conum" data-value="1"></i><b>(1)</b>
+
+  @FXML private PasswordField pwd;       //  <i class="conum" data-value="1"></i><b>(1)</b>
+
+  public void signInClicked(ActionEvent evt){
+
+    String userID = id.getText();      //   <i class="conum" data-value="2"></i><b>(2)</b>
+    String password = pwd.getText();   //   <i class="conum" data-value="2"></i><b>(2)</b>
+
+    if (!"Yakov".equals(userID)){      //    <i class="conum" data-value="3"></i><b>(3)</b>
+      id.setStyle("-fx-background-color:lightpink;"); <i class="conum" data-value="4"></i><b>(4)</b>
+    } else{
+      id.setStyle("-fx-background-color:white;");    <i class="conum" data-value="5"></i><b>(5)</b>
+    }
+
+    System.out.println("got id:" + userID + ", got password: " + password);
+
+    System.out.println("Hello from signInClicked method in controller");
   }
-}</pre>
+}</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>This class has only a constructor that takes the message describing this error and gives it to its superclass for  storage. When some <code>catch</code> block receives this exception it can find out what exactly has happened by calling the method <code>getMessage()</code>.</p>
-</div>
-<div class="paragraph">
-<p>Imagine that a user selects on the <code>OrderWindow</code> several bicycles of some model and hits the button <em>Place Order</em>. As you know from Chapter 6, this action will result in call to <code>actionPerformed()</code> that will check if the order can be  delivered.  The next code example shows how the method <code>checkOrder()</code> of this window declares that it can throw <code>TooManyBikesException</code>.  If the order won’t fit in the truck, this method throws the exception, the catch block  intercepts it and displays an error message in the text field on the window.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>class OrderWindow implements ActionListener{
-// The code to create window components is needed here.
-
-// The user clicked on the button Place Order
-   String selectedModel = txtFieldModel.getText();
-   String selectedQuantity =
-                          txtFieldQuantity.getText();
-   int quantity = Integer.parseInt(selectedQuantity);
-
-  void actionPerformed(ActionEvent e){
-    try{
-   bikeOrder.checkOrder("FireBird", quantity);
-  //the next line will be skipped in case of exception
-   txtFieldOrderConfirmation.setText(
-                           "Your order is complete");
-   } catch(TooManyBikesException e){
-    txtFieldOrderConfirmation.setText(e.getMessage());
-   }
- }
-
- void checkOrder(String bikeModel, int quantity)
-                         throws TooManyBikesException{
-
-//Write the code that checks if the requested //quantity of bikes of selected model will fit in the //truck. If they won't fit, do  the following:
-
-  throw new TooManyBikesException("Can not ship" +
-   quantity + " bikes of the model " + bikeModel +
-                        " in one shipment" );
- }
-}</pre>
-</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Inject the references to GUI components into member variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Extract the text from the GUI objects</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Has the user not entered Yakov in the User ID field? We use the negation operator ! here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Set the background color to <code>lightpink</code> if the entered user id is not Yakov. You can find major CSS color names at <a href="http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Set the background color to back to <code>white</code> if the entered user id is not Yakov.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>In a perfect world, every program would work properly, but realistically we have to be ready for the unexpected situations. It really helps that Java forces you to write code that is prepared for  these situations.</p>
+<p>If you run the <code>Main</code> program and enter the wrong user id, the window will look as follows:</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_additional-reading"><a class="anchor" href="#_additional-reading"></a>Additional Reading</h3>
 <div id="FIG8-5" class="imageblock">
 <div class="content">
 <img src="./images/fig_8_05.png" alt="fig 8 05">
 </div>
-<div class="title">Figure 5. ???</div>
+<div class="title">Figure 6. After entering the wrong user id</div>
 </div>
-<div class="paragraph">
-<p><a href="http://java.sun.com/docs/books/tutorial/essential/exceptions/">Handling Errors With Exceptions</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_practice"><a class="anchor" href="#_practice"></a>Practice</h3>
+<h3 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>Assigning Event Handlers in Java</h3>
+<div class="paragraph">
+<p>If your program is written completely in Java without any use of FXML, you&#8217;ll be assigning event handlers using so called <a href="http://docs.oracle.com/javafx/2/events/convenience_methods.htm">convenience methods</a> that have names that start with <code>setOn</code> like <code>setOnAction</code>, <code>setOnKeyTyped</code>, <code>setOnEditStart</code> etc. Each of the GUI components has has several of such methods.</p>
+</div>
+<div class="paragraph">
+<p>You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or method references (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you&#8217;ll be writing code to react if some event has happened. For example, if you have a button represented by a variable <code>myButton</code> you can write an event handler for the click event:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Button signInButton = new Button("Sign In");
+signInButton.setOnAction(evt -&gt;
+    System.out.println("The Sign In button was clicked.")
+);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ve got introduced lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but don&#8217;t really uses its values but just prints the message that the button was clicked.</p>
+</div>
+<div class="paragraph">
+<p>What&#8217;s the type of the <code>evt</code> argument? Java compiler will figure it out automatically. Since the method <code>setOnAction</code> expects to get the <code>ActionEvent</code> object from the JVM, compiler guesses that the type of the <code>evt</code> is <code>ActionEvent</code> so you don&#8217;t even need to write it in the program code. You&#8217;ve seen a similar example of of type inference in Chapter 5.</p>
+</div>
+<div class="paragraph">
+<p>To bring all pieces of the puzzle together, I&#8217;ll show you another version of the Sign In application that will look the same, but won&#8217;t use FXML - everything will be programmed in Java. The following class <code>MainPureJava</code> and <code>signin.css</code> is all we need for programming the functionality of our Sign In window. There is not need to use <code>signin.fxml</code> or <code>Controller.java</code> in this case.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package signin;
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+
+public class MainPureJava extends Application {
+
+  public void start(Stage primaryStage) {
+
+    final int TWO_COLUMN_SPAN = 2;               <i class="conum" data-value="1"></i><b>(1)</b>
+
+    Label userIdLbl = new Label("User ID:");     <i class="conum" data-value="2"></i><b>(2)</b>
+    TextField userIdTxt = new TextField();
+    Label userPwdLbl = new Label("Password:");
+    userPwdLbl.getStyleClass().add("bluelabel");
+    PasswordField userPwdTxt = new PasswordField();
+
+    GridPane root = new GridPane();              //  <i class="conum" data-value="3"></i><b>(3)</b>
+    root.setVgap(20);
+    root.setPadding(new Insets(10));
+    root.setAlignment(Pos.CENTER);
+    root.setId("root");
+
+    // Setting constraints for firs 2 rows
+    GridPane.setConstraints(userIdLbl, 0, 0);    //  <i class="conum" data-value="4"></i><b>(4)</b>
+    GridPane.setConstraints(userIdTxt, 1, 0);
+    GridPane.setConstraints(userPwdLbl, 0, 1);
+    GridPane.setConstraints(userPwdTxt, 1, 1);
+
+    root.getChildren().addAll(userIdLbl, userIdTxt,
+    userPwdLbl, userPwdTxt);                      //  <i class="conum" data-value="5"></i><b>(5)</b>
+
+
+    Button signInBtn = new Button ("Sign In");    //  <i class="conum" data-value="6"></i><b>(6)</b>
+    signInBtn.setId("submitBtn");  // used in CSS
+
+    // Event handler with lambda expression
+    signInBtn.setOnAction(evt -&gt; {                 //  <i class="conum" data-value="7"></i><b>(7)</b>
+
+        String userID = userIdTxt.getText();
+        String password = userPwdTxt.getText();
+        if (!"Yakov".equals(userID)){
+            userIdTxt.setStyle("-fx-background-color: lightpink;");
+        } else{
+            userIdTxt.setStyle("-fx-background-color: white;");
+        }
+
+        System.out.println("Got id " + userID +
+                           " and password " + password);
+    });
+
+    // Allow the button to be wider
+    signInBtn.setPrefWidth(Double.MAX_VALUE);
+
+    // Adding a wide button to the third row
+    root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);
+
+    Scene scene = new Scene(root,250,180);
+    scene.getStylesheets()                         <i class="conum" data-value="8"></i><b>(8)</b>
+         .add(getClass()
+         .getResource("signin.css")
+         .toExternalForm());
+
+    primaryStage.setScene(scene);                  <i class="conum" data-value="9"></i><b>(9)</b>
+    primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This programs uses the <code>GridPane</code> layout with three rows and two column. Since the Sign In button will span tho columns, I declared a final variable <code>TWO_COLUMN_SPAN</code> that will be used when the button will be added to the grid.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Then I instantiate labels and text fields.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>After that I create an instance of the <code>GridPane</code> container.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>To add the labels and text fields to the proper cells of the first two rows of the grid, I set the constraints on the <code>GridPane</code> object.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The GUI components for the first two rows are instantiated, constraints are set so I add them as children to the root of the <em>scene graph</em> - the <code>GridPane</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Now I create the instance if the Sign In button and assign the id to it. This was explained in the Styling with CSS section in Chapter 8.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The lambda expression implements the application logic to be invoked as a reaction to the <code>ActionEvent</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The we create a scene object an apply the CSS to it. This is probably the first time you see the method chaining. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Finally, the scene is added to the stage and the curtain goes up.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Some programmers like GUI designer tools where they can drag and drop components. Some prefer writing Java code. I prefer working with FXML, because it greatly simplifies  design of the complex windows. Besides separating the design from the application logic is also a good idea because a person who doesn&#8217;t know programming can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.</p>
+</div>
+<div class="sect3">
+<h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>Further Reading on Event Handling</h4>
+<div class="paragraph">
+<p>I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:<code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (e.g. the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data-binding-and-properties"><a class="anchor" href="#_data-binding-and-properties"></a>Data Binding and Properties</h3>
+<div class="paragraph">
+<p>JavaFX has an interface <code>Property</code> located in the package <code>javafx.beans.property</code>, which defines a very useful functionality allowing to <em>bind</em> the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.</p>
+</div>
+<div class="paragraph">
+<p>Imagine that you&#8217;re developing a multi-player game that has a Java object receiving the moves of other gamers from a central server. When a Java object receives a new move, you need to modify the content of the corresponding GUI component of the game. With JavaFX you can simply bind a property of a Java class that stores player&#8217;s moves (e.g. <code>playersMove</code>) to the property of, say a <code>Label</code> component on the GUI. No more coding required. As soon as the <code>playersMove</code> value changes, the <code>Label</code> will be automatically updated.  JavaFX properties greatly simplify the process of synchronization of the data and the GUI.</p>
+</div>
+<div class="paragraph">
+<p>Existing implementations of the <code>Property</code> interface add  the change notification functionality to regular class attributes. The interface <code>Property</code> declares the following methods: <code>bind</code>, <code>unbind</code>, <code>bindBidirectional</code> , <code>unbindBidirctional</code>, and <code>isBound</code>. You can bind to a JavaFX property only the value of an <code>ObservableValue</code> type, which is explained in the sidebar.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Design Patterns Briefly</div>
+<div class="paragraph">
+<p>Over the years software developers came up with a number of <em>design patterns</em>, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You&#8217;d better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you&#8217;ll be a little better prepared for chatting with programmers.</p>
+</div>
+<div class="paragraph">
+<p><strong>MVC</strong> stands for Mode View Controller. This design patter recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we&#8217;ve almost implemented MVC in one of the versions of the Sign In application. The file <em>signin.fxml</em> was a view, and the class <code>signin.Controller</code> played a role of a controller. Since this example had just two variables (<code>id</code> and <code>pwd</code>) we didn&#8217;t created a special model class for them.</p>
+</div>
+<div class="paragraph">
+<p><strong>Observer</strong> design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you&#8217;ll see in this chapter.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re interested in detailed coverage of design patters, get the book "Head First Design Patterns" published by O&#8217;Reilly Media.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Classes that implement <code>Property</code> interface are located in the package <code>javafx.beans.property</code>. For each property type there are two classes: one that allows only reading property values and the other one for read and writing (changing the values). For example, if you need a <code>String</code> property, use either <code>ReadOnlyStringWrapper</code> or <code>SimpleStringProperty</code>. Similarly named classes exist for other data types and some collections too.</p>
+</div>
+<div class="paragraph">
+<p>As we always do in this book, let&#8217;s learn by coding. I&#8217;ll continue adding features to our Sign In application. This time I&#8217;ll add a <code>Label</code> component with <code>fx:id="errMsg"</code> to the view in FXML file to display sign in error messages if any. In the controller class I&#8217;ll add a corresponding variable <code>errMsg</code> and will inject a reference to the <code>Label</code> into this variable.</p>
+</div>
+<div class="paragraph">
+<p>The next step is to declare a bindable property <code>signinError</code> in the class <code>Controller</code> that will get the value of the error message if any. But since a regular <code>String</code> can&#8217;t be bindable, we&#8217;ll use the data type <code>SimpleStringProperty</code></p>
+</div>
+<div class="paragraph">
+<p>Finally, I&#8217;ll bind the label and the variable to insure that an error message is immediately displayed on the screen as soon as its value changes.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s place an additional <code>Label</code> component at the bottom of the Sign In window. I&#8217;ll add another row to the <code>GridPane</code> and place there a <code>Label</code> that will span two columns. This label will have <code>fx:id="errMsg"</code> and initially won&#8217;t  have any text - it&#8217;ll be invisible. The <code>&lt;children&gt;</code> section of the FXML file will look as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;children&gt;
+      &lt;Label alignment="CENTER" text="User ID:" /&gt;
+      &lt;TextField GridPane.columnIndex="1"  fx:id="id" /&gt;
+      &lt;Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" /&gt;
+      &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/&gt;
+      &lt;Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
+              GridPane.columnSpan="2" GridPane.rowIndex="2"
+              onAction="#signInClicked"/&gt;
+       &lt;Label alignment="CENTER" GridPane.rowIndex="3"
+              GridPane.columnSpan="2" prefWidth="300.0" fx:id="errMsg"/&gt;
+   &lt;/children&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Injecting a reference of the new label into controller and declaring a property to store the error message will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">@FXML private Label errMsg;
+
+SimpleStringProperty signinError =
+                        new SimpleStringProperty();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The next question is when and where do the binding? If I&#8217;d be creating an instance of the <code>Controller</code> with the <code>new</code> operator I could have done it in the class constructor after the GUI component are created. But JavaFX runtime instantiates the <code>Controller</code> for us, so how can we catch the moment when the GUI components are ready?</p>
+</div>
+<div class="paragraph">
+<p>In JavaFX if you&#8217;ll add to the controller the method <code>initialize</code> annotated with @FXML, <code>FXMLLoader</code> will invoke it after the GUI components are constructed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">@FXML public void initialize() {
+
+  errMsg.textProperty().bind(signinError);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>JavaFX properties are observables. So you can read the above the above code as follows: "I want the text property of the label <code>errMsg</code> to be the observer (a.k.a. listener) to the property <code>signinError</code> (observable). So whenever <code>signinError</code> changes, the text property of the label will get the latest value.</p>
+</div>
+<div class="paragraph">
+<p>To complete the binding Sign In example, the event handler for the Sign In button should not only paint the wronn ID in light pink, but also modify the value of the <code>signinError</code> property. The complete code of the class <code>BindableController</code> is shown next.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class BindingController {
+
+  @FXML
+  private TextField id;
+
+  @FXML
+  private PasswordField pwd;
+
+  @FXML private Label errMsg;
+
+  SimpleStringProperty signinError = new SimpleStringProperty();
+
+  @FXML public void initialize() {
+      System.out.println("Controller's ready. Let's bind some components");
+
+      errMsg.textProperty().bind(signinError);
+  }
+
+  public void signInClicked(ActionEvent evt){
+
+      String userID = id.getText();
+      String password = pwd.getText();
+      if (!"Yakov".equals(userID)){
+          id.setStyle("-fx-background-color: lightpink;");
+          signinError.set("Wrong id:" + userID);
+
+      } else{
+          id.setStyle("-fx-background-color: white;");
+          signinError.set("");
+      }
+
+      System.out.println("got id:" + userID + ", got password: " + password);
+
+      System.out.println("Hello from signInClicked method in controller");
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that in the if statement I set the error message when the ID is wrong, and reset the <code>signinError</code> to an empty string when the ID is correct. After I ran the Sign In application the above controller, entered Alex as the user ID and clicked the button Sign In, my window looked like this:</p>
+</div>
 <div id="FIG8-6" class="imageblock">
 <div class="content">
 <img src="./images/fig_8_06.png" alt="fig 8 06">
 </div>
-<div class="title">Figure 6. ???</div>
+<div class="title">Figure 7. Binding in action after entering the wrong user id</div>
 </div>
 <div class="paragraph">
-<p>Create a Swing application for placing bike orders. It has to have the two text fields <em>Bike Model</em> and <em>Quantity</em>, a button <em>Place Order</em>, and the label for order confirmation.</p>
-</div>
-<div class="paragraph">
-<p>Use the code in the examples <code>OrderWindow</code> and <code>TooManyBikesException</code>. Make up several combinations of bike models and quantities that will throw an exception.</p>
+<p>Enter the right user ID, click on Sign In again, and the binding mechanism will remove the error message from the window.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_practice-for-smarty-pants"><a class="anchor" href="#_practice-for-smarty-pants"></a>Practice for Smarty Pants</h3>
-<div id="FIG8-7" class="imageblock">
+<h3 id="_deploying-with-javafx-packager"><a class="anchor" href="#_deploying-with-javafx-packager"></a>Deploying With JavaFX Packager</h3>
+<div class="paragraph">
+<p><a href="http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm">http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Application</code> class has a method <code>getParameters</code>, which is a JavaFX way of getting command line arguments that might be passed to your application during its launch .</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;m sure many of you want to know if it&#8217;s possible to use JavaFX for writing applications for smart phones. Oracle doesn&#8217;t offer the JavaFX libraries for mobile platforms, but it&#8217;s still possible.</p>
+</div>
+<div class="paragraph">
+<p>To develop JavaFX applications for iOS, you&#8217;d need to install and learn on your own some additional software, namely RoboVM[<a href="http://www.robovm.com/">http://www.robovm.com/</a>] is an SDK for converting Java bytecode into a native device code as if it was written in C programming language, which makes it deployable on iOS devices.</p>
+</div>
+<div class="paragraph">
+<p>There is also a community site JavaFX Ports[ <a href="http://javafxports.org/page/home">http://javafxports.org/page/home</a>] where people are working on deployment of JavaFX applications on iOS and Android devices.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_application-thread-in-javafx"><a class="anchor" href="#_application-thread-in-javafx"></a>Application Thread in JavaFX</h3>
+<div class="paragraph">
+<p>In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have separate between different threads the the code that updates the GUI from the code that performs application logic. Now I&#8217;ll explain you why.</p>
+</div>
+<div class="paragraph">
+<p>Imagine a program with a GUI that&#8217;s constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction.</p>
+</div>
+<div class="paragraph">
+<p>Updates of the GUI in JavaFX are done in so called  <em>application thread</em>. The idea is to separate intensive calculations from the GUI updates. Say, the user pressed the button Play on JavaFX video portal application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn&#8217;t be able to use any screen components.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;d better see it to believe it, right? I can easily demonstrate you a "frozen GUI" effect by making a small change in the class <code>signin.Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep as if there is some application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<img src="./images/fig_8_07.png" alt="fig 8 07">
+<pre class="highlight"><code class="java language-java">Thread.sleep(10000);</code></pre>
 </div>
-<div class="title">Figure 7. ???</div>
-</div>
-<div class="paragraph">
-<p>Modify the application from the previous assignment to replace the text field <code>Bike Model</code> with a dropdown list box that will contain several models, so the user can select from the list rather then type them.</p>
 </div>
 <div class="paragraph">
-<p>You’ll have to read online about the Swing component <code>JComboBox</code> and the <code>ItemListener</code> to process events when the user picks the  bike model.</p>
+<p>The method <code>sleep</code> takes one argument - the sleeping time in milliseconds. There is 100 milliseconds in one second, so the above code snippet will place the current thread to sleep for 10 second.</p>
+</div>
+<div class="paragraph">
+<p>Remember, the controller class has a handler for the button click? I&#8217;ll</p>
+</div>
+<div class="paragraph">
+<p>Hence the long running processes shouldn&#8217;t be running on the application thread, but have a dedicated one. The application thread should be mainly updating the GUI, and not running long processes. All requests for the scene updates have to be placed into a special event queue in the application thread.</p>
+</div>
+<div class="paragraph">
+<p>The method <code>runLater</code> defined in the class <code>Platform</code> places the <code>Runnable</code> object into an event queue.</p>
+</div>
+<div class="paragraph">
+<p>In the chapter on Ping-Pong game I&#8217;ll show you how your program can creates multiple threads too. One thread will be responsible for displaying the table, while the other one  will calculate coordinates of the ball and paddles and will send commands to the first thread to repaint the window.</p>
+</div>
+<div class="paragraph">
+<p>To be continued&#8230;</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_what-to-study-next-about-javafx"><a class="anchor" href="#_what-to-study-next-about-javafx"></a>What to Study Next About JavaFX</h3>
+<div class="paragraph">
+<p>In Chapters 8 and 9 I gave you a very brief introduction to JavaFX. You&#8217;ll be writing  more of JavaFX code while working on the Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
+</div>
+<div class="paragraph">
+<p>Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress.</p>
 </div>
 </div>
 <div class="sect2">
@@ -973,7 +1088,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-22 22:04:48 EDT
+Last updated 2014-10-22 21:38:06 EDT
 </div>
 </div>
 </body>

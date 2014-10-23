@@ -500,7 +500,7 @@ p { margin-bottom: 1.25rem; }
 </ul>
 </li>
 <li><a href="#_introduction-to-generics">Introduction to Generics</a></li>
-<li><a href="#_the-first-look-at-multi-threading">The First Look at Multi-Threading</a></li>
+<li><a href="#_light-introduction-to-multi-threading">Light Introduction to Multi-Threading</a></li>
 <li>
 <ul class="sectlevel3">
 <li><a href="#_how-to-create-a-thread">How to Create a Thread</a></li>
@@ -958,9 +958,6 @@ implements Map&lt;K,V&gt;, Cloneable, Serializable</code></pre>
 <div class="content">
 <pre class="highlight"><code class="java language-java">import java.util.Hashtable;
 
-/**
- * Created by NewProgrammer on 3/28/15.
- */
 public class HashTableBrokenDemo {
     public static void main(String[] args) {
 
@@ -1055,18 +1052,18 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the-first-look-at-multi-threading"><a class="anchor" href="#_the-first-look-at-multi-threading"></a>The First Look at Multi-Threading</h3>
+<h3 id="_light-introduction-to-multi-threading"><a class="anchor" href="#_light-introduction-to-multi-threading"></a>Light Introduction to Multi-Threading</h3>
 <div class="paragraph">
-<p>So far, all our programs perform actions in a sequence – one after another. In such case if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one <em>thread of execution</em>, where the code works sequentially.</p>
+<p>So far, all our programs perform actions in a sequence – one after another. So if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one <em>thread of execution</em>, where the code works sequentially.</p>
 </div>
 <div class="paragraph">
 <p>In a real life though, we can do several things in parallel like eat, talk on the phone, watch TV, and do the homework. To do all these actions in parallel we use several "processors": hands, eyes, and mouth.</p>
 </div>
 <div class="paragraph">
-<p>Today, only your grandma&#8217;s computer might have a single processor (a.k.a. Central Processing Unit or CPU). But most likely your computer has at least two CPU&#8217;s and a GPU (Graphics Processing Unit) for processing graphics if any. A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on.</p>
+<p>Today, only your grandma&#8217;s computer has a single processor (a.k.a. Central Processing Unit or CPU). A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on. Most likely your computer has at least two CPU&#8217;s and a GPU (Graphics Processing Unit) for processing graphics if any.</p>
 </div>
 <div class="paragraph">
-<p>But even a single processor can perform several actions at once if a program uses <em>multiple threads</em>. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time.</p>
+<p>But even a single processor can perform several actions at once if a program uses <em>multiple threads</em>. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. For example, the program asks the user a question and waits for the response. Meantime the CPU can be used for performing some other application logic instead of idling.</p>
 </div>
 <div class="paragraph">
 <p>A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel.</p>
@@ -1077,7 +1074,7 @@ public class HashTableBrokenDemo {
 <p>All Java applications that we&#8217;ve created so far (even Hello World) were running in so called <em>main thread</em>. We didn&#8217;t need to do any special programming to create a main thread - Java runtime always create one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.</p>
 </div>
 <div class="paragraph">
-<p>There are different ways of creating threads. I won&#8217;t be explaining details of each method because it&#8217;s a pretty advanced topic and is not a good fit for this book. But I&#8217;ll just list some of the ways of creating threads and will illustrate it with just one simple example. These are the main method of creating Java threads:</p>
+<p>There are different ways of creating threads. I won&#8217;t be explaining details of each method because it&#8217;s a pretty advanced topic and is not a good fit for this book. But I&#8217;ll just list some of the ways of creating threads and will illustrate it with one simple example. These are the main methods of writing code to be executed in a separate thread:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1085,7 +1082,7 @@ public class HashTableBrokenDemo {
 <p>You can inherit your class from the Java class <code>Thread</code> and override its method <code>run</code>, which should contain the code to be executed in parallel.</p>
 </li>
 <li>
-<p>You can add <code>implements Runnable</code> to the declaration of and class and implement the method <code>run</code>, which, again, should contain the code to be executed in parralel.</p>
+<p>You can add <code>implements Runnable</code> to the declaration of a class and implement the method <code>run</code>, which, again, should contain the code to be executed in parralel.</p>
 </li>
 <li>
 <p>Instead of inheriting your class from the class <code>Thread</code> you can create the new instance of the <code>Thread</code> object</p>
@@ -1189,7 +1186,7 @@ The value of i in power of 4 is 1024
 </table>
 </div>
 <div class="paragraph">
-<p>If you run the program <code>MultiThreadedDemo</code> several times, it&#8217;ll print the output differently depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look:</p>
+<p>If you run the program <code>MultiThreadedDemo</code> several times, it may print the output differently each time depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1206,13 +1203,13 @@ The value of i in power of 4 is 1024</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that the first two lines print the output from the second loop! This means that after calling the method <code>start</code> on the thread <code>myThread</code> the program didn&#8217;t wait for the completion of the first loop, which ran in parallel thread. Then the first loop had something to print. Then the second, e.t.c. The entire console output is a mix of two parallel number-crunching threads.</p>
+<p>Note that the first two lines print the output from the second loop! This means that after calling the method <code>start</code> on the thread <code>myThread</code> the program didn&#8217;t wait for the completion of the first loop, which ran in parallel thread. Then the first loop had something to print. Then the second, etc. The entire console output is a mix of two parallel number-crunching threads.</p>
 </div>
 <div class="paragraph">
 <p>You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.</p>
 </div>
 <div class="paragraph">
-<p>For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I&#8217;ll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.</p>
+<p>For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 9 I&#8217;ll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.</p>
 </div>
 </div>
 </div>
@@ -1292,7 +1289,7 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-22 18:57:35 EDT
+Last updated 2014-10-23 10:07:20 EDT
 </div>
 </div>
 </body>

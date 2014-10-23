@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 8. Programming User Interaction in JavaFX</title>
+<title>Chapter 8. Introduction to GUI with JavaFX</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,334 +487,436 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-8-programming-user-interaction-in-javafx"><a class="anchor" href="#_chapter-8-programming-user-interaction-in-javafx"></a>Chapter 8. Programming User Interaction in JavaFX</h2>
+<h2 id="_chapter-8-introduction-to-gui-with-javafx"><a class="anchor" href="#_chapter-8-introduction-to-gui-with-javafx"></a>Chapter 8. Introduction to GUI with JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator window windows from Chapter 7 looks good, but none of them would react on user&#8217;s actions. No matter how hard you click on the Sign In or calculator&#8217;s buttons, nothing will happen because we didn&#8217;t teach these application how to react on user-generated events (e.g. button clicks).</p>
+<p>After creating lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking Graphic User Interface (GUI). We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and other GUI components.</p>
 </div>
 <div class="paragraph">
-<p>Events are notifications that something important for the application has happened. In this chapter I&#8217;ll explain you how to write code to handle some of such events.</p>
+<p>Java has an older library of GUI components called <a href="http://docs.oracle.com/javase/tutorial/uiswing/">Swing</a>, and the new one called <a href="http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm">JavaFX</a>. We&#8217;ll use only JavaFX in this book. JavaFX is also a library that&#8217;s included with JDK, and you can write your GUI programs using familiar Java language. On the other hand, JavaFX allows to create and arrange GUI components in a special FXML format, while writing application logic in Java.</p>
 </div>
 <div class="paragraph">
-<p>When IDEA creates a new JavaFX project it generates an empty class <code>Controller</code>, which is a right place for the code that communicates with GUI components. In this chapter we&#8217;ll establish a link between GUI and the controller. We&#8217;ll also add event handlers and will right code to modify the GUI. I&#8217;ll continue working with FXML samples created in the previous chapter, but this time the GUI events will be handled by the code from the controller class.</p>
+<p>In this chapter I&#8217;ll explain you the basics of GUI programming with JavaFX. You&#8217;ll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you&#8217;ll learn how to write code that reacts on user&#8217;s actions (a.k.a. events) like a click on the button or a mouse move.</p>
 </div>
 <div class="paragraph">
-<p>You&#8217;ll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes.</p>
+<p>By the end of this chapter you should be ready to work on the following assignment: "Create the GUI for a calculator that will look similar to this one":</p>
+</div>
+<div id="FIG7-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_01.png" alt="fig 7 01">
+</div>
+<div class="title">Figure 1. The Calculator</div>
 </div>
 <div class="sect2">
-<h3 id="_events"><a class="anchor" href="#_events"></a>Events</h3>
+<h3 id="_introduction-to-javafx"><a class="anchor" href="#_introduction-to-javafx"></a>Introduction to JavaFX</h3>
 <div class="paragraph">
-<p>JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You need to know what events are important to your program and, as the programmers say, "listen to events". You&#8217;ll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you&#8217;ll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is recommended for code that has to process multiple events.</p>
+<p>With JavaFX you can create Graphic User Interface in two ways:</p>
 </div>
-<div id="FIG8-1-0" class="imageblock">
+<div class="ulist">
+<ul>
+<li>
+<p>By writing the code in Java as you did in previous chapters.</p>
+</li>
+<li>
+<p>With the help of the visual layout tool called Scene Builder, where you&#8217;ll be dragging and dropping components on the window and saving the design in the FXML format in a file with extension <em>.fxml</em>. Then the Java program will load this <em>.fxml</em> file and display your creation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll show you both ways, but let&#8217;s start with some basics of development with JavaFX. Let&#8217;s set the stage - JavaFX uses theater terminology.</p>
+</div>
+<div class="paragraph">
+<p>IntelliJ IDEA will helps you to get stated quickly. Just  create a new project (the menu File | New Project), select JavaFX application as the project type and give it a name. In a second a new project will be created with two Java classes <code>Main</code> and <code>Controller</code> and a file named <em>sample.fxml</em> as shown below.</p>
+</div>
+<div id="FIG7-2" class="imageblock">
 <div class="content">
-<img src="./images/fig_8-01-1.png" alt="fig 8 01 1">
+<img src="./images/fig_7_02.png" alt="fig 7 02">
 </div>
-<div class="title">Figure 1. Event listeners</div>
-</div>
-<div class="paragraph">
-<p>You can either create with <code>new</code> or <em>inject</em> an instance of your controller class into Java code. I&#8217;ll explain you what injection means in a bit.</p>
-</div>
-<div class="sect3">
-<h4 id="_assigning-event-handlers-in-fxml"><a class="anchor" href="#_assigning-event-handlers-in-fxml"></a>Assigning Event Handlers in FXML</h4>
-<div class="paragraph">
-<p>Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We&#8217;ll stick to our principles of separating GUI and application logic, and will keep the GUI in .fxml file, but processing in Java.</p>
+<div class="title">Figure 2. The newly generated IDEA project</div>
 </div>
 <div class="paragraph">
-<p>In Scene Builder you may have noticed the <em>Controller</em> bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic.</p>
+<p>The <code>Main</code> class of a JavaFX application extends <code>Application</code> and is an entry point of your application. JavaFX classes are located in the packages whose names start with <code>javafx</code> (e.g. <code>javafx.stage</code> and <code>javafx.scene</code>).The <code>main</code> method invokes the method <code>launch</code> from <code>Application</code>, which creates stage by calling its method <code>start</code>, which was was declared as <code>abstract</code>. Hence, we must override <code>start</code> in our <code>Main</code> class. When the method <code>start</code> is invoked, it&#8217;ll receive a reference to the <code>Stage</code> object - this is where your GUI  components will live and perform.</p>
 </div>
 <div class="paragraph">
-<p>At the bottom right corner of Scene Builder you may notice a tab titled Code. This is where you can assign event handler methods to selected GUI component after assigning the controller class. So you could select have selected, say a button in the central canvas and assign its click handler right in the <em>Code</em> section for this button.</p>
+<p>Pretend that you&#8217;re a play director and need to set up one or more <em>scenes</em> (views) on stage. But if in a real scene you&#8217;d expect to see some chairs, tables and other pieces of furniture, each JavaFX scene consists of GUI nodes (containers and components). In JavaFX you&#8217;ll create components, add them the a scene and then add a scene to the stage. When the stage is ready, open the curtain by calling the method <code>show</code>.</p>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_hooking-up-a-controller-to-gui"><a class="anchor" href="#_hooking-up-a-controller-to-gui"></a>Hooking up a Controller to GUI</h3>
 <div class="paragraph">
-<p>Since we&#8217;re separating the GUI code form the application logic, we need a way to specify that a particular FXML file should use a particular controller. In Chapter 7 I didn&#8217;t bring your attention to where it&#8217;s done in FXML, but if you&#8217;ll look at any of the FXML files, you&#8217;ll see that the name of the controller was specified there when IDEA generated the project for us.</p>
+<p>Now you have a choice: create these nodes using Java classes or load the pre-created design from the <code>.fxml</code> file as it was done in the code generated by IDEA.</p>
 </div>
-<div class="sect3">
-<h4 id="_adding-controller-to-sign-in-application"><a class="anchor" href="#_adding-controller-to-sign-in-application"></a>Adding Controller to Sign In application</h4>
 <div class="paragraph">
-<p>To illustrate the use of controllers, I&#8217;ll continue working on the sample Sign In project from Chapter 7. It has a file signin.fxml that includes the following <code>GridPane</code> tag:</p>
+<p>The method <code>start</code> loads the file <em>sample.fxml</em>, sets the title of the stage and creates a <code>Scene</code> 300 by 275 pixels.The content of the generated <em>sample.fxml</em> looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="xml language-xml">&lt;GridPane hgap="10" vgap="10"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller"&gt;</code></pre>
+<pre class="highlight"><code class="xml language-xml">&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.layout.GridPane?&gt;
+
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+&lt;GridPane fx:controller="sample.Controller"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"&gt;
+&lt;/GridPane&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>hgap</code> and <code>vgap</code> attributes specify the padding between the grid grid columns and rows. The <code>xmlns</code> attributes specify so called namespaces required for proper parsing of FXML files. And the attribute <code>fx:controller</code> specifies the full name of the class <code>Controller</code>, which in our project is located in the package <code>signin</code>.</p>
+<p>FXML is a markup language based on XML (a popular data presentation format). The idea is to separate the creation of the GUI in a declarative language (FXML) from the application logic (Java). If we didn&#8217;t use IDEA, the FXML would be generated by the Scene Builder itself. In FXML the GUI is represented by tags in angle brackets, e.g. <code>&lt;GridPane&gt;</code>. Each tag has a matching closing tag that starts with a forward slash, e.g. <code>&lt;/GridPane&gt;</code> and may have attributes (e.g. <code>alignment="center"</code>). The <code>&lt;GridPane&gt;</code> tag corresponds to the Java class <code>GrindPane</code>, which is one of the JavaFX layouts - I&#8217;ll explain them shortly. Every FXML tag has a corresponding Java class.</p>
 </div>
 <div class="paragraph">
-<p>When the file signin.fxml is loaded, JavaFX runtime creates an instance of the class <code>signin.Controller</code> and injects it in the instance of the GUI class generated from FXML. The word injection describes the situation when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to create an instance of the <code>signin.Controller</code> manually by using the <code>new</code> operator.</p>
+<p>The generated Java class <code>Controller</code> has just the pair of curly braces at this point, but in the next chapter we&#8217;ll be writing the application logic there. Later on you&#8217;ll connect the generated FXML views with the Java code of the <code>Controller</code>. Run the <code>Main</code> program and it&#8217;ll show an empty window shown next:</p>
 </div>
-<div class="paragraph">
-<p>The first version of our controller class is shown next:</p>
-</div>
-<div class="listingblock">
+<div id="FIG7-3" class="imageblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">package signin;
-
-import javafx.event.ActionEvent;
-
-public class Controller {
-
-  public void signInClicked(ActionEvent evt){
-
-    System.out.println("Hello from signInClicked method in controller");
-  }
-}</code></pre>
+<img src="./images/fig_7_03.png" alt="fig 7 03">
 </div>
-</div>
-<div class="paragraph">
-<p>The class <code>Controller</code> uses the class <code>ActionEvent</code> from package <code>javafx.event</code>, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an <code>ActionEvent</code> in the package <code>java.awt.event</code>, which we don&#8217;t want in this case.</p>
-</div>
-<div class="paragraph">
-<p>We want the method <code>signInClicked</code> to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the <code>onAction</code> event in the Button element in signin.fxml as shown on Figure 8-2.</p>
-</div>
-<div id="FIG8-1" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_01.png" alt="fig 8 01">
-</div>
-<div class="title">Figure 2. Mapping onAction event to signInClicked method</div>
-</div>
-<div class="paragraph">
-<p>If you run the <code>Main</code> program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-3.</p>
-</div>
-<div id="FIG8-2" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_02.png" alt="fig 8 02">
-</div>
-<div class="title">Figure 3. After clicking 3 times on Sign In button</div>
-</div>
-<div class="paragraph">
-<p>So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the <code>ActionEvent</code> object as an argument. Its property <code>target</code> identifies, well the target of the event, which is a Sign In button in our case.</p>
-</div>
-<div class="paragraph">
-<p>I ran our application in the debug mode just to show you that the <code>target</code> property on the <code>ActionEvent</code> correctly recognizes the event target shown in Figure 8-4.</p>
-</div>
-<div id="FIG8-3" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_03.png" alt="fig 8 03">
-</div>
-<div class="title">Figure 4. Viewing properties of ActionEvent in debugger</div>
-</div>
-<div class="paragraph">
-<p>There is another event property <code>source</code>, which has the same value as <code>target</code> in our application. There are cases when <code>source</code> and <code>target</code> are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration.</p>
-</div>
-<div class="paragraph">
-<p>When you want to handle button clicks, you don&#8217;t really care in which area inside the button was the mouse pointer when the user clicked on the button. So handing <code>ActionEvent</code> was sufficient. But there is another event called <code>MouseEvent</code>, which gives you more details on the click event.</p>
-</div>
-<div class="paragraph">
-<p>In your signin.fxml you&#8217;re allowed to use <code>onMouseClicked</code> instead of <code>onAction</code> for the button. But if you do so, the <code>Button</code> will be considered a container for a special skin class <code>LabeledText</code> with the text <em>Sign In</em>, and if you click on the words <em>Sign In</em> the source of the event will be <code>Button</code>, and the target would be the class <code>LabeledSkin</code>. I&#8217;ve created an event handler <code>signInMouseClicked</code> and ran it through a debugger. Now the source and target of the event are different.</p>
-</div>
-<div id="FIG8-4" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_04.png" alt="fig 8 04">
-</div>
-<div class="title">Figure 5. Viewing properties of MouseEvent in debugger</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_data-exchange-between-gui-components-and-controller"><a class="anchor" href="#_data-exchange-between-gui-components-and-controller"></a>Data Exchange Between GUI Components And Controller</h4>
-<div class="paragraph">
-<p>No that we know how to link controller&#8217;s event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/Password the user entered and update the GUI from the controller accordingly.</p>
-</div>
-<div class="paragraph">
-<p>To read the values from GUI components we&#8217;ll need to give them unique id&#8217;s in the FXML file. We don&#8217;t need to give id&#8217;s to all component - only to those that have values for handling. Take a look at the <code>&lt;childrens&gt;</code> section of signin.fxml:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="xml language-xml">&lt;children&gt;
-   &lt;Label alignment="CENTER" text="User ID:" /&gt;
-   &lt;Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" /&gt;
-   &lt;Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
-           GridPane.columnSpan="2" GridPane.rowIndex="2"
-           onAction="#signInClicked"/&gt;
-   &lt;TextField GridPane.columnIndex="1" fx:id="id" /&gt;
-   &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/&gt;
-&lt;/children&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Only the <code>TextField</code> and <code>PasswordField</code> have an attribute <code>fx:id</code> - this is how we can assign id&#8217;s in fxml.</p>
-</div>
-<div class="paragraph">
-<p>The next step is to inject them into the variables in the <code>signin.Controller</code> class. The following code fragment shows how to inject component references into the <code>id</code> and <code>pwd</code> fields. This is how I&#8217;ll declared two Java variables in the <code>Controller</code> clas with the names that match those from signin.fxml:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">@FXML private TextField id;
-
-@FXML private PasswordField pwd;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Java has so called annotations (not covered in this book). They start with <code>@</code> sign and can be placed in front of the variable, class, or a method declaration depending on how  the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation <code>@FXML</code> instructs runtime to inject the references to the specifies GUI objects into the variables.</p>
-</div>
-<div class="paragraph">
-<p>In other words, JavaFX runtime will read the first line as follows: "I need to get the object that I created after loading signin.fxml file, and then inside this object find the component with an the <code>fx:id="id"</code>. Finally, I need to insert the reference to this component into the Java variable <code>id</code>". The same applies to the variable <code>pwd</code>.</p>
-</div>
-<div class="paragraph">
-<p>The rest is easy. Just use the injected values in you event handler. The code of our <code>Controller</code> is shown next. Its method <code>signInClicked</code> checks the value entered in the User ID field in the GUI, and if it&#8217;s not equal to "Yakov", then the code sets the background of the GUI component to pink color.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public class Controller {
-
-  @FXML private TextField id;            //  <i class="conum" data-value="1"></i><b>(1)</b>
-
-  @FXML private PasswordField pwd;       //  <i class="conum" data-value="1"></i><b>(1)</b>
-
-  public void signInClicked(ActionEvent evt){
-
-    String userID = id.getText();      //   <i class="conum" data-value="2"></i><b>(2)</b>
-    String password = pwd.getText();   //   <i class="conum" data-value="2"></i><b>(2)</b>
-
-    if (!"Yakov".equals(userID)){      //    <i class="conum" data-value="3"></i><b>(3)</b>
-      id.setStyle("-fx-background-color:lightpink;"); <i class="conum" data-value="4"></i><b>(4)</b>
-    } else{
-      id.setStyle("-fx-background-color:white;");    <i class="conum" data-value="5"></i><b>(5)</b>
-    }
-
-    System.out.println("got id:" + userID + ", got password: " + password);
-
-    System.out.println("Hello from signInClicked method in controller");
-  }
-}</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Inject the references to GUI components into member variables.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Extract the text from the GUI objects</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Has the user not entered Yakov in the User ID field? We use the negation operator ! here.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Set the background color to <code>lightpink</code> if the entered user id is not Yakov. You can find major CSS color names at <a href="http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html">http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html</a></td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Set the background color to back to <code>white</code> if the entered user id is not Yakov.</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>If you run the <code>Main</code> program and enter the wrong user id, the window will look as follows:</p>
-</div>
-<div id="FIG8-5" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_05.png" alt="fig 8 05">
-</div>
-<div class="title">Figure 6. After entering the wrong user id</div>
-</div>
+<div class="title">Figure 3. Running the generated application</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>Assigning Event Handlers in Java</h3>
+<h3 id="_brief-overview-of-javafx-layouts"><a class="anchor" href="#_brief-overview-of-javafx-layouts"></a>Brief Overview of JavaFX Layouts</h3>
 <div class="paragraph">
-<p>If your program is written completely in Java without any use of FXML, you&#8217;ll be assigning event handlers using so called <a href="http://docs.oracle.com/javafx/2/events/convenience_methods.htm">convenience methods</a> that have names that start with <code>setOn</code> like <code>setOnAction</code>, <code>setOnKeyTyped</code>, <code>setOnEditStart</code> etc. Each of the GUI components has has several of such methods.</p>
+<p>Users of your application can have computer monitors of different screen sizes and resolutions. JavaFX comes with <em>layouts</em> that help with arranging GUI controls on the scene and keeping the arrangement for different stage sizes (think window sizes). There are following layout container Java classes (and similarly named FXML tags):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HBox</p>
+</li>
+<li>
+<p>VBox</p>
+</li>
+<li>
+<p>FlowPane</p>
+</li>
+<li>
+<p>GridPane</p>
+</li>
+<li>
+<p>BorderPane</p>
+</li>
+<li>
+<p>StackPane</p>
+</li>
+<li>
+<p>TilePane</p>
+</li>
+<li>
+<p>AnchorPane</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or method references (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you&#8217;ll be writing code to react if some event has happened. For example, if you have a button represented by a variable <code>myButton</code> you can write an event handler for the click event:</p>
+<p>The <code>HBox</code> class (the horizontal box) places controls in a row next to each other. The vertical box <code>VBox</code> places controls vertically. The <code>FlowPane</code> places the nodes in a row and then wraps to the next row if there is no room left  in the current one.</p>
+</div>
+<div class="paragraph">
+<p>The <code>GridPane</code> allows to arrange UI controls in rows and columns and assign constraints (properties) to each cell.</p>
+</div>
+<div class="paragraph">
+<p>The <code>BorderPane</code> splits the scene into five regions, which are called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>TilePane</code> layout is similar to the FlowPane, but it places each node in a cell of the same size (like tiles on the wall). Say, you need to display several images in a tile layout. Adding the <code>ImageView</code> nodes to the <code>TilePane</code> will shows them as tiles next to each other.</p>
+</div>
+<div class="paragraph">
+<p>The <code>StackPane</code> layout works as a deck of playing cards - only one child node will be shown at a time covering the other nodes.</p>
+</div>
+<div class="paragraph">
+<p>The <code>AnchorPane</code> lets you to anchor nodes at left, top, right, and bottom of the scene. Imagine a music player application with the buttons Rewind on the left and the Fast Forward on the right. For example, the <code>AncorPane</code> allows to force the Rewind button to always remain at 20 pixels from the left border of the window and 10 pixels from the bottom even when the window resizes. For that you can use the <code>leftAnchor</code> and <code>bottomAnchor</code> properties. For example,</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">Button signInButton = new Button("Sign In");
-signInButton.setOnAction(evt -&gt;
-    System.out.println("The Sign In button was clicked.")
-);</code></pre>
+<pre class="highlight"><code class="java language-java">AnchorPane.setLeftAnchor(rewindBtn, 20);
+AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You&#8217;ve got introduced lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but don&#8217;t really uses its values but just prints the message that the button was clicked.</p>
+<p>If you&#8217;d be writing the code manually in Java, you&#8217;d be going through the following steps with any layout:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create instances of child nodes to be used within the layout container.</p>
+</li>
+<li>
+<p>Create an instance of the selected layout class (e.g. <code>HBox</code>). This instance will serve as a container and a layout manager for all child nodes that you&#8217;ll add to it.</p>
+</li>
+<li>
+<p>Add the child nodes to the container using either the method <code>add()</code> or <code>addAll()</code>.</p>
+</li>
+<li>
+<p>If this layout instance needs to be used inside another layout (e.g. an <code>HBox</code> can be placed inside the <code>BorderPane</code>) add the instance created in Step 1 to the parent container by using the method <code>add()</code>.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>What&#8217;s the type of the <code>evt</code> argument? Java compiler will figure it out automatically. Since the method <code>setOnAction</code> expects to get the <code>ActionEvent</code> object from the JVM, compiler guesses that the type of the <code>evt</code> is <code>ActionEvent</code> so you don&#8217;t even need to write it in the program code. You&#8217;ve seen a similar example of of type inference in Chapter 5.</p>
+<p>In this chapter we&#8217;ll use only some of the JavaFX layouts, but for detailed coverage of layouts visit Oracle tutorial at <a href="http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm">http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm</a>.</p>
 </div>
 <div class="paragraph">
-<p>To bring all pieces of the puzzle together, I&#8217;ll show you another version of the Sign In application that will look the same, but won&#8217;t use FXML - everything will be programmed in Java. The following class <code>MainPureJava</code> and <code>signin.css</code> is all we need for programming the functionality of our Sign In window. There is not need to use <code>signin.fxml</code> or <code>Controller.java</code> in this case.</p>
+<p>It&#8217;s easier to create layouts and components using a visual tool, and this is what we&#8217;ll do next.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting-started-with-scene-builder"><a class="anchor" href="#_getting-started-with-scene-builder"></a>Getting Started With Scene Builder</h3>
+<div class="paragraph">
+<p>Scene Builder 2.0 is a visual layout tool for JavaFX applications by Oracle. Download it from <a href="http://goo.gl/9jOse6">http://goo.gl/9jOse6</a>. Follow the <a href="http://goo.gl/rCt8x1">installation instructions</a> for your operational system and install Scene Builder on your computer. In this section I&#8217;ll show you how to quickly get started with Scene Builder, but you should also watch this helpful <a href="https://www.youtube.com/watch?v=rHcnsEoSK_c">Youtube video</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can start the Scene Builder either independently or from IDEA. For example, if you right-click on the <em>sample.fxml</em> file in your newly generated IDEA project it&#8217;ll show you a popup menu, which includes the item Open in SceneBuilder. Select this item. The very first time IDEA will ask you to confirm  the location of Scene Builder application on your computer. Then it&#8217;ll open <em>sample.fxml</em> in Scene Builder. This is how it looks on my computer:</p>
+</div>
+<div id="FIG7-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_04.png" alt="fig 7 04">
+</div>
+<div class="title">Figure 4. Scene Builder with opened sample.fxml</div>
+</div>
+<div class="paragraph">
+<p>On the left panel you can select containers, controls, menus, shapes and drag and drop them onto the central canvas area. Note the GridPanel layout shown at the bottom left - the arrangement of GUI components inside of this scene will be controlled by <code>GridLayout</code>. Let me select the Button from the Controls section on the left and drop it on the canvas in the middle. The Screen Builder&#8217;s window will look like this:</p>
+</div>
+<div id="FIG7-5" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_05.png" alt="fig 7 05">
+</div>
+<div class="title">Figure 5. Adding a button to the scene</div>
+</div>
+<div class="paragraph">
+<p>The right panel allows you to change the properties of this button. These little boxes with the digit one represent so called row and column constraints - we&#8217;ll discuss them shortly.</p>
+</div>
+<div class="paragraph">
+<p>The Scene Builder&#8217;s menu Preview | Show Preview in Window will show how your GUI will look during the runtime. So far our one-button screen is not too fancy, and this is how it&#8217;s preview looks like:</p>
+</div>
+<div id="FIG7-6" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_06.png" alt="fig 7 06">
+</div>
+<div class="title">Figure 6. Scene Builder: previewing in window</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s save the changes in <em>sample.fxml</em> (menu File | Save) and open this file in the IDEA text editor. When IDEA generated <em>sample.fxml</em> there were no content between <code>&lt;GridPanel&gt;</code> and `&lt;/GridPanel&gt;`in the generated <em>sample.fxml</em>, but now there is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">package signin;
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.*;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.layout.GridPane?&gt;
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
 
-public class MainPureJava extends Application {
+&lt;GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sample.Controller"&gt;
+   &lt;columnConstraints&gt;
+      &lt;ColumnConstraints /&gt;
+      &lt;ColumnConstraints /&gt;
+   &lt;/columnConstraints&gt;
+   &lt;rowConstraints&gt;
+      &lt;RowConstraints /&gt;
+      &lt;RowConstraints /&gt;
+   &lt;/rowConstraints&gt;
+   &lt;children&gt;
+      &lt;Button mnemonicParsing="false" text="Button"
+         GridPane.columnIndex="1" GridPane.rowIndex="1" /&gt;
+   &lt;/children&gt;
+&lt;/GridPane&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll go through the details of the <code>GridPane</code> layout in the next section, but please note that Scene Builder created some tags to specify the constraints for the rows and columns of the grid. The <code>Button</code> component is placed inside the grid in the cell located in the intersection of the column 1 and row 1.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gridpane-layout"><a class="anchor" href="#_gridpane-layout"></a>GridPane Layout</h3>
+<div class="paragraph">
+<p>I&#8217;m not going to cover each JavaFX layout in details, but will show you how to use a pretty powerful layout - <code>GridPane</code>. When we&#8217;ll work on the GUI for the calculator, I&#8217;ll also show you how to design a scene using a combination of layouts.</p>
+</div>
+<div class="paragraph">
+<p>GridPane divides the area into rows and columns and places GUI components (the nodes) into the grid cells. With <code>GridPane</code> layout cells don&#8217;t have to have the same size - nodes can span. If the screen size changes, the content won&#8217;t be rearranged and will maintain the grid look.</p>
+</div>
+<div class="paragraph">
+<p>Before placing the node into a particula cell you have to specify the grid constraints such as <code>rowIndex</code> and <code>columnIndex</code> (the coordinate of the cell, which starts with 0,0). The <code>rowSpans</code> and <code>columnSpan</code> allow to make the cell as wide (or as tall) as several other cells. The <code>GridPane</code> <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/GridPane.html">documentation</a> describes lots of various constraints that can define the behavior of each cell&#8217;s content if the windows gets resized. I&#8217;ll show you a basic example that uses some of these constraints.</p>
+</div>
+<div class="sect3">
+<h4 id="_designing-a-sign-in-window-in-scene-builder"><a class="anchor" href="#_designing-a-sign-in-window-in-scene-builder"></a>Designing a Sign In Window in Scene Builder</h4>
+<div class="paragraph">
+<p>I want to create a Sign In window where the user can enter the id, password and press the button Sign In. The scene will use <code>GridPane</code> layout. The first row will contain a <code>Label</code> and <code>TextField</code> for user id, the second row will have a similar pair for the password, and the third row of the grid will have one <code>Button</code> Sign In that should span two columns. This is how this window should look like:</p>
+</div>
+<div id="FIG7-7" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_07.png" alt="fig 7 07">
+</div>
+<div class="title">Figure 7. The Sign In Window</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll start with creating a new IDEA JavaFX project (menus File | New Project | JavaFX Application) giving it a name Signin. The project with classes <code>Main</code>, <code>Controller</code> and the file <em>sample.fxml</em> will be generated. Let&#8217;s rename this FXML file into <em>signin.fxml</em>. IDEA will automatically change the corresponding line in the <code>Main</code> class to load this file instead of <em>sample.fxml</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rename the package from <em>sample</em> to <em>signin</em> (right-click menu, Refactor | Rename). Now open the file signin.fxml in Scene Builder and start thinking about laying out the components of our Sign In scene. Let&#8217;s take another look at the image of the Sign In window. I can clearly see that GUI components are placed in three rows. The first two have a <code>Label</code> and <code>TextField</code> and the third one has a wide <code>Button</code>.
+I can also recognize two columns in the layout of the Sign In window. The first column has two <code>Label</code> components and the left side of the <code>Button</code>. The second column has two <code>TextFiled</code> components and the right side of the <code>Button</code>. We can also say that the <code>Button</code> <em>spans</em> two columns. We&#8217;ve got a 2x3 grid!</p>
+</div>
+<div class="paragraph">
+<p>Open the generated <code>signin.fxml</code> in Scene Builder. Since this file has already empty <code>&lt;GrigPane&gt;</code> tag, you&#8217;ll see GridPane(0,0) as the root of the hierarchy in the bottom left corner as in Figure 4 above. So far this grid has zero rows and zero columns. Right-click on the grid in the middle of the screen and add three rows and two columns to the grid by using the right-click menus GridPane | Add Row Below and Add Column After. When the GridPane is selected The Scene Builder&#8217;s window may look similar to this:</p>
+</div>
+<div id="FIG7-8" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_08.png" alt="fig 7 08">
+</div>
+<div class="title">Figure 8. A GridPane (2,3)</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s drag two <code>Label</code> controls and a <code>Button</code> from the Controls section on the left and drop them into the appropriate cells in the first grid column. Change the text on these components to be UserID:, Password, and Sign In.
+Then we could drag and drop two <code>TextField</code> objects in the top two cells in the second column. Actually, it&#8217;s not a good idea to enter password in the clear text. I&#8217;ll use the <code>TextField</code> for the user ID, and the <code>PasswordField</code> (it marks user&#8217;s input) for password.</p>
+</div>
+<div id="FIG7-9" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_09.png" alt="fig 7 09">
+</div>
+<div class="title">Figure 9. A GridPane with nodes in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>Note that the hierarchy of nodes is shown in the bottom left panel of Scene Builder. If you want to change the properties of a component on a scene with a complex GUI layout it might be easier to select the GUI control in the Hierarchy panel than in the design area in the middle. Now select the menu Preview | Show Preview in Window and you&#8217;ll see the following window:</p>
+</div>
+<div id="FIG7-10" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_10.png" alt="fig 7 10">
+</div>
+<div class="title">Figure 10. Previwing in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>This window doesn&#8217;t look exactly as we wanted: there are some issues with alignments, there is no spacing between the container and components, and the button Sign In doesn&#8217;t span. But on the bright side, the <code>GridPane</code> controls the layout and if you&#8217;ll try to stretch this window, GUI components won&#8217;t change their relative positioning:</p>
+</div>
+<div id="FIG7-11" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_11.png" alt="fig 7 11">
+</div>
+<div class="title">Figure 11. Streching the preview window in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s do a couple of more property changes before we&#8217;ll run this application from IDEA. In Scene Builder the Properties panel is located on the right and has three sections: Properties, Layout, and Code, and you&#8217;ll find the properties to be changed in one of these sections.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>On the left panel of Scene Builder select the <code>GridPane</code> and on the right panel change alignment to be <code>TOP_LEFT</code>.</p>
+</li>
+<li>
+<p>Enter 10 for the padding on top, right, bottom and left for the <code>GridPane</code>. We need some spacing between the borders of the scene and the grid.</p>
+</li>
+<li>
+<p>Select the <code>Button</code> on the left and then change the column span to be 2 and the preferred width to be a large number, say 300. This will make the button wide.</p>
+</li>
+<li>
+<p>Select the first column of the grid row by clicking on the little 0 on top of the grid. Set the both preferred and maximum width for this column to be 70.</p>
+</li>
+<li>
+<p>Select the second column of the grid row by clicking on the little 1 on top of the grid. Set the both preferred and maximum width for this column to be 100.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After you do all these changes and save them, the file <code>signin.fxml</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.geometry.*?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.layout.GridPane?&gt;
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+
+&lt;GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller"&gt;
+   &lt;rowConstraints&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+   &lt;/rowConstraints&gt;
+   &lt;columnConstraints&gt;
+      &lt;ColumnConstraints maxWidth="70.0" minWidth="10.0" prefWidth="70.0" /&gt;
+      &lt;ColumnConstraints maxWidth="100.0" minWidth="10.0" prefWidth="100.0" /&gt;
+   &lt;/columnConstraints&gt;
+   &lt;children&gt;
+      &lt;Label alignment="CENTER" text="User ID:" /&gt;
+      &lt;Label text="Password:" GridPane.rowIndex="1" /&gt;
+      &lt;Button mnemonicParsing="false" prefWidth="300.0" text="Sign In" GridPane.columnSpan="2" GridPane.rowIndex="2" /&gt;
+      &lt;TextField GridPane.columnIndex="1" /&gt;
+      &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" /&gt;
+   &lt;/children&gt;
+   &lt;padding&gt;
+      &lt;Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /&gt;
+   &lt;/padding&gt;
+&lt;/GridPane&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the <code>&lt;GridPane&gt;</code> section you see <code>&lt;rowConstraints&gt;</code> and <code>&lt;columnConstraints&gt;</code> tags defining the the properties of the rows and columns. The <code>&lt;children&gt;</code> section contains the declaration of GUI components that the user will see on the screen: <code>&lt;Label&gt;</code>, <code>&lt;Button&gt;</code>, <code>&lt;TextField&gt;</code>, and  <code>&lt;PasswordField&gt;</code>. The <code>&lt;Insets&gt;</code> section endures that there is some space between the grid borders and its children.</p>
+</div>
+<div class="paragraph">
+<p>This is a declarative way of creating GUI in FXML. No Java coding was required to create the GUI for this application.</p>
+</div>
+<div class="paragraph">
+<p>Finally, let&#8217;s set the size of the stage so it can accommodate all components from our scene. In IDEA, open the class <code>Main</code>,  and in the code set the size of the scene to be 200x150 pixels.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">primaryStage.setScene(new Scene(root, 200, 150));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the <code>Main</code> program and you&#8217;ll see the window that looks like in Figure 7 above. The work that we&#8217;ve done in Scene Builder was a little tedious, but it didn&#8217;t require any knowledge of Java. This means that this work can be given to a UI designer, while you&#8217;ll concentrate on programming the application logic in Java.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_programming-the-sign-in-window-in-java"><a class="anchor" href="#_programming-the-sign-in-window-in-java"></a>Programming the Sign In Window in Java</h4>
+<div class="paragraph">
+<p>Some people like visual design tools, but others don&#8217;t. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I&#8217;ve written purely in Java without using Scene Builder. It&#8217;ll produce the same output as in Figure 7.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class GridPaneSample extends Application {
 
   public void start(Stage primaryStage) {
 
-    final int TWO_COLUMN_SPAN = 2;               <i class="conum" data-value="1"></i><b>(1)</b>
+      final int TWO_COLUMN_SPAN = 2;
 
-    Label userIdLbl = new Label("User ID:");     <i class="conum" data-value="2"></i><b>(2)</b>
-    TextField userIdTxt = new TextField();
-    Label userPwdLbl = new Label("Password:");
-    userPwdLbl.getStyleClass().add("bluelabel");
-    PasswordField userPwdTxt = new PasswordField();
+      Label userIdLbl = new Label("User ID:");
+      TextField userIdTxt = new TextField();
+      Label userPwdLbl = new Label("Password:");
+      PasswordField userPwdTxt = new PasswordField();
 
-    GridPane root = new GridPane();              //  <i class="conum" data-value="3"></i><b>(3)</b>
-    root.setVgap(20);
-    root.setPadding(new Insets(10));
-    root.setAlignment(Pos.CENTER);
-    root.setId("root");
+      GridPane root = new GridPane();
+      root.setVgap(10);
+      root.setPadding(new Insets(10));
+      root.setAlignment(Pos.CENTER);
 
-    // Setting constraints for firs 2 rows
-    GridPane.setConstraints(userIdLbl, 0, 0);    //  <i class="conum" data-value="4"></i><b>(4)</b>
-    GridPane.setConstraints(userIdTxt, 1, 0);
-    GridPane.setConstraints(userPwdLbl, 0, 1);
-    GridPane.setConstraints(userPwdTxt, 1, 1);
+      // Using static methods for setting node constraints
+      GridPane.setConstraints(userIdLbl, 0, 0);
+      GridPane.setConstraints(userIdTxt, 1, 0);
+      GridPane.setConstraints(userPwdLbl, 0, 1);
+      GridPane.setConstraints(userPwdTxt, 1, 1);
 
-    root.getChildren().addAll(userIdLbl, userIdTxt,
-    userPwdLbl, userPwdTxt);                      //  <i class="conum" data-value="5"></i><b>(5)</b>
+      root.getChildren().addAll(userIdLbl, userIdTxt,
+                                userPwdLbl, userPwdTxt);
 
+      Button signInBtn = new Button ("Sign In");
 
-    Button signInBtn = new Button ("Sign In");    //  <i class="conum" data-value="6"></i><b>(6)</b>
-    signInBtn.setId("submitBtn");  // used in CSS
+      // Allow the button to be wider overriding preferred width
+      signInBtn.setPrefWidth(Double.MAX_VALUE);
 
-    // Event handler with lambda expression
-    signInBtn.setOnAction(evt -&gt; {                 //  <i class="conum" data-value="7"></i><b>(7)</b>
+      // using instance method for directly adding the node
+      root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);
 
-        String userID = userIdTxt.getText();
-        String password = userPwdTxt.getText();
-        if (!"Yakov".equals(userID)){
-            userIdTxt.setStyle("-fx-background-color: lightpink;");
-        } else{
-            userIdTxt.setStyle("-fx-background-color: white;");
-        }
-
-        System.out.println("Got id " + userID +
-                           " and password " + password);
-    });
-
-    // Allow the button to be wider
-    signInBtn.setPrefWidth(Double.MAX_VALUE);
-
-    // Adding a wide button to the third row
-    root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);
-
-    Scene scene = new Scene(root,250,180);
-    scene.getStylesheets()                         <i class="conum" data-value="8"></i><b>(8)</b>
-         .add(getClass()
-         .getResource("signin.css")
-         .toExternalForm());
-
-    primaryStage.setScene(scene);                  <i class="conum" data-value="9"></i><b>(9)</b>
-    primaryStage.show();
+      Scene scene = new Scene(root,250,150);
+      primaryStage.setScene(scene);
+      primaryStage.show();
   }
 
   public static void main(String[] args) {
@@ -823,258 +925,386 @@ public class MainPureJava extends Application {
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This programs uses the <code>GridPane</code> layout with three rows and two column. Since the Sign In button will span tho columns, I declared a final variable <code>TWO_COLUMN_SPAN</code> that will be used when the button will be added to the grid.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Then I instantiate labels and text fields.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>After that I create an instance of the <code>GridPane</code> container.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>To add the labels and text fields to the proper cells of the first two rows of the grid, I set the constraints on the <code>GridPane</code> object.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The GUI components for the first two rows are instantiated, constraints are set so I add them as children to the root of the <em>scene graph</em> - the <code>GridPane</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>Now I create the instance if the Sign In button and assign the id to it. This was explained in the Styling with CSS section in Chapter 7.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>The lambda expression implements the application logic to be invoked as a reaction to the <code>ActionEvent</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The we create a scene object an apply the CSS to it. This is probably the first time you see the method chaining. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="9"></i><b>9</b></td>
-<td>Finally, the scene is added to the stage and the curtain goes up.</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
-<p>Some programmers like GUI designer tools where they can drag and drop components. Some prefer writing Java code. I prefer working with FXML, because it greatly simplifies  design of the complex windows. Besides separating the design from the application logic is also a good idea because a person who doesn&#8217;t know programming can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.</p>
-</div>
-<div class="sect3">
-<h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>Further Reading on Event Handling</h4>
-<div class="paragraph">
-<p>I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:<code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (e.g. the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
+<p>After all your efforts in Scene Builder, this Java program shouldn&#8217;t be difficult for you to understand. As you see, I use classes named similarly to FXML tags. FXML tags can have attributes (e.g. <code>vgap="10" `), and in Java you'd need to call the corresponding setter (e.g. `root.setVgap(10)</code>). So the choice is yours - FXML or Java. If you have <em>visual personality</em> use FXML, otherwise use Java.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_data-binding-and-properties"><a class="anchor" href="#_data-binding-and-properties"></a>Data Binding and Properties</h3>
+<h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling With CSS</h3>
 <div class="paragraph">
-<p>JavaFX has an interface <code>Property</code> located in the package <code>javafx.beans.property</code>, which defines a very useful functionality allowing to <em>bind</em> the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.</p>
+<p>It would be boring if all applications would look the same. Application windows may have different colors, fonts, buttons with rounded corners or use special visual effects. In other words, applications have different styles. Even though you can style JavaFX GUI components programmatically (e.g. by calling methods <code>setFont()</code> or <code>setFill()</code>) separating styling from programming allows professional UI designers to take care of the look and feel while software developers implement application logic.</p>
 </div>
 <div class="paragraph">
-<p>Imagine that you&#8217;re developing a multi-player game that has a Java object receiving the moves of other gamers from a central server. When a Java object receives a new move, you need to modify the content of the corresponding GUI component of the game. With JavaFX you can simply bind a property of a Java class that stores player&#8217;s moves (e.g. <code>playersMove</code>) to the property of, say a <code>Label</code> component on the GUI. No more coding required. As soon as the <code>playersMove</code> value changes, the <code>Label</code> will be automatically updated.  JavaFX properties greatly simplify the process of synchronization of the data and the GUI.</p>
+<p>Separating the work of programmers and designers became  popular in Web applications. Cascading Style Sheets (CSS) is a special language for styling UI. Styles of GUI components are stored in separate <em>.css</em> files and are loaded and applied to components by the application&#8217;s code. Sometimes this process is called <em>skinning</em> - you can create an application that can "wear different skins" changing its look to the user&#8217;s liking. JavaFX has a default skin, and if you&#8217;re interested in how to create custom skins, visit Oracle online tutorial <a href="http://docs.oracle.com/javafx/2/css_tutorial/jfxpub-css_tutorial.htm">Skinning JavaFX applications with CSS</a>.</p>
 </div>
 <div class="paragraph">
-<p>Existing implementations of the <code>Property</code> interface add  the change notification functionality to regular class attributes. The interface <code>Property</code> declares the following methods: <code>bind</code>, <code>unbind</code>, <code>bindBidirectional</code> , <code>unbindBidirctional</code>, and <code>isBound</code>. You can bind to a JavaFX property only the value of an <code>ObservableValue</code> type, which is explained in the sidebar.</p>
+<p>Even if you won&#8217;t create your own CSS file, your JavaFX application applies default CSS style to the components of your view. In Scene Builder you can see these styles. Just select any component and the go to the menu View | Show CSS Analyzer. You&#8217;ll see a number of styles the start with the prefix <code>fx-</code>, which makes JavaFX CSS a little different from a standard CSS syntax.</p>
 </div>
-<div class="sidebarblock">
+<div class="paragraph">
+<p>Covering CSS in detail would require a separate book, but I&#8217;ll show you a simple example of how the look of the GUI can be changed without the need to modify the Java code.</p>
+</div>
+<div class="paragraph">
+<p>You can either create so-called <em>CSS selectors</em> to style a specific GUI component, a type of components (e.g. all buttons), or create a reusable style that can be applied programmatically to a selected component.</p>
+</div>
+<div class="paragraph">
+<p>To style a specific component it has to have a unique id. If you program GUI in Java, set in your Java code using the method <code>setId()</code>, for example:</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<div class="title">Design Patterns Briefly</div>
-<div class="paragraph">
-<p>Over the years software developers came up with a number of <em>design patterns</em>, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You&#8217;d better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you&#8217;ll be a little better prepared for chatting with programmers.</p>
-</div>
-<div class="paragraph">
-<p><strong>MVC</strong> stands for Mode View Controller. This design patter recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we&#8217;ve almost implemented MVC in one of the versions of the Sign In application. The file <em>signin.fxml</em> was a view, and the class <code>signin.Controller</code> played a role of a controller. Since this example had just two variables (<code>id</code> and <code>pwd</code>) we didn&#8217;t created a special model class for them.</p>
-</div>
-<div class="paragraph">
-<p><strong>Observer</strong> design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you&#8217;ll see in this chapter.</p>
-</div>
-<div class="paragraph">
-<p>If you&#8217;re interested in detailed coverage of design patters, get the book "Head First Design Patterns" published by O&#8217;Reilly Media.</p>
-</div>
+<pre class="highlight"><code class="java language-java">Button signInBtn = new Button ("Sign In");
+signInBtn.setId("submitBtn");</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Classes that implement <code>Property</code> interface are located in the package <code>javafx.beans.property</code>. For each property type there are two classes: one that allows only reading property values and the other one for read and writing (changing the values). For example, if you need a <code>String</code> property, use either <code>ReadOnlyStringWrapper</code> or <code>SimpleStringProperty</code>. Similarly named classes exist for other data types and some collections too.</p>
+<p>In FXML just add an <code>id</code> attribute to the tag of the component:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;Button id="submitBtn" text="Sign In"&gt;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>As we always do in this book, let&#8217;s learn by coding. I&#8217;ll continue adding features to our Sign In application. This time I&#8217;ll add a <code>Label</code> component with <code>fx:id="errMsg"</code> to the view in FXML file to display sign in error messages if any. In the controller class I&#8217;ll add a corresponding variable <code>errMsg</code> and will inject a reference to the <code>Label</code> into this variable.</p>
+<p>For a button with an id <code>submitBtn</code> you can add the following section to the CSS file to make its background color red:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">#submitBtn{
+  -fx-background-color: red;
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The next step is to declare a bindable property <code>signinError</code> in the class <code>Controller</code> that will get the value of the error message if any. But since a regular <code>String</code> can&#8217;t be bindable, we&#8217;ll use the data type <code>SimpleStringProperty</code></p>
+<p>You can find the names of the main CSS colors <a href="http://www.w3schools.com/cssref/css_colornames.asp">online</a>. In CSS the id type selectors start with the #-sign as in <code>#submitBtn</code>.</p>
 </div>
 <div class="paragraph">
-<p>Finally, I&#8217;ll bind the label and the variable to insure that an error message is immediately displayed on the screen as soon as its value changes.</p>
+<p>If you want to apply a style to several components of the same type, you need to define a type selector. For example, to make the text of all <code>Label</code> components red, you can define the following CSS type selector:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">.label{
+  -fx-text-fill: red;
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s place an additional <code>Label</code> component at the bottom of the Sign In window. I&#8217;ll add another row to the <code>GridPane</code> and place there a <code>Label</code> that will span two columns. This label will have <code>fx:id="errMsg"</code> and initially won&#8217;t  have any text - it&#8217;ll be invisible. The <code>&lt;children&gt;</code> section of the FXML file will look as follows:</p>
+<p>Note that CSS type selectors start with the dot. To create a <em>CSS class selector</em> that can be applied to any component, define the selector with an arbitrary name and apply it programmatically to the components of your choice.  For example, you can specify the class selector <code>.blueLable</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This class selector defines the rules that will display text of the component in blue <strong>bold</strong> verdana font in <em>italic</em> style. Typically, you&#8217;ll be loading the entire CSS file when the application starts so all styles are available for use. If you use Java for GUI programming, you can apply a class selector to a specific button just like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Label userPwdLbl = new Label("Password:");
+userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In FXML assigning a CSS class selector is done by adding the attribute <code>styleClass</code> to the tag element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;Label text="Password:" styleClass="bluelabel" GridPane.rowIndex="1" /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may ask, "How am I supposed to know which style properties are available for a given JavaFX component?" All JavaFX styles are described in the online document titled <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html">"JavaFX CSS Reference Guide"</a>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s learn how to apply all these styling techniques to the Sign In window from the previous section. Using IDEA menu File | New create a new file <em>signin.css</em> in Signin project. Then add the following content to it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">#submitBtn{
+    -fx-background-color: lightskyblue;
+    -fx-font-family:verdana;
+    -fx-font-size:20;
+    -fx-font-weight: bold;
+    -fx-stroke:navy;
+    -fx-font-style:italic;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.label{
+    -fx-text-fill: red;
+}
+
+.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file signin.css_ defines three styles:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an id selector for the component with the id <code>submitBtn</code></p>
+</li>
+<li>
+<p>a type selector for all <code>Label</code> components</p>
+</li>
+<li>
+<p>a class selector <code>bluelabel</code> that we can be applied to certain labels.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To apply this CSS file to our Sign In application add the attribute <code>id="submitBtn"</code> to the <code>&lt;Button&gt;</code> element in <em>signin.fxml</em>.</p>
+</div>
+<div class="paragraph">
+<p>Then add the attribute <code>styleClass="bluelabel"</code> to the <code>&lt;Password&gt;</code> tag in <code>signin.fxml</code>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, in <code>Main.java</code> load the <code>signin.css</code> and apply it to the scene. The new version of <code>Main.java</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
+      primaryStage.setTitle("Sign In");
+
+      Scene scene  = new Scene(root, 200, 150);
+        scene.getStylesheets().add(getClass()
+              .getResource("signin.css").toExternalForm());
+
+      primaryStage.setScene(scene);
+      primaryStage.show();
+    }
+
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the <code>Main</code> application and you&#8217;ll see a differently styled Sign In window:</p>
+</div>
+<div id="FIG7-12" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_12.png" alt="fig 7 12">
+</div>
+<div class="title">Figure 12. Styled Sign In Window</div>
+</div>
+<div class="paragraph">
+<p>When the application starts loading our CSS file it sees that all labels must be red because of the type selector for labels. But then the application notices a more specific style for the <code>Label</code> Password: <code>styleClass="bluelabel"</code>, so it paints the text <em>Password</em> in blue.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_borderpane-and-combining-layouts"><a class="anchor" href="#_borderpane-and-combining-layouts"></a>BorderPane and Combining Layouts</h3>
+<div class="paragraph">
+<p>Pretty often you see applications that split the window into several distinct areas - the header goes on top, the navigation bar is on the left (or right), the footer&#8217;s at the bottom of the page and a large content area occupies the middle portion of the window. The <code>BorderPane</code> layout allows you to do exactly this - split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
+</div>
+<div class="paragraph">
+<p>Each of these regions can contain either a single GUI component or a container that will have "children" - components allocated in their own container, e.g. inside a <code>GridPane</code>. You&#8217;ll use <code>BorderPane</code> layout with a nested <code>GridPane</code> while working on the calculator following instructions from the Project section at the end of this chapter. Meanwhile, let&#8217;s create a very basic window illustrating how the <code>BorderPane</code> layout works.</p>
+</div>
+<div class="paragraph">
+<p>Open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag the <code>BorderPane</code> from the left and drop in the middle. Click on the <code>BorderPane</code> and you&#8217;ll see a screen that can look as follows:</p>
+</div>
+<div id="FIG7-13" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_13.png" alt="fig 7 13">
+</div>
+<div class="title">Figure 13. An Empty BorderPane</div>
+</div>
+<div class="paragraph">
+<p>Now select Insert TOP at the bottom left, and then drag and drop a <code>Label</code> from the Controls section onto the middle section of Screen Builder. Set the label&#8217;s title to "This is the Header". This text will be displayed at the top.</p>
+</div>
+<div class="paragraph">
+<p>Now select Insert LEFT and then drag and drop <code>VBox</code> from the Containers area to the left side of the middle section of the Screen Builder. The <code>VBox</code> is a container for arranging GUI components vertically, which is what we need for creating a navigation menu. You&#8217;ll see an empty gray area on the left.</p>
+</div>
+<div id="FIG7-14" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_14.png" alt="fig 7 14">
+</div>
+<div class="title">Figure 14. Adding a VBox for navigation</div>
+</div>
+<div class="paragraph">
+<p>Now select <code>VBOX</code> at the bottom left and add a couple of menu items to the empty <code>VBox</code>. Drag a <code>Button</code> from the Controls section and drop it onto the <code>VBox</code>. Change its text to read "Menu 1", and make it a little wider so it fits the <code>VBox</code> nicely. Add two more buttons labeled "Menu 2" and "Menu 3".</p>
+</div>
+<div id="FIG7-15" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_15.png" alt="fig 7 15">
+</div>
+<div class="title">Figure 15. Adding buttons to VBox</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add a footer to the window now. Select Insert BOTTOM at the bottom left and then drag the <code>HBox</code> from the Containers area to the middle section. It&#8217;ll look like a gray area at the bottom. Adjust its height so the footer doesn&#8217;t take too much real estate in our scene. Now add three <code>Hyperlink</code> components from the Contols section to the footer and set their text to "Link 1", "Link 2", and "Link 3" correspondingly. The Scene Builder&#8217;s window should look like this:</p>
+</div>
+<div id="FIG7-16" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_16.png" alt="fig 7 16">
+</div>
+<div class="title">Figure 16. Adding a footer with links</div>
+</div>
+<div class="paragraph">
+<p>Select the menu Preview | Show Preview in Window will help you to see how the window will look during the runtime:</p>
+</div>
+<div id="FIG7-17" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_17.png" alt="fig 7 17">
+</div>
+<div class="title">Figure 17. Previewing the window</div>
+</div>
+<div class="paragraph">
+<p>Of course, this window may need more work on styling controls and adjusting sizes and alignments, but as long as you understand how to lay out a scene, the shouldn&#8217;t be too difficult. Creating and applying CSS styles can make this windows a lot prettier.</p>
+</div>
+<div class="paragraph">
+<p>Using Scene Builder&#8217;s menu File | Save save the layout in a file <em>border.fxml</em>. While you&#8217;ve been dragging and dropping components, Scene builder was working hard generating the corresponding FXML code in <em>border.fxml</em>. If you open this file in any text editor, its content may look similar to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.scene.image.*?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+
+&lt;BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"&gt;
+   &lt;top&gt;
+      &lt;Label text="This is the Header" BorderPane.alignment="CENTER" /&gt;
+   &lt;/top&gt;
+   &lt;left&gt;
+      &lt;VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER"&gt;
+         &lt;children&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 1" /&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 2" /&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 3" /&gt;
+         &lt;/children&gt;
+      &lt;/VBox&gt;
+   &lt;/left&gt;
+   &lt;bottom&gt;
+      &lt;HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER"&gt;
+         &lt;children&gt;
+            &lt;Hyperlink text="Link 1" /&gt;
+            &lt;Hyperlink text="Link 2" /&gt;
+            &lt;Hyperlink text="Link 3" /&gt;
+         &lt;/children&gt;
+      &lt;/HBox&gt;
+   &lt;/bottom&gt;
+&lt;/BorderPane&gt;
+</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t be overwhelmed with the amount of tags and attributes in the above code. You can identify the regions of the <code>BorderPane</code> layout. The <code>&lt;top&gt;</code> region contains a label, while the <code>left</code> and <code>&lt;bottom&gt;</code> regions have containers with their own layouts. In this example I have not used the <code>&lt;center&gt;</code> and <code>&lt;right&gt;</code> regions. Typically your program will be changing the content of the central area based on the user actions. For example, if the user clicks on the "Menu 1" button in the left region, JavaFX will generate a <em>clicked event</em> and you&#8217;ll show the content required for this selection in the central area.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll learn how to process events in the next chapter. Now it&#8217;s time to practice in working with combined layouts.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_project-creating-a-gui-for-calculator"><a class="anchor" href="#_project-creating-a-gui-for-calculator"></a>Project: Creating a GUI for Calculator</h3>
+<div class="paragraph">
+<p>Using Scene Builder and a combination of the <code>BorderPane</code> and <code>GridPane</code> layout create GUI for the calculator that looks as on Figure 1.  Add the <code>TextField</code> to the <code>north</code> region of the <code>BorderPane</code>. Then add a <code>GridPane</code> container to the <code>center</code> area - you&#8217;ll add buttons to this container.</p>
+</div>
+<div class="paragraph">
+<p>Most of the calculators have a display field on top and the buttons just below it. As you can see on Figure 1, the grid with buttons has four columns and six rows. The default <code>GridPane</code> contains two columns and three rows. You&#8217;ll need to right-click on the grid and use the menus GridPane | Add Row Above and Add Column After to until you see a 4x6 grid as shown below.</p>
+</div>
+<div id="FIG7-18" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_18.png" alt="fig 7 18">
+</div>
+<div class="title">Figure 18. The 4x6 GridPane in the center</div>
+</div>
+<div class="paragraph">
+<p>Note that I set the <code>Padding</code> property to be 10 for all sides of the grid and the <code>Hgap</code> and <code>Vgap</code> to 5 (the gap between the cells).</p>
+</div>
+<div class="paragraph">
+<p>Save the layout in the file <em>calculator.fxml</em>. Then drop a Button into the top left cell of the grid. Set the <code>Margin</code> property to 5 for each side of the button - this is the distance between the button and cell borders. Drag the button&#8217;s border to make it larger. This is what you should see:</p>
+</div>
+<div id="FIG7-19" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_19.png" alt="fig 7 19">
+</div>
+<div class="title">Figure 19. The grid with one button</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re curious how this button looks in the <em>calculator.fxml</em>, open this file in any text editor and note the section <code>&lt;children&gt;</code> that in my case looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="xml language-xml">&lt;children&gt;
-      &lt;Label alignment="CENTER" text="User ID:" /&gt;
-      &lt;TextField GridPane.columnIndex="1"  fx:id="id" /&gt;
-      &lt;Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" /&gt;
-      &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/&gt;
-      &lt;Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
-              GridPane.columnSpan="2" GridPane.rowIndex="2"
-              onAction="#signInClicked"/&gt;
-       &lt;Label alignment="CENTER" GridPane.rowIndex="3"
-              GridPane.columnSpan="2" prefWidth="300.0" fx:id="errMsg"/&gt;
-   &lt;/children&gt;</code></pre>
+   &lt;Button mnemonicParsing="false" prefHeight="37.0" prefWidth="132.0" text="Button"&gt;
+      &lt;GridPane.margin&gt;
+         &lt;Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /&gt;
+      &lt;/GridPane.margin&gt;
+   &lt;/Button&gt;
+&lt;/children&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Injecting a reference of the new label into controller and declaring a property to store the error message will look like this:</p>
+<p>There is no indication of the cell (0,0) because zeros are the default values for <code>GridPane.columnIndex</code> and <code>GridPane.rowIndex</code> properties. Now you need to replicate this button in other cells. You can use multiple Ctrl-C/Ctrl-V commands and then drag/drop the buttons into other cells. See how the content of the <em>calculator.fxml</em> changes as you add more buttons. I find it faster copy/pasting the generated code in the FXML file than using Scene Builder for mass duplication.</p>
+</div>
+<div class="paragraph">
+<p>Note that on Figure 1, the button with coordinates (0,5) spans two columns, and the button with coordinates (3,4) spans two rows. For these buttons you&#8217;ll need to enter 2 as the row (or column) span, and select <code>MAX_VALUE</code> as maximum width (or height).  This is what you should see by now:</p>
+</div>
+<div id="FIG7-20" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_20.png" alt="fig 7 20">
+</div>
+<div class="title">Figure 20. Replicated buttons</div>
+</div>
+<div class="paragraph">
+<p>Change the text of each button to look as in Figure 1, and the layout is done.</p>
+</div>
+<div class="paragraph">
+<p>Then create a new JavaFX project Calculator in IDEA and replace the generated <em>sample.fxml</em> with <em>calculator.fxml</em> created by Scene Builder. Modify the generated class <code>Main</code> to use <em>calculator.fxml</em>. Rename the package from <em>sample</em> to <em>mycalculator</em>. Set the size of the scene to be large enough to accommodate your design. This is how my class <code>Main</code> looks like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">@FXML private Label errMsg;
+<pre class="highlight"><code class="java language-java">public class Main extends Application {
 
-SimpleStringProperty signinError =
-                        new SimpleStringProperty();</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The next question is when and where do the binding? If I&#8217;d be creating an instance of the <code>Controller</code> with the <code>new</code> operator I could have done it in the class constructor after the GUI component are created. But JavaFX runtime instantiates the <code>Controller</code> for us, so how can we catch the moment when the GUI components are ready?</p>
-</div>
-<div class="paragraph">
-<p>In JavaFX if you&#8217;ll add to the controller the method <code>initialize</code> annotated with @FXML, <code>FXMLLoader</code> will invoke it after the GUI components are constructed.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">@FXML public void initialize() {
-
-  errMsg.textProperty().bind(signinError);
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>JavaFX properties are observables. So you can read the above the above code as follows: "I want the text property of the label <code>errMsg</code> to be the observer (a.k.a. listener) to the property <code>signinError</code> (observable). So whenever <code>signinError</code> changes, the text property of the label will get the latest value.</p>
-</div>
-<div class="paragraph">
-<p>To complete the binding Sign In example, the event handler for the Sign In button should not only paint the wronn ID in light pink, but also modify the value of the <code>signinError</code> property. The complete code of the class <code>BindableController</code> is shown next.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="java language-java">public class BindingController {
-
-  @FXML
-  private TextField id;
-
-  @FXML
-  private PasswordField pwd;
-
-  @FXML private Label errMsg;
-
-  SimpleStringProperty signinError = new SimpleStringProperty();
-
-  @FXML public void initialize() {
-      System.out.println("Controller's ready. Let's bind some components");
-
-      errMsg.textProperty().bind(signinError);
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+      Parent root = FXMLLoader.load(getClass().getResource("calculator.fxml"));
+      primaryStage.setTitle("My JavaFX Calculator");
+      primaryStage.setScene(new Scene(root,650,600));
+      primaryStage.show();
   }
 
-  public void signInClicked(ActionEvent evt){
-
-      String userID = id.getText();
-      String password = pwd.getText();
-      if (!"Yakov".equals(userID)){
-          id.setStyle("-fx-background-color: lightpink;");
-          signinError.set("Wrong id:" + userID);
-
-      } else{
-          id.setStyle("-fx-background-color: white;");
-          signinError.set("");
-      }
-
-      System.out.println("got id:" + userID + ", got password: " + password);
-
-      System.out.println("Hello from signInClicked method in controller");
+  public static void main(String[] args) {
+      launch(args);
   }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that in the if statement I set the error message when the ID is wrong, and reset the <code>signinError</code> to an empty string when the ID is correct. After I ran the Sign In application the above controller, entered Alex as the user ID and clicked the button Sign In, my window looked like this:</p>
-</div>
-<div id="FIG8-6" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_06.png" alt="fig 8 06">
-</div>
-<div class="title">Figure 7. Binding in action after entering the wrong user id</div>
+<p>Run the <code>Main</code> program from IDEA to ensure that your calculator looks as expected. Don&#8217;t allow the users to resize your calculator by invoking the method <code>setResizable</code> on the stage object.</p>
 </div>
 <div class="paragraph">
-<p>Enter the right user ID, click on Sign In again, and the binding mechanism will remove the error message from the window.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deploying-with-javafx-packager"><a class="anchor" href="#_deploying-with-javafx-packager"></a>Deploying With JavaFX Packager</h3>
-<div class="paragraph">
-<p><a href="http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm">http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm</a>.</p>
+<p>Then create a CSS file to add some cool styling to the calculator&#8217;s buttons. Save the CSS file in your IDEA project and modify the code of the <code>Main</code> class to use your CSS file similarly to how it was done in the section "Styling With CSS" above. Make your calculator look better than mine - it&#8217;s not too difficult.</p>
 </div>
 <div class="paragraph">
-<p>The <code>Application</code> class has a method <code>getParameters</code>, which is a JavaFX way of getting command line arguments that might be passed to your application during its launch .</p>
+<p>After completing this assignment your buttons won&#8217;t work just yet. In the next chapter you&#8217;ll learn how to make the buttons (or other components) to react on user actions, so you&#8217;ll be able to complete the calculator. In this chapter my goal was to introduce you to basic rules of designing JavaFX GUI with the help of Scene Builder. Watch <a href="http://www.youtube.com/watch?v=ij0HwRAlCmo">this YouTube video</a> to see how easy it is to design more complex views with Scene Builder.</p>
 </div>
-<div class="paragraph">
-<p>I&#8217;m sure many of you want to know if it&#8217;s possible to use JavaFX for writing applications for smart phones. Oracle doesn&#8217;t offer the JavaFX libraries for mobile platforms, but it&#8217;s still possible.</p>
-</div>
-<div class="paragraph">
-<p>To develop JavaFX applications for iOS, you&#8217;d need to install and learn on your own some additional software, namely RoboVM[<a href="http://www.robovm.com/">http://www.robovm.com/</a>] is an SDK for converting Java bytecode into a native device code as if it was written in C programming language, which makes it deployable on iOS devices.</p>
-</div>
-<div class="paragraph">
-<p>There is also a community site JavaFX Ports[ <a href="http://javafxports.org/page/home">http://javafxports.org/page/home</a>] where people are working on deployment of JavaFX applications on iOS and Android devices.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_application-thread-in-javafx"><a class="anchor" href="#_application-thread-in-javafx"></a>Application Thread in JavaFX</h3>
-<div class="paragraph">
-<p>JavaFX also runs more than one thread. Imagine a program with a GUI that&#8217;s constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or characters. It could be an application for a TV channel that shows a video, a running commercial, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction.</p>
-</div>
-<div class="paragraph">
-<p>Updates of the GUI in JavaFX are done in a so called  <em>application thread</em>. The idea is to separate intensive calculations from the GUI updates. Say, the user pressed the button Play on JavaFX video portal application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy every time there was a delay in getting content. The screen would be "frozen" and the user wouldn&#8217;t be able to use any screen components.</p>
-</div>
-<div class="paragraph">
-<p>I&#8217;d better see it to believe it, right? I can easily demonstrate you a "frozen GUI" effect by making a small change in the class <code>signin.Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the the executing thread to sleep.</p>
-</div>
-<div class="paragraph">
-<p>Hence the long running processes shouldn&#8217;t be running on the application thread, but have a dedicated one. The application thread should be mainly updating the GUI, and not running long processes. All requests for the scene updates have to be placed into a special event queue in the application thread.</p>
-</div>
-<div class="paragraph">
-<p>The method <code>runLater</code> defined in the class <code>Platform</code> places the <code>Runnable</code> object into an event queue.</p>
-</div>
-<div class="paragraph">
-<p>In the chapter on Ping-Pong game I&#8217;ll show you how your program can creates multiple threads too. One thread will be responsible for displaying the table, while the other one  will calculate coordinates of the ball and paddles and will send commands to the first thread to repaint the window.</p>
-</div>
-<div class="paragraph">
-<p>To be continued&#8230;</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_what-to-study-next-about-javafx"><a class="anchor" href="#_what-to-study-next-about-javafx"></a>What to Study Next About JavaFX</h3>
-<div class="paragraph">
-<p>In Chapter 7 and 8 I gave you a very brief introduction to JavaFX. You&#8217;ll be writing  more of JavaFX code while working on the Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
-</div>
-<div class="paragraph">
-<p>Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_project"><a class="anchor" href="#_project"></a>Project</h3>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-22 18:32:09 EDT
+Last updated 2014-10-22 21:35:10 EDT
 </div>
 </div>
 </body>
