@@ -121,7 +121,7 @@ Object myOtherCar = new Car();
 Car myOtherCarAfterCasting = (Car) myOtherCar;
 ----
 
-It's like you're saying, "I know that the variable `myOtherCar` is of type ``Object`, but it actually points at the `Car` instance". Now the variable `myOtherCarAfterCasting` will see the method `brake()` declared in the class `Car`:
+It's like you're saying, "I know that the variable `myOtherCar` is of type ``Object`, but it actually points at the `Car` instance". Now the variable `myOtherCarAfterCasting` will see the method `brake` declared in the class `Car`:
 
 [[FIG6-5]]
 .The Car type variable sees Car's members
@@ -466,7 +466,11 @@ In a real life though, we can do several things in parallel like eat, talk on th
 
 Today, only your grandma's computer has a single processor (a.k.a. Central Processing Unit or CPU). A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on. Most likely your computer has at least two CPU's and a GPU (Graphics Processing Unit) for processing graphics if any.  
 
-But even a single processor can perform several actions at once if a program uses _multiple threads_. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. For example, the program asks the user a question and waits for the response. Meantime the CPU can be used for performing some other application logic instead of idling.
+But even a single processor can perform several actions at once if a program uses _multiple threads_. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. For example, the program asks the user a question and waits for the response. Meantime the CPU can be used for performing some other application logic instead of idling as shown in Figure 7.
+
+[[FIG6-7]]
+.Parallel processing
+image::images/fig_6_07.png[]
 
 A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel. 
 
@@ -478,7 +482,7 @@ There are different ways of creating threads. I won't be explaining details of e
 
 * You can inherit your class from the Java class `Thread` and override its method `run`, which should contain the code to be executed in parallel. 
 
-* You can add `implements Runnable` to the declaration of a class and implement the method `run`, which, again, should contain the code to be executed in parralel. 
+* You can add `implements Runnable` to the declaration of a class and implement the method `run`, which, again, should contain the code to be executed in parallel. 
 
 * Instead of inheriting your class from the class `Thread` you can create the new instance of the `Thread` object 
 
