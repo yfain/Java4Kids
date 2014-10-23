@@ -14,14 +14,14 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 
 * <<Chapter_1.adoc#,Chapter 1. Your First Java Program>>
 * <<Chapter_2.adoc#,Chapter 2. Getting Comfy In IDEA IDE>>
-* <<Chapter_3.adoc#,Chapter 3. Meet Pet And Fish, The Java Classes>>
+* <<Chapter_3.adoc#,Chapter 3. Meet Classes - the Main Language Constructs>>
 * <<Chapter_4.adoc#,Chapter 4. Java Building Blocks>>
 * <<Chapter_5.adoc#,Chapter 5. Interfaces, Lambdas, and Anonymous Classes >>
 * <<Chapter_6.adoc#,Chapter 6. Access Levels, Collections, Generics, and Multi-Threading >>
-*  <<Chapter_7.adoc#,Chapter 7. Introduction to GUI with JavaFX>>
-* <<Chapter_8.adoc#,Chapter 8. User Interaction in JavaFX (work in progress)>> 
-* Chapter 9. Creating a Tic-Tac-Toe Game
-* Chapter 10. Exceptions: Dealing with Errors 
+*  <<Chapter_7.adoc#,Chapter 7. Exceptions: Dealing with Errors (work in progress)>>
+*  <<Chapter_8.adoc#,Chapter 8. Introduction to GUI with JavaFX>>
+* <<Chapter_9.adoc#,Chapter 9. User Interaction in JavaFX (work in progress)>> 
+* Chapter 10. Creating a Tic-Tac-Toe Game
 * Chapter 11. Saving the Game Score in Files
 * Chapter 12. Networking: Downloading Stuff From Internet
 * Chapter 13. Multi-Threading: The Ping-Pong Game

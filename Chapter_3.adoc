@@ -2,7 +2,12 @@
 :toclevels: 4
 :imagesdir: ./
 
-== Chapter 3. Java Classes - Pet and Fish
+== Chapter 3. Meet Classes - the Main Language Constructs
+
+In the real world you see and use various objects, and each of them is of some kind like toys, food, animals, electronics et al. In Java instead of saying a kind of objects, we say a class of objects. A class is like a blueprint of an object. In this chapter you’ll get familiar with classes - the main constructs of the Java language. 
+
+Any program that you’ll write will have at least one class. You’ll learn how to declare a class and how to create one or more object based on the class declaration. You’ll also learn about a class internals – what a class can consist of. Finally, I’ll show you how to create a class that inherits features of another class.
+
 
 Java defines a number of data types. Some of them are simple, like `int`, which represents integer numbers. Some of them are more complex - they are called _classes_, like `System`, which can be used for things like printing texts on the screen, exiting a program or cleaning computer's memory. 
 

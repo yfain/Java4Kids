@@ -1,266 +1,322 @@
 :toc-placement!:
 :imagesdir: ./
 
-== Chapter 8. Programming User Interaction in JavaFX
+== Chapter 8. Introduction to GUI with JavaFX 
 
-After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator window windows from Chapter 7 looks good, but none of them would react on user's actions. No matter how hard you click on the Sign In or calculator's buttons, nothing will happen because we didn't teach these application how to react on user-generated events (e.g. button clicks). 
+After creating lots of code samples producing outputs to the system console, it's time for creating a nice looking Graphic User Interface (GUI). We're accustomed to programs that open windows with buttons, text fields, menus and other GUI components. 
 
-Events are notifications that something important for the application has happened. In this chapter I'll explain you how to write code to handle some of such events.  
+Java has an older library of GUI components called http://docs.oracle.com/javase/tutorial/uiswing/[Swing], and the new one called http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm[JavaFX]. We'll use only JavaFX in this book. JavaFX is also a library that's included with JDK, and you can write your GUI programs using familiar Java language. On the other hand, JavaFX allows to create and arrange GUI components in a special FXML format, while writing application logic in Java.
 
-When IDEA creates a new JavaFX project it generates an empty class `Controller`, which is a right place for the code that communicates with GUI components. In this chapter we'll establish a link between GUI and the controller. We'll also add event handlers and will right code to modify the GUI. I'll continue working with FXML samples created in the previous chapter, but this time the GUI events will be handled by the code from the controller class. 
+In this chapter I'll explain you the basics of GUI programming with JavaFX. You'll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you'll learn how to write code that reacts on user's actions (a.k.a. events) like a click on the button or a mouse move. 
 
-You'll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes. 
+By the end of this chapter you should be ready to work on the following assignment: "Create the GUI for a calculator that will look similar to this one":
 
-=== Events
+[[FIG7-1]]
+.The Calculator
+image::images/fig_7_01.png[]
 
-JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class `Event` located in the packages `javafx.event` and `javafx.scene.input`. You need to know what events are important to your program and, as the programmers say, "listen to events". You'll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you'll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is recommended for code that has to process multiple events.
+=== Introduction to JavaFX
 
-[[FIG8-1-0]]
-.Event listeners 
-image::images/fig_8-01-1.png[]
+With JavaFX you can create Graphic User Interface in two ways:
 
-You can either create with `new` or _inject_ an instance of your controller class into Java code. I'll explain you what injection means in a bit. 
+* By writing the code in Java as you did in previous chapters.
 
-==== Assigning Event Handlers in FXML
+* With the help of the visual layout tool called Scene Builder, where you'll be dragging and dropping components on the window and saving the design in the FXML format in a file with extension _.fxml_. Then the Java program will load this _.fxml_ file and display your creation.
 
-Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We'll stick to our principles of separating GUI and application logic, and will keep the GUI in .fxml file, but processing in Java. 
+I'll show you both ways, but let's start with some basics of development with JavaFX. Let's set the stage - JavaFX uses theater terminology. 
 
-In Scene Builder you may have noticed the _Controller_ bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic.
+IntelliJ IDEA will helps you to get stated quickly. Just  create a new project (the menu File | New Project), select JavaFX application as the project type and give it a name. In a second a new project will be created with two Java classes `Main` and `Controller` and a file named _sample.fxml_ as shown below.
 
-At the bottom right corner of Scene Builder you may notice a tab titled Code. This is where you can assign event handler methods to selected GUI component after assigning the controller class. So you could select have selected, say a button in the central canvas and assign its click handler right in the _Code_ section for this button. 
+[[FIG7-2]]
+.The newly generated IDEA project
+image::images/fig_7_02.png[]
 
+The `Main` class of a JavaFX application extends `Application` and is an entry point of your application. JavaFX classes are located in the packages whose names start with `javafx` (e.g. `javafx.stage` and `javafx.scene`).The `main` method invokes the method `launch` from `Application`, which creates stage by calling its method `start`, which was was declared as `abstract`. Hence, we must override `start` in our `Main` class. When the method `start` is invoked, it'll receive a reference to the `Stage` object - this is where your GUI  components will live and perform.
 
-=== Hooking up a Controller to GUI
+Pretend that you're a play director and need to set up one or more _scenes_ (views) on stage. But if in a real scene you'd expect to see some chairs, tables and other pieces of furniture, each JavaFX scene consists of GUI nodes (containers and components). In JavaFX you'll create components, add them the a scene and then add a scene to the stage. When the stage is ready, open the curtain by calling the method `show`.
 
-Since we're separating the GUI code form the application logic, we need a way to specify that a particular FXML file should use a particular controller. In Chapter 7 I didn't bring your attention to where it's done in FXML, but if you'll look at any of the FXML files, you'll see that the name of the controller was specified there when IDEA generated the project for us. 
+Now you have a choice: create these nodes using Java classes or load the pre-created design from the `.fxml` file as it was done in the code generated by IDEA. 
 
-==== Adding Controller to Sign In application
-
-To illustrate the use of controllers, I'll continue working on the sample Sign In project from Chapter 7. It has a file signin.fxml that includes the following `GridPane` tag:
-
-[source, xml]
-----
-<GridPane hgap="10" vgap="10" 
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller">
-----
-
-The `hgap` and `vgap` attributes specify the padding between the grid grid columns and rows. The `xmlns` attributes specify so called namespaces required for proper parsing of FXML files. And the attribute `fx:controller` specifies the full name of the class `Controller`, which in our project is located in the package `signin`. 
-
-When the file signin.fxml is loaded, JavaFX runtime creates an instance of the class `signin.Controller` and injects it in the instance of the GUI class generated from FXML. The word injection describes the situation when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to create an instance of the `signin.Controller` manually by using the `new` operator. 
-
-The first version of our controller class is shown next: 
-
-[source, java]
-----
-package signin;
-
-import javafx.event.ActionEvent;
-
-public class Controller {
-
-  public void signInClicked(ActionEvent evt){
-
-    System.out.println("Hello from signInClicked method in controller");  
-  }
-}
-----
-
-The class `Controller` uses the class `ActionEvent` from package `javafx.event`, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an `ActionEvent` in the package `java.awt.event`, which we don't want in this case.
-
-We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the `onAction` event in the Button element in signin.fxml as shown on Figure 8-2.
-
-[[FIG8-1]]
-.Mapping onAction event to signInClicked method 
-image::images/fig_8_01.png[]
-
-If you run the `Main` program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-3.
-
-[[FIG8-2]]
-.After clicking 3 times on Sign In button 
-image::images/fig_8_02.png[]
-
-So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the `ActionEvent` object as an argument. Its property `target` identifies, well the target of the event, which is a Sign In button in our case. 
-
-I ran our application in the debug mode just to show you that the `target` property on the `ActionEvent` correctly recognizes the event target shown in Figure 8-4.   
-
-[[FIG8-3]]
-.Viewing properties of ActionEvent in debugger 
-image::images/fig_8_03.png[]
-
-There is another event property `source`, which has the same value as `target` in our application. There are cases when `source` and `target` are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration. 
-
-When you want to handle button clicks, you don't really care in which area inside the button was the mouse pointer when the user clicked on the button. So handing `ActionEvent` was sufficient. But there is another event called `MouseEvent`, which gives you more details on the click event. 
-
-In your signin.fxml you're allowed to use `onMouseClicked` instead of `onAction` for the button. But if you do so, the `Button` will be considered a container for a special skin class `LabeledText` with the text _Sign In_, and if you click on the words _Sign In_ the source of the event will be `Button`, and the target would be the class `LabeledSkin`. I've created an event handler `signInMouseClicked` and ran it through a debugger. Now the source and target of the event are different.
-
-[[FIG8-4]]
-.Viewing properties of MouseEvent in debugger 
-image::images/fig_8_04.png[]
-
-==== Data Exchange Between GUI Components And Controller
-
-No that we know how to link controller's event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/Password the user entered and update the GUI from the controller accordingly.
-
-To read the values from GUI components we'll need to give them unique id's in the FXML file. We don't need to give id's to all component - only to those that have values for handling. Take a look at the `<childrens>` section of signin.fxml:
+The method `start` loads the file _sample.fxml_, sets the title of the stage and creates a `Scene` 300 by 275 pixels.The content of the generated _sample.fxml_ looks like this:
 
 [source, xml]
 ----
-<children>
-   <Label alignment="CENTER" text="User ID:" />
-   <Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" />
-   <Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
-           GridPane.columnSpan="2" GridPane.rowIndex="2"
-           onAction="#signInClicked"/>
-   <TextField GridPane.columnIndex="1" fx:id="id" />
-   <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/>
-</children>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<GridPane fx:controller="sample.Controller"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+</GridPane>
 ----
 
-Only the `TextField` and `PasswordField` have an attribute `fx:id` - this is how we can assign id's in fxml.
+FXML is a markup language based on XML (a popular data presentation format). The idea is to separate the creation of the GUI in a declarative language (FXML) from the application logic (Java). If we didn't use IDEA, the FXML would be generated by the Scene Builder itself. In FXML the GUI is represented by tags in angle brackets, e.g. `<GridPane>`. Each tag has a matching closing tag that starts with a forward slash, e.g. `</GridPane>` and may have attributes (e.g. `alignment="center"`). The `<GridPane>` tag corresponds to the Java class `GrindPane`, which is one of the JavaFX layouts - I'll explain them shortly. Every FXML tag has a corresponding Java class.
 
-The next step is to inject them into the variables in the `signin.Controller` class. The following code fragment shows how to inject component references into the `id` and `pwd` fields. This is how I'll declared two Java variables in the `Controller` clas with the names that match those from signin.fxml:
+The generated Java class `Controller` has just the pair of curly braces at this point, but in the next chapter we'll be writing the application logic there. Later on you'll connect the generated FXML views with the Java code of the `Controller`. Run the `Main` program and it'll show an empty window shown next:
+
+[[FIG7-3]]
+.Running the generated application
+image::images/fig_7_03.png[]
+
+=== Brief Overview of JavaFX Layouts 
+
+Users of your application can have computer monitors of different screen sizes and resolutions. JavaFX comes with _layouts_ that help with arranging GUI controls on the scene and keeping the arrangement for different stage sizes (think window sizes). There are following layout container Java classes (and similarly named FXML tags):
+
+* HBox
+* VBox
+* FlowPane
+* GridPane
+* BorderPane
+* StackPane
+* TilePane
+* AnchorPane
+
+The `HBox` class (the horizontal box) places controls in a row next to each other. The vertical box `VBox` places controls vertically. The `FlowPane` places the nodes in a row and then wraps to the next row if there is no room left  in the current one.
+
+The `GridPane` allows to arrange UI controls in rows and columns and assign constraints (properties) to each cell.
+
+The `BorderPane` splits the scene into five regions, which are called `left`, `top`, `right`, `bottom`, and `center`. 
+
+The `TilePane` layout is similar to the FlowPane, but it places each node in a cell of the same size (like tiles on the wall). Say, you need to display several images in a tile layout. Adding the `ImageView` nodes to the `TilePane` will shows them as tiles next to each other. 
+
+The `StackPane` layout works as a deck of playing cards - only one child node will be shown at a time covering the other nodes.
+
+The `AnchorPane` lets you to anchor nodes at left, top, right, and bottom of the scene. Imagine a music player application with the buttons Rewind on the left and the Fast Forward on the right. For example, the `AncorPane` allows to force the Rewind button to always remain at 20 pixels from the left border of the window and 10 pixels from the bottom even when the window resizes. For that you can use the `leftAnchor` and `bottomAnchor` properties. For example,
 
 [source, java]
 ----
-@FXML private TextField id;
-
-@FXML private PasswordField pwd;
+AnchorPane.setLeftAnchor(rewindBtn, 20);
+AnchorPane.setBottomAnchor(rewindBtn, 10);
 ----
 
-Java has so called annotations (not covered in this book). They start with `@` sign and can be placed in front of the variable, class, or a method declaration depending on how  the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation `@FXML` instructs runtime to inject the references to the specifies GUI objects into the variables. 
+If you'd be writing the code manually in Java, you'd be going through the following steps with any layout:
 
-In other words, JavaFX runtime will read the first line as follows: "I need to get the object that I created after loading signin.fxml file, and then inside this object find the component with an the `fx:id="id"`. Finally, I need to insert the reference to this component into the Java variable `id`". The same applies to the variable `pwd`.
+1. Create instances of child nodes to be used within the layout container.
 
-The rest is easy. Just use the injected values in you event handler. The code of our `Controller` is shown next. Its method `signInClicked` checks the value entered in the User ID field in the GUI, and if it's not equal to "Yakov", then the code sets the background of the GUI component to pink color.
+2. Create an instance of the selected layout class (e.g. `HBox`). This instance will serve as a container and a layout manager for all child nodes that you'll add to it.
+
+3. Add the child nodes to the container using either the method `add()` or `addAll()`.
+
+4. If this layout instance needs to be used inside another layout (e.g. an `HBox` can be placed inside the `BorderPane`) add the instance created in Step 1 to the parent container by using the method `add()`.
+
+In this chapter we'll use only some of the JavaFX layouts, but for detailed coverage of layouts visit Oracle tutorial at http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm.
+ 
+It's easier to create layouts and components using a visual tool, and this is what we'll do next.
+
+=== Getting Started With Scene Builder
+
+Scene Builder 2.0 is a visual layout tool for JavaFX applications by Oracle. Download it from http://goo.gl/9jOse6. Follow the http://goo.gl/rCt8x1[installation instructions] for your operational system and install Scene Builder on your computer. In this section I'll show you how to quickly get started with Scene Builder, but you should also watch this helpful https://www.youtube.com/watch?v=rHcnsEoSK_c[Youtube video].
+
+You can start the Scene Builder either independently or from IDEA. For example, if you right-click on the _sample.fxml_ file in your newly generated IDEA project it'll show you a popup menu, which includes the item Open in SceneBuilder. Select this item. The very first time IDEA will ask you to confirm  the location of Scene Builder application on your computer. Then it'll open _sample.fxml_ in Scene Builder. This is how it looks on my computer:
+
+[[FIG7-4]]
+.Scene Builder with opened sample.fxml
+image::images/fig_7_04.png[]
+
+On the left panel you can select containers, controls, menus, shapes and drag and drop them onto the central canvas area. Note the GridPanel layout shown at the bottom left - the arrangement of GUI components inside of this scene will be controlled by `GridLayout`. Let me select the Button from the Controls section on the left and drop it on the canvas in the middle. The Screen Builder's window will look like this:
+
+[[FIG7-5]]
+.Adding a button to the scene
+image::images/fig_7_05.png[]
+
+The right panel allows you to change the properties of this button. These little boxes with the digit one represent so called row and column constraints - we'll discuss them shortly.
+
+The Scene Builder's menu Preview | Show Preview in Window will show how your GUI will look during the runtime. So far our one-button screen is not too fancy, and this is how it's preview looks like:
+
+[[FIG7-6]]
+.Scene Builder: previewing in window
+image::images/fig_7_06.png[]
+
+Let's save the changes in _sample.fxml_ (menu File | Save) and open this file in the IDEA text editor. When IDEA generated _sample.fxml_ there were no content between `<GridPanel>` and `</GridPanel>`in the generated _sample.fxml_, but now there is:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Button mnemonicParsing="false" text="Button" 
+         GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   </children>
+</GridPane>
+----
+
+I'll go through the details of the `GridPane` layout in the next section, but please note that Scene Builder created some tags to specify the constraints for the rows and columns of the grid. The `Button` component is placed inside the grid in the cell located in the intersection of the column 1 and row 1. 
+
+
+=== GridPane Layout
+
+I'm not going to cover each JavaFX layout in details, but will show you how to use a pretty powerful layout - `GridPane`. When we'll work on the GUI for the calculator, I'll also show you how to design a scene using a combination of layouts.
+
+GridPane divides the area into rows and columns and places GUI components (the nodes) into the grid cells. With `GridPane` layout cells don't have to have the same size - nodes can span. If the screen size changes, the content won't be rearranged and will maintain the grid look. 
+
+Before placing the node into a particula cell you have to specify the grid constraints such as `rowIndex` and `columnIndex` (the coordinate of the cell, which starts with 0,0). The `rowSpans` and `columnSpan` allow to make the cell as wide (or as tall) as several other cells. The `GridPane` http://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/GridPane.html[documentation] describes lots of various constraints that can define the behavior of each cell's content if the windows gets resized. I'll show you a basic example that uses some of these constraints.
+
+==== Designing a Sign In Window in Scene Builder
+
+I want to create a Sign In window where the user can enter the id, password and press the button Sign In. The scene will use `GridPane` layout. The first row will contain a `Label` and `TextField` for user id, the second row will have a similar pair for the password, and the third row of the grid will have one `Button` Sign In that should span two columns. This is how this window should look like:
+
+[[FIG7-7]]
+.The Sign In Window
+image::images/fig_7_07.png[]
+
+I'll start with creating a new IDEA JavaFX project (menus File | New Project | JavaFX Application) giving it a name Signin. The project with classes `Main`, `Controller` and the file _sample.fxml_ will be generated. Let's rename this FXML file into _signin.fxml_. IDEA will automatically change the corresponding line in the `Main` class to load this file instead of _sample.fxml_:
 
 [source, java]
 ----
-public class Controller {
-
-  @FXML private TextField id;            //  <1>
-
-  @FXML private PasswordField pwd;       //  <1>
-
-  public void signInClicked(ActionEvent evt){
-
-    String userID = id.getText();      //   <2> 
-    String password = pwd.getText();   //   <2>
-
-    if (!"Yakov".equals(userID)){      //    <3>
-      id.setStyle("-fx-background-color:lightpink;"); //<4>
-    } else{
-      id.setStyle("-fx-background-color:white;");    // <5>
-    }
-
-    System.out.println("got id:" + userID + ", got password: " + password);
-
-    System.out.println("Hello from signInClicked method in controller");
-  }
-}
+Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
 ----
 
-<1> Inject the references to GUI components into member variables.  
-<2>  Extract the text from the GUI objects 
-<3>  Has the user not entered Yakov in the User ID field? We use the negation operator ! here.
-<4>  Set the background color to `lightpink` if the entered user id is not Yakov. You can find major CSS color names at http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html   
-<5>  Set the background color to back to `white` if the entered user id is not Yakov. 
+Rename the package from _sample_ to _signin_ (right-click menu, Refactor | Rename). Now open the file signin.fxml in Scene Builder and start thinking about laying out the components of our Sign In scene. Let's take another look at the image of the Sign In window. I can clearly see that GUI components are placed in three rows. The first two have a `Label` and `TextField` and the third one has a wide `Button`.  
+I can also recognize two columns in the layout of the Sign In window. The first column has two `Label` components and the left side of the `Button`. The second column has two `TextFiled` components and the right side of the `Button`. We can also say that the `Button` _spans_ two columns. We've got a 2x3 grid!
 
-If you run the `Main` program and enter the wrong user id, the window will look as follows:
+Open the generated `signin.fxml` in Scene Builder. Since this file has already empty `<GrigPane>` tag, you'll see GridPane(0,0) as the root of the hierarchy in the bottom left corner as in Figure 4 above. So far this grid has zero rows and zero columns. Right-click on the grid in the middle of the screen and add three rows and two columns to the grid by using the right-click menus GridPane | Add Row Below and Add Column After. When the GridPane is selected The Scene Builder's window may look similar to this:
 
-[[FIG8-5]]
-.After entering the wrong user id 
-image::images/fig_8_05.png[]
+[[FIG7-8]]
+.A GridPane (2,3)
+image::images/fig_7_08.png[]
 
+Now let's drag two `Label` controls and a `Button` from the Controls section on the left and drop them into the appropriate cells in the first grid column. Change the text on these components to be UserID:, Password, and Sign In.
+Then we could drag and drop two `TextField` objects in the top two cells in the second column. Actually, it's not a good idea to enter password in the clear text. I'll use the `TextField` for the user ID, and the `PasswordField` (it marks user's input) for password.
 
-=== Assigning Event Handlers in Java
+[[FIG7-9]]
+.A GridPane with nodes in Scene Builder
+image::images/fig_7_09.png[]
 
-If your program is written completely in Java without any use of FXML, you'll be assigning event handlers using so called http://docs.oracle.com/javafx/2/events/convenience_methods.htm[convenience methods] that have names that start with `setOn` like `setOnAction`, `setOnKeyTyped`, `setOnEditStart` etc. Each of the GUI components has has several of such methods.   
+Note that the hierarchy of nodes is shown in the bottom left panel of Scene Builder. If you want to change the properties of a component on a scene with a complex GUI layout it might be easier to select the GUI control in the Hierarchy panel than in the design area in the middle. Now select the menu Preview | Show Preview in Window and you'll see the following window:
 
-You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or method references (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you'll be writing code to react if some event has happened. For example, if you have a button represented by a variable `myButton` you can write an event handler for the click event:
+[[FIG7-10]]
+.Previwing in Scene Builder
+image::images/fig_7_10.png[]
+
+This window doesn't look exactly as we wanted: there are some issues with alignments, there is no spacing between the container and components, and the button Sign In doesn't span. But on the bright side, the `GridPane` controls the layout and if you'll try to stretch this window, GUI components won't change their relative positioning:
+
+[[FIG7-11]]
+.Streching the preview window in Scene Builder
+image::images/fig_7_11.png[]
+
+Let's do a couple of more property changes before we'll run this application from IDEA. In Scene Builder the Properties panel is located on the right and has three sections: Properties, Layout, and Code, and you'll find the properties to be changed in one of these sections. 
+
+1. On the left panel of Scene Builder select the `GridPane` and on the right panel change alignment to be `TOP_LEFT`.
+
+2. Enter 10 for the padding on top, right, bottom and left for the `GridPane`. We need some spacing between the borders of the scene and the grid.
+
+3. Select the `Button` on the left and then change the column span to be 2 and the preferred width to be a large number, say 300. This will make the button wide.  
+
+4. Select the first column of the grid row by clicking on the little 0 on top of the grid. Set the both preferred and maximum width for this column to be 70.
+
+5. Select the second column of the grid row by clicking on the little 1 on top of the grid. Set the both preferred and maximum width for this column to be 100.
+
+After you do all these changes and save them, the file `signin.fxml` will look like this:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller">
+   <rowConstraints>                    
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
+      <ColumnConstraints maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <children>
+      <Label alignment="CENTER" text="User ID:" />
+      <Label text="Password:" GridPane.rowIndex="1" />
+      <Button mnemonicParsing="false" prefWidth="300.0" text="Sign In" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+      <TextField GridPane.columnIndex="1" />
+      <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>
+----
+
+In the `<GridPane>` section you see `<rowConstraints>` and `<columnConstraints>` tags defining the the properties of the rows and columns. The `<children>` section contains the declaration of GUI components that the user will see on the screen: `<Label>`, `<Button>`, `<TextField>`, and  `<PasswordField>`. The `<Insets>` section endures that there is some space between the grid borders and its children.
+
+This is a declarative way of creating GUI in FXML. No Java coding was required to create the GUI for this application.
+
+Finally, let's set the size of the stage so it can accommodate all components from our scene. In IDEA, open the class `Main`,  and in the code set the size of the scene to be 200x150 pixels.
 
 [source, java]
 ----
-Button signInButton = new Button("Sign In");
-signInButton.setOnAction(evt -> 
-    System.out.println("The Sign In button was clicked.")
-);
+primaryStage.setScene(new Scene(root, 200, 150));
 ----
 
-You've got introduced lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but don't really uses its values but just prints the message that the button was clicked. 
+Run the `Main` program and you'll see the window that looks like in Figure 7 above. The work that we've done in Scene Builder was a little tedious, but it didn't require any knowledge of Java. This means that this work can be given to a UI designer, while you'll concentrate on programming the application logic in Java. 
 
-What's the type of the `evt` argument? Java compiler will figure it out automatically. Since the method `setOnAction` expects to get the `ActionEvent` object from the JVM, compiler guesses that the type of the `evt` is `ActionEvent` so you don't even need to write it in the program code. You've seen a similar example of of type inference in Chapter 5.  
+==== Programming the Sign In Window in Java
 
-To bring all pieces of the puzzle together, I'll show you another version of the Sign In application that will look the same, but won't use FXML - everything will be programmed in Java. The following class `MainPureJava` and `signin.css` is all we need for programming the functionality of our Sign In window. There is not need to use `signin.fxml` or `Controller.java` in this case. 
+Some people like visual design tools, but others don't. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I've written purely in Java without using Scene Builder. It'll produce the same output as in Figure 7.
 
 [source, java]
 ----
-package signin;
-
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.*;
-
-public class MainPureJava extends Application {
+public class GridPaneSample extends Application {
 
   public void start(Stage primaryStage) {
+      
+      final int TWO_COLUMN_SPAN = 2; 
+      
+      Label userIdLbl = new Label("User ID:");
+      TextField userIdTxt = new TextField();
+      Label userPwdLbl = new Label("Password:");
+      PasswordField userPwdTxt = new PasswordField();
 
-    final int TWO_COLUMN_SPAN = 2;               // <1>
+      GridPane root = new GridPane();
+      root.setVgap(10);
+      root.setPadding(new Insets(10));
+      root.setAlignment(Pos.CENTER);
+      
+      // Using static methods for setting node constraints 
+      GridPane.setConstraints(userIdLbl, 0, 0);
+      GridPane.setConstraints(userIdTxt, 1, 0);
+      GridPane.setConstraints(userPwdLbl, 0, 1);
+      GridPane.setConstraints(userPwdTxt, 1, 1);
 
-    Label userIdLbl = new Label("User ID:");     // <2> 
-    TextField userIdTxt = new TextField();
-    Label userPwdLbl = new Label("Password:");
-    userPwdLbl.getStyleClass().add("bluelabel");
-    PasswordField userPwdTxt = new PasswordField();
-
-    GridPane root = new GridPane();              //  <3> 
-    root.setVgap(20);
-    root.setPadding(new Insets(10));
-    root.setAlignment(Pos.CENTER);
-    root.setId("root");
-
-    // Setting constraints for firs 2 rows
-    GridPane.setConstraints(userIdLbl, 0, 0);    //  <4>
-    GridPane.setConstraints(userIdTxt, 1, 0);
-    GridPane.setConstraints(userPwdLbl, 0, 1);
-    GridPane.setConstraints(userPwdTxt, 1, 1);
-
-    root.getChildren().addAll(userIdLbl, userIdTxt, 
-    userPwdLbl, userPwdTxt);                      //  <5>
-
-
-    Button signInBtn = new Button ("Sign In");    //  <6>
-    signInBtn.setId("submitBtn");  // used in CSS
-
-    // Event handler with lambda expression
-    signInBtn.setOnAction(evt -> {                 //  <7> 
-
-        String userID = userIdTxt.getText();
-        String password = userPwdTxt.getText();
-        if (!"Yakov".equals(userID)){
-            userIdTxt.setStyle("-fx-background-color: lightpink;");
-        } else{
-            userIdTxt.setStyle("-fx-background-color: white;");
-        }
-
-        System.out.println("Got id " + userID +
-                           " and password " + password);
-    });
-
-    // Allow the button to be wider
-    signInBtn.setPrefWidth(Double.MAX_VALUE); 
-
-    // Adding a wide button to the third row
-    root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);     
-
-    Scene scene = new Scene(root,250,180);
-    scene.getStylesheets()                         // <8>
-         .add(getClass()
-         .getResource("signin.css")              
-         .toExternalForm());
-    
-    primaryStage.setScene(scene);                  // <9>
-    primaryStage.show();
+      root.getChildren().addAll(userIdLbl, userIdTxt, 
+                                userPwdLbl, userPwdTxt);
+      
+      Button signInBtn = new Button ("Sign In");
+      
+      // Allow the button to be wider overriding preferred width       
+      signInBtn.setPrefWidth(Double.MAX_VALUE);
+ 
+      // using instance method for directly adding the node
+      root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1); 
+  
+      Scene scene = new Scene(root,250,150);
+      primaryStage.setScene(scene);
+      primaryStage.show();
   }
 
   public static void main(String[] args) {
@@ -269,183 +325,300 @@ public class MainPureJava extends Application {
 }
 ----
 
-<1> This programs uses the `GridPane` layout with three rows and two column. Since the Sign In button will span tho columns, I declared a final variable `TWO_COLUMN_SPAN` that will be used when the button will be added to the grid. 
-<2> Then I instantiate labels and text fields.
+After all your efforts in Scene Builder, this Java program shouldn't be difficult for you to understand. As you see, I use classes named similarly to FXML tags. FXML tags can have attributes (e.g. `vgap="10" `), and in Java you'd need to call the corresponding setter (e.g. `root.setVgap(10)`). So the choice is yours - FXML or Java. If you have _visual personality_ use FXML, otherwise use Java.
 
-<3> After that I create an instance of the `GridPane` container.
+=== Styling With CSS
 
-<4> To add the labels and text fields to the proper cells of the first two rows of the grid, I set the constraints on the `GridPane` object.
+It would be boring if all applications would look the same. Application windows may have different colors, fonts, buttons with rounded corners or use special visual effects. In other words, applications have different styles. Even though you can style JavaFX GUI components programmatically (e.g. by calling methods `setFont()` or `setFill()`) separating styling from programming allows professional UI designers to take care of the look and feel while software developers implement application logic. 
 
-<5> The GUI components for the first two rows are instantiated, constraints are set so I add them as children to the root of the _scene graph_ - the `GridPane`.
+Separating the work of programmers and designers became  popular in Web applications. Cascading Style Sheets (CSS) is a special language for styling UI. Styles of GUI components are stored in separate _.css_ files and are loaded and applied to components by the application's code. Sometimes this process is called _skinning_ - you can create an application that can "wear different skins" changing its look to the user's liking. JavaFX has a default skin, and if you're interested in how to create custom skins, visit Oracle online tutorial http://docs.oracle.com/javafx/2/css_tutorial/jfxpub-css_tutorial.htm[Skinning JavaFX applications with CSS].
 
-<6> Now I create the instance if the Sign In button and assign the id to it. This was explained in the Styling with CSS section in Chapter 7.
+Even if you won't create your own CSS file, your JavaFX application applies default CSS style to the components of your view. In Scene Builder you can see these styles. Just select any component and the go to the menu View | Show CSS Analyzer. You'll see a number of styles the start with the prefix `fx-`, which makes JavaFX CSS a little different from a standard CSS syntax.
 
-<7> The lambda expression implements the application logic to be invoked as a reaction to the `ActionEvent`.    
+Covering CSS in detail would require a separate book, but I'll show you a simple example of how the look of the GUI can be changed without the need to modify the Java code. 
 
-<8> The we create a scene object an apply the CSS to it. This is probably the first time you see the method chaining. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object. 
+You can either create so-called _CSS selectors_ to style a specific GUI component, a type of components (e.g. all buttons), or create a reusable style that can be applied programmatically to a selected component. 
 
-<9> Finally, the scene is added to the stage and the curtain goes up.
+To style a specific component it has to have a unique id. If you program GUI in Java, set in your Java code using the method `setId()`, for example:
 
-Some programmers like GUI designer tools where they can drag and drop components. Some prefer writing Java code. I prefer working with FXML, because it greatly simplifies  design of the complex windows. Besides separating the design from the application logic is also a good idea because a person who doesn't know programming can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.
+[source,java]
+----
+Button signInBtn = new Button ("Sign In");
+signInBtn.setId("submitBtn"); 
+----
+
+In FXML just add an `id` attribute to the tag of the component:
+
+[source,xml]
+----
+<Button id="submitBtn" text="Sign In"> 
+----
+
+For a button with an id `submitBtn` you can add the following section to the CSS file to make its background color red:
+
+[source, css]
+----
+#submitBtn{
+  -fx-background-color: red;
+}
+----
+
+You can find the names of the main CSS colors http://www.w3schools.com/cssref/css_colornames.asp[online]. In CSS the id type selectors start with the #-sign as in `#submitBtn`. 
+
+If you want to apply a style to several components of the same type, you need to define a type selector. For example, to make the text of all `Label` components red, you can define the following CSS type selector:
+
+[source, xml]
+----
+.label{
+  -fx-text-fill: red;
+} 
+----
+
+Note that CSS type selectors start with the dot. To create a _CSS class selector_ that can be applied to any component, define the selector with an arbitrary name and apply it programmatically to the components of your choice.  For example, you can specify the class selector `.blueLable`:
+
+[source, xml]
+----
+.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}
+----
+
+This class selector defines the rules that will display text of the component in blue *bold* verdana font in _italic_ style. Typically, you'll be loading the entire CSS file when the application starts so all styles are available for use. If you use Java for GUI programming, you can apply a class selector to a specific button just like this:
+
+[source, java]
+----
+Label userPwdLbl = new Label("Password:");
+userPwdLbl.getStyleClass().add("bluelabel");
+----
+
+In FXML assigning a CSS class selector is done by adding the attribute `styleClass` to the tag element:
+
+[source, xml]
+----
+<Label text="Password:" styleClass="bluelabel" GridPane.rowIndex="1" />
+----
+
+You may ask, "How am I supposed to know which style properties are available for a given JavaFX component?" All JavaFX styles are described in the online document titled http://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html["JavaFX CSS Reference Guide"].  
+
+Let's learn how to apply all these styling techniques to the Sign In window from the previous section. Using IDEA menu File | New create a new file _signin.css_ in Signin project. Then add the following content to it:
+
+[source, css]
+----
+#submitBtn{
+    -fx-background-color: lightskyblue;
+    -fx-font-family:verdana;
+    -fx-font-size:20;
+    -fx-font-weight: bold;
+    -fx-stroke:navy;
+    -fx-font-style:italic;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.label{
+    -fx-text-fill: red;
+}    
+
+.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}
+----
+
+The file signin.css_ defines three styles:
+
+* an id selector for the component with the id `submitBtn`
+* a type selector for all `Label` components
+* a class selector `bluelabel` that we can be applied to certain labels.
+
+To apply this CSS file to our Sign In application add the attribute `id="submitBtn"` to the `<Button>` element in _signin.fxml_.
+
+Then add the attribute `styleClass="bluelabel"` to the `<Password>` tag in `signin.fxml`.
+
+Finally, in `Main.java` load the `signin.css` and apply it to the scene. The new version of `Main.java` will look like this:
+
+[source, java]
+----
+public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
+      primaryStage.setTitle("Sign In");
+
+      Scene scene  = new Scene(root, 200, 150);
+        scene.getStylesheets().add(getClass()
+              .getResource("signin.css").toExternalForm());
+
+      primaryStage.setScene(scene);
+      primaryStage.show();
+    }
 
 
-==== Further Reading on Event Handling
+  public static void main(String[] args) {
+      launch(args);
+  }
+}
+----
 
-I've explained you the basics of event handling using the `ActionEvent` and `onAction` event handler as an example. Some other examples of the events are:`KeyEvent` (e.g. the user pressed a key on the keyboard), `MouseEvent`(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), `TouchEvent` (e.g. the user touched the screen), `WindowEvent` (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle's tutorial about handling events at http://docs.oracle.com/javafx/2/events/jfxpub-events.htm.
+Run the `Main` application and you'll see a differently styled Sign In window: 
 
-=== Data Binding and Properties
+[[FIG7-12]]
+.Styled Sign In Window
+image::images/fig_7_12.png[]
 
-JavaFX has an interface `Property` located in the package `javafx.beans.property`, which defines a very useful functionality allowing to _bind_ the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.
+When the application starts loading our CSS file it sees that all labels must be red because of the type selector for labels. But then the application notices a more specific style for the `Label` Password: `styleClass="bluelabel"`, so it paints the text _Password_ in blue. 
 
-Imagine that you're developing a multi-player game that has a Java object receiving the moves of other gamers from a central server. When a Java object receives a new move, you need to modify the content of the corresponding GUI component of the game. With JavaFX you can simply bind a property of a Java class that stores player's moves (e.g. `playersMove`) to the property of, say a `Label` component on the GUI. No more coding required. As soon as the `playersMove` value changes, the `Label` will be automatically updated.  JavaFX properties greatly simplify the process of synchronization of the data and the GUI.
+=== BorderPane and Combining Layouts
 
-Existing implementations of the `Property` interface add  the change notification functionality to regular class attributes. The interface `Property` declares the following methods: `bind`, `unbind`, `bindBidirectional` , `unbindBidirctional`, and `isBound`. You can bind to a JavaFX property only the value of an `ObservableValue` type, which is explained in the sidebar. 
+Pretty often you see applications that split the window into several distinct areas - the header goes on top, the navigation bar is on the left (or right), the footer's at the bottom of the page and a large content area occupies the middle portion of the window. The `BorderPane` layout allows you to do exactly this - split the scene into up to five regions called `left`, `top`, `right`, `bottom`, and `center`. 
 
-.Design Patterns Briefly
-****************************
-Over the years software developers came up with a number of _design patterns_, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You'd better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you'll be a little better prepared for chatting with programmers.
+Each of these regions can contain either a single GUI component or a container that will have "children" - components allocated in their own container, e.g. inside a `GridPane`. You'll use `BorderPane` layout with a nested `GridPane` while working on the calculator following instructions from the Project section at the end of this chapter. Meanwhile, let's create a very basic window illustrating how the `BorderPane` layout works.
 
-*MVC* stands for Mode View Controller. This design patter recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we've almost implemented MVC in one of the versions of the Sign In application. The file _signin.fxml_ was a view, and the class `signin.Controller` played a role of a controller. Since this example had just two variables (`id` and `pwd`) we didn't created a special model class for them.
+Open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag the `BorderPane` from the left and drop in the middle. Click on the `BorderPane` and you'll see a screen that can look as follows:
 
-*Observer* design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you'll see in this chapter. 
+[[FIG7-13]]
+.An Empty BorderPane
+image::images/fig_7_13.png[]
 
-If you're interested in detailed coverage of design patters, get the book "Head First Design Patterns" published by O'Reilly Media. 
-****************************
+Now select Insert TOP at the bottom left, and then drag and drop a `Label` from the Controls section onto the middle section of Screen Builder. Set the label's title to "This is the Header". This text will be displayed at the top.
 
-Classes that implement `Property` interface are located in the package `javafx.beans.property`. For each property type there are two classes: one that allows only reading property values and the other one for read and writing (changing the values). For example, if you need a `String` property, use either `ReadOnlyStringWrapper` or `SimpleStringProperty`. Similarly named classes exist for other data types and some collections too.
+Now select Insert LEFT and then drag and drop `VBox` from the Containers area to the left side of the middle section of the Screen Builder. The `VBox` is a container for arranging GUI components vertically, which is what we need for creating a navigation menu. You'll see an empty gray area on the left.
 
-As we always do in this book, let's learn by coding. I'll continue adding features to our Sign In application. This time I'll add a `Label` component with `fx:id="errMsg"` to the view in FXML file to display sign in error messages if any. In the controller class I'll add a corresponding variable `errMsg` and will inject a reference to the `Label` into this variable. 
+[[FIG7-14]]
+.Adding a VBox for navigation 
+image::images/fig_7_14.png[]
 
-The next step is to declare a bindable property `signinError` in the class `Controller` that will get the value of the error message if any. But since a regular `String` can't be bindable, we'll use the data type `SimpleStringProperty`  
+Now select `VBOX` at the bottom left and add a couple of menu items to the empty `VBox`. Drag a `Button` from the Controls section and drop it onto the `VBox`. Change its text to read "Menu 1", and make it a little wider so it fits the `VBox` nicely. Add two more buttons labeled "Menu 2" and "Menu 3".
 
-Finally, I'll bind the label and the variable to insure that an error message is immediately displayed on the screen as soon as its value changes. 
+[[FIG7-15]]
+.Adding buttons to VBox 
+image::images/fig_7_15.png[]
 
-Let's place an additional `Label` component at the bottom of the Sign In window. I'll add another row to the `GridPane` and place there a `Label` that will span two columns. This label will have `fx:id="errMsg"` and initially won't  have any text - it'll be invisible. The `<children>` section of the FXML file will look as follows:
+Let's add a footer to the window now. Select Insert BOTTOM at the bottom left and then drag the `HBox` from the Containers area to the middle section. It'll look like a gray area at the bottom. Adjust its height so the footer doesn't take too much real estate in our scene. Now add three `Hyperlink` components from the Contols section to the footer and set their text to "Link 1", "Link 2", and "Link 3" correspondingly. The Scene Builder's window should look like this: 
+
+[[FIG7-16]]
+.Adding a footer with links 
+image::images/fig_7_16.png[]
+
+Select the menu Preview | Show Preview in Window will help you to see how the window will look during the runtime:
+
+[[FIG7-17]]
+.Previewing the window 
+image::images/fig_7_17.png[]
+
+Of course, this window may need more work on styling controls and adjusting sizes and alignments, but as long as you understand how to lay out a scene, the shouldn't be too difficult. Creating and applying CSS styles can make this windows a lot prettier.
+
+Using Scene Builder's menu File | Save save the layout in a file _border.fxml_. While you've been dragging and dropping components, Scene builder was working hard generating the corresponding FXML code in _border.fxml_. If you open this file in any text editor, its content may look similar to this:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label text="This is the Header" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 1" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 2" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 3" />
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+      <HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Hyperlink text="Link 1" />
+            <Hyperlink text="Link 2" />
+            <Hyperlink text="Link 3" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
+
+----
+
+Don't be overwhelmed with the amount of tags and attributes in the above code. You can identify the regions of the `BorderPane` layout. The `<top>` region contains a label, while the `left` and `<bottom>` regions have containers with their own layouts. In this example I have not used the `<center>` and `<right>` regions. Typically your program will be changing the content of the central area based on the user actions. For example, if the user clicks on the "Menu 1" button in the left region, JavaFX will generate a _clicked event_ and you'll show the content required for this selection in the central area. 
+
+You'll learn how to process events in the next chapter. Now it's time to practice in working with combined layouts. 
+
+=== Project: Creating a GUI for Calculator
+
+Using Scene Builder and a combination of the `BorderPane` and `GridPane` layout create GUI for the calculator that looks as on Figure 1.  Add the `TextField` to the `north` region of the `BorderPane`. Then add a `GridPane` container to the `center` area - you'll add buttons to this container. 
+
+Most of the calculators have a display field on top and the buttons just below it. As you can see on Figure 1, the grid with buttons has four columns and six rows. The default `GridPane` contains two columns and three rows. You'll need to right-click on the grid and use the menus GridPane | Add Row Above and Add Column After to until you see a 4x6 grid as shown below.
+
+[[FIG7-18]]
+.The 4x6 GridPane in the center 
+image::images/fig_7_18.png[]
+
+Note that I set the `Padding` property to be 10 for all sides of the grid and the `Hgap` and `Vgap` to 5 (the gap between the cells).
+
+Save the layout in the file _calculator.fxml_. Then drop a Button into the top left cell of the grid. Set the `Margin` property to 5 for each side of the button - this is the distance between the button and cell borders. Drag the button's border to make it larger. This is what you should see:
+
+[[FIG7-19]]
+.The grid with one button 
+image::images/fig_7_19.png[]
+
+If you're curious how this button looks in the _calculator.fxml_, open this file in any text editor and note the section `<children>` that in my case looks like this:
 
 [source, xml]
 ----
 <children>
-      <Label alignment="CENTER" text="User ID:" />
-      <TextField GridPane.columnIndex="1"  fx:id="id" />
-      <Label text="Password:"  styleClass="bluelabel" GridPane.rowIndex="1" />
-      <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="pwd"/>
-      <Button id="submitBtn" mnemonicParsing="false" prefWidth="300.0" text="Sign In"
-              GridPane.columnSpan="2" GridPane.rowIndex="2"
-              onAction="#signInClicked"/>
-       <Label alignment="CENTER" GridPane.rowIndex="3"
-              GridPane.columnSpan="2" prefWidth="300.0" fx:id="errMsg"/>
-   </children>
+   <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="132.0" text="Button">
+      <GridPane.margin>
+         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </GridPane.margin>
+   </Button>  
+</children>
 ----
 
-Injecting a reference of the new label into controller and declaring a property to store the error message will look like this:
+There is no indication of the cell (0,0) because zeros are the default values for `GridPane.columnIndex` and `GridPane.rowIndex` properties. Now you need to replicate this button in other cells. You can use multiple Ctrl-C/Ctrl-V commands and then drag/drop the buttons into other cells. See how the content of the _calculator.fxml_ changes as you add more buttons. I find it faster copy/pasting the generated code in the FXML file than using Scene Builder for mass duplication.
+
+Note that on Figure 1, the button with coordinates (0,5) spans two columns, and the button with coordinates (3,4) spans two rows. For these buttons you'll need to enter 2 as the row (or column) span, and select `MAX_VALUE` as maximum width (or height).  This is what you should see by now:
+
+[[FIG7-20]]
+.Replicated buttons 
+image::images/fig_7_20.png[]
+
+Change the text of each button to look as in Figure 1, and the layout is done.
+
+Then create a new JavaFX project Calculator in IDEA and replace the generated _sample.fxml_ with _calculator.fxml_ created by Scene Builder. Modify the generated class `Main` to use _calculator.fxml_. Rename the package from _sample_ to _mycalculator_. Set the size of the scene to be large enough to accommodate your design. This is how my class `Main` looks like:
 
 [source, java]
 ----
-@FXML private Label errMsg;
+public class Main extends Application {
 
-SimpleStringProperty signinError = 
-                        new SimpleStringProperty();
----- 
-
-The next question is when and where do the binding? If I'd be creating an instance of the `Controller` with the `new` operator I could have done it in the class constructor after the GUI component are created. But JavaFX runtime instantiates the `Controller` for us, so how can we catch the moment when the GUI components are ready? 
-
-In JavaFX if you'll add to the controller the method `initialize` annotated with @FXML, `FXMLLoader` will invoke it after the GUI components are constructed. 
-
-[source, java]
-----
-@FXML public void initialize() {
-
-  errMsg.textProperty().bind(signinError);
-}
-----
-
-JavaFX properties are observables. So you can read the above the above code as follows: "I want the text property of the label `errMsg` to be the observer (a.k.a. listener) to the property `signinError` (observable). So whenever `signinError` changes, the text property of the label will get the latest value. 
-
-To complete the binding Sign In example, the event handler for the Sign In button should not only paint the wronn ID in light pink, but also modify the value of the `signinError` property. The complete code of the class `BindableController` is shown next.  
-
-[source, java]
-----
-public class BindingController {
-
-  @FXML
-  private TextField id;
-
-  @FXML
-  private PasswordField pwd;
-
-  @FXML private Label errMsg;
-
-  SimpleStringProperty signinError = new SimpleStringProperty();
-
-  @FXML public void initialize() {
-      System.out.println("Controller's ready. Let's bind some components");
-
-      errMsg.textProperty().bind(signinError);
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+      Parent root = FXMLLoader.load(getClass().getResource("calculator.fxml"));
+      primaryStage.setTitle("My JavaFX Calculator");
+      primaryStage.setScene(new Scene(root,650,600));
+      primaryStage.show();
   }
 
-  public void signInClicked(ActionEvent evt){
-
-      String userID = id.getText();
-      String password = pwd.getText();
-      if (!"Yakov".equals(userID)){
-          id.setStyle("-fx-background-color: lightpink;");
-          signinError.set("Wrong id:" + userID);
-
-      } else{
-          id.setStyle("-fx-background-color: white;");
-          signinError.set("");
-      }
-
-      System.out.println("got id:" + userID + ", got password: " + password);
-
-      System.out.println("Hello from signInClicked method in controller");
+  public static void main(String[] args) {
+      launch(args);
   }
 }
 ----
 
-Note that in the if statement I set the error message when the ID is wrong, and reset the `signinError` to an empty string when the ID is correct. After I ran the Sign In application the above controller, entered Alex as the user ID and clicked the button Sign In, my window looked like this:
+Run the `Main` program from IDEA to ensure that your calculator looks as expected. Don't allow the users to resize your calculator by invoking the method `setResizable` on the stage object.
 
-[[FIG8-6]]
-.Binding in action after entering the wrong user id 
-image::images/fig_8_06.png[]
-
-Enter the right user ID, click on Sign In again, and the binding mechanism will remove the error message from the window.
-
-=== Deploying With JavaFX Packager
-
-http://docs.oracle.com/javafx/2/deployment/jfxpub-deployment.htm.
-
-The `Application` class has a method `getParameters`, which is a JavaFX way of getting command line arguments that might be passed to your application during its launch .
-
-I'm sure many of you want to know if it's possible to use JavaFX for writing applications for smart phones. Oracle doesn't offer the JavaFX libraries for mobile platforms, but it's still possible. 
-
-To develop JavaFX applications for iOS, you'd need to install and learn on your own some additional software, namely RoboVM[http://www.robovm.com/] is an SDK for converting Java bytecode into a native device code as if it was written in C programming language, which makes it deployable on iOS devices. 
-
-There is also a community site JavaFX Ports[ http://javafxports.org/page/home] where people are working on deployment of JavaFX applications on iOS and Android devices.
+Then create a CSS file to add some cool styling to the calculator's buttons. Save the CSS file in your IDEA project and modify the code of the `Main` class to use your CSS file similarly to how it was done in the section "Styling With CSS" above. Make your calculator look better than mine - it's not too difficult.
 
 
-=== Application Thread in JavaFX 
+After completing this assignment your buttons won't work just yet. In the next chapter you'll learn how to make the buttons (or other components) to react on user actions, so you'll be able to complete the calculator. In this chapter my goal was to introduce you to basic rules of designing JavaFX GUI with the help of Scene Builder. Watch http://www.youtube.com/watch?v=ij0HwRAlCmo[this YouTube video] to see how easy it is to design more complex views with Scene Builder.
 
-JavaFX also runs more than one thread. Imagine a program with a GUI that's constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or characters. It could be an application for a TV channel that shows a video, a running commercial, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction. 
-
-Updates of the GUI in JavaFX are done in a so called  _application thread_. The idea is to separate intensive calculations from the GUI updates. Say, the user pressed the button Play on JavaFX video portal application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy every time there was a delay in getting content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
-
-I'd better see it to believe it, right? I can easily demonstrate you a "frozen GUI" effect by making a small change in the class `signin.Controller` in our Sign In application. The simplest way to emulate a long running process is to place the the executing thread to sleep.
-
-Hence the long running processes shouldn't be running on the application thread, but have a dedicated one. The application thread should be mainly updating the GUI, and not running long processes. All requests for the scene updates have to be placed into a special event queue in the application thread.  
-
-The method `runLater` defined in the class `Platform` places the `Runnable` object into an event queue.
-
-In the chapter on Ping-Pong game I'll show you how your program can creates multiple threads too. One thread will be responsible for displaying the table, while the other one  will calculate coordinates of the ball and paddles and will send commands to the first thread to repaint the window. 
-
-To be continued...
-
-
-=== What to Study Next About JavaFX
-
-In Chapter 7 and 8 I gave you a very brief introduction to JavaFX. You'll be writing  more of JavaFX code while working on the Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package `javafx.animation`.
-
-Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress. 
-
-
-=== Project 

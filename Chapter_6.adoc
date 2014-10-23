@@ -377,9 +377,6 @@ Let's write a program that illustrates the advantages of using generics. I'll re
 ----
 import java.util.Hashtable;
 
-/**
- * Created by NewProgrammer on 3/28/15.
- */
 public class HashTableBrokenDemo {
     public static void main(String[] args) {
 
@@ -461,15 +458,15 @@ What have we achieved? The program `HashTableBrokenDemo` allowed us to store any
 
 I've been using parameterized data type `Hashtable` that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book.  
 
-=== The First Look at Multi-Threading 
+=== Light Introduction to Multi-Threading 
 
-So far, all our programs perform actions in a sequence – one after another. In such case if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one _thread of execution_, where the code works sequentially.
+So far, all our programs perform actions in a sequence – one after another. So if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one _thread of execution_, where the code works sequentially.
 
 In a real life though, we can do several things in parallel like eat, talk on the phone, watch TV, and do the homework. To do all these actions in parallel we use several "processors": hands, eyes, and mouth. 
 
-Today, only your grandma's computer might have a single processor (a.k.a. Central Processing Unit or CPU). But most likely your computer has at least two CPU's and a GPU (Graphics Processing Unit) for processing graphics if any. A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on. 
+Today, only your grandma's computer has a single processor (a.k.a. Central Processing Unit or CPU). A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on. Most likely your computer has at least two CPU's and a GPU (Graphics Processing Unit) for processing graphics if any.  
 
-But even a single processor can perform several actions at once if a program uses _multiple threads_. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. 
+But even a single processor can perform several actions at once if a program uses _multiple threads_. One Java class can start several threads of execution that will take turns in getting time slices of the processor’s time. For example, the program asks the user a question and waits for the response. Meantime the CPU can be used for performing some other application logic instead of idling.
 
 A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel. 
 
@@ -477,11 +474,11 @@ A good example of a program that creates multiple threads is a Web browser. For 
 
 All Java applications that we've created so far (even Hello World) were running in so called _main thread_. We didn't need to do any special programming to create a main thread - Java runtime always create one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.
 
-There are different ways of creating threads. I won't be explaining details of each method because it's a pretty advanced topic and is not a good fit for this book. But I'll just list some of the ways of creating threads and will illustrate it with just one simple example. These are the main method of creating Java threads:
+There are different ways of creating threads. I won't be explaining details of each method because it's a pretty advanced topic and is not a good fit for this book. But I'll just list some of the ways of creating threads and will illustrate it with one simple example. These are the main methods of writing code to be executed in a separate thread:
 
 * You can inherit your class from the Java class `Thread` and override its method `run`, which should contain the code to be executed in parallel. 
 
-* You can add `implements Runnable` to the declaration of and class and implement the method `run`, which, again, should contain the code to be executed in parralel. 
+* You can add `implements Runnable` to the declaration of a class and implement the method `run`, which, again, should contain the code to be executed in parralel. 
 
 * Instead of inheriting your class from the class `Thread` you can create the new instance of the `Thread` object 
 
@@ -562,7 +559,7 @@ public class MultiThreadedDemo {
 
 <4> To start the execution of the thread, we need to call the method `start`, which is define in the class `Thread` and will internally invoke the method `run`, which is implemented as lambda. The method `start` doesn't wait for the completion of the method `run` so the next line in our `main` method is executed.
 
-If you run the program `MultiThreadedDemo` several times, it'll print the output differently depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look: 
+If you run the program `MultiThreadedDemo` several times, it may print the output differently each time depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look: 
 
 [source, java]
 ----
@@ -578,11 +575,11 @@ The value of i in power of 4 is 243
 The value of i in power of 4 is 1024
 ----
 
-Note that the first two lines print the output from the second loop! This means that after calling the method `start` on the thread `myThread` the program didn't wait for the completion of the first loop, which ran in parallel thread. Then the first loop had something to print. Then the second, e.t.c. The entire console output is a mix of two parallel number-crunching threads.  
+Note that the first two lines print the output from the second loop! This means that after calling the method `start` on the thread `myThread` the program didn't wait for the completion of the first loop, which ran in parallel thread. Then the first loop had something to print. Then the second, etc. The entire console output is a mix of two parallel number-crunching threads.  
 
 You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.
 
-For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I'll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.
+For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 9 I'll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.
 
 === Project: Using ArrayList and Generics
 
