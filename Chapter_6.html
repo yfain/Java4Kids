@@ -684,7 +684,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <p>Now let&#8217;s see how to work with collections of data. Java  packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
 </div>
 <div class="paragraph">
-<p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to concurrent programming in Chapter 13, but the materials about concurrent collections don&#8217;t belong to the introductory book like this one.</p>
+<p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to the concept of multi-threadinglater in this chapter, but the coverage of  concurrent collections doesn&#8217;t belong to the introductory book like this one.</p>
 </div>
 <div class="sect3">
 <h4 id="_the-class-arraylist"><a class="anchor" href="#_the-class-arraylist"></a>The Class ArrayList</h4>
@@ -1209,7 +1209,7 @@ The value of i in power of 4 is 1024</code></pre>
 <p>You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.</p>
 </div>
 <div class="paragraph">
-<p>For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 9 I&#8217;ll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.</p>
+<p>For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I&#8217;ll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.</p>
 </div>
 </div>
 </div>
@@ -1289,7 +1289,7 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 10:07:20 EDT
+Last updated 2014-10-23 11:28:50 EDT
 </div>
 </div>
 </body>

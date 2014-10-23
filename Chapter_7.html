@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 8. Error Handling</title>
+<title>Chapter 7. Introduction to GUI with JavaFX</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,493 +487,824 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-8-error-handling"><a class="anchor" href="#_chapter-8-error-handling"></a>Chapter 8. Error Handling</h2>
+<h2 id="_chapter-7-introduction-to-gui-with-javafx"><a class="anchor" href="#_chapter-7-introduction-to-gui-with-javafx"></a>Chapter 7. Introduction to GUI with JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter I&#8217;ll explain you how to handle run-time errors, which in Java are called <em>exceptions</em>.</p>
+<p>After creating lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking Graphic User Interface (GUI). We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and other GUI components.</p>
 </div>
 <div class="paragraph">
-<p>Say you forgot to write one closing curly brace in your Java code. This will result in the compilation error that can be fixed easily. But there are so called <em>run-time errors</em>, when all of a sudden your program stops working properly.</p>
+<p>Java has an older library of GUI components called <a href="http://docs.oracle.com/javase/tutorial/uiswing/">Swing</a>, and the new one called <a href="http://docs.oracle.com/javafx/2/get_started/jfxpub-get_started.htm">JavaFX</a>. We&#8217;ll use only JavaFX in this book. JavaFX is also a library that&#8217;s included with JDK, and you can write your GUI programs using familiar Java language. On the other hand, JavaFX allows to create and arrange GUI components in a special FXML format, while writing application logic in Java.</p>
 </div>
 <div class="paragraph">
-<p>For example, a Java class reads a file with the game scores. What’s going to happen if someone will delete this file? Will the program crash with a scary error message, or will it stay alive displaying a user friendly message like this one: <em>Dear friend, for some reason I could not read the file scores.txt. Please make sure that the file exists?</em> This is an example of a situation when Java compiler won&#8217;t be able to help - the Java syntax was written properly.</p>
+<p>In this chapter I&#8217;ll explain you the basics of GUI programming with JavaFX. You&#8217;ll learn how to create GUI containers and arrange GUI components inside them. In the next chapter you&#8217;ll learn how to write code that reacts on user&#8217;s actions (a.k.a. events) like a click on the button or a mouse move.</p>
 </div>
 <div class="paragraph">
-<p>You should make your programs ready for unexpected situations. you should foresee what might go wrong when the program will be running, and what to do if something went wrong. In many programming languages the programmer decides if he wants to add error processing code to a program. But in many cases Java forces you to include error processing code, otherwise the programs will not even compile.</p>
+<p>By the end of this chapter you should be ready to work on the following assignment: "Create the GUI for a calculator that will look similar to this one":</p>
 </div>
-<div class="paragraph">
-<p>Runtime errors in Java are called exceptions, and error processing is called <em>exception handling</em>. You have to place code that may produce errors in so-called <code>try/catch</code> block. It’s as if you’re saying to JVM the following: <em>Try to read the file with scores, but if something happens, catch the error and execute the code that will deal with it:</em></p>
-</div>
-<div class="listingblock">
+<div id="FIG7-1" class="imageblock">
 <div class="content">
-<pre>try{
-  fileScores.read();
-}
-catch (IOException e){
-  System.out.println(
-       "Dear friend,I could not read the file scores.txt");
-}</pre>
+<img src="./images/fig_7_01.png" alt="fig 7 01">
 </div>
-</div>
-<div class="paragraph">
-<p>We’ll learn how to work with files in Chapter 10, but at this point I&#8217;d like to introduce a new term <em>I/O</em> or <em>input/output</em>. Read and write operations (from/to disk or other device) are also known as I/O operations, and the class <code>IOException</code> is a class that contains information about input/output errors.</p>
-</div>
-<div class="paragraph">
-<p>In the Java world, a method <em>throws an exception</em> in case of a runtime error. Different exceptions will be thrown for different type of errors.  If the <code>catch</code> block exists in the program for this particular type of an error, it will be caught and the program will jump into the <code>catch</code> block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.</p>
-</div>
-<div class="paragraph">
-<p>The print statement from the code above will be executed only in case of the file read error.</p>
+<div class="title">Figure 1. The Calculator</div>
 </div>
 <div class="sect2">
-<h3 id="_reading-the-stack-trace"><a class="anchor" href="#_reading-the-stack-trace"></a>Reading the Stack Trace</h3>
+<h3 id="_introduction-to-javafx"><a class="anchor" href="#_introduction-to-javafx"></a>Introduction to JavaFX</h3>
 <div class="paragraph">
-<p>If an unexpected exception occurs that is not handled by the program, it prints a multi-line error message on the screen. Such message is called stack trace. If your program  called several methods before it ran into a problem, the <em>stack trace</em> can help you to trace the program, and find the line that have caused the error.</p>
-</div>
-<div class="paragraph">
-<p>We know that dividing by zero is illegal. But, for the illustration purposes, I wrote a program <code>TestStackTrace</code> that divides by zero on purpose  (line numbers are not the part of the code).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>1 class TestStackTrace{
-2  TestStackTrace()
-3   {
-4    divideByZero();
-5   }
-6
-7  int divideByZero()
-8   {
-9      return 25/0;
-10  }
-11
-12  static void main(String[] args)
-13  {
-14    new TestStackTrace();
-15  }
-16 }</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The output of this program shows the sequence of method calls that were made up to the moment when the run-time error had happened. Start reading this output from the last line going up.</p>
-</div>
-<div class="paragraph">
-<p><code>Exception in thread "main"</code>
-<code>java.lang.ArithmeticException: / by zero</code>
-   <code>at TestStackTrace.divideByZero(TestStackTrace.java:9)</code>
-   <code>at TestStackTrace.&lt;init&gt;(TestStackTrace.java:4)</code>
-   <code>at TestStackTrace.main(TestStackTrace.java:14)</code></p>
-</div>
-<div class="paragraph">
-<p>This means that the program started in the method <code>main()</code>, then went to <code>init()</code> which is a constructor, and then called the method <code>divideByZero()</code>. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an <code>ArithmeticException</code> was thrown –the line number nine tried to divide by zero.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_genealogical-tree-of-exceptions"><a class="anchor" href="#_genealogical-tree-of-exceptions"></a>Genealogical Tree of Exceptions</h3>
-<div class="paragraph">
-<p>Exceptions in Java are also classes, and some of them are shown in the following inheritance tree:</p>
-</div>
-<div id="FIG8-1" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_01.png" alt="fig 8 01">
-</div>
-<div class="title">Figure 1. ???</div>
-</div>
-<div class="paragraph">
-<p>Subclasses of the class <code>Exception</code> are called <em>checked exceptions</em> and you must process them  in your code.</p>
-</div>
-<div class="paragraph">
-<p>Subclasses of the class <code>Error</code> are fatal JVM errors and the running program can’t handle them.</p>
-</div>
-<div class="paragraph">
-<p>The <code>TooManyBikesException</code> is an example of exception that can be created by a programmer.</p>
-</div>
-<div class="paragraph">
-<p>How a programmer is supposed to know in advance if some Java method may throw an exception and that a <code>try/catch</code> block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one:</p>
-</div>
-<div class="paragraph">
-<p><code>"ScoreReader.java":  unreported exception: java.io.IOException; must be ``caught or declared to be thrown at line 57</code></p>
-</div>
-<div class="paragraph">
-<p>Of course you are welcome to read Java documentation that describes exceptions that may be thrown by any particular  method.  The rest of this chapter will explain how to deal with these exceptions.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_try-catch-block"><a class="anchor" href="#_try-catch-block"></a>Try/Catch Block</h3>
-<div class="paragraph">
-<p>There are five Java keywords that can be used for error handling: <code>try</code>, <code>catch</code>, <code>finally</code>, <code>throw</code>, and <code>throws</code>.</p>
-</div>
-<div class="paragraph">
-<p>After one <code>try</code> block you may put several <code>catch</code> blocks, if you believe that more than one error may happen. For example, when a program tries to read a file, the file may not be there, and you’ll get the <code>FileNotFoundException</code>, or the file is there, but the code keeps reading the file after reaching the end of  file – this generates <code>EOFException</code>. The next code fragment  will print messages in plain English if the program can’t find a file with game scores or reached the end of the file. For any other read errors it’ll print the message <em>Problem reading</em> file and a technical description of the error.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>public void getScores(){
- try{
-    fileScores.read();
-    System.out.println(“Scores loaded successfully”);
- }catch(FileNotFoundException e){
-     System.out.println(“Can not find file Scores”);
- }catch(EOFException e1){
-      System.out.println(“Reached end of file”);
- }catch(IOException e2){
-      System.out.println(“Problem reading  file “ +
-                                    e2.getMessage());
- }
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If the method <code>read()</code> fails, the program jumps over the line <code>println()</code>  and tries to land in the <code>catch</code> block that matches the error. If it finds such block, the appropriate println() will be executed, but if the matching catch block is not found, the method <code>getScores()</code> will re-throw this exception to its caller.</p>
-</div>
-<div class="paragraph">
-<p>If you write several <code>catch</code> blocks, you may need to place them in a particular order if these exceptions are inherited from each other. For example, since the <code>EOFException</code> is a subclass of the <code>IOException</code>, you have to put the <code>catch</code> block for the subclass first.  If you would put the <code>catch</code> for <code>IOException</code> first, the program would never reach the <code>FileNotFound</code> or <code>EOFException</code>, because the first <code>catch</code> would intercept them.</p>
-</div>
-<div class="paragraph">
-<p>Lazybones would program the method <code>getScores()</code> just like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>public void getScores(){
- try{
-  fileScores.read();
- }catch(Exception e){
-  System.out.println(“Problem reading  file ”+
-                                      e.getMessage());
-   }
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This is an example of a bad style of Java coding. When you write a program, always remember that someone else may read it, and you don’t want to be ashamed of your code.</p>
-</div>
-<div class="paragraph">
-<p>Catch blocks receive an instance of the object <code>Exception</code> that contains a short explanation of a problem, and its method <code>getMessage()</code> will return this info. Sometimes, if the description of an error is not clear, try the method <code>toString()</code> instead:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>catch(Exception e){
- System.out.println(“Problem reading file ”+ e.toString());
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>If you need more detailed information about the exception, use the method <code>printStackTrace()</code>. It will print the sequence of  method calls that lead to this exception  similar to an example from  the section <em>Reading Stack Trace</em>.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s try to “kill” the calculator program from Chapter 6. Run the class Calculator and enter from the keyboard the charactes <em>abc</em>. Press any of the action buttons, and you’ll see on the console screen something like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>java.lang.NumberFormatException: For input string: "abc"
-   at java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)
-   at java.lang.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1213)
-   at java.lang.Double.parseDouble(Double.java:202)
-   at CalculatorEngine.actionPerformed(CalculatorEngine.java:27)
-   at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1764)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This was an example of a non-handled exception. The class <code>CalculatorEngine</code> has the following line in its method <code>actionPerformed()</code>:</p>
-</div>
-<div class="paragraph">
-<p><code>displayValue= Double.parseDouble(dispFieldText);</code></p>
-</div>
-<div class="paragraph">
-<p>If the variable <code>dispFieldTest</code> has not a numeric value,  the method <code>parseDouble()</code> will not be anle to convert it to the <code>double</code> data type and will throw a <code>NumberFormatException</code>.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s handle this exception and display an error message that will explain the problem to the user.  The line with <code>parseDouble()</code> has to be placed in a <code>try/catch</code> block, and Eclipse will help you with this. Highlight this line and right-click on it with the mouse. In the popup menu select the items <em>Source</em> and <em>Surround with try/catch block</em>. Voila! The code is changed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>try {
-   displayValue= Double.parseDouble(dispFieldText);
-} catch (NumberFormatException e1) {
-   // TODO Auto-generated catch block
-   e1.printStackTrace();
-}</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Replace the <code>printStackTrace()</code> line with the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>javax.swing.JOptionPane.showConfirmDialog(null,
-   "Please enter a Number", "Wrong input",
-   javax.swing.JOptionPane.PLAIN_MESSAGE);
-return;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We’ve gotten rid of the scary stack trace error messages, and displayed a simple to understand  message <em>Please enter a Number</em>:</p>
-</div>
-<div id="FIG8-2" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_02.png" alt="fig 8 02">
-</div>
-<div class="title">Figure 2. ???</div>
-</div>
-<div class="paragraph">
-<p>Now the <code>NumberFormatException</code> is handled.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_the-keyword-code-throws-code"><a class="anchor" href="#_the-keyword-code-throws-code"></a>The keyword <code>throws</code></h3>
-<div class="paragraph">
-<p>In some cases, it makes more sense to handle the exception not in the method where it happened, but in the method’s caller.
-In such cases the method signature has to declare (warn) that it may throw a particular exception. This is done using a special keyword <code>throws</code>. Let’s use the same example that reads a file. Since the method <code>read()</code> may throw an <code>IOException</code>, you should either handle or declare it. In the next example we are  going to declare that the method <code>getAllScores()</code> may throw an IOException:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>class MySuperGame{
-
-  void getAllScores() throws IOException{
-   // …
-   // Do not use try/catch  if you are
-   // not handling exceptions in this method
-   file.read();
-  }
-
-  public static void main(String[] args){
-    MySuperGame msg = new MySuperGame();
-    System.out.println(“List of Scores”);
-
-    try{
-     // Since the  getAllScores()declares exception,
-     // we handle  it over here
-       msg.getAllScores();
-
-    }catch(IOException e){
-       System.out.println(
-       "Sorry, the list of scores is not available");
-    }
- }</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Since we are not even trying to catch exceptions here, the <code>IOException</code> will be  <em>propagated</em> from the <code>getAllScores()</code> to its caller - the method <code>main()</code>. Now the main method has to handle this exception.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_the-keyword-code-finally-code"><a class="anchor" href="#_the-keyword-code-finally-code"></a>The Keyword <code>finally</code></h3>
-<div class="paragraph">
-<p>Any code within a <code>try/catch</code> block can end in one of the following ways:</p>
+<p>With JavaFX you can create Graphic User Interface in two ways:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The code inside the <code>try</code> block successfully ended and the program continues.</p>
+<p>By writing the code in Java as you did in previous chapters.</p>
 </li>
 <li>
-<p>The code inside the <code>try</code> block runs into a <code>return</code> statement and the method is exited.</p>
-</li>
-<li>
-<p>The code in the <code>try</code> block throws an exception and control goes to the matching <code>catch</code> block, which either handles the error and the method execution continues, or it re-throws the exception to the caller of this method.</p>
+<p>With the help of the visual layout tool called Scene Builder, where you&#8217;ll be dragging and dropping components on the window and saving the design in the FXML format in a file with extension <em>.fxml</em>. Then the Java program will load this <em>.fxml</em> file and display your creation.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>If there is a piece of code that must be executed no matter what, put it under the keyword <code>finally</code>:</p>
+<p>I&#8217;ll show you both ways, but let&#8217;s start with some basics of development with JavaFX. Let&#8217;s set the stage - JavaFX uses theater terminology.</p>
+</div>
+<div class="paragraph">
+<p>IntelliJ IDEA will helps you to get stated quickly. Just  create a new project (the menu File | New Project), select JavaFX application as the project type and give it a name. In a second a new project will be created with two Java classes <code>Main</code> and <code>Controller</code> and a file named <em>sample.fxml</em> as shown below.</p>
+</div>
+<div id="FIG7-2" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_02.png" alt="fig 7 02">
+</div>
+<div class="title">Figure 2. The newly generated IDEA project</div>
+</div>
+<div class="paragraph">
+<p>The <code>Main</code> class of a JavaFX application extends <code>Application</code> and is an entry point of your application. JavaFX classes are located in the packages whose names start with <code>javafx</code> (e.g. <code>javafx.stage</code> and <code>javafx.scene</code>).The <code>main</code> method invokes the method <code>launch</code> from <code>Application</code>, which creates stage by calling its method <code>start</code>, which was was declared as <code>abstract</code>. Hence, we must override <code>start</code> in our <code>Main</code> class. When the method <code>start</code> is invoked, it&#8217;ll receive a reference to the <code>Stage</code> object - this is where your GUI  components will live and perform.</p>
+</div>
+<div class="paragraph">
+<p>Pretend that you&#8217;re a play director and need to set up one or more <em>scenes</em> (views) on stage. But if in a real scene you&#8217;d expect to see some chairs, tables and other pieces of furniture, each JavaFX scene consists of GUI nodes (containers and components). In JavaFX you&#8217;ll create components, add them the a scene and then add a scene to the stage. When the stage is ready, open the curtain by calling the method <code>show</code>.</p>
+</div>
+<div class="paragraph">
+<p>Now you have a choice: create these nodes using Java classes or load the pre-created design from the <code>.fxml</code> file as it was done in the code generated by IDEA.</p>
+</div>
+<div class="paragraph">
+<p>The method <code>start</code> loads the file <em>sample.fxml</em>, sets the title of the stage and creates a <code>Scene</code> 300 by 275 pixels.The content of the generated <em>sample.fxml</em> looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>try{
-   file.read();
-}catch(Exception e){
-   printStackTrace();
-}finally{
-  // the code that must always be executed
-  // goes here, for example file.close();
-}
-</pre>
+<pre class="highlight"><code class="xml language-xml">&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.layout.GridPane?&gt;
+
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+&lt;GridPane fx:controller="sample.Controller"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"&gt;
+&lt;/GridPane&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The code above has to close the file regardless of success or failure of the read operation. Usually, you can find the code that releases some computer resources in the block <code>finally</code>, for example, disconnection from a network or file closing.</p>
+<p>FXML is a markup language based on XML (a popular data presentation format). The idea is to separate the creation of the GUI in a declarative language (FXML) from the application logic (Java). If we didn&#8217;t use IDEA, the FXML would be generated by the Scene Builder itself. In FXML the GUI is represented by tags in angle brackets, e.g. <code>&lt;GridPane&gt;</code>. Each tag has a matching closing tag that starts with a forward slash, e.g. <code>&lt;/GridPane&gt;</code> and may have attributes (e.g. <code>alignment="center"</code>). The <code>&lt;GridPane&gt;</code> tag corresponds to the Java class <code>GrindPane</code>, which is one of the JavaFX layouts - I&#8217;ll explain them shortly. Every FXML tag has a corresponding Java class.</p>
 </div>
 <div class="paragraph">
-<p>If you are not planning to handle exceptions in the current method, they will be propagated to the caller. In this case, you can use the <code>finally</code> even without a <code>catch</code> block:</p>
+<p>The generated Java class <code>Controller</code> has just the pair of curly braces at this point, but in the next chapter we&#8217;ll be writing the application logic there. Later on you&#8217;ll connect the generated FXML views with the Java code of the <code>Controller</code>. Run the <code>Main</code> program and it&#8217;ll show an empty window shown next:</p>
 </div>
-<div class="listingblock">
+<div id="FIG7-3" class="imageblock">
 <div class="content">
-<pre>void myMethod () throws IOException{
- try{
-   // your code that reads a file goes here
- }
- finally{
-   // your code that closes the file  goes here
- }
-}</pre>
+<img src="./images/fig_7_03.png" alt="fig 7 03">
 </div>
+<div class="title">Figure 3. Running the generated application</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the-keyword-code-throw-code"><a class="anchor" href="#_the-keyword-code-throw-code"></a>The Keyword <code>throw</code></h3>
+<h3 id="_brief-overview-of-javafx-layouts"><a class="anchor" href="#_brief-overview-of-javafx-layouts"></a>Brief Overview of JavaFX Layouts</h3>
 <div class="paragraph">
-<p>If an exception has happened in a method, but you believe that the caller should handle it, just re-throw it to the method’s caller. Sometimes, you might want to catch one exception but re-throw another one with a different description of the error like in the code snippet below.</p>
+<p>Users of your application can have computer monitors of different screen sizes and resolutions. JavaFX comes with <em>layouts</em> that help with arranging GUI controls on the scene and keeping the arrangement for different stage sizes (think window sizes). There are following layout container Java classes (and similarly named FXML tags):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HBox</p>
+</li>
+<li>
+<p>VBox</p>
+</li>
+<li>
+<p>FlowPane</p>
+</li>
+<li>
+<p>GridPane</p>
+</li>
+<li>
+<p>BorderPane</p>
+</li>
+<li>
+<p>StackPane</p>
+</li>
+<li>
+<p>TilePane</p>
+</li>
+<li>
+<p>AnchorPane</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The statement <code>throw</code> is used to throw Java objects. The object that a program throws must be <em>throwable</em>. This means that you can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>, and all Java exceptions are its subclasses.</p>
-</div>
-<div id="FIG8-3" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_03.png" alt="fig 8 03">
-</div>
-<div class="title">Figure 3. ???</div>
+<p>The <code>HBox</code> class (the horizontal box) places controls in a row next to each other. The vertical box <code>VBox</code> places controls vertically. The <code>FlowPane</code> places the nodes in a row and then wraps to the next row if there is no room left  in the current one.</p>
 </div>
 <div class="paragraph">
-<p>The next code fragment shows how the method <code>getAllScores()</code> catches an <code>IOException</code> and creates a new <code>Exception</code> object with a more friendly description of the error, and re-throws it to the method <code>main()</code>.  Now the method <code>main()</code> won’t compile unless you put the line that calls <code>getAllScores()</code> in the <code>try/catch</code> block, because this method may throw an <code>Exception</code> and it should be either handled or re-thrown again. The method <code>main()</code> should not throw any exceptions, that’s why it should handle it.</p>
+<p>The <code>GridPane</code> allows to arrange UI controls in rows and columns and assign constraints (properties) to each cell.</p>
+</div>
+<div class="paragraph">
+<p>The <code>BorderPane</code> splits the scene into five regions, which are called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>TilePane</code> layout is similar to the FlowPane, but it places each node in a cell of the same size (like tiles on the wall). Say, you need to display several images in a tile layout. Adding the <code>ImageView</code> nodes to the <code>TilePane</code> will shows them as tiles next to each other.</p>
+</div>
+<div class="paragraph">
+<p>The <code>StackPane</code> layout works as a deck of playing cards - only one child node will be shown at a time covering the other nodes.</p>
+</div>
+<div class="paragraph">
+<p>The <code>AnchorPane</code> lets you to anchor nodes at left, top, right, and bottom of the scene. Imagine a music player application with the buttons Rewind on the left and the Fast Forward on the right. For example, the <code>AncorPane</code> allows to force the Rewind button to always remain at 20 pixels from the left border of the window and 10 pixels from the bottom even when the window resizes. For that you can use the <code>leftAnchor</code> and <code>bottomAnchor</code> properties. For example,</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>class ScoreList{
-   // Additional code is needed to compile this class
-
-   static void getAllScores() throws Exception{
-     try{
-      file.read();//this line may throw an exception
-     } catch (IOException e) {
-      throw new  Exception (
-      "Dear Friend, the file Scores has problems");
-     }
-   }
-
-  public static void main(String[] args){
-    System.out.println("Scores");
-
-   try{
-       getAllScores();
-   }
-   catch(Exception e1){
-        System.out.println(e1.getMessage());
-   }
- }
-}</pre>
+<pre class="highlight"><code class="java language-java">AnchorPane.setLeftAnchor(rewindBtn, 20);
+AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In case of a file error,  the main method will handle it,  and  the <code>e1.getMessage()</code>   will return the <em>Dear Friend…</em> message.</p>
+<p>If you&#8217;d be writing the code manually in Java, you&#8217;d be going through the following steps with any layout:</p>
 </div>
-<div id="FIG8-4" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_04.png" alt="fig 8 04">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create instances of child nodes to be used within the layout container.</p>
+</li>
+<li>
+<p>Create an instance of the selected layout class (e.g. <code>HBox</code>). This instance will serve as a container and a layout manager for all child nodes that you&#8217;ll add to it.</p>
+</li>
+<li>
+<p>Add the child nodes to the container using either the method <code>add()</code> or <code>addAll()</code>.</p>
+</li>
+<li>
+<p>If this layout instance needs to be used inside another layout (e.g. an <code>HBox</code> can be placed inside the <code>BorderPane</code>) add the instance created in Step 1 to the parent container by using the method <code>add()</code>.</p>
+</li>
+</ol>
 </div>
-<div class="title">Figure 4. ???</div>
+<div class="paragraph">
+<p>In this chapter we&#8217;ll use only some of the JavaFX layouts, but for detailed coverage of layouts visit Oracle tutorial at <a href="http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm">http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm</a>.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s easier to create layouts and components using a visual tool, and this is what we&#8217;ll do next.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating-new-exceptions"><a class="anchor" href="#_creating-new-exceptions"></a>Creating New Exceptions</h3>
+<h3 id="_getting-started-with-scene-builder"><a class="anchor" href="#_getting-started-with-scene-builder"></a>Getting Started With Scene Builder</h3>
 <div class="paragraph">
-<p>Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. Create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes,  throw the this exception:</p>
+<p>Scene Builder 2.0 is a visual layout tool for JavaFX applications by Oracle. Download it from <a href="http://goo.gl/9jOse6">http://goo.gl/9jOse6</a>. Follow the <a href="http://goo.gl/rCt8x1">installation instructions</a> for your operational system and install Scene Builder on your computer. In this section I&#8217;ll show you how to quickly get started with Scene Builder, but you should also watch this helpful <a href="https://www.youtube.com/watch?v=rHcnsEoSK_c">Youtube video</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can start the Scene Builder either independently or from IDEA. For example, if you right-click on the <em>sample.fxml</em> file in your newly generated IDEA project it&#8217;ll show you a popup menu, which includes the item Open in SceneBuilder. Select this item. The very first time IDEA will ask you to confirm  the location of Scene Builder application on your computer. Then it&#8217;ll open <em>sample.fxml</em> in Scene Builder. This is how it looks on my computer:</p>
+</div>
+<div id="FIG7-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_04.png" alt="fig 7 04">
+</div>
+<div class="title">Figure 4. Scene Builder with opened sample.fxml</div>
+</div>
+<div class="paragraph">
+<p>On the left panel you can select containers, controls, menus, shapes and drag and drop them onto the central canvas area. Note the GridPanel layout shown at the bottom left - the arrangement of GUI components inside of this scene will be controlled by <code>GridLayout</code>. Let me select the Button from the Controls section on the left and drop it on the canvas in the middle. The Screen Builder&#8217;s window will look like this:</p>
+</div>
+<div id="FIG7-5" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_05.png" alt="fig 7 05">
+</div>
+<div class="title">Figure 5. Adding a button to the scene</div>
+</div>
+<div class="paragraph">
+<p>The right panel allows you to change the properties of this button. These little boxes with the digit one represent so called row and column constraints - we&#8217;ll discuss them shortly.</p>
+</div>
+<div class="paragraph">
+<p>The Scene Builder&#8217;s menu Preview | Show Preview in Window will show how your GUI will look during the runtime. So far our one-button screen is not too fancy, and this is how it&#8217;s preview looks like:</p>
+</div>
+<div id="FIG7-6" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_06.png" alt="fig 7 06">
+</div>
+<div class="title">Figure 6. Scene Builder: previewing in window</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s save the changes in <em>sample.fxml</em> (menu File | Save) and open this file in the IDEA text editor. When IDEA generated <em>sample.fxml</em> there were no content between <code>&lt;GridPanel&gt;</code> and `&lt;/GridPanel&gt;`in the generated <em>sample.fxml</em>, but now there is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>class TooManyBikesException extends Exception{
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 
-  // Constructor
-  TooManyBikesException (){
-  // Just call the constructor of the superclass
-  // and pass to it the error message to display
-  super("Can't ship this many bikes in one shipment.");
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.layout.GridPane?&gt;
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+
+&lt;GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sample.Controller"&gt;
+   &lt;columnConstraints&gt;
+      &lt;ColumnConstraints /&gt;
+      &lt;ColumnConstraints /&gt;
+   &lt;/columnConstraints&gt;
+   &lt;rowConstraints&gt;
+      &lt;RowConstraints /&gt;
+      &lt;RowConstraints /&gt;
+   &lt;/rowConstraints&gt;
+   &lt;children&gt;
+      &lt;Button mnemonicParsing="false" text="Button"
+         GridPane.columnIndex="1" GridPane.rowIndex="1" /&gt;
+   &lt;/children&gt;
+&lt;/GridPane&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll go through the details of the <code>GridPane</code> layout in the next section, but please note that Scene Builder created some tags to specify the constraints for the rows and columns of the grid. The <code>Button</code> component is placed inside the grid in the cell located in the intersection of the column 1 and row 1.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gridpane-layout"><a class="anchor" href="#_gridpane-layout"></a>GridPane Layout</h3>
+<div class="paragraph">
+<p>I&#8217;m not going to cover each JavaFX layout in details, but will show you how to use a pretty powerful layout - <code>GridPane</code>. When we&#8217;ll work on the GUI for the calculator, I&#8217;ll also show you how to design a scene using a combination of layouts.</p>
+</div>
+<div class="paragraph">
+<p>GridPane divides the area into rows and columns and places GUI components (the nodes) into the grid cells. With <code>GridPane</code> layout cells don&#8217;t have to have the same size - nodes can span. If the screen size changes, the content won&#8217;t be rearranged and will maintain the grid look.</p>
+</div>
+<div class="paragraph">
+<p>Before placing the node into a particula cell you have to specify the grid constraints such as <code>rowIndex</code> and <code>columnIndex</code> (the coordinate of the cell, which starts with 0,0). The <code>rowSpans</code> and <code>columnSpan</code> allow to make the cell as wide (or as tall) as several other cells. The <code>GridPane</code> <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/GridPane.html">documentation</a> describes lots of various constraints that can define the behavior of each cell&#8217;s content if the windows gets resized. I&#8217;ll show you a basic example that uses some of these constraints.</p>
+</div>
+<div class="sect3">
+<h4 id="_designing-a-sign-in-window-in-scene-builder"><a class="anchor" href="#_designing-a-sign-in-window-in-scene-builder"></a>Designing a Sign In Window in Scene Builder</h4>
+<div class="paragraph">
+<p>I want to create a Sign In window where the user can enter the id, password and press the button Sign In. The scene will use <code>GridPane</code> layout. The first row will contain a <code>Label</code> and <code>TextField</code> for user id, the second row will have a similar pair for the password, and the third row of the grid will have one <code>Button</code> Sign In that should span two columns. This is how this window should look like:</p>
+</div>
+<div id="FIG7-7" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_07.png" alt="fig 7 07">
+</div>
+<div class="title">Figure 7. The Sign In Window</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll start with creating a new IDEA JavaFX project (menus File | New Project | JavaFX Application) giving it a name Signin. The project with classes <code>Main</code>, <code>Controller</code> and the file <em>sample.fxml</em> will be generated. Let&#8217;s rename this FXML file into <em>signin.fxml</em>. IDEA will automatically change the corresponding line in the <code>Main</code> class to load this file instead of <em>sample.fxml</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rename the package from <em>sample</em> to <em>signin</em> (right-click menu, Refactor | Rename). Now open the file signin.fxml in Scene Builder and start thinking about laying out the components of our Sign In scene. Let&#8217;s take another look at the image of the Sign In window. I can clearly see that GUI components are placed in three rows. The first two have a <code>Label</code> and <code>TextField</code> and the third one has a wide <code>Button</code>.
+I can also recognize two columns in the layout of the Sign In window. The first column has two <code>Label</code> components and the left side of the <code>Button</code>. The second column has two <code>TextFiled</code> components and the right side of the <code>Button</code>. We can also say that the <code>Button</code> <em>spans</em> two columns. We&#8217;ve got a 2x3 grid!</p>
+</div>
+<div class="paragraph">
+<p>Open the generated <code>signin.fxml</code> in Scene Builder. Since this file has already empty <code>&lt;GrigPane&gt;</code> tag, you&#8217;ll see GridPane(0,0) as the root of the hierarchy in the bottom left corner as in Figure 4 above. So far this grid has zero rows and zero columns. Right-click on the grid in the middle of the screen and add three rows and two columns to the grid by using the right-click menus GridPane | Add Row Below and Add Column After. When the GridPane is selected The Scene Builder&#8217;s window may look similar to this:</p>
+</div>
+<div id="FIG7-8" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_08.png" alt="fig 7 08">
+</div>
+<div class="title">Figure 8. A GridPane (2,3)</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s drag two <code>Label</code> controls and a <code>Button</code> from the Controls section on the left and drop them into the appropriate cells in the first grid column. Change the text on these components to be UserID:, Password, and Sign In.
+Then we could drag and drop two <code>TextField</code> objects in the top two cells in the second column. Actually, it&#8217;s not a good idea to enter password in the clear text. I&#8217;ll use the <code>TextField</code> for the user ID, and the <code>PasswordField</code> (it marks user&#8217;s input) for password.</p>
+</div>
+<div id="FIG7-9" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_09.png" alt="fig 7 09">
+</div>
+<div class="title">Figure 9. A GridPane with nodes in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>Note that the hierarchy of nodes is shown in the bottom left panel of Scene Builder. If you want to change the properties of a component on a scene with a complex GUI layout it might be easier to select the GUI control in the Hierarchy panel than in the design area in the middle. Now select the menu Preview | Show Preview in Window and you&#8217;ll see the following window:</p>
+</div>
+<div id="FIG7-10" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_10.png" alt="fig 7 10">
+</div>
+<div class="title">Figure 10. Previwing in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>This window doesn&#8217;t look exactly as we wanted: there are some issues with alignments, there is no spacing between the container and components, and the button Sign In doesn&#8217;t span. But on the bright side, the <code>GridPane</code> controls the layout and if you&#8217;ll try to stretch this window, GUI components won&#8217;t change their relative positioning:</p>
+</div>
+<div id="FIG7-11" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_11.png" alt="fig 7 11">
+</div>
+<div class="title">Figure 11. Streching the preview window in Scene Builder</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s do a couple of more property changes before we&#8217;ll run this application from IDEA. In Scene Builder the Properties panel is located on the right and has three sections: Properties, Layout, and Code, and you&#8217;ll find the properties to be changed in one of these sections.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>On the left panel of Scene Builder select the <code>GridPane</code> and on the right panel change alignment to be <code>TOP_LEFT</code>.</p>
+</li>
+<li>
+<p>Enter 10 for the padding on top, right, bottom and left for the <code>GridPane</code>. We need some spacing between the borders of the scene and the grid.</p>
+</li>
+<li>
+<p>Select the <code>Button</code> on the left and then change the column span to be 2 and the preferred width to be a large number, say 300. This will make the button wide.</p>
+</li>
+<li>
+<p>Select the first column of the grid row by clicking on the little 0 on top of the grid. Set the both preferred and maximum width for this column to be 70.</p>
+</li>
+<li>
+<p>Select the second column of the grid row by clicking on the little 1 on top of the grid. Set the both preferred and maximum width for this column to be 100.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After you do all these changes and save them, the file <code>signin.fxml</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.geometry.*?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.layout.GridPane?&gt;
+&lt;?import javafx.scene.control.Button?&gt;
+&lt;?import javafx.scene.control.Label?&gt;
+
+&lt;GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.Controller"&gt;
+   &lt;rowConstraints&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+      &lt;RowConstraints minHeight="10.0" prefHeight="30.0" /&gt;
+   &lt;/rowConstraints&gt;
+   &lt;columnConstraints&gt;
+      &lt;ColumnConstraints maxWidth="70.0" minWidth="10.0" prefWidth="70.0" /&gt;
+      &lt;ColumnConstraints maxWidth="100.0" minWidth="10.0" prefWidth="100.0" /&gt;
+   &lt;/columnConstraints&gt;
+   &lt;children&gt;
+      &lt;Label alignment="CENTER" text="User ID:" /&gt;
+      &lt;Label text="Password:" GridPane.rowIndex="1" /&gt;
+      &lt;Button mnemonicParsing="false" prefWidth="300.0" text="Sign In" GridPane.columnSpan="2" GridPane.rowIndex="2" /&gt;
+      &lt;TextField GridPane.columnIndex="1" /&gt;
+      &lt;PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" /&gt;
+   &lt;/children&gt;
+   &lt;padding&gt;
+      &lt;Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /&gt;
+   &lt;/padding&gt;
+&lt;/GridPane&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the <code>&lt;GridPane&gt;</code> section you see <code>&lt;rowConstraints&gt;</code> and <code>&lt;columnConstraints&gt;</code> tags defining the the properties of the rows and columns. The <code>&lt;children&gt;</code> section contains the declaration of GUI components that the user will see on the screen: <code>&lt;Label&gt;</code>, <code>&lt;Button&gt;</code>, <code>&lt;TextField&gt;</code>, and  <code>&lt;PasswordField&gt;</code>. The <code>&lt;Insets&gt;</code> section endures that there is some space between the grid borders and its children.</p>
+</div>
+<div class="paragraph">
+<p>This is a declarative way of creating GUI in FXML. No Java coding was required to create the GUI for this application.</p>
+</div>
+<div class="paragraph">
+<p>Finally, let&#8217;s set the size of the stage so it can accommodate all components from our scene. In IDEA, open the class <code>Main</code>,  and in the code set the size of the scene to be 200x150 pixels.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">primaryStage.setScene(new Scene(root, 200, 150));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the <code>Main</code> program and you&#8217;ll see the window that looks like in Figure 7 above. The work that we&#8217;ve done in Scene Builder was a little tedious, but it didn&#8217;t require any knowledge of Java. This means that this work can be given to a UI designer, while you&#8217;ll concentrate on programming the application logic in Java.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_programming-the-sign-in-window-in-java"><a class="anchor" href="#_programming-the-sign-in-window-in-java"></a>Programming the Sign In Window in Java</h4>
+<div class="paragraph">
+<p>Some people like visual design tools, but others don&#8217;t. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I&#8217;ve written purely in Java without using Scene Builder. It&#8217;ll produce the same output as in Figure 7.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class GridPaneSample extends Application {
+
+  public void start(Stage primaryStage) {
+
+      final int TWO_COLUMN_SPAN = 2;
+
+      Label userIdLbl = new Label("User ID:");
+      TextField userIdTxt = new TextField();
+      Label userPwdLbl = new Label("Password:");
+      PasswordField userPwdTxt = new PasswordField();
+
+      GridPane root = new GridPane();
+      root.setVgap(10);
+      root.setPadding(new Insets(10));
+      root.setAlignment(Pos.CENTER);
+
+      // Using static methods for setting node constraints
+      GridPane.setConstraints(userIdLbl, 0, 0);
+      GridPane.setConstraints(userIdTxt, 1, 0);
+      GridPane.setConstraints(userPwdLbl, 0, 1);
+      GridPane.setConstraints(userPwdTxt, 1, 1);
+
+      root.getChildren().addAll(userIdLbl, userIdTxt,
+                                userPwdLbl, userPwdTxt);
+
+      Button signInBtn = new Button ("Sign In");
+
+      // Allow the button to be wider overriding preferred width
+      signInBtn.setPrefWidth(Double.MAX_VALUE);
+
+      // using instance method for directly adding the node
+      root.add(signInBtn,0,2,TWO_COLUMN_SPAN,1);
+
+      Scene scene = new Scene(root,250,150);
+      primaryStage.setScene(scene);
+      primaryStage.show();
   }
-}</pre>
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This class has only a constructor that takes the message describing this error and gives it to its superclass for  storage. When some <code>catch</code> block receives this exception it can find out what exactly has happened by calling the method <code>getMessage()</code>.</p>
+<p>After all your efforts in Scene Builder, this Java program shouldn&#8217;t be difficult for you to understand. As you see, I use classes named similarly to FXML tags. FXML tags can have attributes (e.g. <code>vgap="10" `), and in Java you'd need to call the corresponding setter (e.g. `root.setVgap(10)</code>). So the choice is yours - FXML or Java. If you have <em>visual personality</em> use FXML, otherwise use Java.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling With CSS</h3>
+<div class="paragraph">
+<p>It would be boring if all applications would look the same. Application windows may have different colors, fonts, buttons with rounded corners or use special visual effects. In other words, applications have different styles. Even though you can style JavaFX GUI components programmatically (e.g. by calling methods <code>setFont()</code> or <code>setFill()</code>) separating styling from programming allows professional UI designers to take care of the look and feel while software developers implement application logic.</p>
 </div>
 <div class="paragraph">
-<p>Imagine that a user selects on the <code>OrderWindow</code> several bicycles of some model and hits the button <em>Place Order</em>. As you know from Chapter 6, this action will result in call to <code>actionPerformed()</code> that will check if the order can be  delivered.  The next code example shows how the method <code>checkOrder()</code> of this window declares that it can throw <code>TooManyBikesException</code>.  If the order won’t fit in the truck, this method throws the exception, the catch block  intercepts it and displays an error message in the text field on the window.</p>
+<p>Separating the work of programmers and designers became  popular in Web applications. Cascading Style Sheets (CSS) is a special language for styling UI. Styles of GUI components are stored in separate <em>.css</em> files and are loaded and applied to components by the application&#8217;s code. Sometimes this process is called <em>skinning</em> - you can create an application that can "wear different skins" changing its look to the user&#8217;s liking. JavaFX has a default skin, and if you&#8217;re interested in how to create custom skins, visit Oracle online tutorial <a href="http://docs.oracle.com/javafx/2/css_tutorial/jfxpub-css_tutorial.htm">Skinning JavaFX applications with CSS</a>.</p>
+</div>
+<div class="paragraph">
+<p>Even if you won&#8217;t create your own CSS file, your JavaFX application applies default CSS style to the components of your view. In Scene Builder you can see these styles. Just select any component and the go to the menu View | Show CSS Analyzer. You&#8217;ll see a number of styles the start with the prefix <code>fx-</code>, which makes JavaFX CSS a little different from a standard CSS syntax.</p>
+</div>
+<div class="paragraph">
+<p>Covering CSS in detail would require a separate book, but I&#8217;ll show you a simple example of how the look of the GUI can be changed without the need to modify the Java code.</p>
+</div>
+<div class="paragraph">
+<p>You can either create so-called <em>CSS selectors</em> to style a specific GUI component, a type of components (e.g. all buttons), or create a reusable style that can be applied programmatically to a selected component.</p>
+</div>
+<div class="paragraph">
+<p>To style a specific component it has to have a unique id. If you program GUI in Java, set in your Java code using the method <code>setId()</code>, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>class OrderWindow implements ActionListener{
-// The code to create window components is needed here.
-
-// The user clicked on the button Place Order
-   String selectedModel = txtFieldModel.getText();
-   String selectedQuantity =
-                          txtFieldQuantity.getText();
-   int quantity = Integer.parseInt(selectedQuantity);
-
-  void actionPerformed(ActionEvent e){
-    try{
-   bikeOrder.checkOrder("FireBird", quantity);
-  //the next line will be skipped in case of exception
-   txtFieldOrderConfirmation.setText(
-                           "Your order is complete");
-   } catch(TooManyBikesException e){
-    txtFieldOrderConfirmation.setText(e.getMessage());
-   }
- }
-
- void checkOrder(String bikeModel, int quantity)
-                         throws TooManyBikesException{
-
-//Write the code that checks if the requested //quantity of bikes of selected model will fit in the //truck. If they won't fit, do  the following:
-
-  throw new TooManyBikesException("Can not ship" +
-   quantity + " bikes of the model " + bikeModel +
-                        " in one shipment" );
- }
-}</pre>
+<pre class="highlight"><code class="java language-java">Button signInBtn = new Button ("Sign In");
+signInBtn.setId("submitBtn");</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In a perfect world, every program would work properly, but realistically we have to be ready for the unexpected situations. It really helps that Java forces you to write code that is prepared for  these situations.</p>
+<p>In FXML just add an <code>id</code> attribute to the tag of the component:</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_additional-reading"><a class="anchor" href="#_additional-reading"></a>Additional Reading</h3>
-<div id="FIG8-5" class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/fig_8_05.png" alt="fig 8 05">
+<pre class="highlight"><code class="xml language-xml">&lt;Button id="submitBtn" text="Sign In"&gt;</code></pre>
 </div>
-<div class="title">Figure 5. ???</div>
 </div>
 <div class="paragraph">
-<p><a href="http://java.sun.com/docs/books/tutorial/essential/exceptions/">Handling Errors With Exceptions</a></p>
+<p>For a button with an id <code>submitBtn</code> you can add the following section to the CSS file to make its background color red:</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_practice"><a class="anchor" href="#_practice"></a>Practice</h3>
-<div id="FIG8-6" class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/fig_8_06.png" alt="fig 8 06">
+<pre class="highlight"><code class="css language-css">#submitBtn{
+  -fx-background-color: red;
+}</code></pre>
 </div>
-<div class="title">Figure 6. ???</div>
 </div>
 <div class="paragraph">
-<p>Create a Swing application for placing bike orders. It has to have the two text fields <em>Bike Model</em> and <em>Quantity</em>, a button <em>Place Order</em>, and the label for order confirmation.</p>
+<p>You can find the names of the main CSS colors <a href="http://www.w3schools.com/cssref/css_colornames.asp">online</a>. In CSS the id type selectors start with the #-sign as in <code>#submitBtn</code>.</p>
 </div>
 <div class="paragraph">
-<p>Use the code in the examples <code>OrderWindow</code> and <code>TooManyBikesException</code>. Make up several combinations of bike models and quantities that will throw an exception.</p>
+<p>If you want to apply a style to several components of the same type, you need to define a type selector. For example, to make the text of all <code>Label</code> components red, you can define the following CSS type selector:</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_practice-for-smarty-pants"><a class="anchor" href="#_practice-for-smarty-pants"></a>Practice for Smarty Pants</h3>
-<div id="FIG8-7" class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/fig_8_07.png" alt="fig 8 07">
+<pre class="highlight"><code class="xml language-xml">.label{
+  -fx-text-fill: red;
+}</code></pre>
 </div>
-<div class="title">Figure 7. ???</div>
-</div>
-<div class="paragraph">
-<p>Modify the application from the previous assignment to replace the text field <code>Bike Model</code> with a dropdown list box that will contain several models, so the user can select from the list rather then type them.</p>
 </div>
 <div class="paragraph">
-<p>You’ll have to read online about the Swing component <code>JComboBox</code> and the <code>ItemListener</code> to process events when the user picks the  bike model.</p>
+<p>Note that CSS type selectors start with the dot. To create a <em>CSS class selector</em> that can be applied to any component, define the selector with an arbitrary name and apply it programmatically to the components of your choice.  For example, you can specify the class selector <code>.blueLable</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This class selector defines the rules that will display text of the component in blue <strong>bold</strong> verdana font in <em>italic</em> style. Typically, you&#8217;ll be loading the entire CSS file when the application starts so all styles are available for use. If you use Java for GUI programming, you can apply a class selector to a specific button just like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Label userPwdLbl = new Label("Password:");
+userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In FXML assigning a CSS class selector is done by adding the attribute <code>styleClass</code> to the tag element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;Label text="Password:" styleClass="bluelabel" GridPane.rowIndex="1" /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may ask, "How am I supposed to know which style properties are available for a given JavaFX component?" All JavaFX styles are described in the online document titled <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html">"JavaFX CSS Reference Guide"</a>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s learn how to apply all these styling techniques to the Sign In window from the previous section. Using IDEA menu File | New create a new file <em>signin.css</em> in Signin project. Then add the following content to it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">#submitBtn{
+    -fx-background-color: lightskyblue;
+    -fx-font-family:verdana;
+    -fx-font-size:20;
+    -fx-font-weight: bold;
+    -fx-stroke:navy;
+    -fx-font-style:italic;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.label{
+    -fx-text-fill: red;
+}
+
+.bluelabel{
+   -fx-text-fill: blue;
+   -fx-font-family:verdana;
+   -fx-font-style:italic;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file signin.css_ defines three styles:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an id selector for the component with the id <code>submitBtn</code></p>
+</li>
+<li>
+<p>a type selector for all <code>Label</code> components</p>
+</li>
+<li>
+<p>a class selector <code>bluelabel</code> that we can be applied to certain labels.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To apply this CSS file to our Sign In application add the attribute <code>id="submitBtn"</code> to the <code>&lt;Button&gt;</code> element in <em>signin.fxml</em>.</p>
+</div>
+<div class="paragraph">
+<p>Then add the attribute <code>styleClass="bluelabel"</code> to the <code>&lt;Password&gt;</code> tag in <code>signin.fxml</code>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, in <code>Main.java</code> load the <code>signin.css</code> and apply it to the scene. The new version of <code>Main.java</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("signin.fxml"));
+      primaryStage.setTitle("Sign In");
+
+      Scene scene  = new Scene(root, 200, 150);
+        scene.getStylesheets().add(getClass()
+              .getResource("signin.css").toExternalForm());
+
+      primaryStage.setScene(scene);
+      primaryStage.show();
+    }
+
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the <code>Main</code> application and you&#8217;ll see a differently styled Sign In window:</p>
+</div>
+<div id="FIG7-12" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_12.png" alt="fig 7 12">
+</div>
+<div class="title">Figure 12. Styled Sign In Window</div>
+</div>
+<div class="paragraph">
+<p>When the application starts loading our CSS file it sees that all labels must be red because of the type selector for labels. But then the application notices a more specific style for the <code>Label</code> Password: <code>styleClass="bluelabel"</code>, so it paints the text <em>Password</em> in blue.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project"><a class="anchor" href="#_project"></a>Project</h3>
+<h3 id="_borderpane-and-combining-layouts"><a class="anchor" href="#_borderpane-and-combining-layouts"></a>BorderPane and Combining Layouts</h3>
+<div class="paragraph">
+<p>Pretty often you see applications that split the window into several distinct areas - the header goes on top, the navigation bar is on the left (or right), the footer&#8217;s at the bottom of the page and a large content area occupies the middle portion of the window. The <code>BorderPane</code> layout allows you to do exactly this - split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
+</div>
+<div class="paragraph">
+<p>Each of these regions can contain either a single GUI component or a container that will have "children" - components allocated in their own container, e.g. inside a <code>GridPane</code>. You&#8217;ll use <code>BorderPane</code> layout with a nested <code>GridPane</code> while working on the calculator following instructions from the Project section at the end of this chapter. Meanwhile, let&#8217;s create a very basic window illustrating how the <code>BorderPane</code> layout works.</p>
+</div>
+<div class="paragraph">
+<p>Open Scene Builder and create a new FXML file by selecting the menu File | New. Then drag the <code>BorderPane</code> from the left and drop in the middle. Click on the <code>BorderPane</code> and you&#8217;ll see a screen that can look as follows:</p>
+</div>
+<div id="FIG7-13" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_13.png" alt="fig 7 13">
+</div>
+<div class="title">Figure 13. An Empty BorderPane</div>
+</div>
+<div class="paragraph">
+<p>Now select Insert TOP at the bottom left, and then drag and drop a <code>Label</code> from the Controls section onto the middle section of Screen Builder. Set the label&#8217;s title to "This is the Header". This text will be displayed at the top.</p>
+</div>
+<div class="paragraph">
+<p>Now select Insert LEFT and then drag and drop <code>VBox</code> from the Containers area to the left side of the middle section of the Screen Builder. The <code>VBox</code> is a container for arranging GUI components vertically, which is what we need for creating a navigation menu. You&#8217;ll see an empty gray area on the left.</p>
+</div>
+<div id="FIG7-14" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_14.png" alt="fig 7 14">
+</div>
+<div class="title">Figure 14. Adding a VBox for navigation</div>
+</div>
+<div class="paragraph">
+<p>Now select <code>VBOX</code> at the bottom left and add a couple of menu items to the empty <code>VBox</code>. Drag a <code>Button</code> from the Controls section and drop it onto the <code>VBox</code>. Change its text to read "Menu 1", and make it a little wider so it fits the <code>VBox</code> nicely. Add two more buttons labeled "Menu 2" and "Menu 3".</p>
+</div>
+<div id="FIG7-15" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_15.png" alt="fig 7 15">
+</div>
+<div class="title">Figure 15. Adding buttons to VBox</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add a footer to the window now. Select Insert BOTTOM at the bottom left and then drag the <code>HBox</code> from the Containers area to the middle section. It&#8217;ll look like a gray area at the bottom. Adjust its height so the footer doesn&#8217;t take too much real estate in our scene. Now add three <code>Hyperlink</code> components from the Contols section to the footer and set their text to "Link 1", "Link 2", and "Link 3" correspondingly. The Scene Builder&#8217;s window should look like this:</p>
+</div>
+<div id="FIG7-16" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_16.png" alt="fig 7 16">
+</div>
+<div class="title">Figure 16. Adding a footer with links</div>
+</div>
+<div class="paragraph">
+<p>Select the menu Preview | Show Preview in Window will help you to see how the window will look during the runtime:</p>
+</div>
+<div id="FIG7-17" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_17.png" alt="fig 7 17">
+</div>
+<div class="title">Figure 17. Previewing the window</div>
+</div>
+<div class="paragraph">
+<p>Of course, this window may need more work on styling controls and adjusting sizes and alignments, but as long as you understand how to lay out a scene, the shouldn&#8217;t be too difficult. Creating and applying CSS styles can make this windows a lot prettier.</p>
+</div>
+<div class="paragraph">
+<p>Using Scene Builder&#8217;s menu File | Save save the layout in a file <em>border.fxml</em>. While you&#8217;ve been dragging and dropping components, Scene builder was working hard generating the corresponding FXML code in <em>border.fxml</em>. If you open this file in any text editor, its content may look similar to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import javafx.scene.image.*?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+
+&lt;BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"&gt;
+   &lt;top&gt;
+      &lt;Label text="This is the Header" BorderPane.alignment="CENTER" /&gt;
+   &lt;/top&gt;
+   &lt;left&gt;
+      &lt;VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER"&gt;
+         &lt;children&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 1" /&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 2" /&gt;
+            &lt;Button mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Menu 3" /&gt;
+         &lt;/children&gt;
+      &lt;/VBox&gt;
+   &lt;/left&gt;
+   &lt;bottom&gt;
+      &lt;HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER"&gt;
+         &lt;children&gt;
+            &lt;Hyperlink text="Link 1" /&gt;
+            &lt;Hyperlink text="Link 2" /&gt;
+            &lt;Hyperlink text="Link 3" /&gt;
+         &lt;/children&gt;
+      &lt;/HBox&gt;
+   &lt;/bottom&gt;
+&lt;/BorderPane&gt;
+</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t be overwhelmed with the amount of tags and attributes in the above code. You can identify the regions of the <code>BorderPane</code> layout. The <code>&lt;top&gt;</code> region contains a label, while the <code>left</code> and <code>&lt;bottom&gt;</code> regions have containers with their own layouts. In this example I have not used the <code>&lt;center&gt;</code> and <code>&lt;right&gt;</code> regions. Typically your program will be changing the content of the central area based on the user actions. For example, if the user clicks on the "Menu 1" button in the left region, JavaFX will generate a <em>clicked event</em> and you&#8217;ll show the content required for this selection in the central area.</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll learn how to process events in the next chapter. Now it&#8217;s time to practice in working with combined layouts.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_project-creating-a-gui-for-calculator"><a class="anchor" href="#_project-creating-a-gui-for-calculator"></a>Project: Creating a GUI for Calculator</h3>
+<div class="paragraph">
+<p>Using Scene Builder and a combination of the <code>BorderPane</code> and <code>GridPane</code> layout create GUI for the calculator that looks as on Figure 1.  Add the <code>TextField</code> to the <code>north</code> region of the <code>BorderPane</code>. Then add a <code>GridPane</code> container to the <code>center</code> area - you&#8217;ll add buttons to this container.</p>
+</div>
+<div class="paragraph">
+<p>Most of the calculators have a display field on top and the buttons just below it. As you can see on Figure 1, the grid with buttons has four columns and six rows. The default <code>GridPane</code> contains two columns and three rows. You&#8217;ll need to right-click on the grid and use the menus GridPane | Add Row Above and Add Column After to until you see a 4x6 grid as shown below.</p>
+</div>
+<div id="FIG7-18" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_18.png" alt="fig 7 18">
+</div>
+<div class="title">Figure 18. The 4x6 GridPane in the center</div>
+</div>
+<div class="paragraph">
+<p>Note that I set the <code>Padding</code> property to be 10 for all sides of the grid and the <code>Hgap</code> and <code>Vgap</code> to 5 (the gap between the cells).</p>
+</div>
+<div class="paragraph">
+<p>Save the layout in the file <em>calculator.fxml</em>. Then drop a Button into the top left cell of the grid. Set the <code>Margin</code> property to 5 for each side of the button - this is the distance between the button and cell borders. Drag the button&#8217;s border to make it larger. This is what you should see:</p>
+</div>
+<div id="FIG7-19" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_19.png" alt="fig 7 19">
+</div>
+<div class="title">Figure 19. The grid with one button</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re curious how this button looks in the <em>calculator.fxml</em>, open this file in any text editor and note the section <code>&lt;children&gt;</code> that in my case looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;children&gt;
+   &lt;Button mnemonicParsing="false" prefHeight="37.0" prefWidth="132.0" text="Button"&gt;
+      &lt;GridPane.margin&gt;
+         &lt;Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /&gt;
+      &lt;/GridPane.margin&gt;
+   &lt;/Button&gt;
+&lt;/children&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is no indication of the cell (0,0) because zeros are the default values for <code>GridPane.columnIndex</code> and <code>GridPane.rowIndex</code> properties. Now you need to replicate this button in other cells. You can use multiple Ctrl-C/Ctrl-V commands and then drag/drop the buttons into other cells. See how the content of the <em>calculator.fxml</em> changes as you add more buttons. I find it faster copy/pasting the generated code in the FXML file than using Scene Builder for mass duplication.</p>
+</div>
+<div class="paragraph">
+<p>Note that on Figure 1, the button with coordinates (0,5) spans two columns, and the button with coordinates (3,4) spans two rows. For these buttons you&#8217;ll need to enter 2 as the row (or column) span, and select <code>MAX_VALUE</code> as maximum width (or height).  This is what you should see by now:</p>
+</div>
+<div id="FIG7-20" class="imageblock">
+<div class="content">
+<img src="./images/fig_7_20.png" alt="fig 7 20">
+</div>
+<div class="title">Figure 20. Replicated buttons</div>
+</div>
+<div class="paragraph">
+<p>Change the text of each button to look as in Figure 1, and the layout is done.</p>
+</div>
+<div class="paragraph">
+<p>Then create a new JavaFX project Calculator in IDEA and replace the generated <em>sample.fxml</em> with <em>calculator.fxml</em> created by Scene Builder. Modify the generated class <code>Main</code> to use <em>calculator.fxml</em>. Rename the package from <em>sample</em> to <em>mycalculator</em>. Set the size of the scene to be large enough to accommodate your design. This is how my class <code>Main</code> looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Main extends Application {
+
+  @Override
+  public void start(Stage primaryStage) throws Exception{
+      Parent root = FXMLLoader.load(getClass().getResource("calculator.fxml"));
+      primaryStage.setTitle("My JavaFX Calculator");
+      primaryStage.setScene(new Scene(root,650,600));
+      primaryStage.show();
+  }
+
+  public static void main(String[] args) {
+      launch(args);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the <code>Main</code> program from IDEA to ensure that your calculator looks as expected. Don&#8217;t allow the users to resize your calculator by invoking the method <code>setResizable</code> on the stage object.</p>
+</div>
+<div class="paragraph">
+<p>Then create a CSS file to add some cool styling to the calculator&#8217;s buttons. Save the CSS file in your IDEA project and modify the code of the <code>Main</code> class to use your CSS file similarly to how it was done in the section "Styling With CSS" above. Make your calculator look better than mine - it&#8217;s not too difficult.</p>
+</div>
+<div class="paragraph">
+<p>After completing this assignment your buttons won&#8217;t work just yet. In the next chapter you&#8217;ll learn how to make the buttons (or other components) to react on user actions, so you&#8217;ll be able to complete the calculator. In this chapter my goal was to introduce you to basic rules of designing JavaFX GUI with the help of Scene Builder. Watch <a href="http://www.youtube.com/watch?v=ij0HwRAlCmo">this YouTube video</a> to see how easy it is to design more complex views with Scene Builder.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-22 22:04:48 EDT
+Last updated 2014-10-23 11:23:29 EDT
 </div>
 </div>
 </body>
