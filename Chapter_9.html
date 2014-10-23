@@ -571,11 +571,11 @@ catch (IOException e){
 <div class="paragraph">
 <p>Exceptions in Java are also classes, and some of them are shown in the following inheritance tree:</p>
 </div>
-<div id="FIG8-1" class="imageblock">
+<div id="FIG9-1" class="imageblock">
 <div class="content">
-<img src="./images/fig_8_01.png" alt="fig 8 01">
+<img src="./images/fig_9_01.png" alt="fig 9 01">
 </div>
-<div class="title">Figure 1. ???</div>
+<div class="title">Figure 1. Exceptions Hierarchy</div>
 </div>
 <div class="paragraph">
 <p>Subclasses of the class <code>Exception</code> are called <em>checked exceptions</em> and you must process them  in your code.</p>
@@ -606,7 +606,7 @@ catch (IOException e){
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>public void getScores(){
+<pre class="highlight"><code class="Java language-Java">public void getScores(){
  try{
     fileScores.read();
     System.out.println(“Scores loaded successfully”);
@@ -618,7 +618,7 @@ catch (IOException e){
       System.out.println(“Problem reading  file “ +
                                     e2.getMessage());
  }
-}</pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -705,16 +705,7 @@ return;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We’ve gotten rid of the scary stack trace error messages, and displayed a simple to understand  message <em>Please enter a Number</em>:</p>
-</div>
-<div id="FIG8-2" class="imageblock">
-<div class="content">
-<img src="./images/fig_8_02.png" alt="fig 8 02">
-</div>
-<div class="title">Figure 2. ???</div>
-</div>
-<div class="paragraph">
-<p>Now the <code>NumberFormatException</code> is handled.</p>
+<p>We’ve gotten rid of the scary stack trace error messages, and displayed a simple to understand  message <em>Please enter a Number</em>. Now the <code>NumberFormatException</code> is handled.</p>
 </div>
 </div>
 <div class="sect2">
@@ -815,11 +806,11 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <div class="paragraph">
 <p>The statement <code>throw</code> is used to throw Java objects. The object that a program throws must be <em>throwable</em>. This means that you can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>, and all Java exceptions are its subclasses.</p>
 </div>
-<div id="FIG8-3" class="imageblock">
+<div id="FIG9-3" class="imageblock">
 <div class="content">
-<img src="./images/fig_8_03.png" alt="fig 8 03">
+<img src="./images/fig_9_02.png" alt="fig 9 02">
 </div>
-<div class="title">Figure 3. ???</div>
+<div class="title">Figure 2. Throwing exceptions</div>
 </div>
 <div class="paragraph">
 <p>The next code fragment shows how the method <code>getAllScores()</code> catches an <code>IOException</code> and creates a new <code>Exception</code> object with a more friendly description of the error, and re-throws it to the method <code>main()</code>.  Now the method <code>main()</code> won’t compile unless you put the line that calls <code>getAllScores</code> in the <code>try/catch</code> block, because this method may throw an <code>Exception</code> and it should be either handled or re-thrown again. The method <code>main</code> should not throw any exceptions, that’s why it should handle it.</p>
@@ -854,11 +845,11 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <div class="paragraph">
 <p>In case of a file error,  the main method will handle it,  and  the <code>e1.getMessage</code>   will return the <em>Dear Friend…</em> message.</p>
 </div>
-<div id="FIG8-4" class="imageblock">
+<div id="FIG8-3" class="imageblock">
 <div class="content">
-<img src="./images/fig_8_04.png" alt="fig 8 04">
+<img src="./images/fig_8_03.png" alt="fig 8 03">
 </div>
-<div class="title">Figure 4. ???</div>
+<div class="title">Figure 3. Showing a user-friendly message</div>
 </div>
 </div>
 <div class="sect2">
@@ -935,7 +926,7 @@ For more detailed coverage of exceptions read Oracle&#8217;s   <a href="http://d
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 11:24:26 EDT
+Last updated 2014-10-23 11:43:21 EDT
 </div>
 </div>
 </body>
