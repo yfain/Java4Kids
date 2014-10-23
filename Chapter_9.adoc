@@ -297,9 +297,9 @@ class ScoreList{
 
 In case of a file error,  the main method will handle it,  and  the `e1.getMessage`   will return the _Dear Friend…_ message.   
 
-[[FIG8-3]]
+[[FIG9-3]]
 .Showing a user-friendly message
-image::images/fig_8_03.png[]
+image::images/fig_9_03.png[]
 
 === Creating New Exceptions 
 
