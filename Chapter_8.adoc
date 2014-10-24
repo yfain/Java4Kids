@@ -3,40 +3,31 @@
 
 == Chapter 8. Programming User Interaction in JavaFX
 
-After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator windows from Chapter 7 looks good, but none of them would react on user's actions. No matter how hard you click on the Sign In or calculator's buttons, nothing will happen because we didn't teach these application how to react on user-generated events (e.g. button clicks). 
-
-Events are notifications that something important for the application has happened. In this chapter I'll explain you how to write code to handle some of such events.  
+After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and Calculator windows from Chapter 7 look good, but none of them would react on user's actions. No matter how hard you click on the Sign In or calculator's buttons, nothing will happen because we didn't teach these application how to react on user-generated events. Events are notifications that something important for the application has happened (e.g. the user clicked on the button). In this chapter I'll explain you how to write code to handle some of such events.  
 
 When IDEA creates a new JavaFX project it generates an empty class `Controller`, which is a right place for the code that communicates with GUI components. In this chapter we'll establish a link between GUI and the controller. We'll also add event handlers and will right code to modify the GUI. I'll continue working with FXML samples created in the previous chapter, but this time the GUI events will be handled by the code from the controller class. 
 
-You'll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes. 
+You'll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes. I'll also show the wrong and the right way of updating the GUI to make the used interaction more responsive.
 
 === Events
 
-JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class `Event` located in the packages `javafx.event` and `javafx.scene.input`. You need to know what events are important to your program and, as the programmers say, "listen to events". You'll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you'll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is recommended for code that has to process multiple events.
+JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. When the event happens, the event object is represented by the one of the subclasses of the class `Event` located in the packages `javafx.event` and `javafx.scene.input`. You need to decide what events are important to your program and, as the programmers say, "listen to these events". You'll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed using FXML, you'll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is a good idea if your code has to process multiple events.
 
 [[FIG8-1-0]]
 .Event listeners 
 image::images/fig_8-01-1.png[]
 
-You can either create with `new` or _inject_ an instance of your controller class into Java code. I'll explain you what injection means in a bit. 
+You can create an instance of your controller class either with the `new` operator or _inject_ it into Java code. I'll explain you what injection means in a bit. 
 
 ==== Assigning Event Handlers in FXML
 
-Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We'll stick to our principles of separating GUI and application logic, and will keep the GUI in .fxml file, but processing in Java. 
+Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We'll stick to our principles of separating GUI and application logic, and will keep the GUI in `.fxml` file, but application logic will be programmed in Java. 
 
-In Scene Builder you may have noticed the _Controller_ bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic.
-
-At the bottom right corner of Scene Builder you may notice a tab titled Code. This is where you can assign event handler methods to selected GUI component after assigning the controller class. So you could select have selected, say a button in the central canvas and assign its click handler right in the _Code_ section for this button. 
-
-
-=== Hooking up a Controller to GUI
-
-Since we're separating the GUI code form the application logic, we need a way to specify that a particular FXML file should use a particular controller. In Chapter 7 I didn't bring your attention to where it's done in FXML, but if you'll look at any of the FXML files, you'll see that the name of the controller was specified there when IDEA generated the project for us. 
+In Scene Builder you may have noticed the _Controller_ bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic. You can also open your `.fxml` file in the text editor and type in the name of the controller class there. If you'll look at any of the FXML files from Chapter 7, you'll see that the name of the controller was specified there when IDEA generated the project for us. 
 
 ==== Adding Controller to Sign In application
 
-To illustrate the use of controllers, I'll continue working on the sample Sign In project from Chapter 7. It has a file signin.fxml that includes the following `GridPane` tag:
+To illustrate the use of controllers, I'll continue working on the sample Sign In project from Chapter 7. It has a file `signin.fxml` that includes the `GridPane` tag as a root element:
 
 [source, xml]
 ----
@@ -46,9 +37,9 @@ To illustrate the use of controllers, I'll continue working on the sample Sign I
 
 The `hgap` and `vgap` attributes specify the padding between the grid grid columns and rows. The `xmlns` attributes specify so called namespaces required for proper parsing of FXML files. And the attribute `fx:controller` specifies the full name of the class `Controller`, which in our project is located in the package `signin`. 
 
-When the file signin.fxml is loaded, JavaFX runtime creates an instance of the class `signin.Controller` and injects it in the instance of the GUI class generated from FXML. The word injection describes the situation when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to create an instance of the `signin.Controller` manually by using the `new` operator. 
+When the file `signin.fxml` is loaded, `FXMLLoader` creates an instance of the Java class based on the FXML content and then instantiates and injects the`signin.Controller` object into the GUI object. The word _inject_ describes the process when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to manually create an instance of the `signin.Controller` by using the `new` operator. 
 
-The first version of our controller class is shown next: 
+The first version of the `Controller` class is shown next: 
 
 [source, java]
 ----
@@ -65,9 +56,9 @@ public class Controller {
 }
 ----
 
-The class `Controller` uses the class `ActionEvent` from package `javafx.event`, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an `ActionEvent` in the package `java.awt.event`, which we don't want in this case.
+The class `Controller` uses the class `ActionEvent` from package `javafx.event`, and I want to warn you - be careful when IDE will offer to insert an import statement for you. There is also an `ActionEvent` in the package `java.awt.event`, which we don't want in JavaFX applications.
 
-We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the `onAction` event in the Button element in signin.fxml as shown on Figure 8-2.
+We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we can specify the name of this method as a handler of the `onAction` event in the Button element in `signin.fxml` as shown on Figure 8-2.
 
 [[FIG8-1]]
 .Mapping onAction event to signInClicked method 
@@ -79,7 +70,7 @@ If you run the `Main` program and click three times on the button Sign In, the c
 .After clicking 3 times on Sign In button 
 image::images/fig_8_02.png[]
 
-So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the `ActionEvent` object as an argument. Its property `target` identifies, well the target of the event, which is a Sign In button in our case. 
+So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method for all buttons with the code recognizing which button was clicked. The controller will invoke your event handler providing the `ActionEvent` object as an argument. Its property `target` identifies, well the target of the event, which is a Sign In button in our case. 
 
 I ran our application in the debug mode just to show you that the `target` property on the `ActionEvent` correctly recognizes the event target shown in Figure 8-4.   
 
@@ -87,11 +78,11 @@ I ran our application in the debug mode just to show you that the `target` prope
 .Viewing properties of ActionEvent in debugger 
 image::images/fig_8_03.png[]
 
-There is another event property `source`, which has the same value as `target` in our application. There are cases when `source` and `target` are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration. 
+The `ActionEvent` has another property called `source`, which has the same value as `target` in our application. There are cases when `source` and `target` are different because an event travels through all containers until it reaches the target.  Then it _bubles up_ through all the containers. This is an advanced topic, but I still want to give you an illustration. 
 
-When you want to handle button clicks, you don't really care in which area inside the button was the mouse pointer when the user clicked on the button. So handing `ActionEvent` was sufficient. But there is another event called `MouseEvent`, which gives you more details on the click event. 
+While handling button clicks, you don't really care where exactly inside the button was the mouse pointer when the user clicked on the button. So handing `ActionEvent` was sufficient. But there is another event called `MouseEvent`, which gives you more details on the click event like the mouse pointer coordinate, if some of the keys were down during the click and some other information. 
 
-In your signin.fxml you're allowed to use `onMouseClicked` instead of `onAction` for the button. But if you do so, the `Button` will be considered a container for a special skin class `LabeledText` with the text _Sign In_, and if you click on the words _Sign In_ the source of the event will be `Button`, and the target would be the class `LabeledSkin`. I've created an event handler `signInMouseClicked` and ran it through a debugger. Now the source and target of the event are different.
+In `signin.fxml` you're allowed to use `onMouseClicked` instead of `onAction` for the button. But if you do so, the `Button` will be considered a container for a special skin class `LabeledText` with the text _Sign In_, and if you click on the words _Sign In_ the source of the event will be `Button`, and the target would be the class `LabeledSkin`. Just for the illustration purposes I've created an event handler `signInMouseClicked` and ran it through a debugger. Now the source and target of the event are different.
 
 [[FIG8-4]]
 .Viewing properties of MouseEvent in debugger 
@@ -99,9 +90,9 @@ image::images/fig_8_04.png[]
 
 ==== Data Exchange Between GUI Components And Controller
 
-No that we know how to link controller's event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/Password the user entered and update the GUI from the controller accordingly.
+Now that we know how to link controller's event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/password the user entered and update the GUI from the controller accordingly.
 
-To read the values from GUI components we'll need to give them unique id's in the FXML file. We don't need to give id's to all component - only to those that have values for handling. Take a look at the `<childrens>` section of signin.fxml:
+To read the values from GUI components we'll need to give them unique id's in the FXML file. We don't need to give id's to all components - only to those that we want to process in the controller's code. Take a look at the `<childrens>` section of `signin.fxml`:
 
 [source, xml]
 ----
@@ -116,9 +107,7 @@ To read the values from GUI components we'll need to give them unique id's in th
 </children>
 ----
 
-Only the `TextField` and `PasswordField` have an attribute `fx:id` - this is how we can assign id's in fxml.
-
-The next step is to inject them into the variables in the `signin.Controller` class. The following code fragment shows how to inject component references into the `id` and `pwd` fields. This is how I'll declared two Java variables in the `Controller` clas with the names that match those from signin.fxml:
+Only the `TextField` and `PasswordField` have an attribute `fx:id` - this is how you can assign id's in fxml. The next step is to inject references to these GUI components  into the variables in the `Controller` class. The following code fragment shows how to inject component references into the `id` and `pwd` fields. I've declared two Java variables in the `Controller` class with the names that match those from `signin.fxml`:
 
 [source, java]
 ----
@@ -127,11 +116,11 @@ The next step is to inject them into the variables in the `signin.Controller` cl
 @FXML private PasswordField pwd;
 ----
 
-Java has so called annotations (not covered in this book). They start with `@` sign and can be placed in front of the variable, class, or a method declaration depending on how  the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation `@FXML` instructs runtime to inject the references to the specifies GUI objects into the variables. 
+Java has so called http://docs.oracle.com/javase/tutorial/java/annotations/[annotations] (not covered in this book). They start with the `@` sign and can be placed in front of the variable, class, or a method declaration depending on how the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation `@FXML` instructs runtime to inject the references to the specifies GUI objects into the variables. 
 
-In other words, JavaFX runtime will read the first line as follows: "I need to get the object that I created after loading signin.fxml file, and then inside this object find the component with an the `fx:id="id"`. Finally, I need to insert the reference to this component into the Java variable `id`". The same applies to the variable `pwd`.
+In other words, JavaFX runtime will read the first line as follows: _"I need to get the object that I created after loading `signin.fxml` file, and find the component with an the `fx:id="id"` inside this object. Finally, I need to insert the reference to this component into the Java variable `id`"_. The same applies to the variable `pwd`.
 
-The rest is easy. Just use the injected values in you event handler. The code of our `Controller` is shown next. Its method `signInClicked` checks the value entered in the User ID field in the GUI, and if it's not equal to "Yakov", then the code sets the background of the GUI component to pink color.
+The rest is easy. Just use the injected values in you event handler. The code of our `Controller` is shown next. Its method `signInClicked` checks the value entered in the User ID field in the GUI, and if it's not equal to "Yakov", then the code sets the background of the GUI component to the light pink color.
 
 [source, java]
 ----
@@ -161,7 +150,7 @@ public class Controller {
 
 <1> Inject the references to GUI components into member variables.  
 <2>  Extract the text from the GUI objects 
-<3>  Has the user not entered Yakov in the User ID field? We use the negation operator ! here.
+<3>  Has the user not entered Yakov in the User ID field? We use the negation operator `!` here.
 <4>  Set the background color to `lightpink` if the entered user id is not Yakov. You can find major CSS color names at http://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html   
 <5>  Set the background color to back to `white` if the entered user id is not Yakov. 
 
@@ -172,11 +161,11 @@ If you run the `Main` program and enter the wrong user id, the window will look 
 image::images/fig_8_05.png[]
 
 
-=== Assigning Event Handlers in Java
+==== Assigning Event Handlers in Java
 
 If your program is written completely in Java without any use of FXML, you'll be assigning event handlers using so called http://docs.oracle.com/javafx/2/events/convenience_methods.htm[convenience methods] that have names that start with `setOn` like `setOnAction`, `setOnKeyTyped`, `setOnEditStart` etc. Each of the GUI components has has several of such methods.   
 
-You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or method references (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you'll be writing code to react if some event has happened. For example, if you have a button represented by a variable `myButton` you can write an event handler for the click event:
+You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html[method references] (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you'll be writing code to react if some event has happened. For example, if you have a button represented by a variable `myButton` you can write an event handler for the click event:
 
 [source, java]
 ----
@@ -186,7 +175,7 @@ signInButton.setOnAction(evt ->
 );
 ----
 
-You've got introduced lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but don't really uses its values but just prints the message that the button was clicked. 
+You've got introduced to lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but doesn't really use its values but just prints the message that the button was clicked. 
 
 What's the type of the `evt` argument? Java compiler will figure it out automatically. Since the method `setOnAction` expects to get the `ActionEvent` object from the JVM, compiler guesses that the type of the `evt` is `ActionEvent` so you don't even need to write it in the program code. You've seen a similar example of of type inference in Chapter 5.  
 
@@ -278,24 +267,23 @@ public class MainPureJava extends Application {
 
 <5> The GUI components for the first two rows are instantiated, constraints are set so I add them as children to the root of the _scene graph_ - the `GridPane`.
 
-<6> Now I create the instance if the Sign In button and assign the id to it. This was explained in the Styling with CSS section in Chapter 7.
+<6> Now I create the instance if the Sign In button and give it an id. This was explained in the "Styling with CSS" section in Chapter 7.
 
-<7> The lambda expression implements the application logic to be invoked as a reaction to the `ActionEvent`.    
+<7> This lambda expression implements the application logic to be invoked as a reaction to the `ActionEvent`.    
 
-<8> The we create a scene object an apply the CSS to it. This is probably the first time you see the method chaining. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object. 
+<8> We create a scene object an apply the CSS to it. This is probably the first time you see so called _method chaining_. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object. 
 
 <9> Finally, the scene is added to the stage and the curtain goes up.
 
-Some programmers like GUI designer tools where they can drag and drop components. Some prefer writing Java code. I prefer working with FXML, because it greatly simplifies  design of the complex windows. Besides separating the design from the application logic is also a good idea because a person who doesn't know programming can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.
-
+Some programmers prefer working GUI designer tools where they can drag and drop components. Some prefer writing Java code for UI. I like the declarative way of designing GUI components with FXML, because it's just more productive. The fact that FXML separates the screen design from the application logic, even a person who doesn't know programming (e.g. a UI designer) can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.
 
 ==== Further Reading on Event Handling
 
-I've explained you the basics of event handling using the `ActionEvent` and `onAction` event handler as an example. Some other examples of the events are:`KeyEvent` (e.g. the user pressed a key on the keyboard), `MouseEvent`(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), `TouchEvent` (e.g. the user touched the screen), `WindowEvent` (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle's tutorial about handling events at http://docs.oracle.com/javafx/2/events/jfxpub-events.htm.
+I've covered the basics of event handling using the `ActionEvent` and `onAction` event handler as an example. Some other examples of the events are:`KeyEvent` (the user pressed a key on the keyboard), `MouseEvent`(the user pressed the mouse key and we need to know coordinates of the mouse pointer), `TouchEvent` (the user touched the screen), `WindowEvent` (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle's tutorial about handling events at http://docs.oracle.com/javafx/2/events/jfxpub-events.htm.
 
 === Data Binding and Properties
 
-JavaFX has an interface `Property` located in the package `javafx.beans.property`, which defines a very useful functionality allowing to _bind_ the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.
+JavaFX has the interface `Property` located in the package `javafx.beans.property`, which defines a very useful functionality allowing to _bind_ the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.
 
 Imagine that you're developing a multi-player game that has a Java object receiving the moves of other gamers from a central server. When a Java object receives a new move, you need to modify the content of the corresponding GUI component of the game. With JavaFX you can simply bind a property of a Java class that stores player's moves (e.g. `playersMove`) to the property of, say a `Label` component on the GUI. No more coding required. As soon as the `playersMove` value changes, the `Label` will be automatically updated.  JavaFX properties greatly simplify the process of synchronization of the data and the GUI.
 
@@ -303,22 +291,22 @@ Existing implementations of the `Property` interface add  the change notificatio
 
 .Design Patterns Briefly
 ****************************
-Over the years software developers came up with a number of _design patterns_, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You'd better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you'll be a little better prepared for chatting with programmers.
+Over the years software developers came up with a number of _design patterns_, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You'd better implement MVC in this program" and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you'll be a little better prepared for chatting with programmers.
 
-*MVC* stands for Mode View Controller. This design patter recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we've almost implemented MVC in one of the versions of the Sign In application. The file _signin.fxml_ was a view, and the class `signin.Controller` played a role of a controller. Since this example had just two variables (`id` and `pwd`) we didn't created a special model class for them.
+*MVC* stands for Mode View Controller. This design pattern recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we've almost implemented MVC in one of the versions of the Sign In application. The file `signin.fxml` was a view, and the class `Controller` played a role of a controller. Since this example had just two variables (`id` and `pwd`) we didn't create a special model class for them.
 
-*Observer* design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you'll see in this chapter. 
+*Observer* design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you'll see later in this chapter. 
 
-If you're interested in detailed coverage of design patters, get the book "Head First Design Patterns" published by O'Reilly Media. 
+If you're interested in detailed coverage of design patterns, get the book "Head First Design Patterns" published by O'Reilly Media. 
 ****************************
 
 Classes that implement `Property` interface are located in the package `javafx.beans.property`. For each property type there are two classes: one that allows only reading property values and the other one for read and writing (changing the values). For example, if you need a `String` property, use either `ReadOnlyStringWrapper` or `SimpleStringProperty`. Similarly named classes exist for other data types and some collections too.
 
-As we always do in this book, let's learn by coding. I'll continue adding features to our Sign In application. This time I'll add a `Label` component with `fx:id="errMsg"` to the view in FXML file to display sign in error messages if any. In the controller class I'll add a corresponding variable `errMsg` and will inject a reference to the `Label` into this variable. 
+As we always do in this book, let's learn by coding. I'll continue adding features to our Sign In application. This time I'll add a `Label` component with `fx:id="errMsg"` to the view in FXML file to display sign in error messages, if any. In the controller class I'll add the corresponding variable `errMsg` and will inject a reference to the `Label` into this variable. 
 
-The next step is to declare a bindable property `signinError` in the class `Controller` that will get the value of the error message if any. But since a regular `String` can't be bindable, we'll use the data type `SimpleStringProperty`  
+The next step is to declare a _bindable_ property `signinError` in the class `Controller` that will get the value of the error message if any. But since a regular `String` can't be bindable, we'll use the data type `SimpleStringProperty`  
 
-Finally, I'll bind the label and the variable to insure that an error message is immediately displayed on the screen as soon as its value changes. 
+Finally, I'll bind the label to the variable to insure that an error message is immediately displayed on the screen as soon as its value changes. 
 
 Let's place an additional `Label` component at the bottom of the Sign In window. I'll add another row to the `GridPane` and place there a `Label` that will span two columns. This label will have `fx:id="errMsg"` and initially won't  have any text - it'll be invisible. The `<children>` section of the FXML file will look as follows:
 
@@ -349,7 +337,7 @@ SimpleStringProperty signinError =
 
 The next question is when and where do the binding? If I'd be creating an instance of the `Controller` with the `new` operator I could have done it in the class constructor after the GUI component are created. But JavaFX runtime instantiates the `Controller` for us, so how can we catch the moment when the GUI components are ready? 
 
-In JavaFX if you'll add to the controller the method `initialize` annotated with @FXML, `FXMLLoader` will invoke it after the GUI components are constructed. 
+In JavaFX if you'll add to the controller the method `initialize` annotated with `@FXML`, `FXMLLoader` will invoke it after all GUI components are constructed. 
 
 [source, java]
 ----
@@ -359,9 +347,9 @@ In JavaFX if you'll add to the controller the method `initialize` annotated with
 }
 ----
 
-JavaFX properties are observables. So you can read the above the above code as follows: "I want the text property of the label `errMsg` to be the observer (a.k.a. listener) to the property `signinError` (observable). So whenever `signinError` changes, the text property of the label will get the latest value. 
+JavaFX properties are _observables_. So you can read the above code as follows: _"I want the text property of the label `errMsg` to be the observer (a.k.a. listener) to the property `signinError` (observable). So whenever `signinError` changes, the text property of the label will get the latest value."_ 
 
-To complete the binding Sign In example, the event handler for the Sign In button should not only paint the wronn ID in light pink, but also modify the value of the `signinError` property. The complete code of the class `BindableController` is shown next.  
+To complete the Sign In example with the binding, the event handler for the Sign In button should not only paint the wrong ID in light pink, but also modify the value of the `signinError` property. The complete code of the class `BindableController` is shown next.  
 
 [source, java]
 ----
@@ -403,7 +391,7 @@ public class BindingController {
 }
 ----
 
-Note that in the if statement I set the error message when the ID is wrong, and reset the `signinError` to an empty string when the ID is correct. After I ran the Sign In application the above controller, entered Alex as the user ID and clicked the button Sign In, my window looked like this:
+Note that in the if statement I set the error message when the ID is wrong, and reset the `signinError` to an empty string when the ID is correct. To test the program I've entered Alex as the user ID and clicked the button Sign In.My window looked like this:
 
 [[FIG8-6]]
 .Binding in action after entering the wrong user id 
@@ -413,14 +401,15 @@ Enter the right user ID, click on Sign In again, and the binding mechanism will 
 
 === Application Thread in JavaFX 
 
-In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have to run in separate threads the code that updates the GUI from the code that performs application logic. I'll explain you why. 
-Imagine a program with a GUI that's constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction. 
+In Chapter 6 I gave you a light introduction to multi-threading. When you work with JavaFX you have to run the code that updates the GUI and the code that performs application logic in separate threads. I'll explain you why. 
 
-Updates of the GUI in JavaFX are done in so called  _application thread_. The idea is to separate intensive calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
+Imagine a program with a GUI that's constantly is being updated based on some intensive calculations. It could be a game with multiple moving shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction. 
+
+Updates of the GUI in JavaFX are done in so called  _application thread_. The idea is to separate calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
 
 ==== The Frozen Screen Demo
 
-I can easily demonstrate you a "frozen GUI" effect by making a small change in the class `signin.Controller` in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep, as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:
+I will demonstrate you a "frozen GUI" effect by making a small change in the class `Controller` in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep, as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can write the following:
 
 [source, java]
 ----
@@ -436,7 +425,7 @@ This code snippet has so-called try-catch block, which is required in some cases
 
 The method `sleep` of class `Thread` takes one argument - the sleeping time in milliseconds. There are 1000  milliseconds in one second, so the above code snippet will place the current thread to sleep for 10 second.
 
-Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I'll add the 10-second sleeping code to the application thread to emulate the process that would perform actual sign in. This is wrong - you should execute the application logic in a separate thread. But I do it on purpose to demonstrate the frozen effect.
+Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I'll add the 10-second sleeping code to the application thread to emulate the process that would perform actual sign in. Actually, this is wrong - you should execute the application logic in a separate thread. But I do this on purpose to demonstrate the frozen effect.
 
 The following code fragment from the new controller class shows hos the event handler `signInClicked` invokes the method named `wrongStartOfLongRunningProcess`, which sleeps for 10 seconds and then checks if the entered user ID is Yakov.  
 
@@ -467,13 +456,13 @@ private void wrongStartOfLongRunningProcess(String uID) {
 }
 ----
 
-Basically, when the user clicks on the Sign In button, the application thread will become busy for 10 seconds, and only then checks the user ID and set the background color of the `TextField` on the screen. If you'll run the Sign In sample with such event handler, the application window becomes frozen and unresponsive for 10 seconds. If the user will try to reenter the ID, he'll see a wait cursor. On MAC OS computers such a cursor looks as a spinning _wheel of death_ as shown on Figure 8-7.
+When the user clicks on the Sign In button, the application thread will become busy for 10 seconds, and only then checks the user ID and set the background color of the `TextField` on the screen. If you'll run the Sign In sample with such event handler, the application window becomes frozen and unresponsive for 10 seconds. If the user will try to reenter the ID, he'll see a wait cursor. On MAC OS computers such a cursor looks as a spinning _wheel of death_ as shown on Figure 8-7.
 
 [[FIG8-7]]
 .Frozen Screen with a wheel of death 
 image::images/fig_8_07.png[]
 
-Ten seconds later, the application thread wakes up, and the GUI becomes responsive again. Let's fix this code and create a separate thread emulating the long running process so that the application thread can continue working with GUI. The following code listing shows the complete code of the class `ControllerLongRunningThread`, which doesn't freeze the window.
+Ten seconds later the application thread wakes up, and the GUI becomes responsive again. Let's fix this code and create a separate thread emulating the long running process so that the application thread can continue working with GUI. The following code listing shows the complete code of the class `ControllerLongRunningThread`, which doesn't freeze the window.
 
 [source, java]
 ----
@@ -531,14 +520,13 @@ public class ControllerLongRunningThread {
 
 <6> The method `start` of the class `Thread` starts the executing of the lambda's code in a separate worker thread. 
 
-
-In the chapter on Ping-Pong game we'll use multiple threads too.One thread will be responsible for displaying the ping-pong table, while the other one will calculate coordinates of the ball and paddles. 
+In the chapter on Ping-Pong game we'll use multiple threads too. One thread will be responsible for displaying the ping-pong table, while the other will calculate coordinates of the ball and paddles. 
 
 === Deploying With JavaFX Packager
 
-How do you start a JavaFX application? Well, you can start it either from the IDE or from a command line as any other Java application. But what if you want to give your application to your grandma, what may not be as good at Java as you are? Of course, you can pay her a visit, install the Java runtime on her computer, and teach her how to open a command ot Terminal window and enter `java signin.Main`. 
+How do you start a JavaFX application? Well, you can start it either from the IDE or from a command line as any other Java application. But if you want to give your application to your grandma, what may not be as good at Java as you are? Of course, you can pay her a visit, install the Java runtime on her computer, and teach her how to open a command or Terminal window and enter `java signin.Main`. 
 
-You may even learn how to use scripting languages and create a file `signin.bat` on Windows or `signin.sh` on MAC OS that will have the java command inside. You can even create an icon that will run this script. But what if everyone in your school want to have your program installed on their computers? Now if becomes a time-consuming task.
+You may learn how to use scripting languages and create a file `signin.bat` in Windows or `signin.sh` in MAC OS that will have the `java signin.Main` command inside. You can even create an icon that will run this script. But what if everyone in your school want to have your program installed on their computers? Now if becomes a time-consuming task.
 
 But the best way to prepare your JavaFX application for distribution is to create a self-contain file `signin.exe` for Windows or `signin.dmg` for MAC OS. This file will contain both the Java runtime and your application code. This process is described in details in Oracle's tutorial titled http://docs.oracle.com/javafx/2/deployment/self-contained-packaging.htm#BCGIBBCI["Self-Contained Application Packaging]. I'm not going to repeat this tutorial here, but will leave it for you as a self-study project. 
 
@@ -550,7 +538,7 @@ There is also a community site JavaFX Ports[ http://javafxports.org/page/home] w
 
 === What to Study Next About JavaFX
 
-In Chapters 7 and 8 I gave you a very brief introduction to JavaFX. You'll be writing more of JavaFX code in Chapter 9 and while working on the Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package `javafx.animation`.
+In Chapters 7 and 8 I gave you a very brief introduction to JavaFX. You'll be writing more of JavaFX code in chapters 9, 10, and 13, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package `javafx.animation`.
 
 Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress. 
 
