@@ -490,21 +490,18 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-8-programming-user-interaction-in-javafx"><a class="anchor" href="#_chapter-8-programming-user-interaction-in-javafx"></a>Chapter 8. Programming User Interaction in JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and calculator windows from Chapter 7 looks good, but none of them would react on user&#8217;s actions. No matter how hard you click on the Sign In or calculator&#8217;s buttons, nothing will happen because we didn&#8217;t teach these application how to react on user-generated events (e.g. button clicks).</p>
-</div>
-<div class="paragraph">
-<p>Events are notifications that something important for the application has happened. In this chapter I&#8217;ll explain you how to write code to handle some of such events.</p>
+<p>After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and Calculator windows from Chapter 7 look good, but none of them would react on user&#8217;s actions. No matter how hard you click on the Sign In or calculator&#8217;s buttons, nothing will happen because we didn&#8217;t teach these application how to react on user-generated events. Events are notifications that something important for the application has happened (e.g. the user clicked on the button). In this chapter I&#8217;ll explain you how to write code to handle some of such events.</p>
 </div>
 <div class="paragraph">
 <p>When IDEA creates a new JavaFX project it generates an empty class <code>Controller</code>, which is a right place for the code that communicates with GUI components. In this chapter we&#8217;ll establish a link between GUI and the controller. We&#8217;ll also add event handlers and will right code to modify the GUI. I&#8217;ll continue working with FXML samples created in the previous chapter, but this time the GUI events will be handled by the code from the controller class.</p>
 </div>
 <div class="paragraph">
-<p>You&#8217;ll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes.</p>
+<p>You&#8217;ll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes. I&#8217;ll also show the wrong and the right way of updating the GUI to make the used interaction more responsive.</p>
 </div>
 <div class="sect2">
 <h3 id="_events"><a class="anchor" href="#_events"></a>Events</h3>
 <div class="paragraph">
-<p>JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. An event object is represented by the instance of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You need to know what events are important to your program and, as the programmers say, "listen to events". You&#8217;ll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed with FXML, you&#8217;ll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is recommended for code that has to process multiple events.</p>
+<p>JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. When the event happens, the event object is represented by the one of the subclasses of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You need to decide what events are important to your program and, as the programmers say, "listen to these events". You&#8217;ll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed using FXML, you&#8217;ll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is a good idea if your code has to process multiple events.</p>
 </div>
 <div id="FIG8-1-0" class="imageblock">
 <div class="content">
@@ -513,30 +510,21 @@ p { margin-bottom: 1.25rem; }
 <div class="title">Figure 1. Event listeners</div>
 </div>
 <div class="paragraph">
-<p>You can either create with <code>new</code> or <em>inject</em> an instance of your controller class into Java code. I&#8217;ll explain you what injection means in a bit.</p>
+<p>You can create an instance of your controller class either with the <code>new</code> operator or <em>inject</em> it into Java code. I&#8217;ll explain you what injection means in a bit.</p>
 </div>
 <div class="sect3">
 <h4 id="_assigning-event-handlers-in-fxml"><a class="anchor" href="#_assigning-event-handlers-in-fxml"></a>Assigning Event Handlers in FXML</h4>
 <div class="paragraph">
-<p>Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We&#8217;ll stick to our principles of separating GUI and application logic, and will keep the GUI in .fxml file, but processing in Java.</p>
+<p>Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We&#8217;ll stick to our principles of separating GUI and application logic, and will keep the GUI in <code>.fxml</code> file, but application logic will be programmed in Java.</p>
 </div>
 <div class="paragraph">
-<p>In Scene Builder you may have noticed the <em>Controller</em> bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic.</p>
+<p>In Scene Builder you may have noticed the <em>Controller</em> bar in the bottom left corner. This is the place were you can specify a Java class that will contain event handling code and may use other classes implementing application logic. You can also open your <code>.fxml</code> file in the text editor and type in the name of the controller class there. If you&#8217;ll look at any of the FXML files from Chapter 7, you&#8217;ll see that the name of the controller was specified there when IDEA generated the project for us.</p>
 </div>
-<div class="paragraph">
-<p>At the bottom right corner of Scene Builder you may notice a tab titled Code. This is where you can assign event handler methods to selected GUI component after assigning the controller class. So you could select have selected, say a button in the central canvas and assign its click handler right in the <em>Code</em> section for this button.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_hooking-up-a-controller-to-gui"><a class="anchor" href="#_hooking-up-a-controller-to-gui"></a>Hooking up a Controller to GUI</h3>
-<div class="paragraph">
-<p>Since we&#8217;re separating the GUI code form the application logic, we need a way to specify that a particular FXML file should use a particular controller. In Chapter 7 I didn&#8217;t bring your attention to where it&#8217;s done in FXML, but if you&#8217;ll look at any of the FXML files, you&#8217;ll see that the name of the controller was specified there when IDEA generated the project for us.</p>
 </div>
 <div class="sect3">
 <h4 id="_adding-controller-to-sign-in-application"><a class="anchor" href="#_adding-controller-to-sign-in-application"></a>Adding Controller to Sign In application</h4>
 <div class="paragraph">
-<p>To illustrate the use of controllers, I&#8217;ll continue working on the sample Sign In project from Chapter 7. It has a file signin.fxml that includes the following <code>GridPane</code> tag:</p>
+<p>To illustrate the use of controllers, I&#8217;ll continue working on the sample Sign In project from Chapter 7. It has a file <code>signin.fxml</code> that includes the <code>GridPane</code> tag as a root element:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -548,10 +536,10 @@ p { margin-bottom: 1.25rem; }
 <p>The <code>hgap</code> and <code>vgap</code> attributes specify the padding between the grid grid columns and rows. The <code>xmlns</code> attributes specify so called namespaces required for proper parsing of FXML files. And the attribute <code>fx:controller</code> specifies the full name of the class <code>Controller</code>, which in our project is located in the package <code>signin</code>.</p>
 </div>
 <div class="paragraph">
-<p>When the file signin.fxml is loaded, JavaFX runtime creates an instance of the class <code>signin.Controller</code> and injects it in the instance of the GUI class generated from FXML. The word injection describes the situation when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to create an instance of the <code>signin.Controller</code> manually by using the <code>new</code> operator.</p>
+<p>When the file <code>signin.fxml</code> is loaded, <code>FXMLLoader</code> creates an instance of the Java class based on the FXML content and then instantiates and injects the`signin.Controller` object into the GUI object. The word <em>inject</em> describes the process when a runtime automatically instantiate a class B and make it available in class A. For us it means that there is no  need to manually create an instance of the <code>signin.Controller</code> by using the <code>new</code> operator.</p>
 </div>
 <div class="paragraph">
-<p>The first version of our controller class is shown next:</p>
+<p>The first version of the <code>Controller</code> class is shown next:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -569,10 +557,10 @@ public class Controller {
 </div>
 </div>
 <div class="paragraph">
-<p>The class <code>Controller</code> uses the class <code>ActionEvent</code> from package <code>javafx.event</code>, and I want to warn you - be careful when IDE will offer you help in insert an import statement for you. There is also an <code>ActionEvent</code> in the package <code>java.awt.event</code>, which we don&#8217;t want in this case.</p>
+<p>The class <code>Controller</code> uses the class <code>ActionEvent</code> from package <code>javafx.event</code>, and I want to warn you - be careful when IDE will offer to insert an import statement for you. There is also an <code>ActionEvent</code> in the package <code>java.awt.event</code>, which we don&#8217;t want in JavaFX applications.</p>
 </div>
 <div class="paragraph">
-<p>We want the method <code>signInClicked</code> to be called on the controller if the user clicks on the button. For this to happen, we need to specify the name of this method as a handler of the <code>onAction</code> event in the Button element in signin.fxml as shown on Figure 8-2.</p>
+<p>We want the method <code>signInClicked</code> to be called on the controller if the user clicks on the button. For this to happen, we can specify the name of this method as a handler of the <code>onAction</code> event in the Button element in <code>signin.fxml</code> as shown on Figure 8-2.</p>
 </div>
 <div id="FIG8-1" class="imageblock">
 <div class="content">
@@ -590,7 +578,7 @@ public class Controller {
 <div class="title">Figure 3. After clicking 3 times on Sign In button</div>
 </div>
 <div class="paragraph">
-<p>So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method, which could recognize which button was clicked. The controller will invoke your event handler providing the <code>ActionEvent</code> object as an argument. Its property <code>target</code> identifies, well the target of the event, which is a Sign In button in our case.</p>
+<p>So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method for all buttons with the code recognizing which button was clicked. The controller will invoke your event handler providing the <code>ActionEvent</code> object as an argument. Its property <code>target</code> identifies, well the target of the event, which is a Sign In button in our case.</p>
 </div>
 <div class="paragraph">
 <p>I ran our application in the debug mode just to show you that the <code>target</code> property on the <code>ActionEvent</code> correctly recognizes the event target shown in Figure 8-4.</p>
@@ -602,13 +590,13 @@ public class Controller {
 <div class="title">Figure 4. Viewing properties of ActionEvent in debugger</div>
 </div>
 <div class="paragraph">
-<p>There is another event property <code>source</code>, which has the same value as <code>target</code> in our application. There are cases when <code>source</code> and <code>target</code> are different because an event travels through all containers until it reaches the target. So if a component is nested inside a container would be located in. This is an advanced topic, but I still want to give you an illustration.</p>
+<p>The <code>ActionEvent</code> has another property called <code>source</code>, which has the same value as <code>target</code> in our application. There are cases when <code>source</code> and <code>target</code> are different because an event travels through all containers until it reaches the target.  Then it <em>bubles up</em> through all the containers. This is an advanced topic, but I still want to give you an illustration.</p>
 </div>
 <div class="paragraph">
-<p>When you want to handle button clicks, you don&#8217;t really care in which area inside the button was the mouse pointer when the user clicked on the button. So handing <code>ActionEvent</code> was sufficient. But there is another event called <code>MouseEvent</code>, which gives you more details on the click event.</p>
+<p>While handling button clicks, you don&#8217;t really care where exactly inside the button was the mouse pointer when the user clicked on the button. So handing <code>ActionEvent</code> was sufficient. But there is another event called <code>MouseEvent</code>, which gives you more details on the click event like the mouse pointer coordinate, if some of the keys were down during the click and some other information.</p>
 </div>
 <div class="paragraph">
-<p>In your signin.fxml you&#8217;re allowed to use <code>onMouseClicked</code> instead of <code>onAction</code> for the button. But if you do so, the <code>Button</code> will be considered a container for a special skin class <code>LabeledText</code> with the text <em>Sign In</em>, and if you click on the words <em>Sign In</em> the source of the event will be <code>Button</code>, and the target would be the class <code>LabeledSkin</code>. I&#8217;ve created an event handler <code>signInMouseClicked</code> and ran it through a debugger. Now the source and target of the event are different.</p>
+<p>In <code>signin.fxml</code> you&#8217;re allowed to use <code>onMouseClicked</code> instead of <code>onAction</code> for the button. But if you do so, the <code>Button</code> will be considered a container for a special skin class <code>LabeledText</code> with the text <em>Sign In</em>, and if you click on the words <em>Sign In</em> the source of the event will be <code>Button</code>, and the target would be the class <code>LabeledSkin</code>. Just for the illustration purposes I&#8217;ve created an event handler <code>signInMouseClicked</code> and ran it through a debugger. Now the source and target of the event are different.</p>
 </div>
 <div id="FIG8-4" class="imageblock">
 <div class="content">
@@ -620,10 +608,10 @@ public class Controller {
 <div class="sect3">
 <h4 id="_data-exchange-between-gui-components-and-controller"><a class="anchor" href="#_data-exchange-between-gui-components-and-controller"></a>Data Exchange Between GUI Components And Controller</h4>
 <div class="paragraph">
-<p>No that we know how to link controller&#8217;s event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/Password the user entered and update the GUI from the controller accordingly.</p>
+<p>Now that we know how to link controller&#8217;s event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/password the user entered and update the GUI from the controller accordingly.</p>
 </div>
 <div class="paragraph">
-<p>To read the values from GUI components we&#8217;ll need to give them unique id&#8217;s in the FXML file. We don&#8217;t need to give id&#8217;s to all component - only to those that have values for handling. Take a look at the <code>&lt;childrens&gt;</code> section of signin.fxml:</p>
+<p>To read the values from GUI components we&#8217;ll need to give them unique id&#8217;s in the FXML file. We don&#8217;t need to give id&#8217;s to all components - only to those that we want to process in the controller&#8217;s code. Take a look at the <code>&lt;childrens&gt;</code> section of <code>signin.fxml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -639,10 +627,7 @@ public class Controller {
 </div>
 </div>
 <div class="paragraph">
-<p>Only the <code>TextField</code> and <code>PasswordField</code> have an attribute <code>fx:id</code> - this is how we can assign id&#8217;s in fxml.</p>
-</div>
-<div class="paragraph">
-<p>The next step is to inject them into the variables in the <code>signin.Controller</code> class. The following code fragment shows how to inject component references into the <code>id</code> and <code>pwd</code> fields. This is how I&#8217;ll declared two Java variables in the <code>Controller</code> clas with the names that match those from signin.fxml:</p>
+<p>Only the <code>TextField</code> and <code>PasswordField</code> have an attribute <code>fx:id</code> - this is how you can assign id&#8217;s in fxml. The next step is to inject references to these GUI components  into the variables in the <code>Controller</code> class. The following code fragment shows how to inject component references into the <code>id</code> and <code>pwd</code> fields. I&#8217;ve declared two Java variables in the <code>Controller</code> class with the names that match those from <code>signin.fxml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -652,13 +637,13 @@ public class Controller {
 </div>
 </div>
 <div class="paragraph">
-<p>Java has so called annotations (not covered in this book). They start with <code>@</code> sign and can be placed in front of the variable, class, or a method declaration depending on how  the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation <code>@FXML</code> instructs runtime to inject the references to the specifies GUI objects into the variables.</p>
+<p>Java has so called <a href="http://docs.oracle.com/javase/tutorial/java/annotations/">annotations</a> (not covered in this book). They start with the <code>@</code> sign and can be placed in front of the variable, class, or a method declaration depending on how the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation <code>@FXML</code> instructs runtime to inject the references to the specifies GUI objects into the variables.</p>
 </div>
 <div class="paragraph">
-<p>In other words, JavaFX runtime will read the first line as follows: "I need to get the object that I created after loading signin.fxml file, and then inside this object find the component with an the <code>fx:id="id"</code>. Finally, I need to insert the reference to this component into the Java variable <code>id</code>". The same applies to the variable <code>pwd</code>.</p>
+<p>In other words, JavaFX runtime will read the first line as follows: <em>"I need to get the object that I created after loading <code>signin.fxml</code> file, and find the component with an the <code>fx:id="id"</code> inside this object. Finally, I need to insert the reference to this component into the Java variable <code>id</code>"</em>. The same applies to the variable <code>pwd</code>.</p>
 </div>
 <div class="paragraph">
-<p>The rest is easy. Just use the injected values in you event handler. The code of our <code>Controller</code> is shown next. Its method <code>signInClicked</code> checks the value entered in the User ID field in the GUI, and if it&#8217;s not equal to "Yakov", then the code sets the background of the GUI component to pink color.</p>
+<p>The rest is easy. Just use the injected values in you event handler. The code of our <code>Controller</code> is shown next. Its method <code>signInClicked</code> checks the value entered in the User ID field in the GUI, and if it&#8217;s not equal to "Yakov", then the code sets the background of the GUI component to the light pink color.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -698,7 +683,7 @@ public class Controller {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Has the user not entered Yakov in the User ID field? We use the negation operator ! here.</td>
+<td>Has the user not entered Yakov in the User ID field? We use the negation operator <code>!</code> here.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -720,14 +705,13 @@ public class Controller {
 <div class="title">Figure 6. After entering the wrong user id</div>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>Assigning Event Handlers in Java</h3>
+<div class="sect3">
+<h4 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>Assigning Event Handlers in Java</h4>
 <div class="paragraph">
 <p>If your program is written completely in Java without any use of FXML, you&#8217;ll be assigning event handlers using so called <a href="http://docs.oracle.com/javafx/2/events/convenience_methods.htm">convenience methods</a> that have names that start with <code>setOn</code> like <code>setOnAction</code>, <code>setOnKeyTyped</code>, <code>setOnEditStart</code> etc. Each of the GUI components has has several of such methods.</p>
 </div>
 <div class="paragraph">
-<p>You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or method references (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you&#8217;ll be writing code to react if some event has happened. For example, if you have a button represented by a variable <code>myButton</code> you can write an event handler for the click event:</p>
+<p>You can provide event handling code to the convenience methods using anonymous classes, lambda expressions, or <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">method references</a> (not covered in this book). Implementing event handlers as lambda expressions as they are easier to write. Typically, you&#8217;ll be writing code to react if some event has happened. For example, if you have a button represented by a variable <code>myButton</code> you can write an event handler for the click event:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -738,7 +722,7 @@ signInButton.setOnAction(evt -&gt;
 </div>
 </div>
 <div class="paragraph">
-<p>You&#8217;ve got introduced lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but don&#8217;t really uses its values but just prints the message that the button was clicked.</p>
+<p>You&#8217;ve got introduced to lambda expressions in Chapter 5. The above code snippet means that lambda expression gets the event object as an argument, but doesn&#8217;t really use its values but just prints the message that the button was clicked.</p>
 </div>
 <div class="paragraph">
 <p>What&#8217;s the type of the <code>evt</code> argument? Java compiler will figure it out automatically. Since the method <code>setOnAction</code> expects to get the <code>ActionEvent</code> object from the JVM, compiler guesses that the type of the <code>evt</code> is <code>ActionEvent</code> so you don&#8217;t even need to write it in the program code. You&#8217;ve seen a similar example of of type inference in Chapter 5.</p>
@@ -847,15 +831,15 @@ public class MainPureJava extends Application {
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>Now I create the instance if the Sign In button and assign the id to it. This was explained in the Styling with CSS section in Chapter 7.</td>
+<td>Now I create the instance if the Sign In button and give it an id. This was explained in the "Styling with CSS" section in Chapter 7.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>The lambda expression implements the application logic to be invoked as a reaction to the <code>ActionEvent</code>.</td>
+<td>This lambda expression implements the application logic to be invoked as a reaction to the <code>ActionEvent</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The we create a scene object an apply the CSS to it. This is probably the first time you see the method chaining. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object.</td>
+<td>We create a scene object an apply the CSS to it. This is probably the first time you see so called <em>method chaining</em>. All these lines that starts with dots are methods chained together - all of them are sequentially invoked on the scene object.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
@@ -864,19 +848,20 @@ public class MainPureJava extends Application {
 </table>
 </div>
 <div class="paragraph">
-<p>Some programmers like GUI designer tools where they can drag and drop components. Some prefer writing Java code. I prefer working with FXML, because it greatly simplifies  design of the complex windows. Besides separating the design from the application logic is also a good idea because a person who doesn&#8217;t know programming can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.</p>
+<p>Some programmers prefer working GUI designer tools where they can drag and drop components. Some prefer writing Java code for UI. I like the declarative way of designing GUI components with FXML, because it&#8217;s just more productive. The fact that FXML separates the screen design from the application logic, even a person who doesn&#8217;t know programming (e.g. a UI designer) can master Scene Builder and create nice GUI layouts allowing programmers to take care of application logic.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>Further Reading on Event Handling</h4>
 <div class="paragraph">
-<p>I&#8217;ve explained you the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:<code>KeyEvent</code> (e.g. the user pressed a key on the keyboard), <code>MouseEvent</code>(e.g. the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (e.g. the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
+<p>I&#8217;ve covered the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:<code>KeyEvent</code> (the user pressed a key on the keyboard), <code>MouseEvent</code>(the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_data-binding-and-properties"><a class="anchor" href="#_data-binding-and-properties"></a>Data Binding and Properties</h3>
 <div class="paragraph">
-<p>JavaFX has an interface <code>Property</code> located in the package <code>javafx.beans.property</code>, which defines a very useful functionality allowing to <em>bind</em> the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.</p>
+<p>JavaFX has the interface <code>Property</code> located in the package <code>javafx.beans.property</code>, which defines a very useful functionality allowing to <em>bind</em> the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.</p>
 </div>
 <div class="paragraph">
 <p>Imagine that you&#8217;re developing a multi-player game that has a Java object receiving the moves of other gamers from a central server. When a Java object receives a new move, you need to modify the content of the corresponding GUI component of the game. With JavaFX you can simply bind a property of a Java class that stores player&#8217;s moves (e.g. <code>playersMove</code>) to the property of, say a <code>Label</code> component on the GUI. No more coding required. As soon as the <code>playersMove</code> value changes, the <code>Label</code> will be automatically updated.  JavaFX properties greatly simplify the process of synchronization of the data and the GUI.</p>
@@ -888,16 +873,16 @@ public class MainPureJava extends Application {
 <div class="content">
 <div class="title">Design Patterns Briefly</div>
 <div class="paragraph">
-<p>Over the years software developers came up with a number of <em>design patterns</em>, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You&#8217;d better implement MVC in this program", and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you&#8217;ll be a little better prepared for chatting with programmers.</p>
+<p>Over the years software developers came up with a number of <em>design patterns</em>, which are reusable solutions for various programming tasks. Programmers casually use design pattern names in their conversations and technical literature. For example, one programmer can say to another , "You&#8217;d better implement MVC in this program" and both understand what this means. Let me explain you briefly a couple of design patterns - MVC and Observer - so you&#8217;ll be a little better prepared for chatting with programmers.</p>
 </div>
 <div class="paragraph">
-<p><strong>MVC</strong> stands for Mode View Controller. This design patter recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we&#8217;ve almost implemented MVC in one of the versions of the Sign In application. The file <em>signin.fxml</em> was a view, and the class <code>signin.Controller</code> played a role of a controller. Since this example had just two variables (<code>id</code> and <code>pwd</code>) we didn&#8217;t created a special model class for them.</p>
+<p><strong>MVC</strong> stands for Mode View Controller. This design pattern recommends separating the code that stores application data (Model) from the code implementing the user interface (View) and from the code that controls the data exchange and implements application logic (Controller). As a matter of fact we&#8217;ve almost implemented MVC in one of the versions of the Sign In application. The file <code>signin.fxml</code> was a view, and the class <code>Controller</code> played a role of a controller. Since this example had just two variables (<code>id</code> and <code>pwd</code>) we didn&#8217;t create a special model class for them.</p>
 </div>
 <div class="paragraph">
-<p><strong>Observer</strong> design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you&#8217;ll see in this chapter.</p>
+<p><strong>Observer</strong> design pattern is used to implement scenarios when one object, a.k.a. the observer needs to watch changes in other object(s), the observables. For example, if a Twitter user (the observable) posts a twit all of his followers (observers) will get notified. If a programming language or a library supports data binding, implementing the observer design pattern becomes pretty easy, which you&#8217;ll see later in this chapter.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;re interested in detailed coverage of design patters, get the book "Head First Design Patterns" published by O&#8217;Reilly Media.</p>
+<p>If you&#8217;re interested in detailed coverage of design patterns, get the book "Head First Design Patterns" published by O&#8217;Reilly Media.</p>
 </div>
 </div>
 </div>
@@ -905,13 +890,13 @@ public class MainPureJava extends Application {
 <p>Classes that implement <code>Property</code> interface are located in the package <code>javafx.beans.property</code>. For each property type there are two classes: one that allows only reading property values and the other one for read and writing (changing the values). For example, if you need a <code>String</code> property, use either <code>ReadOnlyStringWrapper</code> or <code>SimpleStringProperty</code>. Similarly named classes exist for other data types and some collections too.</p>
 </div>
 <div class="paragraph">
-<p>As we always do in this book, let&#8217;s learn by coding. I&#8217;ll continue adding features to our Sign In application. This time I&#8217;ll add a <code>Label</code> component with <code>fx:id="errMsg"</code> to the view in FXML file to display sign in error messages if any. In the controller class I&#8217;ll add a corresponding variable <code>errMsg</code> and will inject a reference to the <code>Label</code> into this variable.</p>
+<p>As we always do in this book, let&#8217;s learn by coding. I&#8217;ll continue adding features to our Sign In application. This time I&#8217;ll add a <code>Label</code> component with <code>fx:id="errMsg"</code> to the view in FXML file to display sign in error messages, if any. In the controller class I&#8217;ll add the corresponding variable <code>errMsg</code> and will inject a reference to the <code>Label</code> into this variable.</p>
 </div>
 <div class="paragraph">
-<p>The next step is to declare a bindable property <code>signinError</code> in the class <code>Controller</code> that will get the value of the error message if any. But since a regular <code>String</code> can&#8217;t be bindable, we&#8217;ll use the data type <code>SimpleStringProperty</code></p>
+<p>The next step is to declare a <em>bindable</em> property <code>signinError</code> in the class <code>Controller</code> that will get the value of the error message if any. But since a regular <code>String</code> can&#8217;t be bindable, we&#8217;ll use the data type <code>SimpleStringProperty</code></p>
 </div>
 <div class="paragraph">
-<p>Finally, I&#8217;ll bind the label and the variable to insure that an error message is immediately displayed on the screen as soon as its value changes.</p>
+<p>Finally, I&#8217;ll bind the label to the variable to insure that an error message is immediately displayed on the screen as soon as its value changes.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s place an additional <code>Label</code> component at the bottom of the Sign In window. I&#8217;ll add another row to the <code>GridPane</code> and place there a <code>Label</code> that will span two columns. This label will have <code>fx:id="errMsg"</code> and initially won&#8217;t  have any text - it&#8217;ll be invisible. The <code>&lt;children&gt;</code> section of the FXML file will look as follows:</p>
@@ -946,7 +931,7 @@ SimpleStringProperty signinError =
 <p>The next question is when and where do the binding? If I&#8217;d be creating an instance of the <code>Controller</code> with the <code>new</code> operator I could have done it in the class constructor after the GUI component are created. But JavaFX runtime instantiates the <code>Controller</code> for us, so how can we catch the moment when the GUI components are ready?</p>
 </div>
 <div class="paragraph">
-<p>In JavaFX if you&#8217;ll add to the controller the method <code>initialize</code> annotated with @FXML, <code>FXMLLoader</code> will invoke it after the GUI components are constructed.</p>
+<p>In JavaFX if you&#8217;ll add to the controller the method <code>initialize</code> annotated with <code>@FXML</code>, <code>FXMLLoader</code> will invoke it after all GUI components are constructed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -957,10 +942,10 @@ SimpleStringProperty signinError =
 </div>
 </div>
 <div class="paragraph">
-<p>JavaFX properties are observables. So you can read the above the above code as follows: "I want the text property of the label <code>errMsg</code> to be the observer (a.k.a. listener) to the property <code>signinError</code> (observable). So whenever <code>signinError</code> changes, the text property of the label will get the latest value.</p>
+<p>JavaFX properties are <em>observables</em>. So you can read the above code as follows: <em>"I want the text property of the label <code>errMsg</code> to be the observer (a.k.a. listener) to the property <code>signinError</code> (observable). So whenever <code>signinError</code> changes, the text property of the label will get the latest value."</em></p>
 </div>
 <div class="paragraph">
-<p>To complete the binding Sign In example, the event handler for the Sign In button should not only paint the wronn ID in light pink, but also modify the value of the <code>signinError</code> property. The complete code of the class <code>BindableController</code> is shown next.</p>
+<p>To complete the Sign In example with the binding, the event handler for the Sign In button should not only paint the wrong ID in light pink, but also modify the value of the <code>signinError</code> property. The complete code of the class <code>BindableController</code> is shown next.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1003,7 +988,7 @@ SimpleStringProperty signinError =
 </div>
 </div>
 <div class="paragraph">
-<p>Note that in the if statement I set the error message when the ID is wrong, and reset the <code>signinError</code> to an empty string when the ID is correct. After I ran the Sign In application the above controller, entered Alex as the user ID and clicked the button Sign In, my window looked like this:</p>
+<p>Note that in the if statement I set the error message when the ID is wrong, and reset the <code>signinError</code> to an empty string when the ID is correct. To test the program I&#8217;ve entered Alex as the user ID and clicked the button Sign In.My window looked like this:</p>
 </div>
 <div id="FIG8-6" class="imageblock">
 <div class="content">
@@ -1018,16 +1003,18 @@ SimpleStringProperty signinError =
 <div class="sect2">
 <h3 id="_application-thread-in-javafx"><a class="anchor" href="#_application-thread-in-javafx"></a>Application Thread in JavaFX</h3>
 <div class="paragraph">
-<p>In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have to run in separate threads the code that updates the GUI from the code that performs application logic. I&#8217;ll explain you why.
-Imagine a program with a GUI that&#8217;s constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction.</p>
+<p>In Chapter 6 I gave you a light introduction to multi-threading. When you work with JavaFX you have to run the code that updates the GUI and the code that performs application logic in separate threads. I&#8217;ll explain you why.</p>
 </div>
 <div class="paragraph">
-<p>Updates of the GUI in JavaFX are done in so called  <em>application thread</em>. The idea is to separate intensive calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn&#8217;t be able to use any screen components.</p>
+<p>Imagine a program with a GUI that&#8217;s constantly is being updated based on some intensive calculations. It could be a game with multiple moving shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction.</p>
+</div>
+<div class="paragraph">
+<p>Updates of the GUI in JavaFX are done in so called  <em>application thread</em>. The idea is to separate calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn&#8217;t be able to use any screen components.</p>
 </div>
 <div class="sect3">
 <h4 id="_the-frozen-screen-demo"><a class="anchor" href="#_the-frozen-screen-demo"></a>The Frozen Screen Demo</h4>
 <div class="paragraph">
-<p>I can easily demonstrate you a "frozen GUI" effect by making a small change in the class <code>signin.Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep, as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:</p>
+<p>I will demonstrate you a "frozen GUI" effect by making a small change in the class <code>Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep, as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can write the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1046,7 +1033,7 @@ Imagine a program with a GUI that&#8217;s constantly is being updated based on s
 <p>The method <code>sleep</code> of class <code>Thread</code> takes one argument - the sleeping time in milliseconds. There are 1000  milliseconds in one second, so the above code snippet will place the current thread to sleep for 10 second.</p>
 </div>
 <div class="paragraph">
-<p>Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I&#8217;ll add the 10-second sleeping code to the application thread to emulate the process that would perform actual sign in. This is wrong - you should execute the application logic in a separate thread. But I do it on purpose to demonstrate the frozen effect.</p>
+<p>Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I&#8217;ll add the 10-second sleeping code to the application thread to emulate the process that would perform actual sign in. Actually, this is wrong - you should execute the application logic in a separate thread. But I do this on purpose to demonstrate the frozen effect.</p>
 </div>
 <div class="paragraph">
 <p>The following code fragment from the new controller class shows hos the event handler <code>signInClicked</code> invokes the method named <code>wrongStartOfLongRunningProcess</code>, which sleeps for 10 seconds and then checks if the entered user ID is Yakov.</p>
@@ -1079,7 +1066,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 </div>
 </div>
 <div class="paragraph">
-<p>Basically, when the user clicks on the Sign In button, the application thread will become busy for 10 seconds, and only then checks the user ID and set the background color of the <code>TextField</code> on the screen. If you&#8217;ll run the Sign In sample with such event handler, the application window becomes frozen and unresponsive for 10 seconds. If the user will try to reenter the ID, he&#8217;ll see a wait cursor. On MAC OS computers such a cursor looks as a spinning <em>wheel of death</em> as shown on Figure 8-7.</p>
+<p>When the user clicks on the Sign In button, the application thread will become busy for 10 seconds, and only then checks the user ID and set the background color of the <code>TextField</code> on the screen. If you&#8217;ll run the Sign In sample with such event handler, the application window becomes frozen and unresponsive for 10 seconds. If the user will try to reenter the ID, he&#8217;ll see a wait cursor. On MAC OS computers such a cursor looks as a spinning <em>wheel of death</em> as shown on Figure 8-7.</p>
 </div>
 <div id="FIG8-7" class="imageblock">
 <div class="content">
@@ -1088,7 +1075,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 <div class="title">Figure 8. Frozen Screen with a wheel of death</div>
 </div>
 <div class="paragraph">
-<p>Ten seconds later, the application thread wakes up, and the GUI becomes responsive again. Let&#8217;s fix this code and create a separate thread emulating the long running process so that the application thread can continue working with GUI. The following code listing shows the complete code of the class <code>ControllerLongRunningThread</code>, which doesn&#8217;t freeze the window.</p>
+<p>Ten seconds later the application thread wakes up, and the GUI becomes responsive again. Let&#8217;s fix this code and create a separate thread emulating the long running process so that the application thread can continue working with GUI. The following code listing shows the complete code of the class <code>ControllerLongRunningThread</code>, which doesn&#8217;t freeze the window.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1163,17 +1150,17 @@ private void wrongStartOfLongRunningProcess(String uID) {
 </table>
 </div>
 <div class="paragraph">
-<p>In the chapter on Ping-Pong game we&#8217;ll use multiple threads too.One thread will be responsible for displaying the ping-pong table, while the other one will calculate coordinates of the ball and paddles.</p>
+<p>In the chapter on Ping-Pong game we&#8217;ll use multiple threads too. One thread will be responsible for displaying the ping-pong table, while the other will calculate coordinates of the ball and paddles.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_deploying-with-javafx-packager"><a class="anchor" href="#_deploying-with-javafx-packager"></a>Deploying With JavaFX Packager</h3>
 <div class="paragraph">
-<p>How do you start a JavaFX application? Well, you can start it either from the IDE or from a command line as any other Java application. But what if you want to give your application to your grandma, what may not be as good at Java as you are? Of course, you can pay her a visit, install the Java runtime on her computer, and teach her how to open a command ot Terminal window and enter <code>java signin.Main</code>.</p>
+<p>How do you start a JavaFX application? Well, you can start it either from the IDE or from a command line as any other Java application. But if you want to give your application to your grandma, what may not be as good at Java as you are? Of course, you can pay her a visit, install the Java runtime on her computer, and teach her how to open a command or Terminal window and enter <code>java signin.Main</code>.</p>
 </div>
 <div class="paragraph">
-<p>You may even learn how to use scripting languages and create a file <code>signin.bat</code> on Windows or <code>signin.sh</code> on MAC OS that will have the java command inside. You can even create an icon that will run this script. But what if everyone in your school want to have your program installed on their computers? Now if becomes a time-consuming task.</p>
+<p>You may learn how to use scripting languages and create a file <code>signin.bat</code> in Windows or <code>signin.sh</code> in MAC OS that will have the <code>java signin.Main</code> command inside. You can even create an icon that will run this script. But what if everyone in your school want to have your program installed on their computers? Now if becomes a time-consuming task.</p>
 </div>
 <div class="paragraph">
 <p>But the best way to prepare your JavaFX application for distribution is to create a self-contain file <code>signin.exe</code> for Windows or <code>signin.dmg</code> for MAC OS. This file will contain both the Java runtime and your application code. This process is described in details in Oracle&#8217;s tutorial titled <a href="http://docs.oracle.com/javafx/2/deployment/self-contained-packaging.htm#BCGIBBCI">"Self-Contained Application Packaging</a>. I&#8217;m not going to repeat this tutorial here, but will leave it for you as a self-study project.</p>
@@ -1191,7 +1178,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 <div class="sect2">
 <h3 id="_what-to-study-next-about-javafx"><a class="anchor" href="#_what-to-study-next-about-javafx"></a>What to Study Next About JavaFX</h3>
 <div class="paragraph">
-<p>In Chapters 7 and 8 I gave you a very brief introduction to JavaFX. You&#8217;ll be writing more of JavaFX code in Chapter 9 and while working on the Tic-Tac-Toe and Ping-Pong games, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
+<p>In Chapters 7 and 8 I gave you a very brief introduction to JavaFX. You&#8217;ll be writing more of JavaFX code in chapters 9, 10, and 13, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
 </div>
 <div class="paragraph">
 <p>Pick up a book on JavaFX 8 or later and experiment on your own. One of the better books on the subject is "Pro JavaFX 8: A Definite Guide to Building Desktop, Mobile, and Embedded Java Clients" published by Apress.</p>
@@ -1257,7 +1244,7 @@ String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 20:55:05 EDT
+Last updated 2014-10-24 10:01:56 EDT
 </div>
 </div>
 </body>
