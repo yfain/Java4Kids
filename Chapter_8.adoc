@@ -567,13 +567,14 @@ The goal of this project is to complete the calculator program. If you completed
 4. Modify the file `calculator.fxml` and assign the name of the click handler method for each button using the attribute `onAction` as we did in the Sign In example.
 
 5. In each handler method add the code to recognize which button has been clicked. You can do the label of the clicked button by querying the `ActionEvent` object that will be provided for each event handler method. For example if the variable `evt` represents the `ActionEvent` object, the code can look like this:
-
++
 [source, java]
 ----
 Button clickedButton = (Button) evt.getTarget();
 String buttonLabel = clickedButton.getText();
 ----  
-6. If the use clicked the digit button, get the current value from the calculator's display field, concatenate the button's lable and assignn the new value back to the display field.
++
+6. If the use clicked the digit button, get the current value from the calculator's display field, concatenate the button's label and assign the new value back to the display field.
 
 7. You need to declare a variable, say `valueOne` in the controller to store the current value of the display field when the user clicks on the operation button. For example, if the user clicked on the button with the label `+`, `-`, `/`, or `*`, it's a signal that the user finished entering the first number. Store it in the variable `valueOne` and clear the display field so the user can start entering the second number.
 
