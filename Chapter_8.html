@@ -1218,19 +1218,15 @@ private void wrongStartOfLongRunningProcess(String uID) {
 </li>
 <li>
 <p>In each handler method add the code to recognize which button has been clicked. You can do the label of the clicked button by querying the <code>ActionEvent</code> object that will be provided for each event handler method. For example if the variable <code>evt</code> represents the <code>ActionEvent</code> object, the code can look like this:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="java language-java">Button clickedButton = (Button) evt.getTarget();
 String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
-<p>If the use clicked the digit button, get the current value from the calculator&#8217;s display field, concatenate the button&#8217;s lable and assignn the new value back to the display field.</p>
+<p>If the use clicked the digit button, get the current value from the calculator&#8217;s display field, concatenate the button&#8217;s label and assign the new value back to the display field.</p>
 </li>
 <li>
 <p>You need to declare a variable, say <code>valueOne</code> in the controller to store the current value of the display field when the user clicks on the operation button. For example, if the user clicked on the button with the label <code>+</code>, <code>-</code>, <code>/</code>, or <code>*</code>, it&#8217;s a signal that the user finished entering the first number. Store it in the variable <code>valueOne</code> and clear the display field so the user can start entering the second number.</p>
@@ -1261,7 +1257,7 @@ String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 20:53:16 EDT
+Last updated 2014-10-23 20:55:05 EDT
 </div>
 </div>
 </body>
