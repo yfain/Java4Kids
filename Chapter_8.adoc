@@ -413,15 +413,14 @@ Enter the right user ID, click on Sign In again, and the binding mechanism will 
 
 === Application Thread in JavaFX 
 
-In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have separate between different threads the the code that updates the GUI from the code that performs application logic. Now I'll explain you why. 
-
+In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have to run in separate threads the code that updates the GUI from the code that performs application logic. I'll explain you why. 
 Imagine a program with a GUI that's constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction. 
 
 Updates of the GUI in JavaFX are done in so called  _application thread_. The idea is to separate intensive calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn't be able to use any screen components.
 
 ==== The Frozen Screen Demo
 
-I can easily demonstrate you a "frozen GUI" effect by making a small change in the class `signin.Controller` in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:
+I can easily demonstrate you a "frozen GUI" effect by making a small change in the class `signin.Controller` in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep, as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:
 
 [source, java]
 ----
@@ -433,12 +432,13 @@ try {
 }
 ----
 
-This code snippet has so-called try-catch block, which is required in some cases for error handling. The next chapter  explains the error processing subject in details. But at this point let's just concentrate at the code located inside the curly braces after the keyword `try`. 
+This code snippet has so-called try-catch block, which is required in some cases for error handling. The next chapter  explains the error processing subject in details. But at this point let's just focus on the code located inside the curly braces after the keyword `try`. 
 
 The method `sleep` of class `Thread` takes one argument - the sleeping time in milliseconds. There are 1000  milliseconds in one second, so the above code snippet will place the current thread to sleep for 10 second.
 
-Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I'll add the thread sleeping code to it to emulate the process that would perform actual sign in. As I wrote before, this is wrong - you should execute the application logic in a separate thread. But I do it on purpose to demonstrate the frozen effect.
-The following code fragment from the Controller class shows hos the event handler `signInClicked` invokes the method named `wrongStartOfLongRunningProcess`, which sleeps for 10 seconds and then checks if the entered user ID is Yakov.  
+Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I'll add the 10-second sleeping code to the application thread to emulate the process that would perform actual sign in. This is wrong - you should execute the application logic in a separate thread. But I do it on purpose to demonstrate the frozen effect.
+
+The following code fragment from the new controller class shows hos the event handler `signInClicked` invokes the method named `wrongStartOfLongRunningProcess`, which sleeps for 10 seconds and then checks if the entered user ID is Yakov.  
 
 [source, java]
 ----
@@ -473,7 +473,7 @@ Basically, when the user clicks on the Sign In button, the application thread wi
 .Frozen Screen with a wheel of death 
 image::images/fig_8_07.png[]
 
-Ten seconds later, the application thread wakes up, and the GUI becomes responsive again. Let's fix this code and create a separate thread emulating the long running process so the application thread can continue working with GUI. The following code listing shows the complete code of the class `ControllerLongRunningThread`, which doesn't freeze the window.
+Ten seconds later, the application thread wakes up, and the GUI becomes responsive again. Let's fix this code and create a separate thread emulating the long running process so that the application thread can continue working with GUI. The following code listing shows the complete code of the class `ControllerLongRunningThread`, which doesn't freeze the window.
 
 [source, java]
 ----
@@ -566,10 +566,26 @@ The goal of this project is to complete the calculator program. If you completed
 
 4. Modify the file `calculator.fxml` and assign the name of the click handler method for each button using the attribute `onAction` as we did in the Sign In example.
 
-5. In each handler method add the code to recognize which button has been clicked. You can do the label of the clicked button by querying the `ActionEvent` object that will be provided for each event handler method, for example:
+5. In each handler method add the code to recognize which button has been clicked. You can do the label of the clicked button by querying the `ActionEvent` object that will be provided for each event handler method. For example if the variable `evt` represents the `ActionEvent` object, the code can look like this:
 
 [source, java]
 ----
 Button clickedButton = (Button) evt.getTarget();
 String buttonLabel = clickedButton.getText();
 ----  
+6. If the use clicked the digit button, get the current value from the calculator's display field, concatenate the button's lable and assignn the new value back to the display field.
+
+7. You need to declare a variable, say `valueOne` in the controller to store the current value of the display field when the user clicks on the operation button. For example, if the user clicked on the button with the label `+`, `-`, `/`, or `*`, it's a signal that the user finished entering the first number. Store it in the variable `valueOne` and clear the display field so the user can start entering the second number.
+
+8. Declare a variable, say `operation`, to remember the operation that the user wants to perform. For example, if the user clicked on `+`, store `+` in the variable `operation`.
+
+9. If the user clicks on the button `=`, get the value from `valueOne` and from the display field and perform the operation according to the value in `operation`. Use the `switch` statement to perform different operations.
+
+10. After the operation is complete, assign the result to the display field by using the method `setText` of the `TextField` component.
+
+11. Store the calculated result in the variable `valueOne` so the user can continue performing other operation. For example if the first operation was 2+3, the display shows 5, and the user can click on the buttons `*` followed by 4 requesting multiplication of 5 by 4.  
+
+
+==== Challenge Yorself
+
+The step 10 in the project assignment suggest that you should use the the method `setText` of the `TextField` component. See if you can apply the property binding technique to display the result in the display field. 
