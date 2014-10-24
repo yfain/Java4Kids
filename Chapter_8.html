@@ -1018,10 +1018,8 @@ SimpleStringProperty signinError =
 <div class="sect2">
 <h3 id="_application-thread-in-javafx"><a class="anchor" href="#_application-thread-in-javafx"></a>Application Thread in JavaFX</h3>
 <div class="paragraph">
-<p>In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have separate between different threads the the code that updates the GUI from the code that performs application logic. Now I&#8217;ll explain you why.</p>
-</div>
-<div class="paragraph">
-<p>Imagine a program with a GUI that&#8217;s constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction.</p>
+<p>In Chapter 6 I gave you a very light introduction to multi-threading. When you work with JavaFX you have to run in separate threads the code that updates the GUI from the code that performs application logic. I&#8217;ll explain you why.
+Imagine a program with a GUI that&#8217;s constantly is being updated based on some intensive calculations. It could be a game with multiple moving balls, squares or other shapes. It could be an application for a TV channel that may show a video stream, commercials, viewers polls and more. It could be a business application that displays several pieces of constantly changing information in different parts of the window like prices on eBay auction.</p>
 </div>
 <div class="paragraph">
 <p>Updates of the GUI in JavaFX are done in so called  <em>application thread</em>. The idea is to separate intensive calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn&#8217;t be able to use any screen components.</p>
@@ -1029,7 +1027,7 @@ SimpleStringProperty signinError =
 <div class="sect3">
 <h4 id="_the-frozen-screen-demo"><a class="anchor" href="#_the-frozen-screen-demo"></a>The Frozen Screen Demo</h4>
 <div class="paragraph">
-<p>I can easily demonstrate you a "frozen GUI" effect by making a small change in the class <code>signin.Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:</p>
+<p>I can easily demonstrate you a "frozen GUI" effect by making a small change in the class <code>signin.Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep, as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can right the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1042,14 +1040,16 @@ SimpleStringProperty signinError =
 </div>
 </div>
 <div class="paragraph">
-<p>This code snippet has so-called try-catch block, which is required in some cases for error handling. The next chapter  explains the error processing subject in details. But at this point let&#8217;s just concentrate at the code located inside the curly braces after the keyword <code>try</code>.</p>
+<p>This code snippet has so-called try-catch block, which is required in some cases for error handling. The next chapter  explains the error processing subject in details. But at this point let&#8217;s just focus on the code located inside the curly braces after the keyword <code>try</code>.</p>
 </div>
 <div class="paragraph">
 <p>The method <code>sleep</code> of class <code>Thread</code> takes one argument - the sleeping time in milliseconds. There are 1000  milliseconds in one second, so the above code snippet will place the current thread to sleep for 10 second.</p>
 </div>
 <div class="paragraph">
-<p>Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I&#8217;ll add the thread sleeping code to it to emulate the process that would perform actual sign in. As I wrote before, this is wrong - you should execute the application logic in a separate thread. But I do it on purpose to demonstrate the frozen effect.
-The following code fragment from the Controller class shows hos the event handler <code>signInClicked</code> invokes the method named <code>wrongStartOfLongRunningProcess</code>, which sleeps for 10 seconds and then checks if the entered user ID is Yakov.</p>
+<p>Remember, the controller class has an event handler for the Sign In button? It executes in the JavaFX application thread. I&#8217;ll add the 10-second sleeping code to the application thread to emulate the process that would perform actual sign in. This is wrong - you should execute the application logic in a separate thread. But I do it on purpose to demonstrate the frozen effect.</p>
+</div>
+<div class="paragraph">
+<p>The following code fragment from the new controller class shows hos the event handler <code>signInClicked</code> invokes the method named <code>wrongStartOfLongRunningProcess</code>, which sleeps for 10 seconds and then checks if the entered user ID is Yakov.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1088,7 +1088,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 <div class="title">Figure 8. Frozen Screen with a wheel of death</div>
 </div>
 <div class="paragraph">
-<p>Ten seconds later, the application thread wakes up, and the GUI becomes responsive again. Let&#8217;s fix this code and create a separate thread emulating the long running process so the application thread can continue working with GUI. The following code listing shows the complete code of the class <code>ControllerLongRunningThread</code>, which doesn&#8217;t freeze the window.</p>
+<p>Ten seconds later, the application thread wakes up, and the GUI becomes responsive again. Let&#8217;s fix this code and create a separate thread emulating the long running process so that the application thread can continue working with GUI. The following code listing shows the complete code of the class <code>ControllerLongRunningThread</code>, which doesn&#8217;t freeze the window.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1217,7 +1217,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 <p>Modify the file <code>calculator.fxml</code> and assign the name of the click handler method for each button using the attribute <code>onAction</code> as we did in the Sign In example.</p>
 </li>
 <li>
-<p>In each handler method add the code to recognize which button has been clicked. You can do the label of the clicked button by querying the <code>ActionEvent</code> object that will be provided for each event handler method, for example:</p>
+<p>In each handler method add the code to recognize which button has been clicked. You can do the label of the clicked button by querying the <code>ActionEvent</code> object that will be provided for each event handler method. For example if the variable <code>evt</code> represents the <code>ActionEvent</code> object, the code can look like this:</p>
 </li>
 </ol>
 </div>
@@ -1227,13 +1227,41 @@ private void wrongStartOfLongRunningProcess(String uID) {
 String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If the use clicked the digit button, get the current value from the calculator&#8217;s display field, concatenate the button&#8217;s lable and assignn the new value back to the display field.</p>
+</li>
+<li>
+<p>You need to declare a variable, say <code>valueOne</code> in the controller to store the current value of the display field when the user clicks on the operation button. For example, if the user clicked on the button with the label <code>+</code>, <code>-</code>, <code>/</code>, or <code>*</code>, it&#8217;s a signal that the user finished entering the first number. Store it in the variable <code>valueOne</code> and clear the display field so the user can start entering the second number.</p>
+</li>
+<li>
+<p>Declare a variable, say <code>operation</code>, to remember the operation that the user wants to perform. For example, if the user clicked on <code>+</code>, store <code>+</code> in the variable <code>operation</code>.</p>
+</li>
+<li>
+<p>If the user clicks on the button <code>=</code>, get the value from <code>valueOne</code> and from the display field and perform the operation according to the value in <code>operation</code>. Use the <code>switch</code> statement to perform different operations.</p>
+</li>
+<li>
+<p>After the operation is complete, assign the result to the display field by using the method <code>setText</code> of the <code>TextField</code> component.</p>
+</li>
+<li>
+<p>Store the calculated result in the variable <code>valueOne</code> so the user can continue performing other operation. For example if the first operation was 2+3, the display shows 5, and the user can click on the buttons <code>*</code> followed by 4 requesting multiplication of 5 by 4.</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_challenge-yorself"><a class="anchor" href="#_challenge-yorself"></a>Challenge Yorself</h4>
+<div class="paragraph">
+<p>The step 10 in the project assignment suggest that you should use the the method <code>setText</code> of the <code>TextField</code> component. See if you can apply the property binding technique to display the result in the display field.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 18:20:21 EDT
+Last updated 2014-10-23 20:53:16 EDT
 </div>
 </div>
 </body>
