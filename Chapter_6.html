@@ -640,12 +640,13 @@ Object myOtherCar = new Car();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Java compiler can <em>cast</em> (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called <em>upcasting</em>. But if a variable has the type of a super class, it won&#8217;t see any members of teh subclass. The next screen shot shows that the variable <code>myOtherCar</code> doesn&#8217;t see the method <code>brake()</code> declared in the class <code>Car</code>.</p>
+<p>Java compiler can <em>cast</em> (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called <em>upcasting</em>. But if a variable has the type of a super class, it won&#8217;t see any members of the subclass. The next screen shot shows that the variable <code>myOtherCar</code> doesn&#8217;t see the method <code>brake()</code> declared in the class <code>Car</code>.</p>
 </div>
-<div class="paragraph">
-<p><strong><a id="FIG6-4"></a>
-.The Object type variable doesn&#8217;t see Car&#8217;s members
-image::images/fig_6_04.png[]</strong></p>
+<div id="FIG6-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_6_04.png" alt="fig 6 04">
+</div>
+<div class="title">Figure 4. The Object type variable doesn&#8217;t see Car&#8217;s members</div>
 </div>
 <div class="paragraph">
 <p>But you can say, "Doesn&#8217;t the variable <code>myOtherCar</code> point at the instance of the class <code>Car</code>, which has a public method <code>brake()</code>?" That&#8217;s right, but since I declared this variable of the type <code>Object</code> the variable <code>myOtherCar</code> assumes that its just a general object.  The programmer can <em>downcast</em> the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example:</p>
@@ -664,7 +665,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <div class="content">
 <img src="./images/fig_6_05.png" alt="fig 6 05">
 </div>
-<div class="title">Figure 4. The Car type variable sees Car&#8217;s members</div>
+<div class="title">Figure 5. The Car type variable sees Car&#8217;s members</div>
 </div>
 <div class="paragraph">
 <p>Why do we need all these complications? Can&#8217;t we just always declare variables of the specific types? Sometimes we can&#8217;t. For example, JDK comes with lots of other classes that were written to work with the <code>Object</code> data types. Data collection classes were written to be able to store instances of any objects.</p>
@@ -896,7 +897,7 @@ public class HashTableDemo {
 <div class="content">
 <img src="./images/fig_6-04-1.png" alt="fig 6 04 1">
 </div>
-<div class="title">Figure 5. Contacts can be programmed with Hashtable</div>
+<div class="title">Figure 6. Contacts can be programmed with Hashtable</div>
 </div>
 <div class="paragraph">
 <p><code>HashTable</code> requires each key to be unique. Say you have another contact named <code>Art</code> and will create a new instance of the <code>ContactDetail</code> object. If you&#8217;ll add it to the same collection under the same key - <code>friends.put("Art", friend3);</code>  it&#8217;ll replace the contact details of the first Art with the data of the second one. This happens because Java <code>Hashtable</code> internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like <code>ArtFromNYC</code> or use another Java collection like <code>ArrayList</code> to store your contacts. By the way, <code>ArrayList</code> even allows you to store duplicates (objects with the same values), while <code>Hashtable</code> doesn&#8217;t.</p>
@@ -997,7 +998,7 @@ public class HashTableBrokenDemo {
 <div class="content">
 <img src="./images/fig_6_06.png" alt="fig 6 06">
 </div>
-<div class="title">Figure 6. The runtime exception: ClassCastException</div>
+<div class="title">Figure 7. The runtime exception: ClassCastException</div>
 </div>
 <div class="paragraph">
 <p>The program failed on line 24 with the error <code>ClassCastException</code>. The runtime errors are called exceptions in Java, and I&#8217;ll explain error handling in Chapter 10. But my main point is that this program has crashed during the runtime just because I "forgot" that only the objects of type <code>ContactDetail</code> should be stored in the collection <code>friends</code>.</p>
@@ -1069,7 +1070,7 @@ public class HashTableBrokenDemo {
 <div class="content">
 <img src="./images/fig_6_07.png" alt="fig 6 07">
 </div>
-<div class="title">Figure 7. Parallel processing</div>
+<div class="title">Figure 8. Parallel processing</div>
 </div>
 <div class="paragraph">
 <p>A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel.</p>
@@ -1295,7 +1296,7 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 16:53:39 EDT
+Last updated 2014-11-25 10:57:08 EST
 </div>
 </div>
 </body>

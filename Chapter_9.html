@@ -563,7 +563,7 @@ catch (IOException e){
    <code>at TestStackTrace.main(TestStackTrace.java:14)</code></p>
 </div>
 <div class="paragraph">
-<p>This means that the program started in the method <code>main</code>, then went to <code>init</code> which is a constructor, and then called the method <code>divideByZero</code>. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an <code>ArithmeticException</code> was thrown –the line number nine tried to divide by zero.</p>
+<p>This means that the program started in the method <code>main</code>, then went to <code>init</code> which is a constructor, and then called the method <code>divideByZero</code>. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an <code>ArithmeticException</code> was thrown – the line number nine tried to divide by zero.</p>
 </div>
 </div>
 <div class="sect2">
@@ -855,7 +855,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <div class="sect2">
 <h3 id="_creating-new-exceptions"><a class="anchor" href="#_creating-new-exceptions"></a>Creating New Exceptions</h3>
 <div class="paragraph">
-<p>Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. Create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes,  throw the this exception:</p>
+<p>Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes,  throw the this exception:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -863,62 +863,85 @@ In such cases the method signature has to declare (warn) that it may throw a par
 
   // Constructor
   TooManyBikesException (){
-  // Just call the constructor of the superclass
-  // and pass to it the error message to display
-  super("Can't ship this many bikes in one shipment.");
+
+    super("Can't ship so many bikes.");
   }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This class has only a constructor that takes the message describing this error and gives it to its superclass for  storage. When some <code>catch</code> block receives this exception it can find out what exactly has happened by calling the method <code>getMessage</code>.</p>
+<p>This class has only a constructor that takes the message describing this error and passes it to the superclass of <code>TooManyBikesException</code> for reporting the same way as Java runtime reports any other exception. When some <code>catch</code> block receives this exception it can extract the message describing what happened by calling the method <code>getMessage</code> on the caught object <code>TooManyBikesException</code>.</p>
+</div>
+<div id="FIG9-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_9_04.png" alt="fig 9 04">
+</div>
 </div>
 <div class="paragraph">
-<p>Imagine that a user selects on the <code>OrderWindow</code> several bicycles of some model and hits the button <em>Place Order</em>. As you know from Chapter 6, this action will result in call to <code>actionPerformed</code> that will check if the order can be  delivered.  The next code example shows how the method <code>checkOrder</code> of this window declares that it can throw <code>TooManyBikesException</code>.  If the order won’t fit in the truck, this method throws the exception, the catch block  intercepts it and displays an error message in the text field on the window.</p>
+<p>Visualize a JavaFX GUI where the user selects several bicycles of some model and hits the button <em>Place Order</em>. As you know from Chapter 8, this action will result in the call to the event handler method (e.g. <code>placeOrder</code>) assigned to the <code>onAction</code> property of the button.  The event handler can apply some business logic (e.g. call a method <code>validateOrder</code>) to check if the order can be delivered.</p>
+</div>
+<div class="paragraph">
+<p>The next code fragment shows how the method <code>placeOrder</code> invokes <code>validateOrder</code>, which can throw <code>TooManyBikesException</code>. If the order won’t fit in the truck, the method <code>validateOrder</code> throws the exception, the <code>catch</code> block in <code>placeOrder</code> intercepts it and displays an error message in a text field on the window.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">class OrderWindow implements ActionListener{
-// The code to create window components is needed here.
+<pre class="highlight"><code class="Java language-Java">@FXML private ComboBox model;
+@FXML private TextField quantity;
 
-// The user clicked on the button Place Order
-   String selectedModel = txtFieldModel.getText();
+@FXML private Label txtFieldOrderConfirmation;
+
+public void validateOrder(ActionEvent evt){
+
+   String selectedModel = model.getSelectionModel()
+                               .getSelectedItem();
    String selectedQuantity =
                           txtFieldQuantity.getText();
    int quantity = Integer.parseInt(selectedQuantity);
 
-  void actionPerformed(ActionEvent e){
-    try{
-   bikeOrder.checkOrder("FireBird", quantity);
-  //the next line will be skipped in case of exception
-   txtFieldOrderConfirmation.setText(
+   try{
+      validateOrder(selectedModel, quantity);
+
+      //the next line will be skipped in case of exception
+      txtFieldOrderConfirmation.setText(
                            "Your order is complete");
-   } catch(TooManyBikesException e){
-    txtFieldOrderConfirmation.setText(e.getMessage());
+
+   } catch(TooManyBikesException bikesException){
+       txtFieldOrderConfirmation.setText(
+              bikesException.getMessage());
    }
  }
 
- void checkOrder(String bikeModel, int quantity)
+ void validateOrder(String bikeModel, int quantity)
                          throws TooManyBikesException{
 
-//Write the code that checks if the requested //quantity of bikes of selected model will fit in the //truck. If they won't fit, do  the following:
+   /* Here should go the code to checks if the requested
+      quantity of bikes of selected model fits in the
+      truck. If they won't fit, do the following:
+   */
 
-  throw new TooManyBikesException("Can not ship" +
-   quantity + " bikes of the model " + bikeModel +
-                        " in one shipment" );
+   throw new TooManyBikesException("Can not ship" +
+                    quantity + " bikes of the model " + bikeModel + " in one shipment" );
  }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In a perfect world, every program would work properly, but realistically we have to be ready for the unexpected situations. It really helps that Java forces you to write code that is prepared for  these situations.
-For more detailed coverage of exceptions read Oracle&#8217;s   <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/">lesson on exceptions</a>.</p>
+<p>I&#8217;m not going to provide you an explanation of how JavaFX <code>ComboBox</code> control, because I want you to do a little research as a part of the project assignment below.</p>
+</div>
+<div class="paragraph">
+<p>In a perfect world, every program would work properly, but realistically you have to be ready for the unexpected situations. It helps that Java often forces you to write code that is prepared for these situations. You can also use the Java exception handling mechanism to process situation specific to your application as illustrated using the bike store example.</p>
+</div>
+<div class="paragraph">
+<p>For more detailed coverage of exceptions read Oracle&#8217;s   <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/">lesson on exceptions</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project"><a class="anchor" href="#_project"></a>Project</h3>
+<h3 id="_project-create-a-javafx-bike-store"><a class="anchor" href="#_project-create-a-javafx-bike-store"></a>Project: Create a JavaFX Bike Store</h3>
 <div class="paragraph">
-<p>Create an application for placing bike orders.</p>
+<p>In this assignment I&#8217;d like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX <code>ComboBox</code> for this). Use a <code>TextField</code> control for entering the quantity, a <code>Button</code> for placing an order, and a <code>Label</code> to display either order confirmation or an error message.</p>
+</div>
+<div class="paragraph">
+<p>In the controller class use the code fragment from the section "Creating New Exceptions".</p>
 </div>
 </div>
 </div>
@@ -926,7 +949,7 @@ For more detailed coverage of exceptions read Oracle&#8217;s   <a href="http://d
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-23 11:57:39 EDT
+Last updated 2014-11-25 16:50:17 EST
 </div>
 </div>
 </body>

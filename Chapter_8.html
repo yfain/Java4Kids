@@ -505,9 +505,8 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="FIG8-1-0" class="imageblock">
 <div class="content">
-<img src="./images/fig_8-01-1.png" alt="fig 8 01 1">
+<img src="./images/fig_8-01-2.png" alt="fig 8 01 2">
 </div>
-<div class="title">Figure 1. Event listeners</div>
 </div>
 <div class="paragraph">
 <p>You can create an instance of your controller class either with the <code>new</code> operator or <em>inject</em> it into Java code. I&#8217;ll explain you what injection means in a bit.</p>
@@ -560,13 +559,13 @@ public class Controller {
 <p>The class <code>Controller</code> uses the class <code>ActionEvent</code> from package <code>javafx.event</code>, and I want to warn you - be careful when IDE will offer to insert an import statement for you. There is also an <code>ActionEvent</code> in the package <code>java.awt.event</code>, which we don&#8217;t want in JavaFX applications.</p>
 </div>
 <div class="paragraph">
-<p>We want the method <code>signInClicked</code> to be called on the controller if the user clicks on the button. For this to happen, we can specify the name of this method as a handler of the <code>onAction</code> event in the Button element in <code>signin.fxml</code> as shown on Figure 8-2.</p>
+<p>We want the method <code>signInClicked</code> to be called on the controller if the user clicks on the button. For this to happen, we can specify the name of this method as a handler of the <code>onAction</code> property in the <code>&lt;Button&gt;</code> element in <code>signin.fxml</code> as shown on Figure 8-2.</p>
 </div>
 <div id="FIG8-1" class="imageblock">
 <div class="content">
 <img src="./images/fig_8_01.png" alt="fig 8 01">
 </div>
-<div class="title">Figure 2. Mapping onAction event to signInClicked method</div>
+<div class="title">Figure 1. Mapping onAction property to the signInClicked method</div>
 </div>
 <div class="paragraph">
 <p>If you run the <code>Main</code> program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-3.</p>
@@ -575,7 +574,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_02.png" alt="fig 8 02">
 </div>
-<div class="title">Figure 3. After clicking 3 times on Sign In button</div>
+<div class="title">Figure 2. After clicking 3 times on Sign In button</div>
 </div>
 <div class="paragraph">
 <p>So there is a link between the GUI and the controller. If we had several buttons on the GUI, we could either map each of them to a separate method in controller, or have one method for all buttons with the code recognizing which button was clicked. The controller will invoke your event handler providing the <code>ActionEvent</code> object as an argument. Its property <code>target</code> identifies, well the target of the event, which is a Sign In button in our case.</p>
@@ -587,7 +586,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_03.png" alt="fig 8 03">
 </div>
-<div class="title">Figure 4. Viewing properties of ActionEvent in debugger</div>
+<div class="title">Figure 3. Viewing properties of ActionEvent in debugger</div>
 </div>
 <div class="paragraph">
 <p>The <code>ActionEvent</code> has another property called <code>source</code>, which has the same value as <code>target</code> in our application. There are cases when <code>source</code> and <code>target</code> are different because an event travels through all containers until it reaches the target.  Then it <em>bubles up</em> through all the containers. This is an advanced topic, but I still want to give you an illustration.</p>
@@ -602,7 +601,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_04.png" alt="fig 8 04">
 </div>
-<div class="title">Figure 5. Viewing properties of MouseEvent in debugger</div>
+<div class="title">Figure 4. Viewing properties of MouseEvent in debugger</div>
 </div>
 </div>
 <div class="sect3">
@@ -702,7 +701,7 @@ public class Controller {
 <div class="content">
 <img src="./images/fig_8_05.png" alt="fig 8 05">
 </div>
-<div class="title">Figure 6. After entering the wrong user id</div>
+<div class="title">Figure 5. After entering the wrong user id</div>
 </div>
 </div>
 <div class="sect3">
@@ -994,7 +993,7 @@ SimpleStringProperty signinError =
 <div class="content">
 <img src="./images/fig_8_06.png" alt="fig 8 06">
 </div>
-<div class="title">Figure 7. Binding in action after entering the wrong user id</div>
+<div class="title">Figure 6. Binding in action after entering the wrong user id</div>
 </div>
 <div class="paragraph">
 <p>Enter the right user ID, click on Sign In again, and the binding mechanism will remove the error message from the window.</p>
@@ -1072,7 +1071,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 <div class="content">
 <img src="./images/fig_8_07.png" alt="fig 8 07">
 </div>
-<div class="title">Figure 8. Frozen Screen with a wheel of death</div>
+<div class="title">Figure 7. Frozen Screen with a wheel of death</div>
 </div>
 <div class="paragraph">
 <p>Ten seconds later the application thread wakes up, and the GUI becomes responsive again. Let&#8217;s fix this code and create a separate thread emulating the long running process so that the application thread can continue working with GUI. The following code listing shows the complete code of the class <code>ControllerLongRunningThread</code>, which doesn&#8217;t freeze the window.</p>
@@ -1235,7 +1234,7 @@ String buttonLabel = clickedButton.getText();</code></pre>
 <div class="sect3">
 <h4 id="_challenge-yorself"><a class="anchor" href="#_challenge-yorself"></a>Challenge Yorself</h4>
 <div class="paragraph">
-<p>The step 10 in the project assignment suggest that you should use the the method <code>setText</code> of the <code>TextField</code> component. See if you can apply the property binding technique to display the result in the display field.</p>
+<p>The step 10 in the project assignment suggests that you should use the the method <code>setText</code> of the <code>TextField</code> component. See if you can apply the property binding technique to display the result in the display field.</p>
 </div>
 </div>
 </div>
@@ -1244,7 +1243,7 @@ String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-10-24 10:01:56 EDT
+Last updated 2014-11-25 16:11:34 EST
 </div>
 </div>
 </body>
