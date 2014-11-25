@@ -57,10 +57,10 @@ public class Controller {
 
 The class `Controller` uses the class `ActionEvent` from package `javafx.event`, and I want to warn you - be careful when IDE will offer to insert an import statement for you. There is also an `ActionEvent` in the package `java.awt.event`, which we don't want in JavaFX applications.
 
-We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we can specify the name of this method as a handler of the `onAction` event in the Button element in `signin.fxml` as shown on Figure 8-2.
+We want the method `signInClicked` to be called on the controller if the user clicks on the button. For this to happen, we can specify the name of this method as a handler of the `onAction` property in the `<Button>` element in `signin.fxml` as shown on Figure 8-2.
 
 [[FIG8-1]]
-.Mapping onAction event to signInClicked method 
+.Mapping onAction property to the signInClicked method 
 image::images/fig_8_01.png[]
 
 If you run the `Main` program and click three times on the button Sign In, the console will print the hello message three times as shown on Figure 8-3.

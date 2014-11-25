@@ -303,7 +303,7 @@ image::images/fig_9_03.png[]
 
 === Creating New Exceptions 
 
-Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to _validate_ customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. Create a new subclass of `Exception` called `TooManyBikesException`, and if someone tries to order more than three of these bikes,  throw the this exception: 
+Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to _validate_ customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of `Exception` called `TooManyBikesException`, and if someone tries to order more than three of these bikes,  throw the this exception: 
 
 [source, Java]
 ----
@@ -311,59 +311,72 @@ class TooManyBikesException extends Exception{
 
   // Constructor 
   TooManyBikesException (){
-  // Just call the constructor of the superclass
-  // and pass to it the error message to display
-  super("Can't ship this many bikes in one shipment.");      
+
+    super("Can't ship so many bikes.");      
   }  
 }
 ----
 
-This class has only a constructor that takes the message describing this error and gives it to its superclass for  storage. When some `catch` block receives this exception it can find out what exactly has happened by calling the method `getMessage`. 
+This class has only a constructor that takes the message describing this error and passes it to the superclass of `TooManyBikesException` for reporting the same way as Java runtime reports any other exception. When some `catch` block receives this exception it can extract the message describing what happened by calling the method `getMessage` on the caught object `TooManyBikesException`. 
 
 [[FIG9-4]]
 image::images/fig_9_04.png[]
 
-Imagine that a user selects on the `OrderWindow` several bicycles of some model and hits the button _Place Order_. As you know from Chapter 6, this action will result in call to `actionPerformed` that will check if the order can be  delivered.  The next code example shows how the method `checkOrder` of this window declares that it can throw `TooManyBikesException`.  If the order won’t fit in the truck, this method throws the exception, the catch block  intercepts it and displays an error message in the text field on the window.
+Visualize a JavaFX GUI where the user selects several bicycles of some model and hits the button _Place Order_. As you know from Chapter 8, this action will result in the call to the event handler method (e.g. `placeOrder`) assigned to the `onAction` property of the button.  The event handler can apply some business logic (e.g. call a method `validateOrder`) to check if the order can be delivered.  
+
+The next code fragment shows how the method `placeOrder` invokes `validateOrder`, which can throw `TooManyBikesException`. If the order won’t fit in the truck, the method `validateOrder` throws the exception, the `catch` block in `placeOrder` intercepts it and displays an error message in a text field on the window. 
 
 [source, Java]
 ----
-class OrderWindow implements ActionListener{
-// The code to create window components is needed here. 
+@FXML private ComboBox model;
+@FXML private TextField quantity;
 
-// The user clicked on the button Place Order
-   String selectedModel = txtFieldModel.getText();
+@FXML private Label txtFieldOrderConfirmation;
+
+public void validateOrder(ActionEvent evt){ 
+
+   String selectedModel = model.getSelectionModel()
+                               .getSelectedItem();
    String selectedQuantity =  
                           txtFieldQuantity.getText();
    int quantity = Integer.parseInt(selectedQuantity);   
 
-  void actionPerformed(ActionEvent e){
-    try{   
-   bikeOrder.checkOrder("FireBird", quantity);
-  //the next line will be skipped in case of exception
-   txtFieldOrderConfirmation.setText(
-                           "Your order is complete");   
-   } catch(TooManyBikesException e){
-    txtFieldOrderConfirmation.setText(e.getMessage());
+   try{   
+      validateOrder(selectedModel, quantity);
+      
+      //the next line will be skipped in case of exception
+      txtFieldOrderConfirmation.setText(
+                           "Your order is complete"); 
+
+   } catch(TooManyBikesException bikesException){
+       txtFieldOrderConfirmation.setText(
+              bikesException.getMessage());
    }                          
  }
  
- void checkOrder(String bikeModel, int quantity) 
+ void validateOrder(String bikeModel, int quantity) 
                          throws TooManyBikesException{
 
-//Write the code that checks if the requested //quantity of bikes of selected model will fit in the //truck. If they won't fit, do  the following: 
+   /* Here should go the code to checks if the requested 
+      quantity of bikes of selected model fits in the 
+      truck. If they won't fit, do the following: 
+   */
 
-  throw new TooManyBikesException("Can not ship" + 
-   quantity + " bikes of the model " + bikeModel +
-                        " in one shipment" );
+   throw new TooManyBikesException("Can not ship" + 
+                    quantity + " bikes of the model " + bikeModel + " in one shipment" );
  }
 }
 ----
 
-In a perfect world, every program would work properly, but realistically we have to be ready for the unexpected situations. It really helps that Java forces you to write code that is prepared for  these situations.
+I'm not going to provide you an explanation of how JavaFX `ComboBox` control, because I want you to do a little research as a part of the project assignment below.
+
+In a perfect world, every program would work properly, but realistically you have to be ready for the unexpected situations. It helps that Java often forces you to write code that is prepared for these situations. You can also use the Java exception handling mechanism to process situation specific to your application as illustrated using the bike store example.
+
 For more detailed coverage of exceptions read Oracle's   http://docs.oracle.com/javase/tutorial/essential/exceptions/[lesson on exceptions].
 
 
-=== Project
+=== Project: Create a JavaFX Bike Store
 
+In this assignment I'd like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX `ComboBox` for this). Use a `TextField` control for entering the quantity, a `Button` for placing an order, and a `Label` to display either order confirmation or an error message.   
 
-Create an application for placing bike orders. 
+In the controller class use the code fragment from the section "Creating New Exceptions".
