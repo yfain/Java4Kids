@@ -105,12 +105,11 @@ Car myCar = new Car();
 Object myOtherCar = new Car();
 ----
 
-Java compiler can _cast_ (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called _upcasting_. But if a variable has the type of a super class, it won't see any members of teh subclass. The next screen shot shows that the variable `myOtherCar` doesn't see the method `brake()` declared in the class `Car`.
+Java compiler can _cast_ (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called _upcasting_. But if a variable has the type of a super class, it won't see any members of the subclass. The next screen shot shows that the variable `myOtherCar` doesn't see the method `brake()` declared in the class `Car`.
 
-
-*[[FIG6-4]]
+[[FIG6-4]]
 .The Object type variable doesn't see Car's members
-image::images/fig_6_04.png[]*
+image::images/fig_6_04.png[]
 
 But you can say, "Doesn't the variable `myOtherCar` point at the instance of the class `Car`, which has a public method `brake()`?" That's right, but since I declared this variable of the type `Object` the variable `myOtherCar` assumes that its just a general object.  The programmer can _downcast_ the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example: 
 

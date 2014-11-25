@@ -64,7 +64,7 @@ The output of this program shows the sequence of method calls that were made up 
    `at TestStackTrace.<init>(TestStackTrace.java:4)`
    `at TestStackTrace.main(TestStackTrace.java:14)`
 
-This means that the program started in the method `main`, then went to `init` which is a constructor, and then called the method `divideByZero`. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an `ArithmeticException` was thrown –the line number nine tried to divide by zero. 
+This means that the program started in the method `main`, then went to `init` which is a constructor, and then called the method `divideByZero`. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an `ArithmeticException` was thrown – the line number nine tried to divide by zero. 
 
 === Genealogical Tree of Exceptions 
 
@@ -319,6 +319,9 @@ class TooManyBikesException extends Exception{
 ----
 
 This class has only a constructor that takes the message describing this error and gives it to its superclass for  storage. When some `catch` block receives this exception it can find out what exactly has happened by calling the method `getMessage`. 
+
+[[FIG9-4]]
+image::images/fig_9_04.png[]
 
 Imagine that a user selects on the `OrderWindow` several bicycles of some model and hits the button _Place Order_. As you know from Chapter 6, this action will result in call to `actionPerformed` that will check if the order can be  delivered.  The next code example shows how the method `checkOrder` of this window declares that it can throw `TooManyBikesException`.  If the order won’t fit in the truck, this method throws the exception, the catch block  intercepts it and displays an error message in the text field on the window.
 

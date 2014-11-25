@@ -14,8 +14,7 @@ You'll learn how data binding can make automatically update the properties of a 
 JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. When the event happens, the event object is represented by the one of the subclasses of the class `Event` located in the packages `javafx.event` and `javafx.scene.input`. You need to decide what events are important to your program and, as the programmers say, "listen to these events". You'll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed using FXML, you'll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is a good idea if your code has to process multiple events.
 
 [[FIG8-1-0]]
-.Event listeners 
-image::images/fig_8-01-1.png[]
+image::images/fig_8-01-2.png[]
 
 You can create an instance of your controller class either with the `new` operator or _inject_ it into Java code. I'll explain you what injection means in a bit. 
 
@@ -577,4 +576,4 @@ String buttonLabel = clickedButton.getText();
 
 ==== Challenge Yorself
 
-The step 10 in the project assignment suggest that you should use the the method `setText` of the `TextField` component. See if you can apply the property binding technique to display the result in the display field. 
+The step 10 in the project assignment suggests that you should use the the method `setText` of the `TextField` component. See if you can apply the property binding technique to display the result in the display field. 
