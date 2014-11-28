@@ -569,13 +569,31 @@ p { margin-bottom: 1.25rem; }
 <p>Firs of all, the <code>&lt;GridPane&gt;</code> is not a good candidate to serve as a root container for our game, which has to have a menu on top. The <code>&lt;BorderPane&gt;</code> is a better choice when you need to have some GUI components to be located on the top of the window. Our game will have a menu on top and a 3x3 grid of squares in the center of the window.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s delete the <code>GridPane</code> from the Hierarchy panel at the bottom left and drag/drop the <code>BorderPane</code> there. Scene Builder&#8217;s Window should look like this:</p>
+<p>Let&#8217;s delete the <code>GridPane</code> from the Hierarchy panel at the bottom left and drag-drop the <code>BorderPane</code> there. The Scene Builder&#8217;s Window should look like this:</p>
 </div>
 <div id="FIG10-3" class="imageblock">
 <div class="content">
 <img src="./images/fig_10_03.png" alt="fig 10 03">
 </div>
 <div class="title">Figure 2. The BorderPane is a root container</div>
+</div>
+<div class="paragraph">
+<p>JavaFX menus are created as a hierarchy of nested components. A <code>Menu</code> container can contain one or more <code>MenuItem</code> components and other <code>Menu</code> components. You can also create a <code>MenuBar</code> or a <code>ContextMenu</code> that include one or more <code>Menu</code> components. I&#8217;ll show how to create a menu bar with two menus <em>Actions</em> and <em>Help</em> for our Tic-Tac-Toe game.</p>
+</div>
+<div class="paragraph">
+<p>A menu bar is usually located at the top of a window. In Scene Builder Drop the <code>MenuBar</code> component from the Controls panel onto <code>Insert TOP</code> line in the <code>BorderPane</code> at the bottom left panel. Press a little plus sign to expand the <code>MenuBar</code> in the Hierarchy panel. You&#8217;ll see that it&#8217;ll have the default menus named File, Edit and Help. We&#8217;re not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.</p>
+</div>
+<div class="paragraph">
+<p>Now we&#8217;ll add menu items to the menus Actions and Help. Drop a <code>MenuItem</code> component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create two menu items: Close and Unspecified Action. Rename them into Play and Quit respectively.</p>
+</div>
+<div class="paragraph">
+<p>Drop another <code>MenuItem</code> component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play.</p>
+</div>
+<div class="paragraph">
+<p>Now drop a GridPane from the Containers panel onto the center of the BorderPane and add a column to change the grid dimensions to be 3x3.</p>
+</div>
+<div class="paragraph">
+<p>Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. Your Scene Builder&#8217;s window should look like this:</p>
 </div>
 </div>
 </div>
@@ -584,7 +602,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-11-28 10:58:52 EST
+Last updated 2014-11-28 13:04:18 EST
 </div>
 </div>
 </body>
