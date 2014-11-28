@@ -581,19 +581,163 @@ p { margin-bottom: 1.25rem; }
 <p>JavaFX menus are created as a hierarchy of nested components. A <code>Menu</code> container can contain one or more <code>MenuItem</code> components and other <code>Menu</code> components. You can also create a <code>MenuBar</code> or a <code>ContextMenu</code> that include one or more <code>Menu</code> components. I&#8217;ll show how to create a menu bar with two menus <em>Actions</em> and <em>Help</em> for our Tic-Tac-Toe game.</p>
 </div>
 <div class="paragraph">
-<p>A menu bar is usually located at the top of a window. In Scene Builder Drop the <code>MenuBar</code> component from the Controls panel onto <code>Insert TOP</code> line in the <code>BorderPane</code> at the bottom left panel. Press a little plus sign to expand the <code>MenuBar</code> in the Hierarchy panel. You&#8217;ll see that it&#8217;ll have the default menus named File, Edit and Help. We&#8217;re not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.</p>
+<p>A menu bar is usually located at the top of a window. In Scene Builder drop the <code>MenuBar</code> component from the Controls panel onto <code>Insert TOP</code> line in the <code>BorderPane</code> at the bottom left panel. Press a little plus sign to expand the <code>MenuBar</code> in the Hierarchy panel. You&#8217;ll see that it&#8217;ll have the default menus named File, Edit and Help.</p>
+</div>
+<div id="FIG10-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_04.png" alt="fig 10 04">
+</div>
+<div class="title">Figure 3. Dropped the MenuBar on Top of the BorderPane</div>
 </div>
 <div class="paragraph">
-<p>Now we&#8217;ll add menu items to the menus Actions and Help. Drop a <code>MenuItem</code> component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create two menu items: Close and Unspecified Action. Rename them into Play and Quit respectively.</p>
+<p>We&#8217;re not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.The <code>Menu</code> File was created with the <code>MenuItem</code> Close - rename it into Quit.</p>
 </div>
 <div class="paragraph">
-<p>Drop another <code>MenuItem</code> component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play.</p>
+<p>Now we&#8217;ll add menu items to the menus Actions and Help. Drop a <code>MenuItem</code> component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create Unspecified Action. Rename it into Play. you can use drag and drop to change the order of the menu items.</p>
 </div>
 <div class="paragraph">
-<p>Now drop a GridPane from the Containers panel onto the center of the BorderPane and add a column to change the grid dimensions to be 3x3.</p>
+<p>Drop another <code>MenuItem</code> component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play. The Hierarchy panel should look as follows:</p>
+</div>
+<div id="FIG10-5" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_05.png" alt="fig 10 05">
+</div>
+<div class="title">Figure 4. The menu bar with 2 menus and 4 menu items</div>
 </div>
 <div class="paragraph">
-<p>Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. Your Scene Builder&#8217;s window should look like this:</p>
+<p>Now drop a <code>GridPane</code> from the Containers panel onto the center of the BorderPane. By default, Scene Builder creates a 2x3 grid. Right-click at the column tab "1" and add a column to change the grid dimensions to be 3x3.</p>
+</div>
+<div class="paragraph">
+<p>Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. This is what we&#8217;ve got so far:</p>
+</div>
+<div id="FIG10-6" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_06.png" alt="fig 10 06">
+</div>
+<div class="title">Figure 5. The menu bar on top and the grid in center</div>
+</div>
+<div class="paragraph">
+<p>Save this layout in Scene Builder and run the TicTacToe class in IDEA. You&#8217;ll see a window with a menu on top. The grid won&#8217;t be visible yet, because it has no content. Click on the menu Actions, and the window will look like this:</p>
+</div>
+<div id="FIG10-7" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_07.png" alt="fig 10 07">
+</div>
+<div class="title">Figure 6. Running TicTacToe with an empty grid</div>
+</div>
+<div class="paragraph">
+<p>The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder s we did in the Calculator in Chapter 7. But it&#8217;ll be faster to do it manually in by editing the content of the file <em>tictactoe.fxml</em> in IDEA&#8217;s editor. Modify the content of this file to look as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="xml language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;?import java.lang.*?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+&lt;?import javafx.scene.layout.BorderPane?&gt;
+
+&lt;BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tictactoe.TicTacToeController"&gt;
+   &lt;top&gt;
+      &lt;MenuBar BorderPane.alignment="CENTER"&gt;
+        &lt;menus&gt;
+          &lt;Menu text="Actions"&gt;
+            &lt;items&gt;
+              &lt;MenuItem text="Play" /&gt;
+              &lt;MenuItem text="Quit" /&gt;
+            &lt;/items&gt;
+          &lt;/Menu&gt;
+          &lt;Menu text="Help"&gt;
+            &lt;items&gt;
+              &lt;MenuItem text="About" /&gt;
+              &lt;MenuItem text="How to play" /&gt;
+            &lt;/items&gt;
+          &lt;/Menu&gt;
+        &lt;/menus&gt;
+      &lt;/MenuBar&gt;
+   &lt;/top&gt;
+   &lt;center&gt;
+      &lt;GridPane fx:id ="gameBoard" BorderPane.alignment="CENTER"&gt;
+         &lt;children&gt;
+          &lt;Button fx:id="b1" prefHeight="100.0" prefWidth="100.0" /&gt;
+          &lt;Button fx:id="b2" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="1" /&gt;
+          &lt;Button fx:id="b3" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="2" /&gt;
+          &lt;Button fx:id="b4" prefHeight="100.0" prefWidth="100.0"  GridPane.rowIndex="1" /&gt;
+          &lt;Button fx:id="b5" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="1" GridPane.rowIndex="1" /&gt;
+          &lt;Button fx:id="b6" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="2" GridPane.rowIndex="1" /&gt;
+          &lt;Button fx:id="b7" prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="2" /&gt;
+          &lt;Button fx:id="b8" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" /&gt;
+          &lt;Button fx:id="b9" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" /&gt;
+         &lt;/children&gt;
+      &lt;/GridPane&gt;
+   &lt;/center&gt;
+&lt;/BorderPane&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that each button has an id. We&#8217;ll need them while processing button clicks in the controller class. Run the TicTacToe class and the window will look pretty close to the final version of our Tic-Tac-Toe game.</p>
+</div>
+<div id="FIG10-8" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_08.png" alt="fig 10 08">
+</div>
+<div class="title">Figure 7. Running TicTacToe - the first square has a focus</div>
+</div>
+<div class="paragraph">
+<p>Do yo see this thin border around the top left square? It happens because by default the firs grid cell <em>has a focus</em>, which means that this particular GUI component is ready to receive input. But we don&#8217;t want to suggest the player starting the game from the top left corner, do we? We want to remove this little border, and it&#8217;s time to create a a special style for a button that will not show the focus.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s create a new file named <em>tictactoe.css</em>. In IDEA, right click on the package name <em>mygame</em>  and use the menu  File | New | File. It&#8217;ll create an empty file. Type the following in there:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">.button{
+  -fx-focus-color: transparent;
+  -fx-background-insets: -1, 0, 1, 1;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From Chapter 7 you may remember that this means that every button in our application will have these attributes. To be honest with you, I did search on line to figure out how to remove the focus border, and the online documentation suggested that adding the style <code>-fx-focus-color: transparent;</code> would do the trick. But it didn&#8217;t. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding <code>-fx-background-insets: -1, 0, 1, 1;</code> is needed too.</p>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t be scared that not everything works as it should from the first time. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site <a href="http://stackoverflow.com/">StackOverflow</a>.</p>
+</div>
+<div class="paragraph">
+<p>Now we need to add a line to the <code>main</code> method of the TicTacToe class to load the file <code>tictactoe.css</code>. We did something like this in Chapter 7 while styling the Sign In application. We&#8217;ll also need to do small changes in the <code>main</code> method to keep store the reference to a <code>scene</code> in a separate variable. After these modifications the class <code>TicTacToe</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class TicTacToe extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass()
+                           .getResource("tictactoe.fxml"));
+        primaryStage.setTitle("TicTacToe");
+        Scene scene = new Scene(root, 300, 275);
+        scene.getStylesheets().add(getClass()
+            .getResource("tictactoe.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run the TicTacToe class now and the focus is gone:</p>
+</div>
+<div id="FIG10-9" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_09.png" alt="fig 10 09">
+</div>
+<div class="title">Figure 8. Running TicTacToe - the first square has no focus</div>
 </div>
 </div>
 </div>
@@ -602,7 +746,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-11-28 13:04:18 EST
+Last updated 2014-11-28 18:14:53 EST
 </div>
 </div>
 </body>
