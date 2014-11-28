@@ -487,7 +487,7 @@ image::images/fig_7_13.png[]
 
 Now select Insert TOP at the bottom left, and then drag and drop a `Label` from the Controls section onto the middle section of Screen Builder. Set the label's title to "This is the Header". This text will be displayed at the top.
 
-Now select Insert LEFT and then drag and drop `VBox` from the Containers area to the left side of the middle section of the Screen Builder. The `VBox` is a container for arranging GUI components vertically, which is what we need for creating a navigation menu. You'll see an empty gray area on the left.
+Select Insert LEFT and then drag and drop `VBox` from the Containers area to the left side of the middle section of the Screen Builder. The `VBox` is a container for arranging GUI components vertically, which is what we need for creating a navigation menu. You'll see an empty gray area on the left.
 
 [[FIG7-14]]
 .Adding a VBox for navigation 
@@ -498,6 +498,8 @@ Now select `VBOX` at the bottom left and add a couple of menu items to the empty
 [[FIG7-15]]
 .Adding buttons to VBox 
 image::images/fig_7_15.png[]
+
+Our left navigation bar has a menu that's implemented as buttons. In Chapter 10 while developing a Tic-Tac-Toe game I'll show you how to create real menus.  
 
 Let's add a footer to the window now. Select Insert BOTTOM at the bottom left and then drag the `HBox` from the Containers area to the middle section. It'll look like a gray area at the bottom. Adjust its height so the footer doesn't take too much real estate in our scene. Now add three `Hyperlink` components from the Contols section to the footer and set their text to "Link 1", "Link 2", and "Link 3" correspondingly. The Scene Builder's window should look like this: 
 

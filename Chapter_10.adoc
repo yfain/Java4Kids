@@ -55,11 +55,20 @@ image::images/fig_10_02.png[]
 
 Firs of all, the `<GridPane>` is not a good candidate to serve as a root container for our game, which has to have a menu on top. The `<BorderPane>` is a better choice when you need to have some GUI components to be located on the top of the window. Our game will have a menu on top and a 3x3 grid of squares in the center of the window.
 
-Let's delete the `GridPane` from the Hierarchy panel at the bottom left and drag/drop the `BorderPane` there. Scene Builder's Window should look like this:
+Let's delete the `GridPane` from the Hierarchy panel at the bottom left and drag-drop the `BorderPane` there. The Scene Builder's Window should look like this:
 
 [[FIG10-3]]
 .The BorderPane is a root container
 image::images/fig_10_03.png[]
 
+JavaFX menus are created as a hierarchy of nested components. A `Menu` container can contain one or more `MenuItem` components and other `Menu` components. You can also create a `MenuBar` or a `ContextMenu` that include one or more `Menu` components. I'll show how to create a menu bar with two menus _Actions_ and _Help_ for our Tic-Tac-Toe game. 
 
+A menu bar is usually located at the top of a window. In Scene Builder Drop the `MenuBar` component from the Controls panel onto `Insert TOP` line in the `BorderPane` at the bottom left panel. Press a little plus sign to expand the `MenuBar` in the Hierarchy panel. You'll see that it'll have the default menus named File, Edit and Help. We're not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.
 
+Now we'll add menu items to the menus Actions and Help. Drop a `MenuItem` component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create two menu items: Close and Unspecified Action. Rename them into Play and Quit respectively.
+
+Drop another `MenuItem` component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play.
+
+Now drop a GridPane from the Containers panel onto the center of the BorderPane and add a column to change the grid dimensions to be 3x3. 
+
+Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. Your Scene Builder's window should look like this:
