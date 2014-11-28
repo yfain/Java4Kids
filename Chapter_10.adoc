@@ -1,0 +1,65 @@
+:toc-placement!:
+:imagesdir: ./
+
+== Chapter 10. Creating a Tic-Tac-Toe Game  
+
+In this chapter we'll return to GUI programming and will create a Tic-Tac-Toe game using JavaFX and Scene Builder.
+
+Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game.
+
+This game may go by different names around the world, but it comes down to placing X's and O's on a board. This games is described in http://en.wikipedia.org/wiki/Tic-tac-toe[this Wikipedia article]. Our version of the popular game will implement the following strategy:
+
+* The game will be played by two players on a 3x3 board.
+* Two players can play this game. One will play with the symbol X, and the other will use O.
+* The winner must have a full row, column, or diagonal of X's or O's.
+* After each move, the program has to check if there is a winner.
+* The winning combination of squares has to be displayed in different colors.
+* After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.
+* In a new game the first player plays with X's.
+
+[[FIG10-1]]
+image::images/fig_10_01.png[]
+ 
+
+=== Developing the Game: Step by Step
+
+In Chapter 7 we went through the procedure of creating a new IDEA project, and now we'll do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter _TicTacToe_ as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _tictactoe.fxml_ and _Main.java_ into _TicTacToe.java_. Accordingly, the `TicTacToe` class should load the file _ticktacktoe.fxml_, and the window title should read `Tic-Tac-Toe`:
+
+[source, java]
+----
+public class TicTacToe extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("tictactoe.fxml"));
+        primaryStage.setTitle("Tic-Tac-Toe");
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+----
+
+Rename the generated package from _sample_ into _mygame_. Inside the _tictactoe.fxml_ change the reference to controller to be `fx:controller="mygame.Controller"`. Now you're ready to design the GUI for Tic-Tac-Toe in Scene Builder.
+
+==== Developing the GUI part in Scene Builder
+
+Similarly to the examples from Chapter 7, we'll separate the GUI design from implementation. So right-click on the file _tictactoe.fxml_ and select the menu option Open in SceneBuilder. This is how the IDEA-generated file _tictactoe.fxml_ looks like in Scene Builder:  
+
+[[FIG10-2]]
+.Opening the generated tictactoe.fxml in Scene Builder
+image::images/fig_10_02.png[]
+
+Firs of all, the `<GridPane>` is not a good candidate to serve as a root container for our game, which has to have a menu on top. The `<BorderPane>` is a better choice when you need to have some GUI components to be located on the top of the window. Our game will have a menu on top and a 3x3 grid of squares in the center of the window.
+
+Let's delete the `GridPane` from the Hierarchy panel at the bottom left and drag/drop the `BorderPane` there. Scene Builder's Window should look like this:
+
+[[FIG10-3]]
+.The BorderPane is a root container
+image::images/fig_10_03.png[]
+
+
+
