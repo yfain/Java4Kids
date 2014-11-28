@@ -63,12 +63,136 @@ image::images/fig_10_03.png[]
 
 JavaFX menus are created as a hierarchy of nested components. A `Menu` container can contain one or more `MenuItem` components and other `Menu` components. You can also create a `MenuBar` or a `ContextMenu` that include one or more `Menu` components. I'll show how to create a menu bar with two menus _Actions_ and _Help_ for our Tic-Tac-Toe game. 
 
-A menu bar is usually located at the top of a window. In Scene Builder Drop the `MenuBar` component from the Controls panel onto `Insert TOP` line in the `BorderPane` at the bottom left panel. Press a little plus sign to expand the `MenuBar` in the Hierarchy panel. You'll see that it'll have the default menus named File, Edit and Help. We're not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.
+A menu bar is usually located at the top of a window. In Scene Builder drop the `MenuBar` component from the Controls panel onto `Insert TOP` line in the `BorderPane` at the bottom left panel. Press a little plus sign to expand the `MenuBar` in the Hierarchy panel. You'll see that it'll have the default menus named File, Edit and Help. 
 
-Now we'll add menu items to the menus Actions and Help. Drop a `MenuItem` component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create two menu items: Close and Unspecified Action. Rename them into Play and Quit respectively.
+[[FIG10-4]]
+.Dropped the MenuBar on Top of the BorderPane
+image::images/fig_10_04.png[]
 
-Drop another `MenuItem` component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play.
+We're not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.The `Menu` File was created with the `MenuItem` Close - rename it into Quit.
 
-Now drop a GridPane from the Containers panel onto the center of the BorderPane and add a column to change the grid dimensions to be 3x3. 
+Now we'll add menu items to the menus Actions and Help. Drop a `MenuItem` component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create Unspecified Action. Rename it into Play. you can use drag and drop to change the order of the menu items.
 
-Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. Your Scene Builder's window should look like this:
+Drop another `MenuItem` component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play. The Hierarchy panel should look as follows:
+
+[[FIG10-5]]
+.The menu bar with 2 menus and 4 menu items
+image::images/fig_10_05.png[]
+
+Now drop a `GridPane` from the Containers panel onto the center of the BorderPane. By default, Scene Builder creates a 2x3 grid. Right-click at the column tab "1" and add a column to change the grid dimensions to be 3x3. 
+
+Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. This is what we've got so far:
+
+[[FIG10-6]]
+.The menu bar on top and the grid in center
+image::images/fig_10_06.png[]
+
+Save this layout in Scene Builder and run the TicTacToe class in IDEA. You'll see a window with a menu on top. The grid won't be visible yet, because it has no content. Click on the menu Actions, and the window will look like this:
+
+[[FIG10-7]]
+.Running TicTacToe with an empty grid
+image::images/fig_10_07.png[]
+
+The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder s we did in the Calculator in Chapter 7. But it'll be faster to do it manually in by editing the content of the file _tictactoe.fxml_ in IDEA's editor. Modify the content of this file to look as follows:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="tictactoe.TicTacToeController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu text="Actions">
+            <items>
+              <MenuItem text="Play" />
+              <MenuItem text="Quit" />
+            </items>
+          </Menu>
+          <Menu text="Help">
+            <items>
+              <MenuItem text="About" />
+              <MenuItem text="How to play" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <GridPane fx:id ="gameBoard" BorderPane.alignment="CENTER">
+         <children>
+          <Button fx:id="b1" prefHeight="100.0" prefWidth="100.0" />
+          <Button fx:id="b2" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="1" />
+          <Button fx:id="b3" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="2" />
+          <Button fx:id="b4" prefHeight="100.0" prefWidth="100.0"  GridPane.rowIndex="1" />
+          <Button fx:id="b5" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="1" GridPane.rowIndex="1" />
+          <Button fx:id="b6" prefHeight="100.0" prefWidth="100.0"  GridPane.columnIndex="2" GridPane.rowIndex="1" />
+          <Button fx:id="b7" prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="2" />
+          <Button fx:id="b8" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+          <Button fx:id="b9" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>
+----
+
+Note that each button has an id. We'll need them while processing button clicks in the controller class. Run the TicTacToe class and the window will look pretty close to the final version of our Tic-Tac-Toe game. 
+
+[[FIG10-8]]
+.Running TicTacToe - the first square has a focus
+image::images/fig_10_08.png[]
+
+Do yo see this thin border around the top left square? It happens because by default the firs grid cell _has a focus_, which means that this particular GUI component is ready to receive input. But we don't want to suggest the player starting the game from the top left corner, do we? We want to remove this little border, and it's time to create a a special style for a button that will not show the focus.
+
+Let's create a new file named _tictactoe.css_. In IDEA, right click on the package name _mygame_  and use the menu  File | New | File. It'll create an empty file. Type the following in there:
+
+[source, css]
+----
+.button{
+  -fx-focus-color: transparent;
+  -fx-background-insets: -1, 0, 1, 1;
+}
+----
+
+From Chapter 7 you may remember that this means that every button in our application will have these attributes. To be honest with you, I did search on line to figure out how to remove the focus border, and the online documentation suggested that adding the style `-fx-focus-color: transparent;` would do the trick. But it didn't. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding `-fx-background-insets: -1, 0, 1, 1;` is needed too. 
+
+Don't be scared that not everything works as it should from the first time. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site http://stackoverflow.com/[StackOverflow]. 
+
+Now we need to add a line to the `main` method of the TicTacToe class to load the file `tictactoe.css`. We did something like this in Chapter 7 while styling the Sign In application. We'll also need to do small changes in the `main` method to keep store the reference to a `scene` in a separate variable. After these modifications the class `TicTacToe` will look like this:
+
+[source, java]
+----
+public class TicTacToe extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass()
+                           .getResource("tictactoe.fxml"));
+        primaryStage.setTitle("TicTacToe");
+        Scene scene = new Scene(root, 300, 275);
+        scene.getStylesheets().add(getClass()
+            .getResource("tictactoe.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+----
+
+Run the TicTacToe class now and the focus is gone:
+
+[[FIG10-9]]
+.Running TicTacToe - the first square has no focus
+image::images/fig_10_09.png[]
+
+
