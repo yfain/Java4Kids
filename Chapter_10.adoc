@@ -3,19 +3,9 @@
 
 == Chapter 10. Creating a Tic-Tac-Toe Game  
 
-In this chapter we'll return to GUI programming and will create a Tic-Tac-Toe game using JavaFX and Scene Builder.
+In this chapter we'll return to GUI programming to develop  a Tic-Tac-Toe game using JavaFX and Scene Builder.
 
-Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game.
-
-This game may go by different names around the world, but it comes down to placing X's and O's on a board. This games is described in http://en.wikipedia.org/wiki/Tic-tac-toe[this Wikipedia article]. Our version of the popular game will implement the following strategy:
-
-* The game will be played by two players on a 3x3 board.
-* Two players can play this game. One will play with the symbol X, and the other will use O.
-* The winner must have a full row, column, or diagonal of X's or O's.
-* After each move, the program has to check if there is a winner.
-* The winning combination of squares has to be displayed in different colors.
-* After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.
-* In a new game the first player plays with X's.
+This game may go by different names around the world, but it comes down to placing X's and O's on the game board. This game is described in http://en.wikipedia.org/wiki/Tic-tac-toe[this Wikipedia article]. 
 
 [[FIG10-1]]
 image::images/fig_10_01.png[]
@@ -93,7 +83,7 @@ Save this layout in Scene Builder and run the TicTacToe class in IDEA. You'll se
 .Running TicTacToe with an empty grid
 image::images/fig_10_07.png[]
 
-The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder s we did in the Calculator in Chapter 7. But it'll be faster to do it manually in by editing the content of the file _tictactoe.fxml_ in IDEA's editor. Modify the content of this file to look as follows:
+The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder as we did in the Calculator in Chapter 7. But it'll be faster to do it manually in by editing the content of the file _tictactoe.fxml_ in IDEA's editor. Modify the content of this file to look as follows:
 
 [source, xml]
 ----
@@ -161,11 +151,13 @@ Let's create a new file named _tictactoe.css_. In IDEA, right click on the packa
 }
 ----
 
-From Chapter 7 you may remember that this means that every button in our application will have these attributes. To be honest with you, I did search on line to figure out how to remove the focus border, and the online documentation suggested that adding the style `-fx-focus-color: transparent;` would do the trick. But it didn't. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding `-fx-background-insets: -1, 0, 1, 1;` is needed too. 
+From Chapter 7 you may remember that this means that every button in our application will have these attributes. Web designers call the styles created for certain types of GUI element _type selectors_. Hence the attributes defined in the `.button` section of CSS will apply only for buttons. If we wanted to style, menus, we'd need to add a section `.menu` to the CSS file.  Labels would be styled in the `.label` section, and so on.
+
+When I did my search on line to figure out how to remove the focus border, the online documentation suggested that adding the rule `-fx-focus-color: transparent;` would do the trick. But it didn't. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding `-fx-background-insets: -1, 0, 1, 1;` is needed too. 
 
 Don't be scared that not everything works as it should from the first time. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site http://stackoverflow.com/[StackOverflow]. 
 
-Now we need to add a line to the `main` method of the TicTacToe class to load the file `tictactoe.css`. We did something like this in Chapter 7 while styling the Sign In application. We'll also need to do small changes in the `main` method to keep store the reference to a `scene` in a separate variable. After these modifications the class `TicTacToe` will look like this:
+Now we need to add a line to the `main` method of the TicTacToe class to load the file `tictactoe.css`. We did something like this in Chapter 7 while styling the Sign In application. We'll also need to do small changes in the `main` method to keep store the reference to a `scene` in a separate variable. We also want to set fix the size of the game board by invoking _setResizable(false);_ on the stage object. After these modifications the class `TicTacToe` will look like this:
 
 [source, java]
 ----
@@ -179,6 +171,7 @@ public class TicTacToe extends Application {
         Scene scene = new Scene(root, 300, 275);
         scene.getStylesheets().add(getClass()
             .getResource("tictactoe.css").toExternalForm());
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -195,4 +188,209 @@ Run the TicTacToe class now and the focus is gone:
 .Running TicTacToe - the first square has no focus
 image::images/fig_10_09.png[]
 
+The GUI is ready. The name of the Java class that will play the role of the controller was specified in the file _tictactoe.fxml_ as `fx:controller="mygame.Controller"`. Now let's program the application logic in the controller class.
+
+==== Handling Button Clicks in Controller
+
+There are different ways of programming computer games. In some games you play against another player, in others - against the computer. Our version of TicTac-Toe will have two players. The first one will place X's on the blank buttons and the other one will place O's.  Hence we need to keep track of the player's number. 
+
+When the player will click on the button, the event handler should place the appropriate label on the button. The code of the class `Controller` will take care of this functionality:
+
+[source, java]
+----
+public class Controller {
+   private boolean isFirstPlayer = true;
+   
+   public void buttonClickHandler(ActionEvent evt){
+         
+        Button clickedButton = (Button) evt.getTarget();
+        String buttonLabel = clickedButton.getText();
+        
+        if ("".equals(buttonLabel) && isFirstPlayer){
+            clickedButton.setText("X");
+            isFirstPlayer = false;
+        } else if("".equals(buttonLabel) && !isFirstPlayer){
+            clickedButton.setText("O");
+            isFirstPlayer = true;
+        }
+   }        
+}
+----
+The method `buttonClickHandler` will handle events generated when the player clicks on a button. Note that we check if the button's label is blank, then the program displays either X or O depending on which player clicked on the button. To let the GUI know about this event handler we need to add the attribute `onAction="#buttonClickHandler"` to each `<Button>` tag in the file _tictactoe.fxml_. 
+After this is done, run the `TicTacToe` program again. Start clicking on empty squares, and the program will take turns in placing the X's and O's on them.
+
+[[FIG10-10]]
+.Running TicTacToe - after 3 clicks
+image::images/fig_10_10.png[]
+
+Great,the View communicates with the Controller! But the X's and O's look unproportionally small in these large squares. Besides, the gray color does not look too exciting. It's time to add some styling to our GUI components.
+
+==== Styling Buttons and the Menu Bar 
+
+Let's add more style attributes to the `.button` and add a new type selector for the `.menu-bar` to the file _tictactoe.css_. You can find the color names and their codes in the  https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[JavaFX CSS Reference Guide]. This is what I came up with:
+
+[source, css]
+----
+.button{
+  -fx-focus-color: transparent;
+  -fx-background-insets: -1, 0, 1, 1;
+
+  -fx-font-weight: bold;
+  -fx-font-size: 36;
+  -fx-text-fill: blue;
+  -fx-background-color: violet;
+  -fx-border-color:darkblue;
+}
+
+.menu-bar{
+  -fx-background-color: gold;
+}
+----
+
+If you run the `TicTacToe` program now and start clicking on buttons, the game board will look like this:
+
+[[FIG10-11]]
+.Adding colors to the game board
+image::images/fig_10_11.png[]
+
+As you can see, my artistic abilities are limited, but if you spend some time learning CSS, you may come up with a lot fancier game board than mine. 
+
+All JavaFX components are pre-styled, and the combination of the styles is called _theme_. The default theme of all JavaFX components is called caspian. By defining your own CSS rules you can override the defaults. Scene Builder has a menu View | Show CSS analyzer, which allows you to see the default styles of your GUI components. If you're interesting in learning more about styling with Scene Builder, watch the video titled https://www.youtube.com/watch?v=7Nu3_5doZK4["In-Depth Layout and Styling with the JavaFX Scene Builder"].
+
+==== Implementing the Game Strategy
+
+Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:
+
+* The game will be played by two players on a 3x3 board.
+* Two players can play this game. One will play with the symbol X, and the other will use O.
+* The winner must have a full row, column, or diagonal of X's or O's.
+* After each move, the program has to check if there is a winner.
+* The winning combination of squares has to be displayed in different colors.
+* After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.
+* In a new game the first player plays with X's.
+
+We'll implement the game rules in the `Controller` class. On each button click we need to check if there is a winner already. If there is, the program should highlight the winning combination.
+
+We'll write a method `find3InARow`, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method `find3InARow` will be invoked from the method `buttonClickHandler`. If the winning combination is found, the program will invoke the method `highlightWinningCombo` to show the winning combination in different style. 
+
+To compare the labels of the buttons we need to have references to their `Button` objects, which we'll get using the injection mechanism offered by the `@FXML` annotation as we did in Chapter 8. We'll also need to have a reference to the `GridPane`, which is a container for all buttons. You'll see its use in the section "Handling the Tic-Tac-Toe Menu Play".
+
+Each button will have a matching variable in the controller annotated with `@FXML`. The grid will also have a reference variable. We'll just add the following member variables to the `Controller` class:
+
+[source, java]
+----
+@FXML Button b1; 
+@FXML Button b2;
+@FXML Button b3;
+@FXML Button b4;
+@FXML Button b5;
+@FXML Button b6;
+@FXML Button b7;
+@FXML Button b8;
+@FXML Button b9;   
+
+@FXML GridPane gameBoard;
+----
+
+Now let's write the method `find3InARow` that will methodically compare the non-blank labels of the buttons in each row, column, and both diagonals. If three labels are the same, the code should highlight the winning combination. This is how the code in the method `find3InARow` will look:
+
+[source, java]
+----
+private boolean find3InARow(){
+       //Row 1
+       if (""!=b1.getText() && b1.getText() == b2.getText() 
+           && b2.getText() == b3.getText()){
+           highlightWinningCombo(b1,b2,b3);
+           return true;
+       }
+       //Row 2
+       if (""!=b4.getText() && b4.getText() == b5.getText() 
+           && b5.getText() == b6.getText()){
+           highlightWinningCombo(b4,b5,b6);
+           return true;
+       }
+       //Row 3
+       if (""!=b7.getText() && b7.getText() == b8.getText() 
+           && b8.getText() == b9.getText()){
+           highlightWinningCombo(b7,b8,b9);
+           return true;
+       }
+       //Column 1
+       if (""!=b1.getText() && b1.getText() == b4.getText() 
+           && b4.getText() == b7.getText()){
+           highlightWinningCombo(b1,b4,b7);
+           return true;
+       }
+       //Column 2
+       if (""!=b2.getText() && b2.getText() == b5.getText() 
+           && b5.getText() == b8.getText()){
+           highlightWinningCombo(b2,b5,b8);
+           return true;
+       }
+       //Column 3
+       if (""!=b3.getText() && b3.getText() == b6.getText() 
+           && b6.getText() == b9.getText()){
+           highlightWinningCombo(b3,b6,b9);
+           return true;
+       }
+       //Diagonal 1
+       if (""!=b1.getText() && b1.getText() == b5.getText() 
+           && b5.getText() == b9.getText()){
+           highlightWinningCombo(b1,b5,b9);
+           return true;
+       }
+       //Diagonal 2
+       if (""!=b3.getText() && b3.getText() == b5.getText() 
+           && b5.getText() == b7.getText()){
+           highlightWinningCombo(b3,b5,b7);
+           return true;
+       }       
+       return false;
+   }
+----
+
+If you'll check the `fx:id` of each button in the file _tictactoe.fxml_, you'll see that the first row is represented by the buttons `b1`, `b2`, and `b3`. The first column is represented by the buttons `b1`, `b4`, and `b7`. One diagonal consists of the buttons `b1`, `b5`, and `b9`. It should be pretty easy to read and understand the code of the method `find3InARow`, isn't it? The method `highlightWinningCombo` will get the references to the three winning buttons as the method arguments, and it has to change their styles. 
+
+==== Highlighting the Winning Combination  
+
+The styles of the winning buttons should be changed dynamically (during the runtime). First of all, we need to come up with the style for displaying the winning button and add it to the CSS file. Then the class `Controller` will invoke the method `setStyle` on them providing the name of the winning style.
+
+I want to change the background of the winning buttons, but this time I won't use just a single color, but a _color gradient_. In computer graphics color gradients refer to filling the area with different colors that are smoothly transitioning from one color to another. The color transitioning can be linear or radial, and http://en.wikipedia.org/wiki/Color_gradient[this Wikipedia article] gives you some examples of both. 
+
+We'll use radial gradients in our game. With gradients you can use more than two colors. I'll use three colors in the gradient for the winning squares. The background color will transition from white to light yellow, and then to lawn green. I'll use red for the text of the label on the winning square. 
+
+To dynamically change the style of a GUI component you can call the method `setStyle` and specify the color as an argument, for example:
+
+`myButton.setStyle("-fx-text-fill: red;");`
+
+But embedding CSS rules in your Java program is not a good idea. What if you decide to change the styling (e.g. to change the color from red to pink)? You don't want to search for all places in your Java where this style was used. Besides, changing the styles in the code would require to recompile your Java program. It's much better to keep the style definitions in the CSS file.
+
+So far we've been using CSS _type selectors_ that can change the style of the specified component types. But CSS allows you to define and name a style that's not intended for a specific component type and can be applied by name to various components. In CSS such styles are called _class selectors_. Let's add a style selector called `.winning-square` to the file `tictactoe.css`. 
+
+[source, css]
+----
+.winning-square {
+    -fx-text-fill: red;
+    -fx-background-color: radial-gradient( radius 100%, white, lightyellow, lawngreen); 
+}
+----
+
+The style selector `.winning-square` includes two style rules: one for setting the text color to red, and another to set the background color to radial gradient. Now our Java program has to get a reference to the existing styles of the button and add a `.winning-square`, which will override the default color and background color of the button.The method `highlightWinningCombo` will look like this: 
+
+[source,java]
+----
+private void highlightWinningCombo(Button first, Button second, Button third){
+    first.getStyleClass().add("winning-square");
+    second.getStyleClass().add("winning-square");
+    third.getStyleClass().add("winning-square");
+}
+----
+
+Try playing the game after adding the methods `find3InARow` and `highlightWinningCombo` to the class `Controller`. The winning combination will look as follows:
+
+[[FIG10-12]]
+.We've got the winner!
+image::images/fig_10_12.png[]  
+
+==== Handling the Tic-Tac-Toe Menu Play
 
