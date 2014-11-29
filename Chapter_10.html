@@ -972,6 +972,51 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 </div>
 <div class="title">Figure 11. We&#8217;ve got the winner!</div>
 </div>
+<div class="paragraph">
+<p>JavaFX includes various <a href="https://docs.oracle.com/javafx/2/visual_effects/jfxpub-visual_effects.htm">visual effects</a> and <a href="https://docs.oracle.com/javafx/2/animations/jfxpub-animations.htm">transition based animations</a> that can make your GUI more fun to use.</p>
+</div>
+<div class="paragraph">
+<p>To use the effect or animation you need to pick one from the package <code>javafx.scene.effect</code> or <code>javafx.animation</code> respectively. I&#8217;ll show you how to apply a fade transition the <code>FadeTransition</code> to our winning buttons. Each winning button will keep fading and coming back to its original state. We&#8217;ll add the method <code>applyFadeTransition</code> to the <code>Controller</code> class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private void applyFadeTransition(Button winningButton) {
+
+  FadeTransition ft = new FadeTransition(Duration.millis(1000), winningButton);
+
+  ft.setFromValue(1.0);
+  ft.setToValue(0.1);
+  ft.setCycleCount(10);
+  ft.setAutoReverse(true);
+  ft.play();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This code creates an instance of the animation class <code>FadeTransition</code> that will span 1000 milliseconds (1 second) and applies if to the winning button. Then the code sets the fading parameters to change the opacity of the button from 1.0 to 0.1 (changing to 0.0 would make the button completely transparent).</p>
+</div>
+<div class="paragraph">
+<p>By setting the style count to 10, repeats the animation 10 times. Because of <code>setAutoReverse(true)</code> , the animation will proceed forward on the first cycle, then reverses on the second cycle, and so on. The method <code>play</code> starts the animation. Adding the following three lines to the method <code>highlightWinningCombo</code> will make the winning buttons animate.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">applyFadeTransition(first);
+applyFadeTransition(second);
+applyFadeTransition(third);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The screen shot on Figure 10-12 should give you an idea of how the end of the animation cycle will look like.</p>
+</div>
+<div id="FIG10-13" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_13.png" alt="fig 10 13">
+</div>
+<div class="title">Figure 12. Faded winning buttons</div>
+</div>
+<div class="paragraph">
+<p>Compare this image with Figure 10-11, or better run the code that comes with the book to see it in action.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_handling-the-tic-tac-toe-menu-play"><a class="anchor" href="#_handling-the-tic-tac-toe-menu-play"></a>Handling the Tic-Tac-Toe Menu Play</h4>
@@ -982,7 +1027,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-11-29 13:22:34 EST
+Last updated 2014-11-29 16:53:51 EST
 </div>
 </div>
 </body>
