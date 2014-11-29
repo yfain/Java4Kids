@@ -490,38 +490,10 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-10-creating-a-tic-tac-toe-game"><a class="anchor" href="#_chapter-10-creating-a-tic-tac-toe-game"></a>Chapter 10. Creating a Tic-Tac-Toe Game</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we&#8217;ll return to GUI programming and will create a Tic-Tac-Toe game using JavaFX and Scene Builder.</p>
+<p>In this chapter we&#8217;ll return to GUI programming to develop  a Tic-Tac-Toe game using JavaFX and Scene Builder.</p>
 </div>
 <div class="paragraph">
-<p>Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game.</p>
-</div>
-<div class="paragraph">
-<p>This game may go by different names around the world, but it comes down to placing X&#8217;s and O&#8217;s on a board. This games is described in <a href="http://en.wikipedia.org/wiki/Tic-tac-toe">this Wikipedia article</a>. Our version of the popular game will implement the following strategy:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The game will be played by two players on a 3x3 board.</p>
-</li>
-<li>
-<p>Two players can play this game. One will play with the symbol X, and the other will use O.</p>
-</li>
-<li>
-<p>The winner must have a full row, column, or diagonal of X&#8217;s or O&#8217;s.</p>
-</li>
-<li>
-<p>After each move, the program has to check if there is a winner.</p>
-</li>
-<li>
-<p>The winning combination of squares has to be displayed in different colors.</p>
-</li>
-<li>
-<p>After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.</p>
-</li>
-<li>
-<p>In a new game the first player plays with X&#8217;s.</p>
-</li>
-</ul>
+<p>This game may go by different names around the world, but it comes down to placing X&#8217;s and O&#8217;s on the game board. This game is described in <a href="http://en.wikipedia.org/wiki/Tic-tac-toe">this Wikipedia article</a>.</p>
 </div>
 <div id="FIG10-1" class="imageblock">
 <div class="content">
@@ -626,7 +598,7 @@ p { margin-bottom: 1.25rem; }
 <div class="title">Figure 6. Running TicTacToe with an empty grid</div>
 </div>
 <div class="paragraph">
-<p>The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder s we did in the Calculator in Chapter 7. But it&#8217;ll be faster to do it manually in by editing the content of the file <em>tictactoe.fxml</em> in IDEA&#8217;s editor. Modify the content of this file to look as follows:</p>
+<p>The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder as we did in the Calculator in Chapter 7. But it&#8217;ll be faster to do it manually in by editing the content of the file <em>tictactoe.fxml</em> in IDEA&#8217;s editor. Modify the content of this file to look as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -700,13 +672,16 @@ p { margin-bottom: 1.25rem; }
 </div>
 </div>
 <div class="paragraph">
-<p>From Chapter 7 you may remember that this means that every button in our application will have these attributes. To be honest with you, I did search on line to figure out how to remove the focus border, and the online documentation suggested that adding the style <code>-fx-focus-color: transparent;</code> would do the trick. But it didn&#8217;t. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding <code>-fx-background-insets: -1, 0, 1, 1;</code> is needed too.</p>
+<p>From Chapter 7 you may remember that this means that every button in our application will have these attributes. Web designers call the styles created for certain types of GUI element <em>type selectors</em>. Hence the attributes defined in the <code>.button</code> section of CSS will apply only for buttons. If we wanted to style, menus, we&#8217;d need to add a section <code>.menu</code> to the CSS file.  Labels would be styled in the <code>.label</code> section, and so on.</p>
+</div>
+<div class="paragraph">
+<p>When I did my search on line to figure out how to remove the focus border, the online documentation suggested that adding the rule <code>-fx-focus-color: transparent;</code> would do the trick. But it didn&#8217;t. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding <code>-fx-background-insets: -1, 0, 1, 1;</code> is needed too.</p>
 </div>
 <div class="paragraph">
 <p>Don&#8217;t be scared that not everything works as it should from the first time. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site <a href="http://stackoverflow.com/">StackOverflow</a>.</p>
 </div>
 <div class="paragraph">
-<p>Now we need to add a line to the <code>main</code> method of the TicTacToe class to load the file <code>tictactoe.css</code>. We did something like this in Chapter 7 while styling the Sign In application. We&#8217;ll also need to do small changes in the <code>main</code> method to keep store the reference to a <code>scene</code> in a separate variable. After these modifications the class <code>TicTacToe</code> will look like this:</p>
+<p>Now we need to add a line to the <code>main</code> method of the TicTacToe class to load the file <code>tictactoe.css</code>. We did something like this in Chapter 7 while styling the Sign In application. We&#8217;ll also need to do small changes in the <code>main</code> method to keep store the reference to a <code>scene</code> in a separate variable. We also want to set fix the size of the game board by invoking <em>setResizable(false);</em> on the stage object. After these modifications the class <code>TicTacToe</code> will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -720,6 +695,7 @@ p { margin-bottom: 1.25rem; }
         Scene scene = new Scene(root, 300, 275);
         scene.getStylesheets().add(getClass()
             .getResource("tictactoe.css").toExternalForm());
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -739,6 +715,266 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div class="title">Figure 8. Running TicTacToe - the first square has no focus</div>
 </div>
+<div class="paragraph">
+<p>The GUI is ready. The name of the Java class that will play the role of the controller was specified in the file <em>tictactoe.fxml</em> as <code>fx:controller="mygame.Controller"</code>. Now let&#8217;s program the application logic in the controller class.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_handling-button-clicks-in-controller"><a class="anchor" href="#_handling-button-clicks-in-controller"></a>Handling Button Clicks in Controller</h4>
+<div class="paragraph">
+<p>There are different ways of programming computer games. In some games you play against another player, in others - against the computer. Our version of TicTac-Toe will have two players. The first one will place X&#8217;s on the blank buttons and the other one will place O&#8217;s.  Hence we need to keep track of the player&#8217;s number.</p>
+</div>
+<div class="paragraph">
+<p>When the player will click on the button, the event handler should place the appropriate label on the button. The code of the class <code>Controller</code> will take care of this functionality:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Controller {
+   private boolean isFirstPlayer = true;
+
+   public void buttonClickHandler(ActionEvent evt){
+
+        Button clickedButton = (Button) evt.getTarget();
+        String buttonLabel = clickedButton.getText();
+
+        if ("".equals(buttonLabel) &amp;&amp; isFirstPlayer){
+            clickedButton.setText("X");
+            isFirstPlayer = false;
+        } else if("".equals(buttonLabel) &amp;&amp; !isFirstPlayer){
+            clickedButton.setText("O");
+            isFirstPlayer = true;
+        }
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The method <code>buttonClickHandler</code> will handle events generated when the player clicks on a button. Note that we check if the button&#8217;s label is blank, then the program displays either X or O depending on which player clicked on the button. To let the GUI know about this event handler we need to add the attribute <code>onAction="#buttonClickHandler"</code> to each <code>&lt;Button&gt;</code> tag in the file <em>tictactoe.fxml</em>.
+After this is done, run the <code>TicTacToe</code> program again. Start clicking on empty squares, and the program will take turns in placing the X&#8217;s and O&#8217;s on them.</p>
+</div>
+<div id="FIG10-10" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_10.png" alt="fig 10 10">
+</div>
+<div class="title">Figure 9. Running TicTacToe - after 3 clicks</div>
+</div>
+<div class="paragraph">
+<p>Great,the View communicates with the Controller! But the X&#8217;s and O&#8217;s look unproportionally small in these large squares. Besides, the gray color does not look too exciting. It&#8217;s time to add some styling to our GUI components.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_styling-buttons-and-the-menu-bar"><a class="anchor" href="#_styling-buttons-and-the-menu-bar"></a>Styling Buttons and the Menu Bar</h4>
+<div class="paragraph">
+<p>Let&#8217;s add more style attributes to the <code>.button</code> and add a new type selector for the <code>.menu-bar</code> to the file <em>tictactoe.css</em>. You can find the color names and their codes in the  <a href="https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor">JavaFX CSS Reference Guide</a>. This is what I came up with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">.button{
+  -fx-focus-color: transparent;
+  -fx-background-insets: -1, 0, 1, 1;
+
+  -fx-font-weight: bold;
+  -fx-font-size: 36;
+  -fx-text-fill: blue;
+  -fx-background-color: violet;
+  -fx-border-color:darkblue;
+}
+
+.menu-bar{
+  -fx-background-color: gold;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you run the <code>TicTacToe</code> program now and start clicking on buttons, the game board will look like this:</p>
+</div>
+<div id="FIG10-11" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_11.png" alt="fig 10 11">
+</div>
+<div class="title">Figure 10. Adding colors to the game board</div>
+</div>
+<div class="paragraph">
+<p>As you can see, my artistic abilities are limited, but if you spend some time learning CSS, you may come up with a lot fancier game board than mine.</p>
+</div>
+<div class="paragraph">
+<p>All JavaFX components are pre-styled, and the combination of the styles is called <em>theme</em>. The default theme of all JavaFX components is called caspian. By defining your own CSS rules you can override the defaults. Scene Builder has a menu View | Show CSS analyzer, which allows you to see the default styles of your GUI components. If you&#8217;re interesting in learning more about styling with Scene Builder, watch the video titled <a href="https://www.youtube.com/watch?v=7Nu3_5doZK4">"In-Depth Layout and Styling with the JavaFX Scene Builder"</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_implementing-the-game-strategy"><a class="anchor" href="#_implementing-the-game-strategy"></a>Implementing the Game Strategy</h4>
+<div class="paragraph">
+<p>Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The game will be played by two players on a 3x3 board.</p>
+</li>
+<li>
+<p>Two players can play this game. One will play with the symbol X, and the other will use O.</p>
+</li>
+<li>
+<p>The winner must have a full row, column, or diagonal of X&#8217;s or O&#8217;s.</p>
+</li>
+<li>
+<p>After each move, the program has to check if there is a winner.</p>
+</li>
+<li>
+<p>The winning combination of squares has to be displayed in different colors.</p>
+</li>
+<li>
+<p>After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.</p>
+</li>
+<li>
+<p>In a new game the first player plays with X&#8217;s.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll implement the game rules in the <code>Controller</code> class. On each button click we need to check if there is a winner already. If there is, the program should highlight the winning combination.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll write a method <code>find3InARow</code>, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method <code>find3InARow</code> will be invoked from the method <code>buttonClickHandler</code>. If the winning combination is found, the program will invoke the method <code>highlightWinningCombo</code> to show the winning combination in different style.</p>
+</div>
+<div class="paragraph">
+<p>To compare the labels of the buttons we need to have references to their <code>Button</code> objects, which we&#8217;ll get using the injection mechanism offered by the <code>@FXML</code> annotation as we did in Chapter 8. We&#8217;ll also need to have a reference to the <code>GridPane</code>, which is a container for all buttons. You&#8217;ll see its use in the section "Handling the Tic-Tac-Toe Menu Play".</p>
+</div>
+<div class="paragraph">
+<p>Each button will have a matching variable in the controller annotated with <code>@FXML</code>. The grid will also have a reference variable. We&#8217;ll just add the following member variables to the <code>Controller</code> class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">@FXML Button b1;
+@FXML Button b2;
+@FXML Button b3;
+@FXML Button b4;
+@FXML Button b5;
+@FXML Button b6;
+@FXML Button b7;
+@FXML Button b8;
+@FXML Button b9;
+
+@FXML GridPane gameBoard;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s write the method <code>find3InARow</code> that will methodically compare the non-blank labels of the buttons in each row, column, and both diagonals. If three labels are the same, the code should highlight the winning combination. This is how the code in the method <code>find3InARow</code> will look:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private boolean find3InARow(){
+       //Row 1
+       if (""!=b1.getText() &amp;&amp; b1.getText() == b2.getText()
+           &amp;&amp; b2.getText() == b3.getText()){
+           highlightWinningCombo(b1,b2,b3);
+           return true;
+       }
+       //Row 2
+       if (""!=b4.getText() &amp;&amp; b4.getText() == b5.getText()
+           &amp;&amp; b5.getText() == b6.getText()){
+           highlightWinningCombo(b4,b5,b6);
+           return true;
+       }
+       //Row 3
+       if (""!=b7.getText() &amp;&amp; b7.getText() == b8.getText()
+           &amp;&amp; b8.getText() == b9.getText()){
+           highlightWinningCombo(b7,b8,b9);
+           return true;
+       }
+       //Column 1
+       if (""!=b1.getText() &amp;&amp; b1.getText() == b4.getText()
+           &amp;&amp; b4.getText() == b7.getText()){
+           highlightWinningCombo(b1,b4,b7);
+           return true;
+       }
+       //Column 2
+       if (""!=b2.getText() &amp;&amp; b2.getText() == b5.getText()
+           &amp;&amp; b5.getText() == b8.getText()){
+           highlightWinningCombo(b2,b5,b8);
+           return true;
+       }
+       //Column 3
+       if (""!=b3.getText() &amp;&amp; b3.getText() == b6.getText()
+           &amp;&amp; b6.getText() == b9.getText()){
+           highlightWinningCombo(b3,b6,b9);
+           return true;
+       }
+       //Diagonal 1
+       if (""!=b1.getText() &amp;&amp; b1.getText() == b5.getText()
+           &amp;&amp; b5.getText() == b9.getText()){
+           highlightWinningCombo(b1,b5,b9);
+           return true;
+       }
+       //Diagonal 2
+       if (""!=b3.getText() &amp;&amp; b3.getText() == b5.getText()
+           &amp;&amp; b5.getText() == b7.getText()){
+           highlightWinningCombo(b3,b5,b7);
+           return true;
+       }
+       return false;
+   }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;ll check the <code>fx:id</code> of each button in the file <em>tictactoe.fxml</em>, you&#8217;ll see that the first row is represented by the buttons <code>b1</code>, <code>b2</code>, and <code>b3</code>. The first column is represented by the buttons <code>b1</code>, <code>b4</code>, and <code>b7</code>. One diagonal consists of the buttons <code>b1</code>, <code>b5</code>, and <code>b9</code>. It should be pretty easy to read and understand the code of the method <code>find3InARow</code>, isn&#8217;t it? The method <code>highlightWinningCombo</code> will get the references to the three winning buttons as the method arguments, and it has to change their styles.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_highlighting-the-winning-combination"><a class="anchor" href="#_highlighting-the-winning-combination"></a>Highlighting the Winning Combination</h4>
+<div class="paragraph">
+<p>The styles of the winning buttons should be changed dynamically (during the runtime). First of all, we need to come up with the style for displaying the winning button and add it to the CSS file. Then the class <code>Controller</code> will invoke the method <code>setStyle</code> on them providing the name of the winning style.</p>
+</div>
+<div class="paragraph">
+<p>I want to change the background of the winning buttons, but this time I won&#8217;t use just a single color, but a <em>color gradient</em>. In computer graphics color gradients refer to filling the area with different colors that are smoothly transitioning from one color to another. The color transitioning can be linear or radial, and <a href="http://en.wikipedia.org/wiki/Color_gradient">this Wikipedia article</a> gives you some examples of both.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll use radial gradients in our game. With gradients you can use more than two colors. I&#8217;ll use three colors in the gradient for the winning squares. The background color will transition from white to light yellow, and then to lawn green. I&#8217;ll use red for the text of the label on the winning square.</p>
+</div>
+<div class="paragraph">
+<p>To dynamically change the style of a GUI component you can call the method <code>setStyle</code> and specify the color as an argument, for example:</p>
+</div>
+<div class="paragraph">
+<p><code>myButton.setStyle("-fx-text-fill: red;");</code></p>
+</div>
+<div class="paragraph">
+<p>But embedding CSS rules in your Java program is not a good idea. What if you decide to change the styling (e.g. to change the color from red to pink)? You don&#8217;t want to search for all places in your Java where this style was used. Besides, changing the styles in the code would require to recompile your Java program. It&#8217;s much better to keep the style definitions in the CSS file.</p>
+</div>
+<div class="paragraph">
+<p>So far we&#8217;ve been using CSS <em>type selectors</em> that can change the style of the specified component types. But CSS allows you to define and name a style that&#8217;s not intended for a specific component type and can be applied by name to various components. In CSS such styles are called <em>class selectors</em>. Let&#8217;s add a style selector called <code>.winning-square</code> to the file <code>tictactoe.css</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="css language-css">.winning-square {
+    -fx-text-fill: red;
+    -fx-background-color: radial-gradient( radius 100%, white, lightyellow, lawngreen);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The style selector <code>.winning-square</code> includes two style rules: one for setting the text color to red, and another to set the background color to radial gradient. Now our Java program has to get a reference to the existing styles of the button and add a <code>.winning-square</code>, which will override the default color and background color of the button.The method <code>highlightWinningCombo</code> will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private void highlightWinningCombo(Button first, Button second, Button third){
+    first.getStyleClass().add("winning-square");
+    second.getStyleClass().add("winning-square");
+    third.getStyleClass().add("winning-square");
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Try playing the game after adding the methods <code>find3InARow</code> and <code>highlightWinningCombo</code> to the class <code>Controller</code>. The winning combination will look as follows:</p>
+</div>
+<div id="FIG10-12" class="imageblock">
+<div class="content">
+<img src="./images/fig_10_12.png" alt="fig 10 12">
+</div>
+<div class="title">Figure 11. We&#8217;ve got the winner!</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_handling-the-tic-tac-toe-menu-play"><a class="anchor" href="#_handling-the-tic-tac-toe-menu-play"></a>Handling the Tic-Tac-Toe Menu Play</h4>
 </div>
 </div>
 </div>
@@ -746,7 +982,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-11-28 18:14:53 EST
+Last updated 2014-11-29 13:22:34 EST
 </div>
 </div>
 </body>
