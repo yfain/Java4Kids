@@ -392,5 +392,43 @@ Try playing the game after adding the methods `find3InARow` and `highlightWinnin
 .We've got the winner!
 image::images/fig_10_12.png[]  
 
+JavaFX includes various https://docs.oracle.com/javafx/2/visual_effects/jfxpub-visual_effects.htm[visual effects] and https://docs.oracle.com/javafx/2/animations/jfxpub-animations.htm[transition based animations] that can make your GUI more fun to use. 
+
+To use the effect or animation you need to pick one from the package `javafx.scene.effect` or `javafx.animation` respectively. I'll show you how to apply a fade transition the `FadeTransition` to our winning buttons. Each winning button will keep fading and coming back to its original state. We'll add the method `applyFadeTransition` to the `Controller` class:
+
+
+[source, java]
+----
+private void applyFadeTransition(Button winningButton) {
+
+  FadeTransition ft = new FadeTransition(Duration.millis(1000), winningButton);
+
+  ft.setFromValue(1.0);
+  ft.setToValue(0.1);
+  ft.setCycleCount(10);
+  ft.setAutoReverse(true);
+  ft.play();
+}
+----
+
+This code creates an instance of the animation class `FadeTransition` that will span 1000 milliseconds (1 second) and applies if to the winning button. Then the code sets the fading parameters to change the opacity of the button from 1.0 to 0.1 (changing to 0.0 would make the button completely transparent).
+
+By setting the style count to 10, repeats the animation 10 times. Because of `setAutoReverse(true)` , the animation will proceed forward on the first cycle, then reverses on the second cycle, and so on. The method `play` starts the animation. Adding the following three lines to the method `highlightWinningCombo` will make the winning buttons animate.
+
+[source, java]
+----
+applyFadeTransition(first);
+applyFadeTransition(second);
+applyFadeTransition(third);
+----
+
+The screen shot on Figure 10-12 should give you an idea of how the end of the animation cycle will look like.  
+
+[[FIG10-13]]
+.Faded winning buttons
+image::images/fig_10_13.png[]
+
+Compare this image with Figure 10-11, or better run the code that comes with the book to see it in action.
+
 ==== Handling the Tic-Tac-Toe Menu Play
 
