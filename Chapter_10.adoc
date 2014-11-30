@@ -483,7 +483,7 @@ Enjoy our Tic-Tac-Toe game!
 
 Our version of the game is created for two players. In this assignment you'll need to change the program so the player can play against the computer. The player will keep playing with X's, and the computer with O's.
 
-Write a method `goComputer` that should try to find if there are any two buttons with O's in each row, column or a diagonal. If found, the program should place a O to the winning position. If not found, the computer should place a O next to another O. If no O's is found, the computer should try to place an O in the middle of the board. If the middle square is occupied, place a O on the first blank button. 
+Write a method `goComputer` that should try to find if there are any two buttons with O's in each row, column or a diagonal. If found, the program should place a O to the winning position. If not found, the computer should place a O next to another O. If no O's are found, the computer should try to place an O in the middle of the board. If the middle square is occupied, place a O on the first blank button. 
 
 The method `goComputer` should be called from the method `buttonClickHandler` right after the line that invokes the method `find3InARow`.
 
