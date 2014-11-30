@@ -1044,17 +1044,17 @@ applyFadeTransition(third);</code></pre>
    MenuItem clickedMenu = (MenuItem) evt.getTarget();
    String menuLabel = clickedMenu.getText();
 
-   if ("Play".equals(menuLabel)){           // 1
-       ObservableList&lt;Node&gt; buttons =       // 2
+   if ("Play".equals(menuLabel)){           <i class="conum" data-value="1"></i><b>(1)</b>
+       ObservableList&lt;Node&gt; buttons =       <i class="conum" data-value="2"></i><b>(2)</b>
               gameBoard.getChildren();
 
        buttons.forEach(btn -&gt; {
-         ((Button) btn).setText("");      // 3
+         ((Button) btn).setText("");      <i class="conum" data-value="3"></i><b>(3)</b>
 
-         btn.getStyleClass().remove("winning-square"); // 4
+         btn.getStyleClass().remove("winning-square"); <i class="conum" data-value="4"></i><b>(4)</b>
        });
 
-       isFirstPlayer = true;  // 5
+       isFirstPlayer = true;  <i class="conum" data-value="5"></i><b>(5)</b>
    }
 }</code></pre>
 </div>
@@ -1111,7 +1111,7 @@ applyFadeTransition(third);</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-11-29 22:31:11 EST
+Last updated 2014-11-29 22:38:46 EST
 </div>
 </div>
 </body>
