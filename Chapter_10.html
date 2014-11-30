@@ -490,20 +490,51 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-10-creating-a-tic-tac-toe-game"><a class="anchor" href="#_chapter-10-creating-a-tic-tac-toe-game"></a>Chapter 10. Creating a Tic-Tac-Toe Game</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we&#8217;ll return to GUI programming to develop  a Tic-Tac-Toe game using JavaFX and Scene Builder.</p>
+<p>In this chapter we&#8217;ll return to GUI programming and will  develop a Tic-Tac-Toe game using JavaFX and Scene Builder.</p>
 </div>
 <div class="paragraph">
-<p>This game may go by different names around the world, but it comes down to placing X&#8217;s and O&#8217;s on the game board. This game is described in <a href="http://en.wikipedia.org/wiki/Tic-tac-toe">this Wikipedia article</a>.</p>
+<p>This game may go by different names around the world, but it comes down to placing X&#8217;s and O&#8217;s on the game board. If you&#8217;re not familiar with this game, read its description in  <a href="http://en.wikipedia.org/wiki/Tic-tac-toe">this Wikipedia article</a>.</p>
+</div>
+<div class="paragraph">
+<p>Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The game will be played by two players on a 3x3 board.</p>
+</li>
+<li>
+<p>Two players can play this game. One will play with the symbol X, and the other will use O.</p>
+</li>
+<li>
+<p>The winner must have a full row, column, or diagonal of X&#8217;s or O&#8217;s.</p>
+</li>
+<li>
+<p>After each move, the program has to check if there is a winner.</p>
+</li>
+<li>
+<p>The winning combination of squares has to be displayed in different colors.</p>
+</li>
+<li>
+<p>After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.</p>
+</li>
+<li>
+<p>In a new game the first player plays with X&#8217;s.</p>
+</li>
+</ul>
 </div>
 <div id="FIG10-1" class="imageblock">
 <div class="content">
 <img src="./images/fig_10_01.png" alt="fig 10 01">
 </div>
 </div>
+<div class="paragraph">
+<p>The content of this chapter is based on the materials covered in Chapter 7 and 8. While developing the game you&#8217;ll learn how to add menus, dynamically change styling of GUI components and apply an animation effect.</p>
+</div>
 <div class="sect2">
 <h3 id="_developing-the-game-step-by-step"><a class="anchor" href="#_developing-the-game-step-by-step"></a>Developing the Game: Step by Step</h3>
 <div class="paragraph">
-<p>In Chapter 7 we went through the procedure of creating a new IDEA project, and now we&#8217;ll do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter <em>TicTacToe</em> as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>tictactoe.fxml</em> and <em>Main.java</em> into <em>TicTacToe.java</em>. Accordingly, the <code>TicTacToe</code> class should load the file <em>ticktacktoe.fxml</em>, and the window title should read <code>Tic-Tac-Toe</code>:</p>
+<p>In Chapter 7 we went through the procedure of creating a new IDEA project, and now you&#8217;ll need do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter <em>TicTacToe</em> as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>tictactoe.fxml</em> and <em>Main.java</em> into <em>TicTacToe.java</em>. Accordingly, the <code>TicTacToe</code> class should load the file <em>ticktacktoe.fxml</em>, and the window title should read <code>Tic-Tac-Toe</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -804,35 +835,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 <div class="sect3">
 <h4 id="_implementing-the-game-strategy"><a class="anchor" href="#_implementing-the-game-strategy"></a>Implementing the Game Strategy</h4>
 <div class="paragraph">
-<p>Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The game will be played by two players on a 3x3 board.</p>
-</li>
-<li>
-<p>Two players can play this game. One will play with the symbol X, and the other will use O.</p>
-</li>
-<li>
-<p>The winner must have a full row, column, or diagonal of X&#8217;s or O&#8217;s.</p>
-</li>
-<li>
-<p>After each move, the program has to check if there is a winner.</p>
-</li>
-<li>
-<p>The winning combination of squares has to be displayed in different colors.</p>
-</li>
-<li>
-<p>After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.</p>
-</li>
-<li>
-<p>In a new game the first player plays with X&#8217;s.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>We&#8217;ll implement the game rules in the <code>Controller</code> class. On each button click we need to check if there is a winner already. If there is, the program should highlight the winning combination.</p>
+<p>In the beginning of this chapter I&#8217;ve described the game strategy. We&#8217;ll implement it in the <code>Controller</code> class. On each button click we need to check if there is already a winning combination of X&#8217;s or O&#8217;s. If there is, the program should highlight the winning combination. In case of a draw, the player may select the menu option Play to start playing again.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll write a method <code>find3InARow</code>, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method <code>find3InARow</code> will be invoked from the method <code>buttonClickHandler</code>. If the winning combination is found, the program will invoke the method <code>highlightWinningCombo</code> to show the winning combination in different style.</p>
@@ -952,7 +955,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 </div>
 </div>
 <div class="paragraph">
-<p>The style selector <code>.winning-square</code> includes two style rules: one for setting the text color to red, and another to set the background color to radial gradient. Now our Java program has to get a reference to the existing styles of the button and add a <code>.winning-square</code>, which will override the default color and background color of the button.The method <code>highlightWinningCombo</code> will look like this:</p>
+<p>The style selector <code>.winning-square</code> includes two style rules: one for setting the button&#8217;s text color to red, and another to set the button&#8217;s background color to radial gradient. Our Java program has to get a reference to the existing styles of the button and add a <code>.winning-square</code>, which will override both the text and the background color of the button.The method <code>highlightWinningCombo</code> will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -993,10 +996,10 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 </div>
 </div>
 <div class="paragraph">
-<p>This code creates an instance of the animation class <code>FadeTransition</code> that will span 1000 milliseconds (1 second) and applies if to the winning button. Then the code sets the fading parameters to change the opacity of the button from 1.0 to 0.1 (changing to 0.0 would make the button completely transparent).</p>
+<p>This code creates an instance of the animation class <code>FadeTransition</code> that will span 1000 milliseconds (1 second) and assigns this animation to the winning button. Then the code sets the fading parameters to change the opacity of the button from 1.0 to 0.1 (changing to 0.0 would make the button completely transparent).</p>
 </div>
 <div class="paragraph">
-<p>By setting the style count to 10, repeats the animation 10 times. Because of <code>setAutoReverse(true)</code> , the animation will proceed forward on the first cycle, then reverses on the second cycle, and so on. The method <code>play</code> starts the animation. Adding the following three lines to the method <code>highlightWinningCombo</code> will make the winning buttons animate.</p>
+<p>Setting the style count to 10 plays the animation 10 times. Because of <code>setAutoReverse(true)</code>, the animation will proceed forward on the first cycle, then reverses on the second cycle, and so on. The method <code>play</code> starts the animation. Adding the following three lines to the method <code>highlightWinningCombo</code> will play the animation on the  <code>winningButton</code> component.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1006,7 +1009,7 @@ applyFadeTransition(third);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The screen shot on Figure 10-12 should give you an idea of how the end of the animation cycle will look like.</p>
+<p>The screen shot shown on Figure 10-12 should give you an idea of how the end of the animation cycle will look like.</p>
 </div>
 <div id="FIG10-13" class="imageblock">
 <div class="content">
@@ -1015,11 +1018,92 @@ applyFadeTransition(third);</code></pre>
 <div class="title">Figure 12. Faded winning buttons</div>
 </div>
 <div class="paragraph">
-<p>Compare this image with Figure 10-11, or better run the code that comes with the book to see it in action.</p>
+<p>Compare this image with Figure 10-11, or better run the code that comes with the book to see the animation in action.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_handling-the-tic-tac-toe-menu-play"><a class="anchor" href="#_handling-the-tic-tac-toe-menu-play"></a>Handling the Tic-Tac-Toe Menu Play</h4>
+<div class="paragraph">
+<p>The winner is found, but how to start a new game? Our gane has a menu Actions with the menu item Play. Now we need to make it working so the players can start a new game when either a winning combination is found or it&#8217;s a draw.</p>
+</div>
+<div class="paragraph">
+<p>The good news is that clicks on menu items are processes the same way as clicks on buttons. In the file <em>tictactoe.fxml</em> we&#8217;ll assign <code>onAction</code> event handler for the menu Play:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">&lt;MenuItem text="Play" onAction="#menuClickHandler"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When the user clicks on the menu Play, the controller needs to reset buttons' labels to blank and remove styling from the winning buttons. We&#8217;ll do this by getting a hold of all children of our <code>GridPane</code> and invoking the method <code>forEach</code> passing a short lambda expression to it. This is what the method <code>menuClickHandler</code> will look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public void menuClickHandler(ActionEvent evt){
+
+   MenuItem clickedMenu = (MenuItem) evt.getTarget();
+   String menuLabel = clickedMenu.getText();
+
+   if ("Play".equals(menuLabel)){           // 1
+       ObservableList&lt;Node&gt; buttons =       // 2
+              gameBoard.getChildren();
+
+       buttons.forEach(btn -&gt; {
+         ((Button) btn).setText("");      // 3
+
+         btn.getStyleClass().remove("winning-square"); // 4
+       });
+
+       isFirstPlayer = true;  // 5
+   }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This code processes just the clicks on the menu Play, but I included the if statement to check the menu label in case you decided to implement other menus too.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We&#8217;re getting references to all children of the grid (the buttons) in one shot. The method <code>getChildren</code> returns a JavaFX collection of type <code>ObservableList</code> located in the package <code>javafx.collections</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Each Java collection implements the method <code>forEach</code>, which gets a lambda expression to set the label of each button to an empty string.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Then we&#8217;re getting the reference to the styles of the button and remove the style <code>winning-square</code> if exists.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Finally, the code sets the variable <code>isFirstPlayer</code> to <code>true</code> so the next game will place an X as the first label.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Enjoy our Tic-Tac-Toe game!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_project-playing-against-computer"><a class="anchor" href="#_project-playing-against-computer"></a>Project: Playing Against Computer</h3>
+<div class="paragraph">
+<p>Our version of the game is created for two players. In this assignment you&#8217;ll need to change the program so the player can play against the computer. The player will keep playing with X&#8217;s, and the computer with O&#8217;s.</p>
+</div>
+<div class="paragraph">
+<p>Write a method <code>goComputer</code> that should try to find if there are any two buttons with O&#8217;s in each row, column or a diagonal. If found, the program should place a O to the winning position. If not found, the computer should place a O next to another O. If no O&#8217;s is found, the computer should try to place an O in the middle of the board. If the middle square is occupied, place a O on the first blank button.</p>
+</div>
+<div class="paragraph">
+<p>The method <code>goComputer</code> should be called from the method <code>buttonClickHandler</code> right after the line that invokes the method <code>find3InARow</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h4>
+<div class="paragraph">
+<p>Play an audio when the winning combination is found. To do this learn how to use the JavaFX class <code>AudioClip</code> located in the package <code>javafx.scene.media</code>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1027,7 +1111,7 @@ applyFadeTransition(third);</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-11-29 16:53:51 EST
+Last updated 2014-11-29 22:31:11 EST
 </div>
 </div>
 </body>
