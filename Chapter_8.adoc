@@ -574,6 +574,6 @@ String buttonLabel = clickedButton.getText();
 11. Store the calculated result in the variable `valueOne` so the user can continue performing other operation. For example if the first operation was 2+3, the display shows 5, and the user can click on the buttons `*` followed by 4 requesting multiplication of 5 by 4.  
 
 
-==== Challenge Yorself
+==== Challenge Yourself
 
 The step 10 in the project assignment suggests that you should use the the method `setText` of the `TextField` component. See if you can apply the property binding technique to display the result in the display field. 

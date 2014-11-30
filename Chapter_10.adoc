@@ -3,17 +3,29 @@
 
 == Chapter 10. Creating a Tic-Tac-Toe Game  
 
-In this chapter we'll return to GUI programming to develop  a Tic-Tac-Toe game using JavaFX and Scene Builder.
+In this chapter we'll return to GUI programming and will  develop a Tic-Tac-Toe game using JavaFX and Scene Builder.
 
-This game may go by different names around the world, but it comes down to placing X's and O's on the game board. This game is described in http://en.wikipedia.org/wiki/Tic-tac-toe[this Wikipedia article]. 
+This game may go by different names around the world, but it comes down to placing X's and O's on the game board. If you're not familiar with this game, read its description in  http://en.wikipedia.org/wiki/Tic-tac-toe[this Wikipedia article]. 
+
+Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:
+
+* The game will be played by two players on a 3x3 board.
+* Two players can play this game. One will play with the symbol X, and the other will use O.
+* The winner must have a full row, column, or diagonal of X's or O's.
+* After each move, the program has to check if there is a winner.
+* The winning combination of squares has to be displayed in different colors.
+* After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.
+* In a new game the first player plays with X's.
 
 [[FIG10-1]]
 image::images/fig_10_01.png[]
  
+The content of this chapter is based on the materials covered in Chapter 7 and 8. While developing the game you'll learn how to add menus, dynamically change styling of GUI components and apply an animation effect.  
+
 
 === Developing the Game: Step by Step
 
-In Chapter 7 we went through the procedure of creating a new IDEA project, and now we'll do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter _TicTacToe_ as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _tictactoe.fxml_ and _Main.java_ into _TicTacToe.java_. Accordingly, the `TicTacToe` class should load the file _ticktacktoe.fxml_, and the window title should read `Tic-Tac-Toe`:
+In Chapter 7 we went through the procedure of creating a new IDEA project, and now you'll need do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter _TicTacToe_ as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _tictactoe.fxml_ and _Main.java_ into _TicTacToe.java_. Accordingly, the `TicTacToe` class should load the file _ticktacktoe.fxml_, and the window title should read `Tic-Tac-Toe`:
 
 [source, java]
 ----
@@ -259,17 +271,7 @@ All JavaFX components are pre-styled, and the combination of the styles is calle
 
 ==== Implementing the Game Strategy
 
-Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:
-
-* The game will be played by two players on a 3x3 board.
-* Two players can play this game. One will play with the symbol X, and the other will use O.
-* The winner must have a full row, column, or diagonal of X's or O's.
-* After each move, the program has to check if there is a winner.
-* The winning combination of squares has to be displayed in different colors.
-* After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.
-* In a new game the first player plays with X's.
-
-We'll implement the game rules in the `Controller` class. On each button click we need to check if there is a winner already. If there is, the program should highlight the winning combination.
+In the beginning of this chapter I've described the game strategy. We'll implement it in the `Controller` class. On each button click we need to check if there is already a winning combination of X's or O's. If there is, the program should highlight the winning combination. In case of a draw, the player may select the menu option Play to start playing again.
 
 We'll write a method `find3InARow`, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method `find3InARow` will be invoked from the method `buttonClickHandler`. If the winning combination is found, the program will invoke the method `highlightWinningCombo` to show the winning combination in different style. 
 
@@ -375,7 +377,7 @@ So far we've been using CSS _type selectors_ that can change the style of the sp
 }
 ----
 
-The style selector `.winning-square` includes two style rules: one for setting the text color to red, and another to set the background color to radial gradient. Now our Java program has to get a reference to the existing styles of the button and add a `.winning-square`, which will override the default color and background color of the button.The method `highlightWinningCombo` will look like this: 
+The style selector `.winning-square` includes two style rules: one for setting the button's text color to red, and another to set the button's background color to radial gradient. Our Java program has to get a reference to the existing styles of the button and add a `.winning-square`, which will override both the text and the background color of the button.The method `highlightWinningCombo` will look like this: 
 
 [source,java]
 ----
@@ -411,9 +413,9 @@ private void applyFadeTransition(Button winningButton) {
 }
 ----
 
-This code creates an instance of the animation class `FadeTransition` that will span 1000 milliseconds (1 second) and applies if to the winning button. Then the code sets the fading parameters to change the opacity of the button from 1.0 to 0.1 (changing to 0.0 would make the button completely transparent).
+This code creates an instance of the animation class `FadeTransition` that will span 1000 milliseconds (1 second) and assigns this animation to the winning button. Then the code sets the fading parameters to change the opacity of the button from 1.0 to 0.1 (changing to 0.0 would make the button completely transparent).
 
-By setting the style count to 10, repeats the animation 10 times. Because of `setAutoReverse(true)` , the animation will proceed forward on the first cycle, then reverses on the second cycle, and so on. The method `play` starts the animation. Adding the following three lines to the method `highlightWinningCombo` will make the winning buttons animate.
+Setting the style count to 10 plays the animation 10 times. Because of `setAutoReverse(true)`, the animation will proceed forward on the first cycle, then reverses on the second cycle, and so on. The method `play` starts the animation. Adding the following three lines to the method `highlightWinningCombo` will play the animation on the  `winningButton` component.
 
 [source, java]
 ----
@@ -422,13 +424,69 @@ applyFadeTransition(second);
 applyFadeTransition(third);
 ----
 
-The screen shot on Figure 10-12 should give you an idea of how the end of the animation cycle will look like.  
+The screen shot shown on Figure 10-12 should give you an idea of how the end of the animation cycle will look like.  
 
 [[FIG10-13]]
 .Faded winning buttons
 image::images/fig_10_13.png[]
 
-Compare this image with Figure 10-11, or better run the code that comes with the book to see it in action.
+Compare this image with Figure 10-11, or better run the code that comes with the book to see the animation in action.
 
 ==== Handling the Tic-Tac-Toe Menu Play
 
+The winner is found, but how to start a new game? Our gane has a menu Actions with the menu item Play. Now we need to make it working so the players can start a new game when either a winning combination is found or it's a draw.
+
+The good news is that clicks on menu items are processes the same way as clicks on buttons. In the file _tictactoe.fxml_ we'll assign `onAction` event handler for the menu Play:
+
+[source, html]
+----
+<MenuItem text="Play" onAction="#menuClickHandler"/>
+----
+
+When the user clicks on the menu Play, the controller needs to reset buttons' labels to blank and remove styling from the winning buttons. We'll do this by getting a hold of all children of our `GridPane` and invoking the method `forEach` passing a short lambda expression to it. This is what the method `menuClickHandler` will look like:
+
+[source, java]
+----
+public void menuClickHandler(ActionEvent evt){
+
+   MenuItem clickedMenu = (MenuItem) evt.getTarget();
+   String menuLabel = clickedMenu.getText();
+   
+   if ("Play".equals(menuLabel)){           // 1
+       ObservableList<Node> buttons =       // 2
+              gameBoard.getChildren();
+       
+       buttons.forEach(btn -> {
+         ((Button) btn).setText("");      // 3
+
+         btn.getStyleClass().remove("winning-square"); // 4
+       });
+
+       isFirstPlayer = true;  // 5
+   }
+}
+----
+
+<1> This code processes just the clicks on the menu Play, but I included the if statement to check the menu label in case you decided to implement other menus too.
+
+<2> We're getting references to all children of the grid (the buttons) in one shot. The method `getChildren` returns a JavaFX collection of type `ObservableList` located in the package `javafx.collections`.
+
+<3> Each Java collection implements the method `forEach`, which gets a lambda expression to set the label of each button to an empty string.
+
+<4> Then we're getting the reference to the styles of the button and remove the style `winning-square` if exists.  
+
+<5> Finally, the code sets the variable `isFirstPlayer` to `true` so the next game will place an X as the first label.
+
+Enjoy our Tic-Tac-Toe game!
+
+=== Project: Playing Against Computer
+
+Our version of the game is created for two players. In this assignment you'll need to change the program so the player can play against the computer. The player will keep playing with X's, and the computer with O's.
+
+Write a method `goComputer` that should try to find if there are any two buttons with O's in each row, column or a diagonal. If found, the program should place a O to the winning position. If not found, the computer should place a O next to another O. If no O's is found, the computer should try to place an O in the middle of the board. If the middle square is occupied, place a O on the first blank button. 
+
+The method `goComputer` should be called from the method `buttonClickHandler` right after the line that invokes the method `find3InARow`.
+
+==== Challenge Yourself
+
+Play an audio when the winning combination is found. To do this learn how to use the JavaFX class `AudioClip` located in the package `javafx.scene.media`. 

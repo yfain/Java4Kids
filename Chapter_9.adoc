@@ -380,3 +380,4 @@ For more detailed coverage of exceptions read Oracle's   http://docs.oracle.com/
 In this assignment I'd like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX `ComboBox` for this). Use a `TextField` control for entering the quantity, a `Button` for placing an order, and a `Label` to display either order confirmation or an error message.   
 
 In the controller class use the code fragment from the section "Creating New Exceptions".
+
