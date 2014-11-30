@@ -452,17 +452,17 @@ public void menuClickHandler(ActionEvent evt){
    MenuItem clickedMenu = (MenuItem) evt.getTarget();
    String menuLabel = clickedMenu.getText();
    
-   if ("Play".equals(menuLabel)){           // 1
-       ObservableList<Node> buttons =       // 2
+   if ("Play".equals(menuLabel)){           <1>
+       ObservableList<Node> buttons =       <2>
               gameBoard.getChildren();
        
        buttons.forEach(btn -> {
-         ((Button) btn).setText("");      // 3
+         ((Button) btn).setText("");      <3>
 
-         btn.getStyleClass().remove("winning-square"); // 4
+         btn.getStyleClass().remove("winning-square"); <4>
        });
 
-       isFirstPlayer = true;  // 5
+       isFirstPlayer = true;  <5>
    }
 }
 ----
