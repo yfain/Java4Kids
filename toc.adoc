@@ -23,7 +23,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * <<Chapter_7.adoc#,Chapter 7. Introduction to GUI with JavaFX>>
 * <<Chapter_8.adoc#,Chapter 8. User Interaction in JavaFX>> 
 * <<Chapter_9.adoc#,Chapter 9. Error Handling>>
-* <<Chapter_10.adoc#,Chapter 10. Creating a Tic-Tac-Toe Game (Work in progress)>>
+* <<Chapter_10.adoc#,Chapter 10. Creating a Tic-Tac-Toe Game>>
 * Chapter 11. Saving the Game Score in Files
 * Chapter 12. Networking: Downloading Stuff From the Internet
 * Chapter 13. Developing a Ping-Pong Game
