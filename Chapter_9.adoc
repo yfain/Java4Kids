@@ -83,7 +83,7 @@ The `TooManyBikesException` is an example of exception that can be created by a 
 
 How a programmer is supposed to know in advance if some Java method may throw an exception and that a `try/catch` block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one: 
 
-`"ScoreReader.java":  unreported exception: java.io.IOException; must be ``caught or declared to be thrown at line 57`
+`"ScoreReader.java":  unreported exception: java.io.IOException; must be caught or declared to be thrown at line 57`
 
 Of course you are welcome to read Java documentation that describes exceptions that may be thrown by any particular  method.  The rest of this chapter will explain how to deal with these exceptions.
 

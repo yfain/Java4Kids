@@ -1,0 +1,123 @@
+:toc-placement!:
+:imagesdir: ./
+
+== Chapter 11. Working With Files  
+
+After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.  
+
+In this chapter you’ll learn how to save data on disks and read them back into memory using Java Input/Output(I/O) streams.A program can open an _output stream_ between your program and a file on disk and write the important data there. Similarly, you can open an _input stream_ and read the data from a file. 
+
+For example, if a player wins a game and  you want to save the score, you can save it in a file called scores.txt using an output stream. If you want to save the player's preferences (e.g. colors or fonts) you can save them in a file, and read and apply them when the user runs your program again.
+
+A program reads or writes data from/to a stream serially – byte after byte, character after character, etc.  Since your program may use different data types like `String`, `int`, `double`, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream. In this chapter I'll show you how to use I/O streams with files located in your computer. In the next chapter you'll learn about I/O streams that can work with remote data located in other computers connected into a network. 
+
+=== Basics of working with streams
+
+Think of a steam as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it's another pipe where the data flow from your program. As with any pipe, if has to be opened to start the flow and closed to stop it.
+
+Java supports several types of streams, but no matter what type of a file stream you are going to use, the following three steps should be done in your program:
+
+• Open a stream that points at some data store e.g. a local or remote file.
+
+• Read or write data from/to this stream. 
+
+• Close the stream.
+ 
+In the real world people use different types of pipes for carrying different contents. Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al. But all classes that can work with file streams are located in packages  `java.io` and `java.nio`.  Classes from the `java.io` 
+implement blocking I/O: When bytes are being read/written, they become unavailable for other threads of execution. The package `java.nio` offers non-blocking I/O with improved performance.
+
+==== Byte Streams
+
+To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a _set of bytes_, and then writes them into a destination folder, byte after byte using Java classes `FileInputStream` or `FileOutputStream`.The classes `Reader` and `Writer` specifically meant for reading character streams. 
+
+After selecting the appropriate class you'll be invoking one of its methods to read or write the file. For example the http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html[online documentation] of the class `FileInputStream` 
+includes the method `read()` having the following signature:
+
+[source, java]
+----
+public int read() throws IOException
+----
+
+This tells you that the method `read()` returns an integer value and may throw the `IOException`, which is an error that may happen if the file is corrupted, a device failure happened et al. Hence, you must enclose the invocation of the method read into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you'll call the method `getMessage()` on the exception object.
+Each byte in a file is represented by a code, which is a positive integer number from 0 to 255. The method `read()` returns the value of this code.
+
+The next example shows how to use the class `FileInputStream` to read the bytes from a graphic file named _abc.dat_. We are not going to create a graphic editor like Photoshop, and this little program won't interpret the meaning of each byte - it'll just print the code value of each byte.
+
+I'll start with creating a new Java project _Chapter11_ in IDEA. Then I'll create a new empty file _abc.dat_ in the root folder of the project (right-click on the project name and select the menu New | File). Finally, I'll type in the following in this file:
+
+_This is a test file_
+
+Then I'll create a new Java class `MyByteReader` that will read and print the content of the file _abc.dat_. But let's pretend that we don't know that the content of this file is text - I want to read it byte by byte and print each byte's code separated by a space character. The class `MyByteReader` will look like this:
+
+[source, java]
+----
+import java.io.FileInputStream;              
+import java.io.IOException;
+
+public class MyByteReader {
+
+  public static void main(String[] args) {
+
+    try (FileInputStream myFile =             // <1>
+              new FileInputStream("abc.dat")){
+
+      int byteValue;
+
+      while ((byteValue = myFile.read()) != -1) { // <2>
+
+          System.out.print(byteValue + " ");   // <3>
+      }
+    } catch (IOException ioe) {                // <4>
+        System.out.println("Could not read file: " +
+                ioe.getMessage());
+    }
+  }
+}
+----
+
+This program is short, but requires explanations.
+<1> First we open the file for reading by creating an instance of the class `FileInputStream` passing the file name `abc.dat` as a parameter. In Chapter 9 you've learned the syntax of the try-catch blocks. But here I use a special syntax called _try-with-resources_. When there are some program resources that has to be opened and closed (e.g. `FileInputStream`), just instantiate them in parentheses right after the `try` keyword and Java will close them for you automatically. This spares you from writing a `finally` block containing the code for closing resources.
+
+<2> This line starts a `while` loop that calls the method `read()`, which reads one byte, assigns its value to the variable `byteCode`, and compares it with `-1` (the end of file indicator). 
+
+<3> If the value in the current byte is not equal to `-1`, we print it followed by a space character. The loop ends when it reads the `-1` byte. 
+
+<4> If the `IOException` occurs, catch it and print the reason of this error.
+
+Running this program prints the following numbers that represent encoding of the text "This is a test file":
+
+[source, java]
+----
+84 104 105 115 32 105 115 32 97 32 116 101 115 116 32 102 105 108 101 
+----
+
+Writing bytes into a file works similarly, but you'd use the class `FileOutputStream` and its method `write()` as shown in the program `MyByteWriter` below.
+
+[source, java]
+----
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class MyByteWriter {
+
+  public static void main(String[] args) {
+
+    // Some byte values represented by integer codes
+    int someData[]= {56,230,123,43,11,37};   // <1>
+
+    try (FileOutputStream myFile = new FileOutputStream("xyz.dat")){            // <2>
+
+        int arrayLength = someData.length;
+
+        for (int i = 0; i < arrayLength; i++){
+            myFile.write(someData[i]);        // <3>
+        }
+    } catch (IOException ioe) {
+        System.out.println("Could not write into the file: " + ioe.getMessage());     //  <4>
+    }
+  }
+}
+----
+
+The program `MyByteWriter` populates an array `someData` with integer codes <1> that may represent some characters, then opens the file _xyz.dat_ <2> and write each of the integers into the file <3>. 
+If an error occurs, we catch it and print the reason.

@@ -1,5 +1,34 @@
-Appendix A. Useful Online Resources:
+== Appendix A. Version Control and Publishing code online: Gitub
 
-1. Java Primitive Data Types:
-http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html
+Man, it was working yesterday?
+Who broke the build? 
+
+Many years ago programmers simply created backup copies of their code.
+Then they decided to automate the process and store only changes between numbered versions of files, so if the code is broken today, undo the deltas and you'll have yesterday's working version.
+
+Centralized version control systems
+
+Distributed version control systems. 
+
+Actually kids try  to avoid going to places where the Internet connection is not available.
+
+Pull request
+Branching
+
+Every new feature can live in its own branch
+
+Unexpected demo is needed. Mom, i
+t was working yesterday. Tic-Tack-Toe works fine and we want to have a working copy to demo our friends and relative at any time. John continues working  on the controller and Mary works on FXML. Then Pete wants to work on our project too. He also will work on the Controller class. 
+
+Merge with history
+
+Conflict resolution
+
+Rollback to previous version
+
+Github - a social network for developers
+
+
+
+Bitbucket allows 
 
