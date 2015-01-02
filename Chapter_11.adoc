@@ -5,7 +5,7 @@
 
 After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.  
 
-In this chapter you’ll learn how to save data on disks and read them back into memory using Java Input/Output(I/O) streams.A program can open an _output stream_ between your program and a file on disk and write the important data there. Similarly, you can open an _input stream_ and read the data from a file. 
+In this chapter you’ll learn how to save data on disks and read them back into memory using Java Input/Output(I/O) streams.A program can open an _output stream_ with a file on disk and write the important data there. Similarly, you can open an _input stream_ and read the data from a file. 
 
 For example, if a player wins a game and  you want to save the score, you can save it in a file called scores.txt using an output stream. If you want to save the player's preferences (e.g. colors or fonts) you can save them in a file, and read and apply them when the user runs your program again.
 
@@ -13,7 +13,7 @@ A program reads or writes data from/to a stream serially – byte after byte, ch
 
 === Basics of working with streams
 
-Think of a steam as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it's another pipe where the data flow from your program. As with any pipe, if has to be opened to start the flow and closed to stop it.
+Think of a steam as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it's another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.
 
 Java supports several types of streams, but no matter what type of a file stream you are going to use, the following three steps should be done in your program:
 
@@ -75,7 +75,6 @@ public class MyByteReader {
 }
 ----
 
-This program is short, but requires explanations.
 <1> First we open the file for reading by creating an instance of the class `FileInputStream` passing the file name `abc.dat` as a parameter. In Chapter 9 you've learned the syntax of the try-catch blocks. But here I use a special syntax called _try-with-resources_. When there are some program resources that has to be opened and closed (e.g. `FileInputStream`), just instantiate them in parentheses right after the `try` keyword and Java will close them for you automatically. This spares you from writing a `finally` block containing the code for closing resources.
 
 <2> This line starts a `while` loop that calls the method `read()`, which reads one byte, assigns its value to the variable `byteCode`, and compares it with `-1` (the end of file indicator). 
@@ -120,4 +119,45 @@ public class MyByteWriter {
 ----
 
 The program `MyByteWriter` populates an array `someData` with integer codes <1> that may represent some characters, then opens the file _xyz.dat_ <2> and write each of the integers into the file <3>. 
-If an error occurs, we catch it and print the reason.
+If an error occurs, we catch it and print the reason<4>.
+
+==== Bufferred Streams
+
+The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of `read` would read one byte, and one invocation of `write` would write one byte. In general, disk access is much slower
+than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.
+The class `BufferedInputStream` works as a middleman between `FileInputStream` and the file itself. It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the `FileInputStream` object then reads single bytes from there, which is memory-to-memory operations. `BufferedOutputStream` works similarly with the class `FileOutputStream`.
+
+[[FIG11-1]]
+image::images/fig_11_BufferedStream.png[]
+
+The main idea here is to minimize disk access.
+Buffered streams are not changing the type of the original streams — they just make reading more efficient. A program performs stream chaining (or stream piping) to connect streams, just as pipes are connected in plumbing. 
+
+The next code listing shows a class `MyBufferedByteReader`, which is a slightly modified version of `MyByteReader`. I just attached "another fragment to the pipe" - the `BufferedInputStream`.
+
+[source, java]
+----
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class MyBufferedByteReader {
+
+  public static void main(String[] args) {
+
+    try (FileInputStream myFile = new  FileInputStream("abc.dat");
+         BufferedInputStream buff = new BufferedInputStream(myFile);){
+
+        int byteValue;
+
+        while ((byteValue = buff.read()) != -1) {
+
+            System.out.print(byteValue + " ");
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+  }
+}
+----
+
