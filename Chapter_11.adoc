@@ -9,45 +9,57 @@ In this chapter you’ll learn how to save data on disks and read them back into
 
 For example, if a player wins a game and  you want to save the score, you can save it in a file called scores.txt using an output stream. If you want to save the player's preferences (e.g. colors or fonts) you can save them in a file, and read and apply them when the user runs your program again.
 
-A program reads or writes data from/to a stream serially – byte after byte, character after character, etc.  Since your program may use different data types like `String`, `int`, `double`, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream. In this chapter I'll show you how to use I/O streams with files located in your computer. In the next chapter you'll learn about I/O streams that can work with remote data located in other computers connected into a network. 
+A program reads or writes data from/to a stream serially – byte after byte, character after character, etc.  Since your program may use different data types like `String`, `int`, `double`, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream. 
 
-=== Basics of working with streams
+In this chapter I'll show you how to use I/O streams with files located in your computer. In the next chapter you'll learn about I/O streams that can work with remote data located in other computers connected into a network. 
 
-Think of a steam as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it's another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.
+All classes that can work with file streams are located in packages  `java.io` and `java.nio`.  Classes from the `java.io`  
+implement blocking I/O: When bytes are being read/written, they become unavailable for other threads of execution. This may not be an issue with small files like a history of game scores, but may become an issue with large files that contain a gigabyte or more. The package `java.nio` offers a set of classes with improved performance as well as some useful utility classes.
 
-Java supports several types of streams, but no matter what type of a file stream you are going to use, the following three steps should be done in your program:
+I'll start with explaining you the basics of working with streams of bytes using classes from the `java.io` package, and then give you some examples of working with classes from `java.nio`.
+
+=== Basics of Working With Streams
+
+Think of a stream as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it's another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.
+
+Java supports several types of streams, but no matter what type you are going to use, the following three steps should be done in your program:
 
 • Open a stream that points at some data store e.g. a local or remote file.
 
 • Read or write data from/to this stream. 
 
-• Close the stream.
+• Close the stream (Java can do it automatically).
  
-In the real world people use different types of pipes for carrying different contents. Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al. But all classes that can work with file streams are located in packages  `java.io` and `java.nio`.  Classes from the `java.io` 
-implement blocking I/O: When bytes are being read/written, they become unavailable for other threads of execution. The package `java.nio` offers non-blocking I/O with improved performance.
+In the real world people use different types of pipes for carrying different contents (e.g. gas, oil, milkshakes). Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al. 
 
 ==== Byte Streams
 
-To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a _set of bytes_, and then writes them into a destination folder, byte after byte using Java classes `FileInputStream` or `FileOutputStream`.The classes `Reader` and `Writer` specifically meant for reading character streams. 
+To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a _set of bytes_, and then writes them into a destination folder.. 
 
-After selecting the appropriate class you'll be invoking one of its methods to read or write the file. For example the http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html[online documentation] of the class `FileInputStream` 
-includes the method `read()` having the following signature:
+Originaly `java.io` package have not offered a fast way to copy files and you'd need to write a program that reads byte after byte using Java classes `FileInputStream` or `FileOutputStream`.
+
+If your program has to work only with text files, you could use the classes `Reader` and `Writer`, which are specifically meant for reading character streams. 
+
+After selecting the appropriate class you'll be invoking one of its methods to read or write the file. For example the http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html[online documentation] of the class `FileInputStream` includes the method `read` having the following signature:
 
 [source, java]
 ----
 public int read() throws IOException
 ----
 
-This tells you that the method `read()` returns an integer value and may throw the `IOException`, which is an error that may happen if the file is corrupted, a device failure happened et al. Hence, you must enclose the invocation of the method read into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you'll call the method `getMessage()` on the exception object.
-Each byte in a file is represented by a code, which is a positive integer number from 0 to 255. The method `read()` returns the value of this code.
+This should tell you that the method `read` returns an integer value and may throw the `IOException`, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method `read` into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you'll call the method `getMessage` on the exception object.
 
-The next example shows how to use the class `FileInputStream` to read the bytes from a graphic file named _abc.dat_. We are not going to create a graphic editor like Photoshop, and this little program won't interpret the meaning of each byte - it'll just print the code value of each byte.
+Each byte in a file is represented by a code, which is a positive integer number from 0 to 255. The method `read` returns the value of this code.
 
-I'll start with creating a new Java project _Chapter11_ in IDEA. Then I'll create a new empty file _abc.dat_ in the root folder of the project (right-click on the project name and select the menu New | File). Finally, I'll type in the following in this file:
+The next example shows how to use the class `FileInputStream` to read the bytes from a file named _abc.dat_. This little program won't interpret the meaning of each byte - it'll just print their code values.
+
+I'll start with creating a new Java project _Chapter11_ in IDEA. Then I'll create a new empty file _abc.dat_ in the root folder of the project (right-click on the project name and select the menu New | File). Finally, I'll type the following text in _abc.dat_:
 
 _This is a test file_
 
-Then I'll create a new Java class `MyByteReader` that will read and print the content of the file _abc.dat_. But let's pretend that we don't know that the content of this file is text - I want to read it byte by byte and print each byte's code separated by a space character. The class `MyByteReader` will look like this:
+Then I'll create a new Java class `MyByteReader` that will read and print the content of the file _abc.dat_. Text in Java is encoded using so-called character sets, which are different depending on which language the users understand. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16. Each JVM has a default character set, which could be changed during the JVM startup.
+
+But let's pretend that we don't know that the content of this file is text - I want to read it byte by byte and print each byte's code (not a letter) separated by a space character. The class `MyByteReader` will look like this:
 
 [source, java]
 ----
@@ -75,13 +87,13 @@ public class MyByteReader {
 }
 ----
 
-<1> First we open the file for reading by creating an instance of the class `FileInputStream` passing the file name `abc.dat` as a parameter. In Chapter 9 you've learned the syntax of the try-catch blocks. But here I use a special syntax called _try-with-resources_. When there are some program resources that has to be opened and closed (e.g. `FileInputStream`), just instantiate them in parentheses right after the `try` keyword and Java will close them for you automatically. This spares you from writing a `finally` block containing the code for closing resources.
+<1> First we open the file for reading (using a default character set) by creating an instance of the class `FileInputStream` passing the file name `abc.dat` as a parameter. In Chapter 9 you've learned the syntax of the try-catch blocks. But here I use a special syntax called _try-with-resources_. When there are some program resources that has to be opened and closed (e.g. `FileInputStream`), just instantiate them in parentheses right after the `try` keyword and Java will close them for you automatically. This spares you from writing a `finally` block containing the code for closing resources.
 
 <2> This line starts a `while` loop that calls the method `read()`, which reads one byte, assigns its value to the variable `byteCode`, and compares it with `-1` (the end of file indicator). 
 
 <3> If the value in the current byte is not equal to `-1`, we print it followed by a space character. The loop ends when it reads the `-1` byte. 
 
-<4> If the `IOException` occurs, catch it and print the reason of this error.
+<4> If an `IOException` occurs, catch it and print the reason of this error.
 
 Running this program prints the following numbers that represent encoding of the text "This is a test file":
 
@@ -118,22 +130,28 @@ public class MyByteWriter {
 }
 ----
 
-The program `MyByteWriter` populates an array `someData` with integer codes <1> that may represent some characters, then opens the file _xyz.dat_ <2> and write each of the integers into the file <3>. 
-If an error occurs, we catch it and print the reason<4>.
+<1> The program `MyByteWriter` populates an array `someData` with integer codes that may represent some characters
+
+<2> Then the program opens the file _xyz.dat_ 
+
+<3> and writes each of the integers into the file.
+
+<4> If an error occurs, we catch it and print the reason.
 
 ==== Bufferred Streams
 
-The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of `read` would read one byte, and one invocation of `write` would write one byte. In general, disk access is much slower
-than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.
-The class `BufferedInputStream` works as a middleman between `FileInputStream` and the file itself. It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the `FileInputStream` object then reads single bytes from there, which is memory-to-memory operations. `BufferedOutputStream` works similarly with the class `FileOutputStream`.
+The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of `read` would read one byte, and one invocation of `write` would write one byte. In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.
 
 [[FIG11-1]]
 image::images/fig_11_BufferedStream.png[]
 
+The class `BufferedInputStream` works as a middleman between `FileInputStream` and the file itself. It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the `FileInputStream` object then reads single bytes from there, which are fast memory-to-memory operations. `BufferedOutputStream` works similarly with the class `FileOutputStream`.
+
+
 The main idea here is to minimize disk access.
 Buffered streams are not changing the type of the original streams — they just make reading more efficient. A program performs stream chaining (or stream piping) to connect streams, just as pipes are connected in plumbing. 
 
-The next code listing shows a class `MyBufferedByteReader`, which is a slightly modified version of `MyByteReader`. I just attached "another fragment to the pipe" - the `BufferedInputStream`.
+The next code listing shows a class `MyBufferedByteReader`, which is a slightly modified version of `MyByteReader`. I just attached "another fragment to the pipe" - the `BufferedInputStream` from the `java.io` package.
 
 [source, java]
 ----
@@ -145,12 +163,12 @@ public class MyBufferedByteReader {
 
   public static void main(String[] args) {
 
-    try (FileInputStream myFile = new  FileInputStream("abc.dat");
+    try (FileInputStream myFile = new      // <1>FileInputStream("abc.dat");
          BufferedInputStream buff = new BufferedInputStream(myFile);){
 
         int byteValue;
 
-        while ((byteValue = buff.read()) != -1) {
+        while ((byteValue = buff.read()) != -1) { // <2>
 
             System.out.print(byteValue + " ");
         }
@@ -160,4 +178,87 @@ public class MyBufferedByteReader {
   }
 }
 ----
+
+<1> Here we use the try-with-resources syntax again. This time we create an instance of `FileInputReader` and then and instance of `BufferedInputReader` providing the `FileInputReader` as an argument. This is how we connect to fragments of the pipe that uses the file _abc.dat_ as the source of data.
+
+<2> Under the hood the `BufferedInputReader` reads  bytes from disk in chunks into a memory buffer, and then the method `read` reads one byte at time from memory.
+
+The program `MyBufferedByteReader` produces the same output as `MyByteReader`, but will work just a little bit faster.
+
+=== Character Streams
+
+Text in Java is represented as a set of `char` values, which are encoded based on the character set required by an alphabet or symbols used in a particular human language. The Java classes `FileReader` and `FileWriter` from the package `java.io` were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.
+ 
+For efficiency, the reading can be piped with the `BufferedReader` or `BufferedWriter`, which read or write from/to the stream buffering characters. I'll show you examples of working with text files in the next section. 
+
+
+=== A java.nio Style of Working With Files 
+
+
+==== Using Classes Path and Paths
+
+==== Using Classes File and Files
+
+
+==== Reading a Text File
+
+
+
+[source, java]
+----
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class MyTextFileReader {
+
+  public static void main(String[] args){
+
+    Path path = Paths.get(".","abc.dat");
+
+    try {
+        BufferedReader bufferedReader= Files.newBufferedReader(path, StandardCharsets.UTF_8);
+
+        String currentLine;
+
+        while ((currentLine = bufferedReader.readLine()) != null){
+
+            System.out.println(currentLine);
+
+        }
+    } catch (IOException ioe) {
+            System.out.println("Can't read file: "  
+                              + ioe.getMessage());
+    }
+  }
+}
+----
+
+In this example we use the same file _abc.dat_ located in the root directory of our IDEA project Chapter11. Run the `MyTextFileReader` and it'll print the following:
+
+[source, java]
+----
+This is a test file
+----
+
+Now make an experiment to see if the `IOException` is thrown if the file is not found where expected to be. Just move the file _abc.dat_ into a different directory and re-run `MyTextFileReader`. Now the console output looks different:
+
+[source, java]
+----
+Can't read file: ./abc.dat
+----
+This output was produced by the `catch` section from `MyTextFileReader` where the code invoked the `getMessage` method on the `IOException` object. The `./` prefix on Unix and MAC OS means the file located in current directory. 
+
+==== Writing a Text File
+
+==== Copying a File
+
+=== Serialization: Turn an Object Into Bytes
+
+=== Saving User's Preferences
+
+=== Project: Saving the Game Score
 
