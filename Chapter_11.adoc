@@ -49,7 +49,7 @@ public int read() throws IOException
 
 This should tell you that the method `read` returns an integer value and may throw the `IOException`, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method `read` into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you'll call the method `getMessage` on the exception object.
 
-Each byte in a file is represented by a code, which is a positive integer number from 0 to 255. The method `read` returns the value of this code.
+Each byte in a file is represented by a code, which is a positive integer number. The method `read` returns the value of this code.
 
 The next example shows how to use the class `FileInputStream` to read the bytes from a file named _abc.dat_. This little program won't interpret the meaning of each byte - it'll just print their code values.
 
@@ -57,9 +57,7 @@ I'll start with creating a new Java project _Chapter11_ in IDEA. Then I'll creat
 
 _This is a test file_
 
-Then I'll create a new Java class `MyByteReader` that will read and print the content of the file _abc.dat_. Text in Java is encoded using so-called character sets, which are different depending on which language the users understand. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16. Each JVM has a default character set, which could be changed during the JVM startup.
-
-But let's pretend that we don't know that the content of this file is text - I want to read it byte by byte and print each byte's code (not a letter) separated by a space character. The class `MyByteReader` will look like this:
+Then I'll create a new Java class `MyByteReader` that will read and print the content of the file _abc.dat_. But let's pretend that we don't know that the content of this file is text - I want to read it byte by byte and print each byte's code (not a letter) separated by a space character. The class `MyByteReader` will look like this:
 
 [source, java]
 ----
@@ -147,7 +145,6 @@ image::images/fig_11_BufferedStream.png[]
 
 The class `BufferedInputStream` works as a middleman between `FileInputStream` and the file itself. It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the `FileInputStream` object then reads single bytes from there, which are fast memory-to-memory operations. `BufferedOutputStream` works similarly with the class `FileOutputStream`.
 
-
 The main idea here is to minimize disk access.
 Buffered streams are not changing the type of the original streams — they just make reading more efficient. A program performs stream chaining (or stream piping) to connect streams, just as pipes are connected in plumbing. 
 
@@ -187,7 +184,11 @@ The program `MyBufferedByteReader` produces the same output as `MyByteReader`, b
 
 === Character Streams
 
-Text in Java is represented as a set of `char` values, which are encoded based on the character set required by an alphabet or symbols used in a particular human language. The Java classes `FileReader` and `FileWriter` from the package `java.io` were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.
+Text in Java is represented as a set of `char` values, which are encoded based on the character sets capable to represent alphabet or other symbols used in a particular human language. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16. 
+
+Each JVM has a default character set, which could be changed during the JVM startup. You can also find out what's the default character in your Java installation by invoking the method `defaultCharset` on the class `Charset`, and I'll show how to do it in the section "Reading Text Files".
+
+The Java classes `FileReader` and `FileWriter` from the package `java.io` were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.
  
 For efficiency, the reading can be piped with the `BufferedReader` or `BufferedWriter`, which read or write from/to the stream buffering characters. I'll show you examples of working with text files in the next section. 
 
@@ -209,6 +210,7 @@ For efficiency, the reading can be piped with the `BufferedReader` or `BufferedW
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -233,6 +235,8 @@ public class MyTextFileReader {
             System.out.println("Can't read file: "  
                               + ioe.getMessage());
     }
+
+    System.out.println("Your default character encoding is " + Charset.defaultCharset());    
   }
 }
 ----
@@ -242,6 +246,7 @@ In this example we use the same file _abc.dat_ located in the root directory of 
 [source, java]
 ----
 This is a test file
+Your defatlt character enchoding is UTF-8
 ----
 
 Now make an experiment to see if the `IOException` is thrown if the file is not found where expected to be. Just move the file _abc.dat_ into a different directory and re-run `MyTextFileReader`. Now the console output looks different:
