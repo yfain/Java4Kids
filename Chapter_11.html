@@ -499,15 +499,25 @@ p { margin-bottom: 1.25rem; }
 <p>For example, if a player wins a game and  you want to save the score, you can save it in a file called scores.txt using an output stream. If you want to save the player&#8217;s preferences (e.g. colors or fonts) you can save them in a file, and read and apply them when the user runs your program again.</p>
 </div>
 <div class="paragraph">
-<p>A program reads or writes data from/to a stream serially – byte after byte, character after character, etc.  Since your program may use different data types like <code>String</code>, <code>int</code>, <code>double</code>, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream. In this chapter I&#8217;ll show you how to use I/O streams with files located in your computer. In the next chapter you&#8217;ll learn about I/O streams that can work with remote data located in other computers connected into a network.</p>
+<p>A program reads or writes data from/to a stream serially – byte after byte, character after character, etc.  Since your program may use different data types like <code>String</code>, <code>int</code>, <code>double</code>, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream.</p>
+</div>
+<div class="paragraph">
+<p>In this chapter I&#8217;ll show you how to use I/O streams with files located in your computer. In the next chapter you&#8217;ll learn about I/O streams that can work with remote data located in other computers connected into a network.</p>
+</div>
+<div class="paragraph">
+<p>All classes that can work with file streams are located in packages  <code>java.io</code> and <code>java.nio</code>.  Classes from the <code>java.io</code>
+implement blocking I/O: When bytes are being read/written, they become unavailable for other threads of execution. This may not be an issue with small files like a history of game scores, but may become an issue with large files that contain a gigabyte or more. The package <code>java.nio</code> offers a set of classes with improved performance as well as some useful utility classes.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll start with explaining you the basics of working with streams of bytes using classes from the <code>java.io</code> package, and then give you some examples of working with classes from <code>java.nio</code>.</p>
 </div>
 <div class="sect2">
-<h3 id="_basics-of-working-with-streams"><a class="anchor" href="#_basics-of-working-with-streams"></a>Basics of working with streams</h3>
+<h3 id="_basics-of-working-with-streams"><a class="anchor" href="#_basics-of-working-with-streams"></a>Basics of Working With Streams</h3>
 <div class="paragraph">
-<p>Think of a steam as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it&#8217;s another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.</p>
+<p>Think of a stream as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it&#8217;s another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.</p>
 </div>
 <div class="paragraph">
-<p>Java supports several types of streams, but no matter what type of a file stream you are going to use, the following three steps should be done in your program:</p>
+<p>Java supports several types of streams, but no matter what type you are going to use, the following three steps should be done in your program:</p>
 </div>
 <div class="paragraph">
 <p>• Open a stream that points at some data store e.g. a local or remote file.</p>
@@ -516,20 +526,24 @@ p { margin-bottom: 1.25rem; }
 <p>• Read or write data from/to this stream.</p>
 </div>
 <div class="paragraph">
-<p>• Close the stream.</p>
+<p>• Close the stream (Java can do it automatically).</p>
 </div>
 <div class="paragraph">
-<p>In the real world people use different types of pipes for carrying different contents. Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al. But all classes that can work with file streams are located in packages  <code>java.io</code> and <code>java.nio</code>.  Classes from the <code>java.io</code>
-implement blocking I/O: When bytes are being read/written, they become unavailable for other threads of execution. The package <code>java.nio</code> offers non-blocking I/O with improved performance.</p>
+<p>In the real world people use different types of pipes for carrying different contents (e.g. gas, oil, milkshakes). Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al.</p>
 </div>
 <div class="sect3">
 <h4 id="_byte-streams"><a class="anchor" href="#_byte-streams"></a>Byte Streams</h4>
 <div class="paragraph">
-<p>To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a <em>set of bytes</em>, and then writes them into a destination folder, byte after byte using Java classes <code>FileInputStream</code> or <code>FileOutputStream</code>.The classes <code>Reader</code> and <code>Writer</code> specifically meant for reading character streams.</p>
+<p>To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a <em>set of bytes</em>, and then writes them into a destination folder..</p>
 </div>
 <div class="paragraph">
-<p>After selecting the appropriate class you&#8217;ll be invoking one of its methods to read or write the file. For example the <a href="http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html">online documentation</a> of the class <code>FileInputStream</code>
-includes the method <code>read()</code> having the following signature:</p>
+<p>Originaly <code>java.io</code> package have not offered a fast way to copy files and you&#8217;d need to write a program that reads byte after byte using Java classes <code>FileInputStream</code> or <code>FileOutputStream</code>.</p>
+</div>
+<div class="paragraph">
+<p>If your program has to work only with text files, you could use the classes <code>Reader</code> and <code>Writer</code>, which are specifically meant for reading character streams.</p>
+</div>
+<div class="paragraph">
+<p>After selecting the appropriate class you&#8217;ll be invoking one of its methods to read or write the file. For example the <a href="http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html">online documentation</a> of the class <code>FileInputStream</code> includes the method <code>read</code> having the following signature:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -537,20 +551,25 @@ includes the method <code>read()</code> having the following signature:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This tells you that the method <code>read()</code> returns an integer value and may throw the <code>IOException</code>, which is an error that may happen if the file is corrupted, a device failure happened et al. Hence, you must enclose the invocation of the method read into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you&#8217;ll call the method <code>getMessage()</code> on the exception object.
-Each byte in a file is represented by a code, which is a positive integer number from 0 to 255. The method <code>read()</code> returns the value of this code.</p>
+<p>This should tell you that the method <code>read</code> returns an integer value and may throw the <code>IOException</code>, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method <code>read</code> into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you&#8217;ll call the method <code>getMessage</code> on the exception object.</p>
 </div>
 <div class="paragraph">
-<p>The next example shows how to use the class <code>FileInputStream</code> to read the bytes from a graphic file named <em>abc.dat</em>. We are not going to create a graphic editor like Photoshop, and this little program won&#8217;t interpret the meaning of each byte - it&#8217;ll just print the code value of each byte.</p>
+<p>Each byte in a file is represented by a code, which is a positive integer number from 0 to 255. The method <code>read</code> returns the value of this code.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;ll start with creating a new Java project <em>Chapter11</em> in IDEA. Then I&#8217;ll create a new empty file <em>abc.dat</em> in the root folder of the project (right-click on the project name and select the menu New | File). Finally, I&#8217;ll type in the following in this file:</p>
+<p>The next example shows how to use the class <code>FileInputStream</code> to read the bytes from a file named <em>abc.dat</em>. This little program won&#8217;t interpret the meaning of each byte - it&#8217;ll just print their code values.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll start with creating a new Java project <em>Chapter11</em> in IDEA. Then I&#8217;ll create a new empty file <em>abc.dat</em> in the root folder of the project (right-click on the project name and select the menu New | File). Finally, I&#8217;ll type the following text in <em>abc.dat</em>:</p>
 </div>
 <div class="paragraph">
 <p><em>This is a test file</em></p>
 </div>
 <div class="paragraph">
-<p>Then I&#8217;ll create a new Java class <code>MyByteReader</code> that will read and print the content of the file <em>abc.dat</em>. But let&#8217;s pretend that we don&#8217;t know that the content of this file is text - I want to read it byte by byte and print each byte&#8217;s code separated by a space character. The class <code>MyByteReader</code> will look like this:</p>
+<p>Then I&#8217;ll create a new Java class <code>MyByteReader</code> that will read and print the content of the file <em>abc.dat</em>. Text in Java is encoded using so-called character sets, which are different depending on which language the users understand. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16. Each JVM has a default character set, which could be changed during the JVM startup.</p>
+</div>
+<div class="paragraph">
+<p>But let&#8217;s pretend that we don&#8217;t know that the content of this file is text - I want to read it byte by byte and print each byte&#8217;s code (not a letter) separated by a space character. The class <code>MyByteReader</code> will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -582,7 +601,7 @@ public class MyByteReader {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>First we open the file for reading by creating an instance of the class <code>FileInputStream</code> passing the file name <code>abc.dat</code> as a parameter. In Chapter 9 you&#8217;ve learned the syntax of the try-catch blocks. But here I use a special syntax called <em>try-with-resources</em>. When there are some program resources that has to be opened and closed (e.g. <code>FileInputStream</code>), just instantiate them in parentheses right after the <code>try</code> keyword and Java will close them for you automatically. This spares you from writing a <code>finally</code> block containing the code for closing resources.</td>
+<td>First we open the file for reading (using a default character set) by creating an instance of the class <code>FileInputStream</code> passing the file name <code>abc.dat</code> as a parameter. In Chapter 9 you&#8217;ve learned the syntax of the try-catch blocks. But here I use a special syntax called <em>try-with-resources</em>. When there are some program resources that has to be opened and closed (e.g. <code>FileInputStream</code>), just instantiate them in parentheses right after the <code>try</code> keyword and Java will close them for you automatically. This spares you from writing a <code>finally</code> block containing the code for closing resources.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -594,7 +613,7 @@ public class MyByteReader {
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>If the <code>IOException</code> occurs, catch it and print the reason of this error.</td>
+<td>If an <code>IOException</code> occurs, catch it and print the reason of this error.</td>
 </tr>
 </table>
 </div>
@@ -635,17 +654,31 @@ public class MyByteWriter {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The program <code>MyByteWriter</code> populates an array <code>someData</code> with integer codes &lt;1&gt; that may represent some characters, then opens the file <em>xyz.dat</em> &lt;2&gt; and write each of the integers into the file &lt;3&gt;.
-If an error occurs, we catch it and print the reason&lt;4&gt;.</p>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The program <code>MyByteWriter</code> populates an array <code>someData</code> with integer codes that may represent some characters</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Then the program opens the file <em>xyz.dat</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>and writes each of the integers into the file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If an error occurs, we catch it and print the reason.</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_bufferred-streams"><a class="anchor" href="#_bufferred-streams"></a>Bufferred Streams</h4>
 <div class="paragraph">
-<p>The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of <code>read</code> would read one byte, and one invocation of <code>write</code> would write one byte. In general, disk access is much slower
-than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.
-The class <code>BufferedInputStream</code> works as a middleman between <code>FileInputStream</code> and the file itself. It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the <code>FileInputStream</code> object then reads single bytes from there, which is memory-to-memory operations. <code>BufferedOutputStream</code> works similarly with the class <code>FileOutputStream</code>.</p>
+<p>The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of <code>read</code> would read one byte, and one invocation of <code>write</code> would write one byte. In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.</p>
 </div>
 <div id="FIG11-1" class="imageblock">
 <div class="content">
@@ -653,11 +686,14 @@ The class <code>BufferedInputStream</code> works as a middleman between <code>Fi
 </div>
 </div>
 <div class="paragraph">
+<p>The class <code>BufferedInputStream</code> works as a middleman between <code>FileInputStream</code> and the file itself. It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the <code>FileInputStream</code> object then reads single bytes from there, which are fast memory-to-memory operations. <code>BufferedOutputStream</code> works similarly with the class <code>FileOutputStream</code>.</p>
+</div>
+<div class="paragraph">
 <p>The main idea here is to minimize disk access.
 Buffered streams are not changing the type of the original streams — they just make reading more efficient. A program performs stream chaining (or stream piping) to connect streams, just as pipes are connected in plumbing.</p>
 </div>
 <div class="paragraph">
-<p>The next code listing shows a class <code>MyBufferedByteReader</code>, which is a slightly modified version of <code>MyByteReader</code>. I just attached "another fragment to the pipe" - the <code>BufferedInputStream</code>.</p>
+<p>The next code listing shows a class <code>MyBufferedByteReader</code>, which is a slightly modified version of <code>MyByteReader</code>. I just attached "another fragment to the pipe" - the <code>BufferedInputStream</code> from the <code>java.io</code> package.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -669,12 +705,12 @@ public class MyBufferedByteReader {
 
   public static void main(String[] args) {
 
-    try (FileInputStream myFile = new  FileInputStream("abc.dat");
+    try (FileInputStream myFile = new      // &lt;1&gt;FileInputStream("abc.dat");
          BufferedInputStream buff = new BufferedInputStream(myFile);){
 
         int byteValue;
 
-        while ((byteValue = buff.read()) != -1) {
+        while ((byteValue = buff.read()) != -1) { <i class="conum" data-value="2"></i><b>(2)</b>
 
             System.out.print(byteValue + " ");
         }
@@ -685,14 +721,117 @@ public class MyBufferedByteReader {
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Here we use the try-with-resources syntax again. This time we create an instance of <code>FileInputReader</code> and then and instance of <code>BufferedInputReader</code> providing the <code>FileInputReader</code> as an argument. This is how we connect to fragments of the pipe that uses the file <em>abc.dat</em> as the source of data.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Under the hood the <code>BufferedInputReader</code> reads  bytes from disk in chunks into a memory buffer, and then the method <code>read</code> reads one byte at time from memory.</td>
+</tr>
+</table>
 </div>
+<div class="paragraph">
+<p>The program <code>MyBufferedByteReader</code> produces the same output as <code>MyByteReader</code>, but will work just a little bit faster.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_character-streams"><a class="anchor" href="#_character-streams"></a>Character Streams</h3>
+<div class="paragraph">
+<p>Text in Java is represented as a set of <code>char</code> values, which are encoded based on the character set required by an alphabet or symbols used in a particular human language. The Java classes <code>FileReader</code> and <code>FileWriter</code> from the package <code>java.io</code> were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.</p>
+</div>
+<div class="paragraph">
+<p>For efficiency, the reading can be piped with the <code>BufferedReader</code> or <code>BufferedWriter</code>, which read or write from/to the stream buffering characters. I&#8217;ll show you examples of working with text files in the next section.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a-java-nio-style-of-working-with-files"><a class="anchor" href="#_a-java-nio-style-of-working-with-files"></a>A java.nio Style of Working With Files</h3>
+<div class="sect3">
+<h4 id="_using-classes-path-and-paths"><a class="anchor" href="#_using-classes-path-and-paths"></a>Using Classes Path and Paths</h4>
+</div>
+<div class="sect3">
+<h4 id="_using-classes-file-and-files"><a class="anchor" href="#_using-classes-file-and-files"></a>Using Classes File and Files</h4>
+</div>
+<div class="sect3">
+<h4 id="_reading-a-text-file"><a class="anchor" href="#_reading-a-text-file"></a>Reading a Text File</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class MyTextFileReader {
+
+  public static void main(String[] args){
+
+    Path path = Paths.get(".","abc.dat");
+
+    try {
+        BufferedReader bufferedReader= Files.newBufferedReader(path, StandardCharsets.UTF_8);
+
+        String currentLine;
+
+        while ((currentLine = bufferedReader.readLine()) != null){
+
+            System.out.println(currentLine);
+
+        }
+    } catch (IOException ioe) {
+            System.out.println("Can't read file: "
+                              + ioe.getMessage());
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example we use the same file <em>abc.dat</em> located in the root directory of our IDEA project Chapter11. Run the <code>MyTextFileReader</code> and it&#8217;ll print the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">This is a test file</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now make an experiment to see if the <code>IOException</code> is thrown if the file is not found where expected to be. Just move the file <em>abc.dat</em> into a different directory and re-run <code>MyTextFileReader</code>. Now the console output looks different:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Can't read file: ./abc.dat</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This output was produced by the <code>catch</code> section from <code>MyTextFileReader</code> where the code invoked the <code>getMessage</code> method on the <code>IOException</code> object. The <code>./</code> prefix on Unix and MAC OS means the file located in current directory.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_writing-a-text-file"><a class="anchor" href="#_writing-a-text-file"></a>Writing a Text File</h4>
+</div>
+<div class="sect3">
+<h4 id="_copying-a-file"><a class="anchor" href="#_copying-a-file"></a>Copying a File</h4>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_serialization-turn-an-object-into-bytes"><a class="anchor" href="#_serialization-turn-an-object-into-bytes"></a>Serialization: Turn an Object Into Bytes</h3>
+</div>
+<div class="sect2">
+<h3 id="_saving-user-s-preferences"><a class="anchor" href="#_saving-user-s-preferences"></a>Saving User&#8217;s Preferences</h3>
+</div>
+<div class="sect2">
+<h3 id="_project-saving-the-game-score"><a class="anchor" href="#_project-saving-the-game-score"></a>Project: Saving the Game Score</h3>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-02 18:00:52 EST
+Last updated 2015-01-03 20:35:14 EST
 </div>
 </div>
 </body>
