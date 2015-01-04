@@ -554,7 +554,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <p>This should tell you that the method <code>read</code> returns an integer value and may throw the <code>IOException</code>, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method <code>read</code> into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you&#8217;ll call the method <code>getMessage</code> on the exception object.</p>
 </div>
 <div class="paragraph">
-<p>Each byte in a file is represented by a code, which is a positive integer number from 0 to 255. The method <code>read</code> returns the value of this code.</p>
+<p>Each byte in a file is represented by a code, which is a positive integer number. The method <code>read</code> returns the value of this code.</p>
 </div>
 <div class="paragraph">
 <p>The next example shows how to use the class <code>FileInputStream</code> to read the bytes from a file named <em>abc.dat</em>. This little program won&#8217;t interpret the meaning of each byte - it&#8217;ll just print their code values.</p>
@@ -566,10 +566,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <p><em>This is a test file</em></p>
 </div>
 <div class="paragraph">
-<p>Then I&#8217;ll create a new Java class <code>MyByteReader</code> that will read and print the content of the file <em>abc.dat</em>. Text in Java is encoded using so-called character sets, which are different depending on which language the users understand. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16. Each JVM has a default character set, which could be changed during the JVM startup.</p>
-</div>
-<div class="paragraph">
-<p>But let&#8217;s pretend that we don&#8217;t know that the content of this file is text - I want to read it byte by byte and print each byte&#8217;s code (not a letter) separated by a space character. The class <code>MyByteReader</code> will look like this:</p>
+<p>Then I&#8217;ll create a new Java class <code>MyByteReader</code> that will read and print the content of the file <em>abc.dat</em>. But let&#8217;s pretend that we don&#8217;t know that the content of this file is text - I want to read it byte by byte and print each byte&#8217;s code (not a letter) separated by a space character. The class <code>MyByteReader</code> will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -741,7 +738,13 @@ public class MyBufferedByteReader {
 <div class="sect2">
 <h3 id="_character-streams"><a class="anchor" href="#_character-streams"></a>Character Streams</h3>
 <div class="paragraph">
-<p>Text in Java is represented as a set of <code>char</code> values, which are encoded based on the character set required by an alphabet or symbols used in a particular human language. The Java classes <code>FileReader</code> and <code>FileWriter</code> from the package <code>java.io</code> were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.</p>
+<p>Text in Java is represented as a set of <code>char</code> values, which are encoded based on the character sets capable to represent alphabet or other symbols used in a particular human language. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16.</p>
+</div>
+<div class="paragraph">
+<p>Each JVM has a default character set, which could be changed during the JVM startup. You can also find out what&#8217;s the default character in your Java installation by invoking the method <code>defaultCharset</code> on the class <code>Charset</code>, and I&#8217;ll show how to do it in the section "Reading Text Files".</p>
+</div>
+<div class="paragraph">
+<p>The Java classes <code>FileReader</code> and <code>FileWriter</code> from the package <code>java.io</code> were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.</p>
 </div>
 <div class="paragraph">
 <p>For efficiency, the reading can be piped with the <code>BufferedReader</code> or <code>BufferedWriter</code>, which read or write from/to the stream buffering characters. I&#8217;ll show you examples of working with text files in the next section.</p>
@@ -762,6 +765,7 @@ public class MyBufferedByteReader {
 <pre class="highlight"><code class="java language-java">import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -786,6 +790,8 @@ public class MyTextFileReader {
             System.out.println("Can't read file: "
                               + ioe.getMessage());
     }
+
+    System.out.println("Your default character encoding is " + Charset.defaultCharset());
   }
 }</code></pre>
 </div>
@@ -795,7 +801,8 @@ public class MyTextFileReader {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">This is a test file</code></pre>
+<pre class="highlight"><code class="java language-java">This is a test file
+Your defatlt character enchoding is UTF-8</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -831,7 +838,7 @@ public class MyTextFileReader {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-03 20:35:14 EST
+Last updated 2015-01-04 07:23:33 EST
 </div>
 </div>
 </body>
