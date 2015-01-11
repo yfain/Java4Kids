@@ -782,7 +782,7 @@ public class MyBufferedByteReader {
 <p>Since we specified just the file name without a directory, the program will look for the file in the current directory, which in IDEA is the directory of your project (e.g. <em>Chapter11</em>). Outside of the IDE, the current directory is the one where the program was started from.</p>
 </div>
 <div class="paragraph">
-<p>But if we were to create a directory <em>data</em> at the root of our project and move the file <em>abc.dat</em> there, then the <em>relative path</em> to the file starting from the project root would look as <code>"./data/abc.dat"</code> on Mac OS or <code>".\\data\\abc.dat"</code> on Windows. Two backslashes in a Java string correspond to one backslash in the Windows operational system.</p>
+<p>But if we were to create a directory <em>data</em> at the root of our project and move the file <em>abc.dat</em> there, then the <em>relative path</em> to the file starting from the project root would look as <code>"data/abc.dat"</code> on Mac OS or <code>"data\\abc.dat"</code> on Windows. Two backslashes in a Java string correspond to one backslash in the Windows operational system.</p>
 </div>
 <div class="paragraph">
 <p>But your IDEA project is also located in some directory on disk, e.g. <em>chapter11</em>, which is a subdirectory of <em>practicalJava</em>. The file can be represented by the <em>absolute path</em>, which may look like this:</p>
@@ -830,7 +830,7 @@ public class MyBufferedByteReader {
 </div>
 </div>
 <div class="paragraph">
-<p>Both <code>readAllBytes</code> and <code>readAllLines</code> do not use buffers, but for small files is not important.  For more efficient reading you can ask the class <code>Files</code> to create a buffered stream. For example, the program <code>MyTextFileReader</code> uses the method <code>newBufferedReader</code> for more efficient reading.</p>
+<p>Both <code>readAllBytes</code> and <code>readAllLines</code> do not use buffers, but for small files is not important.  For more efficient reading you can ask the class <code>Files</code> to create a buffered stream. For example, the program <code>MyTextFileReader</code> uses the method <code>newBufferedReader</code> for more efficient reading. Here I used the same file <em>abc.dat</em> located in the root directory of our IDEA project Chapter11.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -848,39 +848,63 @@ public class MyTextFileReader {
 
   public static void main(String[] args){
 
-    Path path = Paths.get("abc.dat");
-
-    System.out.println("The absolute path is " + path.toAbsolutePath());
+    Path path = Paths.get("abc.dat");     <i class="conum" data-value="1"></i><b>(1)</b>
+    System.out.println("The absolute path is " +
+                         path.toAbsolutePath());
 
     try {
+      if ( Files.exists(path)){         <i class="conum" data-value="2"></i><b>(2)</b>
+          System.out.println("The file size is " + Files.size(path));
+      }
 
-        if ( Files.exists(path)){
-            System.out.println("The file size is " + Files.size(path));
-        }
+      BufferedReader bufferedReader=    <i class="conum" data-value="3"></i><b>(3)</b>
+               Files.newBufferedReader(path, StandardCharsets.UTF_8);
 
-        BufferedReader bufferedReader=
-                 Files.newBufferedReader(path, StandardCharsets.UTF_8);
+      String currentLine;
 
-        String currentLine;
+      while ((currentLine =             <i class="conum" data-value="4"></i><b>(4)</b>
+             bufferedReader.readLine()) != null){
 
-        while ((currentLine = bufferedReader.readLine()) != null){
+        System.out.println(currentLine);
 
-          System.out.println(currentLine);
-
-        }
+      }
     } catch (IOException ioe) {
         System.out.println("Can't read file: " +
                              ioe.getMessage());
     }
 
-    System.out.println(
+    System.out.println(             <i class="conum" data-value="5"></i><b>(5)</b>
            "Your default character encoding is " + Charset.defaultCharset());
   }
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The program starts with creating a <code>Path</code> object from <em>abc.dat</em> and printing its absolute path.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Then it checks if the file represented by the path exists and prints its size in bytes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Here we&#8217;re opening the buffered reader capable of reading text encoded with a character set <code>UTF-8</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Reading the text lines from the buffer.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Print the default character set being used for those who are interested.</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>In this example I used the same file <em>abc.dat</em> located in the root directory of our IDEA project Chapter11. When I ran the program <code>MyTextFileReader</code> it printed the following:</p>
+<p>When I ran the program <code>MyTextFileReader</code> it printed the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -904,7 +928,109 @@ Your default character encoding is UTF-8</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_writing-a-text-file"><a class="anchor" href="#_writing-a-text-file"></a>Writing a Text File</h4>
+<h4 id="_writing-into-a-file"><a class="anchor" href="#_writing-into-a-file"></a>Writing Into a File</h4>
+<div class="paragraph">
+<p>Writing into a file is as reading one. Start with creating create an instance of the <code>Path</code> object.  If you want to write bytes, create a byte array, populate it with data and call the method <code>write</code> on the class <code>Files</code>. If you want to write some text into a file, just convert the text from a <code>String</code> into a byte array and then call the method <code>write</code>, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Path path = Paths.get("data/scores.txt");
+
+Files.write(path, myScore.getBytes(),
+                    StandardOpenOption.APPEND);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When your program opens a file for writing, you need to consider different options. For example, you may want to append text to an existing file, hence the above code snippet passes the argument  <code>StandardOpenOption.APPEND</code> to method <code>write</code>. If you want to create a file from scratch every time you run the program, use the option <code>StandardOpenOption.CREATE</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following program <code>MyTextFileWriter</code> writes the text into a file <code>scores.txt</code> in the directory <code>data</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package niosamples;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+
+public class MyTextFileWriter {
+
+  public static void main(String[] args){
+
+    System.out.println("The current directory is "+
+         System.getProperty("user.dir"));   <i class="conum" data-value="1"></i><b>(1)</b>
+
+    String myScore =                        <i class="conum" data-value="2"></i><b>(2)</b>
+                "My game score is 28000 " +
+                     LocalDateTime.now() + "\n";
+
+    Path path = Paths.get("data/scores.txt"); <i class="conum" data-value="3"></i><b>(3)</b>
+
+    try {
+
+        if ( Files.exists(path)){            <i class="conum" data-value="4"></i><b>(4)</b>
+            Files.write(path, myScore.getBytes(),
+                      StandardOpenOption.APPEND);
+        } else {
+            Files.write(path, myScore.getBytes(),
+                      StandardOpenOption.CREATE);
+        }
+
+        System.out.println("The game score was saved at " + path.toAbsolutePath());
+    } catch (IOException ioe) {
+        System.out.println("Can't write file: "
+                             + ioe.getMessage());
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>For illustration purposes I want the program to print its current directory, which is stored in a special Java variable <code>user.dir</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Then I populate a string with the content "My game score is 28000" and concatenate the current date and time followed by <code>\n</code>, which is the end of line marker.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Creating a <code>Path</code> object pointing at the file <code>score.txt</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Check if the file <code>score.txt</code> already exists, append the new content to it. If the file doesn&#8217;t exists – create it and write the content there.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The program <code>MyTextFileWriter</code> printed the following on my console:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">The current directory is /Users/yfain11/IdeaProjects/jfk/Chapter11
+The game score was saved at /Users/yfain11/IdeaProjects/jfk/Chapter11/data/scores.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After running <code>MyTextFileWriter</code> twice I opened the file <em>scores.txt</em> just to see what&#8217;s in there. Here&#8217;s what I found there:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">My game score is 28000 2015-01-11T09:07:49.352
+My game score is 28000 2015-01-11T09:10:11.049</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each time the program saved the same score of 28000
+attaching the system date and time.  This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package <code>java.time</code> you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle&#8217;s tutorial on working with Date and Time API if interested. A link &#8230;&#8230;..</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_copying-a-file"><a class="anchor" href="#_copying-a-file"></a>Copying a File</h4>
@@ -912,6 +1038,9 @@ Your default character encoding is UTF-8</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_serialization-turn-an-object-into-bytes"><a class="anchor" href="#_serialization-turn-an-object-into-bytes"></a>Serialization: Turn an Object Into Bytes</h3>
+<div class="paragraph">
+<p>Imagine a building that, with a push of a button, can be turned into a pile of construction materials and the possessions of its residents. Push another button and the building is magically re-created in its original form in a different location. This is what Java serialization is about. By “clicking the serialize button” you turn an instance of an object into a pile of bytes, and “clicking the deserialize button” magically re-creates the object.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_saving-user-s-preferences"><a class="anchor" href="#_saving-user-s-preferences"></a>Saving User&#8217;s Preferences</h3>
@@ -924,7 +1053,7 @@ Your default character encoding is UTF-8</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-11 04:50:43 EST
+Last updated 2015-01-11 11:50:34 EST
 </div>
 </div>
 </body>
