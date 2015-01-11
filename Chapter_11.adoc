@@ -161,7 +161,8 @@ public class MyBufferedByteReader {
   public static void main(String[] args) {
 
     try (FileInputStream myFile = new      // <1>FileInputStream("abc.dat");
-         BufferedInputStream buff = new BufferedInputStream(myFile);){
+         BufferedInputStream buff = new 
+         BufferedInputStream(myFile);){
 
         int byteValue;
 
@@ -399,7 +400,7 @@ public class MyTextFileWriter {
 <3> Creating a `Path` object pointing at the file `score.txt`.
 
 <4> Check if the file `score.txt` already exists, append the new content to it. If the file doesn't exists – create it and write the content there.
-  
+
 The program `MyTextFileWriter` printed the following on my console:
 
 [source, java]
@@ -408,7 +409,7 @@ The current directory is /Users/yfain11/IdeaProjects/jfk/Chapter11
 The game score was saved at /Users/yfain11/IdeaProjects/jfk/Chapter11/data/scores.txt
 ----
 
-After running `MyTextFileWriter` twice I opened the file _scores.txt_ just to see what's in there. Here's what I found there:
+After running `MyTextFileWriter` twice I opened the file _scores.txt_. Here's what I found there:
 
 [source, java]
 ---- 
@@ -417,17 +418,97 @@ My game score is 28000 2015-01-11T09:10:11.049
 ----
 
 Each time the program saved the same score of 28000
-attaching the system date and time.  This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package `java.time` you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle's tutorial on working with Date and Time API if interested. A link ........
+attaching the system date and time. Of course, you could calculate and write the real score of a game. This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package `java.time` you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle's tutorial on working with http://docs.oracle.com/javase/tutorial/datetime/TOC.html[Date and Time API] if interested. 
+
+For writing small files like _scores.txt_ you don't need to use buffered streams. For large files though, use BufferedWriter, for example:
+
+[source, java]
+----
+String myScore = "My game score is 28000 " + 
+                    LocalDateTime.now() + "\n";
+BufferedWrited writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND);
+
+writer.write(myScore)
+----
+
+The class `MyTextFileBufferedFileWriter` shows how to write the game score using `BufferedWriter`.
+
+[source, java]
+----
+package niosamples;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+
+public class MyTextFileBufferedFileWriter {
+
+  public static void main(String[] args) {
+
+    String myScore = "My game score is 28000 " + LocalDateTime.now() + "\n";
+
+    Path path = Paths.get("data/scores.txt");
+
+    try (BufferedWriter writer = 
+                    getBufferedWriter(path)) {
+        
+        writer.write(myScore);
+
+        System.out.println("The game score was saved at " + path.toAbsolutePath());
+    } catch (IOException ioe) {
+        System.out.println("Can't write file: " + 
+                                  ioe.getMessage());
+    }
+  }
+
+  // The factory of BufferedWriter objects
+  private static BufferedWriter getBufferedWriter(Path path) throws IOException{
+
+      if (Files.exists(path)) {
+          return Files.newBufferedWriter(path,
+                        StandardOpenOption.APPEND);
+      } else {
+          return Files.newBufferedWriter(path,
+                         StandardOpenOption.CREATE);
+      }
+  }
+}
+----
+
+In this class I've moved the code that check if the file exists into a separate method `getBufferedWriter`. I did it to illustrate so-called _factory design pattern_. A factory can build different objects, right?  The method `getBufferedWriter` also builds different instances of a `BufferedReader` depending on the existence of the file referred by `path`. In programmers jargon the methods that create and return different object instances based on some parameter are called factories.    
+
+If you run the program `MyTextFileBufferedFileWriter` it'll produce the same results as `MyTextFileFileWriter`. If you use these programs for writing short texts you won't notice the difference in the speed of execution. But when you need to write large amount of information  `MyTextFileBufferedFileWriter` will work faster.
 
 
+=== Serialization: Turning an Object Into Bytes
 
-==== Copying a File
+Imagine a building that, with a push of a button, can be turned into a pile of construction materials. Load all these materials on the truck and drive to a different city. On arrival push another button, and the building is magically re-created in its original form. This is what Java serialization is about, but instead of a building we'll use a Java object. By “clicking the serialize button” JVM turns an instance of an object into a pile of bytes, and “clicking the deserialize button” re-creates the object.
 
-=== Serialization: Turn an Object Into Bytes
+Why would you need such functionality? Say you are working on a board game and want to be able to save the current state of the game so the player and continue playing it tomorrow even if the computer will need to be turned off. The program needs to save the state of the game in a file, and when the player launches the game again, the program should load the saved state and recreate the situation on the board.  Creating a Java class with fields like player name, level, score, lives can be a good way to represent a state of the game. 
 
-Imagine a building that, with a push of a button, can be turned into a pile of construction materials and the possessions of its residents. Push another button and the building is magically re-created in its original form in a different location. This is what Java serialization is about. By “clicking the serialize button” you turn an instance of an object into a pile of bytes, and “clicking the deserialize button” magically re-creates the object.
+[source, java]
+----
+class GameState {
+   String playerName;
+   int level;
+   int score;
+   int remainingLives; 
 
-=== Saving User's Preferences
+   // other fields go here
+}
+----
 
-=== Project: Saving the Game Score
+When the user selects the menu option _Save Game State_, the program has to create an instance of the object `GameState`, assign the values to its fields and save these values in a file. But which format to save these values in? Create a `String` variable, and concatenate all these values into it separating the values with commas? It's a lot of work. Also, you'd need to remember the order of these concatenated values so when you need to read them you know to which fields of the object `GameState` to assign them to.
+
+Luckily, Java greatly simplifies this process. You can create and instance of the Java object, populate it with the values, and then _serialize_ this instance into a bunch of bytes in a special format that remembers the structure of the class `GameState`. Accordingly, when you need to re-create the instance of the `GameState` for these bytes, you can _deserialize_ the object in one shot with all its fields values.
+
+Let's see serialization in action. 
+
+
+=== Project: Saving the Game Scores
 
