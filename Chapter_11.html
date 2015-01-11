@@ -751,21 +751,95 @@ public class MyBufferedByteReader {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_a-java-nio-style-of-working-with-files"><a class="anchor" href="#_a-java-nio-style-of-working-with-files"></a>A java.nio Style of Working With Files</h3>
+<h3 id="_working-with-files-using-java-nio"><a class="anchor" href="#_working-with-files-using-java-nio"></a>Working With Files Using java.nio</h3>
+<div class="paragraph">
+<p>The <code>java.nio</code> package contains classes that offer a simplified and more efficient way of working with files, and you&#8217;ll see some useful examples here. But first I&#8217;d like to introduce a classes Path and Paths that will represent a file you&#8217;re planning to work with.</p>
+</div>
 <div class="sect3">
 <h4 id="_using-classes-path-and-paths"><a class="anchor" href="#_using-classes-path-and-paths"></a>Using Classes Path and Paths</h4>
+<div class="paragraph">
+<p>So far we worked with files located in the root directory of our IDEA project. But files are grouped in directories (folders), which in turn can include nested directories and files. More over, files are represented differently in Windows, Mac OS and Linux operational systems. For example, in Windows the pull path to a file may look like this:
+<em>c:\mystuff\games\tictactoeScores.txt</em></p>
 </div>
-<div class="sect3">
-<h4 id="_using-classes-file-and-files"><a class="anchor" href="#_using-classes-file-and-files"></a>Using Classes File and Files</h4>
+<div class="paragraph">
+<p>In Mac OS or Linux disks are not named with letters like <em>c:</em> or <em>d:</em>. For example, the path to user&#8217;s files starts from the <em>Users</em> directory. Besides a backslash is not used for a separator symbol there. A full path to a file <em>tictactoeScores.txt</em> of the user <em>mary</em> may look like this:</p>
 </div>
-<div class="sect3">
-<h4 id="_reading-a-text-file"><a class="anchor" href="#_reading-a-text-file"></a>Reading a Text File</h4>
+<div class="paragraph">
+<p><em>/Users/mary/mystuff/games/tictactoeScores.txt</em></p>
+</div>
+<div class="paragraph">
+<p>So before even opening a file you can create an instance of the object <code>Path</code>, which doesn&#8217;t open or reads a file, but represents the location of the file on the disk.</p>
+</div>
+<div class="paragraph">
+<p>There is a special class <code>Paths</code> (yes, in plural) that includes a number of static methods, and in particular, can build the <code>Path</code> object for you. For example, you can invoke the method <code>get</code> passing the name of the file as the argument:</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">import java.io.BufferedReader;
+<pre class="highlight"><code class="java language-java">Path path = Paths.get("abc.dat");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since we specified just the file name without a directory, the program will look for the file in the current directory, which in IDEA is the directory of your project (e.g. <em>Chapter11</em>). Outside of the IDE, the current directory is the one where the program was started from.</p>
+</div>
+<div class="paragraph">
+<p>But if we were to create a directory <em>data</em> at the root of our project and move the file <em>abc.dat</em> there, then the <em>relative path</em> to the file starting from the project root would look as <code>"./data/abc.dat"</code> on Mac OS or <code>".\\data\\abc.dat"</code> on Windows. Two backslashes in a Java string correspond to one backslash in the Windows operational system.</p>
+</div>
+<div class="paragraph">
+<p>But your IDEA project is also located in some directory on disk, e.g. <em>chapter11</em>, which is a subdirectory of <em>practicalJava</em>. The file can be represented by the <em>absolute path</em>, which may look like this:</p>
+</div>
+<div class="paragraph">
+<p><em>c:\practicalJava\chapter11\data\abc.dat</em></p>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="paragraph">
+<p><em>/Users/mary/practicalJava/chapter11/data/abc.dat</em></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using-the-class-files"><a class="anchor" href="#_using-the-class-files"></a>Using the Class Files</h4>
+<div class="paragraph">
+<p>The class <code>Files</code> has several methods that will help you with file manipulations. It can create, delete, rename and copy files. There are methods to read and write files too.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reading-a-file"><a class="anchor" href="#_reading-a-file"></a>Reading a File</h4>
+<div class="paragraph">
+<p>The simplest way to read a file is by calling the method <code>readAllBytes</code> on the class <code>Files</code>. The following line reads the file <em>abc.dat</em> into an array of bytes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">byte[] myFileBytes = Files.readAllBytes(Paths.get("abc.dat");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the file contains text, you can read the file into a <code>String</code> variable like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">String myFileText = new String(Files.readAllBytes(Paths.get("abc.dat")));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to read a text file into a collection, where each element contains one line from the file use the method <code>readAllLines</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">List&lt;String&gt; myFileLines = Files.readAllLines(Paths.get("abc.dat"));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both <code>readAllBytes</code> and <code>readAllLines</code> do not use buffers, but for small files is not important.  For more efficient reading you can ask the class <code>Files</code> to create a buffered stream. For example, the program <code>MyTextFileReader</code> uses the method <code>newBufferedReader</code> for more efficient reading.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package niosamples;
+
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -774,35 +848,46 @@ public class MyTextFileReader {
 
   public static void main(String[] args){
 
-    Path path = Paths.get(".","abc.dat");
+    Path path = Paths.get("abc.dat");
+
+    System.out.println("The absolute path is " + path.toAbsolutePath());
 
     try {
-        BufferedReader bufferedReader= Files.newBufferedReader(path, StandardCharsets.UTF_8);
+
+        if ( Files.exists(path)){
+            System.out.println("The file size is " + Files.size(path));
+        }
+
+        BufferedReader bufferedReader=
+                 Files.newBufferedReader(path, StandardCharsets.UTF_8);
 
         String currentLine;
 
         while ((currentLine = bufferedReader.readLine()) != null){
 
-            System.out.println(currentLine);
+          System.out.println(currentLine);
 
         }
     } catch (IOException ioe) {
-            System.out.println("Can't read file: "
-                              + ioe.getMessage());
+        System.out.println("Can't read file: " +
+                             ioe.getMessage());
     }
 
-    System.out.println("Your default character encoding is " + Charset.defaultCharset());
+    System.out.println(
+           "Your default character encoding is " + Charset.defaultCharset());
   }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In this example we use the same file <em>abc.dat</em> located in the root directory of our IDEA project Chapter11. Run the <code>MyTextFileReader</code> and it&#8217;ll print the following:</p>
+<p>In this example I used the same file <em>abc.dat</em> located in the root directory of our IDEA project Chapter11. When I ran the program <code>MyTextFileReader</code> it printed the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">This is a test file
-Your defatlt character enchoding is UTF-8</code></pre>
+<pre class="highlight"><code class="java language-java">The absolute path is /Users/yfain11/IdeaProjects/jfk/Chapter11/abc.dat
+The file size is 19
+This is a test file
+Your default character encoding is UTF-8</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -810,11 +895,12 @@ Your defatlt character enchoding is UTF-8</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">Can't read file: ./abc.dat</code></pre>
+<pre class="highlight"><code class="java language-java">Can't read file: abc.dat
+Your default character encoding is UTF-8</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This output was produced by the <code>catch</code> section from <code>MyTextFileReader</code> where the code invoked the <code>getMessage</code> method on the <code>IOException</code> object. The <code>./</code> prefix on Unix and MAC OS means the file located in current directory.</p>
+<p>This output was produced by the <code>catch</code> section from <code>MyTextFileReader</code> where the code invoked the <code>getMessage</code> method on the <code>IOException</code> object.</p>
 </div>
 </div>
 <div class="sect3">
@@ -838,7 +924,7 @@ Your defatlt character enchoding is UTF-8</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-04 07:23:33 EST
+Last updated 2015-01-11 04:50:43 EST
 </div>
 </div>
 </body>
