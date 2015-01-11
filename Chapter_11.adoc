@@ -217,7 +217,7 @@ Path path = Paths.get("abc.dat");
 
 Since we specified just the file name without a directory, the program will look for the file in the current directory, which in IDEA is the directory of your project (e.g. _Chapter11_). Outside of the IDE, the current directory is the one where the program was started from.
 
-But if we were to create a directory _data_ at the root of our project and move the file _abc.dat_ there, then the _relative path_ to the file starting from the project root would look as `"./data/abc.dat"` on Mac OS or `".\\data\\abc.dat"` on Windows. Two backslashes in a Java string correspond to one backslash in the Windows operational system.
+But if we were to create a directory _data_ at the root of our project and move the file _abc.dat_ there, then the _relative path_ to the file starting from the project root would look as `"data/abc.dat"` on Mac OS or `"data\\abc.dat"` on Windows. Two backslashes in a Java string correspond to one backslash in the Windows operational system.
 
 But your IDEA project is also located in some directory on disk, e.g. _chapter11_, which is a subdirectory of _practicalJava_. The file can be represented by the _absolute path_, which may look like this:
 
@@ -255,7 +255,7 @@ If you want to read a text file into a collection, where each element contains o
 List<String> myFileLines = Files.readAllLines(Paths.get("abc.dat"));
 ----
 
-Both `readAllBytes` and `readAllLines` do not use buffers, but for small files is not important.  For more efficient reading you can ask the class `Files` to create a buffered stream. For example, the program `MyTextFileReader` uses the method `newBufferedReader` for more efficient reading. 
+Both `readAllBytes` and `readAllLines` do not use buffers, but for small files is not important.  For more efficient reading you can ask the class `Files` to create a buffered stream. For example, the program `MyTextFileReader` uses the method `newBufferedReader` for more efficient reading. Here I used the same file _abc.dat_ located in the root directory of our IDEA project Chapter11. 
 
 [source, java]
 ----
@@ -273,38 +273,48 @@ public class MyTextFileReader {
 
   public static void main(String[] args){
 
-    Path path = Paths.get("abc.dat");
-
-    System.out.println("The absolute path is " + path.toAbsolutePath());
+    Path path = Paths.get("abc.dat");     // <1>
+    System.out.println("The absolute path is " + 
+                         path.toAbsolutePath());
 
     try {
+      if ( Files.exists(path)){         // <2>
+          System.out.println("The file size is " + Files.size(path));
+      }
 
-        if ( Files.exists(path)){
-            System.out.println("The file size is " + Files.size(path));
-        }
+      BufferedReader bufferedReader=    // <3>
+               Files.newBufferedReader(path, StandardCharsets.UTF_8);
 
-        BufferedReader bufferedReader= 
-                 Files.newBufferedReader(path, StandardCharsets.UTF_8);
+      String currentLine;
 
-        String currentLine;
+      while ((currentLine =             // <4>
+             bufferedReader.readLine()) != null){
 
-        while ((currentLine = bufferedReader.readLine()) != null){
+        System.out.println(currentLine);
 
-          System.out.println(currentLine);
-
-        }
+      }
     } catch (IOException ioe) {
         System.out.println("Can't read file: " +
                              ioe.getMessage());
     }
 
-    System.out.println(
+    System.out.println(             // <5>
            "Your default character encoding is " + Charset.defaultCharset());
   }
 }
-----
+---- 
 
-In this example I used the same file _abc.dat_ located in the root directory of our IDEA project Chapter11. When I ran the program `MyTextFileReader` it printed the following:
+<1> The program starts with creating a `Path` object from _abc.dat_ and printing its absolute path.
+
+<2>  Then it checks if the file represented by the path exists and prints its size in bytes.
+
+<3>  Here we're opening the buffered reader capable of reading text encoded with a character set `UTF-8`.
+
+<4> Reading the text lines from the buffer. 
+
+<5> Print the default character set being used for those who are interested.
+
+When I ran the program `MyTextFileReader` it printed the following:
 
 [source, java]
 ----
@@ -323,11 +333,99 @@ Your default character encoding is UTF-8
 ----
 This output was produced by the `catch` section from `MyTextFileReader` where the code invoked the `getMessage` method on the `IOException` object.  
 
-==== Writing a Text File
+==== Writing Into a File
+
+Writing into a file is as reading one. Start with creating create an instance of the `Path` object.  If you want to write bytes, create a byte array, populate it with data and call the method `write` on the class `Files`. If you want to write some text into a file, just convert the text from a `String` into a byte array and then call the method `write`, for example:
+
+[source, java]
+----
+Path path = Paths.get("data/scores.txt");
+
+Files.write(path, myScore.getBytes(),
+                    StandardOpenOption.APPEND);
+----
+
+When your program opens a file for writing, you need to consider different options. For example, you may want to append text to an existing file, hence the above code snippet passes the argument  `StandardOpenOption.APPEND` to method `write`. If you want to create a file from scratch every time you run the program, use the option `StandardOpenOption.CREATE`.
+
+The following program `MyTextFileWriter` writes the text into a file `scores.txt` in the directory `data`.
+
+[source, java]
+----
+package niosamples;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+
+public class MyTextFileWriter {
+
+  public static void main(String[] args){
+
+    System.out.println("The current directory is "+
+         System.getProperty("user.dir"));   // <1>
+
+    String myScore =                        // <2>
+                "My game score is 28000 " + 
+                     LocalDateTime.now() + "\n";
+
+    Path path = Paths.get("data/scores.txt"); // <3>
+
+    try {
+
+        if ( Files.exists(path)){            // <4>
+            Files.write(path, myScore.getBytes(),
+                      StandardOpenOption.APPEND);
+        } else {
+            Files.write(path, myScore.getBytes(),
+                      StandardOpenOption.CREATE);
+        }
+
+        System.out.println("The game score was saved at " + path.toAbsolutePath());
+    } catch (IOException ioe) {
+        System.out.println("Can't write file: " 
+                             + ioe.getMessage());
+    }
+  }
+}
+----
+
+<1> For illustration purposes I want the program to print its current directory, which is stored in a special Java variable `user.dir`.
+
+<2> Then I populate a string with the content "My game score is 28000" and concatenate the current date and time followed by `\n`, which is the end of line marker.
+
+<3> Creating a `Path` object pointing at the file `score.txt`.
+
+<4> Check if the file `score.txt` already exists, append the new content to it. If the file doesn't exists – create it and write the content there.
+  
+The program `MyTextFileWriter` printed the following on my console:
+
+[source, java]
+----
+The current directory is /Users/yfain11/IdeaProjects/jfk/Chapter11
+The game score was saved at /Users/yfain11/IdeaProjects/jfk/Chapter11/data/scores.txt
+----
+
+After running `MyTextFileWriter` twice I opened the file _scores.txt_ just to see what's in there. Here's what I found there:
+
+[source, java]
+---- 
+My game score is 28000 2015-01-11T09:07:49.352
+My game score is 28000 2015-01-11T09:10:11.049
+----
+
+Each time the program saved the same score of 28000
+attaching the system date and time.  This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package `java.time` you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle's tutorial on working with Date and Time API if interested. A link ........
+
+
 
 ==== Copying a File
 
 === Serialization: Turn an Object Into Bytes
+
+Imagine a building that, with a push of a button, can be turned into a pile of construction materials and the possessions of its residents. Push another button and the building is magically re-created in its original form in a different location. This is what Java serialization is about. By “clicking the serialize button” you turn an instance of an object into a pile of bytes, and “clicking the deserialize button” magically re-creates the object.
 
 === Saving User's Preferences
 
