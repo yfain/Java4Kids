@@ -193,24 +193,78 @@ The Java classes `FileReader` and `FileWriter` from the package `java.io` were s
 For efficiency, the reading can be piped with the `BufferedReader` or `BufferedWriter`, which read or write from/to the stream buffering characters. I'll show you examples of working with text files in the next section. 
 
 
-=== A java.nio Style of Working With Files 
+=== Working With Files Using java.nio
 
+The `java.nio` package contains classes that offer a simplified and more efficient way of working with files, and you'll see some useful examples here. But first I'd like to introduce a classes Path and Paths that will represent a file you're planning to work with. 
 
 ==== Using Classes Path and Paths
 
-==== Using Classes File and Files
+So far we worked with files located in the root directory of our IDEA project. But files are grouped in directories (folders), which in turn can include nested directories and files. More over, files are represented differently in Windows, Mac OS and Linux operational systems. For example, in Windows the pull path to a file may look like this:
+_c:\mystuff\games\tictactoeScores.txt_
 
+In Mac OS or Linux disks are not named with letters like _c:_ or _d:_. For example, the path to user's files starts from the _Users_ directory. Besides a backslash is not used for a separator symbol there. A full path to a file _tictactoeScores.txt_ of the user _mary_ may look like this:
 
-==== Reading a Text File
+_/Users/mary/mystuff/games/tictactoeScores.txt_
 
+So before even opening a file you can create an instance of the object `Path`, which doesn't open or reads a file, but represents the location of the file on the disk. 
 
+There is a special class `Paths` (yes, in plural) that includes a number of static methods, and in particular, can build the `Path` object for you. For example, you can invoke the method `get` passing the name of the file as the argument:
 
 [source, java]
 ----
+Path path = Paths.get("abc.dat");
+----
+
+Since we specified just the file name without a directory, the program will look for the file in the current directory, which in IDEA is the directory of your project (e.g. _Chapter11_). Outside of the IDE, the current directory is the one where the program was started from.
+
+But if we were to create a directory _data_ at the root of our project and move the file _abc.dat_ there, then the _relative path_ to the file starting from the project root would look as `"./data/abc.dat"` on Mac OS or `".\\data\\abc.dat"` on Windows. Two backslashes in a Java string correspond to one backslash in the Windows operational system.
+
+But your IDEA project is also located in some directory on disk, e.g. _chapter11_, which is a subdirectory of _practicalJava_. The file can be represented by the _absolute path_, which may look like this:
+
+_c:\practicalJava\chapter11\data\abc.dat_
+
+or 
+
+_/Users/mary/practicalJava/chapter11/data/abc.dat_
+
+
+==== Using the Class Files
+
+The class `Files` has several methods that will help you with file manipulations. It can create, delete, rename and copy files. There are methods to read and write files too.  
+
+==== Reading a File
+
+The simplest way to read a file is by calling the method `readAllBytes` on the class `Files`. The following line reads the file _abc.dat_ into an array of bytes:
+
+[source, java]
+----
+byte[] myFileBytes = Files.readAllBytes(Paths.get("abc.dat");
+----
+
+If the file contains text, you can read the file into a `String` variable like this:
+
+[source, java]
+----
+String myFileText = new String(Files.readAllBytes(Paths.get("abc.dat")));  
+----
+
+If you want to read a text file into a collection, where each element contains one line from the file use the method `readAllLines`.  
+
+[source, java]
+----
+List<String> myFileLines = Files.readAllLines(Paths.get("abc.dat"));
+----
+
+Both `readAllBytes` and `readAllLines` do not use buffers, but for small files is not important.  For more efficient reading you can ask the class `Files` to create a buffered stream. For example, the program `MyTextFileReader` uses the method `newBufferedReader` for more efficient reading. 
+
+[source, java]
+----
+package niosamples;
+
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -219,43 +273,55 @@ public class MyTextFileReader {
 
   public static void main(String[] args){
 
-    Path path = Paths.get(".","abc.dat");
+    Path path = Paths.get("abc.dat");
+
+    System.out.println("The absolute path is " + path.toAbsolutePath());
 
     try {
-        BufferedReader bufferedReader= Files.newBufferedReader(path, StandardCharsets.UTF_8);
+
+        if ( Files.exists(path)){
+            System.out.println("The file size is " + Files.size(path));
+        }
+
+        BufferedReader bufferedReader= 
+                 Files.newBufferedReader(path, StandardCharsets.UTF_8);
 
         String currentLine;
 
         while ((currentLine = bufferedReader.readLine()) != null){
 
-            System.out.println(currentLine);
+          System.out.println(currentLine);
 
         }
     } catch (IOException ioe) {
-            System.out.println("Can't read file: "  
-                              + ioe.getMessage());
+        System.out.println("Can't read file: " +
+                             ioe.getMessage());
     }
 
-    System.out.println("Your default character encoding is " + Charset.defaultCharset());    
+    System.out.println(
+           "Your default character encoding is " + Charset.defaultCharset());
   }
 }
 ----
 
-In this example we use the same file _abc.dat_ located in the root directory of our IDEA project Chapter11. Run the `MyTextFileReader` and it'll print the following:
+In this example I used the same file _abc.dat_ located in the root directory of our IDEA project Chapter11. When I ran the program `MyTextFileReader` it printed the following:
 
 [source, java]
 ----
+The absolute path is /Users/yfain11/IdeaProjects/jfk/Chapter11/abc.dat
+The file size is 19
 This is a test file
-Your defatlt character enchoding is UTF-8
+Your default character encoding is UTF-8
 ----
 
 Now make an experiment to see if the `IOException` is thrown if the file is not found where expected to be. Just move the file _abc.dat_ into a different directory and re-run `MyTextFileReader`. Now the console output looks different:
 
 [source, java]
 ----
-Can't read file: ./abc.dat
+Can't read file: abc.dat
+Your default character encoding is UTF-8
 ----
-This output was produced by the `catch` section from `MyTextFileReader` where the code invoked the `getMessage` method on the `IOException` object. The `./` prefix on Unix and MAC OS means the file located in current directory. 
+This output was produced by the `catch` section from `MyTextFileReader` where the code invoked the `getMessage` method on the `IOException` object.  
 
 ==== Writing a Text File
 
