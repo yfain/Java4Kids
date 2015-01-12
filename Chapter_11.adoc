@@ -160,7 +160,8 @@ public class MyBufferedByteReader {
 
   public static void main(String[] args) {
 
-    try (FileInputStream myFile = new      // <1>FileInputStream("abc.dat");
+    try (FileInputStream myFile = new 
+                    FileInputStream("abc.dat");  // <1>
          BufferedInputStream buff = new 
          BufferedInputStream(myFile);){
 
@@ -506,7 +507,119 @@ When the user selects the menu option _Save Game State_, the program has to crea
 
 Luckily, Java greatly simplifies this process. You can create and instance of the Java object, populate it with the values, and then _serialize_ this instance into a bunch of bytes in a special format that remembers the structure of the class `GameState`. Accordingly, when you need to re-create the instance of the `GameState` for these bytes, you can _deserialize_ the object in one shot with all its fields values.
 
-Let's see serialization in action. 
+A Java object can be serialized if it implements `Serializabe` interface. It's a very simple interface to implement, as it doesn't declare any abstract methods. Just add `implements Serializable` to the class declaration to make a class serializable. The following class `GameState` will represent the state of the game.
+
+[source, java]
+----
+import java.io.Serializable;
+
+public class GameState implements Serializable {
+
+    String playerName;                      // <1>
+    int level;
+    int score;
+    int remainingLives;
+
+  GameState(String playerName, int Level,   // <2>
+                   int score, int remainingLives){
+
+    this.playerName = playerName;
+    this.level=level;
+    this.score=score;
+    this.remainingLives = remainingLives;
+  }
+
+  public String toString(){                 // <3>
+
+    return "PlayerName: " + playerName + ", level:" + level + ", score: " + score + 
+    ", remainingLives: " + remainingLives;
+  }
+}
+----
+
+<1> The `GameState` class has four fields that describe the current state of the game.
+
+<2> The class constructor populates these fields with the values passed as arguments.
+
+<3> We override the method `toString` to be able to print the content of the fields. The method `toString` is declared in the class `Object` - the ancestor of all Java classes. For example, if you write `System.out.println(myObject)`, Java finds and invokes the `toString`method on the object `myObject`. You'll see this in action in the class `GameStateManager` below.  
+ 
+Java objects are serialized into an I/O stream of type `ObjectOutputStream`. You'll need to create an instance of `OutputStream`, pipe it with `ObjectOutputStream`, and invoke a method `writeObject`.
+
+To deserialize (to read back) a Java object you need to create an instance of `InputStream`,  pipe it with `ObjectInputStream`, and invoke a method `readObject`.  
+
+Let's create a class `GameStateManager` that will perform the following actions:
+
+* Create an instance of the class `GameState` and populate its fields with some data.
+* Serialize this instance of `GameState` into the file named `gamestate.ser`.
+* Deserialize the instance of `GameState`from the file 
+`gamestate.ser` into a new object.
+
+
+[source, java]
+----
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+public class GameStateManager {
+
+  public static void main(String[] args) {
+
+    // Create and populate the GameState object
+    GameState gameState = 
+              new GameState("Mary", 45,28000,3);
+
+    // The file for serialization/deserialization
+    Path path = Paths.get("gamestate.ser");
+
+    saveGameState(path, gameState);
+    System.out.println("The GameStateObject is serialized");
+
+    GameState deserializedGameState = 
+                               loadGameState(path);
+    System.out.println("Deserialized game state; " +
+                             deserializedGameState);
+  }
+
+   // Serialize the gameState into a file
+  private static void saveGameState(Path path, GameState gameState) {
+
+    try (ObjectOutputStream whereToWrite =
+          new ObjectOutputStream(Files.newOutputStream(path, StandardOpenOption.CREATE))){
+
+        whereToWrite.writeObject(gameState);
+
+    } catch (IOException ioe) {
+           System.out.println("Can't serialize file: " + ioe.getMessage());
+    }
+  }
+
+  // Deserialize the GameState from a file
+  private static GameState loadGameState(Path path){
+
+      GameState loadedGameState = null;
+
+      try (ObjectInputStream whereToReadFrom =
+                   new ObjectInputStream(Files.newInputStream(path))){
+          
+          loadedGameState= (GameState) whereToReadFrom.readObject();
+
+      } catch (ClassNotFoundException cnfe) {
+          System.out.println("WrongObjectType: " + cnfe.getMessage());
+      }  catch (IOException ioe) {
+          System.out.println("Can't deserialize file: " + ioe.getMessage());
+      }
+
+      return loadedGameState;
+  }
+}
+----
+
+
 
 
 === Project: Saving the Game Scores
@@ -540,8 +653,8 @@ class Score implements Serializable{
 [source, java]
 ----
 scores.stream()
-      .sorted(Comparator.comparing(Score::getScore)
-      .forEach(System.out::println);
+      .sorted(Comparator.comparing(s -> s.score).reversed())
+      .forEach(s -> System.out.println(s));
 ----
 
 7. From this step on all of the coding should be done in the  `main` method of `ScoreManager`.
