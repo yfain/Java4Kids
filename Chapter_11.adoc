@@ -551,7 +551,7 @@ Let's create a class `GameStateManager` that will perform the following actions:
 
 * Create an instance of the class `GameState` and populate its fields with some data.
 * Serialize this instance of `GameState` into the file named `gamestate.ser`.
-* Deserialize the instance of `GameState`from the file 
+* Deserialize the instance of `GameState` from the file 
 `gamestate.ser` into a new object.
 
 
@@ -571,27 +571,29 @@ public class GameStateManager {
 
     // Create and populate the GameState object
     GameState gameState = 
-              new GameState("Mary", 45,28000,3);
+              new GameState("Mary", 45,28000,3); // <1>
 
     // The file for serialization/deserialization
-    Path path = Paths.get("gamestate.ser");
+    Path path = Paths.get("gamestate.ser");      // <2>
 
-    saveGameState(path, gameState);
+    saveGameState(path, gameState);              // <3>
     System.out.println("The GameStateObject is serialized");
 
-    GameState deserializedGameState = 
+    GameState deserializedGameState =            // <4>
                                loadGameState(path);
     System.out.println("Deserialized game state; " +
                              deserializedGameState);
   }
 
    // Serialize the gameState into a file
-  private static void saveGameState(Path path, GameState gameState) {
+  private static void saveGameState(Path path,    // <5>
+                               GameState gameState) {
 
-    try (ObjectOutputStream whereToWrite =
-          new ObjectOutputStream(Files.newOutputStream(path, StandardOpenOption.CREATE))){
+    try (ObjectOutputStream whereToWrite =        // <6>
+          new ObjectOutputStream(Files.newOutputStream(
+                    path, StandardOpenOption.CREATE))){
 
-        whereToWrite.writeObject(gameState);
+        whereToWrite.writeObject(gameState);      // <7>
 
     } catch (IOException ioe) {
            System.out.println("Can't serialize file: " + ioe.getMessage());
@@ -603,13 +605,13 @@ public class GameStateManager {
 
       GameState loadedGameState = null;
 
-      try (ObjectInputStream whereToReadFrom =
+      try (ObjectInputStream whereToReadFrom =    // <8>
                    new ObjectInputStream(Files.newInputStream(path))){
           
-          loadedGameState= (GameState) whereToReadFrom.readObject();
+          loadedGameState= (GameState) whereToReadFrom.readObject();                           // <9>
 
       } catch (ClassNotFoundException cnfe) {
-          System.out.println("WrongObjectType: " + cnfe.getMessage());
+          System.out.println("Can't find the declaration of GameState: " + cnfe.getMessage());
       }  catch (IOException ioe) {
           System.out.println("Can't deserialize file: " + ioe.getMessage());
       }
@@ -619,8 +621,39 @@ public class GameStateManager {
 }
 ----
 
+<1> The program starts with creating and populating the game state object. In this example I used hard-coded values, but in a real game they should be taken from the variables that reflect the actual game status.
 
+<2> The serialized file's name is `gamestate.ser` and it'll be represented by the `Path` object.
 
+<3> Then we call the method `saveGameState` that will serialize the object `GameState` into a file.
+
+<4> After serialization is complete, we deserialize it back into another instance of the game state object. The variable `deserializedGameState` points at this new instance. 
+
+<5> The method `saveGameState` is responsible for serializing the object. It takes two parameters - the path to the file and the reference to the object that has to be serialized. 
+
+<6> Now we're opening the file's `OutputStream` and pipe it up with the `ObjectOutputStream`.
+
+<7>  It takes just one line of code to serialize the `GameState` object into the file using the method `write`.
+
+<8> The method `loadGameState` deserializes the object from a file, and we're opening the `InputStream` and pipe it up with the `ObjectInputStream` 
+
+<9> It takes just one line of code to deserialize the file into a `GameState` object using the method `read`. In this example the same program serializes and deserializes the game state, but this may not be the case. You can send the serialized object to another computer on the network, and another program may deserialize the `GameState`. Hence it's important that the declaration of the `GameState` is available on both computers. The exception `ClassNotFoundException` will be thrown if the declaration of the class `GameState` is not available. 
+
+Run the program `GameStateManager`, and you'll see that it creates a new file `gamestate.ser`. Open this file in a text editor, and you'll see some gibberish. Java serializes objects in its internal format, which is not meant for reading by the humans. The console output will look like this:
+
+[source, java]
+----
+The GameStateObject is serialized
+Deserialized the game state
+Deserialized game state object; PlayerName: Mary, level:0, score: 28000, remainingLives: 3
+----
+
+If you place the breakpoint right after the invokation of the `loadGameState` method, you'll be able to see two different instances of the `GameState` object as shown below:
+
+[[FIG11-1]]
+image::images/fig_11_debug_serialize.png[]
+
+Note how IDEA conveniently shows the values of the variables not only in the debugger's view at the bottom but in the source code of the program in grayed out font.
 
 === Project: Saving the Game Scores
 
