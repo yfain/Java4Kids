@@ -702,7 +702,8 @@ public class MyBufferedByteReader {
 
   public static void main(String[] args) {
 
-    try (FileInputStream myFile = new      // &lt;1&gt;FileInputStream("abc.dat");
+    try (FileInputStream myFile = new
+                    FileInputStream("abc.dat");  <i class="conum" data-value="1"></i><b>(1)</b>
          BufferedInputStream buff = new
          BufferedInputStream(myFile);){
 
@@ -1129,7 +1130,138 @@ public class MyTextFileBufferedFileWriter {
 <p>Luckily, Java greatly simplifies this process. You can create and instance of the Java object, populate it with the values, and then <em>serialize</em> this instance into a bunch of bytes in a special format that remembers the structure of the class <code>GameState</code>. Accordingly, when you need to re-create the instance of the <code>GameState</code> for these bytes, you can <em>deserialize</em> the object in one shot with all its fields values.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s see serialization in action.</p>
+<p>A Java object can be serialized if it implements <code>Serializabe</code> interface. It&#8217;s a very simple interface to implement, as it doesn&#8217;t declare any abstract methods. Just add <code>implements Serializable</code> to the class declaration to make a class serializable. The following class <code>GameState</code> will represent the state of the game.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.io.Serializable;
+
+public class GameState implements Serializable {
+
+    String playerName;                      <i class="conum" data-value="1"></i><b>(1)</b>
+    int level;
+    int score;
+    int remainingLives;
+
+  GameState(String playerName, int Level,   <i class="conum" data-value="2"></i><b>(2)</b>
+                   int score, int remainingLives){
+
+    this.playerName = playerName;
+    this.level=level;
+    this.score=score;
+    this.remainingLives = remainingLives;
+  }
+
+  public String toString(){                 <i class="conum" data-value="3"></i><b>(3)</b>
+
+    return "PlayerName: " + playerName + ", level:" + level + ", score: " + score +
+    ", remainingLives: " + remainingLives;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>GameState</code> class has four fields that describe the current state of the game.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The class constructor populates these fields with the values passed as arguments.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>We override the method <code>toString</code> to be able to print the content of the fields. The method <code>toString</code> is declared in the class <code>Object</code> - the ancestor of all Java classes. For example, if you write <code>System.out.println(myObject)</code>, Java finds and invokes the <code>toString`method on the object `myObject</code>. You&#8217;ll see this in action in the class <code>GameStateManager</code> below.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Java objects are serialized into an I/O stream of type <code>ObjectOutputStream</code>. You&#8217;ll need to create an instance of <code>OutputStream</code>, pipe it with <code>ObjectOutputStream</code>, and invoke a method <code>writeObject</code>.</p>
+</div>
+<div class="paragraph">
+<p>To deserialize (to read back) a Java object you need to create an instance of <code>InputStream</code>,  pipe it with <code>ObjectInputStream</code>, and invoke a method <code>readObject</code>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s create a class <code>GameStateManager</code> that will perform the following actions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create an instance of the class <code>GameState</code> and populate its fields with some data.</p>
+</li>
+<li>
+<p>Serialize this instance of <code>GameState</code> into the file named <code>gamestate.ser</code>.</p>
+</li>
+<li>
+<p>Deserialize the instance of <code>GameState`from the file
+`gamestate.ser</code> into a new object.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+public class GameStateManager {
+
+  public static void main(String[] args) {
+
+    // Create and populate the GameState object
+    GameState gameState =
+              new GameState("Mary", 45,28000,3);
+
+    // The file for serialization/deserialization
+    Path path = Paths.get("gamestate.ser");
+
+    saveGameState(path, gameState);
+    System.out.println("The GameStateObject is serialized");
+
+    GameState deserializedGameState =
+                               loadGameState(path);
+    System.out.println("Deserialized game state; " +
+                             deserializedGameState);
+  }
+
+   // Serialize the gameState into a file
+  private static void saveGameState(Path path, GameState gameState) {
+
+    try (ObjectOutputStream whereToWrite =
+          new ObjectOutputStream(Files.newOutputStream(path, StandardOpenOption.CREATE))){
+
+        whereToWrite.writeObject(gameState);
+
+    } catch (IOException ioe) {
+           System.out.println("Can't serialize file: " + ioe.getMessage());
+    }
+  }
+
+  // Deserialize the GameState from a file
+  private static GameState loadGameState(Path path){
+
+      GameState loadedGameState = null;
+
+      try (ObjectInputStream whereToReadFrom =
+                   new ObjectInputStream(Files.newInputStream(path))){
+
+          loadedGameState= (GameState) whereToReadFrom.readObject();
+
+      } catch (ClassNotFoundException cnfe) {
+          System.out.println("WrongObjectType: " + cnfe.getMessage());
+      }  catch (IOException ioe) {
+          System.out.println("Can't deserialize file: " + ioe.getMessage());
+      }
+
+      return loadedGameState;
+  }
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1175,8 +1307,8 @@ public class MyTextFileBufferedFileWriter {
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="java language-java">scores.stream()
-      .sorted(Comparator.comparing(Score::getScore)
-      .forEach(System.out::println);</code></pre>
+      .sorted(Comparator.comparing(s -&gt; s.score).reversed())
+      .forEach(s -&gt; System.out.println(s));</code></pre>
 </div>
 </div>
 </li>
@@ -1209,7 +1341,7 @@ public class MyTextFileBufferedFileWriter {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-11 19:36:41 EST
+Last updated 2015-01-12 09:07:31 EST
 </div>
 </div>
 </body>
