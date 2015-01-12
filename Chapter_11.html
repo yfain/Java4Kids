@@ -1194,8 +1194,8 @@ public class GameState implements Serializable {
 <p>Serialize this instance of <code>GameState</code> into the file named <code>gamestate.ser</code>.</p>
 </li>
 <li>
-<p>Deserialize the instance of <code>GameState`from the file
-`gamestate.ser</code> into a new object.</p>
+<p>Deserialize the instance of <code>GameState</code> from the file
+<code>gamestate.ser</code> into a new object.</p>
 </li>
 </ul>
 </div>
@@ -1215,27 +1215,29 @@ public class GameStateManager {
 
     // Create and populate the GameState object
     GameState gameState =
-              new GameState("Mary", 45,28000,3);
+              new GameState("Mary", 45,28000,3); <i class="conum" data-value="1"></i><b>(1)</b>
 
     // The file for serialization/deserialization
-    Path path = Paths.get("gamestate.ser");
+    Path path = Paths.get("gamestate.ser");      <i class="conum" data-value="2"></i><b>(2)</b>
 
-    saveGameState(path, gameState);
+    saveGameState(path, gameState);              <i class="conum" data-value="3"></i><b>(3)</b>
     System.out.println("The GameStateObject is serialized");
 
-    GameState deserializedGameState =
+    GameState deserializedGameState =            <i class="conum" data-value="4"></i><b>(4)</b>
                                loadGameState(path);
     System.out.println("Deserialized game state; " +
                              deserializedGameState);
   }
 
    // Serialize the gameState into a file
-  private static void saveGameState(Path path, GameState gameState) {
+  private static void saveGameState(Path path,    <i class="conum" data-value="5"></i><b>(5)</b>
+                               GameState gameState) {
 
-    try (ObjectOutputStream whereToWrite =
-          new ObjectOutputStream(Files.newOutputStream(path, StandardOpenOption.CREATE))){
+    try (ObjectOutputStream whereToWrite =        <i class="conum" data-value="6"></i><b>(6)</b>
+          new ObjectOutputStream(Files.newOutputStream(
+                    path, StandardOpenOption.CREATE))){
 
-        whereToWrite.writeObject(gameState);
+        whereToWrite.writeObject(gameState);      <i class="conum" data-value="7"></i><b>(7)</b>
 
     } catch (IOException ioe) {
            System.out.println("Can't serialize file: " + ioe.getMessage());
@@ -1247,13 +1249,13 @@ public class GameStateManager {
 
       GameState loadedGameState = null;
 
-      try (ObjectInputStream whereToReadFrom =
+      try (ObjectInputStream whereToReadFrom =    <i class="conum" data-value="8"></i><b>(8)</b>
                    new ObjectInputStream(Files.newInputStream(path))){
 
-          loadedGameState= (GameState) whereToReadFrom.readObject();
+          loadedGameState= (GameState) whereToReadFrom.readObject();                           <i class="conum" data-value="9"></i><b>(9)</b>
 
       } catch (ClassNotFoundException cnfe) {
-          System.out.println("WrongObjectType: " + cnfe.getMessage());
+          System.out.println("Can't find the declaration of GameState: " + cnfe.getMessage());
       }  catch (IOException ioe) {
           System.out.println("Can't deserialize file: " + ioe.getMessage());
       }
@@ -1262,6 +1264,67 @@ public class GameStateManager {
   }
 }</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The program starts with creating and populating the game state object. In this example I used hard-coded values, but in a real game they should be taken from the variables that reflect the actual game status.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The serialized file&#8217;s name is <code>gamestate.ser</code> and it&#8217;ll be represented by the <code>Path</code> object.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Then we call the method <code>saveGameState</code> that will serialize the object <code>GameState</code> into a file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>After serialization is complete, we deserialize it back into another instance of the game state object. The variable <code>deserializedGameState</code> points at this new instance.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The method <code>saveGameState</code> is responsible for serializing the object. It takes two parameters - the path to the file and the reference to the object that has to be serialized.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Now we&#8217;re opening the file&#8217;s <code>OutputStream</code> and pipe it up with the <code>ObjectOutputStream</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>It takes just one line of code to serialize the <code>GameState</code> object into the file using the method <code>write</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>The method <code>loadGameState</code> deserializes the object from a file, and we&#8217;re opening the <code>InputStream</code> and pipe it up with the <code>ObjectInputStream</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>It takes just one line of code to deserialize the file into a <code>GameState</code> object using the method <code>read</code>. In this example the same program serializes and deserializes the game state, but this may not be the case. You can send the serialized object to another computer on the network, and another program may deserialize the <code>GameState</code>. Hence it&#8217;s important that the declaration of the <code>GameState</code> is available on both computers. The exception <code>ClassNotFoundException</code> will be thrown if the declaration of the class <code>GameState</code> is not available.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Run the program <code>GameStateManager</code>, and you&#8217;ll see that it creates a new file <code>gamestate.ser</code>. Open this file in a text editor, and you&#8217;ll see some gibberish. Java serializes objects in its internal format, which is not meant for reading by the humans. The console output will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">The GameStateObject is serialized
+Deserialized the game state
+Deserialized game state object; PlayerName: Mary, level:0, score: 28000, remainingLives: 3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you place the breakpoint right after the invokation of the <code>loadGameState</code> method, you&#8217;ll be able to see two different instances of the <code>GameState</code> object as shown below:</p>
+</div>
+<div id="FIG11-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_11_debug_serialize.png" alt="fig 11 debug serialize">
+</div>
+</div>
+<div class="paragraph">
+<p>Note how IDEA conveniently shows the values of the variables not only in the debugger&#8217;s view at the bottom but in the source code of the program in grayed out font.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1341,7 +1404,7 @@ public class GameStateManager {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-12 09:07:31 EST
+Last updated 2015-01-12 09:58:15 EST
 </div>
 </div>
 </body>
