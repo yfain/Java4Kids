@@ -608,7 +608,7 @@ public class GameStateManager {
       try (ObjectInputStream whereToReadFrom =    // <8>
                    new ObjectInputStream(Files.newInputStream(path))){
           
-          loadedGameState= (GameState) whereToReadFrom.readObject();                           // <9>
+          loadedGameState= (GameState) whereToReadFrom.readObject();      // <9>
 
       } catch (ClassNotFoundException cnfe) {
           System.out.println("Can't find the declaration of GameState: " + cnfe.getMessage());
@@ -635,7 +635,7 @@ public class GameStateManager {
 
 <7>  It takes just one line of code to serialize the `GameState` object into the file using the method `write`.
 
-<8> The method `loadGameState` deserializes the object from a file, and we're opening the `InputStream` and pipe it up with the `ObjectInputStream` 
+<8> The method `loadGameState` deserializes the object from a file, and we're opening the `InputStream` and pipe it up with the `ObjectInputStream`.The data from file will be read in the same format and order as it was written. So if you'll change the declaration of the class `GameState` between serialization and deserialization, Java will throw `InvalidClassException`.  
 
 <9> It takes just one line of code to deserialize the file into a `GameState` object using the method `read`. In this example the same program serializes and deserializes the game state, but this may not be the case. You can send the serialized object to another computer on the network, and another program may deserialize the `GameState`. Hence it's important that the declaration of the `GameState` is available on both computers. The exception `ClassNotFoundException` will be thrown if the declaration of the class `GameState` is not available. 
 
@@ -657,44 +657,133 @@ Note how IDEA conveniently shows the values of the variables not only in the deb
 
 === Project: Saving the Game Scores
 
-To complete this project you need to understand how to compare objects. While comparing two numbers is easy, the objects include multiple fields and you need to decide which fields of the object should be compared to place objects in order. In this assignment you'll be ordering objects `Score` so the objects with larger value of the field `score` come first. in other words, you'll need to sort the objects `Score` in the descending order of the field `score`.  
+In this project you'll write a program that can keep the history of the game scores in a file by using Java serialization. This program should be able to deserialize and sort the saved scores showing the highest scores on top.
 
-1. Create a serializable class `Score`.
+To complete this project you need to understand how to compare objects. While comparing two numbers is easy, Java objects may include multiple fields and you need to decide which fields of the object should be compared to place objects in a certain order. In this assignment you'll be ordering objects `Score` so the objects with larger value of the field `score` should come first. In other words, you'll need to sort the objects `Score` in the descending order of the field `score`.  
+
+1. Create a serializable class `Score` to represent a game score.
 +
 [source, java]
 ----
-class Score implements Serializable{
-  String name;
-  int score;
-  LocalDateTime dateTime; 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-  Score(String name, int score, LocalDateTime dateTime){
-    this.name=name;
-    this.score=score;
-    this.dateTime=dateTime;
-  }  
+class Score implements Serializable {
+    String name;
+    int score;
+    LocalDateTime dateTime;
+
+    Score(String name, int score, LocalDateTime dateTime){
+        this.name=name;
+        this.score=score;
+        this.dateTime=dateTime;
+    }
+
+    public String toString(){
+        return name + " scored " + score + " on " + dateTime;
+    }
 }
 ----
 
-2. Create a class `ScoreManager` that will declare a collection of scores: `List<Score> scores`.
-3. Add the following methods to the class `ScoreManager`: `saveScores`, `loadScores`, and `sortScores`.
-4. Write the code in the method `saveScore` to serialize the collection `scores` into a file `scores.dat`
-5. Write the code in the method `loadScores` to deserialize the data from the file `scores.dat`
-.
-6. Write the code in the method `sortScores` to sort and print the collection to show the highest score on top. Use the Stream API, for example:
+2. Create a class `ScoreManager` with the method `main`. Inside `main` declare and instantiate a collection of scores: `List<Score> scores`. Create the `Path` object to point at the file `scores.ser`.
 +
 [source, java]
 ----
-scores.stream()
-      .sorted(Comparator.comparing(s -> s.score).reversed())
-      .forEach(s -> System.out.println(s));
+List<Score> scores = new ArrayList<>();
+
+Path path = Paths.get("scores.ser");
 ----
++
+The class `ArrayList` is one of the Java collections that implements the `List` interface, so declaring this variable of type `List` is valid. 
+3. Add the methods `saveScores` and `loadScores` to the class `ScoreManager`:
++
+[source, java]
+----
+private static void saveScores(Path path, List<Score> gameScores) {}
 
-7. From this step on all of the coding should be done in the  `main` method of `ScoreManager`.
-8. Create an instance of the `Score` class, populate its fields name, score, and date. The score field should have a random number generated by the class `java.util.Random`. Use its method `nextInt` to generate a number between 0 and 50000.
-9. Add the `Score` instance to the collection `scores`.
-10. Invoke the method `saveScore` to serialize `scores` into file.
-11. Invoke the method `loadScores` to populate the collection `scores`.
-12. Invoke the method `sortScores` and print the scores on the console.
-13. Run the program `ScoreManager` and observe that all scores are printed in descending order.
+private static List<Score> loadScores(Path path){}
+----
++
+4. Write the code in the method `saveScore` to serialize the collection `scores` into a file `scores.ser`. Use the code from the class `GameStateManager` as an example, but this time you'll need to serialize not just one object instance, but a collection of objects, for example:
++
+[source, java]
+----
+try (ObjectOutputStream whereToWrite = new ObjectOutputStream(
+  Files.newOutputStream(path, StandardOpenOption.CREATE))){
 
+    whereToWrite.writeObject(gameScores);
+
+} catch (IOException ioe) {
+    System.out.println("Can't serialize scores: " + ioe.getMessage());
+}
+----
++
+5. Write the code in the method `loadScores` to deserialize the data from the file `scores.ser`
+:
++
+[source, java]
+----
+List<Score> loadedScores= null;
+
+try (ObjectInputStream whereToReadFrom =
+    new ObjectInputStream(Files.newInputStream(path))){
+
+    loadedScores= 
+         (List<Score>) whereToReadFrom.readObject();
+
+} catch (ClassNotFoundException cnfe) {
+    System.out.println("Can't find the declaration of Score: " + cnfe.getMessage());
+}  catch (IOException ioe) {
+    System.out.println("Can't deserialize file: " + ioe.getMessage());
+}
+
+return loadedScores;
+----
++
+6. Starting from this step all coding should be done in the `main` method of `ScoreManager`. If the file _scores.ser_ already exists, load the collection of score. If _scores.ser_ doesn't exist, create a new collection.
++
+[source, java]
+----
+if (Files.exists(path)) {
+    scores = loadScores(path);
+
+} else {
+    scores = new ArrayList<>();
+}
+----
++
+7. Create an instance of the `Score` class, populate its fields `name`, `score`, and `dateTime`. Assign a random number generated by the class `java.util.Random` to the `score` field. Assign the current date and time to the field `dateTime` Use the method `nextInt` to generate a number between 0 and 50000. Add the hew score to the `scores` collection. 
++
+[source, java]
+----
+Random numberGenerator = new Random();
+
+Score myScore = new Score("Mary", numberGenerator.nextInt(50000), LocalDateTime.now());
+
+scores.add(myScore);
+----
++
+7. Print all the scores and invoke the method `saveScore` to serialize all `scores` into the file.
++
+[source, java]
+----
+System.out.println("All scores:");
+scores.forEach(s -> System.out.println(s));
+
+saveScores(path, scores);
+----
++
+9. Sort and print the collection to show the highest score on top. Use the class `Comarator` to specify that sorting should be done by the field `score`. For sorting in the descendant order invoke the method `reverseOrder`. Use the Stream API.
++
+[source, java]
+----
+System.out.println("Sorted scores (highest on top):");
+Comparator<Score> byScoreDescending =
+        Collections.reverseOrder(Comparator.comparing(s -> s.score));
+
+scores.stream()
+        .sorted(byScoreDescending)
+        .forEach(s -> System.out.println(s));
+----
++
+10. Run the program `ScoreManager` and observe that all scores are printed in descending order.
