@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 11. Working With Files</title>
+<title>Chapter 11. Working With Files and Serialization</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,7 +487,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-11-working-with-files"><a class="anchor" href="#_chapter-11-working-with-files"></a>Chapter 11. Working With Files</h2>
+<h2 id="_chapter-11-working-with-files-and-serialization"><a class="anchor" href="#_chapter-11-working-with-files-and-serialization"></a>Chapter 11. Working With Files and Serialization</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.</p>
@@ -499,7 +499,7 @@ p { margin-bottom: 1.25rem; }
 <p>For example, if a player wins a game and  you want to save the score, you can save it in a file called scores.txt using an output stream. If you want to save the player&#8217;s preferences (e.g. colors or fonts) you can save them in a file, and read and apply them when the user runs your program again.</p>
 </div>
 <div class="paragraph">
-<p>A program reads or writes data from/to a stream serially – byte after byte, character after character, etc.  Since your program may use different data types like <code>String</code>, <code>int</code>, <code>double</code>, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream.</p>
+<p>A program reads or writes data from/to a stream serially byte after byte, character after character, etc.  Since your program may use different data types like <code>String</code>, <code>int</code>, <code>double</code>, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream.</p>
 </div>
 <div class="paragraph">
 <p>In this chapter I&#8217;ll show you how to use I/O streams with files located in your computer. In the next chapter you&#8217;ll learn about I/O streams that can work with remote data located in other computers connected into a network.</p>
@@ -1104,6 +1104,150 @@ public class MyTextFileBufferedFileWriter {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_command-line-arguments"><a class="anchor" href="#_command-line-arguments"></a>Command-Line Arguments</h3>
+<div class="paragraph">
+<p>So far all of the code examples had the file names stored right in the code, or as  programmers say, <em>hard-coded</em> in the program.  This means that to create a program that reads a files with a different name you’d have to modify the code and recompile the program, which is not nice. You should create universal programs that can take parameters (e.g.the name of the file) from a command line during the program launch.</p>
+</div>
+<div class="paragraph">
+<p>In the first lesson of this book you&#8217;ve been running the program HelloWorld from a command window:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">java HelloWorld</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But you&#8217;re allowed to add command-line arguments right after the name of the program, for example,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">java HelloWorld Mary Smith</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case the program HelloWorld would get two command line parameters: Mary and Smith. If you remember, we always write the method main with a <code>String</code> array as an  argument:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public static void main(String[] args) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The JVM passes the <code>String</code> array to the main method, and if you start a program without any command line arguments, this array remains empty.  Otherwise, this array will have exactly as many elements as the number of command-line arguments  passed to the program.</p>
+</div>
+<div class="paragraph">
+<p>Let’s see  how we can use these command line arguments in a very simple class that will just print them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class PrintArguments {
+
+  public static void main(String[] args) {
+
+      // How many arguments we've got?
+      int numberOfArgs = args.length;
+
+      for (int i=0; i&lt;numberOfArgs; i++){
+          System.out.println("I've got " + args[i]);
+      }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This program loops through the array <code>args</code> and prints the arguments received from the command line, if any. Run this program from the Command (or Terminal) Window as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">java PrintArguments Mary Smith 123.5</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The program will print the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">I've got Mary
+I've got Smith
+I've got 123</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The JVM placed <code>Mary</code> into the array element <code>args[0]</code>, <code>Smith</code> into <code>args[1]</code>, and <code>123</code> into `args[2].</p>
+</div>
+<div class="paragraph">
+<p>Command-line arguments are always being passed to a program as strings.  It’s the responsibility of a program to convert the data to the appropriate data type, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">int myScore = Integer.parseInt(args[2]);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s always a good idea to check if the command line contains  correct number of arguments. Do this right in the beginning of the method <code>main</code>. If the program doesn’t receive expected arguments, it should print a brief message about it and immediately stop by using a special method <code>exit</code> of the class <code>System</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public static void main(String[] args) {
+ if (args.length != 3){
+  System.out.println(
+             "Please provide arguments, for example:");
+  System.out.println("java PrintArguments Mary Smith 123");
+
+  // Exit the program
+  System.exit(0);
+ }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can test your programs that take command-line arguments without leaving IntelliJ IDEA. Just open the menu Run, select Edit Configurations and enter the values in the field Program arguments as shown below:</p>
+</div>
+<div id="FIG11-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_11_commandline.png" alt="fig 11 commandline">
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s write a program to copy files. To make this program working with any files, the names of the original and destination files have to be passed to this program as command-line arguments.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class FileCopy {
+
+  public static void main(String[] args) {
+    if (args.length != 2) {
+       System.out.println(
+               "Please provide source and destination file names, for example:");
+        System.out.println("java FIleCopy abc.datcopyOfabc.dat");
+
+        // Exit the program
+       System.exit(0);
+   }
+    Path sourcePath = Paths.get(args[0]);
+   Path destinationPath = Paths.get(args[1]);
+    try {
+       Files.copy(sourcePath, destinationPath);
+       System.out.println("The file " + args[0] + " iscopied to " + args[1]);
+
+    } catch (IOException ioe) {
+       System.out.println("Can't copy file: " +
+                               ioe.getMessage());
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file copy is done by calling the method <code>copy</code> on the class <code>Files</code>. This program will work fine as long as the destination file doesn&#8217;t exist. You can check for file existence in the program by using the method <code>exists</code> of the class <code>Files</code> as it was done in the class <code>MyTextFileReader</code> earlier.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_serialization-turning-an-object-into-bytes"><a class="anchor" href="#_serialization-turning-an-object-into-bytes"></a>Serialization: Turning an Object Into Bytes</h3>
 <div class="paragraph">
 <p>Imagine a building that, with a push of a button, can be turned into a pile of construction materials. Load all these materials on the truck and drive to a different city. On arrival push another button, and the building is magically re-created in its original form. This is what Java serialization is about, but instead of a building we&#8217;ll use a Java object. By “clicking the serialize button” JVM turns an instance of an object into a pile of bytes, and “clicking the deserialize button” re-creates the object.</p>
@@ -1484,7 +1628,7 @@ scores.stream()
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-13 09:54:41 EST
+Last updated 2015-01-13 11:54:05 EST
 </div>
 </div>
 </body>
