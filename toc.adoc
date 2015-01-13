@@ -24,7 +24,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * <<Chapter_8.adoc#,Chapter 8. User Interaction in JavaFX>> 
 * <<Chapter_9.adoc#,Chapter 9. Error Handling>>
 * <<Chapter_10.adoc#,Chapter 10. Creating a Tic-Tac-Toe Game>>
-* <<Chapter_11.adoc#,Chapter 11. Working With Files (Work in progress)>>
+* <<Chapter_11.adoc#,Chapter 11. Working With Files and Serialization>>
 * Chapter 12. Networking: Downloading Stuff From the Internet
 * Chapter 13. Developing a Ping-Pong Game
 * Appendix_A. Publishing Your Code Online: GitHub
