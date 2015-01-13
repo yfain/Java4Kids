@@ -1252,7 +1252,7 @@ public class GameStateManager {
       try (ObjectInputStream whereToReadFrom =    <i class="conum" data-value="8"></i><b>(8)</b>
                    new ObjectInputStream(Files.newInputStream(path))){
 
-          loadedGameState= (GameState) whereToReadFrom.readObject();                           <i class="conum" data-value="9"></i><b>(9)</b>
+          loadedGameState= (GameState) whereToReadFrom.readObject();      <i class="conum" data-value="9"></i><b>(9)</b>
 
       } catch (ClassNotFoundException cnfe) {
           System.out.println("Can't find the declaration of GameState: " + cnfe.getMessage());
@@ -1297,7 +1297,7 @@ public class GameStateManager {
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The method <code>loadGameState</code> deserializes the object from a file, and we&#8217;re opening the <code>InputStream</code> and pipe it up with the <code>ObjectInputStream</code></td>
+<td>The method <code>loadGameState</code> deserializes the object from a file, and we&#8217;re opening the <code>InputStream</code> and pipe it up with the <code>ObjectInputStream</code>.The data from file will be read in the same format and order as it was written. So if you&#8217;ll change the declaration of the class <code>GameState</code> between serialization and deserialization, Java will throw <code>InvalidClassException</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
@@ -1330,68 +1330,148 @@ Deserialized game state object; PlayerName: Mary, level:0, score: 28000, remaini
 <div class="sect2">
 <h3 id="_project-saving-the-game-scores"><a class="anchor" href="#_project-saving-the-game-scores"></a>Project: Saving the Game Scores</h3>
 <div class="paragraph">
-<p>To complete this project you need to understand how to compare objects. While comparing two numbers is easy, the objects include multiple fields and you need to decide which fields of the object should be compared to place objects in order. In this assignment you&#8217;ll be ordering objects <code>Score</code> so the objects with larger value of the field <code>score</code> come first. in other words, you&#8217;ll need to sort the objects <code>Score</code> in the descending order of the field <code>score</code>.</p>
+<p>In this project you&#8217;ll write a program that can keep the history of the game scores in a file by using Java serialization. This program should be able to deserialize and sort the saved scores showing the highest scores on top.</p>
+</div>
+<div class="paragraph">
+<p>To complete this project you need to understand how to compare objects. While comparing two numbers is easy, Java objects may include multiple fields and you need to decide which fields of the object should be compared to place objects in a certain order. In this assignment you&#8217;ll be ordering objects <code>Score</code> so the objects with larger value of the field <code>score</code> should come first. In other words, you&#8217;ll need to sort the objects <code>Score</code> in the descending order of the field <code>score</code>.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create a serializable class <code>Score</code>.</p>
+<p>Create a serializable class <code>Score</code> to represent a game score.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">class Score implements Serializable{
-  String name;
-  int score;
-  LocalDateTime dateTime;
+<pre class="highlight"><code class="java language-java">import java.io.Serializable;
+import java.time.LocalDateTime;
 
-  Score(String name, int score, LocalDateTime dateTime){
-    this.name=name;
-    this.score=score;
-    this.dateTime=dateTime;
-  }
+class Score implements Serializable {
+    String name;
+    int score;
+    LocalDateTime dateTime;
+
+    Score(String name, int score, LocalDateTime dateTime){
+        this.name=name;
+        this.score=score;
+        this.dateTime=dateTime;
+    }
+
+    public String toString(){
+        return name + " scored " + score + " on " + dateTime;
+    }
 }</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Create a class <code>ScoreManager</code> that will declare a collection of scores: <code>List&lt;Score&gt; scores</code>.</p>
-</li>
-<li>
-<p>Add the following methods to the class <code>ScoreManager</code>: <code>saveScores</code>, <code>loadScores</code>, and <code>sortScores</code>.</p>
-</li>
-<li>
-<p>Write the code in the method <code>saveScore</code> to serialize the collection <code>scores</code> into a file <code>scores.dat</code></p>
-</li>
-<li>
-<p>Write the code in the method <code>loadScores</code> to deserialize the data from the file <code>scores.dat</code>
-.</p>
-</li>
-<li>
-<p>Write the code in the method <code>sortScores</code> to sort and print the collection to show the highest score on top. Use the Stream API, for example:</p>
+<p>Create a class <code>ScoreManager</code> with the method <code>main</code>. Inside <code>main</code> declare and instantiate a collection of scores: <code>List&lt;Score&gt; scores</code>. Create the <code>Path</code> object to point at the file <code>scores.ser</code>.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">scores.stream()
-      .sorted(Comparator.comparing(s -&gt; s.score).reversed())
-      .forEach(s -&gt; System.out.println(s));</code></pre>
+<pre class="highlight"><code class="java language-java">List&lt;Score&gt; scores = new ArrayList&lt;&gt;();
+
+Path path = Paths.get("scores.ser");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The class <code>ArrayList</code> is one of the Java collections that implements the <code>List</code> interface, so declaring this variable of type <code>List</code> is valid.</p>
+</div>
+</li>
+<li>
+<p>Add the methods <code>saveScores</code> and <code>loadScores</code> to the class <code>ScoreManager</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private static void saveScores(Path path, List&lt;Score&gt; gameScores) {}
+
+private static List&lt;Score&gt; loadScores(Path path){}</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>From this step on all of the coding should be done in the  <code>main</code> method of <code>ScoreManager</code>.</p>
+<p>Write the code in the method <code>saveScore</code> to serialize the collection <code>scores</code> into a file <code>scores.ser</code>. Use the code from the class <code>GameStateManager</code> as an example, but this time you&#8217;ll need to serialize not just one object instance, but a collection of objects, for example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">try (ObjectOutputStream whereToWrite = new ObjectOutputStream(
+  Files.newOutputStream(path, StandardOpenOption.CREATE))){
+
+    whereToWrite.writeObject(gameScores);
+
+} catch (IOException ioe) {
+    System.out.println("Can't serialize scores: " + ioe.getMessage());
+}</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Create an instance of the <code>Score</code> class, populate its fields name, score, and date. The score field should have a random number generated by the class <code>java.util.Random</code>. Use its method <code>nextInt</code> to generate a number between 0 and 50000.</p>
+<p>Write the code in the method <code>loadScores</code> to deserialize the data from the file <code>scores.ser</code>
+:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">List&lt;Score&gt; loadedScores= null;
+
+try (ObjectInputStream whereToReadFrom =
+    new ObjectInputStream(Files.newInputStream(path))){
+
+    loadedScores=
+         (List&lt;Score&gt;) whereToReadFrom.readObject();
+
+} catch (ClassNotFoundException cnfe) {
+    System.out.println("Can't find the declaration of Score: " + cnfe.getMessage());
+}  catch (IOException ioe) {
+    System.out.println("Can't deserialize file: " + ioe.getMessage());
+}
+
+return loadedScores;</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Add the <code>Score</code> instance to the collection <code>scores</code>.</p>
+<p>Starting from this step all coding should be done in the <code>main</code> method of <code>ScoreManager</code>. If the file <em>scores.ser</em> already exists, load the collection of score. If <em>scores.ser</em> doesn&#8217;t exist, create a new collection.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">if (Files.exists(path)) {
+    scores = loadScores(path);
+
+} else {
+    scores = new ArrayList&lt;&gt;();
+}</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Invoke the method <code>saveScore</code> to serialize <code>scores</code> into file.</p>
+<p>Create an instance of the <code>Score</code> class, populate its fields <code>name</code>, <code>score</code>, and <code>dateTime</code>. Assign a random number generated by the class <code>java.util.Random</code> to the <code>score</code> field. Assign the current date and time to the field <code>dateTime</code> Use the method <code>nextInt</code> to generate a number between 0 and 50000. Add the hew score to the <code>scores</code> collection.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Random numberGenerator = new Random();
+
+Score myScore = new Score("Mary", numberGenerator.nextInt(50000), LocalDateTime.now());
+
+scores.add(myScore);</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Invoke the method <code>loadScores</code> to populate the collection <code>scores</code>.</p>
+<p>Print all the scores and invoke the method <code>saveScore</code> to serialize all <code>scores</code> into the file.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">System.out.println("All scores:");
+scores.forEach(s -&gt; System.out.println(s));
+
+saveScores(path, scores);</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>Invoke the method <code>sortScores</code> and print the scores on the console.</p>
+<p>Sort and print the collection to show the highest score on top. Use the class <code>Comarator</code> to specify that sorting should be done by the field <code>score</code>. For sorting in the descendant order invoke the method <code>reverseOrder</code>. Use the Stream API.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">System.out.println("Sorted scores (highest on top):");
+Comparator&lt;Score&gt; byScoreDescending =
+        Collections.reverseOrder(Comparator.comparing(s -&gt; s.score));
+
+scores.stream()
+        .sorted(byScoreDescending)
+        .forEach(s -&gt; System.out.println(s));</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>Run the program <code>ScoreManager</code> and observe that all scores are printed in descending order.</p>
@@ -1404,7 +1484,7 @@ Deserialized game state object; PlayerName: Mary, level:0, score: 28000, remaini
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-12 09:58:15 EST
+Last updated 2015-01-13 09:54:41 EST
 </div>
 </div>
 </body>
