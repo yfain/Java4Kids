@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: ./
 
-== Chapter 11. Working With Files  
+== Chapter 11. Working With Files and Serialization 
 
 After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.  
 
@@ -9,7 +9,7 @@ In this chapter you’ll learn how to save data on disks and read them back into
 
 For example, if a player wins a game and  you want to save the score, you can save it in a file called scores.txt using an output stream. If you want to save the player's preferences (e.g. colors or fonts) you can save them in a file, and read and apply them when the user runs your program again.
 
-A program reads or writes data from/to a stream serially – byte after byte, character after character, etc.  Since your program may use different data types like `String`, `int`, `double`, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream. 
+A program reads or writes data from/to a stream serially byte after byte, character after character, etc.  Since your program may use different data types like `String`, `int`, `double`, you should use an appropriate Java stream, for example a byte stream, a character stream, or a data stream. 
 
 In this chapter I'll show you how to use I/O streams with files located in your computer. In the next chapter you'll learn about I/O streams that can work with remote data located in other computers connected into a network. 
 
@@ -484,6 +484,131 @@ In this class I've moved the code that check if the file exists into a separate 
 
 If you run the program `MyTextFileBufferedFileWriter` it'll produce the same results as `MyTextFileFileWriter`. If you use these programs for writing short texts you won't notice the difference in the speed of execution. But when you need to write large amount of information  `MyTextFileBufferedFileWriter` will work faster.
 
+=== Command-Line Arguments
+
+So far all of the code examples had the file names stored right in the code, or as  programmers say, _hard-coded_ in the program.  This means that to create a program that reads a files with a different name you’d have to modify the code and recompile the program, which is not nice. You should create universal programs that can take parameters (e.g.the name of the file) from a command line during the program launch.
+ 
+In the first lesson of this book you've been running the program HelloWorld from a command window:
+
+[source, java]
+----
+java HelloWorld
+----
+
+But you're allowed to add command-line arguments right after the name of the program, for example,
+
+[source, java]
+----
+java HelloWorld Mary Smith
+----
+
+In this case the program HelloWorld would get two command line parameters: Mary and Smith. If you remember, we always write the method main with a `String` array as an  argument:
+
+[source, java]
+----
+public static void main(String[] args) {}
+----
+
+The JVM passes the `String` array to the main method, and if you start a program without any command line arguments, this array remains empty.  Otherwise, this array will have exactly as many elements as the number of command-line arguments  passed to the program. 
+
+Let’s see  how we can use these command line arguments in a very simple class that will just print them:
+
+[source, java]
+----
+public class PrintArguments {
+
+  public static void main(String[] args) {
+
+      // How many arguments we've got?
+      int numberOfArgs = args.length;
+
+      for (int i=0; i<numberOfArgs; i++){
+          System.out.println("I've got " + args[i]);
+      }
+  }
+}
+----
+This program loops through the array `args` and prints the arguments received from the command line, if any. Run this program from the Command (or Terminal) Window as follows:
+
+[source, java]
+----
+java PrintArguments Mary Smith 123.5
+----
+
+The program will print the following:
+
+[source, java]
+----
+I've got Mary
+I've got Smith
+I've got 123
+---- 
+
+The JVM placed `Mary` into the array element `args[0]`, `Smith` into `args[1]`, and `123` into `args[2].
+
+Command-line arguments are always being passed to a program as strings.  It’s the responsibility of a program to convert the data to the appropriate data type, for example: 
+
+[source, java]
+----
+int myScore = Integer.parseInt(args[2]);
+----
+
+It’s always a good idea to check if the command line contains  correct number of arguments. Do this right in the beginning of the method `main`. If the program doesn’t receive expected arguments, it should print a brief message about it and immediately stop by using a special method `exit` of the class `System`:
+ 
+[source, java]
+----
+public static void main(String[] args) {
+ if (args.length != 3){
+  System.out.println(
+             "Please provide arguments, for example:"); 
+  System.out.println("java PrintArguments Mary Smith 123");
+
+  // Exit the program  
+  System.exit(0);
+ }
+}
+---- 
+
+You can test your programs that take command-line arguments without leaving IntelliJ IDEA. Just open the menu Run, select Edit Configurations and enter the values in the field Program arguments as shown below:
+
+[[FIG11-1]]
+image::images/fig_11_commandline.png[]
+ 
+Now let's write a program to copy files. To make this program working with any files, the names of the original and destination files have to be passed to this program as command-line arguments.
+
+[source, java]
+----
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class FileCopy {
+
+  public static void main(String[] args) {
+    if (args.length != 2) {
+       System.out.println(
+               "Please provide source and destination file names, for example:");
+        System.out.println("java FIleCopy abc.datcopyOfabc.dat");
+
+        // Exit the program
+       System.exit(0);
+   }
+    Path sourcePath = Paths.get(args[0]);
+   Path destinationPath = Paths.get(args[1]);
+    try {
+       Files.copy(sourcePath, destinationPath);
+       System.out.println("The file " + args[0] + " iscopied to " + args[1]);
+
+    } catch (IOException ioe) {
+       System.out.println("Can't copy file: " +
+                               ioe.getMessage());
+    }
+  }
+}
+----
+
+The file copy is done by calling the method `copy` on the class `Files`. This program will work fine as long as the destination file doesn't exist. You can check for file existence in the program by using the method `exists` of the class `Files` as it was done in the class `MyTextFileReader` earlier.
 
 === Serialization: Turning an Object Into Bytes
 
@@ -763,7 +888,7 @@ Score myScore = new Score("Mary", numberGenerator.nextInt(50000), LocalDateTime.
 scores.add(myScore);
 ----
 +
-7. Print all the scores and invoke the method `saveScore` to serialize all `scores` into the file.
+8. Print all the scores and invoke the method `saveScore` to serialize all `scores` into the file.
 +
 [source, java]
 ----
