@@ -514,14 +514,125 @@ Any network protocol defines the rules of how a program should send or receive d
 </div>
 <div class="paragraph">
 <p>This URL means that on the server nick.com exists , document called nickelodeon-football-stars.html located in the folder games. To be precise, from the URL you can&#8217;t tell if nickelodeon-football-stars.html is a file, or maybe some program generates this document on the fly.
-The port number plays the same role as an appartment number in a building.</p>
+The port number plays the same role as an apartment number in a building.</p>
 </div>
 <div class="paragraph">
-<p>The server nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, port number 80 is a default port number for all Web servers for HTTP connections. That&#8217;s why if you skip the port number, your Web browser will try to connect to the Web server via the port 80.</p>
+<p>The server (a.k.a. host) nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, the port number 80 is a default port number for all Web servers for HTTP connections. That&#8217;s why if you skip the port number, your Web browser will try to connect to the Web server via the port 80.</p>
+</div>
+<div class="paragraph">
+<p>If the URL starts with https, the s stander for "secure". All requests are encrypted by the browser and server for additional security. HTTPS request use port 443 by default.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_domain-names-and-ip-addresses"><a class="anchor" href="#_domain-names-and-ip-addresses"></a>Domain Names and IP Addresses</h3>
+<div class="paragraph">
+<p>The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g.2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com). When you&#8217;re entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.</p>
+</div>
+<div class="paragraph">
+<p>You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn&#8217;t specify any. Often they name the file with the home page content index.html, but it can be any other file too.</p>
+</div>
+<div class="paragraph">
+<p>Most of the people connected to the Internet are getting dynamic (temporary) IP addresses assigned to their computers, which can change without notice.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_downloading-files-from-the-web"><a class="anchor" href="#_downloading-files-from-the-web"></a>Downloading Files From the Web</h3>
+<div class="paragraph">
+<p>In Chapter 11 you&#8217;ve learned that to read local file a program has to know the file’s location—for example, c:\practice\training.html. Then you&#8217;d open a stream pointing to this file and read it.</p>
+</div>
+<div class="paragraph">
+<p>The same holds true for reading remote files — the only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can read  remote data using HTTP protocol.</p>
+</div>
+<div class="paragraph">
+<p>In particular, Java has a class, <code>java.net.URL</code>, that helps you connect to a remote computer on the Internet and get access to a resource there, provided that it&#8217;s not  protected from the public access.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s see how you how you can start writing a program that connects to a URL. First, create an instance of the <code>URL</code> object that points at some remote resource, e.g. Google.com:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">try{
+  URL myUrl = new URL("http://google.com");
+
+    // More code will go here
+}
+catch(MalformedURLException ex){
+      ex.getMessage();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>MalformedURLException</code> is thrown if you have a typo in the code. For example, you&#8217;ve typed htp instead of http or some spaces sneaked into the URL string. If the <code>MalformedURLException</code> is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.</p>
+</div>
+<div class="paragraph">
+<p>Creation of the <code>URL</code> object does not establish a connection with the remote computer; you still need to open a stream and read it. Perform the following steps to read a file from the Internet via HTTP connection:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create an instance of the class URL.</p>
+</li>
+<li>
+<p>Create an instance of the <code>URLConnection</code> class and open a connection using the <code>URL</code> object from Step 1.</p>
+</li>
+<li>
+<p>Get a reference to the input stream of this object by calling the method <code>getInputStream</code> from <code>URLConnection</code>.</p>
+</li>
+<li>
+<p>Read the data from the stream.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>While writing code for reading streams over the networks you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11. The server you are trying to connect.</p>
+</div>
+<div class="paragraph">
+<p>The following program <code>WebSiteReader</code> reads the raw code that google.com uses to deliver its home page, and prints this code (HTML and JavaScript)it on the system console.
+To test this program your computer has to be connected to the Internet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class WebSiteReader {
+  public static void main(String args[]){
+     String nextLine;
+     URL url = null;
+     URLConnection urlConn = null;
+
+     try
+     {
+        url  = new URL("http://www.google.com" );
+        urlConn = url.openConnection();
+     } catch( IOException e){
+         System.out.println("Can't connect to the provided URL:" + e.toString() );
+     }
+
+     try( InputStreamReader inStream = new InputStreamReader(
+           urlConn.getInputStream(), "UTF8");
+          BufferedReader buff  = new BufferedReader(inStream);){
+
+    // Read and print the code of the Google's home page
+      while (true){
+           nextLine =buff.readLine();
+           if (nextLine !=null){
+              System.out.println(nextLine);
+           }
+           else{
+             break;
+           }
+       }
+     } catch(MalformedURLException ex){
+         System.out.println ("Check the spelling of the URL" + ex.getMessage();
+     }
+     catch(IOException  ioe){
+    System.out.println("Can't read from the Internet: "+
+                                        ioe.toString());
+   }
+ }
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_downloading-music-from-last-fm"><a class="anchor" href="#_downloading-music-from-last-fm"></a>Downloading Music From Last.fm</h4>
 <div class="paragraph">
 <p>Free mp3: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a></p>
 </div>
@@ -529,9 +640,10 @@ The port number plays the same role as an appartment number in a building.</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-31 11:32:34 EST
+Last updated 2015-01-31 15:20:00 EST
 </div>
 </div>
 </body>
