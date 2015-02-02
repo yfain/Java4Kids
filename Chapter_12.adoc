@@ -89,7 +89,9 @@ public class WebSiteReader {
    try
    {
        url  = new URL("http://www.google.com" );   // <1>
+
        urlConn = url.openConnection();             // <2>
+
    } catch( IOException e){
        System.out.println("Can't connect to the provided URL:" + e.toString() );
    }
@@ -149,11 +151,11 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));
 The reason you may consider using the `URLConnection` class is that it could give you some additional control over the I/O process. For example, by calling its method `setDoOutput` with the argument `true` you enable `WebSiteReader`  to write to the remote `URL` too. 
 
 
-==== Downloading Music From Last.fm
+==== Downloading Any File From the Internet
 
 In Chapter 11 you've learned how to create a file and write into it. The WebSiteReader just prints the remote data on the console, but you could have saved the data in the local file as well. Let's combine using the class `URL` with the writing files techniques so we can download practically any unprotected file (such as images, music, and binary files) from the Internet. 
 
-The trick is in opening the file stream properly. The following class `FileDownload` gets the `URL` and the destination (local) filename as command-line arguments, connects to this resource, and downloads it, and saves it into a local file.
+The trick is in opening the file stream properly. The following class `FileDownload` gets the `URL` and the destination (local) filename as command-line arguments (explained in Chapter 11), connects to this resource, and downloads it, and saves it into a local file.
 
 [source, java]
 ----
@@ -164,7 +166,7 @@ class FileDownload{
      System.out.println(
     "Proper Usage:java FileDownload SourceFileURL OutputFileName");
      System.out.println(
-             "For example: http://myflex.org/yf/nyc.jpg nyc.jpg");
+             "For example: java FileDownload http://myflex.org/yf/nyc.jpg nyc.jpg");
      System.exit(-1);
    }
 
@@ -193,8 +195,19 @@ class FileDownload{
 }
 ----
 
+Run this program with the following command-line arguments:
+[source, java]
+----
+http://myflex.org/yf/nyc.jpg nyc.jpg
+----
+
+It'll download the photo that I took in the New York City and will save it the file _nyc.jpg_.
+
+[[FIG12-2]]
+image::images/fig_12_nyc.jpg[]
 
 
+==== Downloading Music From Last.fm
 
 Free mp3: http://www.last.fm/music/+free-music-downloads
 
