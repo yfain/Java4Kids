@@ -608,7 +608,9 @@ public class WebSiteReader {
    try
    {
        url  = new URL("http://www.google.com" );   <i class="conum" data-value="1"></i><b>(1)</b>
+
        urlConn = url.openConnection();             <i class="conum" data-value="2"></i><b>(2)</b>
+
    } catch( IOException e){
        System.out.println("Can't connect to the provided URL:" + e.toString() );
    }
@@ -686,12 +688,12 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 <p>The reason you may consider using the <code>URLConnection</code> class is that it could give you some additional control over the I/O process. For example, by calling its method <code>setDoOutput</code> with the argument <code>true</code> you enable <code>WebSiteReader</code>  to write to the remote <code>URL</code> too.</p>
 </div>
 <div class="sect3">
-<h4 id="_downloading-music-from-last-fm"><a class="anchor" href="#_downloading-music-from-last-fm"></a>Downloading Music From Last.fm</h4>
+<h4 id="_downloading-any-file-from-the-internet"><a class="anchor" href="#_downloading-any-file-from-the-internet"></a>Downloading Any File From the Internet</h4>
 <div class="paragraph">
 <p>In Chapter 11 you&#8217;ve learned how to create a file and write into it. The WebSiteReader just prints the remote data on the console, but you could have saved the data in the local file as well. Let&#8217;s combine using the class <code>URL</code> with the writing files techniques so we can download practically any unprotected file (such as images, music, and binary files) from the Internet.</p>
 </div>
 <div class="paragraph">
-<p>The trick is in opening the file stream properly. The following class <code>FileDownload</code> gets the <code>URL</code> and the destination (local) filename as command-line arguments, connects to this resource, and downloads it, and saves it into a local file.</p>
+<p>The trick is in opening the file stream properly. The following class <code>FileDownload</code> gets the <code>URL</code> and the destination (local) filename as command-line arguments (explained in Chapter 11), connects to this resource, and downloads it, and saves it into a local file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -702,7 +704,7 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
      System.out.println(
     "Proper Usage:java FileDownload SourceFileURL OutputFileName");
      System.out.println(
-             "For example: http://myflex.org/yf/nyc.jpg nyc.jpg");
+             "For example: java FileDownload http://myflex.org/yf/nyc.jpg nyc.jpg");
      System.exit(-1);
    }
 
@@ -732,6 +734,25 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 </div>
 <div class="paragraph">
+<p>Run this program with the following command-line arguments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">http://myflex.org/yf/nyc.jpg nyc.jpg</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It&#8217;ll download the photo that I took in the New York City and will save it the file <em>nyc.jpg</em>.</p>
+</div>
+<div id="FIG12-2" class="imageblock">
+<div class="content">
+<img src="./images/fig_12_nyc.jpg" alt="fig 12 nyc">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_downloading-music-from-last-fm"><a class="anchor" href="#_downloading-music-from-last-fm"></a>Downloading Music From Last.fm</h4>
+<div class="paragraph">
 <p>Free mp3: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a></p>
 </div>
 </div>
@@ -741,7 +762,7 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-02 17:17:22 EST
+Last updated 2015-02-02 17:47:24 EST
 </div>
 </div>
 </body>
