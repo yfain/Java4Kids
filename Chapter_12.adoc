@@ -1,0 +1,201 @@
+:toc-placement!:
+:imagesdir: ./
+
+== Chapter 12. Networking: Downloading Stuff 
+
+People can talk to each other if they know the same language. Computers connected to a network can communicate with each other if they use they use the same _protocols_. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. This only is possible if these servers also support HTTP. 
+Any network protocol defines the rules of how a program should send or receive data. 
+
+For example, if you want to find a book about Harry Potter in the online bookstore, you just enter Harry Potter in the search field of that bookstore Web site. But the browser sends a request that has a lot more data than a dozen of characters you've entered. According to HTTP protocol, every request should have a _request header_, which defines the method of sending data, identifies the browser that sends it, ask to connection to stay open (or not), and has other properties.
+
+Similarly, a server should run a program that receives and understands the request, finds in a database all books that have Harry Potter in the title, and sends a response back to you, adding a _response header_ to the data. Both request and response headers can add several hundred bytes each to the actual data being sent.
+
+Some other popular networking protocols are TCP/IP, UDP/IP, FTP, and WebSocket. In this chapter you'll learn how to write Java programs that can connect to remote servers and download data using HTTP protocol.
+
+=== How Computers Find Each Other on the Web
+
+If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number.  In the World Wide Web (WWW), to connect to a server you need to know its Uniform Resource Locator (a URL). Let's see how to read the URL using the following example:
+
+[[FIG12-1]]
+image::images/fig_12_url.png[]
+
+This URL means that on the server nick.com exists , document called nickelodeon-football-stars.html located in the folder games. To be precise, from the URL you can't tell if nickelodeon-football-stars.html is a file, or maybe some program generates this document on the fly.
+The port number plays the same role as an apartment number in a building. 
+
+The server (a.k.a. host) nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, the port number 80 is a default port number for all Web servers for HTTP connections. That's why if you skip the port number, your Web browser will try to connect to the Web server via the port 80. 
+
+If the URL starts with https, the s stander for "secure". All requests are encrypted by the browser and server for additional security. HTTPS request use port 443 by default.
+
+=== Domain Names and IP Addresses
+
+The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g.2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we're using domain names that are easier to remember (e.g. nick.com or google.com). When you're entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.
+
+You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn't specify any. Often they name the file with the home page content index.html, but it can be any other file too.
+ 
+Most of the people connected to the Internet are getting dynamic (temporary) IP addresses assigned to their computers, which can change without notice. 
+
+
+=== Downloading Files From the Web
+
+In Chapter 11 you've learned that to read local file a program has to know the file’s location—for example, c:\practice\training.html. Then you'd open a stream pointing to this file and read it.
+
+The same holds true for reading remote files — the only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html[java.net]. In this chapter we'll use the classes that can read  remote data using HTTP protocol. 
+
+In particular, Java has a class, `java.net.URL`, that helps you connect to a remote computer on the Internet and get access to a resource there, provided that it's not  protected from the public access. 
+
+Let's see how you how you can start writing a program that connects to a URL. First, create an instance of the `URL` object that points at some remote resource, e.g. Google.com:
+
+[source, java]
+----
+try{
+  URL myUrl = new URL("http://google.com");
+    
+    // More code will go here
+}
+catch(MalformedURLException ex){
+      ex.getMessage();
+}
+----
+
+The `MalformedURLException` is thrown if you have a typo in the code. For example, you've typed htp instead of http or some spaces sneaked into the URL string. If the `MalformedURLException` is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.
+
+Creation of the `URL` object does not establish a connection with the remote computer; you still need to open a stream and read it. Perform the following steps to read a file from the Internet via HTTP connection:
+
+1. Create an instance of the class URL.
+2. Create an instance of the `URLConnection` class and open a connection using the `URL` object from Step 1.
+3. Get a reference to the input stream of this object by calling the method `getInputStream` from `URLConnection`.
+4. Read the data from the stream.
+
+While writing code for reading streams over the networks you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11. The server you are trying to connect.
+
+The following program `WebSiteReader` reads and prints the code that google.com uses to deliver its home page.  
+
+[source, java]
+----
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+
+public class WebSiteReader {
+ public static void main(String args[]){
+
+   URL url = null;
+   URLConnection urlConn = null;
+
+   try
+   {
+       url  = new URL("http://www.google.com" );   // <1>
+       urlConn = url.openConnection();             // <2>
+   } catch( IOException e){
+       System.out.println("Can't connect to the provided URL:" + e.toString() );
+   }
+
+   try( InputStreamReader inStream =              // <3>
+        new InputStreamReader (urlConn.getInputStream(), "UTF8");
+        BufferedReader buff  = new BufferedReader(inStream);){                               
+
+       String currentLine;
+
+       // Read and print the code of the Google's home page
+       while ((currentLine = buff.readLine())!= null ){ //<4>
+
+               System.out.println(currentLine);
+       }
+   } catch(MalformedURLException ex){
+       System.out.println ("Check the spelling of the URL" + ex.getMessage());
+   }
+   catch(IOException  ioe){
+       System.out.println("Can't read from the Internet: "+
+               ioe.toString());
+   }
+ }
+}
+----
+
+<1> The `WebSiteReader` creates an instance of the class `URL`.
+
+<2>Then it gets a reference to an instance of the `URLConnection` object to open a connection with the stream.
+
+<3> After that `WebSiteReader` opens `InputStreamReader`, which is piped with `BufferedReader`.
+
+<4> The `while` loop reads the line from `BufferedReader` and if it's not `null`, it prints the line on the console. 
+Make sure your computer is connected to the Internet before you run the `WebSiteReader` program. Actually, I was writing this program while sitting on the plane without the Internet connection. This is what the program printed up in the sky: 
+
+[source, java]
+----
+Can't read from the Internet: java.net.UnknownHostException: www.google.com
+----
+
+When my computer got the Internet connection the output was different. Here's a fragment of what you can expect to see (it's HTML and JavaScript):
+
+[source, javascript]
+----
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage" lang="fr"><head><meta content="/logos/doodles/2015/110th-anniversary-of-first-publication-of-becassine-5701649318281216-hp.jpg" itemprop="image"><title>Google</title><script>(function(){window.google={kEI:'5OzPVMyJM4ukygPRz4CoBQ',kEXPI:'4011559,4013606,4020347,4020562,4021598,4022545,4023678,4024599,4024626,4025090,4027899,4027921,4028062,4028128,4028367,4028508,4028634,4028706,4028717,8300111,8500393,8500852,8501081,8501084,10200083,10200903,10200904',authuser:0,kSID:'5OzPVMyJM4ukygPRz4CoBQ'};google.kHL='us';})();(function(){google.lc=[];google.li=0;google.getEI=function(a){for(var b;a&&(!a.getAttribute||!(b=a.getAttribute("eid")));)a=a.parentNode;return b
+----
+
+The class `WebSiteReader` explicitly creates the object URLConnection. Strictly speaking, you could achieve the same result by using only the class `URL`:
+
+[source, java]
+----
+URL url = new URL("http://www.google.com");
+InputStream in = url.getInputStream();
+BufferedReader buff= new BufferedReader(new InputStreamReader(in));
+----
+
+The reason you may consider using the `URLConnection` class is that it could give you some additional control over the I/O process. For example, by calling its method `setDoOutput` with the argument `true` you enable `WebSiteReader`  to write to the remote `URL` too. 
+
+
+==== Downloading Music From Last.fm
+
+In Chapter 11 you've learned how to create a file and write into it. The WebSiteReader just prints the remote data on the console, but you could have saved the data in the local file as well. Let's combine using the class `URL` with the writing files techniques so we can download practically any unprotected file (such as images, music, and binary files) from the Internet. 
+
+The trick is in opening the file stream properly. The following class `FileDownload` gets the `URL` and the destination (local) filename as command-line arguments, connects to this resource, and downloads it, and saves it into a local file.
+
+[source, java]
+----
+class FileDownload{
+
+  public static void main(String args[]){
+   if (args.length!=2){
+     System.out.println(
+    "Proper Usage:java FileDownload SourceFileURL OutputFileName");
+     System.out.println(
+             "For example: http://myflex.org/yf/nyc.jpg nyc.jpg");
+     System.exit(-1);
+   }
+
+    URLConnection fileStream=null;
+    try{
+        URL remoteFile=new URL(args[0]);
+        fileStream=remoteFile.openConnection();
+    } catch (IOException ioe){
+      ioe.printStackTrace();
+    }
+
+   try(FileOutputStream fOut=new FileOutputStream(args[1]);
+        InputStream in = fileStream.getInputStream();){
+
+    // Read a remote file and save it in the local one
+    int data;
+    System.out.println("Starting the download from " + args[0]);
+    while((data=in.read())!=-1){
+         fOut.write(data);
+    }  
+    System.out.println("Finished downloading the file "+args[1]);
+  } catch (Exception e){
+     e.printStackTrace();
+  } 
+ }
+}
+----
+
+
+
+
+Free mp3: http://www.last.fm/music/+free-music-downloads
+
+
