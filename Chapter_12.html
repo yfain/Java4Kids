@@ -587,52 +587,150 @@ catch(MalformedURLException ex){
 <p>While writing code for reading streams over the networks you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11. The server you are trying to connect.</p>
 </div>
 <div class="paragraph">
-<p>The following program <code>WebSiteReader</code> reads the raw code that google.com uses to deliver its home page, and prints this code (HTML and JavaScript)it on the system console.
-To test this program your computer has to be connected to the Internet.</p>
+<p>The following program <code>WebSiteReader</code> reads and prints the code that google.com uses to deliver its home page.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">public class WebSiteReader {
-  public static void main(String args[]){
-     String nextLine;
-     URL url = null;
-     URLConnection urlConn = null;
+<pre class="highlight"><code class="java language-java">import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
-     try
-     {
-        url  = new URL("http://www.google.com" );
-        urlConn = url.openConnection();
-     } catch( IOException e){
-         System.out.println("Can't connect to the provided URL:" + e.toString() );
-     }
 
-     try( InputStreamReader inStream = new InputStreamReader(
-           urlConn.getInputStream(), "UTF8");
-          BufferedReader buff  = new BufferedReader(inStream);){
+public class WebSiteReader {
+ public static void main(String args[]){
 
-    // Read and print the code of the Google's home page
-      while (true){
-           nextLine =buff.readLine();
-           if (nextLine !=null){
-              System.out.println(nextLine);
-           }
-           else{
-             break;
-           }
+   URL url = null;
+   URLConnection urlConn = null;
+
+   try
+   {
+       url  = new URL("http://www.google.com" );   <i class="conum" data-value="1"></i><b>(1)</b>
+       urlConn = url.openConnection();             <i class="conum" data-value="2"></i><b>(2)</b>
+   } catch( IOException e){
+       System.out.println("Can't connect to the provided URL:" + e.toString() );
+   }
+
+   try( InputStreamReader inStream =              <i class="conum" data-value="3"></i><b>(3)</b>
+        new InputStreamReader (urlConn.getInputStream(), "UTF8");
+        BufferedReader buff  = new BufferedReader(inStream);){
+
+       String currentLine;
+
+       // Read and print the code of the Google's home page
+       while ((currentLine = buff.readLine())!= null ){ <i class="conum" data-value="4"></i><b>(4)</b>
+
+               System.out.println(currentLine);
        }
-     } catch(MalformedURLException ex){
-         System.out.println ("Check the spelling of the URL" + ex.getMessage();
-     }
-     catch(IOException  ioe){
-    System.out.println("Can't read from the Internet: "+
-                                        ioe.toString());
+   } catch(MalformedURLException ex){
+       System.out.println ("Check the spelling of the URL" + ex.getMessage());
+   }
+   catch(IOException  ioe){
+       System.out.println("Can't read from the Internet: "+
+               ioe.toString());
    }
  }
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>WebSiteReader</code> creates an instance of the class <code>URL</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>&lt;2&gt;Then it gets a reference to an instance of the <code>URLConnection</code> object to open a connection with the stream.</p>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>After that <code>WebSiteReader</code> opens <code>InputStreamReader</code>, which is piped with <code>BufferedReader</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>while</code> loop reads the line from <code>BufferedReader</code> and if it&#8217;s not <code>null</code>, it prints the line on the console.
+Make sure your computer is connected to the Internet before you run the <code>WebSiteReader</code> program. Actually, I was writing this program while sitting on the plane without the Internet connection. This is what the program printed up in the sky:</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Can't read from the Internet: java.net.UnknownHostException: www.google.com</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When my computer got the Internet connection the output was different. Here&#8217;s a fragment of what you can expect to see (it&#8217;s HTML and JavaScript):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="javascript language-javascript">&lt;!doctype html&gt;&lt;html itemscope="" itemtype="http://schema.org/WebPage" lang="fr"&gt;&lt;head&gt;&lt;meta content="/logos/doodles/2015/110th-anniversary-of-first-publication-of-becassine-5701649318281216-hp.jpg" itemprop="image"&gt;&lt;title&gt;Google&lt;/title&gt;&lt;script&gt;(function(){window.google={kEI:'5OzPVMyJM4ukygPRz4CoBQ',kEXPI:'4011559,4013606,4020347,4020562,4021598,4022545,4023678,4024599,4024626,4025090,4027899,4027921,4028062,4028128,4028367,4028508,4028634,4028706,4028717,8300111,8500393,8500852,8501081,8501084,10200083,10200903,10200904',authuser:0,kSID:'5OzPVMyJM4ukygPRz4CoBQ'};google.kHL='us';})();(function(){google.lc=[];google.li=0;google.getEI=function(a){for(var b;a&amp;&amp;(!a.getAttribute||!(b=a.getAttribute("eid")));)a=a.parentNode;return b</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The class <code>WebSiteReader</code> explicitly creates the object URLConnection. Strictly speaking, you could achieve the same result by using only the class <code>URL</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">URL url = new URL("http://www.google.com");
+InputStream in = url.getInputStream();
+BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The reason you may consider using the <code>URLConnection</code> class is that it could give you some additional control over the I/O process. For example, by calling its method <code>setDoOutput</code> with the argument <code>true</code> you enable <code>WebSiteReader</code>  to write to the remote <code>URL</code> too.</p>
+</div>
 <div class="sect3">
 <h4 id="_downloading-music-from-last-fm"><a class="anchor" href="#_downloading-music-from-last-fm"></a>Downloading Music From Last.fm</h4>
+<div class="paragraph">
+<p>In Chapter 11 you&#8217;ve learned how to create a file and write into it. The WebSiteReader just prints the remote data on the console, but you could have saved the data in the local file as well. Let&#8217;s combine using the class <code>URL</code> with the writing files techniques so we can download practically any unprotected file (such as images, music, and binary files) from the Internet.</p>
+</div>
+<div class="paragraph">
+<p>The trick is in opening the file stream properly. The following class <code>FileDownload</code> gets the <code>URL</code> and the destination (local) filename as command-line arguments, connects to this resource, and downloads it, and saves it into a local file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">class FileDownload{
+
+  public static void main(String args[]){
+   if (args.length!=2){
+     System.out.println(
+    "Proper Usage:java FileDownload SourceFileURL OutputFileName");
+     System.out.println(
+             "For example: http://myflex.org/yf/nyc.jpg nyc.jpg");
+     System.exit(-1);
+   }
+
+    URLConnection fileStream=null;
+    try{
+        URL remoteFile=new URL(args[0]);
+        fileStream=remoteFile.openConnection();
+    } catch (IOException ioe){
+      ioe.printStackTrace();
+    }
+
+   try(FileOutputStream fOut=new FileOutputStream(args[1]);
+        InputStream in = fileStream.getInputStream();){
+
+    // Read a remote file and save it in the local one
+    int data;
+    System.out.println("Starting the download from " + args[0]);
+    while((data=in.read())!=-1){
+         fOut.write(data);
+    }
+    System.out.println("Finished downloading the file "+args[1]);
+  } catch (Exception e){
+     e.printStackTrace();
+  }
+ }
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Free mp3: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a></p>
 </div>
@@ -643,7 +741,7 @@ To test this program your computer has to be connected to the Internet.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-01-31 15:20:00 EST
+Last updated 2015-02-02 17:17:22 EST
 </div>
 </div>
 </body>
