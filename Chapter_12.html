@@ -505,7 +505,7 @@ Any network protocol defines the rules of how a program should send or receive d
 <div class="sect2">
 <h3 id="_how-computers-find-each-other-on-the-web"><a class="anchor" href="#_how-computers-find-each-other-on-the-web"></a>How Computers Find Each Other on the Web</h3>
 <div class="paragraph">
-<p>If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number.  In the World Wide Web (WWW), to connect to a server you need to know its Uniform Resource Locator (a URL). Let&#8217;s see how to read the URL using the following example:</p>
+<p>If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number.  In the World Wide Web (WWW), to connect to a server you need to know its Uniform Resource Locator (a URL). Let&#8217;s see which parts a URL consists ofby using an example from Nickelodeon&#8217;s Web site:</p>
 </div>
 <div id="FIG12-1" class="imageblock">
 <div class="content">
@@ -513,14 +513,37 @@ Any network protocol defines the rules of how a program should send or receive d
 </div>
 </div>
 <div class="paragraph">
-<p>This URL means that on the server nick.com exists , document called nickelodeon-football-stars.html located in the folder games. To be precise, from the URL you can&#8217;t tell if nickelodeon-football-stars.html is a file, or maybe some program generates this document on the fly.
+<p>This URL tells me that on the host (a server) nick.com exists the file called <em>nickelodeon-football-stars.html</em> located in the folder games. To be precise, from the URL you can&#8217;t tell if nickelodeon-football-stars.html is a file, or maybe some program generates this document on the fly.
 The port number plays the same role as an apartment number in a building.</p>
 </div>
 <div class="paragraph">
 <p>The server (a.k.a. host) nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, the port number 80 is a default port number for all Web servers for HTTP connections. That&#8217;s why if you skip the port number, your Web browser will try to connect to the Web server via the port 80.</p>
 </div>
 <div class="paragraph">
-<p>If the URL starts with https, the s stander for "secure". All requests are encrypted by the browser and server for additional security. HTTPS request use port 443 by default.</p>
+<p>If the URL starts with <em>https</em>, the <em>s</em> stands for "secure". All requests are encrypted by the browser and server for additional security. If user enters a URL that starts with https and has no port number, the Web browser sends an HTTPS request to the server&#8217;s port 443.</p>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s dissect another URL from Nickelodeon.</p>
+</div>
+<div id="FIG12-1-0" class="imageblock">
+<div class="content">
+<img src="./images/fig_12_uri.png" alt="fig 12 uri">
+</div>
+</div>
+<div class="paragraph">
+<p>There is no file name here. What&#8217;s <em>video</em> in this URL stands for? It&#8217;s not a file, and it&#8217;s not a folder on the host either. It&#8217;s just an ID that represents some resources at nick.com. There is a program running at nick.com that understands what this ID means and redirects the request for the Web page with videos, but it brings you the content that may look like this:</p>
+</div>
+<div id="FIG12-3" class="imageblock">
+<div class="content">
+<img src="./images/fig_12_nick_videos.png" alt="fig 12 nick videos">
+</div>
+</div>
+<div class="paragraph">
+<p>Often the content that corresponds to a resource ID is not stored in a file, but is generated on the fly by a server-side program, and can change daily, hourly, every minute or every second.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;m sure that by the time you enter <em><a href="http://www.nick.com/videos">http://www.nick.com/videos</a></em> in your browser the content will be different.
+URL&#8217;s like this one can be called a Unified Resource Identifier (URI).</p>
 </div>
 </div>
 <div class="sect2">
@@ -529,7 +552,7 @@ The port number plays the same role as an apartment number in a building.</p>
 <p>The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g.2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com). When you&#8217;re entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.</p>
 </div>
 <div class="paragraph">
-<p>You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn&#8217;t specify any. Often they name the file with the home page content index.html, but it can be any other file too.</p>
+<p>You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn&#8217;t specify any. Often they name the file with the home page content <em>index.html</em>, but it can be any other file too.</p>
 </div>
 <div class="paragraph">
 <p>Most of the people connected to the Internet are getting dynamic (temporary) IP addresses assigned to their computers, which can change without notice.</p>
@@ -538,16 +561,16 @@ The port number plays the same role as an apartment number in a building.</p>
 <div class="sect2">
 <h3 id="_downloading-files-from-the-web"><a class="anchor" href="#_downloading-files-from-the-web"></a>Downloading Files From the Web</h3>
 <div class="paragraph">
-<p>In Chapter 11 you&#8217;ve learned that to read local file a program has to know the file’s location—for example, c:\practice\training.html. Then you&#8217;d open a stream pointing to this file and read it.</p>
+<p>In Chapter 11 you&#8217;ve learned that to read local file a program has to know the file’s location—for example, <em>c:\practice\training.html</em>. Then you&#8217;d open a stream pointing to this file and read it.</p>
 </div>
 <div class="paragraph">
 <p>The same holds true for reading remote files — the only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can read  remote data using HTTP protocol.</p>
 </div>
 <div class="paragraph">
-<p>In particular, Java has a class, <code>java.net.URL</code>, that helps you connect to a remote computer on the Internet and get access to a resource there, provided that it&#8217;s not  protected from the public access.</p>
+<p>In particular, Java has a class, <code>java.net.URL</code>, that helps you connect to a remote computer on the Internet and get access to a resource there, provided that it&#8217;s not protected from public access.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s see how you how you can start writing a program that connects to a URL. First, create an instance of the <code>URL</code> object that points at some remote resource, e.g. Google.com:</p>
+<p>Let&#8217;s see how you how you can start writing a program that connects to a URL. First, create an instance of the <code>URL</code> object that points at some remote resource, e.g. google.com:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -672,7 +695,7 @@ Make sure your computer is connected to the Internet before you run the <code>We
 </div>
 </div>
 <div class="paragraph">
-<p>The class <code>WebSiteReader</code> explicitly creates the object URLConnection. Strictly speaking, you could achieve the same result by using only the class <code>URL</code>:</p>
+<p>The class <code>WebSiteReader</code> explicitly creates the object <code>URLConnection</code>. Strictly speaking, you could achieve the same result by using only the class <code>URL</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -682,7 +705,7 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The reason you may consider using the <code>URLConnection</code> class is that it could give you some additional control over the I/O process. For example, by calling its method <code>setDoOutput</code> with the argument <code>true</code> you enable <code>WebSiteReader</code>  to write to the remote <code>URL</code> too.</p>
+<p>The reason you may consider using the <code>URLConnection</code> class is that it could give you some additional control over the I/O process. For example, by calling its method <code>setDoOutput</code> with the argument <code>true</code> you enable <code>WebSiteReader</code>  to write to the remote <code>URL</code> too. In which case you&#8217;d need to get a reference to an <code>OutputStream</code> object by calling <code>getOutputStream</code> method on the <code>URLConnection</code> object. If you wanted to write a program that can send data to the server, you&#8217;d need to learn server-side programming, which this book doesn&#8217;t cover.</p>
 </div>
 <div class="sect3">
 <h4 id="_downloading-any-file-from-the-internet"><a class="anchor" href="#_downloading-any-file-from-the-internet"></a>Downloading Any File From the Internet</h4>
@@ -759,7 +782,7 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-02 17:58:51 EST
+Last updated 2015-02-03 01:30:58 EST
 </div>
 </div>
 </body>
