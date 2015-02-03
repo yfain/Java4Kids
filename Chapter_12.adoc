@@ -120,7 +120,7 @@ public class WebSiteReader {
 
 <1> The `WebSiteReader` creates an instance of the class `URL`.
 
-<2>Then it gets a reference to an instance of the `URLConnection` object to open a connection with the stream.
+<2> Then it gets a reference to an instance of the `URLConnection` object to open a connection with the stream.
 
 <3> After that `WebSiteReader` opens `InputStreamReader`, which is piped with `BufferedReader`.
 
@@ -144,7 +144,7 @@ The class `WebSiteReader` explicitly creates the object URLConnection. Strictly 
 [source, java]
 ----
 URL url = new URL("http://www.google.com");
-InputStream in = url.getInputStream();
+InputStream in = url.openStream();
 BufferedReader buff= new BufferedReader(new InputStreamReader(in));
 ----
 
@@ -207,7 +207,7 @@ It'll download the photo that I took in the New York City and will save it the f
 image::images/fig_12_nyc.jpg[]
 
 
-==== Downloading Music From Last.fm
+=== Project: Downloading Music From Last.fm
 
 Free mp3: http://www.last.fm/music/+free-music-downloads
 
