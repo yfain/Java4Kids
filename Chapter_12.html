@@ -643,19 +643,16 @@ public class WebSiteReader {
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>The <code>WebSiteReader</code> creates an instance of the class <code>URL</code>.</td>
 </tr>
-</table>
-</div>
-<div class="paragraph">
-<p>&lt;2&gt;Then it gets a reference to an instance of the <code>URLConnection</code> object to open a connection with the stream.</p>
-</div>
-<div class="colist arabic">
-<table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Then it gets a reference to an instance of the <code>URLConnection</code> object to open a connection with the stream.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>After that <code>WebSiteReader</code> opens <code>InputStreamReader</code>, which is piped with <code>BufferedReader</code>.</td>
 </tr>
 <tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
 <td>The <code>while</code> loop reads the line from <code>BufferedReader</code> and if it&#8217;s not <code>null</code>, it prints the line on the console.
 Make sure your computer is connected to the Internet before you run the <code>WebSiteReader</code> program. Actually, I was writing this program while sitting on the plane without the Internet connection. This is what the program printed up in the sky:</td>
 </tr>
@@ -680,7 +677,7 @@ Make sure your computer is connected to the Internet before you run the <code>We
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="java language-java">URL url = new URL("http://www.google.com");
-InputStream in = url.getInputStream();
+InputStream in = url.openStream();
 BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 </div>
@@ -750,8 +747,9 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_downloading-music-from-last-fm"><a class="anchor" href="#_downloading-music-from-last-fm"></a>Downloading Music From Last.fm</h4>
+</div>
+<div class="sect2">
+<h3 id="_project-downloading-music-from-last-fm"><a class="anchor" href="#_project-downloading-music-from-last-fm"></a>Project: Downloading Music From Last.fm</h3>
 <div class="paragraph">
 <p>Free mp3: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a></p>
 </div>
@@ -759,10 +757,9 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-02 17:47:24 EST
+Last updated 2015-02-02 17:58:51 EST
 </div>
 </div>
 </body>
