@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 12. Networking: Downloading Stuff</title>
+<title>Chapter 12. Networking: Downloading Files From The Internet</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,25 +487,25 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-12-networking-downloading-stuff"><a class="anchor" href="#_chapter-12-networking-downloading-stuff"></a>Chapter 12. Networking: Downloading Stuff</h2>
+<h2 id="_chapter-12-networking-downloading-files-from-the-internet"><a class="anchor" href="#_chapter-12-networking-downloading-files-from-the-internet"></a>Chapter 12. Networking: Downloading Files From The Internet</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>People can talk to each other if they know the same language. Computers connected to a network can communicate with each other if they use they use the same <em>protocols</em>. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. This only is possible if these servers also support HTTP.
+<p>People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other if they use the same <em>protocol</em>. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. Such a communication is possible if the program running on the server also supports HTTP.
 Any network protocol defines the rules of how a program should send or receive data.</p>
 </div>
 <div class="paragraph">
-<p>For example, if you want to find a book about Harry Potter in the online bookstore, you just enter Harry Potter in the search field of that bookstore Web site. But the browser sends a request that has a lot more data than a dozen of characters you&#8217;ve entered. According to HTTP protocol, every request should have a <em>request header</em>, which defines the method of sending data, identifies the browser that sends it, ask to connection to stay open (or not), and has other properties.</p>
+<p>Say, you want to find a book about Harry Potter in the online bookstore. Usually you&#8217;d need to enter Harry Potter in the search field of that bookstore Web site and press the button to start the search. But the browser sends a request with a lot more data than a dozen of characters you&#8217;ve entered. According to HTTP protocol, every request should include a <em>request header</em>, which defines the method of sending data, identifies the browser that sends it, asks to connection to stay open (or not), and has other attributes.</p>
 </div>
 <div class="paragraph">
-<p>Similarly, a server should run a program that receives and understands the request, finds in a database all books that have Harry Potter in the title, and sends a response back to you, adding a <em>response header</em> to the data. Both request and response headers can add several hundred bytes each to the actual data being sent.</p>
+<p>Similarly, a server should run a program that receives and understands the HTTP request, finds all books that have Harry Potter in the title, and sends a response back to you, adding a <em>response header</em> to the data. Both request and response headers can add several hundred bytes to the actual data being sent.</p>
 </div>
 <div class="paragraph">
-<p>Some other popular networking protocols are TCP/IP, UDP/IP, FTP, and WebSocket. In this chapter you&#8217;ll learn how to write Java programs that can connect to remote servers and download data using HTTP protocol.</p>
+<p>Some other popular networking protocols are TCP/IP, FTP, WebSocket. In this chapter you&#8217;ll learn how to write Java programs that can connect to remote servers and download data using HTTP protocol.</p>
 </div>
 <div class="sect2">
 <h3 id="_how-computers-find-each-other-on-the-web"><a class="anchor" href="#_how-computers-find-each-other-on-the-web"></a>How Computers Find Each Other on the Web</h3>
 <div class="paragraph">
-<p>If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number.  In the World Wide Web (WWW), to connect to a server you need to know its Uniform Resource Locator (a URL). Let&#8217;s see which parts a URL consists ofby using an example from Nickelodeon&#8217;s Web site:</p>
+<p>If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number.  In the World Wide Web (WWW), to visit a Web site you need to know its Uniform Resource Locator (a URL). Let&#8217;s see which parts a URL consists of by using an example from Nickelodeon&#8217;s Web site:</p>
 </div>
 <div id="FIG12-1" class="imageblock">
 <div class="content">
@@ -513,14 +513,13 @@ Any network protocol defines the rules of how a program should send or receive d
 </div>
 </div>
 <div class="paragraph">
-<p>This URL tells me that on the host (a server) nick.com exists the file called <em>nickelodeon-football-stars.html</em> located in the folder games. To be precise, from the URL you can&#8217;t tell if nickelodeon-football-stars.html is a file, or maybe some program generates this document on the fly.
-The port number plays the same role as an apartment number in a building.</p>
+<p>This URL tells me that on the host (the server) nick.com exists the file called <em>nickelodeon-football-stars.html</em> located in the folder <em>games</em>. The port number plays the same role as an apartment number in a building.</p>
 </div>
 <div class="paragraph">
-<p>The server (a.k.a. host) nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, the port number 80 is a default port number for all Web servers for HTTP connections. That&#8217;s why if you skip the port number, your Web browser will try to connect to the Web server via the port 80.</p>
+<p>The server nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, the port number 80 is a default port number for all Web servers that use HTTP. That&#8217;s why if you skip the port number, your Web browser will try to connect to the Web server via the port 80.</p>
 </div>
 <div class="paragraph">
-<p>If the URL starts with <em>https</em>, the <em>s</em> stands for "secure". All requests are encrypted by the browser and server for additional security. If user enters a URL that starts with https and has no port number, the Web browser sends an HTTPS request to the server&#8217;s port 443.</p>
+<p>If a URL starts with <em>https</em>, the <em>s</em> stands for "secure". All requests and responses are automatically encrypted by the browser and the server for additional security. If the user enters a URL that starts with https and has no port number, the Web browser sends an HTTPS request to the server&#8217;s port 443.</p>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s dissect another URL from Nickelodeon.</p>
@@ -531,7 +530,7 @@ The port number plays the same role as an apartment number in a building.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>There is no file name here. What&#8217;s <em>video</em> in this URL stands for? It&#8217;s not a file, and it&#8217;s not a folder on the host either. It&#8217;s just an ID that represents some resources at nick.com. There is a program running at nick.com that understands what this ID means and redirects the request for the Web page with videos, but it brings you the content that may look like this:</p>
+<p>There is no file name here. What <em>video</em> stands for in this URL? It&#8217;s not a file, and it&#8217;s not a folder on the host either. It&#8217;s just an ID that represents some resources at nick.com. There is a program running at nick.com that understands what this ID means and redirects the request to the application that serves the Web page with videos that may look like this:</p>
 </div>
 <div id="FIG12-3" class="imageblock">
 <div class="content">
@@ -539,16 +538,16 @@ The port number plays the same role as an apartment number in a building.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Often the content that corresponds to a resource ID is not stored in a file, but is generated on the fly by a server-side program, and can change daily, hourly, every minute or every second.</p>
-</div>
-<div class="paragraph">
-<p>I&#8217;m sure that by the time you enter <em><a href="http://www.nick.com/videos">http://www.nick.com/videos</a></em> in your browser the content will be different.</p>
+<p>Often the content that corresponds to a resource ID is not stored in a file, but is generated on the fly by a server-side program and can change daily, hourly, every minute or every second. Most likely by the time you enter <em><a href="http://www.nick.com/videos">http://www.nick.com/videos</a></em> in your browser the content will be different.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_domain-names-and-ip-addresses"><a class="anchor" href="#_domain-names-and-ip-addresses"></a>Domain Names and IP Addresses</h3>
 <div class="paragraph">
-<p>The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com). When you&#8217;re entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.</p>
+<p>The name of the server (the host name) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com).</p>
+</div>
+<div class="paragraph">
+<p>When you&#8217;re entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format. If not found, you&#8217;ll get an error message that your search didn&#8217;t match any documents.</p>
 </div>
 <div class="paragraph">
 <p>You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn&#8217;t specify any. Often they name the file with the home page content <em>index.html</em>, but it can be any other file too.</p>
@@ -560,13 +559,13 @@ The port number plays the same role as an apartment number in a building.</p>
 <div class="sect2">
 <h3 id="_downloading-files-from-the-web"><a class="anchor" href="#_downloading-files-from-the-web"></a>Downloading Files From the Web</h3>
 <div class="paragraph">
-<p>In Chapter 11 you&#8217;ve learned that how to read a local file if you know its location. You&#8217;d open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can read  remote data using HTTP protocol.</p>
+<p>In Chapter 11 you&#8217;ve learned that how to read a local file if you know its location. You&#8217;d open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can exchange data with remote hosts using HTTP.</p>
 </div>
 <div class="paragraph">
-<p>In particular, Java has a class, <code>java.net.URL</code>, that helps you connect to a remote computer on the Internet and get access to a resource there, provided that it&#8217;s not protected from public access.</p>
+<p>In particular, Java has a class <code>java.net.URL</code> that helps your program to connect to a remote computer on the Internet and get access to a resource there, provided that it&#8217;s not protected from public access.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s see how you can start writing a program that create an instance of the <code>URL</code> object that points at some remote resource, e.g. google.com:</p>
+<p>Let&#8217;s see how you can start writing a program that creates an instance of the <code>URL</code> object that points at some remote resource, e.g. google.com:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -581,10 +580,10 @@ catch(MalformedURLException ex){
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>MalformedURLException</code> is thrown if you have a typo in the code, e.g. you&#8217;ve typed htp instead of http or some spaces sneaked into the URL string. If the <code>MalformedURLException</code> is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.</p>
+<p>The <code>MalformedURLException</code> is thrown if you made a typo in the code, e.g. you&#8217;ve typed htp instead of http or some spaces sneaked into the URL. If the <code>MalformedURLException</code> is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.</p>
 </div>
 <div class="paragraph">
-<p>Creation of the <code>URL</code> object does not establish a connection with the remote computer; you still need to open a stream and read it. Perform the following steps to read a file from the Internet via HTTP connection:</p>
+<p>Creation of the <code>URL</code> object does not establish a connection with the remote computer. If your program needs to read a remote file, you still need to open a stream on that file. Usually a program performs the following steps to read a file from the Internet via HTTP connection:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -592,7 +591,7 @@ catch(MalformedURLException ex){
 <p>Create an instance of the class <code>URL</code>.</p>
 </li>
 <li>
-<p>Create an instance of the <code>URLConnection</code> class and open a connection using the <code>URL</code> object from Step 1.</p>
+<p>Create an instance of the <code>URLConnection</code> to open a connection using the <code>URL</code> object from Step 1.</p>
 </li>
 <li>
 <p>Get a reference to the input stream of this object by calling the method <code>getInputStream</code> from <code>URLConnection</code>.</p>
@@ -603,10 +602,8 @@ catch(MalformedURLException ex){
 </ol>
 </div>
 <div class="paragraph">
-<p>While writing code for reading streams over the networks you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11. The server you are trying to connect.</p>
-</div>
-<div class="paragraph">
-<p>The following program <code>WebSiteReader</code> reads and prints the code that google.com uses to deliver its home page.</p>
+<p>While writing code for reading streams over the networks you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11.
+The following program <code>WebSiteReader</code> reads and prints the code of google.com page.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -616,7 +613,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
 
 public class WebSiteReader {
  public static void main(String args[]){
@@ -681,11 +677,11 @@ public class WebSiteReader {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">Can't read from the Internet: java.net.UnknownHostException: www.google.com</code></pre>
+<pre class="highlight"><code class="html language-html">Can't read from the Internet: java.net.UnknownHostException: www.google.com</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>When my computer got the Internet connection the output was different. Here&#8217;s a fragment of what you can expect to see (it&#8217;s HTML and JavaScript):</p>
+<p>When my computer got the Internet connection the output was different. Here&#8217;s a fragment of what you can expect to see on the console after running <code>WebSiteReader</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -693,7 +689,7 @@ public class WebSiteReader {
 </div>
 </div>
 <div class="paragraph">
-<p>The class <code>WebSiteReader</code> explicitly creates the object <code>URLConnection</code>. Strictly speaking, you could achieve the same result by using only the class <code>URL</code>:</p>
+<p>This is a mix of HTML and JavaScript code. The class <code>WebSiteReader</code> explicitly creates the object <code>URLConnection</code>. Strictly speaking, you could achieve the same result by using only the class <code>URL</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -703,15 +699,15 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The reason you may consider using the <code>URLConnection</code> class is that it could give you some additional control over the I/O process. For example, by calling its method <code>setDoOutput</code> with the argument <code>true</code> you enable <code>WebSiteReader</code>  to write to the remote <code>URL</code> too. In which case you&#8217;d need to get a reference to an <code>OutputStream</code> object by calling <code>getOutputStream</code> method on the <code>URLConnection</code> object. If you wanted to write a program that can send data to the server, you&#8217;d need to learn server-side programming, which this book doesn&#8217;t cover.</p>
+<p>The reason you may want use the <code>URLConnection</code> class is that it could give you some additional control over the I/O process. For example, by calling its method <code>setDoOutput</code> with the argument <code>true</code> you enable <code>WebSiteReader</code>  to write to the remote <code>URL</code>. In this case you&#8217;d need to get a reference to an <code>OutputStream</code> object by calling <code>getOutputStream</code> method on the <code>URLConnection</code> object. If you wanted to write a program that can send data to the server, you&#8217;d need to learn server-side programming, which this book doesn&#8217;t cover.</p>
 </div>
 <div class="sect3">
 <h4 id="_downloading-any-file-from-the-internet"><a class="anchor" href="#_downloading-any-file-from-the-internet"></a>Downloading Any File From the Internet</h4>
 <div class="paragraph">
-<p>In Chapter 11 you&#8217;ve learned how to create a file and write into it. The WebSiteReader just prints the remote data on the console, but you could have saved the data in the local file as well. Let&#8217;s combine using the class <code>URL</code> with the writing files techniques so we can download practically any unprotected file (such as images, music, and binary files) from the Internet.</p>
+<p>In Chapter 11 you&#8217;ve learned how to create a file and write into it. The <code>WebSiteReader</code> program just prints the remote data on the console, but you could have saved the data in the local file as well. It&#8217;s time to add the code that writes into a file. The goal is to write a program that can download any unprotected file (such as images, music, and binary files) available on the Web.</p>
 </div>
 <div class="paragraph">
-<p>The trick is in opening the file stream properly. The following class <code>FileDownload</code> gets the <code>URL</code> and the destination (local) filename as command-line arguments (explained in Chapter 11), connects to the URL, downloads the file, and saves it in a local file.</p>
+<p>The following class <code>FileDownload</code> creates the <code>URLConnection</code> object and get its <code>InputStream</code>. This class also creates an <code>OutputStream</code> to the local file. The URL and the local filename are given to <code>FileDownload</code> program as command-line arguments (explained in Chapter 11). The <code>FileDownload</code> connects to the provided URL, downloads its content and saves it in a local file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -773,40 +769,40 @@ class FileDownload{
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This program starts with checking that it was started with two command line arguments. If not, it prints the message showing the right wait to start the program and exits the program by invoking the method <code>exit</code> on the <code>System</code> object.</td>
+<td>This program starts with checking that two command-line arguments were provided. If not, it prints the message showing the right way to start <code>FileDownload</code> and exits the program by invoking the method <code>exit</code> on the <code>System</code> object.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Then the program creates an instance of the <code>URL</code> object pointing to a URL provided as the firs command-line argument.</td>
+<td>Then the program creates an instance of the <code>URL</code> object using the URL provided as the first command-line argument.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Establish a connection to the remote file.</td>
+<td>Establishing a connection to the remote file.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Build a <code>Path</code> object pointing to a local file where the downloaded data will be saved to.</td>
+<td>Creating a <code>Path</code> object pointing to a local file where the downloaded data will be saved to.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Obtain the <code>OutputStream</code> to the local file for writing.</td>
+<td>Obtaining the <code>OutputStream</code> to the local file for writing.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>Obtain the <code>InputStream</code> to the remote file for reading.</td>
+<td>Obtaining the <code>InputStream</code> to the remote file for reading.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>Read the byte from the <code>InputStream</code></td>
+<td>Reading a byte from the <code>InputStream</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>Write the byte to the <code>OutputStream</code></td>
+<td>Writing a byte to the <code>OutputStream</code>.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Run this program with the following two command-line arguments:</p>
+<p>I&#8217;ve prepared an image for you that&#8217;s located at <a href="http://myflex.org/yf/nyc.jpg">http://myflex.org/yf/nyc.jpg</a>. It&#8217;s a photo that I took in the New York City some time ago. Run this program with the following two command-line arguments:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -814,7 +810,7 @@ class FileDownload{
 </div>
 </div>
 <div class="paragraph">
-<p>The console on my computer looked like this:</p>
+<p>On my computer the console output looked like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -823,28 +819,30 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>FileDowload</code> program has downloaded the photo that I took in the New York City and saved it the file <em>nyc.jpg</em>.
-This program has no knowledge of what type of data it has downloaded as it was simply reading and writing byte by byte. In this case it was an image, but the same program can be used for downloading audio, video, and any other file that&#8217;s has open access to the public.</p>
+<p>The <code>FileDowload</code> program has downloaded the photo and saved it the file <em>nyc.jpg</em>.This program has no knowledge of what type of data it has downloaded - it was simply reading and writing the data byte after byte. In this case it was an image, but the same program can be used for downloading audio and other files that&#8217;s has open access to the public.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;ll open the downloaded file with a program that can show images, you&#8217;ll see the following image:</p>
+<p>If you&#8217;ll open the downloaded file with a program that can show images, you&#8217;ll see the following photo:</p>
 </div>
 <div id="FIG12-2" class="imageblock">
 <div class="content">
 <img src="./images/fig_12_nyc.jpg" alt="fig 12 nyc">
 </div>
 </div>
+<div class="paragraph">
+<p>In this chapter I showed you how to download a file using HTTP. Professional Java developers use various techniques, technologies, and protocols for working with remote content. If you&#8217;re interested in exploring these advanced topics on your own, the <a href="http://docs.oracle.com/javaee/7/tutorial/">Java EE Tutorial</a> is a good start. Maybe one day I&#8217;ll write a book about the server side programming for kids.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-downloading-music-from-last-fm"><a class="anchor" href="#_project-downloading-music-from-last-fm"></a>Project: Downloading Music From Last.fm</h3>
+<h3 id="_project-downloading-music"><a class="anchor" href="#_project-downloading-music"></a>Project: Downloading Music</h3>
 <div class="paragraph">
-<p>In this project you&#8217;ll need to test the FileDownload program to see if it can download an MP3 file as well.</p>
+<p>In this project you&#8217;ll see how our <code>FileDownload</code> program to see if it can download an MP3 file as well.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Visit the Web site: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a> and pick an MP3 that you like. At the time of this writing that page looked as follows:</p>
+<p>Visit the Web site: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a> and pick an MP3 you like. At the time of this writing the Last.FM Web page looked as follows:</p>
 <div id="FIG12-3" class="imageblock">
 <div class="content">
 <img src="./images/fig_12_lastfm.png" alt="fig 12 lastfm">
@@ -852,11 +850,15 @@ This program has no knowledge of what type of data it has downloaded as it was s
 </div>
 </li>
 <li>
-<p>Right-click on the blue button "Free MP3", you&#8217;ll see a popup menu. Select the item that allows you to copy the link address. The link is copied in your computer&#8217;s clipboard. My link looked like this:
-<a href="http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3">http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3</a></p>
+<p>Right-click on the blue button "Free MP3", and you&#8217;ll see a browser&#8217;s popup menu. Select the menu item that allows you to copy the link address. The link will be copied in your computer&#8217;s clipboard. I&#8217;ve selected a link to a music file that looked like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3</code></pre>
+</div>
+</div>
 </li>
 <li>
-<p>In IDEA select the menu Run | Edit Configuration and paste this link into the Program arguments field for the <code>FileDownload</code> program. This is its first command argument.</p>
+<p>In IDEA select the menu Run | Edit Configuration and paste this link into the Program arguments field for the <code>FileDownload</code> program. This link will be the first command-line argument.</p>
 <div id="FIG12-4" class="imageblock">
 <div class="content">
 <img src="./images/fig_12_EditConfigIDEA.png" alt="fig 12 EditConfigIDEA">
@@ -864,10 +866,10 @@ This program has no knowledge of what type of data it has downloaded as it was s
 </div>
 </li>
 <li>
-<p>Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where the song should be saved to. I&#8217;ve entered song1.mp3. Press the button OK.</p>
+<p>Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where you want to save the song. I&#8217;ve entered song1.mp3. Press the button OK.</p>
 </li>
 <li>
-<p>Run the program <code>FileDownload</code>. The MP3 file will be downloaded into the local file song1.mp3. This is the console output I&#8217;ve got:</p>
+<p>Run the program <code>FileDownload</code>. The MP3 file will be downloaded into the local file song1.mp3. Here&#8217;s the console output I&#8217;ve got:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="html language-html">Downloading from http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3. Please wait...
@@ -879,7 +881,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 <p>Open this file in your MP3 player and enjoy the music!</p>
 </li>
 <li>
-<p>Close the IDEA and repeat the same exercise from the command line. you&#8217;ll need to open a Command (or Terminal) window, change the directory to where the file <code>FileDownload.class</code> is located. By default, IDEA places compiled classes in the directory <em>out/production</em>. In my case it was the following directory:</p>
+<p>Close the IDEA and repeat the same exercise from the command line. You&#8217;ll need to open a Command (or Terminal) window, change the directory to where the file <code>FileDownload.class</code> is located. By default, IDEA stores compiled classes in the directory <em>out/production</em>. My IDEA project was named Chapter12, and this is where its compiled classes were located in my computer:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="html language-html">/Users/yfain11/IdeaProjects/jfk/Chapter12/out/production/Chapter12</code></pre>
@@ -887,7 +889,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 </div>
 </li>
 <li>
-<p>Run the FileDownload program providing the URL and the name of the local file as command-line arguments.</p>
+<p>Run the <code>FileDownload</code> program providing the URL and the name of the local file as command-line arguments. It should download the file the same way as it did in the IDEA IDE.</p>
 </li>
 </ol>
 </div>
@@ -897,7 +899,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-05 10:01:07 EST
+Last updated 2015-02-05 13:07:02 EST
 </div>
 </div>
 </body>
