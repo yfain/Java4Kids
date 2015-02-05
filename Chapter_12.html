@@ -542,14 +542,13 @@ The port number plays the same role as an apartment number in a building.</p>
 <p>Often the content that corresponds to a resource ID is not stored in a file, but is generated on the fly by a server-side program, and can change daily, hourly, every minute or every second.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;m sure that by the time you enter <em><a href="http://www.nick.com/videos">http://www.nick.com/videos</a></em> in your browser the content will be different.
-URL&#8217;s like this one can be called a Unified Resource Identifier (URI).</p>
+<p>I&#8217;m sure that by the time you enter <em><a href="http://www.nick.com/videos">http://www.nick.com/videos</a></em> in your browser the content will be different.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_domain-names-and-ip-addresses"><a class="anchor" href="#_domain-names-and-ip-addresses"></a>Domain Names and IP Addresses</h3>
 <div class="paragraph">
-<p>The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g.2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com). When you&#8217;re entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.</p>
+<p>The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com). When you&#8217;re entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.</p>
 </div>
 <div class="paragraph">
 <p>You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn&#8217;t specify any. Often they name the file with the home page content <em>index.html</em>, but it can be any other file too.</p>
@@ -561,16 +560,13 @@ URL&#8217;s like this one can be called a Unified Resource Identifier (URI).</p>
 <div class="sect2">
 <h3 id="_downloading-files-from-the-web"><a class="anchor" href="#_downloading-files-from-the-web"></a>Downloading Files From the Web</h3>
 <div class="paragraph">
-<p>In Chapter 11 you&#8217;ve learned that to read local file a program has to know the file’s location—for example, <em>c:\practice\training.html</em>. Then you&#8217;d open a stream pointing to this file and read it.</p>
-</div>
-<div class="paragraph">
-<p>The same holds true for reading remote files — the only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can read  remote data using HTTP protocol.</p>
+<p>In Chapter 11 you&#8217;ve learned that how to read a local file if you know its location. You&#8217;d open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can read  remote data using HTTP protocol.</p>
 </div>
 <div class="paragraph">
 <p>In particular, Java has a class, <code>java.net.URL</code>, that helps you connect to a remote computer on the Internet and get access to a resource there, provided that it&#8217;s not protected from public access.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s see how you how you can start writing a program that connects to a URL. First, create an instance of the <code>URL</code> object that points at some remote resource, e.g. google.com:</p>
+<p>Let&#8217;s see how you can start writing a program that create an instance of the <code>URL</code> object that points at some remote resource, e.g. google.com:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -585,7 +581,7 @@ catch(MalformedURLException ex){
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>MalformedURLException</code> is thrown if you have a typo in the code. For example, you&#8217;ve typed htp instead of http or some spaces sneaked into the URL string. If the <code>MalformedURLException</code> is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.</p>
+<p>The <code>MalformedURLException</code> is thrown if you have a typo in the code, e.g. you&#8217;ve typed htp instead of http or some spaces sneaked into the URL string. If the <code>MalformedURLException</code> is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.</p>
 </div>
 <div class="paragraph">
 <p>Creation of the <code>URL</code> object does not establish a connection with the remote computer; you still need to open a stream and read it. Perform the following steps to read a file from the Internet via HTTP connection:</p>
@@ -593,7 +589,7 @@ catch(MalformedURLException ex){
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create an instance of the class URL.</p>
+<p>Create an instance of the class <code>URL</code>.</p>
 </li>
 <li>
 <p>Create an instance of the <code>URLConnection</code> class and open a connection using the <code>URL</code> object from Step 1.</p>
@@ -676,10 +672,12 @@ public class WebSiteReader {
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The <code>while</code> loop reads the line from <code>BufferedReader</code> and if it&#8217;s not <code>null</code>, it prints the line on the console.
-Make sure your computer is connected to the Internet before you run the <code>WebSiteReader</code> program. Actually, I was writing this program while sitting on the plane without the Internet connection. This is what the program printed up in the sky:</td>
+<td>The <code>while</code> loop reads the line from <code>BufferedReader</code> and if it&#8217;s not <code>null</code>, it prints the line on the console.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Make sure your computer is connected to the Internet before you run the <code>WebSiteReader</code> program. Actually, I was writing this program while sitting on the plane without the Internet connection. This is what the program printed up in the sky:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -713,56 +711,123 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 <p>In Chapter 11 you&#8217;ve learned how to create a file and write into it. The WebSiteReader just prints the remote data on the console, but you could have saved the data in the local file as well. Let&#8217;s combine using the class <code>URL</code> with the writing files techniques so we can download practically any unprotected file (such as images, music, and binary files) from the Internet.</p>
 </div>
 <div class="paragraph">
-<p>The trick is in opening the file stream properly. The following class <code>FileDownload</code> gets the <code>URL</code> and the destination (local) filename as command-line arguments (explained in Chapter 11), connects to this resource, and downloads it, and saves it into a local file.</p>
+<p>The trick is in opening the file stream properly. The following class <code>FileDownload</code> gets the <code>URL</code> and the destination (local) filename as command-line arguments (explained in Chapter 11), connects to the URL, downloads the file, and saves it in a local file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">class FileDownload{
+<pre class="highlight"><code class="java language-java">import java.io.OutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+class FileDownload{
 
   public static void main(String args[]){
-   if (args.length!=2){
-     System.out.println(
-    "Proper Usage:java FileDownload SourceFileURL OutputFileName");
-     System.out.println(
-             "For example: java FileDownload http://myflex.org/yf/nyc.jpg nyc.jpg");
-     System.exit(-1);
-   }
+    if (args.length != 2){                 <i class="conum" data-value="1"></i><b>(1)</b>
+      System.out.println(
+            "Proper Usage: java FileDownload FileURL DestinationFileName");
+      System.out.println(
+            "For example: java FileDownload http://myflex.org/yf/nyc.jpg nyc.jpg");
+      System.exit(-1);
+    }
 
     URLConnection fileStream=null;
+
     try{
-        URL remoteFile=new URL(args[0]);
-        fileStream=remoteFile.openConnection();
+        URL remoteFile=new URL(args[0]);        <i class="conum" data-value="2"></i><b>(2)</b>
+
+        fileStream=remoteFile.openConnection(); <i class="conum" data-value="3"></i><b>(3)</b>
+
     } catch (IOException ioe){
-      ioe.printStackTrace();
+        ioe.printStackTrace();
     }
 
-   try(FileOutputStream fOut=new FileOutputStream(args[1]);
-        InputStream in = fileStream.getInputStream();){
+    Path path = Paths.get(args[1]);                <i class="conum" data-value="4"></i><b>(4)</b>
 
-    // Read a remote file and save it in the local one
-    int data;
-    System.out.println("Starting the download from " + args[0]);
-    while((data=in.read())!=-1){
-         fOut.write(data);
+    try(OutputStream fOut=Files.newOutputStream(path); <i class="conum" data-value="5"></i><b>(5)</b>
+
+      InputStream in = fileStream.getInputStream();){ <i class="conum" data-value="6"></i><b>(6)</b>
+
+      System.out.println("Downloading from " + args[0] + ". Please wait...");
+
+      // Read a remote file and save it in the local one
+
+      int data;
+
+      while((data=in.read())!=-1){      <i class="conum" data-value="7"></i><b>(7)</b>
+          fOut.write(data);             <i class="conum" data-value="8"></i><b>(8)</b>
+      }
+
+      System.out.println("Finished downloading the file. It's located at "+path.toAbsolutePath());
+    } catch (Exception e){
+        e.printStackTrace();
     }
-    System.out.println("Finished downloading the file "+args[1]);
-  } catch (Exception e){
-     e.printStackTrace();
   }
- }
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This program starts with checking that it was started with two command line arguments. If not, it prints the message showing the right wait to start the program and exits the program by invoking the method <code>exit</code> on the <code>System</code> object.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Then the program creates an instance of the <code>URL</code> object pointing to a URL provided as the firs command-line argument.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Establish a connection to the remote file.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Build a <code>Path</code> object pointing to a local file where the downloaded data will be saved to.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Obtain the <code>OutputStream</code> to the local file for writing.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Obtain the <code>InputStream</code> to the remote file for reading.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Read the byte from the <code>InputStream</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Write the byte to the <code>OutputStream</code></td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>Run this program with the following command-line arguments:</p>
+<p>Run this program with the following two command-line arguments:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">http://myflex.org/yf/nyc.jpg nyc.jpg</code></pre>
+<pre class="highlight"><code class="html language-html">http://myflex.org/yf/nyc.jpg nyc.jpg</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It&#8217;ll download the photo that I took in the New York City and will save it the file <em>nyc.jpg</em>.</p>
+<p>The console on my computer looked like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">Downloading from http://myflex.org/yf/nyc.jpg. Please wait...
+Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/Chapter12/nyc.jpg</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>FileDowload</code> program has downloaded the photo that I took in the New York City and saved it the file <em>nyc.jpg</em>.
+This program has no knowledge of what type of data it has downloaded as it was simply reading and writing byte by byte. In this case it was an image, but the same program can be used for downloading audio, video, and any other file that&#8217;s has open access to the public.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;ll open the downloaded file with a program that can show images, you&#8217;ll see the following image:</p>
 </div>
 <div id="FIG12-2" class="imageblock">
 <div class="content">
@@ -774,7 +839,57 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 <div class="sect2">
 <h3 id="_project-downloading-music-from-last-fm"><a class="anchor" href="#_project-downloading-music-from-last-fm"></a>Project: Downloading Music From Last.fm</h3>
 <div class="paragraph">
-<p>Free mp3: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a></p>
+<p>In this project you&#8217;ll need to test the FileDownload program to see if it can download an MP3 file as well.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Visit the Web site: <a href="http://www.last.fm/music/+free-music-downloads">http://www.last.fm/music/+free-music-downloads</a> and pick an MP3 that you like. At the time of this writing that page looked as follows:</p>
+<div id="FIG12-3" class="imageblock">
+<div class="content">
+<img src="./images/fig_12_lastfm.png" alt="fig 12 lastfm">
+</div>
+</div>
+</li>
+<li>
+<p>Right-click on the blue button "Free MP3", you&#8217;ll see a popup menu. Select the item that allows you to copy the link address. The link is copied in your computer&#8217;s clipboard. My link looked like this:
+<a href="http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3">http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3</a></p>
+</li>
+<li>
+<p>In IDEA select the menu Run | Edit Configuration and paste this link into the Program arguments field for the <code>FileDownload</code> program. This is its first command argument.</p>
+<div id="FIG12-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_12_EditConfigIDEA.png" alt="fig 12 EditConfigIDEA">
+</div>
+</div>
+</li>
+<li>
+<p>Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where the song should be saved to. I&#8217;ve entered song1.mp3. Press the button OK.</p>
+</li>
+<li>
+<p>Run the program <code>FileDownload</code>. The MP3 file will be downloaded into the local file song1.mp3. This is the console output I&#8217;ve got:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">Downloading from http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3. Please wait...
+Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/Chapter12/song1.mp3</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open this file in your MP3 player and enjoy the music!</p>
+</li>
+<li>
+<p>Close the IDEA and repeat the same exercise from the command line. you&#8217;ll need to open a Command (or Terminal) window, change the directory to where the file <code>FileDownload.class</code> is located. By default, IDEA places compiled classes in the directory <em>out/production</em>. In my case it was the following directory:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">/Users/yfain11/IdeaProjects/jfk/Chapter12/out/production/Chapter12</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run the FileDownload program providing the URL and the name of the local file as command-line arguments.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -782,7 +897,7 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-03 01:30:58 EST
+Last updated 2015-02-05 10:01:07 EST
 </div>
 </div>
 </body>
