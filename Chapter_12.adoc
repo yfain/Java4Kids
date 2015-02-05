@@ -39,11 +39,10 @@ image::images/fig_12_nick_videos.png[]
 Often the content that corresponds to a resource ID is not stored in a file, but is generated on the fly by a server-side program, and can change daily, hourly, every minute or every second. 
 
 I'm sure that by the time you enter _http://www.nick.com/videos_ in your browser the content will be different.
-URL's like this one can be called a Unified Resource Identifier (URI).
 
 === Domain Names and IP Addresses
 
-The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g.2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we're using domain names that are easier to remember (e.g. nick.com or google.com). When you're entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.
+The name of the server (the hostname) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we're using domain names that are easier to remember (e.g. nick.com or google.com). When you're entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format.
 
 You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn't specify any. Often they name the file with the home page content _index.html_, but it can be any other file too.
  
@@ -52,13 +51,11 @@ Most of the people connected to the Internet are getting dynamic (temporary) IP 
 
 === Downloading Files From the Web
 
-In Chapter 11 you've learned that to read local file a program has to know the file’s location—for example, _c:\practice\training.html_. Then you'd open a stream pointing to this file and read it.
-
-The same holds true for reading remote files — the only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html[java.net]. In this chapter we'll use the classes that can read  remote data using HTTP protocol. 
+In Chapter 11 you've learned that how to read a local file if you know its location. You'd open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html[java.net]. In this chapter we'll use the classes that can read  remote data using HTTP protocol. 
 
 In particular, Java has a class, `java.net.URL`, that helps you connect to a remote computer on the Internet and get access to a resource there, provided that it's not protected from public access. 
 
-Let's see how you how you can start writing a program that connects to a URL. First, create an instance of the `URL` object that points at some remote resource, e.g. google.com:
+Let's see how you can start writing a program that create an instance of the `URL` object that points at some remote resource, e.g. google.com:
 
 [source, java]
 ----
@@ -72,11 +69,11 @@ catch(MalformedURLException ex){
 }
 ----
 
-The `MalformedURLException` is thrown if you have a typo in the code. For example, you've typed htp instead of http or some spaces sneaked into the URL string. If the `MalformedURLException` is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.
+The `MalformedURLException` is thrown if you have a typo in the code, e.g. you've typed htp instead of http or some spaces sneaked into the URL string. If the `MalformedURLException` is thrown, it does not indicate that the remote server is down; just check "the spelling" of your URL.
 
 Creation of the `URL` object does not establish a connection with the remote computer; you still need to open a stream and read it. Perform the following steps to read a file from the Internet via HTTP connection:
 
-1. Create an instance of the class URL.
+1. Create an instance of the class `URL`.
 2. Create an instance of the `URLConnection` class and open a connection using the `URL` object from Step 1.
 3. Get a reference to the input stream of this object by calling the method `getInputStream` from `URLConnection`.
 4. Read the data from the stream.
@@ -139,7 +136,8 @@ public class WebSiteReader {
 
 <3> After that `WebSiteReader` opens `InputStreamReader`, which is piped with `BufferedReader`.
 
-<4> The `while` loop reads the line from `BufferedReader` and if it's not `null`, it prints the line on the console. 
+<4> The `while` loop reads the line from `BufferedReader` and if it's not `null`, it prints the line on the console.
+
 Make sure your computer is connected to the Internet before you run the `WebSiteReader` program. Actually, I was writing this program while sitting on the plane without the Internet connection. This is what the program printed up in the sky: 
 
 [source, java]
@@ -170,60 +168,136 @@ The reason you may consider using the `URLConnection` class is that it could giv
 
 In Chapter 11 you've learned how to create a file and write into it. The WebSiteReader just prints the remote data on the console, but you could have saved the data in the local file as well. Let's combine using the class `URL` with the writing files techniques so we can download practically any unprotected file (such as images, music, and binary files) from the Internet. 
 
-The trick is in opening the file stream properly. The following class `FileDownload` gets the `URL` and the destination (local) filename as command-line arguments (explained in Chapter 11), connects to this resource, and downloads it, and saves it into a local file.
+The trick is in opening the file stream properly. The following class `FileDownload` gets the `URL` and the destination (local) filename as command-line arguments (explained in Chapter 11), connects to the URL, downloads the file, and saves it in a local file.
 
 [source, java]
 ----
+import java.io.OutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 class FileDownload{
 
   public static void main(String args[]){
-   if (args.length!=2){
-     System.out.println(
-    "Proper Usage:java FileDownload SourceFileURL OutputFileName");
-     System.out.println(
-             "For example: java FileDownload http://myflex.org/yf/nyc.jpg nyc.jpg");
-     System.exit(-1);
-   }
-
-    URLConnection fileStream=null;
-    try{
-        URL remoteFile=new URL(args[0]);
-        fileStream=remoteFile.openConnection();
-    } catch (IOException ioe){
-      ioe.printStackTrace();
+    if (args.length != 2){                 // <1>
+      System.out.println(
+            "Proper Usage: java FileDownload FileURL DestinationFileName");
+      System.out.println(
+            "For example: java FileDownload http://myflex.org/yf/nyc.jpg nyc.jpg");
+      System.exit(-1);
     }
 
-   try(FileOutputStream fOut=new FileOutputStream(args[1]);
-        InputStream in = fileStream.getInputStream();){
+    URLConnection fileStream=null;
 
-    // Read a remote file and save it in the local one
-    int data;
-    System.out.println("Starting the download from " + args[0]);
-    while((data=in.read())!=-1){
-         fOut.write(data);
-    }  
-    System.out.println("Finished downloading the file "+args[1]);
-  } catch (Exception e){
-     e.printStackTrace();
-  } 
- }
+    try{
+        URL remoteFile=new URL(args[0]);        // <2>
+        
+        fileStream=remoteFile.openConnection(); // <3>
+
+    } catch (IOException ioe){
+        ioe.printStackTrace();
+    }
+
+    Path path = Paths.get(args[1]);                // <4>
+
+    try(OutputStream fOut=Files.newOutputStream(path); // <5>
+
+      InputStream in = fileStream.getInputStream();){ // <6>
+
+      System.out.println("Downloading from " + args[0] + ". Please wait...");
+      
+      // Read a remote file and save it in the local one
+
+      int data;
+
+      while((data=in.read())!=-1){      // <7>  
+          fOut.write(data);             // <8>
+      }
+
+      System.out.println("Finished downloading the file. It's located at "+path.toAbsolutePath());
+    } catch (Exception e){
+        e.printStackTrace();
+    }
+  }
 }
 ----
+<1> This program starts with checking that it was started with two command line arguments. If not, it prints the message showing the right wait to start the program and exits the program by invoking the method `exit` on the `System` object.
 
-Run this program with the following command-line arguments:
-[source, java]
+<2> Then the program creates an instance of the `URL` object pointing to a URL provided as the firs command-line argument.
+
+<3> Establish a connection to the remote file. 
+
+<4> Build a `Path` object pointing to a local file where the downloaded data will be saved to.
+
+<5> Obtain the `OutputStream` to the local file for writing.  
+
+<6> Obtain the `InputStream` to the remote file for reading.
+
+<7> Read the byte from the `InputStream`
+
+<8> Write the byte to the `OutputStream`  
+
+Run this program with the following two command-line arguments:
+[source, html]
 ----
 http://myflex.org/yf/nyc.jpg nyc.jpg
 ----
 
-It'll download the photo that I took in the New York City and will save it the file _nyc.jpg_.
+The console on my computer looked like this:
+
+[source, java]
+----
+Downloading from http://myflex.org/yf/nyc.jpg. Please wait...
+Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/Chapter12/nyc.jpg
+----
+
+The `FileDowload` program has downloaded the photo that I took in the New York City and saved it the file _nyc.jpg_.
+This program has no knowledge of what type of data it has downloaded as it was simply reading and writing byte by byte. In this case it was an image, but the same program can be used for downloading audio, video, and any other file that's has open access to the public. 
+
+If you'll open the downloaded file with a program that can show images, you'll see the following image:
 
 [[FIG12-2]]
 image::images/fig_12_nyc.jpg[]
 
-
 === Project: Downloading Music From Last.fm
 
-Free mp3: http://www.last.fm/music/+free-music-downloads
+In this project you'll need to test the FileDownload program to see if it can download an MP3 file as well.
+
+1. Visit the Web site: http://www.last.fm/music/+free-music-downloads and pick an MP3 that you like. At the time of this writing that page looked as follows:
++
+[[FIG12-3]]
+image::images/fig_12_lastfm.png[]
++
+2. Right-click on the blue button "Free MP3", you'll see a popup menu. Select the item that allows you to copy the link address. The link is copied in your computer's clipboard. My link looked like this:
+http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3
+
+3. In IDEA select the menu Run | Edit Configuration and paste this link into the Program arguments field for the `FileDownload` program. This is its first command argument.
++
+[[FIG12-4]]
+image::images/fig_12_EditConfigIDEA.png[]
++
+4. Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where the song should be saved to. I've entered song1.mp3. Press the button OK.
+
+5. Run the program `FileDownload`. The MP3 file will be downloaded into the local file song1.mp3. This is the console output I've got:
++
+[source, html]
+----
+Downloading from http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3. Please wait...
+Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/Chapter12/song1.mp3
+----
++
+6. Open this file in your MP3 player and enjoy the music! 
+
+7. Close the IDEA and repeat the same exercise from the command line. you'll need to open a Command (or Terminal) window, change the directory to where the file `FileDownload.class` is located. By default, IDEA places compiled classes in the directory _out/production_. In my case it was the following directory:
++
+[source, html]
+----
+/Users/yfain11/IdeaProjects/jfk/Chapter12/out/production/Chapter12
+----
+8. Run the FileDownload program providing the URL and the name of the local file as command-line arguments. 
 
 
