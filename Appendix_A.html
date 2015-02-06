@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untitled</title>
+<title>Appendix. Version Control and Publishing Code to GitHub</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -482,28 +482,93 @@ p { margin-bottom: 1.25rem; }
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </head>
-<body class="book toc2 toc-right">
+<body class="book">
 <div id="header">
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-</div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_appendix-version-control-and-publishing-code-to-github"><a class="anchor" href="#_appendix-version-control-and-publishing-code-to-github"></a>Appendix. Version Control and Publishing Code to GitHub</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Appendix A. Useful Online Resources:</p>
+<p>So you wrote you great application and it works as expected. Sometime later you&#8217;ve got an idea how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday&#8217;s version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the code?</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Java Primitive Data Types:
-<a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html</a></p>
-</li>
-</ol>
+<div class="paragraph">
+<p>Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like <em>TicTacToe_Feb_1</em>, <em>TicTacToe_Feb_5</em>, <em>TicTacToe_Feb_20</em> an so on.</p>
+</div>
+<div class="paragraph">
+<p>But programmers often work in teams, and what if Joe and Mary are working on the same application? How to make sure that Joe&#8217;s and Mary&#8217;s computers have the working copy of the application with the ability to keep the history of code changes and rollback to a working version if need be?</p>
+</div>
+<div class="paragraph">
+<p>There are special web hosting facilities called <em>source code repositories</em>, where Joe and Mary can safely keep their application code. There is also a special software called <em>version control systems</em> that allows to keep track of different versions of the source code stored in such common repositories.</p>
+</div>
+<div class="paragraph">
+<p>Software developers make changes in their local copies of the application&#8217;s code, and test them. When they believe that their local version of the application works fine, they <em>commit</em> their latest code to the source code repository. If Mary has committed her changes, Joe can <em>check out</em> the latest code from the repository to his computer. Mary&#8217;s changes are merged with Joe&#8217;s ones on his computer.</p>
+</div>
+<div class="paragraph">
+<p>At this point Joe has the latest Mary&#8217;s code, but she doesn&#8217;t have the latest Joe&#8217;s code changes. WHen Joe decides to commit his latest code to the repository, Mary can check them out to her computer.</p>
+</div>
+<div class="paragraph">
+<p>In this appendix I&#8217;ll explain how to work with a popular version control system called Git, and with a code hosting
+facility called GitHub. Version control systems are used by programmers writing code in any languages, not only in Java. I can tell you more - I was using Git as a repository of the drafts of all chapters of this book, and you can find them on the GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress">https://github.com/yfain/Java4Kids_NoStarchPress</a>.  But understanding how version control systems works is very important - that&#8217;s why I included this Appendix in the book about Java.</p>
+</div>
+<div class="sect2">
+<h3 id="_two-types-of-version-control-systems"><a class="anchor" href="#_two-types-of-version-control-systems"></a>Two Types of Version Control Systems</h3>
+<div class="paragraph">
+<p>There are two types of version control systems: centralized and distributed. With centralized systems the source code repository is stored a server that has the latest version of the application as well as all historical files committed by developers in the past.</p>
+</div>
+<div id="FIG14-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_CentralRepo.png" alt="fig 14 CentralRepo">
+</div>
+</div>
+<div class="paragraph">
+<p>If Pete, the new programmer, joins the team, he&#8217;d need to check out the latest code from the repository and start making his code modifications on his computer. Some popular centralized version control systems are CVS, SVN, Perforce.</p>
+</div>
+<div class="paragraph">
+<p>Distributed version control systems store the latest version of the code as well as all historical files on each programmer&#8217;s computer. Popular distributed version control systems are Git, Mercurial, and Bazaar. We&#8217;ll use Git. Technically, if you work alone, you can install Git on your computer and have your private a version control system. But we usually work in teams, so the following diagram shows three computers - one central repository on the right and to local repositories (Mary&#8217;s and Joe&#8217;s) on the left.</p>
+</div>
+<div id="FIG14-2" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_DistrRepo.png" alt="fig 14 DistrRepo">
+</div>
+</div>
+<div class="paragraph">
+<p>Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly.</p>
+</div>
+<div class="paragraph">
+<p>You may ask, "What if Mary want to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own <em>branch</em> which will keep her experimental code separately. I&#8217;ll give you more details in the section called Branching.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_committing-code-to-git"><a class="anchor" href="#_committing-code-to-git"></a>Committing code to Git</h3>
+</div>
+<div class="sect2">
+<h3 id="_branching"><a class="anchor" href="#_branching"></a>Branching</h3>
+<div class="paragraph">
+<p>Every new feature can live in its own branch</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>Conflict resolution</h3>
+</div>
+<div class="sect2">
+<h3 id="_how-to-rollback-to-the-previous-version"><a class="anchor" href="#_how-to-rollback-to-the-previous-version"></a>How to Rollback to the Previous Version</h3>
+</div>
+<div class="sect2">
+<h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>Publishing your code on GitHub</h3>
+<div class="sect3">
+<h4 id="_pull-request"><a class="anchor" href="#_pull-request"></a>Pull request</h4>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_git-support-in-the-intellij-idea"><a class="anchor" href="#_git-support-in-the-intellij-idea"></a>Git Support in the IntelliJ IDEA</h3>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-08-13 09:48:39 EDT
+Last updated 2015-02-06 13:19:14 EST
 </div>
 </div>
 </body>
