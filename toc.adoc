@@ -27,7 +27,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * <<Chapter_11.adoc#,Chapter 11. Working With Files and Serialization>>
 * <<Chapter_12.adoc#,Chapter 12. Networking: Downloading Files From the Internet>>
 * Chapter 13. Developing a Ping-Pong Game
-* Appendix_A. Publishing Your Code Online: GitHub
+* <<Appendix_A.adoc#,Appendix_A. Publishing Your Code Online: GitHub (Work in Progress)>>
 
    
  

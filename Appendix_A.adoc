@@ -1,34 +1,54 @@
-== Appendix A. Version Control and Publishing code online: Gitub
+:toc-placement!:
+:imagesdir: ./
 
-Man, it was working yesterday?
-Who broke the build? 
+== Appendix. Version Control and Publishing Code to GitHub
 
-Many years ago programmers simply created backup copies of their code.
-Then they decided to automate the process and store only changes between numbered versions of files, so if the code is broken today, undo the deltas and you'll have yesterday's working version.
+So you wrote you great application and it works as expected. Sometime later you've got an idea how to make it even better. After several hours of making changes in your code you've noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday's version of the code that was working fine? Can you undo (_rollback_) the latest changes that broke the code?
 
-Centralized version control systems
+Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like _TicTacToe_Feb_1_, _TicTacToe_Feb_5_, _TicTacToe_Feb_20_ an so on.
 
-Distributed version control systems. 
+But programmers often work in teams, and what if Joe and Mary are working on the same application? How to make sure that Joe's and Mary's computers have the working copy of the application with the ability to keep the history of code changes and rollback to a working version if need be?
 
-Actually kids try  to avoid going to places where the Internet connection is not available.
+There are special web hosting facilities called _source code repositories_, where Joe and Mary can safely keep their application code. There is also a special software called _version control systems_ that allows to keep track of different versions of the source code stored in such common repositories. 
 
-Pull request
-Branching
+Software developers make changes in their local copies of the application's code, and test them. When they believe that their local version of the application works fine, they _commit_ their latest code to the source code repository. If Mary has committed her changes, Joe can _check out_ the latest code from the repository to his computer. Mary's changes are merged with Joe's ones on his computer.
+
+At this point Joe has the latest Mary's code, but she doesn't have the latest Joe's code changes. WHen Joe decides to commit his latest code to the repository, Mary can check them out to her computer. 
+
+In this appendix I'll explain how to work with a popular version control system called Git, and with a code hosting 
+facility called GitHub. Version control systems are used by programmers writing code in any languages, not only in Java. I can tell you more - I was using Git as a repository of the drafts of all chapters of this book, and you can find them on the GitHub at https://github.com/yfain/Java4Kids_NoStarchPress[https://github.com/yfain/Java4Kids_NoStarchPress].  But understanding how version control systems works is very important - that's why I included this Appendix in the book about Java. 
+
+=== Two Types of Version Control Systems
+
+There are two types of version control systems: centralized and distributed. With centralized systems the source code repository is stored a server that has the latest version of the application as well as all historical files committed by developers in the past. 
+
+[[FIG14-1]]
+image::images/fig_14_CentralRepo.png[] 
+
+If Pete, the new programmer, joins the team, he'd need to check out the latest code from the repository and start making his code modifications on his computer. Some popular centralized version control systems are CVS, SVN, Perforce.
+
+Distributed version control systems store the latest version of the code as well as all historical files on each programmer's computer. Popular distributed version control systems are Git, Mercurial, and Bazaar. We'll use Git. Technically, if you work alone, you can install Git on your computer and have your private a version control system. But we usually work in teams, so the following diagram shows three computers - one central repository on the right and to local repositories (Mary's and Joe's) on the left. 
+
+[[FIG14-2]]
+image::images/fig_14_DistrRepo.png[] 
+
+Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly.
+
+You may ask, "What if Mary want to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own _branch_ which will keep her experimental code separately. I'll give you more details in the section called Branching. 
+
+=== Committing code to Git
+
+=== Branching
 
 Every new feature can live in its own branch
 
-Unexpected demo is needed. Mom, i
-t was working yesterday. Tic-Tack-Toe works fine and we want to have a working copy to demo our friends and relative at any time. John continues working  on the controller and Mary works on FXML. Then Pete wants to work on our project too. He also will work on the Controller class. 
-
-Merge with history
-
-Conflict resolution
-
-Rollback to previous version
-
-Github - a social network for developers
+=== Conflict resolution
 
 
+=== How to Rollback to the Previous Version
 
-Bitbucket allows 
+=== Publishing your code on GitHub 
 
+==== Pull request
+
+=== Git Support in the IntelliJ IDEA
