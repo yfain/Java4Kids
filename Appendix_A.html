@@ -490,7 +490,7 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_appendix-version-control-and-publishing-code-to-github"><a class="anchor" href="#_appendix-version-control-and-publishing-code-to-github"></a>Appendix. Version Control and Publishing Code to GitHub</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>So you wrote you great application and it works as expected. Sometime later you&#8217;ve got an idea how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday&#8217;s version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the code?</p>
+<p>So you wrote you great application, and it worked as expected. Sometime later you&#8217;ve got an idea how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday&#8217;s version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the code?</p>
 </div>
 <div class="paragraph">
 <p>Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like <em>TicTacToe_Feb_1</em>, <em>TicTacToe_Feb_5</em>, <em>TicTacToe_Feb_20</em> an so on.</p>
@@ -533,42 +533,98 @@ facility called GitHub. Version control systems are used by programmers writing 
 </div>
 </div>
 <div class="paragraph">
-<p>Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly.</p>
-</div>
-<div class="paragraph">
-<p>You may ask, "What if Mary want to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own <em>branch</em> which will keep her experimental code separately. I&#8217;ll give you more details in the section called Branching.</p>
+<p>Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let&#8217;s see how to create the code repository of your computer that&#8217;s controlled by Git.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_committing-code-to-git"><a class="anchor" href="#_committing-code-to-git"></a>Committing code to Git</h3>
+<h3 id="_introduction-to-git"><a class="anchor" href="#_introduction-to-git"></a>Introduction to Git</h3>
+<div class="paragraph">
+<p>Git is a free distributed version control system, which you should download and install from <a href="http://git-scm.com">http://git-scm.com</a>. There is a chance that your computer already have Git installed, and you can see if this is the case by opening a Command or Terminal window and entering the <em>git</em> command. If you see a list of available Git commands, you already have it. But still, I&#8217;d suggest to install the latest Git version by following <a href="http://git-scm.com/book/en/v2/Getting-Started-Installing-Git">these instructions</a> for your operational system.</p>
+</div>
+<div class="paragraph">
+<p>There are several GUI tools created for working with Git repositories, but we&#8217;ll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command <em>git --version</em>, and you&#8217;ll see which version of Git you have. At the time of this writing it&#8217;s 2.3.</p>
+</div>
+<div class="paragraph">
+<p>The next step is to introduce yourself to Git by providing your name and the email address. Typically you&#8217;ll be running the <em>git</em> program followed by the command name, which may have various options that start with <em>--</em> or <em>-</em>. To introduce yourself to Git, use the <em>config</em> command with the <em>--global</em> option.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git config --global user.name ”Yakov Fain"
+git config --global user.email "yakovfain@gmail.com"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Committing code to Git</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_branching"><a class="anchor" href="#_branching"></a>Branching</h3>
 <div class="paragraph">
-<p>Every new feature can live in its own branch</p>
+<p>You may ask, "What if Mary want to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own <em>branch</em> which will keep her experimental code separately. Every new feature can live in its own branch.</p>
+</div>
+<div class="sect3">
+<h4 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>Conflict resolution</h4>
+</div>
+<div class="sect3">
+<h4 id="_how-to-rollback-to-the-previous-version"><a class="anchor" href="#_how-to-rollback-to-the-previous-version"></a>How to Rollback to the Previous Version</h4>
+<div class="paragraph">
+<p>You can find more detailed explanations of all Git features in the free book titled <a href="http://git-scm.com/book/en/v2">Pro Git</a> published by Apress.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>Conflict resolution</h3>
-</div>
-<div class="sect2">
-<h3 id="_how-to-rollback-to-the-previous-version"><a class="anchor" href="#_how-to-rollback-to-the-previous-version"></a>How to Rollback to the Previous Version</h3>
 </div>
 <div class="sect2">
 <h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>Publishing your code on GitHub</h3>
+<div class="sect3">
+<h4 id="_cloning-and-forking"><a class="anchor" href="#_cloning-and-forking"></a>Cloning and Forking</h4>
+</div>
 <div class="sect3">
 <h4 id="_pull-request"><a class="anchor" href="#_pull-request"></a>Pull request</h4>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_git-support-in-the-intellij-idea"><a class="anchor" href="#_git-support-in-the-intellij-idea"></a>Git Support in the IntelliJ IDEA</h3>
+<h3 id="_getting-this-book-code-samples-from-github"><a class="anchor" href="#_getting-this-book-code-samples-from-github"></a>Getting This Book Code Samples from GitHub</h3>
+<div class="paragraph">
+<p>I was using Git while working on all code samples included in this book. They are available on GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress_code">https://github.com/yfain/Java4Kids_NoStarchPress_code</a>. You can clone this code repository either by typing commands in the Command (or Terminal) window or directly from IDEA.</p>
+</div>
+<div class="sect3">
+<h4 id="_cloning-code-sample-from-a-command-window"><a class="anchor" href="#_cloning-code-sample-from-a-command-window"></a>Cloning Code Sample From a Command Window</h4>
+</div>
+<div class="sect3">
+<h4 id="_cloning-code-sample-from-intellij-idea"><a class="anchor" href="#_cloning-code-sample-from-intellij-idea"></a>Cloning Code Sample From IntelliJ IDEA</h4>
+<div class="paragraph">
+<p>In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.</p>
+</div>
+<div id="FIG14-20" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_IDEA_vcs1.png" alt="fig 14 IDEA vcs1">
+</div>
+</div>
+<div class="paragraph">
+<p>IDEA will ask you to login to GitHub. Use the email and the password that you used while creating your GitHub account. Then IDEA will ask you for its own password database - leave it blank. Now IDEA is ready to clone any public repository provided that you know the clone URL, which is <a href="https://github.com/yfain/Java4Kids_NoStarchPress_code.git">https://github.com/yfain/Java4Kids_NoStarchPress_code.git</a> in our case. You should enter this URL in the next window that may look similar to this one:</p>
+</div>
+<div id="FIG14-21" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_IDEA_vcs2.png" alt="fig 14 IDEA vcs2">
+</div>
+</div>
+<div class="paragraph">
+<p>The field with the name of the project directory will be populated automatically, but you can change it if you want. Press the button Clone and IDEA will clone all the projects into the specified directory and will ask you if you want to open a project. Selecting Yes will open one of the IDEA projects (e.g. Chapter7). You&#8217;ll also see a warning about unregistered VCS root, which you can ignore, as you won&#8217;t be directly pushing any code changes into my GitHub repository.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;ll open the project directory with File Manager (or Finder), you&#8217;ll see there other folders that contain code samples for all the chapters. You can open any of these projects in IDEA by selecting the menu File | Open.
+Note that this project directory has a folder named <em>.git</em>, which contains Git database with the history of all commits that I did while writing code samples for this book.</p>
+</div>
+<div class="paragraph">
+<p>If you see any compilation errors, open the menu File | Project Structure and make sure that the project language level is set to "8 - Lambdas, type annotations etc."</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-06 13:19:14 EST
+Last updated 2015-02-07 12:22:07 EST
 </div>
 </div>
 </body>
