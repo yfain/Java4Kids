@@ -3,7 +3,7 @@
 
 == Appendix. Version Control and Publishing Code to GitHub
 
-So you wrote you great application and it works as expected. Sometime later you've got an idea how to make it even better. After several hours of making changes in your code you've noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday's version of the code that was working fine? Can you undo (_rollback_) the latest changes that broke the code?
+So you wrote you great application, and it worked as expected. Sometime later you've got an idea how to make it even better. After several hours of making changes in your code you've noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday's version of the code that was working fine? Can you undo (_rollback_) the latest changes that broke the code?
 
 Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like _TicTacToe_Feb_1_, _TicTacToe_Feb_5_, _TicTacToe_Feb_20_ an so on.
 
@@ -32,23 +32,69 @@ Distributed version control systems store the latest version of the code as well
 [[FIG14-2]]
 image::images/fig_14_DistrRepo.png[] 
 
-Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly.
+Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let's see how to create the code repository of your computer that's controlled by Git.
 
-You may ask, "What if Mary want to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own _branch_ which will keep her experimental code separately. I'll give you more details in the section called Branching. 
+=== Introduction to Git
 
-=== Committing code to Git
+Git is a free distributed version control system, which you should download and install from http://git-scm.com[http://git-scm.com]. There is a chance that your computer already have Git installed, and you can see if this is the case by opening a Command or Terminal window and entering the _git_ command. If you see a list of available Git commands, you already have it. But still, I'd suggest to install the latest Git version by following http://git-scm.com/book/en/v2/Getting-Started-Installing-Git[these instructions] for your operational system. 
+
+There are several GUI tools created for working with Git repositories, but we'll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command _git --version_, and you'll see which version of Git you have. At the time of this writing it's 2.3. 
+
+The next step is to introduce yourself to Git by providing your name and the email address. Typically you'll be running the _git_ program followed by the command name, which may have various options that start with _--_ or _-_. To introduce yourself to Git, use the _config_ command with the _--global_ option.   
+
+[source, html]
+----
+git config --global user.name ”Yakov Fain" 
+git config --global user.email "yakovfain@gmail.com"
+----
+
+Committing code to Git
 
 === Branching
 
-Every new feature can live in its own branch
+You may ask, "What if Mary want to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own _branch_ which will keep her experimental code separately. Every new feature can live in its own branch.
 
-=== Conflict resolution
+==== Conflict resolution
 
 
-=== How to Rollback to the Previous Version
+==== How to Rollback to the Previous Version
+
+
+You can find more detailed explanations of all Git features in the free book titled http://git-scm.com/book/en/v2[Pro Git] published by Apress.
 
 === Publishing your code on GitHub 
 
+==== Cloning and Forking 
+
 ==== Pull request
 
-=== Git Support in the IntelliJ IDEA
+
+=== Getting This Book Code Samples from GitHub
+
+I was using Git while working on all code samples included in this book. They are available on GitHub at https://github.com/yfain/Java4Kids_NoStarchPress_code[https://github.com/yfain/Java4Kids_NoStarchPress_code]. You can clone this code repository either by typing commands in the Command (or Terminal) window or directly from IDEA. 
+
+
+==== Cloning Code Sample From a Command Window 
+
+
+==== Cloning Code Sample From IntelliJ IDEA
+
+In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.
+
+[[FIG14-20]]
+image::images/fig_14_IDEA_vcs1.png[]
+
+IDEA will ask you to login to GitHub. Use the email and the password that you used while creating your GitHub account. Then IDEA will ask you for its own password database - leave it blank. Now IDEA is ready to clone any public repository provided that you know the clone URL, which is https://github.com/yfain/Java4Kids_NoStarchPress_code.git in our case. You should enter this URL in the next window that may look similar to this one:
+
+[[FIG14-21]]
+image::images/fig_14_IDEA_vcs2.png[]
+
+The field with the name of the project directory will be populated automatically, but you can change it if you want. Press the button Clone and IDEA will clone all the projects into the specified directory and will ask you if you want to open a project. Selecting Yes will open one of the IDEA projects (e.g. Chapter7). You'll also see a warning about unregistered VCS root, which you can ignore, as you won't be directly pushing any code changes into my GitHub repository.
+
+If you'll open the project directory with File Manager (or Finder), you'll see there other folders that contain code samples for all the chapters. You can open any of these projects in IDEA by selecting the menu File | Open. 
+Note that this project directory has a folder named _.git_, which contains Git database with the history of all commits that I did while writing code samples for this book.
+
+If you see any compilation errors, open the menu File | Project Structure and make sure that the project language level is set to "8 - Lambdas, type annotations etc."  
+
+
+
