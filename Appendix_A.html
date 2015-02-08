@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Appendix. Version Control and Publishing Code to GitHub</title>
+<title>Appendix. Basics of the Version Control System Git</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,19 +487,16 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_appendix-version-control-and-publishing-code-to-github"><a class="anchor" href="#_appendix-version-control-and-publishing-code-to-github"></a>Appendix. Version Control and Publishing Code to GitHub</h2>
+<h2 id="_appendix-basics-of-the-version-control-system-git"><a class="anchor" href="#_appendix-basics-of-the-version-control-system-git"></a>Appendix. Basics of the Version Control System Git</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>So you wrote you great application, and it worked as expected. Sometime later you&#8217;ve got an idea how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday&#8217;s version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the code?</p>
 </div>
 <div class="paragraph">
-<p>Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like <em>TicTacToe_Feb_1</em>, <em>TicTacToe_Feb_5</em>, <em>TicTacToe_Feb_20</em> an so on.</p>
+<p>Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like <em>TicTacToe_Feb_1</em>, <em>TicTacToe_Feb_5</em>, <em>TicTacToe_Feb_20</em> an so on. But programmers often work in teams, and what if Joe and Mary are working on the same application? How to make sure that Joe&#8217;s and Mary&#8217;s computers have the working copy of the application with the ability to keep the history of code changes and rollback to a working version if need be?</p>
 </div>
 <div class="paragraph">
-<p>But programmers often work in teams, and what if Joe and Mary are working on the same application? How to make sure that Joe&#8217;s and Mary&#8217;s computers have the working copy of the application with the ability to keep the history of code changes and rollback to a working version if need be?</p>
-</div>
-<div class="paragraph">
-<p>There are special web hosting facilities called <em>source code repositories</em>, where Joe and Mary can safely keep their application code. There is also a special software called <em>version control systems</em> that allows to keep track of different versions of the source code stored in such common repositories.</p>
+<p>There are special web hosting facilities called <em>source code repositories</em>, where Joe and Mary can safely keep their application code. There is also a special software called Version Control Systems (VCS) that allows to keep track of different versions of the source code stored in such common repositories.</p>
 </div>
 <div class="paragraph">
 <p>Software developers make changes in their local copies of the application&#8217;s code, and test them. When they believe that their local version of the application works fine, they <em>commit</em> their latest code to the source code repository. If Mary has committed her changes, Joe can <em>check out</em> the latest code from the repository to his computer. Mary&#8217;s changes are merged with Joe&#8217;s ones on his computer.</p>
@@ -508,13 +505,13 @@ p { margin-bottom: 1.25rem; }
 <p>At this point Joe has the latest Mary&#8217;s code, but she doesn&#8217;t have the latest Joe&#8217;s code changes. WHen Joe decides to commit his latest code to the repository, Mary can check them out to her computer.</p>
 </div>
 <div class="paragraph">
-<p>In this appendix I&#8217;ll explain how to work with a popular version control system called Git, and with a code hosting
-facility called GitHub. Version control systems are used by programmers writing code in any languages, not only in Java. I can tell you more - I was using Git as a repository of the drafts of all chapters of this book, and you can find them on the GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress">https://github.com/yfain/Java4Kids_NoStarchPress</a>.  But understanding how version control systems works is very important - that&#8217;s why I included this Appendix in the book about Java.</p>
+<p>In this appendix I&#8217;ll introduce you to a popular VCS called Git, and to the code hosting
+facility called GitHub. Version control systems are used by programmers writing code in any languages, not only in Java. I can tell you more - I was using Git as a repository of the drafts of all chapters of this book, and you can find them on the GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress">https://github.com/yfain/Java4Kids_NoStarchPress</a>.  But understanding how VCS works is very important - that&#8217;s why I included this Appendix in the book about Java.</p>
 </div>
 <div class="sect2">
 <h3 id="_two-types-of-version-control-systems"><a class="anchor" href="#_two-types-of-version-control-systems"></a>Two Types of Version Control Systems</h3>
 <div class="paragraph">
-<p>There are two types of version control systems: centralized and distributed. With centralized systems the source code repository is stored a server that has the latest version of the application as well as all historical files committed by developers in the past.</p>
+<p>There are two types of VCS: centralized and distributed. With centralized systems the source code repository is stored a server that has the latest version of the application as well as all historical files committed by developers in the past.</p>
 </div>
 <div id="FIG14-1" class="imageblock">
 <div class="content">
@@ -522,10 +519,10 @@ facility called GitHub. Version control systems are used by programmers writing 
 </div>
 </div>
 <div class="paragraph">
-<p>If Pete, the new programmer, joins the team, he&#8217;d need to check out the latest code from the repository and start making his code modifications on his computer. Some popular centralized version control systems are CVS, SVN, Perforce.</p>
+<p>If Pete, the new programmer, joins the team, he&#8217;d need to check out the latest code from the repository and start making his code modifications on his computer. Some popular centralized VCS are CVS, SVN, Perforce.</p>
 </div>
 <div class="paragraph">
-<p>Distributed version control systems store the latest version of the code as well as all historical files on each programmer&#8217;s computer. Popular distributed version control systems are Git, Mercurial, and Bazaar. We&#8217;ll use Git. Technically, if you work alone, you can install Git on your computer and have your private a version control system. But we usually work in teams, so the following diagram shows three computers - one central repository on the right and to local repositories (Mary&#8217;s and Joe&#8217;s) on the left.</p>
+<p>Distributed VCS store the latest version of the code as well as all historical files on each programmer&#8217;s computer. Popular distributed VCS are Git, Mercurial, and Bazaar. We&#8217;ll use Git. Technically, if you work alone, you can install Git on your computer and have your private VCS. But we usually work in teams, so the following diagram shows three computers - one shared repository on the right and to local repositories (Mary&#8217;s and Joe&#8217;s) on the left.</p>
 </div>
 <div id="FIG14-2" class="imageblock">
 <div class="content">
@@ -533,19 +530,20 @@ facility called GitHub. Version control systems are used by programmers writing 
 </div>
 </div>
 <div class="paragraph">
-<p>Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let&#8217;s see how to create the code repository of your computer that&#8217;s controlled by Git.</p>
+<p>Each repository has all historical updates made by Joe and Mary. With centralized VCS Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let&#8217;s see how to create the code repository of your computer that&#8217;s controlled by Git.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_introduction-to-git"><a class="anchor" href="#_introduction-to-git"></a>Introduction to Git</h3>
 <div class="paragraph">
-<p>Git is a free distributed version control system, which you should download and install from <a href="http://git-scm.com">http://git-scm.com</a>. There is a chance that your computer already have Git installed, and you can see if this is the case by opening a Command or Terminal window and entering the <em>git</em> command. If you see a list of available Git commands, you already have it. But still, I&#8217;d suggest to install the latest Git version by following <a href="http://git-scm.com/book/en/v2/Getting-Started-Installing-Git">these instructions</a> for your operational system.</p>
+<p>Git is a free distributed VCS, which you can download and install from <a href="http://git-scm.com">http://git-scm.com</a>. There is a chance that your computer already has Git installed, and you can check it out by opening a Command or Terminal window and typing the command <em>git</em> followed by pressing the Enter key. If these actions print a list of available Git commands, you already have Git installed.
+But still, I&#8217;d suggest to install the latest Git version by following <a href="http://git-scm.com/book/en/v2/Getting-Started-Installing-Git">these instructions</a> for your operational system.</p>
 </div>
 <div class="paragraph">
-<p>There are several GUI tools created for working with Git repositories, but we&#8217;ll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command <em>git --version</em>, and you&#8217;ll see which version of Git you have. At the time of this writing it&#8217;s 2.3.</p>
+<p>There are several GUI tools created for working with Git repositories, but we&#8217;ll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command <em>git --version</em>, and you&#8217;ll see which version of Git you have.</p>
 </div>
 <div class="paragraph">
-<p>The next step is to introduce yourself to Git by providing your name and the email address. Typically you&#8217;ll be running the <em>git</em> program followed by the command name, which may have various options that start with <em>--</em> or <em>-</em>. To introduce yourself to Git, use the <em>config</em> command with the <em>--global</em> option.</p>
+<p>The next step is to introduce yourself to Git by providing your name and the email address. Typically you&#8217;ll be running the <em>git</em> program followed by the command name, which may have various options that start with <em>--</em> or <em>-</em>. To introduce yourself to Git, use the <em>config</em> command with the <em>--global</em> option. This is how I did it:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -554,19 +552,162 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Committing code to Git</p>
+<p>Later on, when you&#8217;ll be opening a GitHub account you&#8217;ll need to use the same email as you used with the <em>config</em> command above. The Git is ready to manage your projects. Now let&#8217;s create a Git repository for a specific project and learn how to work with it.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_branching"><a class="anchor" href="#_branching"></a>Branching</h3>
+<h3 id="_creating-a-new-git-repository"><a class="anchor" href="#_creating-a-new-git-repository"></a>Creating a New Git Repository</h3>
 <div class="paragraph">
-<p>You may ask, "What if Mary want to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own <em>branch</em> which will keep her experimental code separately. Every new feature can live in its own branch.</p>
+<p>For showing you how to use Git, I&#8217;ll create a new folder called <em>gitIntro</em> and will copy there the files <em>Pet.java</em>, <em>Fish.java</em>, and <em>PetMaster.java</em> from Chapter 3. Then I&#8217;ve opened a Terminal window and created a Git repository by entering the command <em>git init</em>. Now the content of my <em>gitIntro</em> folder looked as follows:</p>
+</div>
+<div id="FIG14-3" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_git_init.png" alt="fig 14 git init">
+</div>
+</div>
+<div class="paragraph">
+<p>Now it has my Java classes and a directory called <em>.git</em>, which is a Git repository for my <em>gitIntro</em> project. This directory contains a database to store all the changes I&#8217;ll be making to my Java classes plus the information about the code branches that we&#8217;ll discuss a bit later.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_selected-git-commands"><a class="anchor" href="#_selected-git-commands"></a>Selected Git Commands</h3>
+<div class="paragraph">
+<p>Git has a couple of dozens commands, but knowing just a half dozen of commands may be enough for your projects. I&#8217;ll you several commands that I use daily. Each command may be issued with several options. I&#8217;ll just show you simple ways to run the commands that will get you started with Git. For more detailed coverage of all Git features and commands you&#8217;ll need to study <a href="http://git-scm.com/doc">online documentation</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_the-status-command"><a class="anchor" href="#_the-status-command"></a>The status Command</h4>
+<div class="paragraph">
+<p>I always start working with Git by opening my project directory and typing <em>git status</em>. Let&#8217;s do the same in the directory <em>gitIntro</em>. I&#8217;ve never committed to my brand new code repository yet, and Git will respond with the following status:</p>
+</div>
+<div id="FIG14-4" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_git_status.png" alt="fig 14 git status">
+</div>
+</div>
+<div class="paragraph">
+<p>Note the first statement indicating that I work with the code branch called master. At this point I have no any other branches. The file names are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the-add-command"><a class="anchor" href="#_the-add-command"></a>The add Command</h4>
+<div class="paragraph">
+<p>Adding files to a Git repository is done by the command <em>add</em>. I was learning Git by watching training videos recorded by Git engineers, and they&#8217;ve compared the <em>add</em> command with the process of adding items to the shopping cart in a supermarket. There are lots of produce on the shelves, but you pick only selected ones by placing them into your cart. Similarly, you have lots of files in your folder(s), but you may want to add only selected ones to the git repository, for example <em>git add Fish.java</em>.</p>
+</div>
+<div class="paragraph">
+<p>You can also add all new or modified files in one shot by executing the command <em>git add --all</em>. After running this command you&#8217;ll get the following output:</p>
+</div>
+<div id="FIG14-5" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_git_add_all.png" alt="fig 14 git add all">
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to know which options exist for a command, jut enter <em>git --help</em> followed by a command name, for example, <em>git --help add</em>. To quit the help more just enter the letter <em>q</em> in the Command window.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the-commit-command"><a class="anchor" href="#_the-commit-command"></a>The commit Command</h4>
+<div class="paragraph">
+<p>Now all Java files are shown in green, which means that these files are ready to be committed to the Git database. If we&#8217;ll continue using the analogy with a supermarket, committing is similar to paying for the items in your shopping cart.</p>
+</div>
+<div class="paragraph">
+<p>But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments represent sort of a log that indicates the progress.</p>
+</div>
+<div class="paragraph">
+<p>For example, you can issue a command <em>git commit -m "initial commit of the classes Fish, Pet, and PetMaster"</em>. The <em>-m</em> option means that a message describing the commit follows in the double quotes.</p>
+</div>
+<div id="FIG14-6" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_git_commit.png" alt="fig 14 git commit">
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;ll enter the command <em>git status</em> again you&#8217;ll see the massage that there is nothing to commit. No wonder, I just committed three files and haven&#8217;t modified them yet.</p>
+</div>
+<div id="FIG14-7" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_git_nothing_to_commit.png" alt="fig 14 git nothing to commit">
+</div>
+</div>
+<div class="paragraph">
+<p>Now let me make a small change in the file <em>PetMaster.java</em> - I&#8217;ll just modify a comment at the top of this file. Initially the comment read "Created by NewProgrammer on 3/28/15." I&#8217;ll change the text to "Created by Yakov on 3/28/15." Running the <em>git status</em> command again will produce a different output:</p>
+</div>
+<div id="FIG14-8" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_git_status_changed.png" alt="fig 14 git status changed">
+</div>
+</div>
+<div class="paragraph">
+<p>Git knows that the <em>PetMaster.java</em> has been changed, but until I issue the command <em>add</em> for this file (or all files), Git won&#8217;t track the changes in the current version of <em>PetMaster.java</em>. In the supermarket setup, it&#8217;s a situation when the product is displayed on the shelf, but has not been added to your shopping cart yet. The following two commands will save my latest change in the Git database (a.k.a. index):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git add PetMaster.java
+git commit -m "Modified the opening comment in PetMaster.java"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After committing all the changes <em>git status</em> will tell us again that there is nothing to commit, and the working directory is clean.</p>
+</div>
+<div class="paragraph">
+<p>To summarize, we have three Java classes located in our working directory <em>gitIntro</em>, and the history of modifications and commits located in the directory <em>.git</em>.
+I also want to stress, that so far all the work we&#8217;ve done was saved in the local code repository.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the-reset-command"><a class="anchor" href="#_the-reset-command"></a>The reset Command</h4>
+<div class="paragraph">
+<p>Here&#8217;s another situation to consider. I just committed the changes to the file <em>PetMaster.java</em> and got goose bumps. Suddenly I realized that it was a mistake, and I wanted to undo the last commit. If you remember, the file <em>PetMaster.java</em> has an opening statement "Created by Yakov on 3/28/15." But Git stores the changes as they were made in its database. Let&#8217;s undo the action done with the last commit.</p>
+</div>
+<div class="paragraph">
+<p>When you&#8217;ll be trying to repeat all these commands open the file <em>PetMaster.java</em> and note the text of its opening comment, because it&#8217;s going to change right after the next command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git reset HEAD</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <em>reset</em> command will undo the last commit and will open a text editor containing the description of that commit, which can look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">Revert "modified the opening comment in PetMaster.java"
+
+This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#	modified:   PetMaster.java
+#</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can change this text to better describe what has been done by this command. Git will store the saved message in its history files. The long sequence of digits and letters is a unique number in a hexadecimal format, which is associated with each commit.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_branching-commands"><a class="anchor" href="#_branching-commands"></a>Branching Commands</h4>
+<div class="paragraph">
+<p>You may ask, "What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own <em>branch</em> which will keep her experimental code separately.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_push-and-pull"><a class="anchor" href="#_push-and-pull"></a>Push and Pull</h4>
+<div class="paragraph">
+<p>If you have a shared Git repository on a remote computer, once in a while you&#8217;ll need to synchronize the content from your local Git repository with remote one, which may be used by other members of the team. I wrote "maybe" because even if you work on the project alone, you may want to have an extra copy of your Git repository in the remote computer.</p>
+</div>
+<div class="paragraph">
+<p>The process of downloading of the latest code from the shared repository to your computer is called <em>pull</em>.</p>
+</div>
+<div class="paragraph">
+<p>The process of uploading your latest code to the shared repository is called <em>push</em>. So you commit to a local Git repository, and push to the remote one.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>Conflict resolution</h4>
-</div>
-<div class="sect3">
-<h4 id="_how-to-rollback-to-the-previous-version"><a class="anchor" href="#_how-to-rollback-to-the-previous-version"></a>How to Rollback to the Previous Version</h4>
 <div class="paragraph">
 <p>You can find more detailed explanations of all Git features in the free book titled <a href="http://git-scm.com/book/en/v2">Pro Git</a> published by Apress.</p>
 </div>
@@ -624,7 +765,7 @@ Note that this project directory has a folder named <em>.git</em>, which contain
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-07 12:22:07 EST
+Last updated 2015-02-08 18:46:10 EST
 </div>
 </div>
 </body>
