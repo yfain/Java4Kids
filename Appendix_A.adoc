@@ -1,63 +1,173 @@
 :toc-placement!:
 :imagesdir: ./
 
-== Appendix. Version Control and Publishing Code to GitHub
+== Appendix. Basics of the Version Control System Git
 
 So you wrote you great application, and it worked as expected. Sometime later you've got an idea how to make it even better. After several hours of making changes in your code you've noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday's version of the code that was working fine? Can you undo (_rollback_) the latest changes that broke the code?
 
-Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like _TicTacToe_Feb_1_, _TicTacToe_Feb_5_, _TicTacToe_Feb_20_ an so on.
+Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives and USB drives would have multiple folders named like _TicTacToe_Feb_1_, _TicTacToe_Feb_5_, _TicTacToe_Feb_20_ an so on. But programmers often work in teams, and what if Joe and Mary are working on the same application? How to make sure that Joe's and Mary's computers have the working copy of the application with the ability to keep the history of code changes and rollback to a working version if need be?
 
-But programmers often work in teams, and what if Joe and Mary are working on the same application? How to make sure that Joe's and Mary's computers have the working copy of the application with the ability to keep the history of code changes and rollback to a working version if need be?
-
-There are special web hosting facilities called _source code repositories_, where Joe and Mary can safely keep their application code. There is also a special software called _version control systems_ that allows to keep track of different versions of the source code stored in such common repositories. 
+There are special web hosting facilities called _source code repositories_, where Joe and Mary can safely keep their application code. There is also a special software called Version Control Systems (VCS) that allows to keep track of different versions of the source code stored in such common repositories. 
 
 Software developers make changes in their local copies of the application's code, and test them. When they believe that their local version of the application works fine, they _commit_ their latest code to the source code repository. If Mary has committed her changes, Joe can _check out_ the latest code from the repository to his computer. Mary's changes are merged with Joe's ones on his computer.
 
 At this point Joe has the latest Mary's code, but she doesn't have the latest Joe's code changes. WHen Joe decides to commit his latest code to the repository, Mary can check them out to her computer. 
 
-In this appendix I'll explain how to work with a popular version control system called Git, and with a code hosting 
-facility called GitHub. Version control systems are used by programmers writing code in any languages, not only in Java. I can tell you more - I was using Git as a repository of the drafts of all chapters of this book, and you can find them on the GitHub at https://github.com/yfain/Java4Kids_NoStarchPress[https://github.com/yfain/Java4Kids_NoStarchPress].  But understanding how version control systems works is very important - that's why I included this Appendix in the book about Java. 
+In this appendix I'll introduce you to a popular VCS called Git, and to the code hosting 
+facility called GitHub. Version control systems are used by programmers writing code in any languages, not only in Java. I can tell you more - I was using Git as a repository of the drafts of all chapters of this book, and you can find them on the GitHub at https://github.com/yfain/Java4Kids_NoStarchPress[https://github.com/yfain/Java4Kids_NoStarchPress].  But understanding how VCS works is very important - that's why I included this Appendix in the book about Java. 
 
 === Two Types of Version Control Systems
 
-There are two types of version control systems: centralized and distributed. With centralized systems the source code repository is stored a server that has the latest version of the application as well as all historical files committed by developers in the past. 
+There are two types of VCS: centralized and distributed. With centralized systems the source code repository is stored a server that has the latest version of the application as well as all historical files committed by developers in the past. 
 
 [[FIG14-1]]
 image::images/fig_14_CentralRepo.png[] 
 
-If Pete, the new programmer, joins the team, he'd need to check out the latest code from the repository and start making his code modifications on his computer. Some popular centralized version control systems are CVS, SVN, Perforce.
+If Pete, the new programmer, joins the team, he'd need to check out the latest code from the repository and start making his code modifications on his computer. Some popular centralized VCS are CVS, SVN, Perforce.
 
-Distributed version control systems store the latest version of the code as well as all historical files on each programmer's computer. Popular distributed version control systems are Git, Mercurial, and Bazaar. We'll use Git. Technically, if you work alone, you can install Git on your computer and have your private a version control system. But we usually work in teams, so the following diagram shows three computers - one central repository on the right and to local repositories (Mary's and Joe's) on the left. 
+Distributed VCS store the latest version of the code as well as all historical files on each programmer's computer. Popular distributed VCS are Git, Mercurial, and Bazaar. We'll use Git. Technically, if you work alone, you can install Git on your computer and have your private VCS. But we usually work in teams, so the following diagram shows three computers - one shared repository on the right and to local repositories (Mary's and Joe's) on the left. 
 
 [[FIG14-2]]
 image::images/fig_14_DistrRepo.png[] 
 
-Each repository has all historical updates made by Joe and Mary. With centralized version control systems Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let's see how to create the code repository of your computer that's controlled by Git.
+Each repository has all historical updates made by Joe and Mary. With centralized VCS Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let's see how to create the code repository of your computer that's controlled by Git.
 
 === Introduction to Git
 
-Git is a free distributed version control system, which you should download and install from http://git-scm.com[http://git-scm.com]. There is a chance that your computer already have Git installed, and you can see if this is the case by opening a Command or Terminal window and entering the _git_ command. If you see a list of available Git commands, you already have it. But still, I'd suggest to install the latest Git version by following http://git-scm.com/book/en/v2/Getting-Started-Installing-Git[these instructions] for your operational system. 
+Git is a free distributed VCS, which you can download and install from http://git-scm.com[http://git-scm.com]. There is a chance that your computer already has Git installed, and you can check it out by opening a Command or Terminal window and typing the command _git_ followed by pressing the Enter key. If these actions print a list of available Git commands, you already have Git installed.
+But still, I'd suggest to install the latest Git version by following http://git-scm.com/book/en/v2/Getting-Started-Installing-Git[these instructions] for your operational system. 
 
-There are several GUI tools created for working with Git repositories, but we'll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command _git --version_, and you'll see which version of Git you have. At the time of this writing it's 2.3. 
+There are several GUI tools created for working with Git repositories, but we'll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command _git --version_, and you'll see which version of Git you have.  
 
-The next step is to introduce yourself to Git by providing your name and the email address. Typically you'll be running the _git_ program followed by the command name, which may have various options that start with _--_ or _-_. To introduce yourself to Git, use the _config_ command with the _--global_ option.   
-
+The next step is to introduce yourself to Git by providing your name and the email address. Typically you'll be running the _git_ program followed by the command name, which may have various options that start with _--_ or _-_. To introduce yourself to Git, use the _config_ command with the _--global_ option. This is how I did it:  
+ 
 [source, html]
 ----
 git config --global user.name ”Yakov Fain" 
 git config --global user.email "yakovfain@gmail.com"
 ----
 
-Committing code to Git
+Later on, when you'll be opening a GitHub account you'll need to use the same email as you used with the _config_ command above. The Git is ready to manage your projects. Now let's create a Git repository for a specific project and learn how to work with it.
 
-=== Branching
+=== Creating a New Git Repository
 
-You may ask, "What if Mary want to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own _branch_ which will keep her experimental code separately. Every new feature can live in its own branch.
+For showing you how to use Git, I'll create a new folder called _gitIntro_ and will copy there the files _Pet.java_, _Fish.java_, and _PetMaster.java_ from Chapter 3. Then I've opened a Terminal window and created a Git repository by entering the command _git init_. Now the content of my _gitIntro_ folder looked as follows:
+
+[[FIG14-3]]
+image::images/fig_14_git_init.png[] 
+
+Now it has my Java classes and a directory called _.git_, which is a Git repository for my _gitIntro_ project. This directory contains a database to store all the changes I'll be making to my Java classes plus the information about the code branches that we'll discuss a bit later.
+
+=== Selected Git Commands
+
+Git has a couple of dozens commands, but knowing just a half dozen of commands may be enough for your projects. I'll you several commands that I use daily. Each command may be issued with several options. I'll just show you simple ways to run the commands that will get you started with Git. For more detailed coverage of all Git features and commands you'll need to study http://git-scm.com/doc[online documentation]. 
+
+==== The status Command
+
+I always start working with Git by opening my project directory and typing _git status_. Let's do the same in the directory _gitIntro_. I've never committed to my brand new code repository yet, and Git will respond with the following status:
+
+[[FIG14-4]]
+image::images/fig_14_git_status.png[] 
+
+Note the first statement indicating that I work with the code branch called master. At this point I have no any other branches. The file names are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. 
+
+==== The add Command
+
+Adding files to a Git repository is done by the command _add_. I was learning Git by watching training videos recorded by Git engineers, and they've compared the _add_ command with the process of adding items to the shopping cart in a supermarket. There are lots of produce on the shelves, but you pick only selected ones by placing them into your cart. Similarly, you have lots of files in your folder(s), but you may want to add only selected ones to the git repository, for example _git add Fish.java_. 
+
+You can also add all new or modified files in one shot by executing the command _git add --all_. After running this command you'll get the following output:
+
+[[FIG14-5]]
+image::images/fig_14_git_add_all.png[]
+
+If you want to know which options exist for a command, jut enter _git --help_ followed by a command name, for example, _git --help add_. To quit the help more just enter the letter _q_ in the Command window.
+
+==== The commit Command
+
+Now all Java files are shown in green, which means that these files are ready to be committed to the Git database. If we'll continue using the analogy with a supermarket, committing is similar to paying for the items in your shopping cart. 
+
+But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a _commit_ command you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments represent sort of a log that indicates the progress.
+
+For example, you can issue a command _git commit -m "initial commit of the classes Fish, Pet, and PetMaster"_. The _-m_ option means that a message describing the commit follows in the double quotes.
+
+[[FIG14-6]]
+image::images/fig_14_git_commit.png[]
+
+If you'll enter the command _git status_ again you'll see the massage that there is nothing to commit. No wonder, I just committed three files and haven't modified them yet. 
+
+[[FIG14-7]]
+image::images/fig_14_git_nothing_to_commit.png[]
+
+Now let me make a small change in the file _PetMaster.java_ - I'll just modify a comment at the top of this file. Initially the comment read "Created by NewProgrammer on 3/28/15." I'll change the text to "Created by Yakov on 3/28/15." Running the _git status_ command again will produce a different output:
+
+[[FIG14-8]]
+image::images/fig_14_git_status_changed.png[]
+
+Git knows that the _PetMaster.java_ has been changed, but until I issue the command _add_ for this file (or all files), Git won't track the changes in the current version of _PetMaster.java_. In the supermarket setup, it's a situation when the product is displayed on the shelf, but has not been added to your shopping cart yet. The following two commands will save my latest change in the Git database (a.k.a. index):
+
+[source, html]
+----
+git add PetMaster.java
+git commit -m "Modified the opening comment in PetMaster.java"
+----
+
+After committing all the changes _git status_ will tell us again that there is nothing to commit, and the working directory is clean. 
+
+To summarize, we have three Java classes located in our working directory _gitIntro_, and the history of modifications and commits located in the directory _.git_.
+I also want to stress, that so far all the work we've done was saved in the local code repository.
+
+==== The reset Command
+
+Here's another situation to consider. I just committed the changes to the file _PetMaster.java_ and got goose bumps. Suddenly I realized that it was a mistake, and I wanted to undo the last commit. If you remember, the file _PetMaster.java_ has an opening statement "Created by Yakov on 3/28/15." But Git stores the changes as they were made in its database. Let's undo the action done with the last commit. 
+
+When you'll be trying to repeat all these commands open the file _PetMaster.java_ and note the text of its opening comment, because it's going to change right after the next command.
+
+[source, html]
+----
+git reset HEAD
+----
+
+The _reset_ command will undo the last commit and will open a text editor containing the description of that commit, which can look like this:
+
+[source, html]
+----
+Revert "modified the opening comment in PetMaster.java"
+
+This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#	modified:   PetMaster.java
+#
+----
+
+You can change this text to better describe what has been done by this command. Git will store the saved message in its history files. The long sequence of digits and letters is a unique number in a hexadecimal format, which is associated with each commit.
+
+
+==== Branching Commands
+
+You may ask, "What if Mary wants to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own _branch_ which will keep her experimental code separately. 
+
+
+
+==== Push and Pull
+
+If you have a shared Git repository on a remote computer, once in a while you'll need to synchronize the content from your local Git repository with remote one, which may be used by other members of the team. I wrote "maybe" because even if you work on the project alone, you may want to have an extra copy of your Git repository in the remote computer.
+
+The process of downloading of the latest code from the shared repository to your computer is called _pull_. 
+
+The process of uploading your latest code to the shared repository is called _push_. So you commit to a local Git repository, and push to the remote one.
+
+
+
+
+
+
 
 ==== Conflict resolution
 
-
-==== How to Rollback to the Previous Version
 
 
 You can find more detailed explanations of all Git features in the free book titled http://git-scm.com/book/en/v2[Pro Git] published by Apress.
