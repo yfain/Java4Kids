@@ -86,7 +86,7 @@ I always start working with Git by opening my project directory and typing _git 
 [[FIG14-4]]
 image::images/fig_14_git_status.png[] 
 
-Note the first statement indicating that I work with the code branch called master. At this point I have no any other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.
+Note the first statement indicating that I work with the code branch called _master_. At this point I have no any other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.
 
 ==== The add Command
 
@@ -195,30 +195,142 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 
 You can change this text to better describe what has been done by this _reset_ command. Git will store the saved message in its history files. The 40-character long sequence of digits and letters is a unique code associated with each commit. 
 
-So far we've been working with the default branch called master, and I'll explain you what branches are for next.
+So far we've been working with the default branch called _master_, and now I'll explain you what branches are for.
 
 ==== Branching Commands
 
-You may ask, "What if Mary wants to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own _branch_ to keep her experimental code separately from the main branch. 
+What if Mary wants to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code? Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the _master_ branch, which has tested and working code. 
 
+Let's follow how Mary will be adding a new method `surface` to the class `Fish`, which currently looks like this:
+
+[source, java]
+----
+public class Fish extends Pet {
+
+  int currentDepth=0;
+
+  public int dive(int howDeep){
+
+      currentDepth=currentDepth + howDeep;
+      System.out.println("Diving for " +
+              howDeep + " feet");
+      System.out.println("I'm at " + currentDepth +
+              " feet below sea level");
+
+      return currentDepth;
+  }
+}
+----
+
+Mary will be running all branching commands in the same directory _gitIntro_. First, she'll create her own branch called _mary_:
+
+[source, html]
+----
+git branch mary 
+----
+
+The new branch will be created in the Git database, but Mary remain in the _master_ branch until she switches to the new branch by executing the _checkout_ command:
+
+[source, html]
+----
+git checkout mary 
+---- 
+
+The _git status_ command is our friend. Mary uses it often to make sure that she works in the proper branch:
+
+[[FIG14-9]]
+image::images/fig_14_new_branch.png[]
+
+Now she adds the following method to the class `Fish`:
+
+[source, java]
+----
+public void surface(){
+  System.out.println("Going up " + currentDepth + " feet.");
+}
+----
+
+Using the usual sequence of commands _status_, _add_, and _commit_ Mary commits the changes to the branch _mary_:
+
+[[FIG14-10]]
+image::images/fig_14_add_surface.png[]
+
+At any given time the working directory will have only one copy of each file with the content that correspond to the current branch. Hence the class `Fish` from the branch _mary_ has the method `surface`. Now Mary  switches back to the branch _master_ by running _git checkout master_ and opens the file _Fish.java_ - the method `surface` isn't be there! Git seemlessly moved the older version of _Fish.java_ from its database back to the working directory.
+
+Mary tested the new version of the class `Fish` and she's ready to include it in the _master_ branch. Using the VCS terminology, she wants to merge the code in the branches _master_ and _mary_. From the _master_ branch Mary runs the following _merge_ command:
+
+[source, html]
+----
+git merge mary
+----
+Here's how it may look in the Terminal window:
+
+[[FIG14-11]]
+image::images/fig_14_merge.png[]
+
+In this case Git was able to automatically merge two versions of the file _Fish.java_. But sometimes the changes are conflicting with each other and manual editing is required to resolve the conflicts. 
+
+==== Conflict Resolutions
+
+Since Mary was the only programmer who was changing the file _Fish.java_ Git just kept track of all insertions, deletions, changes and re-applied them to the older version of the file during merge. But when more than one programmer works on the same file they could modify the same piece if code in different branches. This may cause merging conflicts and Git will mark the code fragments that need to be merged manually.
+
+I'll illustrate this by creating conflicting changes on purpose. First, I'll add three exclamation marks in the method `surface` in the _master_ branch:
+
+[source, java]
+----
+System.out.println("Diving for " + howDeep + " feet!!!");
+---- 
+
+I'll commit the changes to the _master_ branch, then switch to _mary_ and add the question marks there in the same place where exclamations were added in _master_. So in the branch _mary_ this line will look like this:
+
+[source, java]
+----
+System.out.println("Diving for " + howDeep + " feet???");
+---- 
+
+Now I'll switch back to _master_ branch and will try to do a merge. Clearly. Git can't take a responsibility in picking one version over the other. We got a conflict:
+
+[[FIG14-12]]
+image::images/fig_14_conflict.png[]
+
+If you'll open the file _Fish.java_
+
+[source, java]
+----
+    public void surface(){
+        System.out.println("Going up " + 
+<<<<<<< HEAD
+        	    currentDepth + " feet!!!");
+=======
+        	    currentDepth + " feet???");
+>>>>>>> mary
+}
+----
+
+The conflicting code section marked as _HEAD_ corresponds to the version in the _master_ branch, and the other one is from _mary_. Now you need to manually edit the file _Fish.java_ to keep the version of the conflicting line of code that you like. Commit the changes to the _master_ branch and the conflict is resolved. 
+
+=== Publishing Your Code on GitHub
+
+If you have a shared Git repository on a remote computer, once in a while you'll need to synchronize the content from your local Git repository with remote one, which may be used by other members of the team. I wrote "maybe" because even if you work on the project alone, you may want to have an extra copy of your Git repository in the remote computer.
+
+https://github.com/[GitHub] is a Web-base Git repository hosting service, where you can create a shared code repository free of charge as long as you don't mind having your code available for public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide, and programmers who have their code published on GitHub are treated with additional respect.
+
+
+
+==== Creating a GitHub Account
 
 
 ==== Push and Pull
 
-If you have a shared Git repository on a remote computer, once in a while you'll need to synchronize the content from your local Git repository with remote one, which may be used by other members of the team. I wrote "maybe" because even if you work on the project alone, you may want to have an extra copy of your Git repository in the remote computer.
 
 The process of downloading of the latest code from the shared repository to your computer is called _pull_. 
 
 The process of uploading your latest code to the shared repository is called _push_. So you commit to a local Git repository, and push to the remote one.
 
 
-==== Conflict resolution
-
-
 
 You can find more detailed explanations of all Git features in the free book titled http://git-scm.com/book/en/v2[Pro Git] published by Apress.
 
-=== Publishing your code on GitHub 
 
 ==== Cloning  
 
