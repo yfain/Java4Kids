@@ -623,7 +623,7 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note the first statement indicating that I work with the code branch called master. At this point I have no any other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.</p>
+<p>Note the first statement indicating that I work with the code branch called <em>master</em>. At this point I have no any other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.</p>
 </div>
 </div>
 <div class="sect3">
@@ -772,36 +772,173 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <p>You can change this text to better describe what has been done by this <em>reset</em> command. Git will store the saved message in its history files. The 40-character long sequence of digits and letters is a unique code associated with each commit.</p>
 </div>
 <div class="paragraph">
-<p>So far we&#8217;ve been working with the default branch called master, and I&#8217;ll explain you what branches are for next.</p>
+<p>So far we&#8217;ve been working with the default branch called <em>master</em>, and now I&#8217;ll explain you what branches are for.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_branching-commands"><a class="anchor" href="#_branching-commands"></a>Branching Commands</h4>
 <div class="paragraph">
-<p>You may ask, "What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code?" There is a solution to this - Mary can create her own <em>branch</em> to keep her experimental code separately from the main branch.</p>
+<p>What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code? Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the <em>master</em> branch, which has tested and working code.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s follow how Mary will be adding a new method <code>surface</code> to the class <code>Fish</code>, which currently looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public class Fish extends Pet {
+
+  int currentDepth=0;
+
+  public int dive(int howDeep){
+
+      currentDepth=currentDepth + howDeep;
+      System.out.println("Diving for " +
+              howDeep + " feet");
+      System.out.println("I'm at " + currentDepth +
+              " feet below sea level");
+
+      return currentDepth;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Mary will be running all branching commands in the same directory <em>gitIntro</em>. First, she&#8217;ll create her own branch called <em>mary</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git branch mary</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The new branch will be created in the Git database, but Mary remain in the <em>master</em> branch until she switches to the new branch by executing the <em>checkout</em> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git checkout mary</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <em>git status</em> command is our friend. Mary uses it often to make sure that she works in the proper branch:</p>
+</div>
+<div id="FIG14-9" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_new_branch.png" alt="fig 14 new branch">
+</div>
+</div>
+<div class="paragraph">
+<p>Now she adds the following method to the class <code>Fish</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">public void surface(){
+  System.out.println("Going up " + currentDepth + " feet.");
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using the usual sequence of commands <em>status</em>, <em>add</em>, and <em>commit</em> Mary commits the changes to the branch <em>mary</em>:</p>
+</div>
+<div id="FIG14-10" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_add_surface.png" alt="fig 14 add surface">
+</div>
+</div>
+<div class="paragraph">
+<p>At any given time the working directory will have only one copy of each file with the content that correspond to the current branch. Hence the class <code>Fish</code> from the branch <em>mary</em> has the method <code>surface</code>. Now Mary  switches back to the branch <em>master</em> by running <em>git checkout master</em> and opens the file <em>Fish.java</em> - the method <code>surface</code> isn&#8217;t be there! Git seemlessly moved the older version of <em>Fish.java</em> from its database back to the working directory.</p>
+</div>
+<div class="paragraph">
+<p>Mary tested the new version of the class <code>Fish</code> and she&#8217;s ready to include it in the <em>master</em> branch. Using the VCS terminology, she wants to merge the code in the branches <em>master</em> and <em>mary</em>. From the <em>master</em> branch Mary runs the following <em>merge</em> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git merge mary</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s how it may look in the Terminal window:</p>
+</div>
+<div id="FIG14-11" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_merge.png" alt="fig 14 merge">
+</div>
+</div>
+<div class="paragraph">
+<p>In this case Git was able to automatically merge two versions of the file <em>Fish.java</em>. But sometimes the changes are conflicting with each other and manual editing is required to resolve the conflicts.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_push-and-pull"><a class="anchor" href="#_push-and-pull"></a>Push and Pull</h4>
+<h4 id="_conflict-resolutions"><a class="anchor" href="#_conflict-resolutions"></a>Conflict Resolutions</h4>
+<div class="paragraph">
+<p>Since Mary was the only programmer who was changing the file <em>Fish.java</em> Git just kept track of all insertions, deletions, changes and re-applied them to the older version of the file during merge. But when more than one programmer works on the same file they could modify the same piece if code in different branches. This may cause merging conflicts and Git will mark the code fragments that need to be merged manually.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll illustrate this by creating conflicting changes on purpose. First, I&#8217;ll add three exclamation marks in the method <code>surface</code> in the <em>master</em> branch:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">System.out.println("Diving for " + howDeep + " feet!!!");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll commit the changes to the <em>master</em> branch, then switch to <em>mary</em> and add the question marks there in the same place where exclamations were added in <em>master</em>. So in the branch <em>mary</em> this line will look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">System.out.println("Diving for " + howDeep + " feet???");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now I&#8217;ll switch back to <em>master</em> branch and will try to do a merge. Clearly. Git can&#8217;t take a responsibility in picking one version over the other. We got a conflict:</p>
+</div>
+<div id="FIG14-12" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_conflict.png" alt="fig 14 conflict">
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;ll open the file <em>Fish.java</em></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">    public void surface(){
+        System.out.println("Going up " +
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+        	    currentDepth + " feet!!!");
+=======
+        	    currentDepth + " feet???");
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; mary
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The conflicting code section marked as <em>HEAD</em> corresponds to the version in the <em>master</em> branch, and the other one is from <em>mary</em>. Now you need to manually edit the file <em>Fish.java</em> to keep the version of the conflicting line of code that you like. Commit the changes to the <em>master</em> branch and the conflict is resolved.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>Publishing Your Code on GitHub</h3>
 <div class="paragraph">
 <p>If you have a shared Git repository on a remote computer, once in a while you&#8217;ll need to synchronize the content from your local Git repository with remote one, which may be used by other members of the team. I wrote "maybe" because even if you work on the project alone, you may want to have an extra copy of your Git repository in the remote computer.</p>
 </div>
+<div class="paragraph">
+<p><a href="https://github.com/">GitHub</a> is a Web-base Git repository hosting service, where you can create a shared code repository free of charge as long as you don&#8217;t mind having your code available for public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide, and programmers who have their code published on GitHub are treated with additional respect.</p>
+</div>
+<div class="sect3">
+<h4 id="_creating-a-github-account"><a class="anchor" href="#_creating-a-github-account"></a>Creating a GitHub Account</h4>
+</div>
+<div class="sect3">
+<h4 id="_push-and-pull"><a class="anchor" href="#_push-and-pull"></a>Push and Pull</h4>
 <div class="paragraph">
 <p>The process of downloading of the latest code from the shared repository to your computer is called <em>pull</em>.</p>
 </div>
 <div class="paragraph">
 <p>The process of uploading your latest code to the shared repository is called <em>push</em>. So you commit to a local Git repository, and push to the remote one.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>Conflict resolution</h4>
 <div class="paragraph">
 <p>You can find more detailed explanations of all Git features in the free book titled <a href="http://git-scm.com/book/en/v2">Pro Git</a> published by Apress.</p>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>Publishing your code on GitHub</h3>
 <div class="sect3">
 <h4 id="_cloning"><a class="anchor" href="#_cloning"></a>Cloning</h4>
 <div class="paragraph">
@@ -922,7 +1059,7 @@ Note that this project directory has a folder named <em>.git</em>, which contain
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-09 08:58:55 EST
+Last updated 2015-02-09 13:12:17 EST
 </div>
 </div>
 </body>
