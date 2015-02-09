@@ -64,6 +64,8 @@ image::images/fig_14_git_init.png[]
 
 Now this folder has my Java classes and a hidden directory called _.git_, which is a Git repository for my _gitIntro_ project. This directory contains a Git database (a.k.a the index) to store all the changes I'll be making to my Java classes plus the name of the _code branch_ that we'll discuss a bit later.
 
+You can start using Git with your old projects any time you want. Just open the directory of any existing project and execute the _git init_ command to create a new local repository. Of course, it won't know about your prior code modifications, but from now on you can start tracking them. 
+
 === Selected Git Commands
 
 Git has a couple of dozens commands, but knowing just a half dozen of them may be enough for all your project activities. I'll show you several commands that I use daily. Each command may be issued with several options. I'll just show you the basic commands to quickly get you started with Git. For more detailed coverage of all Git features and commands you'll need to study http://git-scm.com/doc[online documentation]. 
@@ -218,22 +220,67 @@ You can find more detailed explanations of all Git features in the free book tit
 
 === Publishing your code on GitHub 
 
-==== Cloning and Forking 
+==== Cloning  
 
-==== Pull request
+Say, Peter join the existing project and Joe and Mary want him to get the existing code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but there is no need to create a new folder and issue the _git init_ command there. Git has a _clone_ command that can take the existing code from the shared repository and create its copy on Peter's computer. The clone command not only downloads the latest version of the project's code, but also downloads the entire Git database with all the history of changes made by Joe and Mary in the past.
 
+I store all code examples for this book on GitHub at https://github.com/yfain/Java4Kids_NoStarchPress_code[https://github.com/yfain/Java4Kids_NoStarchPress_code]. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:
 
-=== Getting This Book Code Samples from GitHub
+[[FIG14-12]]
+image::images/fig_14_CloneURL.png[]
 
-I was using Git while working on all code samples included in this book. They are available on GitHub at https://github.com/yfain/Java4Kids_NoStarchPress_code[https://github.com/yfain/Java4Kids_NoStarchPress_code]. You can clone this code repository either by typing commands in the Command (or Terminal) window or directly from IDEA. 
+You can see only a part of this URL, but when you copy it into the clipboard it'll look like this:
 
+[source, html]
+----
+https://github.com/yfain/Java4Kids_NoStarchPress_code.git
+----
 
-==== Cloning Code Sample From a Command Window 
+Now open the Command (or Terminal) window and issue the clone command using the above URL as a parameter:
 
+[source, html]
+----
+git clone https://github.com/yfain/Java4Kids_NoStarchPress_code.git
+----
 
-==== Cloning Code Sample From IntelliJ IDEA
+In a couple of seconds you'll find the directory _Java4Kids_NoStarchPress_code_ with all code samples and the _.git_ folder inside. This is how I did it on my Mac computer:
 
-In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.
+[[FIG14-13]]
+image::images/fig_14_Cloning.png[]
+
+As a matter of fact you can clone any GitHub open source repository on your computer and work with the code without even notifying the author of the code. But creating a clone doesn't mean that you can push your code changes to the author's GitHub repository without his approval. GitHub has special procedures for this called Forking and Pull Requests.
+
+==== Forking and Pull Requests
+
+If cloning creates a copy of someone's remote repository on your computer, forking creates a copy of that GitHub repository in your GitHub repository. Then you can clone this project from your own GitHub account, and work with it as if it's yours. Then if you want to contact the author offering your version of the code, you need to send a _pull request_ to the author. By creating a pull request you are saying to the author, "I just improved your code and committed it into my repository. Please look at it and pull it from me if, you like it". 
+
+Say you want to be a contributor to my code samples for this book. Instead of cloning explained in the previous section, just go to the GitHub page of my project and click on the button Fork at the top of the page:
+
+[[FIG14-14]]
+image::images/fig_14_Fork.png[]
+
+This will create a new repository under your GitHub account and will copy my code there. Then you can clone this project from your repository and work with it. When you've improved my code or fixed a bug, push it to your forked project. Then visit my GitHub page and press the button Pull Request there:
+
+[[FIG14-15]]
+image::images/fig_14_PullRequest.png[]
+
+You'll be able to create a pull request and describe the code change that you've already inplemened and commited into the forked repository. Actually, I have one pull request at the time of this writing. Let's click on this little circle with the digit 1 and see what's there:
+
+[[FIG14-16]]
+image::images/fig_14_PullRequest_YF.png[]
+
+The user with the ID wbrehaut found a typo in my file _CreatePlayStation4Objects.java_. After looking at the code in this file I saw that it's a typo indeed, and pressing the green button Merge pull request will automatically merge the correct line into my code.
+
+The following diagram illustrates this process:
+
+[[FIG14-17]]
+image::images/fig_14_Forking.png[]
+
+Not every pull request can be automatically merged, especially if multiple code changes have been done. In this case you'd need to do a manual merge right in the GitHub. I always leave a Thank You comment to people who helped making my code better. 
+
+==== Cloning From IntelliJ IDEA
+
+All popular Java IDE support working with Git. In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.
 
 [[FIG14-20]]
 image::images/fig_14_IDEA_vcs1.png[]
