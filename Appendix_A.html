@@ -578,6 +578,9 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 <div class="paragraph">
 <p>Now this folder has my Java classes and a hidden directory called <em>.git</em>, which is a Git repository for my <em>gitIntro</em> project. This directory contains a Git database (a.k.a the index) to store all the changes I&#8217;ll be making to my Java classes plus the name of the <em>code branch</em> that we&#8217;ll discuss a bit later.</p>
 </div>
+<div class="paragraph">
+<p>You can start using Git with your old projects any time you want. Just open the directory of any existing project and execute the <em>git init</em> command to create a new local repository. Of course, it won&#8217;t know about your prior code modifications, but from now on you can start tracking them.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_selected-git-commands"><a class="anchor" href="#_selected-git-commands"></a>Selected Git Commands</h3>
@@ -800,24 +803,94 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <div class="sect2">
 <h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>Publishing your code on GitHub</h3>
 <div class="sect3">
-<h4 id="_cloning-and-forking"><a class="anchor" href="#_cloning-and-forking"></a>Cloning and Forking</h4>
-</div>
-<div class="sect3">
-<h4 id="_pull-request"><a class="anchor" href="#_pull-request"></a>Pull request</h4>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_getting-this-book-code-samples-from-github"><a class="anchor" href="#_getting-this-book-code-samples-from-github"></a>Getting This Book Code Samples from GitHub</h3>
+<h4 id="_cloning"><a class="anchor" href="#_cloning"></a>Cloning</h4>
 <div class="paragraph">
-<p>I was using Git while working on all code samples included in this book. They are available on GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress_code">https://github.com/yfain/Java4Kids_NoStarchPress_code</a>. You can clone this code repository either by typing commands in the Command (or Terminal) window or directly from IDEA.</p>
+<p>Say, Peter join the existing project and Joe and Mary want him to get the existing code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but there is no need to create a new folder and issue the <em>git init</em> command there. Git has a <em>clone</em> command that can take the existing code from the shared repository and create its copy on Peter&#8217;s computer. The clone command not only downloads the latest version of the project&#8217;s code, but also downloads the entire Git database with all the history of changes made by Joe and Mary in the past.</p>
 </div>
-<div class="sect3">
-<h4 id="_cloning-code-sample-from-a-command-window"><a class="anchor" href="#_cloning-code-sample-from-a-command-window"></a>Cloning Code Sample From a Command Window</h4>
-</div>
-<div class="sect3">
-<h4 id="_cloning-code-sample-from-intellij-idea"><a class="anchor" href="#_cloning-code-sample-from-intellij-idea"></a>Cloning Code Sample From IntelliJ IDEA</h4>
 <div class="paragraph">
-<p>In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.</p>
+<p>I store all code examples for this book on GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress_code">https://github.com/yfain/Java4Kids_NoStarchPress_code</a>. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:</p>
+</div>
+<div id="FIG14-12" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_CloneURL.png" alt="fig 14 CloneURL">
+</div>
+</div>
+<div class="paragraph">
+<p>You can see only a part of this URL, but when you copy it into the clipboard it&#8217;ll look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">https://github.com/yfain/Java4Kids_NoStarchPress_code.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now open the Command (or Terminal) window and issue the clone command using the above URL as a parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git clone https://github.com/yfain/Java4Kids_NoStarchPress_code.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In a couple of seconds you&#8217;ll find the directory <em>Java4Kids_NoStarchPress_code</em> with all code samples and the <em>.git</em> folder inside. This is how I did it on my Mac computer:</p>
+</div>
+<div id="FIG14-13" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_Cloning.png" alt="fig 14 Cloning">
+</div>
+</div>
+<div class="paragraph">
+<p>As a matter of fact you can clone any GitHub open source repository on your computer and work with the code without even notifying the author of the code. But creating a clone doesn&#8217;t mean that you can push your code changes to the author&#8217;s GitHub repository without his approval. GitHub has special procedures for this called Forking and Pull Requests.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_forking-and-pull-requests"><a class="anchor" href="#_forking-and-pull-requests"></a>Forking and Pull Requests</h4>
+<div class="paragraph">
+<p>If cloning creates a copy of someone&#8217;s remote repository on your computer, forking creates a copy of that GitHub repository in your GitHub repository. Then you can clone this project from your own GitHub account, and work with it as if it&#8217;s yours. Then if you want to contact the author offering your version of the code, you need to send a <em>pull request</em> to the author. By creating a pull request you are saying to the author, "I just improved your code and committed it into my repository. Please look at it and pull it from me if, you like it".</p>
+</div>
+<div class="paragraph">
+<p>Say you want to be a contributor to my code samples for this book. Instead of cloning explained in the previous section, just go to the GitHub page of my project and click on the button Fork at the top of the page:</p>
+</div>
+<div id="FIG14-14" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_Fork.png" alt="fig 14 Fork">
+</div>
+</div>
+<div class="paragraph">
+<p>This will create a new repository under your GitHub account and will copy my code there. Then you can clone this project from your repository and work with it. When you&#8217;ve improved my code or fixed a bug, push it to your forked project. Then visit my GitHub page and press the button Pull Request there:</p>
+</div>
+<div id="FIG14-15" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_PullRequest.png" alt="fig 14 PullRequest">
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll be able to create a pull request and describe the code change that you&#8217;ve already inplemened and commited into the forked repository. Actually, I have one pull request at the time of this writing. Let&#8217;s click on this little circle with the digit 1 and see what&#8217;s there:</p>
+</div>
+<div id="FIG14-16" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_PullRequest_YF.png" alt="fig 14 PullRequest YF">
+</div>
+</div>
+<div class="paragraph">
+<p>The user with the ID wbrehaut found a typo in my file <em>CreatePlayStation4Objects.java</em>. After looking at the code in this file I saw that it&#8217;s a typo indeed, and pressing the green button Merge pull request will automatically merge the correct line into my code.</p>
+</div>
+<div class="paragraph">
+<p>The following diagram illustrates this process:</p>
+</div>
+<div id="FIG14-17" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_Forking.png" alt="fig 14 Forking">
+</div>
+</div>
+<div class="paragraph">
+<p>Not every pull request can be automatically merged, especially if multiple code changes have been done. In this case you&#8217;d need to do a manual merge right in the GitHub. I always leave a Thank You comment to people who helped making my code better.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cloning-from-intellij-idea"><a class="anchor" href="#_cloning-from-intellij-idea"></a>Cloning From IntelliJ IDEA</h4>
+<div class="paragraph">
+<p>All popular Java IDE support working with Git. In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.</p>
 </div>
 <div id="FIG14-20" class="imageblock">
 <div class="content">
@@ -849,7 +922,7 @@ Note that this project directory has a folder named <em>.git</em>, which contain
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-09 05:33:15 EST
+Last updated 2015-02-09 08:58:55 EST
 </div>
 </div>
 </body>
