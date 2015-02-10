@@ -386,7 +386,7 @@ To add a collaborator to your GitHub project, you'd need to visit you shared pro
 
 ==== Cloning  
 
-Say, Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen't have to create a new folder and run the _git init_ command there. Git has a _clone_ command that can take the existing code from a  shared repository and create its copy on Peter's computer. The _clone_ command downloads the latest project's code including the entire Git database with all the history of changes made by Joe and Mary in the past. You can do cloning either by clicking a button Clone in Desktop on GitHub or by running _git clone_ in the Command window.
+Say, Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen't have to create a new folder and run the _git init_ command there. Git has a _clone_ command that can take the existing code from a  shared repository and create its copy on Peter's computer. The _clone_ command downloads the latest project's code including the entire Git database with all the history of changes made by Joe and Mary in the past. You can do cloning either by clicking the button "Clone in Desktop" on GitHub or by running _git clone_ in the Command window.
 
 While writing this book I stored all its code examples on GitHub at https://github.com/yfain/Java4Kids_NoStarchPress_code[https://github.com/yfain/Java4Kids_NoStarchPress_code]. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:
 
@@ -428,14 +428,14 @@ This will create a new repository under your GitHub account and will copy my cod
 [[FIG14-19]]
 image::images/fig_14_PullRequest.png[]
 
-You'll be able to create a pull request and describe the code change that you've already inplemened and commited into the forked repository. Actually, I have one pull request at the time of this writing. Let's click on this little circle with the digit 1 and see what's there:
+You'll be able to create a pull request and describe the code change that you've already implemented and committed into the forked repository. Actually, I have one pull request at the time of this writing. Let's click on this little circle with the digit 1 and see what's there:
 
 [[FIG14-20]]
 image::images/fig_14_PullRequest_YF.png[]
 
 The user with the ID _wbrehaut_ found a typo in my file _CreatePlayStation4Objects.java_. After looking at the code in this file I saw that it's a typo indeed, and pressing the green button "Merge pull request" will automatically merge the correct line into my code.
 
-The following diagram illustrates the forking and pull request process:
+The following diagram illustrates the forking and pull request processes:
 
 [[FIG14-21]]
 image::images/fig_14_Forking.png[]
