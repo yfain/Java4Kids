@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Appendix. Basics of the Version Control System Git</title>
+<title>Chapter 14. Git for Kids</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -487,7 +487,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_appendix-basics-of-the-version-control-system-git"><a class="anchor" href="#_appendix-basics-of-the-version-control-system-git"></a>Appendix. Basics of the Version Control System Git</h2>
+<h2 id="_chapter-14-git-for-kids"><a class="anchor" href="#_chapter-14-git-for-kids"></a>Chapter 14. Git for Kids</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>So you wrote a great application, and it worked as expected. Sometime later you&#8217;ve got an idea how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday&#8217;s version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the working code?</p>
@@ -499,13 +499,13 @@ p { margin-bottom: 1.25rem; }
 <p>Programmers use a special software called Version Control Systems (VCS) that allows to keep track of different versions of the source code stored in common <em>source code repositories</em> located on the company&#8217;s servers. There are also special web hosting facilities, where Joe and Mary can safely keep their application code.</p>
 </div>
 <div class="paragraph">
-<p>Software developers make changes in their local copies of the application&#8217;s code, and test them. When the local version of the application works fine, they <em>commit</em> the latest code to the source code repository. If Mary has committed her changes, Joe can <em>check out</em> the latest code from the shared repository to his computer. Mary&#8217;s changes will merged with Joe&#8217;s ones on his computer.</p>
+<p>Software developers make changes in their local copies of the application&#8217;s code, and test them. When the local version of the application works fine, they <em>commit</em> (save) the latest code changes to the source code repository. If Mary has committed her changes, Joe can <em>check out</em> the latest code from the shared repository to his computer. Mary&#8217;s changes will merged with Joe&#8217;s ones on his computer.</p>
 </div>
 <div class="paragraph">
 <p>Now Joe has the latest Mary&#8217;s code, but she doesn&#8217;t have the latest Joe&#8217;s code changes. When Joe decides to commit his latest code to the shared repository, Mary can check them out to her computer.</p>
 </div>
 <div class="paragraph">
-<p>In this appendix I&#8217;ll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer get lost or stolen you can always recover the code by <em>pulling</em> it from GitHub.</p>
+<p>In this chapter I&#8217;ll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer get lost or stolen you can always recover the code by <em>pulling</em> it from GitHub.</p>
 </div>
 <div class="paragraph">
 <p>I was using Git as a VCS and GitHub as a shared repository of the drafts of all chapters of this book, and you can find them on the GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress">https://github.com/yfain/Java4Kids_NoStarchPress</a>.</p>
@@ -538,16 +538,16 @@ p { margin-bottom: 1.25rem; }
 </div>
 </div>
 <div class="paragraph">
-<p>At any given time each local repository has all historical updates made by its owner as welled as historical updates that the owner pulled from the shared repository. With centralized VCS Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let&#8217;s see how to create the code repository of your computer that&#8217;s controlled by Git.</p>
+<p>At any given time each local repository stores the  history of all updates made by its owner as well as historical updates that the owner pulled from the shared repository. Let&#8217;s see how to create a source code repository of your computer that&#8217;s managed by Git.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_introduction-to-git"><a class="anchor" href="#_introduction-to-git"></a>Introduction to Git</h3>
 <div class="paragraph">
-<p>Git is a free distributed VCS, which you can download and install from <a href="http://git-scm.com">http://git-scm.com</a>. There is a chance that your computer already has Git installed, and you can check it out by opening a Command or Terminal window and entering the command <em>git</em>. If it print a list of available Git commands, you already have Git installed. But still, I&#8217;d suggest to install the latest Git version by following <a href="http://git-scm.com/book/en/v2/Getting-Started-Installing-Git">these instructions</a> for your operational system.</p>
+<p>Git is a free distributed VCS, which you can download and install from <a href="http://git-scm.com">http://git-scm.com</a>. There is a chance that your computer already has Git installed, and you can check it out by opening a Command or Terminal window and entering the command <em>git</em>. If it prints a list of available Git commands, you already have Git installed. But still, I&#8217;d suggest to install the latest Git version by following <a href="http://git-scm.com/book/en/v2/Getting-Started-Installing-Git">these instructions</a> for your operational system.</p>
 </div>
 <div class="paragraph">
-<p>There are several <a href="http://git-scm.com/download/gui/linux">GUI tools</a> for working with Git repositories, but we&#8217;ll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command <em>git --version</em>, and you&#8217;ll see which version of Git you&#8217;ll be using.</p>
+<p>There are several <a href="http://git-scm.com/download/gui/linux">GUI tools</a> for working with Git repositories, but we&#8217;ll be using a Command or Terminal window for executing all commands. After the installation is complete, enter the command <em>git --version</em>, and you&#8217;ll see which version of Git you&#8217;ll be using.</p>
 </div>
 <div class="sect3">
 <h4 id="_introducing-yourself-to-git"><a class="anchor" href="#_introducing-yourself-to-git"></a>Introducing Yourself to Git</h4>
@@ -560,15 +560,27 @@ p { margin-bottom: 1.25rem; }
 git config --global user.email "yakovfain@gmail.com"</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you want to be able to use different user names and emails for different projects, run the above commands from the project directory without the <em>--global</em> option.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>Later on, when you&#8217;ll be opening a GitHub account you&#8217;ll need to use the same email as you used with the <em>config</em> command above. The Git is ready to manage your projects. Now let&#8217;s create a Git repository for a specific project and learn how to work with it.</p>
+<p>Later on, when you&#8217;ll be opening a GitHub account you&#8217;ll need to use the same email as you used with the <em>config</em> command above. Git is ready to manage your projects. Now let&#8217;s create a Git repository for a simple project and learn how to work with it.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_creating-a-new-git-repository"><a class="anchor" href="#_creating-a-new-git-repository"></a>Creating a New Git Repository</h3>
 <div class="paragraph">
-<p>For illustration purposes I&#8217;ll create a new folder called <em>gitIntro</em> and will copy there the files <em>Pet.java</em>, <em>Fish.java</em>, and <em>PetMaster.java</em> from Chapter 3. Then I&#8217;ll  open my Terminal window and will create a new Git repository by entering the command <em>git init</em>. The content of my <em>gitIntro</em> folder looks as follows:</p>
+<p>For illustration purposes I&#8217;ll create a new folder called <em>gitIntro</em> and will copy there the files <em>Pet.java</em>, <em>Fish.java</em>, and <em>PetMaster.java</em> from Chapter 3. Then I&#8217;ll  open the Terminal window on my MacBook (Windows users open the Command window) and will create a new Git repository by entering the command <em>git init</em>. The content of my <em>gitIntro</em> folder looks as follows:</p>
 </div>
 <div id="FIG14-3" class="imageblock">
 <div class="content">
@@ -576,7 +588,7 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now this folder has my Java classes and a hidden directory called <em>.git</em>, which is a Git repository for my <em>gitIntro</em> project. This directory contains a Git database (a.k.a the index) to store all the changes I&#8217;ll be making to my Java classes plus the name of the <em>code branch</em> that we&#8217;ll discuss a bit later.</p>
+<p>The <em>git init</em> command has created a hidden directory called <em>.git</em>, which is a Git repository for my <em>gitIntro</em> project. This directory contains a Git database (a.k.a the index) that will store all the changes I&#8217;ll be making to my Java classes through the life of this project.</p>
 </div>
 <div class="paragraph">
 <p>You can start using Git with your old projects any time you want. Just open the directory of any existing project and execute the <em>git init</em> command to create a new local repository. Of course, it won&#8217;t know about your prior code modifications, but from now on you can start tracking them.</p>
@@ -596,7 +608,7 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 <p>Make the changes to some project files.</p>
 </li>
 <li>
-<p>Check the status of your project.</p>
+<p>Check the status of the files in my project.</p>
 </li>
 <li>
 <p>Change the status of all or some of the modified files to trackable by running the <em>add</em> command.</p>
@@ -605,7 +617,7 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 <p>Commit all or selected modified files to local Git repository.</p>
 </li>
 <li>
-<p>Push the changes to a shared remote repository.</p>
+<p>Push the changes to a shared remote code repository.</p>
 </li>
 <li>
 <p>Repeat.</p>
@@ -615,7 +627,7 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 <div class="sect3">
 <h4 id="_the-status-command"><a class="anchor" href="#_the-status-command"></a>The status Command</h4>
 <div class="paragraph">
-<p>I always start working with Git by opening my project directory and typing <em>git status</em> to see which files I&#8217;ve modified since my last commit. Let&#8217;s do it in the directory <em>gitIntro</em>. Since I&#8217;ve never committed any files to my brand new code repository just yet, Git will respond with the following status:</p>
+<p>I always start working with Git by opening my project directory and typing <em>git status</em> to see which files I&#8217;ve modified since the last time I&#8217;ve committed the changes to Git repository. Let&#8217;s do it in the directory <em>gitIntro</em>. I havn&#8217;t committed any files to my brand new code repository just yet, and Git will respond with the following status:</p>
 </div>
 <div id="FIG14-4" class="imageblock">
 <div class="content">
@@ -623,13 +635,13 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note the first statement indicating that I work with the code branch called <em>master</em>. At this point I have no any other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.</p>
+<p>Note the first statement indicates that I work with the code branch called <em>master</em>. I&#8217;ll explain how and why create separate code branches a bit later, but for now I have no other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_the-add-command"><a class="anchor" href="#_the-add-command"></a>The add Command</h4>
 <div class="paragraph">
-<p>Adding files to a Git repository is done by the command <em>add</em>. I was learning Git by watching training videos recorded by Git engineers, and they&#8217;ve compared the <em>add</em> command with the process of adding items to a shopping cart in a supermarket. There are lots of produce on the shelves, but you pick only selected ones by placing them into your cart. Similarly, you have lots of files in your project&#8217;s folder(s), but you may want to add only selected ones to the git repository, for example <em>git add Fish.java</em>.</p>
+<p>Adding files to a Git repository is done by the command <em>add</em>. I was learning Git by watching training videos recorded by GitHub engineers, and they&#8217;ve compared the <em>add</em> command with the process of adding items to a shopping cart in a supermarket. There are lots of produce on the shelves, but you pick only selected ones by placing them into your cart. Similarly, you have lots of files in your project&#8217;s folder(s), but you may want to add only selected ones to the git repository, for example <em>git add Fish.java</em>. We call the modified files that must be saved in the Git database <em>trackable</em>, and those the should be ignores - <em>untracked</em>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -638,7 +650,7 @@ git config --global user.email "yakovfain@gmail.com"</code></pre>
 <i class="icon-note" title="Note"></i>
 </td>
 <td class="content">
-If you want to know which options exist for a command, jut enter <em>git --help</em> followed by a command name, for example, <em>git --help add</em>. To quit the help mode just enter the letter <em>q</em> in the Command window.
+If you want to know which options exist for any Git command, just enter <em>git --help</em> followed by a command name, for example, <em>git --help add</em>. To quit the help mode just enter the letter <em>q</em> in the Command window.
 </td>
 </tr>
 </table>
@@ -652,16 +664,26 @@ If you want to know which options exist for a command, jut enter <em>git --help<
 </div>
 </div>
 <div class="paragraph">
-<p>Now all my Java files are shown in green, which means that these files are ready to be committed to the Git database.</p>
+<p>Now all my Java files are shown in green, which means that these files became trackable and are ready to be committed to the Git database.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>You shouldn&#8217;t store compiled Java classes or JARs in the source code repositories. You can let Git know which files to ignore by creating a text file named <em>.gitignore</em> in your project directory. Then add there the types of files that Git should ignore. For example, if you&#8217;ll add the following two lines to your <em>.gitigore</em> file, coompiled classes and JARS won&#8217;t be included in your Git database:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">*.class
+*.jar</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_the-commit-command"><a class="anchor" href="#_the-commit-command"></a>The commit Command</h4>
 <div class="paragraph">
-<p>If we&#8217;ll continue using the analogy with a supermarket, committing is similar to paying for the products in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes being made.</p>
-</div>
-<div class="paragraph">
-<p>For example, you can issue the following command:</p>
+<p>If we&#8217;ll continue using the analogy with a supermarket, committing is similar to paying for the products in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes. For example, you can issue the following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -669,7 +691,7 @@ If you want to know which options exist for a command, jut enter <em>git --help<
 </div>
 </div>
 <div class="paragraph">
-<p>The <em>-m</em> option allows to write a short message describing the commit in the double quotes.</p>
+<p>The <em>-m</em> option allows writing a short message in double quotes describing the commit.</p>
 </div>
 <div id="FIG14-6" class="imageblock">
 <div class="content">
@@ -677,13 +699,13 @@ If you want to know which options exist for a command, jut enter <em>git --help<
 </div>
 </div>
 <div class="paragraph">
-<p>The "63 insertions" here means that total of 63 lines were inserted in the Git database.</p>
+<p>The "63 insertions" means that total of 63 lines were inserted in the Git database.</p>
 </div>
 <div class="paragraph">
 <p>If you would run the <em>git commit</em> command without any options, Git would open a text editor where you should enter a detailed description of changes being committed. Saving this file will store this description in the Git database.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;ll enter the command <em>git status</em> again you&#8217;ll see the message that there is nothing to commit. No wonder, I just committed three files and haven&#8217;t modified them again just yet.</p>
+<p>Enter the command <em>git status</em> again, and you&#8217;ll see the "nothing to commit" message. No wonder, I just committed three files and haven&#8217;t modified them again just yet.</p>
 </div>
 <div id="FIG14-7" class="imageblock">
 <div class="content">
@@ -715,7 +737,7 @@ public class PetMaster {
 </div>
 </div>
 <div class="paragraph">
-<p>I&#8217;ll just modify a comment at the top of this file. I&#8217;ll change the text to "Created by Yakov on 3/28/15." Running the <em>git status</em> command again will produce a different output:</p>
+<p>I&#8217;ll just modify the comment at the top of this file. I&#8217;ll change the text to "Created by Yakov on 3/28/15." Running the <em>git status</em> command again will produce a different output:</p>
 </div>
 <div id="FIG14-8" class="imageblock">
 <div class="content">
@@ -723,7 +745,7 @@ public class PetMaster {
 </div>
 </div>
 <div class="paragraph">
-<p>Git has notices that the file <em>PetMaster.java</em> has been changed, but until I issue the command <em>add</em> for this file (or all files), Git won&#8217;t track the changes in the current version of <em>PetMaster.java</em>. In the supermarket setup, it&#8217;s a situation when the product is displayed on the shelf, you noticed it but have not added to your shopping cart yet. The following two commands will save my latest change in the Git database:</p>
+<p>Git has noticed that the file <em>PetMaster.java</em> has been changed, but until I issue the command <em>add</em> for this file (or all files), Git won&#8217;t track the changes in <em>PetMaster.java</em>. In the supermarket setup, it&#8217;s a situation when a product is displayed on the shelf, you noticed it but have not added to your shopping cart yet. The following two commands will save my latest change in the Git database:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -735,13 +757,13 @@ git commit -m "Modified the opening comment in PetMaster.java"</code></pre>
 <p>After committing all the changes <em>git status</em> will tell us again that there is nothing to commit, and the working directory is clean.</p>
 </div>
 <div class="paragraph">
-<p>To summarize, we have three Java classes located in our working directory <em>gitIntro</em>, and the history of modifications and commits is stored in the directory <em>.git</em>. I also want to remind you that all the work we&#8217;ve done so far was saved only in the local code repository.</p>
+<p>To summarize, we have three Java classes located in the working directory <em>gitIntro</em>, and the history of modifications and commits is stored in the directory <em>.git</em>. I&#8217;d like to remind you that all the work we&#8217;ve done so far was saved only in the local code repository.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_the-reset-command"><a class="anchor" href="#_the-reset-command"></a>The reset Command</h4>
 <div class="paragraph">
-<p>Here&#8217;s another scenario to consider. I&#8217;ve just committed the changes to the file <em>PetMaster.java</em> and&#8230; got goose bumps. Suddenly I realized that it was a mistake, and I wanted to undo the last commit. The file <em>PetMaster.java</em> has an opening statement "Created by Yakov on 3/28/15.", but I changed my mind and don&#8217;t want to reveal my name. Luckily Git stores every code changes (the deltas) as they were made in its database.</p>
+<p>Here&#8217;s another scenario to consider. I&#8217;ve just committed the changes to the file <em>PetMaster.java</em> and&#8230; got goose bumps. Suddenly I realized that it was a mistake, and I wanted to undo the last commit. The file <em>PetMaster.java</em> has an opening statement "Created by Yakov on 3/28/15.", but I changed my mind and don&#8217;t want to reveal my name. Luckily Git stores all committed code changes (the deltas) in its database.</p>
 </div>
 <div class="paragraph">
 <p>I&#8217;ll show you how to undo the last commit and remove the code changes in <em>PetMaster.java</em>. When you&#8217;ll be trying to repeat all these commands open the file <em>PetMaster.java</em> and note the text of its opening comment, because it&#8217;s going to change right after the <em>reset</em> command:</p>
@@ -771,17 +793,29 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <div class="paragraph">
 <p>You can change this text to better describe what has been done by this <em>reset</em> command. Git will store the saved message in its history files. The 40-character long sequence of digits and letters is a unique code associated with each commit.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you want to see the history of all commits, use the command <em>git log</em>.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>So far we&#8217;ve been working with the default branch called <em>master</em>, and now I&#8217;ll explain you what branches are for.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_branching-commands"><a class="anchor" href="#_branching-commands"></a>Branching Commands</h4>
+<h4 id="_code-branching"><a class="anchor" href="#_code-branching"></a>Code Branching</h4>
 <div class="paragraph">
-<p>What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the working code? Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the <em>master</em> branch, which has tested and working code.</p>
+<p>What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the application? She doesn&#8217;t want to modify the code that other programmers may rely on. Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the <em>master</em> branch, which has tested and working code.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s follow how Mary will be adding a new method <code>surface</code> to the class <code>Fish</code>, which currently looks like this:</p>
+<p>Let&#8217;s see how Mary can create a separate code branch and add a new method <code>surface</code> to the class <code>Fish</code>, which currently looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -827,7 +861,10 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="paragraph">
-<p>Now she adds the following method to the class <code>Fish</code>:</p>
+<p>You can also print the names of all branches that exist in your Git repository by running the command <em>git branch</em>. The current branch will be shown in green and marked with an asterisk.</p>
+</div>
+<div class="paragraph">
+<p>Now Mary adds the following method to the class <code>Fish</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -845,10 +882,10 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="paragraph">
-<p>At any given time the working directory will have only one copy of each file with the content that correspond to the current branch. Hence the class <code>Fish</code> from the branch <em>mary</em> has the method <code>surface</code>. Now Mary  switches back to the branch <em>master</em> by running <em>git checkout master</em> and opens the file <em>Fish.java</em> - the method <code>surface</code> isn&#8217;t be there! Git seemlessly moved the older version of <em>Fish.java</em> from its database back to the working directory.</p>
+<p>At any given time the working directory will have only one copy of each file with the content that correspond to the current branch. Hence the class <code>Fish</code> from the branch <em>mary</em> has the method <code>surface</code>. Now Mary  switches back to the branch <em>master</em> by running <em>git checkout master</em> and opens the file <em>Fish.java</em> - the method <code>surface</code> isn&#8217;t there! Git seamlessly moved the older version of <em>Fish.java</em> from its database back to the working directory. It happened really fast, because in the distributed VCS the complete code repository is located on the programmers computer and there is no need to do any communication over the network.</p>
 </div>
 <div class="paragraph">
-<p>Mary tested the new version of the class <code>Fish</code> and she&#8217;s ready to include it in the <em>master</em> branch. Using the VCS terminology, she wants to merge the code in the branches <em>master</em> and <em>mary</em>. From the <em>master</em> branch Mary runs the following <em>merge</em> command:</p>
+<p>Mary tested the new version of the class <code>Fish</code> and she&#8217;s ready to include it in the <em>master</em> branch. Using the VCS terminology, she wants to merge the code located in the branch <em>mary</em> into the code in the <em>master</em> branch. From the <em>master</em> branch Mary runs the following <em>merge</em> command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -868,9 +905,9 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_conflict-resolutions"><a class="anchor" href="#_conflict-resolutions"></a>Conflict Resolutions</h4>
+<h4 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>Conflict Resolution</h4>
 <div class="paragraph">
-<p>Since Mary was the only programmer who was changing the file <em>Fish.java</em> Git just kept track of all insertions, deletions, changes and re-applied them to the older version of the file during merge. But when more than one programmer works on the same file they could modify the same piece if code in different branches. This may cause merging conflicts and Git will mark the code fragments that need to be merged manually.</p>
+<p>Since Mary was the only programmer working with the file <em>Fish.java</em> Git just kept track of all insertions, deletions, and changes and re-applied them to the older version of the file during the merge. But when more than one programmer works on the same file they could accidentally modify the same piece of code in different branches. This may cause merge conflicts, and Git will mark the code fragments that need to be merged manually.</p>
 </div>
 <div class="paragraph">
 <p>I&#8217;ll illustrate this by creating conflicting changes on purpose. First, I&#8217;ll add three exclamation marks in the method <code>surface</code> in the <em>master</em> branch:</p>
@@ -881,7 +918,7 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="paragraph">
-<p>I&#8217;ll commit the changes to the <em>master</em> branch, then switch to <em>mary</em> and add the question marks there in the same place where exclamations were added in <em>master</em>. So in the branch <em>mary</em> this line will look like this:</p>
+<p>I&#8217;ll commit the changes to the <em>master</em> branch, then switch to the branch <em>mary</em> and add the question marks there in the same place where exclamations were placed in <em>master</em>. So in the branch <em>mary</em> this line will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -889,7 +926,7 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="paragraph">
-<p>Now I&#8217;ll switch back to <em>master</em> branch and will try to do a merge. Clearly. Git can&#8217;t take a responsibility in picking one version over the other. We got a conflict:</p>
+<p>Now I&#8217;ll switch back to <em>master</em> branch and will try to do a merge. Clearly Git can&#8217;t take a responsibility in picking one version over the other. We got a conflict:</p>
 </div>
 <div id="FIG14-12" class="imageblock">
 <div class="content">
@@ -897,7 +934,7 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="paragraph">
-<p>If you&#8217;ll open the file <em>Fish.java</em></p>
+<p>If you&#8217;ll open the file <em>Fish.java</em> you&#8217;ll find some duplicate code with marked with special tags:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -914,40 +951,131 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <div class="paragraph">
 <p>The conflicting code section marked as <em>HEAD</em> corresponds to the version in the <em>master</em> branch, and the other one is from <em>mary</em>. Now you need to manually edit the file <em>Fish.java</em> to keep the version of the conflicting line of code that you like. Commit the changes to the <em>master</em> branch and the conflict is resolved.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can find more detailed explanations of all Git features in the free book titled <a href="http://git-scm.com/book/en/v2">Pro Git</a> published by Apress.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>Publishing Your Code on GitHub</h3>
 <div class="paragraph">
-<p>If you have a shared Git repository on a remote computer, once in a while you&#8217;ll need to synchronize the content from your local Git repository with remote one, which may be used by other members of the team. I wrote "maybe" because even if you work on the project alone, you may want to have an extra copy of your Git repository in the remote computer.</p>
+<p>If you have a shared Git repository on a remote computer, you&#8217;ll need to synchronize with is the content from your local Git repository. Usually I do it several times a day. Even if you work on the project alone, you may want to have a current copy of your Git repository in the remote computer.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://github.com/">GitHub</a> is a Web-base Git repository hosting service, where you can create a shared code repository free of charge as long as you don&#8217;t mind having your code available for public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide, and programmers who have their code published on GitHub are treated with additional respect.</p>
+<p><a href="https://github.com/">GitHub</a> is a Web-based Git repository hosting service, where you can create a shared code repository free of charge as long as you don&#8217;t mind keeping your code open to the public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide. Moreover, programmers who have their code published on GitHub are treated with additional respect.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+GitHub is not the only hosting service for Git repositories on the Web. <a href="https://bitbucket.org/">Bitbucket</a> is yet another popular place for storing public and private Git repositories.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
-<h4 id="_creating-a-github-account"><a class="anchor" href="#_creating-a-github-account"></a>Creating a GitHub Account</h4>
+<h4 id="_creating-a-github-repository"><a class="anchor" href="#_creating-a-github-repository"></a>Creating a GitHub Repository</h4>
+<div class="paragraph">
+<p>To be able to publish your Git repository on GitHub, you need to create an account there. Visit the Web site <a href="https://github.com/">https://github.com</a> and sign up for it. You&#8217;ll need to pick a user name for yourself and enter the email, which should be the same as you&#8217;ve used with  the <em>git config</em> command (see the section Introducing Yourself to Git). GitHub will send you a verification  email to this address, and you&#8217;ll need to respond to it. For illustration purposes I&#8217;ve created a new GitHub account with the user ID <em>java4kids</em>.</p>
+</div>
+<div class="paragraph">
+<p>After creating a free account you&#8217;ll see a green button titled "+ New repository". Click on it and enter the name and description of your project. Since our goal is to publish the files from the local directory <em>gitIntro</em>, I&#8217;ll use the same name for my GitHub repository. As you see in the following screen shot, I&#8217;ve entered the repository name and its description:</p>
+</div>
+<div id="FIG14-13" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_github_new.png" alt="fig 14 github new">
+</div>
+</div>
+<div class="paragraph">
+<p>Pressing the button titled "Create Repository" and an empty repository is ready. The GitHub will show you the following page with short instructions on how to upload your code there.</p>
+</div>
+<div id="FIG14-14" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_github_setup.png" alt="fig 14 github setup">
+</div>
+</div>
+<div class="paragraph">
+<p>Note the HTTPS URL of this repository on top. It&#8217;s used for cloning that&#8217;s described later.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_push-and-pull"><a class="anchor" href="#_push-and-pull"></a>Push and Pull</h4>
+<h4 id="_pushing-the-local-repository-to-github"><a class="anchor" href="#_pushing-the-local-repository-to-github"></a>Pushing the Local Repository to GitHub</h4>
 <div class="paragraph">
-<p>The process of downloading of the latest code from the shared repository to your computer is called <em>pull</em>.</p>
+<p>Since we already have an existing repository in the directory local directory <em>gitIntro</em>, we&#8217;ll need to go there in the Command or Terminal window and enter the suggested commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="html language-html">git remote add origin https://github.com/java4kids/gitIntro.git   <i class="conum" data-value="1"></i><b>(1)</b>
+git push -u origin master                           <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>When a remote repository is created, it gets a name, which by default is <em>origin</em>. So the first command adds a URL of the newly created origin to the configuration of your Git project. The name <em>origin</em> serves as an alias name to that long GitHub URL.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The Git <em>push</em> command uploads the local code to the remote repository. So you commit changes to a local Git repository, and push them to the remote one. Accordingly, the second command uploaded my Git-managed repository to GitHub. The <em>-u</em> option means upstream. You&#8217;ll use it with the first push to link you local repository to the the remote one. Subsequent <em>push</em> commands will be issued without the <em>-u</em> option.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>The process of uploading your latest code to the shared repository is called <em>push</em>. So you commit to a local Git repository, and push to the remote one.</p>
+<p>After running these commands the code and the Git database from my local directory <em>gitIntro</em> is published on GitHub. Now if you or anyone else will visit the URL <a href="https://github.com/java4kids/gitIntro">https://github.com/java4kids/gitIntro</a>, they&#8217;ll see the Web page that looks similar to this:</p>
+</div>
+<div id="FIG14-15" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_github_pushed.png" alt="fig 14 github pushed">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pulling-the-latest-version-from-github"><a class="anchor" href="#_pulling-the-latest-version-from-github"></a>Pulling The Latest Version from GitHub</h4>
+<div class="paragraph">
+<p>The <em>pull</em> command downloads and merges the latest code from GitHub to your computer. If you work alone on the project, you won&#8217;t use the <em>pull</em> command that much, because no one else is pushing the code changes there. You&#8217;ll be repeatedly running the following sequence of git commands:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>add</em>  - to make the files trackable</p>
+</li>
+<li>
+<p><em>commit</em> - to commit changes in the local Git repository</p>
+</li>
+<li>
+<p><em>push</em> - to upload files to the shared repository</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>You can find more detailed explanations of all Git features in the free book titled <a href="http://git-scm.com/book/en/v2">Pro Git</a> published by Apress.</p>
+<p>But as soon as someone else will join the project, you&#8217;ll need to run the <em>pull</em> command periodically to make sure you have the latest version of the code that includes all the changes made by other team members, which are called <em>collaborators</em>, e.g. our friends Mary and Joe are collaborators.</p>
+</div>
+<div class="paragraph">
+<p>To add a collaborator to your GitHub project, you&#8217;d need to visit you shared project repository on GitHub (e.g. <a href="https://github.com/java4kids/gitIntro)">https://github.com/java4kids/gitIntro)</a>, click on the Setting icon on the right and use the Collaborators link on the next Web page. Of course, this new collaborator must be registered on GitHub and have an ID. This process is described step-by-step in <a href="https://help.github.com/articles/adding-collaborators-to-a-personal-repository/">GitHub documentation</a>.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_cloning"><a class="anchor" href="#_cloning"></a>Cloning</h4>
 <div class="paragraph">
-<p>Say, Peter join the existing project and Joe and Mary want him to get the existing code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but there is no need to create a new folder and issue the <em>git init</em> command there. Git has a <em>clone</em> command that can take the existing code from the shared repository and create its copy on Peter&#8217;s computer. The clone command not only downloads the latest version of the project&#8217;s code, but also downloads the entire Git database with all the history of changes made by Joe and Mary in the past.</p>
+<p>Say, Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen&#8217;t have to create a new folder and run the <em>git init</em> command there. Git has a <em>clone</em> command that can take the existing code from a  shared repository and create its copy on Peter&#8217;s computer. The <em>clone</em> command downloads the latest project&#8217;s code including the entire Git database with all the history of changes made by Joe and Mary in the past. You can do cloning either by clicking a button Clone in Desktop on GitHub or by running <em>git clone</em> in the Command window.</p>
 </div>
 <div class="paragraph">
-<p>I store all code examples for this book on GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress_code">https://github.com/yfain/Java4Kids_NoStarchPress_code</a>. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:</p>
+<p>While writing this book I stored all its code examples on GitHub at <a href="https://github.com/yfain/Java4Kids_NoStarchPress_code">https://github.com/yfain/Java4Kids_NoStarchPress_code</a>. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:</p>
 </div>
-<div id="FIG14-12" class="imageblock">
+<div id="FIG14-16" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_CloneURL.png" alt="fig 14 CloneURL">
 </div>
@@ -961,7 +1089,7 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="paragraph">
-<p>Now open the Command (or Terminal) window and issue the clone command using the above URL as a parameter:</p>
+<p>Now open the Command (or Terminal) window and run the <em>clone</em> command using the above URL as parameter:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -969,26 +1097,26 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 </div>
 </div>
 <div class="paragraph">
-<p>In a couple of seconds you&#8217;ll find the directory <em>Java4Kids_NoStarchPress_code</em> with all code samples and the <em>.git</em> folder inside. This is how I did it on my Mac computer:</p>
+<p>In a couple of seconds you&#8217;ll find in your computer the directory <em>Java4Kids_NoStarchPress_code</em> with all code samples and the <em>.git</em> folder inside. This is how I did it on my Mac computer:</p>
 </div>
-<div id="FIG14-13" class="imageblock">
+<div id="FIG14-17" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_Cloning.png" alt="fig 14 Cloning">
 </div>
 </div>
 <div class="paragraph">
-<p>As a matter of fact you can clone any GitHub open source repository on your computer and work with the code without even notifying the author of the code. But creating a clone doesn&#8217;t mean that you can push your code changes to the author&#8217;s GitHub repository without his approval. GitHub has special procedures for this called Forking and Pull Requests.</p>
+<p>As a matter of fact you can clone any GitHub open source repository on your computer and work with the code without even notifying the author of the code. But creating a clone doesn&#8217;t mean that you can push your code changes back to the author&#8217;s GitHub repository without his approval. GitHub has special procedures for this called Forking and Pull Requests.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_forking-and-pull-requests"><a class="anchor" href="#_forking-and-pull-requests"></a>Forking and Pull Requests</h4>
 <div class="paragraph">
-<p>If cloning creates a copy of someone&#8217;s remote repository on your computer, forking creates a copy of that GitHub repository in your GitHub repository. Then you can clone this project from your own GitHub account, and work with it as if it&#8217;s yours. Then if you want to contact the author offering your version of the code, you need to send a <em>pull request</em> to the author. By creating a pull request you are saying to the author, "I just improved your code and committed it into my repository. Please look at it and pull it from me if, you like it".</p>
+<p>If cloning creates a copy of someone&#8217;s remote repository on your computer, forking creates a new GitHub repository from the existing one. If you fork a project on GitHub, you can clone this project from your own GitHub account, and work with it as if it&#8217;s yours. Then if you want to contact the author offering your version of the code, you need to send a <em>pull request</em> to the author. By creating a pull request you are saying to the author, "I just improved your code and committed it into my repository. Please look at it and pull it from my repository if, you like it".</p>
 </div>
 <div class="paragraph">
 <p>Say you want to be a contributor to my code samples for this book. Instead of cloning explained in the previous section, just go to the GitHub page of my project and click on the button Fork at the top of the page:</p>
 </div>
-<div id="FIG14-14" class="imageblock">
+<div id="FIG14-18" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_Fork.png" alt="fig 14 Fork">
 </div>
@@ -996,7 +1124,7 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <div class="paragraph">
 <p>This will create a new repository under your GitHub account and will copy my code there. Then you can clone this project from your repository and work with it. When you&#8217;ve improved my code or fixed a bug, push it to your forked project. Then visit my GitHub page and press the button Pull Request there:</p>
 </div>
-<div id="FIG14-15" class="imageblock">
+<div id="FIG14-19" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_PullRequest.png" alt="fig 14 PullRequest">
 </div>
@@ -1004,18 +1132,18 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <div class="paragraph">
 <p>You&#8217;ll be able to create a pull request and describe the code change that you&#8217;ve already inplemened and commited into the forked repository. Actually, I have one pull request at the time of this writing. Let&#8217;s click on this little circle with the digit 1 and see what&#8217;s there:</p>
 </div>
-<div id="FIG14-16" class="imageblock">
+<div id="FIG14-20" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_PullRequest_YF.png" alt="fig 14 PullRequest YF">
 </div>
 </div>
 <div class="paragraph">
-<p>The user with the ID wbrehaut found a typo in my file <em>CreatePlayStation4Objects.java</em>. After looking at the code in this file I saw that it&#8217;s a typo indeed, and pressing the green button Merge pull request will automatically merge the correct line into my code.</p>
+<p>The user with the ID <em>wbrehaut</em> found a typo in my file <em>CreatePlayStation4Objects.java</em>. After looking at the code in this file I saw that it&#8217;s a typo indeed, and pressing the green button "Merge pull request" will automatically merge the correct line into my code.</p>
 </div>
 <div class="paragraph">
-<p>The following diagram illustrates this process:</p>
+<p>The following diagram illustrates the forking and pull request process:</p>
 </div>
-<div id="FIG14-17" class="imageblock">
+<div id="FIG14-21" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_Forking.png" alt="fig 14 Forking">
 </div>
@@ -1029,7 +1157,7 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <div class="paragraph">
 <p>All popular Java IDE support working with Git. In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.</p>
 </div>
-<div id="FIG14-20" class="imageblock">
+<div id="FIG14-22" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_IDEA_vcs1.png" alt="fig 14 IDEA vcs1">
 </div>
@@ -1037,7 +1165,7 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 <div class="paragraph">
 <p>IDEA will ask you to login to GitHub. Use the email and the password that you used while creating your GitHub account. Then IDEA will ask you for its own password database - leave it blank. Now IDEA is ready to clone any public repository provided that you know the clone URL, which is <a href="https://github.com/yfain/Java4Kids_NoStarchPress_code.git">https://github.com/yfain/Java4Kids_NoStarchPress_code.git</a> in our case. You should enter this URL in the next window that may look similar to this one:</p>
 </div>
-<div id="FIG14-21" class="imageblock">
+<div id="FIG14-23" class="imageblock">
 <div class="content">
 <img src="./images/fig_14_IDEA_vcs2.png" alt="fig 14 IDEA vcs2">
 </div>
@@ -1052,6 +1180,16 @@ Note that this project directory has a folder named <em>.git</em>, which contain
 <div class="paragraph">
 <p>If you see any compilation errors, open the menu File | Project Structure and make sure that the project language level is set to "8 - Lambdas, type annotations etc."</p>
 </div>
+<div class="paragraph">
+<p>IntelliJ IDEA fully supports Git, so you can run all Git commands without the need to use the Command window. You can find the description of Git support in the <a href="https://www.jetbrains.com/idea/help/using-git-integration.html">IDEA documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_epilogue"><a class="anchor" href="#_epilogue"></a>Epilogue</h3>
+<div class="paragraph">
+<p>This book is over. I hope you&#8217;ve enjoyed reading it as much as I enjoyed my writing. Your process of studying Java is far from being over. If you liked this book and want to continue your Java journey, consider reading my other Java book for adults, which is called "Java 24-Hour Trainer", 2nd Edition, Wiley. That book comes with videos that illustrate the materials covered in each chapter. I also explain the server-side programming in Java there.
+Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you for reading my book, and good luck!</p>
 </div>
 </div>
 </div>
@@ -1059,7 +1197,7 @@ Note that this project directory has a folder named <em>.git</em>, which contain
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-09 13:12:17 EST
+Last updated 2015-02-10 13:18:26 EST
 </div>
 </div>
 </body>
