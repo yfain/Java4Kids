@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: ./
 
-== Appendix. Basics of the Version Control System Git
+== Chapter 14. Git for Kids
 
 So you wrote a great application, and it worked as expected. Sometime later you've got an idea how to make it even better. After several hours of making changes in your code you've noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday's version of the code that was working fine? Can you undo (_rollback_) the latest changes that broke the working code?
 
@@ -9,11 +9,11 @@ Many years ago programmers simply were creating backup copies of their code now 
 
 Programmers use a special software called Version Control Systems (VCS) that allows to keep track of different versions of the source code stored in common _source code repositories_ located on the company's servers. There are also special web hosting facilities, where Joe and Mary can safely keep their application code.
 
-Software developers make changes in their local copies of the application's code, and test them. When the local version of the application works fine, they _commit_ the latest code to the source code repository. If Mary has committed her changes, Joe can _check out_ the latest code from the shared repository to his computer. Mary's changes will merged with Joe's ones on his computer.
+Software developers make changes in their local copies of the application's code, and test them. When the local version of the application works fine, they _commit_ (save) the latest code changes to the source code repository. If Mary has committed her changes, Joe can _check out_ the latest code from the shared repository to his computer. Mary's changes will merged with Joe's ones on his computer.
 
 Now Joe has the latest Mary's code, but she doesn't have the latest Joe's code changes. When Joe decides to commit his latest code to the shared repository, Mary can check them out to her computer. 
 
-In this appendix I'll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer get lost or stolen you can always recover the code by _pulling_ it from GitHub.
+In this chapter I'll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer get lost or stolen you can always recover the code by _pulling_ it from GitHub.
 
 I was using Git as a VCS and GitHub as a shared repository of the drafts of all chapters of this book, and you can find them on the GitHub at https://github.com/yfain/Java4Kids_NoStarchPress[https://github.com/yfain/Java4Kids_NoStarchPress].  
 
@@ -35,13 +35,13 @@ Programmers usually work in teams, so the following diagram shows three computer
 [[FIG14-2]]
 image::images/fig_14_DistrRepo.png[] 
 
-At any given time each local repository has all historical updates made by its owner as welled as historical updates that the owner pulled from the shared repository. With centralized VCS Mary and Joe can exchange code only through the central repository, but with distributed systems they can exchange the code directly. Let's see how to create the code repository of your computer that's controlled by Git.
+At any given time each local repository stores the  history of all updates made by its owner as well as historical updates that the owner pulled from the shared repository. Let's see how to create a source code repository of your computer that's managed by Git.
 
 === Introduction to Git
 
-Git is a free distributed VCS, which you can download and install from http://git-scm.com[http://git-scm.com]. There is a chance that your computer already has Git installed, and you can check it out by opening a Command or Terminal window and entering the command _git_. If it print a list of available Git commands, you already have Git installed. But still, I'd suggest to install the latest Git version by following http://git-scm.com/book/en/v2/Getting-Started-Installing-Git[these instructions] for your operational system. 
+Git is a free distributed VCS, which you can download and install from http://git-scm.com[http://git-scm.com]. There is a chance that your computer already has Git installed, and you can check it out by opening a Command or Terminal window and entering the command _git_. If it prints a list of available Git commands, you already have Git installed. But still, I'd suggest to install the latest Git version by following http://git-scm.com/book/en/v2/Getting-Started-Installing-Git[these instructions] for your operational system. 
 
-There are several http://git-scm.com/download/gui/linux[GUI tools] for working with Git repositories, but we'll be using simple Command or Terminal window for performing all commands. After the installation is complete, enter the command _git --version_, and you'll see which version of Git you'll be using.  
+There are several http://git-scm.com/download/gui/linux[GUI tools] for working with Git repositories, but we'll be using a Command or Terminal window for executing all commands. After the installation is complete, enter the command _git --version_, and you'll see which version of Git you'll be using.  
 
 ==== Introducing Yourself to Git
 
@@ -53,16 +53,20 @@ git config --global user.name ”Yakov Fain"
 git config --global user.email "yakovfain@gmail.com"
 ----
 
-Later on, when you'll be opening a GitHub account you'll need to use the same email as you used with the _config_ command above. The Git is ready to manage your projects. Now let's create a Git repository for a specific project and learn how to work with it.
+NOTE: If you want to be able to use different user names and emails for different projects, run the above commands from the project directory without the _--global_ option.
+
+Later on, when you'll be opening a GitHub account you'll need to use the same email as you used with the _config_ command above. Git is ready to manage your projects. Now let's create a Git repository for a simple project and learn how to work with it.
+
+
 
 === Creating a New Git Repository
 
-For illustration purposes I'll create a new folder called _gitIntro_ and will copy there the files _Pet.java_, _Fish.java_, and _PetMaster.java_ from Chapter 3. Then I'll  open my Terminal window and will create a new Git repository by entering the command _git init_. The content of my _gitIntro_ folder looks as follows:
+For illustration purposes I'll create a new folder called _gitIntro_ and will copy there the files _Pet.java_, _Fish.java_, and _PetMaster.java_ from Chapter 3. Then I'll  open the Terminal window on my MacBook (Windows users open the Command window) and will create a new Git repository by entering the command _git init_. The content of my _gitIntro_ folder looks as follows:
 
 [[FIG14-3]]
 image::images/fig_14_git_init.png[] 
 
-Now this folder has my Java classes and a hidden directory called _.git_, which is a Git repository for my _gitIntro_ project. This directory contains a Git database (a.k.a the index) to store all the changes I'll be making to my Java classes plus the name of the _code branch_ that we'll discuss a bit later.
+The _git init_ command has created a hidden directory called _.git_, which is a Git repository for my _gitIntro_ project. This directory contains a Git database (a.k.a the index) that will store all the changes I'll be making to my Java classes through the life of this project.
 
 You can start using Git with your old projects any time you want. Just open the directory of any existing project and execute the _git init_ command to create a new local repository. Of course, it won't know about your prior code modifications, but from now on you can start tracking them. 
 
@@ -73,55 +77,64 @@ Git has a couple of dozens commands, but knowing just a half dozen of them may b
 Typically, my work with Git-controlled projects consists of the following activities:
 
 1. Make the changes to some project files.
-2. Check the status of your project.
+2. Check the status of the files in my project.
 3. Change the status of all or some of the modified files to trackable by running the _add_ command. 
 4. Commit all or selected modified files to local Git repository.
-5. Push the changes to a shared remote repository.
+5. Push the changes to a shared remote code repository.
 6. Repeat.
 
 ==== The status Command
 
-I always start working with Git by opening my project directory and typing _git status_ to see which files I've modified since my last commit. Let's do it in the directory _gitIntro_. Since I've never committed any files to my brand new code repository just yet, Git will respond with the following status:
+I always start working with Git by opening my project directory and typing _git status_ to see which files I've modified since the last time I've committed the changes to Git repository. Let's do it in the directory _gitIntro_. I havn't committed any files to my brand new code repository just yet, and Git will respond with the following status:
 
 [[FIG14-4]]
 image::images/fig_14_git_status.png[] 
 
-Note the first statement indicating that I work with the code branch called _master_. At this point I have no any other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.
+Note the first statement indicates that I work with the code branch called _master_. I'll explain how and why create separate code branches a bit later, but for now I have no other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.
 
 ==== The add Command
 
-Adding files to a Git repository is done by the command _add_. I was learning Git by watching training videos recorded by Git engineers, and they've compared the _add_ command with the process of adding items to a shopping cart in a supermarket. There are lots of produce on the shelves, but you pick only selected ones by placing them into your cart. Similarly, you have lots of files in your project's folder(s), but you may want to add only selected ones to the git repository, for example _git add Fish.java_. 
+Adding files to a Git repository is done by the command _add_. I was learning Git by watching training videos recorded by GitHub engineers, and they've compared the _add_ command with the process of adding items to a shopping cart in a supermarket. There are lots of produce on the shelves, but you pick only selected ones by placing them into your cart. Similarly, you have lots of files in your project's folder(s), but you may want to add only selected ones to the git repository, for example _git add Fish.java_. We call the modified files that must be saved in the Git database _trackable_, and those the should be ignores - _untracked_.
 
-NOTE: If you want to know which options exist for a command, jut enter _git --help_ followed by a command name, for example, _git --help add_. To quit the help mode just enter the letter _q_ in the Command window.
+NOTE: If you want to know which options exist for any Git command, just enter _git --help_ followed by a command name, for example, _git --help add_. To quit the help mode just enter the letter _q_ in the Command window.
 
 You can also add all new or modified files in one shot by executing the command _git add --all_. After running this command you'll get the following output:
 
 [[FIG14-5]]
 image::images/fig_14_git_add_all.png[]
 
-Now all my Java files are shown in green, which means that these files are ready to be committed to the Git database.
+Now all my Java files are shown in green, which means that these files became trackable and are ready to be committed to the Git database.
+
+[NOTE]
+********
+You shouldn't store compiled Java classes or JARs in the source code repositories. You can let Git know which files to ignore by creating a text file named _.gitignore_ in your project directory. Then add there the types of files that Git should ignore. For example, if you'll add the following two lines to your _.gitigore_ file, coompiled classes and JARS won't be included in your Git database:
+
+[source, html]
+----
+*.class
+*.jar
+---- 
+********
 
 ==== The commit Command
 
-If we'll continue using the analogy with a supermarket, committing is similar to paying for the products in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a _commit_ command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes being made.
-
-For example, you can issue the following command:
+If we'll continue using the analogy with a supermarket, committing is similar to paying for the products in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a _commit_ command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes. For example, you can issue the following command:
 
 [source, html]
 ----
 git commit -m "initial commit of the classes Fish, Pet, and PetMaster". 
 ----
 
-The _-m_ option allows to write a short message describing the commit in the double quotes. 
+The _-m_ option allows writing a short message in double quotes describing the commit. 
 
 [[FIG14-6]]
 image::images/fig_14_git_commit.png[]
 
-The "63 insertions" here means that total of 63 lines were inserted in the Git database. 
+The "63 insertions" means that total of 63 lines were inserted in the Git database. 
 
 If you would run the _git commit_ command without any options, Git would open a text editor where you should enter a detailed description of changes being committed. Saving this file will store this description in the Git database.
 
-If you'll enter the command _git status_ again you'll see the message that there is nothing to commit. No wonder, I just committed three files and haven't modified them again just yet. 
+Enter the command _git status_ again, and you'll see the "nothing to commit" message. No wonder, I just committed three files and haven't modified them again just yet. 
 
 [[FIG14-7]]
 image::images/fig_14_git_nothing_to_commit.png[]
@@ -149,12 +162,12 @@ public class PetMaster {
 }
 ----
 
-I'll just modify a comment at the top of this file. I'll change the text to "Created by Yakov on 3/28/15." Running the _git status_ command again will produce a different output:
+I'll just modify the comment at the top of this file. I'll change the text to "Created by Yakov on 3/28/15." Running the _git status_ command again will produce a different output:
 
 [[FIG14-8]]
 image::images/fig_14_git_status_changed.png[]
 
-Git has notices that the file _PetMaster.java_ has been changed, but until I issue the command _add_ for this file (or all files), Git won't track the changes in the current version of _PetMaster.java_. In the supermarket setup, it's a situation when the product is displayed on the shelf, you noticed it but have not added to your shopping cart yet. The following two commands will save my latest change in the Git database:
+Git has noticed that the file _PetMaster.java_ has been changed, but until I issue the command _add_ for this file (or all files), Git won't track the changes in _PetMaster.java_. In the supermarket setup, it's a situation when a product is displayed on the shelf, you noticed it but have not added to your shopping cart yet. The following two commands will save my latest change in the Git database:
 
 [source, html]
 ----
@@ -164,11 +177,11 @@ git commit -m "Modified the opening comment in PetMaster.java"
 
 After committing all the changes _git status_ will tell us again that there is nothing to commit, and the working directory is clean. 
 
-To summarize, we have three Java classes located in our working directory _gitIntro_, and the history of modifications and commits is stored in the directory _.git_. I also want to remind you that all the work we've done so far was saved only in the local code repository.
+To summarize, we have three Java classes located in the working directory _gitIntro_, and the history of modifications and commits is stored in the directory _.git_. I'd like to remind you that all the work we've done so far was saved only in the local code repository.
 
 ==== The reset Command
 
-Here's another scenario to consider. I've just committed the changes to the file _PetMaster.java_ and... got goose bumps. Suddenly I realized that it was a mistake, and I wanted to undo the last commit. The file _PetMaster.java_ has an opening statement "Created by Yakov on 3/28/15.", but I changed my mind and don't want to reveal my name. Luckily Git stores every code changes (the deltas) as they were made in its database. 
+Here's another scenario to consider. I've just committed the changes to the file _PetMaster.java_ and... got goose bumps. Suddenly I realized that it was a mistake, and I wanted to undo the last commit. The file _PetMaster.java_ has an opening statement "Created by Yakov on 3/28/15.", but I changed my mind and don't want to reveal my name. Luckily Git stores all committed code changes (the deltas) in its database. 
 
 I'll show you how to undo the last commit and remove the code changes in _PetMaster.java_. When you'll be trying to repeat all these commands open the file _PetMaster.java_ and note the text of its opening comment, because it's going to change right after the _reset_ command:
 
@@ -195,13 +208,15 @@ This reverts commit 6e18f1c5f437650c1a115c9875403fb9d081f15d.
 
 You can change this text to better describe what has been done by this _reset_ command. Git will store the saved message in its history files. The 40-character long sequence of digits and letters is a unique code associated with each commit. 
 
+NOTE: If you want to see the history of all commits, use the command _git log_.
+
 So far we've been working with the default branch called _master_, and now I'll explain you what branches are for.
 
-==== Branching Commands
+==== Code Branching 
 
-What if Mary wants to add a new feature to the application, but she's afraid that her new code may introduce bugs in the working code? Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the _master_ branch, which has tested and working code. 
+What if Mary wants to add a new feature to the application, but she's afraid that her new code may introduce bugs in the application? She doesn't want to modify the code that other programmers may rely on. Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the _master_ branch, which has tested and working code. 
 
-Let's follow how Mary will be adding a new method `surface` to the class `Fish`, which currently looks like this:
+Let's see how Mary can create a separate code branch and add a new method `surface` to the class `Fish`, which currently looks like this:
 
 [source, java]
 ----
@@ -241,7 +256,9 @@ The _git status_ command is our friend. Mary uses it often to make sure that she
 [[FIG14-9]]
 image::images/fig_14_new_branch.png[]
 
-Now she adds the following method to the class `Fish`:
+You can also print the names of all branches that exist in your Git repository by running the command _git branch_. The current branch will be shown in green and marked with an asterisk.
+
+Now Mary adds the following method to the class `Fish`:
 
 [source, java]
 ----
@@ -255,9 +272,9 @@ Using the usual sequence of commands _status_, _add_, and _commit_ Mary commits 
 [[FIG14-10]]
 image::images/fig_14_add_surface.png[]
 
-At any given time the working directory will have only one copy of each file with the content that correspond to the current branch. Hence the class `Fish` from the branch _mary_ has the method `surface`. Now Mary  switches back to the branch _master_ by running _git checkout master_ and opens the file _Fish.java_ - the method `surface` isn't be there! Git seemlessly moved the older version of _Fish.java_ from its database back to the working directory.
+At any given time the working directory will have only one copy of each file with the content that correspond to the current branch. Hence the class `Fish` from the branch _mary_ has the method `surface`. Now Mary  switches back to the branch _master_ by running _git checkout master_ and opens the file _Fish.java_ - the method `surface` isn't there! Git seamlessly moved the older version of _Fish.java_ from its database back to the working directory. It happened really fast, because in the distributed VCS the complete code repository is located on the programmers computer and there is no need to do any communication over the network.
 
-Mary tested the new version of the class `Fish` and she's ready to include it in the _master_ branch. Using the VCS terminology, she wants to merge the code in the branches _master_ and _mary_. From the _master_ branch Mary runs the following _merge_ command:
+Mary tested the new version of the class `Fish` and she's ready to include it in the _master_ branch. Using the VCS terminology, she wants to merge the code located in the branch _mary_ into the code in the _master_ branch. From the _master_ branch Mary runs the following _merge_ command:
 
 [source, html]
 ----
@@ -270,9 +287,9 @@ image::images/fig_14_merge.png[]
 
 In this case Git was able to automatically merge two versions of the file _Fish.java_. But sometimes the changes are conflicting with each other and manual editing is required to resolve the conflicts. 
 
-==== Conflict Resolutions
+==== Conflict Resolution
 
-Since Mary was the only programmer who was changing the file _Fish.java_ Git just kept track of all insertions, deletions, changes and re-applied them to the older version of the file during merge. But when more than one programmer works on the same file they could modify the same piece if code in different branches. This may cause merging conflicts and Git will mark the code fragments that need to be merged manually.
+Since Mary was the only programmer working with the file _Fish.java_ Git just kept track of all insertions, deletions, and changes and re-applied them to the older version of the file during the merge. But when more than one programmer works on the same file they could accidentally modify the same piece of code in different branches. This may cause merge conflicts, and Git will mark the code fragments that need to be merged manually.
 
 I'll illustrate this by creating conflicting changes on purpose. First, I'll add three exclamation marks in the method `surface` in the _master_ branch:
 
@@ -281,19 +298,19 @@ I'll illustrate this by creating conflicting changes on purpose. First, I'll add
 System.out.println("Diving for " + howDeep + " feet!!!");
 ---- 
 
-I'll commit the changes to the _master_ branch, then switch to _mary_ and add the question marks there in the same place where exclamations were added in _master_. So in the branch _mary_ this line will look like this:
+I'll commit the changes to the _master_ branch, then switch to the branch _mary_ and add the question marks there in the same place where exclamations were placed in _master_. So in the branch _mary_ this line will look like this:
 
 [source, java]
 ----
 System.out.println("Diving for " + howDeep + " feet???");
 ---- 
 
-Now I'll switch back to _master_ branch and will try to do a merge. Clearly. Git can't take a responsibility in picking one version over the other. We got a conflict:
+Now I'll switch back to _master_ branch and will try to do a merge. Clearly Git can't take a responsibility in picking one version over the other. We got a conflict:
 
 [[FIG14-12]]
 image::images/fig_14_conflict.png[]
 
-If you'll open the file _Fish.java_
+If you'll open the file _Fish.java_ you'll find some duplicate code with marked with special tags:
 
 [source, java]
 ----
@@ -309,36 +326,71 @@ If you'll open the file _Fish.java_
 
 The conflicting code section marked as _HEAD_ corresponds to the version in the _master_ branch, and the other one is from _mary_. Now you need to manually edit the file _Fish.java_ to keep the version of the conflicting line of code that you like. Commit the changes to the _master_ branch and the conflict is resolved. 
 
+NOTE: You can find more detailed explanations of all Git features in the free book titled http://git-scm.com/book/en/v2[Pro Git] published by Apress.
+
+
 === Publishing Your Code on GitHub
 
-If you have a shared Git repository on a remote computer, once in a while you'll need to synchronize the content from your local Git repository with remote one, which may be used by other members of the team. I wrote "maybe" because even if you work on the project alone, you may want to have an extra copy of your Git repository in the remote computer.
+If you have a shared Git repository on a remote computer, you'll need to synchronize with is the content from your local Git repository. Usually I do it several times a day. Even if you work on the project alone, you may want to have a current copy of your Git repository in the remote computer.
 
-https://github.com/[GitHub] is a Web-base Git repository hosting service, where you can create a shared code repository free of charge as long as you don't mind having your code available for public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide, and programmers who have their code published on GitHub are treated with additional respect.
+https://github.com/[GitHub] is a Web-based Git repository hosting service, where you can create a shared code repository free of charge as long as you don't mind keeping your code open to the public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide. Moreover, programmers who have their code published on GitHub are treated with additional respect.
 
+NOTE: GitHub is not the only hosting service for Git repositories on the Web. https://bitbucket.org/[Bitbucket] is yet another popular place for storing public and private Git repositories.  
 
+==== Creating a GitHub Repository
 
-==== Creating a GitHub Account
+To be able to publish your Git repository on GitHub, you need to create an account there. Visit the Web site https://github.com/[https://github.com] and sign up for it. You'll need to pick a user name for yourself and enter the email, which should be the same as you've used with  the _git config_ command (see the section Introducing Yourself to Git). GitHub will send you a verification  email to this address, and you'll need to respond to it. For illustration purposes I've created a new GitHub account with the user ID _java4kids_. 
 
+After creating a free account you'll see a green button titled "+ New repository". Click on it and enter the name and description of your project. Since our goal is to publish the files from the local directory _gitIntro_, I'll use the same name for my GitHub repository. As you see in the following screen shot, I've entered the repository name and its description:
 
-==== Push and Pull
+[[FIG14-13]]
+image::images/fig_14_github_new.png[]
 
+Pressing the button titled "Create Repository" and an empty repository is ready. The GitHub will show you the following page with short instructions on how to upload your code there.
 
-The process of downloading of the latest code from the shared repository to your computer is called _pull_. 
+[[FIG14-14]]
+image::images/fig_14_github_setup.png[]
 
-The process of uploading your latest code to the shared repository is called _push_. So you commit to a local Git repository, and push to the remote one.
+Note the HTTPS URL of this repository on top. It's used for cloning that's described later. 
 
+==== Pushing the Local Repository to GitHub
 
+Since we already have an existing repository in the directory local directory _gitIntro_, we'll need to go there in the Command or Terminal window and enter the suggested commands:
 
-You can find more detailed explanations of all Git features in the free book titled http://git-scm.com/book/en/v2[Pro Git] published by Apress.
+[source, html]
+----
+git remote add origin https://github.com/java4kids/gitIntro.git   // <1>
+git push -u origin master                           // <2>
+---- 
 
+<1> When a remote repository is created, it gets a name, which by default is _origin_. So the first command adds a URL of the newly created origin to the configuration of your Git project. The name _origin_ serves as an alias name to that long GitHub URL.
+
+<2> The Git _push_ command uploads the local code to the remote repository. So you commit changes to a local Git repository, and push them to the remote one. Accordingly, the second command uploaded my Git-managed repository to GitHub. The _-u_ option means upstream. You'll use it with the first push to link you local repository to the the remote one. Subsequent _push_ commands will be issued without the _-u_ option. 
+
+After running these commands the code and the Git database from my local directory _gitIntro_ is published on GitHub. Now if you or anyone else will visit the URL https://github.com/java4kids/gitIntro[https://github.com/java4kids/gitIntro], they'll see the Web page that looks similar to this:
+
+[[FIG14-15]]
+image::images/fig_14_github_pushed.png[]
+
+==== Pulling The Latest Version from GitHub
+
+The _pull_ command downloads and merges the latest code from GitHub to your computer. If you work alone on the project, you won't use the _pull_ command that much, because no one else is pushing the code changes there. You'll be repeatedly running the following sequence of git commands: 
+
+* _add_  - to make the files trackable
+* _commit_ - to commit changes in the local Git repository
+* _push_ - to upload files to the shared repository
+
+But as soon as someone else will join the project, you'll need to run the _pull_ command periodically to make sure you have the latest version of the code that includes all the changes made by other team members, which are called _collaborators_, e.g. our friends Mary and Joe are collaborators.
+
+To add a collaborator to your GitHub project, you'd need to visit you shared project repository on GitHub (e.g. https://github.com/java4kids/gitIntro), click on the Setting icon on the right and use the Collaborators link on the next Web page. Of course, this new collaborator must be registered on GitHub and have an ID. This process is described step-by-step in https://help.github.com/articles/adding-collaborators-to-a-personal-repository/[GitHub documentation].
 
 ==== Cloning  
 
-Say, Peter join the existing project and Joe and Mary want him to get the existing code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but there is no need to create a new folder and issue the _git init_ command there. Git has a _clone_ command that can take the existing code from the shared repository and create its copy on Peter's computer. The clone command not only downloads the latest version of the project's code, but also downloads the entire Git database with all the history of changes made by Joe and Mary in the past.
+Say, Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen't have to create a new folder and run the _git init_ command there. Git has a _clone_ command that can take the existing code from a  shared repository and create its copy on Peter's computer. The _clone_ command downloads the latest project's code including the entire Git database with all the history of changes made by Joe and Mary in the past. You can do cloning either by clicking a button Clone in Desktop on GitHub or by running _git clone_ in the Command window.
 
-I store all code examples for this book on GitHub at https://github.com/yfain/Java4Kids_NoStarchPress_code[https://github.com/yfain/Java4Kids_NoStarchPress_code]. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:
+While writing this book I stored all its code examples on GitHub at https://github.com/yfain/Java4Kids_NoStarchPress_code[https://github.com/yfain/Java4Kids_NoStarchPress_code]. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:
 
-[[FIG14-12]]
+[[FIG14-16]]
 image::images/fig_14_CloneURL.png[]
 
 You can see only a part of this URL, but when you copy it into the clipboard it'll look like this:
@@ -348,44 +400,44 @@ You can see only a part of this URL, but when you copy it into the clipboard it'
 https://github.com/yfain/Java4Kids_NoStarchPress_code.git
 ----
 
-Now open the Command (or Terminal) window and issue the clone command using the above URL as a parameter:
+Now open the Command (or Terminal) window and run the _clone_ command using the above URL as parameter:
 
 [source, html]
 ----
 git clone https://github.com/yfain/Java4Kids_NoStarchPress_code.git
 ----
 
-In a couple of seconds you'll find the directory _Java4Kids_NoStarchPress_code_ with all code samples and the _.git_ folder inside. This is how I did it on my Mac computer:
+In a couple of seconds you'll find in your computer the directory _Java4Kids_NoStarchPress_code_ with all code samples and the _.git_ folder inside. This is how I did it on my Mac computer:
 
-[[FIG14-13]]
+[[FIG14-17]]
 image::images/fig_14_Cloning.png[]
 
-As a matter of fact you can clone any GitHub open source repository on your computer and work with the code without even notifying the author of the code. But creating a clone doesn't mean that you can push your code changes to the author's GitHub repository without his approval. GitHub has special procedures for this called Forking and Pull Requests.
+As a matter of fact you can clone any GitHub open source repository on your computer and work with the code without even notifying the author of the code. But creating a clone doesn't mean that you can push your code changes back to the author's GitHub repository without his approval. GitHub has special procedures for this called Forking and Pull Requests.
 
 ==== Forking and Pull Requests
 
-If cloning creates a copy of someone's remote repository on your computer, forking creates a copy of that GitHub repository in your GitHub repository. Then you can clone this project from your own GitHub account, and work with it as if it's yours. Then if you want to contact the author offering your version of the code, you need to send a _pull request_ to the author. By creating a pull request you are saying to the author, "I just improved your code and committed it into my repository. Please look at it and pull it from me if, you like it". 
+If cloning creates a copy of someone's remote repository on your computer, forking creates a new GitHub repository from the existing one. If you fork a project on GitHub, you can clone this project from your own GitHub account, and work with it as if it's yours. Then if you want to contact the author offering your version of the code, you need to send a _pull request_ to the author. By creating a pull request you are saying to the author, "I just improved your code and committed it into my repository. Please look at it and pull it from my repository if, you like it". 
 
 Say you want to be a contributor to my code samples for this book. Instead of cloning explained in the previous section, just go to the GitHub page of my project and click on the button Fork at the top of the page:
 
-[[FIG14-14]]
+[[FIG14-18]]
 image::images/fig_14_Fork.png[]
 
 This will create a new repository under your GitHub account and will copy my code there. Then you can clone this project from your repository and work with it. When you've improved my code or fixed a bug, push it to your forked project. Then visit my GitHub page and press the button Pull Request there:
 
-[[FIG14-15]]
+[[FIG14-19]]
 image::images/fig_14_PullRequest.png[]
 
 You'll be able to create a pull request and describe the code change that you've already inplemened and commited into the forked repository. Actually, I have one pull request at the time of this writing. Let's click on this little circle with the digit 1 and see what's there:
 
-[[FIG14-16]]
+[[FIG14-20]]
 image::images/fig_14_PullRequest_YF.png[]
 
-The user with the ID wbrehaut found a typo in my file _CreatePlayStation4Objects.java_. After looking at the code in this file I saw that it's a typo indeed, and pressing the green button Merge pull request will automatically merge the correct line into my code.
+The user with the ID _wbrehaut_ found a typo in my file _CreatePlayStation4Objects.java_. After looking at the code in this file I saw that it's a typo indeed, and pressing the green button "Merge pull request" will automatically merge the correct line into my code.
 
-The following diagram illustrates this process:
+The following diagram illustrates the forking and pull request process:
 
-[[FIG14-17]]
+[[FIG14-21]]
 image::images/fig_14_Forking.png[]
 
 Not every pull request can be automatically merged, especially if multiple code changes have been done. In this case you'd need to do a manual merge right in the GitHub. I always leave a Thank You comment to people who helped making my code better. 
@@ -394,12 +446,12 @@ Not every pull request can be automatically merged, especially if multiple code 
 
 All popular Java IDE support working with Git. In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.
 
-[[FIG14-20]]
+[[FIG14-22]]
 image::images/fig_14_IDEA_vcs1.png[]
 
 IDEA will ask you to login to GitHub. Use the email and the password that you used while creating your GitHub account. Then IDEA will ask you for its own password database - leave it blank. Now IDEA is ready to clone any public repository provided that you know the clone URL, which is https://github.com/yfain/Java4Kids_NoStarchPress_code.git in our case. You should enter this URL in the next window that may look similar to this one:
 
-[[FIG14-21]]
+[[FIG14-23]]
 image::images/fig_14_IDEA_vcs2.png[]
 
 The field with the name of the project directory will be populated automatically, but you can change it if you want. Press the button Clone and IDEA will clone all the projects into the specified directory and will ask you if you want to open a project. Selecting Yes will open one of the IDEA projects (e.g. Chapter7). You'll also see a warning about unregistered VCS root, which you can ignore, as you won't be directly pushing any code changes into my GitHub repository.
@@ -407,7 +459,12 @@ The field with the name of the project directory will be populated automatically
 If you'll open the project directory with File Manager (or Finder), you'll see there other folders that contain code samples for all the chapters. You can open any of these projects in IDEA by selecting the menu File | Open. 
 Note that this project directory has a folder named _.git_, which contains Git database with the history of all commits that I did while writing code samples for this book.
 
-If you see any compilation errors, open the menu File | Project Structure and make sure that the project language level is set to "8 - Lambdas, type annotations etc."  
+If you see any compilation errors, open the menu File | Project Structure and make sure that the project language level is set to "8 - Lambdas, type annotations etc."
+
+IntelliJ IDEA fully supports Git, so you can run all Git commands without the need to use the Command window. You can find the description of Git support in the https://www.jetbrains.com/idea/help/using-git-integration.html[IDEA documentation].
 
 
+=== Epilogue
 
+This book is over. I hope you've enjoyed reading it as much as I enjoyed my writing. Your process of studying Java is far from being over. If you liked this book and want to continue your Java journey, consider reading my other Java book for adults, which is called "Java 24-Hour Trainer", 2nd Edition, Wiley. That book comes with videos that illustrate the materials covered in each chapter. I also explain the server-side programming in Java there.   
+Maybe one day I'll write a more advanced Java book for kids too. Thank you for reading my book, and good luck!
