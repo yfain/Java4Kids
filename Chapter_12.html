@@ -706,6 +706,11 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 <div class="paragraph">
 <p>In Chapter 11 you&#8217;ve learned how to create a file and write into it. The <code>WebSiteReader</code> program just prints the remote data on the console, but you could have saved the data in the local file as well. It&#8217;s time to add the code that writes into a file. The goal is to write a program that can download any unprotected file (such as images, music, and binary files) available on the Web.</p>
 </div>
+<div id="FIG12-1-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_12_DownloadUpload.png" alt="fig 12 DownloadUpload">
+</div>
+</div>
 <div class="paragraph">
 <p>The following class <code>FileDownload</code> creates the <code>URLConnection</code> object and get its <code>InputStream</code>. This class also creates an <code>OutputStream</code> to the local file. The URL and the local filename are given to <code>FileDownload</code> program as command-line arguments (explained in Chapter 11). The <code>FileDownload</code> connects to the provided URL, downloads its content and saves it in a local file.</p>
 </div>
@@ -899,7 +904,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-05 13:07:02 EST
+Last updated 2015-02-11 05:56:35 EST
 </div>
 </div>
 </body>

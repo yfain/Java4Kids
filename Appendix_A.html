@@ -641,7 +641,15 @@ If you want to be able to use different user names and emails for different proj
 <div class="sect3">
 <h4 id="_the-add-command"><a class="anchor" href="#_the-add-command"></a>The add Command</h4>
 <div class="paragraph">
-<p>Adding files to a Git repository is done by the command <em>add</em>. I was learning Git by watching training videos recorded by GitHub engineers, and they&#8217;ve compared the <em>add</em> command with the process of adding items to a shopping cart in a supermarket. There are lots of produce on the shelves, but you pick only selected ones by placing them into your cart. Similarly, you have lots of files in your project&#8217;s folder(s), but you may want to add only selected ones to the git repository, for example <em>git add Fish.java</em>. We call the modified files that must be saved in the Git database <em>trackable</em>, and those the should be ignores - <em>untracked</em>.</p>
+<p>Adding files to a Git repository is done by the command <em>add</em>, which is easy to understand to the process of adding toys to a shopping cart in a toy store. There are lots of toys on the shelves, but you pick only selected ones by placing them into your cart.</p>
+</div>
+<div id="FIG14-4-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_ToyStore.png" alt="fig 14 ToyStore">
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly, you have lots of files in your project&#8217;s folder(s), but you may want to add only selected ones to the git repository, for example <em>git add Fish.java</em>. We call the modified files that must be saved in the Git database <em>trackable</em>, and those the should be ignores - <em>untracked</em>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -683,7 +691,7 @@ If you want to know which options exist for any Git command, just enter <em>git 
 <div class="sect3">
 <h4 id="_the-commit-command"><a class="anchor" href="#_the-commit-command"></a>The commit Command</h4>
 <div class="paragraph">
-<p>If we&#8217;ll continue using the analogy with a supermarket, committing is similar to paying for the products in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes. For example, you can issue the following command:</p>
+<p>If we&#8217;ll continue using the analogy with a toy store, committing is similar to paying for the toys that you placed in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes. For example, you can issue the following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -745,7 +753,7 @@ public class PetMaster {
 </div>
 </div>
 <div class="paragraph">
-<p>Git has noticed that the file <em>PetMaster.java</em> has been changed, but until I issue the command <em>add</em> for this file (or all files), Git won&#8217;t track the changes in <em>PetMaster.java</em>. In the supermarket setup, it&#8217;s a situation when a product is displayed on the shelf, you noticed it but have not added to your shopping cart yet. The following two commands will save my latest change in the Git database:</p>
+<p>Git has noticed that the file <em>PetMaster.java</em> has been changed, but until I issue the command <em>add</em> for this file (or all files), Git won&#8217;t track the changes in <em>PetMaster.java</em>. In the toy store setup, it&#8217;s a situation when a toy is displayed on the shelf, you noticed it but have not added to your shopping cart yet. The following two commands will save my latest change in the Git database:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1033,6 +1041,11 @@ git push -u origin master                           <i class="conum" data-value=
 </tr>
 </table>
 </div>
+<div id="FIG14-14-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_GitPush.png" alt="fig 14 GitPush">
+</div>
+</div>
 <div class="paragraph">
 <p>After running these commands the code and the Git database from my local directory <em>gitIntro</em> is published on GitHub. Now if you or anyone else will visit the URL <a href="https://github.com/java4kids/gitIntro">https://github.com/java4kids/gitIntro</a>, they&#8217;ll see the Web page that looks similar to this:</p>
 </div>
@@ -1045,7 +1058,15 @@ git push -u origin master                           <i class="conum" data-value=
 <div class="sect3">
 <h4 id="_pulling-the-latest-version-from-github"><a class="anchor" href="#_pulling-the-latest-version-from-github"></a>Pulling The Latest Version from GitHub</h4>
 <div class="paragraph">
-<p>The <em>pull</em> command downloads and merges the latest code from GitHub to your computer. If you work alone on the project, you won&#8217;t use the <em>pull</em> command that much, because no one else is pushing the code changes there. You&#8217;ll be repeatedly running the following sequence of git commands:</p>
+<p>The <em>pull</em> command downloads and merges the latest code from GitHub to your computer.</p>
+</div>
+<div id="FIG14-15-1" class="imageblock">
+<div class="content">
+<img src="./images/fig_14_GitPull.png" alt="fig 14 GitPull">
+</div>
+</div>
+<div class="paragraph">
+<p>If you work alone on the project, you won&#8217;t use the <em>pull</em> command that much, because no one else is pushing the code changes there. You&#8217;ll be repeatedly running the following sequence of git commands:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1197,7 +1218,7 @@ Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-10 13:23:49 EST
+Last updated 2015-02-11 05:49:19 EST
 </div>
 </div>
 </body>
