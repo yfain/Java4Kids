@@ -3,7 +3,11 @@
 
 == Chapter 13. Creating a Ping-Pong Game 
 
-In chapters 6, 7, and 10 we’ve learned how to create simple GUI with JavaFX. We've been using buttons, labels and text fields there.  This chapter is more about drawing and moving objects on the screen. Ping-Pong is a perfect game to illustrate the drawing capabilities of JavaFX. In this game you'll have another chance to work with event handlers, and will use multi-threading. 
+In chapters 6, 7, and 10 you’ve learned how to create simple GUI with JavaFX using such components as buttons, labels and text fields.  This chapter is more about drawing shapes and moving some of them on the screen. 
+
+JavaFX includes the package http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/package-summary.html[javafx.scene.shape], which includes such classes as `Circle`, `Rectangle`, `Line` and more.
+
+Ping-Pong is a perfect game to illustrate the drawing and animating capabilities of JavaFX. In this game you'll have another chance to work with event handlers, and will use multi-threading. 
 
 === The Strategy
 
@@ -16,7 +20,7 @@ Let’s come up with some rules of our Ping-Pong game:
 
 4.  The game score has to  be displayed at the bottom of the window.
 
-5.  A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serves the ball.
+5.  A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serve the ball.
 
 6.  Only the Kid can serve the ball.
 
@@ -35,4 +39,15 @@ image::images/fig_13_PingPong.png[]
 
 
 === Drawing the Ping-Pong Table
+
+In this section or goal is to draw a 2D ping-pong table, which should look as a green rectangle with thin white border lines. Let's apply analytical thinking and break  this goal into a set of simpler steps:
+
+1. Draw a rectangle of a certain size
+2. Paint it green
+3. Add white border lines on top of the green rectangle
+
+Let's start with creating a new JavaFX project in IntelliJ IDEA selecting JavaFX as a project type. Press Next, and on the next popup window enter PingPong as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _pingpong.fxml_, the `Main` class into `PingPong`, and `Controller` into `PingPongController`.  
+
+
+We'll have a Ping-Pong table to be centered on the screen. We won't set the hard-coded scene dimensions this time, but rather use the `Screen` class that will check the dimensions of the user's device, center the ping-pong table on the screen and will calculate it's dimensions. 
 
