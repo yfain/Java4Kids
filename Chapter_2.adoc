@@ -1,5 +1,4 @@
-:toc:
-:toclevels: 4
+:toc-placement!:
 :imagesdir: ./
 
 == Chapter 2. Getting Comfy In IDEA IDE
@@ -58,6 +57,9 @@ image::images/fig_2_05.png[]
 This project consists from the module hello and External Libraries. The source code of your program(s) will be located in the folder src in the hello module. The file hello.iml is the place where IDEA remembers the setting of the project hello - you don't need to touch it. Under External Libraries you'll find a bunch of files with the names that end with _.jar_. These JAR's are the libraries of code that came with JDK. 
 
 A simple project like our `HelloWorld` will have just one file with the source code – `HelloWorld.java`.  Pretty soon we’ll create more advanced projects that will consist of several files. Then we may need to package them in one or more JARs too. 
+
+[[FIG2-5-1]]
+image::images/fig_2_Jar.png[]
 
 === Creating HelloWorld Class in IDEA
 

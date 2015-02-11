@@ -1,0 +1,38 @@
+:toc-placement!:
+:imagesdir: ./
+
+== Chapter 13. Creating a Ping-Pong Game 
+
+In chapters 6, 7, and 10 we’ve learned how to create simple GUI with JavaFX. We've been using buttons, labels and text fields there.  This chapter is more about drawing and moving objects on the screen. Ping-Pong is a perfect game to illustrate the drawing capabilities of JavaFX. In this game you'll have another chance to work with event handlers, and will use multi-threading. 
+
+=== The Strategy
+
+Let’s come up with some rules of our Ping-Pong game:
+
+1. This game will have two players named Kid and Computer. 
+2. The game lasts until one of these players will reach the score of 21.
+
+3. The Kid’s paddle movements will be controlled by the computer mouse.
+
+4.  The game score has to  be displayed at the bottom of the window.
+
+5.  A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serves the ball.
+
+6.  Only the Kid can serve the ball.
+
+7.  To win a point the ball should go beyond the paddle when it's not blocking the ball.
+
+8.  When the Computer bounces the ball, it can move only horizontally to the right.
+
+9.  If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.
+
+At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called _analytical thinking_, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones an reach them one at time!  
+
+Let's start breaking our complex task. Try to visualize a ping-pong table. Can you write a program that will draw a green rectangle? That’s our first goal to achieve. Then we'll add the paddle. Then we'll see how to draw the ball. Learning how to move the ball will be the next task. Writing the keyboard event handlers shouldn't be too difficult.
+
+[[FIG13-1]]
+image::images/fig_13_PingPong.png[]
+
+
+=== Drawing the Ping-Pong Table
+

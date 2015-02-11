@@ -26,7 +26,7 @@ This is a short version of  Table of Content of the book "Java For Kids". Publis
 * <<Chapter_10.adoc#,Chapter 10. Creating a Tic-Tac-Toe Game>>
 * <<Chapter_11.adoc#,Chapter 11. Working With Files and Serialization>>
 * <<Chapter_12.adoc#,Chapter 12. Networking: Downloading Files From the Internet>>
-* Chapter 13. Developing a Ping-Pong Game
+* <<Chapter_13.adoc#,Chapter 13. Creating a Ping-Pong Game (Work in Progress)>>
 * <<Appendix_A.adoc#,Chapter 14. Git for Kids>>
 
    

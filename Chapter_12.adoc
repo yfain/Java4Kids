@@ -164,6 +164,9 @@ The reason you may want use the `URLConnection` class is that it could give you 
 
 In Chapter 11 you've learned how to create a file and write into it. The `WebSiteReader` program just prints the remote data on the console, but you could have saved the data in the local file as well. It's time to add the code that writes into a file. The goal is to write a program that can download any unprotected file (such as images, music, and binary files) available on the Web. 
 
+[[FIG12-1-1]]
+image::images/fig_12_DownloadUpload.png[]
+
 The following class `FileDownload` creates the `URLConnection` object and get its `InputStream`. This class also creates an `OutputStream` to the local file. The URL and the local filename are given to `FileDownload` program as command-line arguments (explained in Chapter 11). The `FileDownload` connects to the provided URL, downloads its content and saves it in a local file.
 
 [source, java]

@@ -1,5 +1,4 @@
-:toc:
-:toclevels: 4
+:toc-placement!:
 :imagesdir: ./
 
 == Chapter 6. Access Levels, Collections, Generics, and Multi-Threading 
@@ -462,6 +461,9 @@ I've been using parameterized data type `Hashtable` that was conveniently offere
 So far, all our programs perform actions in a sequence – one after another. So if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one _thread of execution_, where the code works sequentially.
 
 In a real life though, we can do several things in parallel like eat, talk on the phone, watch TV, and do the homework. To do all these actions in parallel we use several "processors": hands, eyes, and mouth. 
+
+[[FIG6-6-1]]
+image::images/fig_6_MultiTask.png[]
 
 Today, only your grandma's computer has a single processor (a.k.a. Central Processing Unit or CPU). A CPU performs calculations, sends commands to the monitor, hard disk or a solid state drive, remote computers on the Internet, and so on. Most likely your computer has at least two CPU's and a GPU (Graphics Processing Unit) for processing graphics if any.  
 

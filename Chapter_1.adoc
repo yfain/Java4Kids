@@ -1,5 +1,4 @@
-:toc:
-:toclevels: 4
+:toc-placement!:
 :imagesdir: ./
 
 == Chapter 1. Writing Your First Program
