@@ -490,7 +490,13 @@ p { margin-bottom: 1.25rem; }
 <h2 id="_chapter-13-creating-a-ping-pong-game"><a class="anchor" href="#_chapter-13-creating-a-ping-pong-game"></a>Chapter 13. Creating a Ping-Pong Game</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In chapters 6, 7, and 10 we’ve learned how to create simple GUI with JavaFX. We&#8217;ve been using buttons, labels and text fields there.  This chapter is more about drawing and moving objects on the screen. Ping-Pong is a perfect game to illustrate the drawing capabilities of JavaFX. In this game you&#8217;ll have another chance to work with event handlers, and will use multi-threading.</p>
+<p>In chapters 6, 7, and 10 you’ve learned how to create simple GUI with JavaFX using such components as buttons, labels and text fields.  This chapter is more about drawing shapes and moving some of them on the screen.</p>
+</div>
+<div class="paragraph">
+<p>JavaFX includes the package <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/package-summary.html">javafx.scene.shape</a>, which includes such classes as <code>Circle</code>, <code>Rectangle</code>, <code>Line</code> and more.</p>
+</div>
+<div class="paragraph">
+<p>Ping-Pong is a perfect game to illustrate the drawing and animating capabilities of JavaFX. In this game you&#8217;ll have another chance to work with event handlers, and will use multi-threading.</p>
 </div>
 <div class="sect2">
 <h3 id="_the-strategy"><a class="anchor" href="#_the-strategy"></a>The Strategy</h3>
@@ -512,7 +518,7 @@ p { margin-bottom: 1.25rem; }
 <p>The game score has to  be displayed at the bottom of the window.</p>
 </li>
 <li>
-<p>A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serves the ball.</p>
+<p>A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serve the ball.</p>
 </li>
 <li>
 <p>Only the Kid can serve the ball.</p>
@@ -542,13 +548,35 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div class="sect2">
 <h3 id="_drawing-the-ping-pong-table"><a class="anchor" href="#_drawing-the-ping-pong-table"></a>Drawing the Ping-Pong Table</h3>
+<div class="paragraph">
+<p>In this section or goal is to draw a 2D ping-pong table, which should look as a green rectangle with thin white border lines. Let&#8217;s apply analytical thinking and break  this goal into a set of simpler steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Draw a rectangle of a certain size</p>
+</li>
+<li>
+<p>Paint it green</p>
+</li>
+<li>
+<p>Add white border lines on top of the green rectangle</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start with creating a new JavaFX project in IntelliJ IDEA selecting JavaFX as a project type. Press Next, and on the next popup window enter PingPong as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>pingpong.fxml</em>, the <code>Main</code> class into <code>PingPong</code>, and <code>Controller</code> into <code>PingPongController</code>.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll have a Ping-Pong table to be centered on the screen. We won&#8217;t set the hard-coded scene dimensions this time, but rather use the <code>Screen</code> class that will check the dimensions of the user&#8217;s device, center the ping-pong table on the screen and will calculate it&#8217;s dimensions.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-11 05:38:39 EST
+Last updated 2015-02-11 14:46:39 EST
 </div>
 </div>
 </body>
