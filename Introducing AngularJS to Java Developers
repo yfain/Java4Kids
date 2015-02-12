@@ -1,0 +1,38 @@
+Introducing AngularJS to Java Developers
+
+If you want to develop Web applications, you'll need to learn JavaScript. But writing code in JavaScript (at least in its ECMAScript 5 incarnation) is non-productive. You need to pick up a one of the JavaScript frameworks, because:
+they make you more productive
+will deal with cross-browser compatibility make the application more structured
+may include reusable components
+lower the amount of manually written code.
+
+JavaScript market offers multiple frameworks and libraries. While frameworks expect you to programs using well defined ruleswithin a certain code structure, libraries just offer reusable components a la cart.
+
+In turn, frameworks can be categorized as feature complete (rigid app structure, intrusive, rich GUI components, tooling)  and lightweight (MVC + Binding + Routing) .
+
+Ext JS, YUI, and Dojo represent feature-complete frameworks. AngularJS, Backbone.js, and Ember are examples of lightweight frameworks. After years of experimenting with different frameworks and libraries we decided to stick with hugely popular AngularJS by Google. 
+
+I work in a Java shop, and one of my responsibilities is to create an conduct trainings (both internal and external). Several years ago I started to work with our engineers on the curriculum introducing AngularJS to an enterprise Java developer.  
+
+The learning curve of AngularJS is not too steep for Java developers, who understand the concept of containers, dependency injections, callbacks. They must become proficient with JavaScript with its functions, closures and other good stuff.
+
+But equally important is to be familiar with todays tooling of a productive Web developer. Here's a short list of tools that JavaScript developers use today:
+
+-npm - node package manager used for installing and managing development tools
+-yeoman - a scaffolding tool used to generate the initial structure of an application
+-bower - package manager for application dependencies
+-grunt - a build automation tool
+-A testing framework (e.g. Jasmine)
+
+The next decision to make is how to communicate with the Java backend. Forget about JSP, servlets, and JSFs. Preparing HTML in your Java code is out of fashion. A  Java server exchanges the JSON-formatted data with a single-page HTML/JavaScript front end, which use  either AJAX techniques (old) or WebSocket protocol (new).  
+
+On the Java side we like to use such tried and true technologies as RESTful Web service and Java Messaging API.
+
+When we hire a AngularJS/Java developer, we expect him to be familiar with at least 90% of all the above buzzwords. Finding such skilled software engineers may be difficult, so we've created a training program to prepare such a person. 
+
+By now, we've taught and fine-tuned this training class multiple times. The latest online version of this class consists of seven weekly training sessions (3.5 hours each) and seven consultations (from 30 to 60 min each). Programmers learn and gradually apply all of the above tools and techniques while working on the Online Auction application that has the following architecture:
+
+We have a great feedback from people who have completed this training. But everyone says it's challenging. And it should be. Back in the nineties a person who knew one of the programming languages plus SQL could relatively easy get a well paid job. Not anymore. 
+
+If you're ready to give a boost to your programming career, our next online training starts on March 7, 2015. And the good part is that you can take it from any part of the world as long as you are connected to Internet and can be awake and eager to learn at 9:30AM New York time on Saturdays. 
+
