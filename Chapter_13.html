@@ -657,11 +657,14 @@ public class PingPong extends Application {
 </div>
 </div>
 <div class="paragraph">
-<p>Now back to IDEA. Since our shapes will need to communicate with the controller class, we need to assign an <code>fx:id</code> to each of them. The table will get <code>fx:id="table"</code>. Computer will play with the left paddle, and I&#8217;ll give it <code>fx:id="compPaddle"</code>. The Kid will play with the right paddle that will go by <code>fx:id="kidPaddle"</code>. The ball will get <code>fx:id="ball"</code>. Now The <code>Group</code> container in my file <em>pingpong.fxml</em> will look like this:</p>
+<p>Now back to IDEA. Since our shapes will need to communicate with the controller class, we need to assign an <code>fx:id</code> to each of them. Let&#8217;s assign the <code>fx:id="theGroup"</code> to the <code>Group</code> container. Our green <code>Rectangle</code> will get <code>fx:id="table"</code>.</p>
+</div>
+<div class="paragraph">
+<p>Computer will play with the left paddle, and I&#8217;ll give it <code>fx:id="compPaddle"</code>. The Kid will play with the right paddle that will go by <code>fx:id="kidPaddle"</code>. The ball will get <code>fx:id="ball"</code>. Now The <code>Group</code> container in my file <em>pingpong.fxml</em> will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="xml language-xml">&lt;Group xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"&gt;
+<pre class="highlight"><code class="xml language-xml">&lt;Group fx:id="theGroup" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"&gt;
    &lt;children&gt;
       &lt;Rectangle fx:id="table" fill="#31b287" height="250" stroke="BLACK" strokeType="INSIDE" width="400" /&gt;
       &lt;Rectangle fx:id="compPaddle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="24.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="10.0" /&gt;
@@ -684,7 +687,7 @@ public class PingPong extends Application {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="xml language-xml">&lt;Group fx:controller="pong.PingPongController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"&gt;</code></pre>
+<pre class="highlight"><code class="xml language-xml">&lt;Group fx:id="theGroup" fx:controller="pong.PingPongController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -697,7 +700,10 @@ public class PingPong extends Application {
 <p>We need to add the event handler methods to the class <code>PingPongController</code> to process keyboard events. Every key on the keyboard has a special code assigned, and our first goal is to figure out which key the player pressed.</p>
 </div>
 <div class="paragraph">
-<p>For processing keyboard events JavaFX components have special event handler properties <code>onKeyPressed</code>, <code>onKeyReleased</code>, and <code>onKeyTyped</code>. The first two properties allow you to program different actions for the downward and upward key motions, if needed. We&#8217;ll just use the property <code>onKeyTyped</code> here.</p>
+<p>For processing keyboard events JavaFX components have special event handler properties <code>onKeyPressed</code>, <code>onKeyReleased</code>, and <code>onKeyTyped</code>. The first two properties allow you to program different actions for the downward and upward key motions, if needed.</p>
+</div>
+<div class="paragraph">
+<p>The <code>onKeyTyped</code> is used to assign a handler to the event when the key code is sent to the system output. This event is <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyEvent.html">not generated</a> for the keys that don&#8217;t produce character output. We&#8217;ll use <code>onKeyReleased</code> - this is when the the user lift his finger up.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -712,10 +718,43 @@ IDEA can help you to find out which event handlers can be used with a particular
 </table>
 </div>
 <div class="paragraph">
-<p>When the user presses press a key, the <code>onKeyTyped</code> method handler receives the <code>KeyEvent</code> object as an argument. The method <code>getCode</code> from the class <code>KeyEvent</code> returns the <code>KeyCode</code> object that represents the key pressed.</p>
+<p>When the user releases a key, the <code>onKeyReleased</code> method handler receives the <code>KeyEvent</code> object as an argument. The method <code>getCode</code> from the class <code>KeyEvent</code> returns the <code>KeyCode</code> object that represents the key pressed. For example, if you press the button Q, the <code>getCode</code> will return <code>Q</code>. If you press the arrow up, the <code>getCode</code> will return <code>UP</code>.</p>
 </div>
 <div class="paragraph">
-<p>But the same key can result in displaying more than one character (e.g. if the Shift key was down a capital letter is displayed, otherwise - a small one.) The method <code>getCharachter</code> of <code>KeyEvent</code> returns a <code>String</code> that represent the character typed by the user.</p>
+<p>But the same key can result in displaying more than one character (e.g. Q or q) The method <code>getText</code> of <code>KeyEvent</code> returns a <code>String</code> that represents the character typed by the user.</p>
+</div>
+<div class="paragraph">
+<p>To enable our GUI to react on keyboard events right after the program starts, we need to <em>set the focus</em> on the GUI. This was not required when we clicked on the GUI components with the mouse, but now we won&#8217;t even touch the screen.</p>
+</div>
+<div class="paragraph">
+<p>To set the focus to the <code>Group</code> container we&#8217;ll need to do two things:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Enable the Group to receive the focus by useing the attribute <code>focusTraversable="true"</code> in <em>pingpong.fxml</em>.</p>
+</li>
+<li>
+<p>Right after the scene is displayed in the <code>PingPong</code> class we&#8217;ll call the method <code>requestFocus</code>. The method <code>start</code> in <code>PingPong</code> will look like this:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> public void start(Stage primaryStage) throws Exception{
+
+  Parent root = FXMLLoader.load(getClass().getResource("pingpong.fxml"));
+
+  primaryStage.setScene(new Scene(root, 400, 250));
+  primaryStage.initStyle(StageStyle.UNDECORATED);
+
+  primaryStage.show();
+  root.requestFocus();
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, we need to add to the <code>PingPongControler</code> a method handler for the key released event.</p>
 </div>
 </div>
 <div class="sect2">
@@ -735,7 +774,7 @@ IDEA can help you to find out which event handlers can be used with a particular
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-13 04:20:37 EST
+Last updated 2015-02-14 03:45:44 EST
 </div>
 </div>
 </body>
