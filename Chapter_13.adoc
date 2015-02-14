@@ -130,11 +130,13 @@ Now let's open _pingpong.fxml_ in Scene Builder again add the paddles and the ba
 [[FIG13-6]]
 image::images/fig_13_paddles_and_ball.png[]
 
-Now back to IDEA. Since our shapes will need to communicate with the controller class, we need to assign an `fx:id` to each of them. The table will get `fx:id="table"`. Computer will play with the left paddle, and I'll give it `fx:id="compPaddle"`. The Kid will play with the right paddle that will go by `fx:id="kidPaddle"`. The ball will get `fx:id="ball"`. Now The `Group` container in my file _pingpong.fxml_ will look like this: 
+Now back to IDEA. Since our shapes will need to communicate with the controller class, we need to assign an `fx:id` to each of them. Let's assign the `fx:id="theGroup"` to the `Group` container. Our green `Rectangle` will get `fx:id="table"`. 
+
+Computer will play with the left paddle, and I'll give it `fx:id="compPaddle"`. The Kid will play with the right paddle that will go by `fx:id="kidPaddle"`. The ball will get `fx:id="ball"`. Now The `Group` container in my file _pingpong.fxml_ will look like this: 
 
 [source, xml]
 ----
-<Group xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Group fx:id="theGroup" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle fx:id="table" fill="#31b287" height="250" stroke="BLACK" strokeType="INSIDE" width="400" />
       <Rectangle fx:id="compPaddle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="24.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
@@ -153,7 +155,7 @@ Drawing of the GUI is complete, now we need to take care of the user interaction
 
 [source, xml]
 ----
-<Group fx:controller="pong.PingPongController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Group fx:id="theGroup" fx:controller="pong.PingPongController" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 ----
 
 Dear Scene Builder and FXML, you've been very helpful. Now I'm happily going back to Java programming.
@@ -162,14 +164,39 @@ Dear Scene Builder and FXML, you've been very helpful. Now I'm happily going bac
 
 We need to add the event handler methods to the class `PingPongController` to process keyboard events. Every key on the keyboard has a special code assigned, and our first goal is to figure out which key the player pressed. 
 
-For processing keyboard events JavaFX components have special event handler properties `onKeyPressed`, `onKeyReleased`, and `onKeyTyped`. The first two properties allow you to program different actions for the downward and upward key motions, if needed. We'll just use the property `onKeyTyped` here.
+For processing keyboard events JavaFX components have special event handler properties `onKeyPressed`, `onKeyReleased`, and `onKeyTyped`. The first two properties allow you to program different actions for the downward and upward key motions, if needed. 
+
+The `onKeyTyped` is used to assign a handler to the event when the key code is sent to the system output. This event is http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyEvent.html[not generated] for the keys that don't produce character output. We'll use `onKeyReleased` - this is when the the user lift his finger up.
 
 NOTE: IDEA can help you to find out which event handlers can be used with a particular component. Just click CTRL-Space inside this component's FXML tag and start typing with the letters `on` - you'll see all applicable event handlers. 
 
-When the user presses press a key, the `onKeyTyped` method handler receives the `KeyEvent` object as an argument. The method `getCode` from the class `KeyEvent` returns the `KeyCode` object that represents the key pressed. 
+When the user releases a key, the `onKeyReleased` method handler receives the `KeyEvent` object as an argument. The method `getCode` from the class `KeyEvent` returns the `KeyCode` object that represents the key pressed. For example, if you press the button Q, the `getCode` will return `Q`. If you press the arrow up, the `getCode` will return `UP`.
 
-But the same key can result in displaying more than one character (e.g. if the Shift key was down a capital letter is displayed, otherwise - a small one.) The method `getCharachter` of `KeyEvent` returns a `String` that represent the character typed by the user.
+But the same key can result in displaying more than one character (e.g. Q or q) The method `getText` of `KeyEvent` returns a `String` that represents the character typed by the user.
 
+To enable our GUI to react on keyboard events right after the program starts, we need to _set the focus_ on the GUI. This was not required when we clicked on the GUI components with the mouse, but now we won't even touch the screen.
+
+To set the focus to the `Group` container we'll need to do two things:
+
+1. Enable the Group to receive the focus by useing the attribute `focusTraversable="true"` in _pingpong.fxml_.
+
+2. Right after the scene is displayed in the `PingPong` class we'll call the method `requestFocus`. The method `start` in `PingPong` will look like this:
+
+[source. java]
+----
+ public void start(Stage primaryStage) throws Exception{
+
+  Parent root = FXMLLoader.load(getClass().getResource("pingpong.fxml"));
+
+  primaryStage.setScene(new Scene(root, 400, 250));
+  primaryStage.initStyle(StageStyle.UNDECORATED);
+
+  primaryStage.show();
+  root.requestFocus();
+}
+----
+
+Next, we need to add to the `PingPongControler` a method handler for the key released event.
 
 === Animating the Node
 
