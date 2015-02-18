@@ -512,11 +512,10 @@ p { margin-bottom: 1.25rem; }
 <p>A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serve the ball. Only the kid can serve the ball.</p>
 </li>
 <li>
-<p>The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle by the preset number of pixels up or down. Computer&#8217;s paddle moves up or down depending on the direction of the ball movement.
-The paddles shouldn&#8217;t cross the table borders.</p>
+<p>The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle vertically by the preset number of pixels up or down. The paddle shouldn&#8217;t cross the table borders.</p>
 </li>
 <li>
-<p>To win a point the ball should go beyond the paddle when it&#8217;s not blocking the ball.</p>
+<p>When the Kid presses the S-key, the ball should start moving at an angle toward the left side. To win a point the ball should go beyond the paddle when it&#8217;s not blocking the ball. Computer&#8217;s paddle moves up or down depending on the direction of the ball movement.</p>
 </li>
 <li>
 <p>When the Computer bounces the ball, it can move only horizontally to the right.</p>
@@ -525,8 +524,7 @@ The paddles shouldn&#8217;t cross the table borders.</p>
 <p>If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.</p>
 </li>
 <li>
-<p>The game lasts until one of these players will reach the score of 21.
-The game score should be displayed in the left bottom corner of the table.</p>
+<p>The game lasts until one of the players reaches the score of 21. The game score should be displayed in the left bottom corner of the table.</p>
 </li>
 </ol>
 </div>
@@ -541,9 +539,12 @@ The game score should be displayed in the left bottom corner of the table.</p>
 <img src="./images/fig_13_PingPong.png" alt="fig 13 PingPong">
 </div>
 </div>
+<div class="paragraph">
+<p>Now let&#8217;s implement each step from the game strategy, one step at a time.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_implementing-the-strategy-step-1"><a class="anchor" href="#_implementing-the-strategy-step-1"></a>Implementing the Strategy: Step 1.</h3>
+<h3 id="_step-1-creating-the-table"><a class="anchor" href="#_step-1-creating-the-table"></a>Step 1: Creating the Table</h3>
 <div class="paragraph">
 <p>In this section or goal is to draw a 2D ping-pong table, which should look as a green rectangle.</p>
 </div>
@@ -696,7 +697,7 @@ public class PingPong extends Application {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_implementing-the-strategy-steps-2-and-3"><a class="anchor" href="#_implementing-the-strategy-steps-2-and-3"></a>Implementing the Strategy: Steps 2 and 3.</h3>
+<h3 id="_step-2-handling-keyboard-events"><a class="anchor" href="#_step-2-handling-keyboard-events"></a>Step 2: Handling Keyboard Events</h3>
 <div class="paragraph">
 <p>We need to add the event handler methods to the class <code>PingPongController</code> to process keyboard events. Every key on the keyboard has a special code assigned, and our first goal is to figure out which key the player pressed.</p>
 </div>
@@ -754,6 +755,8 @@ IDEA can help you to find out which event handlers can be used with a particular
 </li>
 </ol>
 </div>
+<div class="sect3">
+<h4 id="_the-first-version-of-controller"><a class="anchor" href="#_the-first-version-of-controller"></a>The First Version of Controller</h4>
 <div class="paragraph">
 <p>Next, we need to add to the <code>PingPongControler</code> a method handler for the key-released events. The first very simple version of the <code>PingPongControler</code> is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.</p>
 </div>
@@ -775,7 +778,8 @@ public class PingPongController {
 </div>
 </div>
 <div class="paragraph">
-<p>The event handler method just extracts the key code from the <code>KeyEvent</code> object provided by the Java runtime and prints it. For example, after running the <code>PingPong</code> class and pressing the up and down arrows, <em>n</em>, <em>q</em>, and <em>s</em> keys, the console output should look like this:</p>
+<p>The event handler method just extracts the key code from the <code>KeyEvent</code> object provided by the Java runtime and prints it.
+For example, after running the <code>PingPong</code> class and pressing the up and down arrows, <em>n</em>, <em>q</em>, and <em>s</em> keys, the console output should look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -786,9 +790,12 @@ You pressed Q
 You pressed S</code></pre>
 </div>
 </div>
-<div class="sidebarblock">
-<div class="content">
-<div class="title">The enum Type</div>
+<div class="paragraph">
+<p>The <code>KeyCode</code> in <code>PingPongController</code> is not a class or an interface, but a special Java construct called <code>enum</code> described next.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the-enum-type"><a class="anchor" href="#_the-enum-type"></a>The enum Type</h4>
 <div class="paragraph">
 <p>Our controller class declares a variable of type <code>KeyCode</code>, which is neither a class nor an interface. It&#8217;s a special Java data type <code>enum</code> used for declaring a bunch of pre-defined constants that never change. For example, you can declare a new <code>enum</code> type day-of-the-week:</p>
 </div>
@@ -836,7 +843,8 @@ You pressed S</code></pre>
 <p>If you&#8217;ll open the <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyCode.html">online documentation</a> for <code>KeyCode</code> you&#8217;ll find there the declarations of all possible keyboard keys.</p>
 </div>
 </div>
-</div>
+<div class="sect3">
+<h4 id="_the-second-version-of-controller"><a class="anchor" href="#_the-second-version-of-controller"></a>The Second Version of Controller</h4>
 <div class="paragraph">
 <p>Now we&#8217;ll add a <code>switch</code> statement to the controller to invoke the method that corresponds to the pressed key. Let&#8217;s not worry about implementing the application logic just yet. We want to make sure that the programs invokes the correct method for each key.</p>
 </div>
@@ -844,6 +852,7 @@ You pressed S</code></pre>
 <div class="content">
 <pre class="highlight"><code class="java language-java">package pong;
 
+import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -851,52 +860,193 @@ public class PingPongController {
 
   public void keyReleasedHandler(KeyEvent event){
 
-      KeyCode keyCode =  event.getCode();
+    KeyCode keyCode = event.getCode();
 
-      switch (keyCode){
-          case UP:
-              process_key_Up();
-              break;
-          case DOWN:
-              process_key_Down();
-              break;
-          case N:
-              process_key_N();
-              break;
-          case Q:
-              process_key_Q();
-              break;
-          case S:
-              process_key_S();
-              break;
+    switch (keyCode){
+      case UP:
+          process_key_Up();
+          break;
+      case DOWN:
+          process_key_Down();
+          break;
+      case N:
+          process_key_N();
+          break;
+      case Q:
+          Platform.exit(); // Terminate the app
+          break;
+      case S:
+          process_key_S();
+          break;
       }
   }
 
   private void process_key_Up() {
-      System.out.println("Processing the Up key");
+    System.out.println("Processing the Up key");
   }
 
   private void process_key_Down() {
-      System.out.println("Processing the Down key");
+    System.out.println("Processing the Down key");
   }
 
   private void process_key_N() {
-      System.out.println("Processing the N key");
-  }
-
-  private void process_key_Q() {
-      System.out.println("Processing the Q key");
+    System.out.println("Processing the N key");
   }
 
   private void process_key_S() {
-      System.out.println("Processing the S key");
+    System.out.println("Processing the S key");
   }
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The <code>switch</code> statement checks the value of <code>enum KeyCode</code> and calls the corresponding method which just prints a hard-coded message - we&#8217;ll implement them shortly. But the Q-key in the above <code>PingPongController</code> is fully functional. When the user presses the Q-key, the program invokes the method <code>exit</code> on the class <code>Platform</code>, which terminates the program.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_animating-the-node"><a class="anchor" href="#_animating-the-node"></a>Animating the Node</h3>
+<h3 id="_step-3-moving-the-paddle"><a class="anchor" href="#_step-3-moving-the-paddle"></a>Step 3: Moving the Paddle</h3>
+<div class="paragraph">
+<p>Now let&#8217;s teach the keys Up and Down to move the kid&#8217;s paddle vertically. Pressing the Up-arrow should move the kid&#8217;s paddle several pixels up according to the predefined moving increment. Pressing the Down-arrow should move the paddle down. We&#8217;ll declare an movement increment as a <code>final</code> variable in <code>PingPongController</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">final int PADDLE_MOVEMENT_INCREMENT = 7;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pressing the key once will change the vertical position of the paddle by 7 pixels. Seven is not a magical number, and you can use any other integer here.</p>
+</div>
+<div class="paragraph">
+<p>The new version of the controller will use the <code>@FXML</code> annotations to inject the references to the GUI components. To update the position of the kid&#8217;s paddle on the GUI we&#8217;ll use data binding explained in Chapter 8. We&#8217;ll also add the method <code>initialize</code> that is invoked by the Java runtime once when the controller object is created. Finally, we&#8217;ll write the code in the methods <code>process_key_Down</code> and <code>process_key_Up</code> to move the kid&#8217;s paddle vertically.</p>
+</div>
+<div class="paragraph">
+<p>In JavaFX the x and y coordinates of the top left corner of the stage have zero values. x-coordinate increases from left to right, and the y-coordinate increases from top to bottom. The paddles can move only up or down, so depending on the key pressed we&#8217;ll be changing the value of the property <code>layoutY</code> of the right paddle, which will move it on stage accordingly. Here&#8217;s how the <code>PingPongController</code> will look now:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">package pong;
+
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+
+public class PingPongController {
+
+  final int PADDLE_MOVEMENT_INCREMENT = 6;
+
+  DoubleProperty currentKidPaddleY =
+              new SimpleDoubleProperty();   <i class="conum" data-value="1"></i><b>(1)</b>
+
+  double allowedPaddleTopY;                 <i class="conum" data-value="2"></i><b>(2)</b>
+  double allowedPaddleBottomY;
+
+  @FXML Rectangle table;                    <i class="conum" data-value="3"></i><b>(3)</b>
+  @FXML Rectangle compPaddle;
+  @FXML Rectangle kidPaddle;
+  @FXML Circle ball;
+
+  public void initialize() {
+
+    currentKidPaddleY.set(kidPaddle.getLayoutY());  <i class="conum" data-value="4"></i><b>(4)</b>
+    kidPaddle.layoutYProperty().bind(currentKidPaddleY);
+
+    allowedPaddleTopY = PADDLE_MOVEMENT_INCREMENT; <i class="conum" data-value="5"></i><b>(5)</b>
+    allowedPaddleBottomY = table.getHeight() - kidPaddle.getHeight() - PADDLE_MOVEMENT_INCREMENT;
+
+
+  }
+
+  public void keyReleasedHandler(KeyEvent event){
+
+    KeyCode keyCode = event.getCode();
+
+    switch (keyCode){
+        case UP:
+            process_key_Up();
+            break;
+        case DOWN:
+            process_key_Down();
+            break;
+        case N:
+            process_key_N();
+            break;
+        case Q:
+            Platform.exit(); // Terminate the application
+            break;
+        case S:
+            process_key_S();
+            break;
+    }
+  }
+
+  private void process_key_Up() {      <i class="conum" data-value="6"></i><b>(6)</b>
+
+    if (currentKidPaddleY.get() &gt; allowedPaddleTopY) {
+        currentKidPaddleY.set(currentKidPaddleY.get() - PADDLE_MOVEMENT_INCREMENT);
+    }
+  }
+
+  private void process_key_Down() {      <i class="conum" data-value="7"></i><b>(7)</b>
+
+    if (currentKidPaddleY.get()&lt; allowedPaddleBottomY) {
+        currentKidPaddleY.set(currentKidPaddleY.get() + PADDLE_MOVEMENT_INCREMENT);
+    }
+  }
+
+  private void process_key_N() {
+     System.out.println("Processing the N key");
+  }
+
+  private void process_key_S() {
+     System.out.println("Processing the S key");
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Declaring the property <code>currentKidPaddleY</code> that will be bound to the property <code>layoutY</code> of the kid&#8217;s paddle.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The Kid will be moving the paddle up and down, but we don&#8217;t want to allow the paddle to leave the table boundaries. The variable <code>allowedPaddleTopY</code> will store the maximum allowed y-coordinate for the top of the paddle, and the <code>allowedPaddleBottomY</code> will have the maximum allowed y-coordinate for the bottom of the paddle.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Using @FXML tag we inject the references to the GUI components defined in <em>pingpong.fxml</em> into the controller&#8217;s variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The method <code>initialize</code> in the controller is called only once and is the right place to initialize important variables. First, we initialize the property <code>currentKidPaddleY</code>, with the value of the <code>layoutY</code> property of the right paddle (the <em>kidPaddle</em> component has an attribute <code>layoutY="98.0"</code> in the file <em>pingpong.fxml</em>). Then we bind <code>currentKidPaddleY</code> to the  <code>layoutY</code> property of the GUI component kidPaddle.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Here we set the limits for the paddle movements. We set the variable <code>allowedPaddleTopY=PADDLE_MOVEMENT_INCREMENT</code> to make sure that if the Kid keeps pressing the Up arrow, the paddle will never cross the top border of the table. The bottom restriction <code>allowedPaddleBottomY</code> is calculated by subtracting the height of the paddle and <code>PADDLE_MOVEMENT_INCREMENT</code> from the table height.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>The method <code>process_key_Up</code> gets the current y-coordinate of the top border of the paddle, and if it&#8217;s far enough from the table top, the code decrements the value of the property <code>currentKidPaddleY</code> by <code>PADDLE_MOVEMENT_INCREMENT</code>. Because <code>currentKidPaddleY</code> is bound to the <code>layoutY</code> property of the GUI component <code>kidPaddle</code>, the latter moves up on stage. The movement stops if the <code>currentKidPaddleY</code> value is higher than <code>allowedPaddleTopY</code>. Remember, the y-coordinate increases from top down, so the higher y-coordinates means that it&#8217;s physically lower on stage.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>The method <code>process_key_Down</code> works similarly to <code>process_key_Up</code> but ensures that the paddle won&#8217;t cross the bottom border of the table.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now our controller knows how to move the Kid&#8217;s paddle. The next challenge is to learn how to move the ball.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step-4-moving-the-ball"><a class="anchor" href="#_step-4-moving-the-ball"></a>Step 4. Moving the Ball</h3>
 <div class="paragraph">
 <p>The class <code>javafx.animation.Timeline</code> allows you to change the values of properties over a time interval. For example, if you&#8217;ll be changing a Y coordinate of a paddle every second, it&#8217;ll be moving vertically on the scene.</p>
 </div>
@@ -912,7 +1062,7 @@ public class PingPongController {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-17 04:26:14 EST
+Last updated 2015-02-18 10:24:27 EST
 </div>
 </div>
 </body>
