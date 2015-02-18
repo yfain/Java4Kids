@@ -17,17 +17,15 @@ Let’s come up with some rules of our Ping-Pong game:
 
 2.  A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serve the ball. Only the kid can serve the ball.
 
-3. The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle by the preset number of pixels up or down. Computer's paddle moves up or down depending on the direction of the ball movement. 
-The paddles shouldn't cross the table borders.
+3. The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle vertically by the preset number of pixels up or down. The paddle shouldn't cross the table borders.
 
-4.  To win a point the ball should go beyond the paddle when it's not blocking the ball.
+4.  When the Kid presses the S-key, the ball should start moving at an angle toward the left side. To win a point the ball should go beyond the paddle when it's not blocking the ball. Computer's paddle moves up or down depending on the direction of the ball movement.
 
 5.  When the Computer bounces the ball, it can move only horizontally to the right.
 
 6.  If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.
 
-7.  The game lasts until one of these players will reach the score of 21.
-The game score should be displayed in the left bottom corner of the table.
+7.  The game lasts until one of the players reaches the score of 21. The game score should be displayed in the left bottom corner of the table.
 
 At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called _analytical thinking_, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones an reach them one at time!  
 
@@ -36,8 +34,9 @@ Let's start breaking our complex task. Try to visualize a ping-pong table. Can y
 [[FIG13-1]]
 image::images/fig_13_PingPong.png[]
 
+Now let's implement each step from the game strategy, one step at a time.
 
-=== Implementing the Strategy: Step 1.
+=== Step 1: Creating the Table
 
 In this section or goal is to draw a 2D ping-pong table, which should look as a green rectangle. 
 
@@ -160,7 +159,7 @@ Drawing of the GUI is complete, now we need to take care of the user interaction
 
 Dear Scene Builder and FXML, you've been very helpful. Now I'm happily going back to Java programming.
 
-=== Implementing the Strategy: Steps 2 and 3.
+=== Step 2: Handling Keyboard Events
 
 We need to add the event handler methods to the class `PingPongController` to process keyboard events. Every key on the keyboard has a special code assigned, and our first goal is to figure out which key the player pressed. 
 
@@ -196,6 +195,8 @@ To set the focus to the `Group` container we'll need to do two things:
 }
 ----
 
+==== The First Version of Controller
+
 Next, we need to add to the `PingPongControler` a method handler for the key-released events. The first very simple version of the `PingPongControler` is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.
 
 [source, java]
@@ -215,7 +216,8 @@ public class PingPongController {
 }
 ----
 
-The event handler method just extracts the key code from the `KeyEvent` object provided by the Java runtime and prints it. For example, after running the `PingPong` class and pressing the up and down arrows, _n_, _q_, and _s_ keys, the console output should look like this:
+The event handler method just extracts the key code from the `KeyEvent` object provided by the Java runtime and prints it. 
+For example, after running the `PingPong` class and pressing the up and down arrows, _n_, _q_, and _s_ keys, the console output should look like this:
 
 [source, html]
 ----
@@ -226,8 +228,10 @@ You pressed Q
 You pressed S
 ---- 
 
-.The enum Type
-******************
+The `KeyCode` in `PingPongController` is not a class or an interface, but a special Java construct called `enum` described next.  
+
+==== The enum Type
+
 Our controller class declares a variable of type `KeyCode`, which is neither a class nor an interface. It's a special Java data type `enum` used for declaring a bunch of pre-defined constants that never change. For example, you can declare a new `enum` type day-of-the-week:
 
 [source, java]
@@ -269,8 +273,8 @@ public class GreetTheDay {
 The method `greet` expects to receive one of the `Day` values as an argument. Our `main` method wants to greet Saturday, and if you run the program `GreetTheDay` it'll print _Hello Weekend!_.
 
 If you'll open the http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyCode.html[online documentation] for `KeyCode` you'll find there the declarations of all possible keyboard keys.
-******************
 
+==== The Second Version of Controller
 
 Now we'll add a `switch` statement to the controller to invoke the method that corresponds to the pressed key. Let's not worry about implementing the application logic just yet. We want to make sure that the programs invokes the correct method for each key. 
 
@@ -278,6 +282,7 @@ Now we'll add a `switch` statement to the controller to invoke the method that c
 ----
 package pong;
 
+import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -285,52 +290,163 @@ public class PingPongController {
 
   public void keyReleasedHandler(KeyEvent event){
 
-      KeyCode keyCode =  event.getCode();
+    KeyCode keyCode = event.getCode();
 
-      switch (keyCode){
-          case UP:
-              process_key_Up();
-              break;
-          case DOWN:
-              process_key_Down();
-              break;
-          case N:
-              process_key_N();
-              break;
-          case Q:
-              process_key_Q();
-              break;
-          case S:
-              process_key_S();
-              break;
+    switch (keyCode){
+      case UP:
+          process_key_Up();
+          break;
+      case DOWN:
+          process_key_Down();
+          break;
+      case N:
+          process_key_N();
+          break;
+      case Q:
+          Platform.exit(); // Terminate the app
+          break;
+      case S:
+          process_key_S();
+          break;
       }
   }
 
   private void process_key_Up() {
-      System.out.println("Processing the Up key");
+    System.out.println("Processing the Up key");
   }
 
   private void process_key_Down() {
-      System.out.println("Processing the Down key");
+    System.out.println("Processing the Down key");
   }
 
   private void process_key_N() {
-      System.out.println("Processing the N key");
-  }
-
-  private void process_key_Q() {
-      System.out.println("Processing the Q key");
+    System.out.println("Processing the N key");
   }
 
   private void process_key_S() {
-      System.out.println("Processing the S key");
+    System.out.println("Processing the S key");
   }
 }
 ----
 
+The `switch` statement checks the value of `enum KeyCode` and calls the corresponding method which just prints a hard-coded message - we'll implement them shortly. But the Q-key in the above `PingPongController` is fully functional. When the user presses the Q-key, the program invokes the method `exit` on the class `Platform`, which terminates the program.      
 
+=== Step 3: Moving the Paddle
 
-=== Animating the Node
+Now let's teach the keys Up and Down to move the kid's paddle vertically. Pressing the Up-arrow should move the kid's paddle several pixels up according to the predefined moving increment. Pressing the Down-arrow should move the paddle down. We'll declare an movement increment as a `final` variable in `PingPongController`:
+
+[source, java]
+----
+final int PADDLE_MOVEMENT_INCREMENT = 7;
+---- 
+Pressing the key once will change the vertical position of the paddle by 7 pixels. Seven is not a magical number, and you can use any other integer here.
+
+The new version of the controller will use the `@FXML` annotations to inject the references to the GUI components. To update the position of the kid's paddle on the GUI we'll use data binding explained in Chapter 8. We'll also add the method `initialize` that is invoked by the Java runtime once when the controller object is created. Finally, we'll write the code in the methods `process_key_Down` and `process_key_Up` to move the kid's paddle vertically. 
+
+In JavaFX the x and y coordinates of the top left corner of the stage have zero values. x-coordinate increases from left to right, and the y-coordinate increases from top to bottom. The paddles can move only up or down, so depending on the key pressed we'll be changing the value of the property `layoutY` of the right paddle, which will move it on stage accordingly. Here's how the `PingPongController` will look now:
+
+[source, java]
+----
+package pong;
+
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+
+public class PingPongController {
+
+  final int PADDLE_MOVEMENT_INCREMENT = 6;
+
+  DoubleProperty currentKidPaddleY = 
+              new SimpleDoubleProperty();   // <1>
+
+  double allowedPaddleTopY;                 // <2> 
+  double allowedPaddleBottomY;
+
+  @FXML Rectangle table;                    // <3>
+  @FXML Rectangle compPaddle;
+  @FXML Rectangle kidPaddle;
+  @FXML Circle ball;
+
+  public void initialize() {               
+
+    currentKidPaddleY.set(kidPaddle.getLayoutY());  // <4>
+    kidPaddle.layoutYProperty().bind(currentKidPaddleY);
+
+    allowedPaddleTopY = PADDLE_MOVEMENT_INCREMENT; // <5> 
+    allowedPaddleBottomY = table.getHeight() - kidPaddle.getHeight() - PADDLE_MOVEMENT_INCREMENT;
+
+    
+  }
+
+  public void keyReleasedHandler(KeyEvent event){
+
+    KeyCode keyCode = event.getCode();
+
+    switch (keyCode){
+        case UP:
+            process_key_Up();
+            break;
+        case DOWN:
+            process_key_Down();
+            break;
+        case N:
+            process_key_N();
+            break;
+        case Q:
+            Platform.exit(); // Terminate the application
+            break;
+        case S:
+            process_key_S();
+            break;
+    }
+  }
+
+  private void process_key_Up() {      // <6>
+
+    if (currentKidPaddleY.get() > allowedPaddleTopY) {
+        currentKidPaddleY.set(currentKidPaddleY.get() - PADDLE_MOVEMENT_INCREMENT);
+    }
+  }
+
+  private void process_key_Down() {      // <7>
+
+    if (currentKidPaddleY.get()< allowedPaddleBottomY) {
+        currentKidPaddleY.set(currentKidPaddleY.get() + PADDLE_MOVEMENT_INCREMENT);
+    }
+  }
+
+  private void process_key_N() {
+     System.out.println("Processing the N key");
+  }
+
+  private void process_key_S() {
+     System.out.println("Processing the S key");
+  }
+}
+----
+
+<1> Declaring the property `currentKidPaddleY` that will be bound to the property `layoutY` of the kid's paddle.
+
+<2>	The Kid will be moving the paddle up and down, but we don't want to allow the paddle to leave the table boundaries. The variable `allowedPaddleTopY` will store the maximum allowed y-coordinate for the top of the paddle, and the `allowedPaddleBottomY` will have the maximum allowed y-coordinate for the bottom of the paddle.
+
+<3> Using @FXML tag we inject the references to the GUI components defined in _pingpong.fxml_ into the controller's variables.
+
+<4> The method `initialize` in the controller is called only once and is the right place to initialize important variables. First, we initialize the property `currentKidPaddleY`, with the value of the `layoutY` property of the right paddle (the _kidPaddle_ component has an attribute `layoutY="98.0"` in the file _pingpong.fxml_). Then we bind `currentKidPaddleY` to the  `layoutY` property of the GUI component kidPaddle.
+
+<5> Here we set the limits for the paddle movements. We set the variable `allowedPaddleTopY=PADDLE_MOVEMENT_INCREMENT` to make sure that if the Kid keeps pressing the Up arrow, the paddle will never cross the top border of the table. The bottom restriction `allowedPaddleBottomY` is calculated by subtracting the height of the paddle and `PADDLE_MOVEMENT_INCREMENT` from the table height. 
+<6> The method `process_key_Up` gets the current y-coordinate of the top border of the paddle, and if it's far enough from the table top, the code decrements the value of the property `currentKidPaddleY` by `PADDLE_MOVEMENT_INCREMENT`. Because `currentKidPaddleY` is bound to the `layoutY` property of the GUI component `kidPaddle`, the latter moves up on stage. The movement stops if the `currentKidPaddleY` value is higher than `allowedPaddleTopY`. Remember, the y-coordinate increases from top down, so the higher y-coordinates means that it's physically lower on stage.
+
+<7> The method `process_key_Down` works similarly to `process_key_Up` but ensures that the paddle won't cross the bottom border of the table.   	
+
+Now our controller knows how to move the Kid's paddle. The next challenge is to learn how to move the ball.
+
+=== Step 4. Moving the Ball
 
 The class `javafx.animation.Timeline` allows you to change the values of properties over a time interval. For example, if you'll be changing a Y coordinate of a paddle every second, it'll be moving vertically on the scene.  
 
