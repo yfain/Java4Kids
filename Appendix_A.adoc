@@ -110,7 +110,7 @@ image::images/fig_14_git_add_all.png[]
 
 Now all my Java files are shown in green, which means that these files became trackable and are ready to be committed to the Git database.
 
-[NOTE]
+.NOTE
 ********
 You shouldn't store compiled Java classes or JARs in the source code repositories. You can let Git know which files to ignore by creating a text file named _.gitignore_ in your project directory. Then add there the types of files that Git should ignore. For example, if you'll add the following two lines to your _.gitigore_ file, coompiled classes and JARS won't be included in your Git database:
 
