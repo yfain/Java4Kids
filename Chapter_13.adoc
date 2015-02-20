@@ -233,6 +233,8 @@ You pressed S
 
 The `KeyCode` in `PingPongController` is not a class or an interface, but a special Java construct called `enum` described next.  
 
+NOTE: In the code that comes with this chapter I've provided multiple versions of the controller that gradually implement all the steps listed in the game strategy. Each controller class name starts with `PingPongController` followed with a different suffix with a version number (e.g. `PingPongController_v1`). The starting comment in the class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as `fx:controller` in the file `pingpong.fxml` and run the `PingPong` program.
+
 ==== The enum Type
 
 Our controller class declares a variable of type `KeyCode`, which is neither a class nor an interface. It's a special Java data type `enum` used for declaring a bunch of pre-defined constants that never change. For example, you can declare a new `enum` type day-of-the-week:
@@ -515,18 +517,32 @@ Each frame is represented by a class `KeyFrame`. Each snapshot is a represented 
 
 [source, java]
 ----
-private void moveTheBall(double currentCenterX){
 
-  Timeline timeline = new Timeline();
-  timeline.setCycleCount(1);
+Timeline timeline = new Timeline();   // <1>
 
-  KeyValue keyValue = new KeyValue(ball.centerXProperty(), 0);
-  KeyFrame keyFrame = new KeyFrame(new Duration(1000), keyValue);
-  timeline.getKeyFrames().add(keyFrame);
+private void moveTheBall(double currentCenterX){  
+  
+  timeline = new Timeline();   // <1>
+  timeline.setCycleCount(1);            
 
-  timeline.play();
+  KeyValue keyValue = new KeyValue(ball.centerXProperty(), 0);  // <2>
+  KeyFrame keyFrame = new KeyFrame(new Duration(1000), keyValue);   // <3>
+  
+  timeline.getKeyFrames().add(keyFrame);    // <4>
+
+  timeline.play();      //    <5>
 }
 ----
+
+<1> First we create an instance of the `Timeline` object and invoke the `setCycleCount` requesting that the animation will be done only once. In this example we could have declared the variable `timeline` inside the method, but keeping this variable on the class level will allow me to programatically stop the animation that I'll demonstrate in the next version of the method `moveTheBall`.
+
+<2> Then we'll create the `KeyValue` object to specify which changing value to display in frames. In this case we want the animation to change the `centerX` property from its current value to zero.	
+
+<3> We want the `KeyFrame` to reach the target (change the `centerX` specified in `KeyValue` from the current value to zero) over the period of 1000 milliseconds. The smaller the number, the faster the ball will move. The number of frames will be automatically calculated based on the duration and the target position of the ball. 
+
+<4> Adding the our `KeyFrame` object to the timeline completes the preparations.
+
+<5> The method `play` will play the timeline.	
 
 Now if you'll invoke the method `moveTheBall` from `process_key_S` the ball will move to the left and stop there. Here's what I've got after starting the game and pressing the S-key:
 
@@ -535,6 +551,53 @@ image::images/fig_13_ball_moved.png[]
 
 Our ball is not smart enough to notice that there was a left paddle on its way and went right through it. We'll take care of the GUI component collisions a bit later.
 
-http://docs.oracle.com/javase/8/javafx/visual-effects-tutorial/animations.htm[Creating Transitions and Timeline Animations]
+Depending on the provided duration, the `Timeline` object will decide how many snapshots (key frames) to create while the `KeyValue` is changing to reach the target. The `Timeline` class has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary[overloaded constructors], and one of the allows to specify the frames per second for the animation.
+
+The `KeyFrame` class also has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/KeyFrame.html#constructor.summary[overloaded constructors], and one of them allows you to specify the duration, the event handler for the `ActionEvent`, and optional key value(s). The handler for the `ActionEvent` can be implemented as a  lambda expression. 
+
+In the following version of the method `moveTheBall` we'll write the code to advance the ball at the specified increments.  We'll also use different constructors of `TimeLine` and `KeyFrame`:
+
+[source, java]
+----
+final int BALL_MOVEMENT_INCREMENT = 5;
+
+private void moveTheBall(double currentCenterX){
+
+  KeyFrame keyFrame = new KeyFrame(new Duration(10),   // <1>
+      event -> {
+
+         if (currentBallX > BALL_MOVEMENT_INCREMENT) { // <2>
+
+            currentBallX -= BALL_MOVEMENT_INCREMENT;   // <3>
+            ball.setCenterX(currentBallX);
+
+         } else {
+            timeline.stop();                           // <4>
+         }
+
+      }
+  );
+
+  timeline = new Timeline(keyFrame);             //  <5>
+  timeline.setCycleCount(Timeline.INDEFINITE);        
+  timeline.play();                     
+
+}
+----
+
+<1> The first argument of the constructor is the `Duration` object, but this time it has different meaning than in the previous version of the `moveTheBall`. The value of 10 means to run the code from the event handler (the lambda expression) every 10 milliseconds.
+
+<2> The lambda expression starts with checking if the current value of the `centerX` is larger than the value in `BALL_MOVEMENT_INCREMENT` to ensure that the ball will not cross the left border and will stay at the 0 coordinates. To make our game more realistic, we'll let the ball go off the table in the next version of the `moveTheBall`. 
+
+<3> Decrement the `currentBallX` by `BALL_MOVEMENT_INCREMENT`, and set the new value of the ball's `centerX`.
+
+<4> Stop the animation if the ball would fall off the table on the next move.	
+
+<5> Create the `Timeline` using our `KeyFrame` and play it. In this case I requested to play the animation indefinitely, because I don't want to calculate how many moves would it take to reach the target position. I'll stop the animation manually anyway as explained in step 4.
+
+
+
+
+You may also read the turorial titled http://docs.oracle.com/javase/8/javafx/visual-effects-tutorial/animations.htm[Creating Transitions and Timeline Animations] for more information of this topic.
 
 === Project: Displaying the Game Score
