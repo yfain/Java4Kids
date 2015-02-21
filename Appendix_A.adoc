@@ -148,9 +148,6 @@ Now let me make a small change in the file _PetMaster.java_. Currently it has th
 
 [source, java]
 ----
-/**
- * Created by NewProgrammer on 3/28/15.
- */
 public class PetMaster {
 
   public static void main(String[] args) {
