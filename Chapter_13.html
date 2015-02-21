@@ -761,9 +761,12 @@ IDEA can help you to find out which event handlers can be used with a particular
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_the-first-version-of-controller"><a class="anchor" href="#_the-first-version-of-controller"></a>The First Version of Controller</h4>
+<h4 id="_processing-keyboard-events-in-the-controller"><a class="anchor" href="#_processing-keyboard-events-in-the-controller"></a>Processing Keyboard Events in the Controller</h4>
 <div class="paragraph">
-<p>Next, we need to add to the <code>PingPongControler</code> a method handler for the key-released events. The first very simple version of the <code>PingPongControler</code> is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.</p>
+<p>In the code that comes with this chapter the final version of the controller is called <code>PingPongController</code>. But I&#8217;ve also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with <code>PingPongController</code> followed with a different suffix with a version number (e.g. <code>PingPongController_v1</code>, <code>PingPongController_v2</code> etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as <code>fx:controller</code> in the file <code>pingpong.fxml</code> and run the <code>PingPong</code> program.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add to the <code>PingPongControler</code> a method handler for the key-released events. The first very simple version of the <code>PingPongControler</code> is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -797,18 +800,6 @@ You pressed S</code></pre>
 </div>
 <div class="paragraph">
 <p>The <code>KeyCode</code> in <code>PingPongController</code> is not a class or an interface, but a special Java construct called <code>enum</code> described next.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="icon-note" title="Note"></i>
-</td>
-<td class="content">
-In the code that comes with this chapter I&#8217;ve provided multiple versions of the controller that gradually implement all the steps listed in the game strategy. Each controller class name starts with <code>PingPongController</code> followed with a different suffix with a version number (e.g. <code>PingPongController_v1</code>). The starting comment in the class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as <code>fx:controller</code> in the file <code>pingpong.fxml</code> and run the <code>PingPong</code> program.
-</td>
-</tr>
-</table>
 </div>
 </div>
 <div class="sect3">
@@ -861,7 +852,7 @@ In the code that comes with this chapter I&#8217;ve provided multiple versions o
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the-second-version-of-controller"><a class="anchor" href="#_the-second-version-of-controller"></a>The Second Version of Controller</h4>
+<h4 id="_preparing-to-process-the-keys-s-q-and-n"><a class="anchor" href="#_preparing-to-process-the-keys-s-q-and-n"></a>Preparing to Process the Keys S, Q, and N</h4>
 <div class="paragraph">
 <p>Now we&#8217;ll add a <code>switch</code> statement to the controller to invoke the method that corresponds to the pressed key. Let&#8217;s not worry about implementing the application logic just yet. We want to make sure that the programs invokes the correct method for each key.</p>
 </div>
@@ -928,7 +919,7 @@ public class PingPongController {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">final int PADDLE_MOVEMENT_INCREMENT = 7;</code></pre>
+<pre class="highlight"><code class="java language-java">final int PADDLE_MOVEMENT_INCREMENT = 6;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1086,6 +1077,8 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="paragraph">
 <p>But why the above tag <code>&lt;Circle&gt;</code> doesn&#8217;t include <code>centerX</code> and <code>centerY</code>?  Actually we can and will replace the attributes <code>layoutX</code> and <code>layoutY</code> with <code>centerX</code> and <code>centerY</code> because we use the <code>Group</code> container that&#8217;s not a part of any other layout (e.g. <code>BorderPane</code> or <code>GridPane</code>). But JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container.</p>
 </div>
+<div class="sect3">
+<h4 id="_moving-the-ball-to-the-right-paddle"><a class="anchor" href="#_moving-the-ball-to-the-right-paddle"></a>Moving the Ball to the Right Paddle</h4>
 <div class="paragraph">
 <p>JavaFX supports various types of transformations that change coordinates of the components on the scene. Working with layout and coordinates is an advanced topic for this book.But if you&#8217;d like to research it on your own, start with reading the the article <a href="https://blogs.oracle.com/jfxprg/entry/the_peculiarities_of_javafx_layout">"The peculiarities of JavaFX"</a>. To keep things simple, let&#8217;s just modify the attributes of the tag <code>&lt;Circle&gt;</code> so it&#8217;ll look like this:</p>
 </div>
@@ -1136,6 +1129,9 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <img src="./images/fig_13_serve_ball.png" alt="fig 13 serve ball">
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_serving-the-ball-horizontally"><a class="anchor" href="#_serving-the-ball-horizontally"></a>Serving the Ball Horizontally</h4>
 <div class="paragraph">
 <p>The ball is ready to start moving now. To make the movement smooth we&#8217;ll use the class <code>javafx.animation.Timeline</code> that allows change the values of the GUI component&#8217;s properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement, the <code>TimeLine</code> will display a set of snapshots of a ball at different positions along its trajectory.</p>
 </div>
@@ -1147,7 +1143,7 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <pre class="highlight"><code class="java language-java">
 Timeline timeline = new Timeline();   <i class="conum" data-value="1"></i><b>(1)</b>
 
-private void moveTheBall(double currentCenterX){
+private void moveTheBall(){
 
   timeline = new Timeline();   <i class="conum" data-value="1"></i><b>(1)</b>
   timeline.setCycleCount(1);
@@ -1209,7 +1205,7 @@ private void moveTheBall(double currentCenterX){
 <div class="content">
 <pre class="highlight"><code class="java language-java">final int BALL_MOVEMENT_INCREMENT = 5;
 
-private void moveTheBall(double currentCenterX){
+private void moveTheBall(){
 
   KeyFrame keyFrame = new KeyFrame(new Duration(10),   <i class="conum" data-value="1"></i><b>(1)</b>
       event -&gt; {
@@ -1257,8 +1253,59 @@ private void moveTheBall(double currentCenterX){
 </tr>
 </table>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_serving-the-ball-in-random-directions"><a class="anchor" href="#_serving-the-ball-in-random-directions"></a>Serving the Ball in Random Directions</h4>
 <div class="paragraph">
-<p>You may also read the turorial titled <a href="http://docs.oracle.com/javase/8/javafx/visual-effects-tutorial/animations.htm">Creating Transitions and Timeline Animations</a> for more information of this topic.</p>
+<p>The game that serves the ball horizontally is pretty boring, so let&#8217;s change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let&#8217;s change the y-coordinate in a random manner, so each ball serving sends the ball in a different direction. We&#8217;ll create a ball serving machine.</p>
+</div>
+<div class="paragraph">
+<p>If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or up. We&#8217;ll declare a <code>double</code> variable <code>centerTableY</code>, and will assign its value in the <code>initialize</code> method of the controller:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">centerTableY = table.getHeight()/2;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following version version of the method moveTheBall implements the random ball servings.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private void moveTheBall(){
+
+  Random randomYGenerator = new Random();
+  double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);
+
+  final boolean isServingFromTop = (ball.getCenterY() &lt;= centerTableY)?true:false;
+
+  KeyFrame keyFrame = new KeyFrame(new Duration(10), event -&gt; {
+
+    double currentBallY =  ball.getCenterY();
+
+    if (currentBallX &gt;= 0) {
+
+        currentBallX -= BALL_MOVEMENT_INCREMENT;
+        ball.setCenterX(currentBallX);
+
+        if (isServingFromTop) {
+          ball.setCenterY(currentBallY + randomYincrement);
+        } else {
+          ball.setCenterY(currentBallY - randomYincrement);
+        }
+
+    } else {
+        timeline.stop();
+    }
+  });
+
+  timeline = new Timeline(keyFrame);
+  timeline.setCycleCount(Timeline.INDEFINITE);
+
+  timeline.play();
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1269,7 +1316,7 @@ private void moveTheBall(double currentCenterX){
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-20 09:44:15 EST
+Last updated 2015-02-21 17:57:25 EST
 </div>
 </div>
 </body>
