@@ -506,17 +506,21 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">try{
+<pre class="highlight"><code class="java language-java">try{
   fileScores.read();
 }
-catch (IOException e){
+catch (IOException ioe){
   System.out.println(
-       "Dear friend,I could not read the file scores.txt");
+       "Dear friend,I could not read the file scores.txt" +
+                  ioe.getMessage());
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We’ll learn how to work with files in Chapter 10, but at this point I&#8217;d like to introduce a new term <em>I/O</em> or <em>input/output</em>. Read and write operations (from/to disk or other device) are also known as I/O operations, and the class <code>IOException</code> is a class that contains information about input/output errors.</p>
+<p>The <code>ioe</code> in the above code fragment is a variable that represents the <code>IOException</code>  object given to the catch block by the Java runtime. You can give this variable any name you like.  The <code>getMessage</code> will return the text describing what happened during the file read.</p>
+</div>
+<div class="paragraph">
+<p>We’ll learn how to work with files in Chapter 11, but at this point I&#8217;d like to introduce a new term <em>I/O</em> or <em>input/output</em>. Read and write operations (from/to disk or other device) are also known as I/O operations, and the class <code>IOException</code> is a class that contains information about input/output errors.</p>
 </div>
 <div class="paragraph">
 <p>In the Java world, a method <em>throws an exception</em> in case of a runtime error. Different exceptions will be thrown for different type of errors.  If the <code>catch</code> block exists in the program for this particular type of an error, it will be caught and the program will jump into the <code>catch</code> block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.</p>
@@ -534,7 +538,7 @@ catch (IOException e){
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">1 class TestStackTrace{
+<pre class="highlight"><code class="java language-java">1 class TestStackTrace{
 2  TestStackTrace()
 3   {
 4    divideByZero();
@@ -593,7 +597,7 @@ catch (IOException e){
 <p><code>"ScoreReader.java":  unreported exception: java.io.IOException; must be caught or declared to be thrown at line 57</code></p>
 </div>
 <div class="paragraph">
-<p>Of course you are welcome to read Java documentation that describes exceptions that may be thrown by any particular  method.  The rest of this chapter will explain how to deal with these exceptions.</p>
+<p>Of course you are welcome to read Java documentation that describes exceptions that may be thrown by any particular  method. The rest of this chapter will explain how to deal with these exceptions.</p>
 </div>
 </div>
 <div class="sect2">
@@ -606,7 +610,7 @@ catch (IOException e){
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">public void getScores(){
+<pre class="highlight"><code class="java language-java">public void getScores(){
  try{
     fileScores.read();
     System.out.println(“Scores loaded successfully”);
@@ -632,7 +636,7 @@ catch (IOException e){
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">public void getScores(){
+<pre class="highlight"><code class="java language-java">public void getScores(){
  try{
   fileScores.read();
  }catch(Exception e){
@@ -650,62 +654,13 @@ catch (IOException e){
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">catch(Exception e){
+<pre class="highlight"><code class="java language-java">catch(Exception e){
  System.out.println(“Problem reading file ”+ e.toString());
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>If you need more detailed information about the exception, use the method <code>printStackTrace</code>. It will print the sequence of  method calls that lead to this exception  similar to an example from  the section <em>Reading Stack Trace</em>.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s try to “kill” the calculator program from Chapter 6. Run the class Calculator and enter from the keyboard the charactes <em>abc</em>. Press any of the action buttons, and you’ll see on the console screen something like this:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="Java language-Java">java.lang.NumberFormatException: For input string: "abc"
-   at java.lang.NumberFormatException.forInputString(NumberFormatException.java:48)
-   at java.lang.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1213)
-   at java.lang.Double.parseDouble(Double.java:202)
-   at CalculatorEngine.actionPerformed(CalculatorEngine.java:27)
-   at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1764)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This was an example of a non-handled exception. The class <code>CalculatorEngine</code> has the following line in its method <code>actionPerformed</code>:</p>
-</div>
-<div class="paragraph">
-<p><code>displayValue= Double.parseDouble(dispFieldText);</code></p>
-</div>
-<div class="paragraph">
-<p>If the variable <code>dispFieldTest</code> has not a numeric value,  the method <code>parseDouble</code> will not be anle to convert it to the <code>double</code> data type and will throw a <code>NumberFormatException</code>.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s handle this exception and display an error message that will explain the problem to the user.  The line with <code>parseDouble</code> has to be placed in a <code>try/catch</code> block, and Eclipse will help you with this. Highlight this line and right-click on it with the mouse. In the popup menu select the items <em>Source</em> and <em>Surround with try/catch block</em>. Voila! The code is changed:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="Java language-Java">try {
-   displayValue= Double.parseDouble(dispFieldText);
-} catch (NumberFormatException e1) {
-   // TODO Auto-generated catch block
-   e1.printStackTrace();
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Replace the <code>printStackTrace</code> line with the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="Java language-Java">javax.swing.JOptionPane.showConfirmDialog(null,
-   "Please enter a Number", "Wrong input",
-   javax.swing.JOptionPane.PLAIN_MESSAGE);
-return;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We’ve gotten rid of the scary stack trace error messages, and displayed a simple to understand  message <em>Please enter a Number</em>. Now the <code>NumberFormatException</code> is handled.</p>
 </div>
 </div>
 <div class="sect2">
@@ -716,7 +671,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">class MySuperGame{
+<pre class="highlight"><code class="java language-java">class MySuperGame{
 
   void getAllScores() throws IOException{
    // …
@@ -742,7 +697,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 </div>
 <div class="paragraph">
-<p>Since we are not even trying to catch exceptions here, the <code>IOException</code> will be  <em>propagated</em> from the <code>getAllScores</code> to its caller - the method <code>main</code>. Now the main method has to handle this exception.</p>
+<p>Imagine that the <code>MySuperGame</code> program invokes multiple methods that read or write files and get some data from a remote server. We may want to process all possible exceptions in one place – the main method. In this case there is no need to handle exceptions inside these methods (e.g. <code>getAllScores</code>). We could rather declare that these methods may throw exceptions. Since we are not even trying to catch exceptions in <code>getAllScores</code>, the <code>IOException</code> will be  <em>propagated</em> from the <code>getAllScores</code> to its caller - the method <code>main</code>. Now the main method has to handle this exception.</p>
 </div>
 </div>
 <div class="sect2">
@@ -756,7 +711,14 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <p>The code inside the <code>try</code> block successfully ended and the program continues.</p>
 </li>
 <li>
-<p>The code inside the <code>try</code> block runs into a <code>return</code> statement and the method is exited.</p>
+<p>The code inside the <code>try</code> block runs into a <code>return</code> statement and the method is exited.For example, you may read a file line by line, and if the line contains a certain text, you may want to stop reading the file. Just write a return statement, and the method is exited, e.g.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">if (playerName.equals("Mary")){
+    return;
+}</code></pre>
+</div>
+</div>
 </li>
 <li>
 <p>The code in the <code>try</code> block throws an exception and control goes to the matching <code>catch</code> block, which either handles the error and the method execution continues, or it re-throws the exception to the caller of this method.</p>
@@ -768,7 +730,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">try{
+<pre class="highlight"><code class="java language-java">try{
    file.read();
 }catch(Exception e){
    printStackTrace();
@@ -787,7 +749,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">void myMethod() throws IOException{
+<pre class="highlight"><code class="java language-java">void myMethod() throws IOException{
  try{
    // your code that reads a file goes here
  }
@@ -797,14 +759,22 @@ In such cases the method signature has to declare (warn) that it may throw a par
 }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>If the myMethod will throw an exception it will be handled in the calling method. But we still want to close the file, and placing the code that closes a file into the <code>finally</code> section will guarantee that it will be done. So we have the` finally` without the <code>catch</code> here.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the-keyword-code-throw-code"><a class="anchor" href="#_the-keyword-code-throw-code"></a>The Keyword <code>throw</code></h3>
 <div class="paragraph">
-<p>If an exception has happened in a method, but you believe that the caller should handle it, just re-throw it to the method’s caller. Sometimes, you might want to catch one exception but re-throw another one with a different description of the error like in the code snippet below.</p>
+<p>When you read in Java documentation that some method may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The  <code>throw</code> keyword is used to throw Java objects, which  are throwable. You can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>. We can guess, that the author of the method that reads a file used the <code>throw</code> keyword in the method <code>read</code>. This could have been done as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">throw new IOException(“The file scores.txt contains invalid characters”);</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The statement <code>throw</code> is used to throw Java objects. The object that a program throws must be <em>throwable</em>. This means that you can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>, and all Java exceptions are its subclasses.</p>
+<p>The constructor of any exception should get a message that describes the error as an argument. When you’ll be invoking the <code>getMessage</code> method on the exception object in the catch block, it’ll print the message that was given to the constructor in the code that has thrown the exception.</p>
 </div>
 <div id="FIG9-3" class="imageblock">
 <div class="content">
@@ -813,53 +783,17 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <div class="title">Figure 2. Throwing exceptions</div>
 </div>
 <div class="paragraph">
-<p>The next code fragment shows how the method <code>getAllScores()</code> catches an <code>IOException</code> and creates a new <code>Exception</code> object with a more friendly description of the error, and re-throws it to the method <code>main()</code>.  Now the method <code>main()</code> won’t compile unless you put the line that calls <code>getAllScores</code> in the <code>try/catch</code> block, because this method may throw an <code>Exception</code> and it should be either handled or re-thrown again. The method <code>main</code> should not throw any exceptions, that’s why it should handle it.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="Java language-Java">class ScoreList{
-   // Additional code is needed to compile this class
-
-   static void getAllScores() throws Exception{
-     try{
-      file.read();//this line may throw an exception
-     } catch (IOException e) {
-      throw new  Exception (
-      "Dear Friend, the file Scores has problems");
-     }
-   }
-
-  public static void main(String[] args){
-    System.out.println("Scores");
-
-   try{
-       getAllScores();
-   }
-   catch(Exception e1){
-        System.out.println(e1.getMessage());
-   }
- }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In case of a file error,  the main method will handle it,  and  the <code>e1.getMessage</code>   will return the <em>Dear Friend…</em> message.</p>
-</div>
-<div id="FIG9-3" class="imageblock">
-<div class="content">
-<img src="./images/fig_9_03.png" alt="fig 9 03">
-</div>
-<div class="title">Figure 3. Showing a user-friendly message</div>
+<p>In the next section I’ll show you how create your own exception classes and throw them with the throw keyword.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating-new-exceptions"><a class="anchor" href="#_creating-new-exceptions"></a>Creating New Exceptions</h3>
+<h3 id="_creating-custom-exceptions"><a class="anchor" href="#_creating-custom-exceptions"></a>Creating Custom Exceptions</h3>
 <div class="paragraph">
 <p>Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes,  throw the this exception:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">class TooManyBikesException extends Exception{
+<pre class="highlight"><code class="java language-java">class TooManyBikesException extends Exception{
 
   // Constructor
   TooManyBikesException (){
@@ -881,11 +815,11 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <p>Visualize a JavaFX GUI where the user selects several bicycles of some model and hits the button <em>Place Order</em>. As you know from Chapter 8, this action will result in the call to the event handler method (e.g. <code>placeOrder</code>) assigned to the <code>onAction</code> property of the button.  The event handler can apply some business logic (e.g. call a method <code>validateOrder</code>) to check if the order can be delivered.</p>
 </div>
 <div class="paragraph">
-<p>The next code fragment shows how the method <code>placeOrder</code> invokes <code>validateOrder</code>, which can throw <code>TooManyBikesException</code>. If the order won’t fit in the truck, the method <code>validateOrder</code> throws the exception, the <code>catch</code> block in <code>placeOrder</code> intercepts it and displays an error message in a text field on the window.</p>
+<p>The next code fragment shows how the method <code>placeOrder</code> invokes <code>validateOrder</code>, which can throw <code>TooManyBikesException</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="Java language-Java">@FXML private ComboBox model;
+<pre class="highlight"><code class="java language-java">@FXML private ComboBox model;
 @FXML private TextField quantity;
 
 @FXML private Label txtFieldOrderConfirmation;
@@ -926,7 +860,16 @@ public void validateOrder(ActionEvent evt){
 </div>
 </div>
 <div class="paragraph">
-<p>I&#8217;m not going to provide you an explanation of how JavaFX <code>ComboBox</code> control, because I want you to do a little research as a part of the project assignment below.</p>
+<p>If the order won’t fit in the truck, the method <code>validateOrder</code> throws the exception, the <code>catch</code> block in <code>placeOrder</code> intercepts it and displays an error message in a text field on the window. When you throw custom exceptions provide user-friendly message that clearly describe the error.</p>
+</div>
+<div id="FIG9-3" class="imageblock">
+<div class="content">
+<img src="./images/fig_9_03.png" alt="fig 9 03">
+</div>
+<div class="title">Figure 3. Showing a user-friendly message</div>
+</div>
+<div class="paragraph">
+<p>I&#8217;m not going to provide you an explanation of how JavaFX <code>ComboBox</code> control works, because I want you to do a little research as a part of the project assignment below.</p>
 </div>
 <div class="paragraph">
 <p>In a perfect world, every program would work properly, but realistically you have to be ready for the unexpected situations. It helps that Java often forces you to write code that is prepared for these situations. You can also use the Java exception handling mechanism to process situation specific to your application as illustrated using the bike store example.</p>
@@ -938,10 +881,13 @@ public void validateOrder(ActionEvent evt){
 <div class="sect2">
 <h3 id="_project-create-a-javafx-bike-store"><a class="anchor" href="#_project-create-a-javafx-bike-store"></a>Project: Create a JavaFX Bike Store</h3>
 <div class="paragraph">
-<p>In this assignment I&#8217;d like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX <code>ComboBox</code> for this). Use a <code>TextField</code> control for entering the quantity, a <code>Button</code> for placing an order, and a <code>Label</code> to display either order confirmation or an error message.</p>
+<p>In this assignment I&#8217;d like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX <code>ComboBox</code> for this). You can find the <a href="http://docs.oracle.com/javase/8/javafx/user-interface-tutorial/combo-box.htm">description</a> of the ComboBox component in Oracle tutorial.</p>
 </div>
 <div class="paragraph">
-<p>In the controller class use the code fragment from the section "Creating New Exceptions".</p>
+<p>Use a <code>TextField</code> control for entering the quantity, a <code>Button</code> for placing an order, and a <code>Label</code> to display either order confirmation or an error message.</p>
+</div>
+<div class="paragraph">
+<p>In the controller class use the code fragment from the section "Creating Custom Exceptions".</p>
 </div>
 </div>
 </div>
@@ -949,7 +895,7 @@ public void validateOrder(ActionEvent evt){
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-11-30 07:36:54 EST
+Last updated 2015-02-21 15:34:04 EST
 </div>
 </div>
 </body>
