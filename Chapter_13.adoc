@@ -198,9 +198,11 @@ To set the focus to the `Group` container we'll need to do two things:
 }
 ----
 
-==== The First Version of Controller
+==== Processing Keyboard Events in the Controller
 
-Next, we need to add to the `PingPongControler` a method handler for the key-released events. The first very simple version of the `PingPongControler` is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.
+In the code that comes with this chapter the final version of the controller is called `PingPongController`. But I've also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with `PingPongController` followed with a different suffix with a version number (e.g. `PingPongController_v1`, `PingPongController_v2` etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as `fx:controller` in the file `pingpong.fxml` and run the `PingPong` program.
+
+Let's add to the `PingPongControler` a method handler for the key-released events. The first very simple version of the `PingPongControler` is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.
 
 [source, java]
 ----
@@ -233,7 +235,6 @@ You pressed S
 
 The `KeyCode` in `PingPongController` is not a class or an interface, but a special Java construct called `enum` described next.  
 
-NOTE: In the code that comes with this chapter I've provided multiple versions of the controller that gradually implement all the steps listed in the game strategy. Each controller class name starts with `PingPongController` followed with a different suffix with a version number (e.g. `PingPongController_v1`). The starting comment in the class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as `fx:controller` in the file `pingpong.fxml` and run the `PingPong` program.
 
 ==== The enum Type
 
@@ -279,7 +280,7 @@ The method `greet` expects to receive one of the `Day` values as an argument. Ou
 
 If you'll open the http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyCode.html[online documentation] for `KeyCode` you'll find there the declarations of all possible keyboard keys.
 
-==== The Second Version of Controller
+==== Preparing to Process the Keys S, Q, and N
 
 Now we'll add a `switch` statement to the controller to invoke the method that corresponds to the pressed key. Let's not worry about implementing the application logic just yet. We want to make sure that the programs invokes the correct method for each key. 
 
@@ -342,7 +343,7 @@ Now let's teach the keys Up and Down to move the kid's paddle vertically. Pressi
 
 [source, java]
 ----
-final int PADDLE_MOVEMENT_INCREMENT = 7;
+final int PADDLE_MOVEMENT_INCREMENT = 6;
 ---- 
 Pressing the key once will change the vertical position of the paddle by 7 pixels. Seven is not a magical number, and you can use any other integer here.
 
@@ -469,6 +470,8 @@ The ball is represented by the shape `Circle`. From school math you should remem
 
 But why the above tag `<Circle>` doesn't include `centerX` and `centerY`?  Actually we can and will replace the attributes `layoutX` and `layoutY` with `centerX` and `centerY` because we use the `Group` container that's not a part of any other layout (e.g. `BorderPane` or `GridPane`). But JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container. 
 
+==== Moving the Ball to the Right Paddle
+
 JavaFX supports various types of transformations that change coordinates of the components on the scene. Working with layout and coordinates is an advanced topic for this book.But if you'd like to research it on your own, start with reading the the article https://blogs.oracle.com/jfxprg/entry/the_peculiarities_of_javafx_layout["The peculiarities of JavaFX"]. To keep things simple, let's just modify the attributes of the tag `<Circle>` so it'll look like this:
 
 [source, xml]
@@ -511,6 +514,8 @@ I ran the `PingPong` application, moved the paddle up by clicking the arrow key 
 [[FIG13-9]]
 image::images/fig_13_serve_ball.png[]
 
+==== Serving the Ball Horizontally
+
 The ball is ready to start moving now. To make the movement smooth we'll use the class `javafx.animation.Timeline` that allows change the values of the GUI component's properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement, the `TimeLine` will display a set of snapshots of a ball at different positions along its trajectory.   
 
 Each frame is represented by a class `KeyFrame`. Each snapshot is a represented by the class `KeyValue`. Let's write a method `moveTheBall` that will move the ball horizontally all the way to the left until the `centerX` will become equal to zero.  If we'll be changing only the `centerX` property of the `Circle`, it'll be moving horizontally. 
@@ -520,7 +525,7 @@ Each frame is represented by a class `KeyFrame`. Each snapshot is a represented 
 
 Timeline timeline = new Timeline();   // <1>
 
-private void moveTheBall(double currentCenterX){  
+private void moveTheBall(){  
   
   timeline = new Timeline();   // <1>
   timeline.setCycleCount(1);            
@@ -561,7 +566,7 @@ In the following version of the method `moveTheBall` we'll write the code to adv
 ----
 final int BALL_MOVEMENT_INCREMENT = 5;
 
-private void moveTheBall(double currentCenterX){
+private void moveTheBall(){
 
   KeyFrame keyFrame = new KeyFrame(new Duration(10),   // <1>
       event -> {
@@ -595,9 +600,54 @@ private void moveTheBall(double currentCenterX){
 
 <5> Create the `Timeline` using our `KeyFrame` and play it. In this case I requested to play the animation indefinitely, because I don't want to calculate how many moves would it take to reach the target position. I'll stop the animation manually anyway as explained in step 4.
 
+==== Serving the Ball in Random Directions
 
+The game that serves the ball horizontally is pretty boring, so let's change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let's change the y-coordinate in a random manner, so each ball serving sends the ball in a different direction. We'll create a ball serving machine.
 
+If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or up. We'll declare a `double` variable `centerTableY`, and will assign its value in the `initialize` method of the controller:
 
-You may also read the turorial titled http://docs.oracle.com/javase/8/javafx/visual-effects-tutorial/animations.htm[Creating Transitions and Timeline Animations] for more information of this topic.
+[source, java]
+----
+centerTableY = table.getHeight()/2;
+----
+
+The following version version of the method moveTheBall implements the random ball servings.
+
+[source, java]
+----
+private void moveTheBall(){
+
+  Random randomYGenerator = new Random();
+  double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);
+
+  final boolean isServingFromTop = (ball.getCenterY() <= centerTableY)?true:false;
+
+  KeyFrame keyFrame = new KeyFrame(new Duration(10), event -> {
+
+    double currentBallY =  ball.getCenterY();
+
+    if (currentBallX >= 0) {
+
+        currentBallX -= BALL_MOVEMENT_INCREMENT;
+        ball.setCenterX(currentBallX);
+
+        if (isServingFromTop) {
+          ball.setCenterY(currentBallY + randomYincrement);
+        } else {
+          ball.setCenterY(currentBallY - randomYincrement);
+        }
+
+    } else {
+        timeline.stop();
+    }
+  });
+
+  timeline = new Timeline(keyFrame);
+  timeline.setCycleCount(Timeline.INDEFINITE);
+
+  timeline.play();
+}
+----
+
 
 === Project: Displaying the Game Score
