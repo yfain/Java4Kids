@@ -1432,6 +1432,80 @@ compPaddle.layoutYProperty().bind(currentComputerPaddleY);</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_step-6-bouncing-the-ball"><a class="anchor" href="#_step-6-bouncing-the-ball"></a>Step 6: Bouncing the Ball</h3>
+<div class="paragraph">
+<p>There is no guarantee that the Computer&#8217;s paddle will be advanced to the position to bounce the ball. Our Ping-Pong game doesn&#8217;t implement the algorithm the adjust the movement of the Computer&#8217;s paddle based on the trajectory of the ball&#8217;s movement. But if the ball accidentally contacts the paddle we need to bounce the ball and send it from left to right.</p>
+</div>
+<div class="paragraph">
+<p>Every JavaFX GUI component is a subclass of a <code>Node</code>, which has a special property <code>boundsInParent</code>. It&#8217;s an invisible rectangle that encapsulates the component when it&#8217;s places inside a layout. So our ball and paddles are is sitting inside of these invisible rectangle too. When the ball or paddles are being moved, the coordinates of their <code>boundsInParent</code> properties are being recalculated. If these invisible rectangles of the ball and the paddle intersect, we can say that there was a contact. The method <code>checkForBallPaddleContact</code> returns true if there was a contact, and false if not.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private boolean checkForBallPaddleContact(){
+
+  if (ball.intersects(compPaddle.getBoundsInParent())){
+      return true;
+  } else {
+       return false;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We should call this method from each frame in the timeline that we started in the method <code>moveTheBall</code>. After this check for contact to the method <code>moveTheBall</code> it&#8217;ll look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private void moveTheBall(){
+
+  Random randomYGenerator = new Random();
+  double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);
+
+  final boolean isServingFromTop = (ballCenterY.get() &lt;= centerTableY)?true:false;
+
+  KeyFrame keyFrame = new KeyFrame(new Duration(10), event -&gt; {
+    if (ballCenterX.get() &gt;= -20) {
+
+        ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);
+
+        if (isServingFromTop) {
+          ballCenterY.set(ballCenterY.get() + randomYincrement);
+
+          currentComputerPaddleY.set( currentComputerPaddleY.get() + 1);
+
+        } else {
+          ballCenterY.set(ballCenterY.get() - randomYincrement);
+
+          currentComputerPaddleY.set(currentComputerPaddleY.get() - 1);
+        }
+
+        if (checkForBallPaddleContact()){    <i class="conum" data-value="1"></i><b>(1)</b>
+
+          timeline.stop();
+          currentComputerPaddleY.set(initialComputerPaddleY);
+          bounceTheBall();
+         };
+
+    } else {
+        timeline.stop();
+        currentComputerPaddleY.set(initialComputerPaddleY);
+    }
+  });
+
+  timeline = new Timeline(keyFrame);
+  timeline.setCycleCount(Timeline.INDEFINITE);
+
+  timeline.play();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If there was a ball/paddle contact, we need to stop playing the current <code>timeline</code>, set the Computer&#8217;s paddle to its initial position and call the method <code>bounceTheBall</code>, which we&#8217;ll write next.</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_project-displaying-the-game-score"><a class="anchor" href="#_project-displaying-the-game-score"></a>Project: Displaying the Game Score</h3>
@@ -1441,7 +1515,7 @@ compPaddle.layoutYProperty().bind(currentComputerPaddleY);</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-22 16:27:41 EST
+Last updated 2015-02-22 17:35:42 EST
 </div>
 </div>
 </body>
