@@ -19,13 +19,15 @@ Let’s come up with some rules of our Ping-Pong game:
 
 3. The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle vertically by the preset number of pixels up or down. The paddle shouldn't cross the table borders.
 
-4.  The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball cam move at an angle, which means that its x and y coordinate should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point. While the ball is moving to the left, computer should move the left paddle in the direction of the ball movement. If the ball touches the left paddle, it should bounce and start moving to the right.
+4.  The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball cam move at an angle, which means that its x and y coordinate should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point. 
 
-5.  When the Computer bounces the ball, it can move only horizontally to the right.
+5. While the ball is moving to the left, the Computer should move the left paddle in the direction of the ball movement. 
 
-6.  If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.
+6. If the ball touches the left paddle, it should bounce and start moving to the right. When the Computer bounces the ball, it can move only horizontally to the right.
 
-7.  The game lasts until one of the players reaches the score of 21. The game score should be displayed in the left bottom corner of the table.
+7.  If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.
+
+8.  The game lasts until one of the players reaches the score of 21. The game score should be displayed in the left bottom corner of the table.
 
 At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called _analytical thinking_, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones an reach them one at time!  
 
@@ -200,7 +202,9 @@ To set the focus to the `Group` container we'll need to do two things:
 
 ==== Processing Keyboard Events in the Controller
 
-In the code that comes with this chapter the final version of the controller is called `PingPongController`. But I've also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with `PingPongController` followed with a different suffix with a version number (e.g. `PingPongController_v1`, `PingPongController_v2` etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as `fx:controller` in the file `pingpong.fxml` and run the `PingPong` program.
+In the code that comes with this chapter the final version of the controller is called `PingPongController`. But I've also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with `PingPongController` followed with a different suffix with a version number (e.g. `PingPongController_v1`, `PingPongController_v2` etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as `fx:controller` in the file `pingpong.fxml` and run the `PingPong` program. 
+
+NOTE: In InelliJ IDEA you can easily compare two files to see the difference. Press CTRL or CMD button and click on the names of two files you'd like to compare (e.g. `PingPongController_v1` and `PingPongController_v2`). Then select the menu View | Compare Two Files, and you'll see the source code of these files next to each other with highlighted differences.
 
 Let's add to the `PingPongControler` a method handler for the key-released events. The first very simple version of the `PingPongControler` is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.
 
@@ -461,7 +465,7 @@ Now our controller knows how to move the Kid's paddle. The next challenge is to 
 Let's start implementing step 4 of the game strategy by calculating the starting position and painting the ball depending on the location of the right paddle. 
 When the user preses the S-key, we need to serve the ball from the position where the right paddle is currently located. Initially it's located in the middle of the table, but the user may move it up or down before serving the ball.
 
-The ball is represented by the shape `Circle`. From school math you should remember that a circle is represented by the coordinates of the center and the radius. In JavaFX the corresponding properties of the class `Circle` are called `centerX`, `centerY`, and `radius`. By changing the coordinates of the center we can move the ball around the stage. Our ball is defined in the file _pingpong.fxml_ like this:
+The ball is represented by the shape `Circle`. From school math you should remember that a circle is represented by the coordinates of the center and the radius. In JavaFX the corresponding properties of the class `Circle` are called `centerX`, `centerY`, and `radius`. When the `Circle` is placed in a layout, its center gets the corresponding properties `layoutX` and `layoutY`.  By changing the coordinates of the center we can move the ball around the stage. Our ball is defined in the file _pingpong.fxml_ like this:
 
 [source, xml]
 ----
@@ -470,42 +474,43 @@ The ball is represented by the shape `Circle`. From school math you should remem
 
 But why the above tag `<Circle>` doesn't include `centerX` and `centerY`?  Actually we can and will replace the attributes `layoutX` and `layoutY` with `centerX` and `centerY` because we use the `Group` container that's not a part of any other layout (e.g. `BorderPane` or `GridPane`). But JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container. 
 
-==== Moving the Ball to the Right Paddle
-
-JavaFX supports various types of transformations that change coordinates of the components on the scene. Working with layout and coordinates is an advanced topic for this book.But if you'd like to research it on your own, start with reading the the article https://blogs.oracle.com/jfxprg/entry/the_peculiarities_of_javafx_layout["The peculiarities of JavaFX"]. To keep things simple, let's just modify the attributes of the tag `<Circle>` so it'll look like this:
+Let's modify the attributes of the tag `<Circle>` so it'll look like this:
 
 [source, xml]
 ----
 <Circle fx:id="ball" fill="#ff1f35" centerX="191.0" centerY="123.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
 ----
 
-Let's move the ball to the current position of the kid's paddle. Since the ball will be moving, let's keep track of its center in the new class variables `currentBallX` and `currentBallY` of type `double`.
+==== Moving the Ball to the Right Paddle
 
-First, we'll adjust the `centerX` coordinate of the ball by setting it the same as the `layoutX` coordinate of the kid's paddle:
 
-[source, java]
-----
-currentBallX
-----
-
-Second, we'll adjust the `centerY` coordinate of the ball. Our controller has the variable `currentKidPaddleY` that remembers the current y-coordinate of the top of the kid's paddle. So if we'll add to `currentKidPaddleY` the half of the the paddle's height, we'll get the the y-coordinate of the paddle's center. 
+Since the ball will be moving, we'll keep track of its center in the new properties `ballCenterX` and `ballCenterY`: 
 
 [source, java]
 ----
-currentBallY = currentKidPaddleY.doubleValue() + kidPaddle.getHeight()/2;
+DoubleProperty ballCenterX = new SimpleDoubleProperty();
+DoubleProperty ballCenterY = new SimpleDoubleProperty();
 ----
 
-Now the new version of the method `process_key_S`  will look like this:
+In the method `initialize` we'll set the initial values of these properties to the center coordinates of the ball. We'll also bind the above properties to the center of the `Circle`, so changing `ballCenterX` and `ballCenterY` will automatically change the location of the ball on the scene:
+
+[source, java]
+----
+ballCenterX.set(ball.getCenterX());
+ballCenterY.set(ball.getCenterY());
+
+ball.centerXProperty().bind(ballCenterX);
+ball.centerYProperty().bind(ballCenterY);
+----
+
+Let's place the ball by the current position of the kid's paddle. In the method `process_key_S` we'll adjust the `centerY` coordinate of the ball. Our controller has the variable `currentKidPaddleY` that remembers the current y-coordinate of the top of the kid's paddle. So if we'll add to `currentKidPaddleY` the half of the the paddle's height, we'll get the the y-coordinate of the paddle's center. The `centerX` coordinate will be the same as the `layoutX` of the Kid's paddle.The new version of the method `process_key_S`  will look like this:
 
 [source, java]
 ----
 private void process_key_S() {
 
-  currentBallY = (currentKidPaddleY.doubleValue() + kidPaddle.getHeight()/2);
-  ball.setCenterY(currentBallY);
-
-  currentBallX = kidPaddle.getLayoutX();
-  ball.setCenterX(currentBallX);
+  ballCenterY.set(currentKidPaddleY.doubleValue() + kidPaddle.getHeight()/2);
+  ballCenterX.set(kidPaddle.getLayoutX());
 }
 ----
 
@@ -516,21 +521,18 @@ image::images/fig_13_serve_ball.png[]
 
 ==== Serving the Ball Horizontally
 
-The ball is ready to start moving now. To make the movement smooth we'll use the class `javafx.animation.Timeline` that allows change the values of the GUI component's properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement, the `TimeLine` will display a set of snapshots of a ball at different positions along its trajectory.   
+The ball is ready to start moving now. To make the movement smooth we'll use the class `javafx.animation.Timeline` that allows change the values of the GUI component's properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement we'll declare the variable `timeline` of the type `TimeLine`, which we'll use to display a set of snapshots of a ball at different positions along its trajectory.   
 
 Each frame is represented by a class `KeyFrame`. Each snapshot is a represented by the class `KeyValue`. Let's write a method `moveTheBall` that will move the ball horizontally all the way to the left until the `centerX` will become equal to zero.  If we'll be changing only the `centerX` property of the `Circle`, it'll be moving horizontally. 
 
 [source, java]
 ----
-
-Timeline timeline = new Timeline();   // <1>
-
 private void moveTheBall(){  
   
   timeline = new Timeline();   // <1>
   timeline.setCycleCount(1);            
 
-  KeyValue keyValue = new KeyValue(ball.centerXProperty(), 0);  // <2>
+  KeyValue keyValue = new KeyValue(ballCenterX, 0);  // <2>
   KeyFrame keyFrame = new KeyFrame(new Duration(1000), keyValue);   // <3>
   
   timeline.getKeyFrames().add(keyFrame);    // <4>
@@ -541,7 +543,7 @@ private void moveTheBall(){
 
 <1> First we create an instance of the `Timeline` object and invoke the `setCycleCount` requesting that the animation will be done only once. In this example we could have declared the variable `timeline` inside the method, but keeping this variable on the class level will allow me to programatically stop the animation that I'll demonstrate in the next version of the method `moveTheBall`.
 
-<2> Then we'll create the `KeyValue` object to specify which changing value to display in frames. In this case we want the animation to change the `centerX` property from its current value to zero.	
+<2> Then we'll create the `KeyValue` object to specify which changing value to display in frames. In this case we want the animation to change the x-coordinate of the ball center from its current value `ballCenterX` to zero.	
 
 <3> We want the `KeyFrame` to reach the target (change the `centerX` specified in `KeyValue` from the current value to zero) over the period of 1000 milliseconds. The smaller the number, the faster the ball will move. The number of frames will be automatically calculated based on the duration and the target position of the ball. 
 
@@ -556,7 +558,7 @@ image::images/fig_13_ball_moved.png[]
 
 Our ball is not smart enough to notice that there was a left paddle on its way and went right through it. We'll take care of the GUI component collisions a bit later.
 
-Depending on the provided duration, the `Timeline` object will decide how many snapshots (key frames) to create while the `KeyValue` is changing to reach the target. The `Timeline` class has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary[overloaded constructors], and one of the allows to specify the frames per second for the animation.
+Depending on the provided duration, the `Timeline` object will calculate how many snapshots (key frames) to create while the `KeyValue` is changing to reach the target. The `Timeline` class has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary[overloaded constructors], and one of the allows to specify the frames per second for the animation.
 
 The `KeyFrame` class also has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/KeyFrame.html#constructor.summary[overloaded constructors], and one of them allows you to specify the duration, the event handler for the `ActionEvent`, and optional key value(s). The handler for the `ActionEvent` can be implemented as a  lambda expression. 
 
@@ -571,19 +573,17 @@ private void moveTheBall(){
   KeyFrame keyFrame = new KeyFrame(new Duration(10),   // <1>
       event -> {
 
-         if (currentBallX > BALL_MOVEMENT_INCREMENT) { // <2>
+        if (ballCenterX.get() > BALL_MOVEMENT_INCREMENT) { // <2>
 
-            currentBallX -= BALL_MOVEMENT_INCREMENT;   // <3>
-            ball.setCenterX(currentBallX);
+               ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);       // <3>
 
-         } else {
-            timeline.stop();                           // <4>
-         }
-
+        } else {
+           timeline.stop();                           // <4>
+        }
       }
   );
 
-  timeline = new Timeline(keyFrame);             //  <5>
+  timeline = new Timeline(keyFrame);             // <5>
   timeline.setCycleCount(Timeline.INDEFINITE);        
   timeline.play();                     
 
@@ -592,9 +592,9 @@ private void moveTheBall(){
 
 <1> The first argument of the constructor is the `Duration` object, but this time it has different meaning than in the previous version of the `moveTheBall`. The value of 10 means to run the code from the event handler (the lambda expression) every 10 milliseconds.
 
-<2> The lambda expression starts with checking if the current value of the `centerX` is larger than the value in `BALL_MOVEMENT_INCREMENT` to ensure that the ball will not cross the left border and will stay at the 0 coordinates. To make our game more realistic, we'll let the ball go off the table in the next version of the `moveTheBall`. 
+<2> The lambda expression starts with checking if the current value of the x-coordinate of the ball center is larger than the value in `BALL_MOVEMENT_INCREMENT` to ensure that the ball will not cross the left border and will stay at the 0 coordinates. To make our game more realistic, we'll let the ball go off the table in the next version of the `moveTheBall`. 
 
-<3> Decrement the `currentBallX` by `BALL_MOVEMENT_INCREMENT`, and set the new value of the ball's `centerX`.
+<3> Decrement the value of the `ballCenterX` by `BALL_MOVEMENT_INCREMENT`. Because of binding this will move the ball on the GUI.
 
 <4> Stop the animation if the ball would fall off the table on the next move.	
 
@@ -604,14 +604,88 @@ private void moveTheBall(){
 
 The game that serves the ball horizontally is pretty boring, so let's change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let's change the y-coordinate in a random manner, so each ball serving sends the ball in a different direction. We'll create a ball serving machine.
 
-If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or up. We'll declare a `double` variable `centerTableY`, and will assign its value in the `initialize` method of the controller:
+If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or upward. To know the y-coordinate of the table center we'll declare the `double` variable `centerTableY` and set its value in the method `initialize` like this:
 
 [source, java]
 ----
 centerTableY = table.getHeight()/2;
 ----
 
-The following version version of the method moveTheBall implements the random ball servings.
+As the ball moves, we'll modified value of the y-coordinate of the ball center will be assigning it to the property `ballCenterY`.The following version version of the method `moveTheBall` implements the random ball servings.
+
+[source, java]
+----
+  private void moveTheBall(){
+
+        Random randomYGenerator = new Random();
+        double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);         // <1>
+
+        final boolean isServingFromTop = (ballCenterY.get() <= centerTableY)?true:false;      // <2>
+
+
+        KeyFrame keyFrame = new KeyFrame(new Duration(10), event -> {
+
+            if (ballCenterX.get() >= -20) {    // <3>
+
+                ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);
+
+                if (isServingFromTop) {       // <4>
+                    ballCenterY.set(ballCenterY.get() + randomYincrement);
+
+                } else {
+                    ballCenterY.set(ballCenterY.get() + randomYincrement);
+                }
+
+            } else {
+                timeline.stop();
+
+            }
+
+        });
+
+        timeline = new Timeline(keyFrame);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        timeline.play();
+
+    }
+----
+
+<1>  We create an instance of the class `java.util.Random`. This class has methods to generate random numbers of different types. Invoking the method `nextInt` generates a random integer number in the range between zero and the value of the method argument. I decided to use the value of `BALL_MOVEMENT_INCREMENT` as a top limit. This random number will be used as an increment for the y-coordinate of the moving ball.
+
+<2>  Using the conditional operator (it's explained in Chapter 4) we set the variable `isServingFromTop` to true if the right paddle is located on the upper half of the table, or to false if the paddle is in the lower half.
+
+<3> In the previous version of the method `moveTheBall` we were keeping the ball on the table when it was reaching the left edge of the table. Now we let the ball fall off the table. The `-20` is just an arbitrary number - we stop the ball movement after the ball moved 20 pixels past the left table edge. In the final version of the game we'll enable the movement for the left paddle, and sometimes it'll bounce the ball back. 
+
+<4>	If `isServingFromTop` is true, we're increasing the y-coordinate of the ball's center by `randomYincrement`, otherwise we're decreasing it by the same amount. Now the ball will be served in an unpredictable manner and will pretty often fall off the table crossing the top or bottom edge of the table. I took the following screen shot when the moving ball was about to cross the bottom edge of the table.
+
+[[FIG13-11]]
+image::images/fig_13_ball_moved_down.png[] 
+
+=== Step 5: Moving the Computer's Paddle
+
+When the ball is served, the Computer needs to move its paddle in the right direction to bounce the ball. This is a pretty easy task since the computer knows that if the Kid's paddle served from the top, the ball will move down, and if the ball was served from the bottom it'll move up. So the moment the ball is served, the computer's paddle should also start moving.
+
+First of all, we'll declare the property `currentComputerPaddleY` to keep track of the y-coordinate of the Computer's paddle. We'll also need to store the initial y-coordinate of the Computer's paddle, because on each ball serving this paddle should be in the middle of the left side f the table:
+
+[source, java]
+----
+DoubleProperty currentComputerPaddleY = new SimpleDoubleProperty();
+
+double initialComputerPaddleY;
+----
+
+In the method `initialize` we'll bind `currentComputerPaddleY` to the `layoutY` property of the `Rectangle` that represents the Computer's paddle:
+
+[source, java]
+----
+initialComputerPaddleY = compPaddle.getLayoutY();
+
+currentComputerPaddleY.set(initialComputerPaddleY);
+compPaddle.layoutYProperty().bind(currentComputerPaddleY);
+----
+
+The new version of the method `moveTheBall` will start the movement of the Computer's paddle in the right direction as soon as the ball is served.
 
 [source, java]
 ----
@@ -620,25 +694,29 @@ private void moveTheBall(){
   Random randomYGenerator = new Random();
   double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);
 
-  final boolean isServingFromTop = (ball.getCenterY() <= centerTableY)?true:false;
+  final boolean isServingFromTop = (ballCenterY.get() <= centerTableY)?true:false;
 
   KeyFrame keyFrame = new KeyFrame(new Duration(10), event -> {
 
-    double currentBallY =  ball.getCenterY();
+    if (ballCenterX.get() >= -20) {
 
-    if (currentBallX >= 0) {
-
-        currentBallX -= BALL_MOVEMENT_INCREMENT;
-        ball.setCenterX(currentBallX);
+        ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);
 
         if (isServingFromTop) {
-          ball.setCenterY(currentBallY + randomYincrement);
+          ballCenterY.set(ballCenterY.get() + randomYincrement);
+
+          currentComputerPaddleY.set( currentComputerPaddleY.get() + 1);       // <1>
+
         } else {
-          ball.setCenterY(currentBallY - randomYincrement);
+          ballCenterY.set(ballCenterY.get() - randomYincrement);
+
+          currentComputerPaddleY.set(currentComputerPaddleY.get() - 1);      // <2>
         }
 
     } else {
         timeline.stop();
+
+        currentComputerPaddleY.set(initialComputerPaddleY);  // <3>
     }
   });
 
@@ -649,5 +727,12 @@ private void moveTheBall(){
 }
 ----
 
+<1> If the ball was served from the top, move the Computer's paddle one pixel down on each frame. 
+
+<2>	If the ball was served from the lower half of the table, move the Computer's paddle one pixel up on each frame.
+
+<3> When the ball stops moving, return the Computer's paddle to the initial position in the middle of the left side of the table.
+
+=== Step 6: Bouncing the Ball
 
 === Project: Displaying the Game Score
