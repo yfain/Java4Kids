@@ -731,8 +731,75 @@ private void moveTheBall(){
 
 <2>	If the ball was served from the lower half of the table, move the Computer's paddle one pixel up on each frame.
 
-<3> When the ball stops moving, return the Computer's paddle to the initial position in the middle of the left side of the table.
+<3> When the ball stops moving, return the Computer's paddle to the initial position in the middle of the left side of the table.   	
 
 === Step 6: Bouncing the Ball
+
+There is no guarantee that the Computer's paddle will be advanced to the position to bounce the ball. Our Ping-Pong game doesn't implement the algorithm the adjust the movement of the Computer's paddle based on the trajectory of the ball's movement. But if the ball accidentally contacts the paddle we need to bounce the ball and send it from left to right.
+
+Every JavaFX GUI component is a subclass of a `Node`, which has a special property `boundsInParent`. It's an invisible rectangle that encapsulates the component when it's places inside a layout. So our ball and paddles are is sitting inside of these invisible rectangle too. When the ball or paddles are being moved, the coordinates of their `boundsInParent` properties are being recalculated. If these invisible rectangles of the ball and the paddle intersect, we can say that there was a contact. The method `checkForBallPaddleContact` returns true if there was a contact, and false if not.
+
+[source, java]
+----
+private boolean checkForBallPaddleContact(){
+
+  if (ball.intersects(compPaddle.getBoundsInParent())){
+      return true;
+  } else {
+       return false;
+  }
+}
+----
+
+We should call this method from each frame in the timeline that we started in the method `moveTheBall`. After this check for contact to the method `moveTheBall` it'll look like this:
+
+[source, java]
+----
+private void moveTheBall(){
+
+  Random randomYGenerator = new Random();
+  double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);
+
+  final boolean isServingFromTop = (ballCenterY.get() <= centerTableY)?true:false;
+
+  KeyFrame keyFrame = new KeyFrame(new Duration(10), event -> {
+    if (ballCenterX.get() >= -20) {
+
+        ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);
+
+        if (isServingFromTop) {
+          ballCenterY.set(ballCenterY.get() + randomYincrement);
+
+          currentComputerPaddleY.set( currentComputerPaddleY.get() + 1);
+
+        } else {
+          ballCenterY.set(ballCenterY.get() - randomYincrement);
+
+          currentComputerPaddleY.set(currentComputerPaddleY.get() - 1);
+        }
+
+        if (checkForBallPaddleContact()){    // <1>
+
+          timeline.stop();                   
+          currentComputerPaddleY.set(initialComputerPaddleY); 
+          bounceTheBall();             
+         };
+
+    } else {
+        timeline.stop();          
+        currentComputerPaddleY.set(initialComputerPaddleY);
+    }
+  });
+
+  timeline = new Timeline(keyFrame);
+  timeline.setCycleCount(Timeline.INDEFINITE);
+
+  timeline.play();
+}
+----
+
+<1> If there was a ball/paddle contact, we need to stop playing the current `timeline`, set the Computer's paddle to its initial position and call the method `bounceTheBall`, which we'll write next. 
+
+
 
 === Project: Displaying the Game Score
