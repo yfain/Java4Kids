@@ -515,10 +515,13 @@ p { margin-bottom: 1.25rem; }
 <p>The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle vertically by the preset number of pixels up or down. The paddle shouldn&#8217;t cross the table borders.</p>
 </li>
 <li>
-<p>The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball cam move at an angle, which means that its x and y coordinate should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point. While the ball is moving to the left, computer should move the left paddle in the direction of the ball movement. If the ball touches the left paddle, it should bounce and start moving to the right.</p>
+<p>The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball cam move at an angle, which means that its x and y coordinate should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point.</p>
 </li>
 <li>
-<p>When the Computer bounces the ball, it can move only horizontally to the right.</p>
+<p>While the ball is moving to the left, the Computer should move the left paddle in the direction of the ball movement.</p>
+</li>
+<li>
+<p>If the ball touches the left paddle, it should bounce and start moving to the right. When the Computer bounces the ball, it can move only horizontally to the right.</p>
 </li>
 <li>
 <p>If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.</p>
@@ -764,6 +767,18 @@ IDEA can help you to find out which event handlers can be used with a particular
 <h4 id="_processing-keyboard-events-in-the-controller"><a class="anchor" href="#_processing-keyboard-events-in-the-controller"></a>Processing Keyboard Events in the Controller</h4>
 <div class="paragraph">
 <p>In the code that comes with this chapter the final version of the controller is called <code>PingPongController</code>. But I&#8217;ve also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with <code>PingPongController</code> followed with a different suffix with a version number (e.g. <code>PingPongController_v1</code>, <code>PingPongController_v2</code> etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as <code>fx:controller</code> in the file <code>pingpong.fxml</code> and run the <code>PingPong</code> program.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+In InelliJ IDEA you can easily compare two files to see the difference. Press CTRL or CMD button and click on the names of two files you&#8217;d like to compare (e.g. <code>PingPongController_v1</code> and <code>PingPongController_v2</code>). Then select the menu View | Compare Two Files, and you&#8217;ll see the source code of these files next to each other with highlighted differences.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s add to the <code>PingPongControler</code> a method handler for the key-released events. The first very simple version of the <code>PingPongControler</code> is shown next. The goal is to see that the controller receives the keyboard events and can recognize the keys pressed by the player.</p>
@@ -1067,7 +1082,7 @@ public class PingPongController {
 When the user preses the S-key, we need to serve the ball from the position where the right paddle is currently located. Initially it&#8217;s located in the middle of the table, but the user may move it up or down before serving the ball.</p>
 </div>
 <div class="paragraph">
-<p>The ball is represented by the shape <code>Circle</code>. From school math you should remember that a circle is represented by the coordinates of the center and the radius. In JavaFX the corresponding properties of the class <code>Circle</code> are called <code>centerX</code>, <code>centerY</code>, and <code>radius</code>. By changing the coordinates of the center we can move the ball around the stage. Our ball is defined in the file <em>pingpong.fxml</em> like this:</p>
+<p>The ball is represented by the shape <code>Circle</code>. From school math you should remember that a circle is represented by the coordinates of the center and the radius. In JavaFX the corresponding properties of the class <code>Circle</code> are called <code>centerX</code>, <code>centerY</code>, and <code>radius</code>. When the <code>Circle</code> is placed in a layout, its center gets the corresponding properties <code>layoutX</code> and <code>layoutY</code>.  By changing the coordinates of the center we can move the ball around the stage. Our ball is defined in the file <em>pingpong.fxml</em> like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1077,47 +1092,46 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="paragraph">
 <p>But why the above tag <code>&lt;Circle&gt;</code> doesn&#8217;t include <code>centerX</code> and <code>centerY</code>?  Actually we can and will replace the attributes <code>layoutX</code> and <code>layoutY</code> with <code>centerX</code> and <code>centerY</code> because we use the <code>Group</code> container that&#8217;s not a part of any other layout (e.g. <code>BorderPane</code> or <code>GridPane</code>). But JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container.</p>
 </div>
-<div class="sect3">
-<h4 id="_moving-the-ball-to-the-right-paddle"><a class="anchor" href="#_moving-the-ball-to-the-right-paddle"></a>Moving the Ball to the Right Paddle</h4>
 <div class="paragraph">
-<p>JavaFX supports various types of transformations that change coordinates of the components on the scene. Working with layout and coordinates is an advanced topic for this book.But if you&#8217;d like to research it on your own, start with reading the the article <a href="https://blogs.oracle.com/jfxprg/entry/the_peculiarities_of_javafx_layout">"The peculiarities of JavaFX"</a>. To keep things simple, let&#8217;s just modify the attributes of the tag <code>&lt;Circle&gt;</code> so it&#8217;ll look like this:</p>
+<p>Let&#8217;s modify the attributes of the tag <code>&lt;Circle&gt;</code> so it&#8217;ll look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="xml language-xml">&lt;Circle fx:id="ball" fill="#ff1f35" centerX="191.0" centerY="123.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" /&gt;</code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_moving-the-ball-to-the-right-paddle"><a class="anchor" href="#_moving-the-ball-to-the-right-paddle"></a>Moving the Ball to the Right Paddle</h4>
 <div class="paragraph">
-<p>Let&#8217;s move the ball to the current position of the kid&#8217;s paddle. Since the ball will be moving, let&#8217;s keep track of its center in the new class variables <code>currentBallX</code> and <code>currentBallY</code> of type <code>double</code>.</p>
-</div>
-<div class="paragraph">
-<p>First, we&#8217;ll adjust the <code>centerX</code> coordinate of the ball by setting it the same as the <code>layoutX</code> coordinate of the kid&#8217;s paddle:</p>
+<p>Since the ball will be moving, we&#8217;ll keep track of its center in the new properties <code>ballCenterX</code> and <code>ballCenterY</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">currentBallX</code></pre>
+<pre class="highlight"><code class="java language-java">DoubleProperty ballCenterX = new SimpleDoubleProperty();
+DoubleProperty ballCenterY = new SimpleDoubleProperty();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Second, we&#8217;ll adjust the <code>centerY</code> coordinate of the ball. Our controller has the variable <code>currentKidPaddleY</code> that remembers the current y-coordinate of the top of the kid&#8217;s paddle. So if we&#8217;ll add to <code>currentKidPaddleY</code> the half of the the paddle&#8217;s height, we&#8217;ll get the the y-coordinate of the paddle&#8217;s center.</p>
+<p>In the method <code>initialize</code> we&#8217;ll set the initial values of these properties to the center coordinates of the ball. We&#8217;ll also bind the above properties to the center of the <code>Circle</code>, so changing <code>ballCenterX</code> and <code>ballCenterY</code> will automatically change the location of the ball on the scene:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">currentBallY = currentKidPaddleY.doubleValue() + kidPaddle.getHeight()/2;</code></pre>
+<pre class="highlight"><code class="java language-java">ballCenterX.set(ball.getCenterX());
+ballCenterY.set(ball.getCenterY());
+
+ball.centerXProperty().bind(ballCenterX);
+ball.centerYProperty().bind(ballCenterY);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now the new version of the method <code>process_key_S</code>  will look like this:</p>
+<p>Let&#8217;s place the ball by the current position of the kid&#8217;s paddle. In the method <code>process_key_S</code> we&#8217;ll adjust the <code>centerY</code> coordinate of the ball. Our controller has the variable <code>currentKidPaddleY</code> that remembers the current y-coordinate of the top of the kid&#8217;s paddle. So if we&#8217;ll add to <code>currentKidPaddleY</code> the half of the the paddle&#8217;s height, we&#8217;ll get the the y-coordinate of the paddle&#8217;s center. The <code>centerX</code> coordinate will be the same as the <code>layoutX</code> of the Kid&#8217;s paddle.The new version of the method <code>process_key_S</code>  will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="java language-java">private void process_key_S() {
 
-  currentBallY = (currentKidPaddleY.doubleValue() + kidPaddle.getHeight()/2);
-  ball.setCenterY(currentBallY);
-
-  currentBallX = kidPaddle.getLayoutX();
-  ball.setCenterX(currentBallX);
+  ballCenterY.set(currentKidPaddleY.doubleValue() + kidPaddle.getHeight()/2);
+  ballCenterX.set(kidPaddle.getLayoutX());
 }</code></pre>
 </div>
 </div>
@@ -1133,22 +1147,19 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="sect3">
 <h4 id="_serving-the-ball-horizontally"><a class="anchor" href="#_serving-the-ball-horizontally"></a>Serving the Ball Horizontally</h4>
 <div class="paragraph">
-<p>The ball is ready to start moving now. To make the movement smooth we&#8217;ll use the class <code>javafx.animation.Timeline</code> that allows change the values of the GUI component&#8217;s properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement, the <code>TimeLine</code> will display a set of snapshots of a ball at different positions along its trajectory.</p>
+<p>The ball is ready to start moving now. To make the movement smooth we&#8217;ll use the class <code>javafx.animation.Timeline</code> that allows change the values of the GUI component&#8217;s properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement we&#8217;ll declare the variable <code>timeline</code> of the type <code>TimeLine</code>, which we&#8217;ll use to display a set of snapshots of a ball at different positions along its trajectory.</p>
 </div>
 <div class="paragraph">
 <p>Each frame is represented by a class <code>KeyFrame</code>. Each snapshot is a represented by the class <code>KeyValue</code>. Let&#8217;s write a method <code>moveTheBall</code> that will move the ball horizontally all the way to the left until the <code>centerX</code> will become equal to zero.  If we&#8217;ll be changing only the <code>centerX</code> property of the <code>Circle</code>, it&#8217;ll be moving horizontally.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="java language-java">
-Timeline timeline = new Timeline();   <i class="conum" data-value="1"></i><b>(1)</b>
-
-private void moveTheBall(){
+<pre class="highlight"><code class="java language-java">private void moveTheBall(){
 
   timeline = new Timeline();   <i class="conum" data-value="1"></i><b>(1)</b>
   timeline.setCycleCount(1);
 
-  KeyValue keyValue = new KeyValue(ball.centerXProperty(), 0);  <i class="conum" data-value="2"></i><b>(2)</b>
+  KeyValue keyValue = new KeyValue(ballCenterX, 0);  <i class="conum" data-value="2"></i><b>(2)</b>
   KeyFrame keyFrame = new KeyFrame(new Duration(1000), keyValue);   <i class="conum" data-value="3"></i><b>(3)</b>
 
   timeline.getKeyFrames().add(keyFrame);    <i class="conum" data-value="4"></i><b>(4)</b>
@@ -1165,7 +1176,7 @@ private void moveTheBall(){
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Then we&#8217;ll create the <code>KeyValue</code> object to specify which changing value to display in frames. In this case we want the animation to change the <code>centerX</code> property from its current value to zero.</td>
+<td>Then we&#8217;ll create the <code>KeyValue</code> object to specify which changing value to display in frames. In this case we want the animation to change the x-coordinate of the ball center from its current value <code>ballCenterX</code> to zero.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -1193,7 +1204,7 @@ private void moveTheBall(){
 <p>Our ball is not smart enough to notice that there was a left paddle on its way and went right through it. We&#8217;ll take care of the GUI component collisions a bit later.</p>
 </div>
 <div class="paragraph">
-<p>Depending on the provided duration, the <code>Timeline</code> object will decide how many snapshots (key frames) to create while the <code>KeyValue</code> is changing to reach the target. The <code>Timeline</code> class has several <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary">overloaded constructors</a>, and one of the allows to specify the frames per second for the animation.</p>
+<p>Depending on the provided duration, the <code>Timeline</code> object will calculate how many snapshots (key frames) to create while the <code>KeyValue</code> is changing to reach the target. The <code>Timeline</code> class has several <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary">overloaded constructors</a>, and one of the allows to specify the frames per second for the animation.</p>
 </div>
 <div class="paragraph">
 <p>The <code>KeyFrame</code> class also has several <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/animation/KeyFrame.html#constructor.summary">overloaded constructors</a>, and one of them allows you to specify the duration, the event handler for the <code>ActionEvent</code>, and optional key value(s). The handler for the <code>ActionEvent</code> can be implemented as a  lambda expression.</p>
@@ -1210,19 +1221,17 @@ private void moveTheBall(){
   KeyFrame keyFrame = new KeyFrame(new Duration(10),   <i class="conum" data-value="1"></i><b>(1)</b>
       event -&gt; {
 
-         if (currentBallX &gt; BALL_MOVEMENT_INCREMENT) { <i class="conum" data-value="2"></i><b>(2)</b>
+        if (ballCenterX.get() &gt; BALL_MOVEMENT_INCREMENT) { <i class="conum" data-value="2"></i><b>(2)</b>
 
-            currentBallX -= BALL_MOVEMENT_INCREMENT;   <i class="conum" data-value="3"></i><b>(3)</b>
-            ball.setCenterX(currentBallX);
+               ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);       <i class="conum" data-value="3"></i><b>(3)</b>
 
-         } else {
-            timeline.stop();                           <i class="conum" data-value="4"></i><b>(4)</b>
-         }
-
+        } else {
+           timeline.stop();                           <i class="conum" data-value="4"></i><b>(4)</b>
+        }
       }
   );
 
-  timeline = new Timeline(keyFrame);             //  <i class="conum" data-value="5"></i><b>(5)</b>
+  timeline = new Timeline(keyFrame);             <i class="conum" data-value="5"></i><b>(5)</b>
   timeline.setCycleCount(Timeline.INDEFINITE);
   timeline.play();
 
@@ -1237,11 +1246,11 @@ private void moveTheBall(){
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The lambda expression starts with checking if the current value of the <code>centerX</code> is larger than the value in <code>BALL_MOVEMENT_INCREMENT</code> to ensure that the ball will not cross the left border and will stay at the 0 coordinates. To make our game more realistic, we&#8217;ll let the ball go off the table in the next version of the <code>moveTheBall</code>.</td>
+<td>The lambda expression starts with checking if the current value of the x-coordinate of the ball center is larger than the value in <code>BALL_MOVEMENT_INCREMENT</code> to ensure that the ball will not cross the left border and will stay at the 0 coordinates. To make our game more realistic, we&#8217;ll let the ball go off the table in the next version of the <code>moveTheBall</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Decrement the <code>currentBallX</code> by <code>BALL_MOVEMENT_INCREMENT</code>, and set the new value of the ball&#8217;s <code>centerX</code>.</td>
+<td>Decrement the value of the <code>ballCenterX</code> by <code>BALL_MOVEMENT_INCREMENT</code>. Because of binding this will move the ball on the GUI.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -1260,7 +1269,7 @@ private void moveTheBall(){
 <p>The game that serves the ball horizontally is pretty boring, so let&#8217;s change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let&#8217;s change the y-coordinate in a random manner, so each ball serving sends the ball in a different direction. We&#8217;ll create a ball serving machine.</p>
 </div>
 <div class="paragraph">
-<p>If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or up. We&#8217;ll declare a <code>double</code> variable <code>centerTableY</code>, and will assign its value in the <code>initialize</code> method of the controller:</p>
+<p>If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or upward. To know the y-coordinate of the table center we&#8217;ll declare the <code>double</code> variable <code>centerTableY</code> and set its value in the method <code>initialize</code> like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1268,7 +1277,101 @@ private void moveTheBall(){
 </div>
 </div>
 <div class="paragraph">
-<p>The following version version of the method moveTheBall implements the random ball servings.</p>
+<p>As the ball moves, we&#8217;ll modified value of the y-coordinate of the ball center will be assigning it to the property <code>ballCenterY</code>.The following version version of the method <code>moveTheBall</code> implements the random ball servings.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">  private void moveTheBall(){
+
+        Random randomYGenerator = new Random();
+        double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);         <i class="conum" data-value="1"></i><b>(1)</b>
+
+        final boolean isServingFromTop = (ballCenterY.get() &lt;= centerTableY)?true:false;      <i class="conum" data-value="2"></i><b>(2)</b>
+
+
+        KeyFrame keyFrame = new KeyFrame(new Duration(10), event -&gt; {
+
+            if (ballCenterX.get() &gt;= -20) {    <i class="conum" data-value="3"></i><b>(3)</b>
+
+                ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);
+
+                if (isServingFromTop) {       <i class="conum" data-value="4"></i><b>(4)</b>
+                    ballCenterY.set(ballCenterY.get() + randomYincrement);
+
+                } else {
+                    ballCenterY.set(ballCenterY.get() + randomYincrement);
+                }
+
+            } else {
+                timeline.stop();
+
+            }
+
+        });
+
+        timeline = new Timeline(keyFrame);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        timeline.play();
+
+    }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We create an instance of the class <code>java.util.Random</code>. This class has methods to generate random numbers of different types. Invoking the method <code>nextInt</code> generates a random integer number in the range between zero and the value of the method argument. I decided to use the value of <code>BALL_MOVEMENT_INCREMENT</code> as a top limit. This random number will be used as an increment for the y-coordinate of the moving ball.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Using the conditional operator (it&#8217;s explained in Chapter 4) we set the variable <code>isServingFromTop</code> to true if the right paddle is located on the upper half of the table, or to false if the paddle is in the lower half.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>In the previous version of the method <code>moveTheBall</code> we were keeping the ball on the table when it was reaching the left edge of the table. Now we let the ball fall off the table. The <code>-20</code> is just an arbitrary number - we stop the ball movement after the ball moved 20 pixels past the left table edge. In the final version of the game we&#8217;ll enable the movement for the left paddle, and sometimes it&#8217;ll bounce the ball back.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If <code>isServingFromTop</code> is true, we&#8217;re increasing the y-coordinate of the ball&#8217;s center by <code>randomYincrement</code>, otherwise we&#8217;re decreasing it by the same amount. Now the ball will be served in an unpredictable manner and will pretty often fall off the table crossing the top or bottom edge of the table. I took the following screen shot when the moving ball was about to cross the bottom edge of the table.</td>
+</tr>
+</table>
+</div>
+<div id="FIG13-11" class="imageblock">
+<div class="content">
+<img src="./images/fig_13_ball_moved_down.png" alt="fig 13 ball moved down">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step-5-moving-the-computer-s-paddle"><a class="anchor" href="#_step-5-moving-the-computer-s-paddle"></a>Step 5: Moving the Computer&#8217;s Paddle</h3>
+<div class="paragraph">
+<p>When the ball is served, the Computer needs to move its paddle in the right direction to bounce the ball. This is a pretty easy task since the computer knows that if the Kid&#8217;s paddle served from the top, the ball will move down, and if the ball was served from the bottom it&#8217;ll move up. So the moment the ball is served, the computer&#8217;s paddle should also start moving.</p>
+</div>
+<div class="paragraph">
+<p>First of all, we&#8217;ll declare the property <code>currentComputerPaddleY</code> to keep track of the y-coordinate of the Computer&#8217;s paddle. We&#8217;ll also need to store the initial y-coordinate of the Computer&#8217;s paddle, because on each ball serving this paddle should be in the middle of the left side f the table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">DoubleProperty currentComputerPaddleY = new SimpleDoubleProperty();
+
+double initialComputerPaddleY;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the method <code>initialize</code> we&#8217;ll bind <code>currentComputerPaddleY</code> to the <code>layoutY</code> property of the <code>Rectangle</code> that represents the Computer&#8217;s paddle:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">initialComputerPaddleY = compPaddle.getLayoutY();
+
+currentComputerPaddleY.set(initialComputerPaddleY);
+compPaddle.layoutYProperty().bind(currentComputerPaddleY);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The new version of the method <code>moveTheBall</code> will start the movement of the Computer&#8217;s paddle in the right direction as soon as the ball is served.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1277,25 +1380,29 @@ private void moveTheBall(){
   Random randomYGenerator = new Random();
   double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);
 
-  final boolean isServingFromTop = (ball.getCenterY() &lt;= centerTableY)?true:false;
+  final boolean isServingFromTop = (ballCenterY.get() &lt;= centerTableY)?true:false;
 
   KeyFrame keyFrame = new KeyFrame(new Duration(10), event -&gt; {
 
-    double currentBallY =  ball.getCenterY();
+    if (ballCenterX.get() &gt;= -20) {
 
-    if (currentBallX &gt;= 0) {
-
-        currentBallX -= BALL_MOVEMENT_INCREMENT;
-        ball.setCenterX(currentBallX);
+        ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);
 
         if (isServingFromTop) {
-          ball.setCenterY(currentBallY + randomYincrement);
+          ballCenterY.set(ballCenterY.get() + randomYincrement);
+
+          currentComputerPaddleY.set( currentComputerPaddleY.get() + 1);       <i class="conum" data-value="1"></i><b>(1)</b>
+
         } else {
-          ball.setCenterY(currentBallY - randomYincrement);
+          ballCenterY.set(ballCenterY.get() - randomYincrement);
+
+          currentComputerPaddleY.set(currentComputerPaddleY.get() - 1);      <i class="conum" data-value="2"></i><b>(2)</b>
         }
 
     } else {
         timeline.stop();
+
+        currentComputerPaddleY.set(initialComputerPaddleY);  <i class="conum" data-value="3"></i><b>(3)</b>
     }
   });
 
@@ -1306,7 +1413,25 @@ private void moveTheBall(){
 }</code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If the ball was served from the top, move the Computer&#8217;s paddle one pixel down on each frame.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If the ball was served from the lower half of the table, move the Computer&#8217;s paddle one pixel up on each frame.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>When the ball stops moving, return the Computer&#8217;s paddle to the initial position in the middle of the left side of the table.</td>
+</tr>
+</table>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_step-6-bouncing-the-ball"><a class="anchor" href="#_step-6-bouncing-the-ball"></a>Step 6: Bouncing the Ball</h3>
 </div>
 <div class="sect2">
 <h3 id="_project-displaying-the-game-score"><a class="anchor" href="#_project-displaying-the-game-score"></a>Project: Displaying the Game Score</h3>
@@ -1316,7 +1441,7 @@ private void moveTheBall(){
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-21 17:57:25 EST
+Last updated 2015-02-22 16:27:41 EST
 </div>
 </div>
 </body>
