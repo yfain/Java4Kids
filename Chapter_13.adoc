@@ -25,9 +25,10 @@ Let’s come up with some rules of our Ping-Pong game:
 
 6. If the ball touches the left paddle, it should bounce and start moving to the right. When the Computer bounces the ball, it can move only horizontally to the right.
 
-7.  If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.
+7.  If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.The game lasts until one of the players reaches the score of 21. Since the computer can't serve the ball, the Kid should score a point if the ball crosses the left border of the table. If the ball crosses the top or
+bottom table borders the point is given to the computer.The computer can also earn the point if it bounces the ball and it crosses the right border of the table. These rules are not the same as in a real Ping-Pong game, but they are good enough for our game.
 
-8.  The game lasts until one of the players reaches the score of 21. The game score should be displayed in the left bottom corner of the table.
+8. The game score should be displayed in the left bottom corner of the table.
 
 At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called _analytical thinking_, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones an reach them one at time!  
 
@@ -848,7 +849,12 @@ private void bounceTheBall() {
     System.out.println(ballCenterX);
     if (ballCenterX.get() < theBallOffTheTableX) {
 
-       ballCenterX.set(ballCenterX.get() + BALL_MOVEMENT_INCREMENT);              // <2>
+       ballCenterX.set(ballCenterX.get() + BALL_MOVEMENT_INCREMENT);              // <2>         
+
+       if (checkForBallPaddleContact(kidPaddle)){   // <3>
+           timeline.stop();
+           moveTheBall();
+        };
 
     } else {
        timeline.stop();
@@ -868,5 +874,256 @@ private void bounceTheBall() {
 
 <2> Advance the ball to the right until its x-coordinate reaches the value of `theBallOffTheTableX`. 
 
+<3> While the Computer bounces the ball, the Kid can press the up and down arrow keys to stop the ball. If the ball contacts the Kid's paddle, we call the `moveTheBall` method to start the random movement to the left again. 
+
+
+The basic functionality of the game is implemented except displaying the game score and starting the new game when one of the players gets 21 points. I leave this part for you to implement on your own.
+
+I've been showing and explaining various code fragments of the `PingPongController` as we've been implementing the game strategy one step at a time. Now I'll just show how the code of the `PingPongConroller` class looks without any additional explanations. You should be able to read and understand the code.
+
+[source, java]
+----
+package pong;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
+import java.util.Random;
+
+
+// This code implements 6 steps of the Game strategy
+
+public class PingPongController {
+
+ final int PADDLE_MOVEMENT_INCREMENT = 7;
+ final int BALL_MOVEMENT_INCREMENT = 3;
+
+ double centerTableY;
+
+ DoubleProperty currentKidPaddleY = new SimpleDoubleProperty();
+ DoubleProperty currentComputerPaddleY = new SimpleDoubleProperty();
+ double initialComputerPaddleY;
+
+ DoubleProperty ballCenterX = new SimpleDoubleProperty();
+ DoubleProperty ballCenterY = new SimpleDoubleProperty();
+
+ double allowedPaddleTopY;
+ double allowedPaddleBottomY;
+
+ Timeline timeline;
+
+ @FXML
+ Rectangle table;
+ @FXML  Rectangle compPaddle;
+ @FXML  Rectangle kidPaddle;
+ @FXML  Circle ball;
+
+ public void initialize()
+ {
+
+     currentKidPaddleY.set(kidPaddle.getLayoutY());
+     kidPaddle.layoutYProperty().bind(currentKidPaddleY);
+
+     ballCenterX.set(ball.getCenterX());
+     ballCenterY.set(ball.getCenterY());
+
+     ball.centerXProperty().bind(ballCenterX);
+     ball.centerYProperty().bind(ballCenterY);
+
+
+     initialComputerPaddleY = compPaddle.getLayoutY();
+     currentComputerPaddleY.set(initialComputerPaddleY);
+     compPaddle.layoutYProperty().bind(currentComputerPaddleY);
+
+
+     allowedPaddleTopY = PADDLE_MOVEMENT_INCREMENT;
+     allowedPaddleBottomY = table.getHeight() - kidPaddle.getHeight() - PADDLE_MOVEMENT_INCREMENT;
+
+     centerTableY = table.getHeight()/2;
+ }
+ public void keyReleasedHandler(KeyEvent event){
+
+     KeyCode keyCode = event.getCode();
+
+     switch (keyCode){
+         case UP:
+             process_key_Up();
+             break;
+         case DOWN:
+             process_key_Down();
+             break;
+         case N:
+             process_key_N();
+             break;
+         case Q:
+             Platform.exit(); // Terminate the application
+             break;
+         case S:
+             process_key_S();
+             break;
+     }
+ }
+
+
+ private void process_key_Up() {
+
+     if (currentKidPaddleY.get() > allowedPaddleTopY) {
+         currentKidPaddleY.set(currentKidPaddleY.get() - PADDLE_MOVEMENT_INCREMENT);
+     }
+ }
+
+ private void process_key_Down() {
+
+     if (currentKidPaddleY.get()< allowedPaddleBottomY) {
+         currentKidPaddleY.set(currentKidPaddleY.get() + PADDLE_MOVEMENT_INCREMENT);
+     }
+ }
+
+ private void process_key_N() {
+     System.out.println("Processing the N key");
+ }
+
+ private void process_key_S() {
+
+     ballCenterY.set(currentKidPaddleY.doubleValue() + kidPaddle.getHeight()/2);
+     ballCenterX.set(kidPaddle.getLayoutX());
+
+     moveTheBall();
+ }
+
+ private void moveTheBall(){
+
+     Random randomYGenerator = new Random();
+     double randomYincrement = randomYGenerator.nextInt(BALL_MOVEMENT_INCREMENT);
+
+     final boolean isServingFromTop = (ballCenterY.get() <= centerTableY)?true:false;
+
+     KeyFrame keyFrame = new KeyFrame(new Duration(10), event -> {
+
+         if (ballCenterX.get() >= -20) {
+
+             ballCenterX.set(ballCenterX.get() - BALL_MOVEMENT_INCREMENT);
+
+             if (isServingFromTop) {
+                 ballCenterY.set(ballCenterY.get() + randomYincrement);
+
+                 currentComputerPaddleY.set( currentComputerPaddleY.get() + 1);
+
+             } else {
+                 ballCenterY.set(ballCenterY.get() - randomYincrement);
+
+                 currentComputerPaddleY.set(currentComputerPaddleY.get() - 1);
+             }
+
+             if (checkForBallPaddleContact(compPaddle)){
+                 timeline.stop();
+                 currentComputerPaddleY.set(initialComputerPaddleY);
+                 bounceTheBall();
+             };
+
+         } else {
+             timeline.stop();
+
+             currentComputerPaddleY.set(initialComputerPaddleY);
+         }
+     });
+
+     timeline = new Timeline(keyFrame);
+     timeline.setCycleCount(Timeline.INDEFINITE);
+
+     timeline.play();
+ }
+
+
+ private boolean checkForBallPaddleContact(Rectangle paddle){
+
+     if (ball.intersects(paddle.getBoundsInParent())){
+         return true;
+     } else {
+          return false;
+     }
+ }
+
+ private void bounceTheBall() {
+
+     double theBallOffTheTableX = table.getWidth() + 20;
+
+     KeyFrame keyFrame = new KeyFrame(new Duration(10), event -> {
+
+         if (ballCenterX.get() < theBallOffTheTableX) {
+
+             ballCenterX.set(ballCenterX.get() + BALL_MOVEMENT_INCREMENT);
+
+             if (checkForBallPaddleContact(kidPaddle)){
+                 timeline.stop();
+                 moveTheBall();
+             };
+
+         } else {
+             timeline.stop();
+         }
+
+     });
+
+     timeline = new Timeline(keyFrame);
+     timeline.setCycleCount(Timeline.INDEFINITE);
+
+     timeline.play();
+
+   }
+}
+----
 
 === Project: Displaying the Game Score
+
+The goal of this project is to keep track and display the game score. I'll just show you how to print the score on the system console, but you'll need research how to display the text right on the ping-pong table.
+
+If the Kid would serve the ball horizontally, he or she would score one point when the ball goes off the table and its x-coordinate is less than zero. But since the ball is served in a random direction, it can go off the table by crossing top or bottom table's borders. In this case the Kid loses the point. When the method _moveTheBall_ stops playing the timeline, the ball's x-coordinate is definitely less than zero. So we need to check the y-coordinate of the ball. 
+
+If the y-coordinate of the ball has a value between zero and the table height, we can assume that the ball crossed the left border of the table and the Kid scores one point. 
+Otherwise the ball crossed either top or bottom table's borders and the Kid should loose the point. 
+
+The Computer scores one point if it bounces the ball and it crosses the right border of the table.
+
+You need to declare two class variable to keep track of the Computer's and Kid's scores: 
+
+[source, java]
+----
+int computerScore;
+int kidScore;
+----
+
+You'll also need to write a method `updateScore` and invoke it every time the timeline stops playing (in both methods: `moveTheBall` and `bounceTheBall` ). The method `updateScore` can look like this:
+
+[source, java]
+----
+private void updateScore(){
+
+  if (ballCenterX.get() > table.getWidth()){
+      // Computer bounced the ball and the Kid didn't hit it back
+      computerScore ++;
+  } else if (ballCenterY.get() > 0 && ballCenterY.get() <= table.getHeight()){
+      // The Kid served the ball and Computer didn't hit it back
+      kidScore++;
+  } else{
+      // The Kid served the ball off the table
+      computerScore++;
+  }
+
+
+  System.out.println("Computer: " + computerScore + ", Kid: " + kidScore);
+}
+---- 
+
+The code that comes with the book has this version of the method `updateScore` implemented. Your goal is to display the score in a nice font on the bottom left corner of the table. you can learn how to work with the `Text` and `Font` classes by studying Oracle's tutorial http://docs.oracle.com/javase/8/javafx/user-interface-tutorial/text.htm#JFXUI734["Working with Text in JavaFX Applications"].
+
+Don't forget to implement the Start New Game functionality. You'll need to write a method `newGame`, where you should reset the scores and put the paddles and the ball in the starting positions.
