@@ -1478,11 +1478,12 @@ compPaddle.layoutYProperty().bind(currentComputerPaddleY);</code></pre>
           currentComputerPaddleY.set(currentComputerPaddleY.get() - 1);
         }
 
-        if (checkForBallPaddleContact()){    <i class="conum" data-value="1"></i><b>(1)</b>
+        if (checkForBallPaddleContact()){
 
-          timeline.stop();
+          timeline.stop();               <i class="conum" data-value="1"></i><b>(1)</b>
           currentComputerPaddleY.set(initialComputerPaddleY);
-          bounceTheBall();
+
+          bounceTheBall();               <i class="conum" data-value="2"></i><b>(2)</b>
          };
 
     } else {
@@ -1502,7 +1503,89 @@ compPaddle.layoutYProperty().bind(currentComputerPaddleY);</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>If there was a ball/paddle contact, we need to stop playing the current <code>timeline</code>, set the Computer&#8217;s paddle to its initial position and call the method <code>bounceTheBall</code>, which we&#8217;ll write next.</td>
+<td>If there was a ball/paddle contact, we need to stop playing the current <code>timeline</code>, set the Computer&#8217;s paddle to its initial position.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>&lt;2&gt;Then we&#8217;ll need to call the method <code>bounceTheBall</code>, which we&#8217;ll write next.</p>
+</div>
+<div class="paragraph">
+<p>According to step 6 in our game strategy, the computer can only serve the ball horizontally, so writing the <code>bounceTheBall</code> method seems like a pretty simple thing to do. We already wrote a version of the <code>moveTheBall</code> method that sends the ball horizontally from right to left, so just reversing the ball moving direction should be easy.</p>
+</div>
+<div class="paragraph">
+<p>But what if the Kid will move his or her paddle to hit the ball back? OK, then we need to be checking if the ball contacts the Kid&#8217;s paddle too. Can we reuse the method <code>checkForBallPaddleContact</code> for this? Not in its current form, because it&#8217;s written specifically for the computer paddle. We can certainly write a similar method for the Kid&#8217;s paddle and have two almost identical methods, but it&#8217;s better to re-write <code>checkForBallPaddleContact</code> to work for both paddles.</p>
+</div>
+<div class="paragraph">
+<p>In programmer&#8217;s jargon re-writing an existing and working code is called <em>refactoring</em>. So let&#8217;s refactor the method <code>checkForBallPaddleContact</code> by providing the paddle as an argument. Here&#8217;s the refactored version that can be used for both p:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private boolean checkForBallPaddleContact(Rectangle paddle){
+
+    if (ball.intersects(paddle.getBoundsInParent())){
+        return true;
+    } else {
+         return false;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Accordingly, the method <code>moveTheBall</code> would check for the contact with Computer&#8217;s paddle as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">checkForBallPaddleContact(compPaddle);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To check for the ball contact with the Kid&#8217;s paddle you&#8217;d write this line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">checkForBallPaddleContact(kidPaddle);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s write the method <code>bounceTheBall</code>, which should be very similar to <code>moveTheBall</code>. The ball should move from left to write, if  you&#8217;ve been decreasing the x-coordinate in <code>moveTheBall</code>, you&#8217;ll need to decrease it now. If you&#8217;ve been stopping the game where the coordinate of the ball was less than -20, now it has to be more that the table width plus 20. I could refactor the method <code>moveTheBall</code> to introduce these values as methods arguments, but let&#8217;s keep it as a small project for you. As long as you understand how the code works, you should be able to do it on your own. Here&#8217;s the code of the method <code>bounceTheBall</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="java language-java">private void bounceTheBall() {
+
+  double theBallOffTheTableX = table.getWidth() + 20;  <i class="conum" data-value="1"></i><b>(1)</b>
+
+  KeyFrame keyFrame = new KeyFrame(new Duration(10), event -&gt; {
+
+    System.out.println(ballCenterX);
+    if (ballCenterX.get() &lt; theBallOffTheTableX) {
+
+       ballCenterX.set(ballCenterX.get() + BALL_MOVEMENT_INCREMENT);              <i class="conum" data-value="2"></i><b>(2)</b>
+
+    } else {
+       timeline.stop();
+    }
+
+  });
+
+  timeline = new Timeline(keyFrame);
+  timeline.setCycleCount(Timeline.INDEFINITE);
+
+  timeline.play();
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The ball should stop its movement when its x-coordinate is 20 pixels to the right of the table.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Advance the ball to the right until its x-coordinate reaches the value of <code>theBallOffTheTableX</code>.</td>
 </tr>
 </table>
 </div>
@@ -1515,7 +1598,7 @@ compPaddle.layoutYProperty().bind(currentComputerPaddleY);</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-22 17:35:42 EST
+Last updated 2015-02-23 11:51:39 EST
 </div>
 </div>
 </body>
