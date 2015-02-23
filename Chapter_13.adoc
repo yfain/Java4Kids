@@ -778,11 +778,12 @@ private void moveTheBall(){
           currentComputerPaddleY.set(currentComputerPaddleY.get() - 1);
         }
 
-        if (checkForBallPaddleContact()){    // <1>
+        if (checkForBallPaddleContact()){    
 
-          timeline.stop();                   
+          timeline.stop();               // <1>    
           currentComputerPaddleY.set(initialComputerPaddleY); 
-          bounceTheBall();             
+
+          bounceTheBall();               // <2>
          };
 
     } else {
@@ -798,8 +799,74 @@ private void moveTheBall(){
 }
 ----
 
-<1> If there was a ball/paddle contact, we need to stop playing the current `timeline`, set the Computer's paddle to its initial position and call the method `bounceTheBall`, which we'll write next. 
+<1> If there was a ball/paddle contact, we need to stop playing the current `timeline`, set the Computer's paddle to its initial position.
 
+<2>Then we'll need to call the method `bounceTheBall`, which we'll write next. 
+
+According to step 6 in our game strategy, the computer can only serve the ball horizontally, so writing the `bounceTheBall` method seems like a pretty simple thing to do. We already wrote a version of the `moveTheBall` method that sends the ball horizontally from right to left, so just reversing the ball moving direction should be easy.
+
+But what if the Kid will move his or her paddle to hit the ball back? OK, then we need to be checking if the ball contacts the Kid's paddle too. Can we reuse the method `checkForBallPaddleContact` for this? Not in its current form, because it's written specifically for the computer paddle. We can certainly write a similar method for the Kid's paddle and have two almost identical methods, but it's better to re-write `checkForBallPaddleContact` to work for both paddles. 
+
+In programmer's jargon re-writing an existing and working code is called _refactoring_. So let's refactor the method `checkForBallPaddleContact` by providing the paddle as an argument. Here's the refactored version that can be used for both p:
+
+[source, java]
+----
+private boolean checkForBallPaddleContact(Rectangle paddle){
+
+    if (ball.intersects(paddle.getBoundsInParent())){
+        return true;
+    } else {
+         return false;
+    }
+}
+----
+
+Accordingly, the method `moveTheBall` would check for the contact with Computer's paddle as follows:
+
+[source, java]
+----
+checkForBallPaddleContact(compPaddle);
+----
+
+To check for the ball contact with the Kid's paddle you'd write this line:
+
+[source, java]
+----
+checkForBallPaddleContact(kidPaddle);
+----
+
+Now let's write the method `bounceTheBall`, which should be very similar to `moveTheBall`. The ball should move from left to write, if  you've been decreasing the x-coordinate in `moveTheBall`, you'll need to decrease it now. If you've been stopping the game where the coordinate of the ball was less than -20, now it has to be more that the table width plus 20. I could refactor the method `moveTheBall` to introduce these values as methods arguments, but let's keep it as a small project for you. As long as you understand how the code works, you should be able to do it on your own. Here's the code of the method `bounceTheBall`:
+
+[source, java]
+----
+private void bounceTheBall() {
+
+  double theBallOffTheTableX = table.getWidth() + 20;  // <1>
+
+  KeyFrame keyFrame = new KeyFrame(new Duration(10), event -> {
+
+    System.out.println(ballCenterX);
+    if (ballCenterX.get() < theBallOffTheTableX) {
+
+       ballCenterX.set(ballCenterX.get() + BALL_MOVEMENT_INCREMENT);              // <2>
+
+    } else {
+       timeline.stop();
+    }
+
+  });
+
+  timeline = new Timeline(keyFrame);
+  timeline.setCycleCount(Timeline.INDEFINITE);
+
+  timeline.play();
+
+}
+----
+
+<1> The ball should stop its movement when its x-coordinate is 20 pixels to the right of the table.
+
+<2> Advance the ball to the right until its x-coordinate reaches the value of `theBallOffTheTableX`. 
 
 
 === Project: Displaying the Game Score
