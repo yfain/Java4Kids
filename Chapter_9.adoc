@@ -61,13 +61,16 @@ We know that dividing by zero is illegal. But, for the illustration purposes, I 
 
 The output of this program shows the sequence of method calls that were made up to the moment when the run-time error had happened. Start reading this output from the last line going up. 
 
-`Exception in thread "main"`
-`java.lang.ArithmeticException: / by zero`
-   `at TestStackTrace.divideByZero(TestStackTrace.java:9)`
-   `at TestStackTrace.<init>(TestStackTrace.java:4)`
-   `at TestStackTrace.main(TestStackTrace.java:14)`
+[source, java]
+----
+Exception in thread "main"
+java.lang.ArithmeticException: / by zero
+   at TestStackTrace.divideByZero(TestStackTrace.java:9)
+   at TestStackTrace.<init>(TestStackTrace.java:4)
+   at TestStackTrace.main(TestStackTrace.java:14)
+----
 
-This means that the program started in the method `main`, then went to `init` which is a constructor, and then called the method `divideByZero`. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an `ArithmeticException` was thrown – the line number nine tried to divide by zero. 
+This means that the program started in the method `main`, then went to `init`, which is a constructor, and then called the method `divideByZero`. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an `ArithmeticException` was thrown – the line number nine tried to divide by zero. 
 
 === Genealogical Tree of Exceptions 
 
@@ -86,7 +89,10 @@ The `TooManyBikesException` is an example of exception that can be created by a 
 
 How a programmer is supposed to know in advance if some Java method may throw an exception and that a `try/catch` block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one: 
 
-`"ScoreReader.java":  unreported exception: java.io.IOException; must be caught or declared to be thrown at line 57`
+[source, java]
+----
+"ScoreReader.java":  unreported exception: java.io.IOException; must be caught or declared to be thrown at line 57
+----
 
 Of course you are welcome to read Java documentation that describes exceptions that may be thrown by any particular  method. The rest of this chapter will explain how to deal with these exceptions.
 

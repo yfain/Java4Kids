@@ -1,5 +1,4 @@
-:toc:
-:toclevels: 4
+:toc-placement!:
 :imagesdir: ./
 
 == Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes

@@ -520,7 +520,7 @@ The method `drive()` has one argument - the driving time. The method has to retu
 
 3. Run this program by using the menu Run in IDEA.
 
-4. Write another class `CarOwner` with the method `main()` that creates an instance of the object `Car`and call its methods.  The result of each method call has to be printed using `System.out.println()`.
+4. Write another class `CarOwner` with the method `main()` that creates an instance of the object `Car` and call its methods. The result of each method call has to be printed using `System.out.println()`.
 
 5. Create a subclass of `Car` named `JamesBondCar` and override the method `drive()` there. Now use the following formula to calculate the distance: `distance = howlong*180;`
 +

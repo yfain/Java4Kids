@@ -1,5 +1,4 @@
-:toc:
-:toclevels: 4
+:toc-placement!:
 :imagesdir: ./
 
 == Chapter 4. Java Building Blocks
@@ -120,11 +119,11 @@ public class FishMaster {
  
   // Try to have the fish go below 100 feet	
 	
-  myFish.dive(2);  // go 2 feet down
-	myFish.dive(97); // go another 97 feet down
-	myFish.dive(3);  // go 3 more feet down
+   myFish.dive(2);  // go 2 feet down
+	 myFish.dive(97); // go another 97 feet down
+	 myFish.dive(3);  // go 3 more feet down
 		
-	myFish.sleep();
+	 myFish.sleep();
   }
 }
 ----
@@ -214,14 +213,13 @@ public class ReportCard {
 		grade = 'A';
 	} else if (testResult >= 80 && testResult < 90){
 	      grade = 'B';
-    }else if (testResult >= 70 && testResult < 80){
+  }else if (testResult >= 70 && testResult < 80){
 	    	grade = 'C';
 	}else {
 	    	grade = 'D';
 	}
 	
-	return grade;
-   
+	return grade; 
  }
 
  public static void main(String[] args){

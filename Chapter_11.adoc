@@ -122,7 +122,7 @@ public class MyByteWriter {
             myFile.write(someData[i]);        // <3>
         }
     } catch (IOException ioe) {
-        System.out.println("Could not write into the file: " + ioe.getMessage());     //  <4>
+        System.out.println("Could not write into the file: " + ioe.getMessage());     // <4>
     }
   }
 }
@@ -598,7 +598,7 @@ public class FileCopy {
    Path destinationPath = Paths.get(args[1]);
     try {
        Files.copy(sourcePath, destinationPath);
-       System.out.println("The file " + args[0] + " iscopied to " + args[1]);
+       System.out.println("The file " + args[0] + " is copied to " + args[1]);
 
     } catch (IOException ioe) {
        System.out.println("Can't copy file: " +

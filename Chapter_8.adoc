@@ -125,17 +125,17 @@ The rest is easy. Just use the injected values in you event handler. The code of
 ----
 public class Controller {
 
-  @FXML private TextField id;            //  <1>
+  @FXML private TextField id;            // <1>
 
-  @FXML private PasswordField pwd;       //  <1>
+  @FXML private PasswordField pwd;       // <1>
 
   public void signInClicked(ActionEvent evt){
 
-    String userID = id.getText();      //   <2> 
-    String password = pwd.getText();   //   <2>
+    String userID = id.getText();      // <2> 
+    String password = pwd.getText();   // <2>
 
-    if (!"Yakov".equals(userID)){      //    <3>
-      id.setStyle("-fx-background-color:lightpink;"); //<4>
+    if (!"Yakov".equals(userID)){      // <3>
+      id.setStyle("-fx-background-color:lightpink;"); // <4>
     } else{
       id.setStyle("-fx-background-color:white;");    // <5>
     }
@@ -201,27 +201,27 @@ public class MainPureJava extends Application {
     userPwdLbl.getStyleClass().add("bluelabel");
     PasswordField userPwdTxt = new PasswordField();
 
-    GridPane root = new GridPane();              //  <3> 
+    GridPane root = new GridPane();              // <3> 
     root.setVgap(20);
     root.setPadding(new Insets(10));
     root.setAlignment(Pos.CENTER);
     root.setId("root");
 
     // Setting constraints for firs 2 rows
-    GridPane.setConstraints(userIdLbl, 0, 0);    //  <4>
+    GridPane.setConstraints(userIdLbl, 0, 0);    // <4>
     GridPane.setConstraints(userIdTxt, 1, 0);
     GridPane.setConstraints(userPwdLbl, 0, 1);
     GridPane.setConstraints(userPwdTxt, 1, 1);
 
     root.getChildren().addAll(userIdLbl, userIdTxt, 
-    userPwdLbl, userPwdTxt);                      //  <5>
+    userPwdLbl, userPwdTxt);                      // <5>
 
 
-    Button signInBtn = new Button ("Sign In");    //  <6>
+    Button signInBtn = new Button ("Sign In");    // <6>
     signInBtn.setId("submitBtn");  // used in CSS
 
     // Event handler with lambda expression
-    signInBtn.setOnAction(evt -> {                 //  <7> 
+    signInBtn.setOnAction(evt -> {                 // <7> 
 
         String userID = userIdTxt.getText();
         String password = userPwdTxt.getText();
@@ -499,10 +499,10 @@ public class ControllerLongRunningThread {
       } catch (InterruptedException interExp) {
           interExp.printStackTrace();
       }
-    };                                                //  <4>
+    };                                                // <4>
 
-    Thread workerThread = new Thread(loginTask);      //  <5>
-    workerThread.start();                             //  <6>
+    Thread workerThread = new Thread(loginTask);      // <5>
+    workerThread.start();                             // <6>
   }
 }
 ----
