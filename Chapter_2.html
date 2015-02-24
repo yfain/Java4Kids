@@ -755,22 +755,31 @@ p { margin-bottom: 1.25rem; }
 <p>There are two version of IDEA IDE - Ultimate and Community. The Ultimate version is not free, but it has additional features useful for developing enterprise applications. But this book is about learning basics of Java programming, and using free Community edition is all we need.</p>
 </div>
 <div class="paragraph">
-<p>Open the Web page <a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> and click on the <em>Download Community</em> button. It&#8217;ll download the installer program with the name that starts with <em>ideaIC</em> - just run it. On MAC OS the installer doesn&#8217;t ask any questions. On Windows, you&#8217;ll need to select the folder where IDEA will be install as shown below. Windows installer will also offer to create a desktop icon for IDEA - agree with this.</p>
+<p>Open the Web page <a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> and click on the <em>Download Community</em> button. It&#8217;ll download the installer program with the name that starts with <em>ideaIC</em> - just run it. On MAC OS the installer doesn&#8217;t ask any questions. Just drag the icon onto the Applications folder.</p>
+</div>
+<div id="FIG2-0-0" class="imageblock">
+<div class="content">
+<img src=".//images/fig_2_install_idea_mac.png" alt="fig 2 install idea mac">
+</div>
+<div class="title">Figure 1. Installing IDEA on MAC OS</div>
+</div>
+<div class="paragraph">
+<p>On Windows, you&#8217;ll need to select the folder where IDEA will be install as shown below. Windows installer will also offer to create a desktop icon for IDEA - agree with this.</p>
 </div>
 <div id="FIG2-0" class="imageblock">
 <div class="content">
 <img src=".//images/fig_2_00.png" alt="fig 2 00">
 </div>
-<div class="title">Figure 1. Selecting the destination folder on Windows</div>
+<div class="title">Figure 2. Selecting the destination folder on Windows</div>
 </div>
 <div class="paragraph">
-<p>In several second you&#8217;ll get the IDEA installed. If you use MAC OS, find it using the Spotlight on the top right corner of the screen and click on it. If you use Windows, click on the newly created IDEA icon on the desktop. The first question IDEA asks is if you want to import the settings from the older versions of IDEA - no we don&#8217;t. Next comes this Welcome screen:</p>
+<p>In several seconds you&#8217;ll get the IDEA installed. If you use MAC OS, find it using the Spotlight on the top right corner of the screen and click on it. If you use Windows, click on the newly created IDEA icon on the desktop. The first question IDEA asks is if you want to import the settings from the older versions of IDEA - no we don&#8217;t. Next comes this Welcome screen:</p>
 </div>
 <div id="FIG2-1" class="imageblock">
 <div class="content">
 <img src=".//images/fig_2_01.png" alt="fig 2 01">
 </div>
-<div class="title">Figure 2. Welcome to IntelliJ IDEA Community Edition</div>
+<div class="title">Figure 3. Welcome to IntelliJ IDEA Community Edition</div>
 </div>
 </div>
 <div class="sect2">
@@ -782,7 +791,7 @@ p { margin-bottom: 1.25rem; }
 <div class="content">
 <img src=".//images/fig_2_02.png" alt="fig 2 02">
 </div>
-<div class="title">Figure 3. Selecting the project type</div>
+<div class="title">Figure 4. Selecting the project type</div>
 </div>
 <div class="paragraph">
 <p>Yes, we want to create a Java project. In IDEA projects consist of modules. By selecting Java we state that our project will have a Java module. Hit the button Next and then again on the following window that will ask about selecting a template. Now we need to give our project a name and select the JDK to be used with this project.</p>
@@ -791,7 +800,7 @@ p { margin-bottom: 1.25rem; }
 <div class="content">
 <img src=".//images/fig_2_03.png" alt="fig 2 03">
 </div>
-<div class="title">Figure 4. Selecting the project name and JDK</div>
+<div class="title">Figure 5. Selecting the project name and JDK</div>
 </div>
 <div class="paragraph">
 <p>We don&#8217;t want our project to be <em>untitled</em>, so replace this name with <em>hello</em> in the top box. Note how the name of the folder in the second box changes accordingly. Now you need to select the JDK. If you never worked with Java before, the only JDK you have is the one installed in Chapter 1.  But Java programmers sometimes have more than one JDK installed. For example, the may not be allowed to use the latest JDK 8 for work projects, so the keep the JDK 7 around, but all the fun projects will be created with JDK 8.
@@ -804,7 +813,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="content">
 <img src=".//images/fig_2_04.png" alt="fig 2 04">
 </div>
-<div class="title">Figure 5. The project name and JDK selected</div>
+<div class="title">Figure 6. The project name and JDK selected</div>
 </div>
 <div class="paragraph">
 <p>Press the button Finish and your new project is created. Every time you start IDEA it offers you little tips on how to use its cool features. You can opt out from this, but I recommend you to read them - you might find some little gems that will make your work with IDEA more fun. The project <em>hello</em> is ready, and you can start writing your Hello World program.</p>
@@ -813,13 +822,13 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="content">
 <img src=".//images/fig_2_05.png" alt="fig 2 05">
 </div>
-<div class="title">Figure 6. The project hello</div>
+<div class="title">Figure 7. The project hello</div>
 </div>
 <div class="paragraph">
 <p>This project consists from the module hello and External Libraries. The source code of your program(s) will be located in the folder src in the hello module. The file hello.iml is the place where IDEA remembers the setting of the project hello - you don&#8217;t need to touch it. Under External Libraries you&#8217;ll find a bunch of files with the names that end with <em>.jar</em>. These JAR&#8217;s are the libraries of code that came with JDK.</p>
 </div>
 <div class="paragraph">
-<p>A simple project like our <code>HelloWorld</code> will have just one file with the source code – <code>HelloWorld.java</code>.  Pretty soon we’ll create more advanced projects that will consist of several files. Then we may need to package them in one or more JARs too.</p>
+<p>A simple project like our HelloWorld will have just one file with the source code HelloWorld.java. More advanced projects will consist of multiple files. To simplify the application deployment all these files could packaged in one or more JARs too. Both JRE and Java SDK include dozens of JARs. Java comes with a jar utility that is used to archive multiple Java classes and other files into a file having the name extension .jar. Internal formats of .jar and .zip files are the same. If your IDEA project will have multiple classes, you can package them into one JAR by using the menu File | Project Structure | Artifacts and then selecting the type JAR.</p>
 </div>
 <div id="FIG2-5-1" class="imageblock">
 <div class="content">
@@ -836,7 +845,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="content">
 <img src=".//images/fig_2_06.png" alt="fig 2 06">
 </div>
-<div class="title">Figure 7. Naming the class</div>
+<div class="title">Figure 8. Naming the class</div>
 </div>
 <div class="paragraph">
 <p>In a second IDEA will create an empty class <code>HelloWorld</code> shown below. The white area on the right is a very smart text editor that will allow you to not only enter the text of your program, but will also help you suggesting what to type next as you type. This editor is really smart!</p>
@@ -845,7 +854,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="content">
 <img src=".//images/fig_2_07.png" alt="fig 2 07">
 </div>
-<div class="title">Figure 8. An empty class HelloWorld</div>
+<div class="title">Figure 9. An empty class HelloWorld</div>
 </div>
 <div class="paragraph">
 <p>The text between <code>/<strong>*</code> and <code></strong>/</code> is one of the ways to write comments in your programs. This is an area where you can type any text you want that describes your program in general or any particular code inside the class. We&#8217;ll talk about various ways to write comments in the next chapter.</p>
@@ -865,7 +874,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="content">
 <img src=".//images/fig_2_08.png" alt="fig 2 08">
 </div>
-<div class="title">Figure 9. Code Competion</div>
+<div class="title">Figure 10. Code Competion</div>
 </div>
 <div class="paragraph">
 <p>Pressing the button <em>Tab</em> on the keyboard will turn <code>pu</code> into <code>public</code>. Nice! You can also press the keys <em>Control-Space</em> to see suggested code completion at any time. But there is even a faster way to enter the declaration of the <code>main</code> method. Just type in the first letters of these keywords <code>psvm</code>, and press the <em>Tab</em> key. IDEA will unfold these letters into the following:</p>
@@ -911,7 +920,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="content">
 <img src=".//images/fig_2_09.png" alt="fig 2 09">
 </div>
-<div class="title">Figure 10. Compiler caught a syntax error</div>
+<div class="title">Figure 11. Compiler caught a syntax error</div>
 </div>
 <div class="paragraph">
 <p>As your project become larger, it’ll have several files and compiler may catch more than one error. Can you see a list of errors from all classes? By default, IDEA doesn&#8217;t compile all the classes from your project. But you can request compiling of the entire project every time you make a change or save the source code. Go to the IDEA menu Preferences (or Settings), select <em>Compiler</em> and check off the option <em>Make project automatically</em>. Now select the menu View | Tool Windows | Problems to see all the problems in one list:</p>
@@ -920,7 +929,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="content">
 <img src=".//images/fig_2_10.png" alt="fig 2 10">
 </div>
-<div class="title">Figure 11. The Problems View</div>
+<div class="title">Figure 12. The Problems View</div>
 </div>
 <div class="paragraph">
 <p>In our case we have only one compiler error. Java reached the end of file while parsing (trying to understand your code), and something could not be found - the curly brace, of course. But what this mysterious <em>(8,6)</em> means? The error was found in the line number 8 around the sixth character from the left. To see line numbers, right-click on the gray vertical bar to the left of the code editor and select the option Show Line Numbers. Now it&#8217;s easier to map the error messages to the lines in the source code:</p>
@@ -929,7 +938,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="content">
 <img src=".//images/fig_2_11.png" alt="fig 2 11">
 </div>
-<div class="title">Figure 12. Displaying the line numbers</div>
+<div class="title">Figure 13. Displaying the line numbers</div>
 </div>
 </div>
 <div class="sect3">
@@ -944,7 +953,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="content">
 <img src=".//images/fig_2_12.png" alt="fig 2 12">
 </div>
-<div class="title">Figure 13. Running HelloWorld in IDEA</div>
+<div class="title">Figure 14. Running HelloWorld in IDEA</div>
 </div>
 </div>
 </div>
@@ -1003,7 +1012,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="content">
 <img src=".//images/fig_2_15.png" alt="fig 2 15">
 </div>
-<div class="title">Figure 14. Peeking inside the System class with code completion</div>
+<div class="title">Figure 15. Peeking inside the System class with code completion</div>
 </div>
 <div class="paragraph">
 <p>This tells me that the Java class System has a variable <code>out</code> of type <code>PrintStream</code>. Wonder what&#8217;s <code>PrintStream</code>? Click on <code>out`in your code and select the menu <em>View | Quick Documentation</em> to read the dry documentation. The fact that after `out</code> goes  a period followed by a method name after`out.println()` tells us that <code>out</code> represents an object, which aparently has a method called <code>println()</code>.</p>
@@ -1026,7 +1035,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-23 14:58:16 EST
+Last updated 2015-02-24 15:47:06 EST
 </div>
 </div>
 </body>
