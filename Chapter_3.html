@@ -899,10 +899,26 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <div class="sect2">
 <h3 id="_java-data-types-and-variables"><a class="anchor" href="#_java-data-types-and-variables"></a>Java Data Types and Variables</h3>
 <div class="paragraph">
-<p>In Java values are stored in <em>variables</em>. For example, the class attribute that has a value of the disk size can be stored in the variable <code>hardDiskSize</code> of type <code>int</code>:</p>
+<p>If you already started learning algebra in school, you are familiar with the expressions like <code>x=2</code>, which means that the variable <code>x</code> represents the number 2. In programming, we used variables a lot.  But in programming a variable can store a value in computer’s memory so you can access these values from various methods in your classes.  Using the same algebra example, we can say that we assign the value of 2 to the variable <code>x</code>. The equal sign represents the assignement of the value located to the right of the equal sign to the variable located on the left.</p>
 </div>
 <div class="paragraph">
-<p><code>int hardDiskSize;</code></p>
+<p>But Java variables can store not only numbers, but other types of data too, so we need to declare the variable type and the name and then assign some value to it.  For example, the class attribute that has a value of the disk size can be stored in the variable of type <code>String</code> that&#8217;s called <code>hardDiskSize</code> that can be declared like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>String hardDiskSize;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the size of the hard disk is 500GB, we can assign this value to the variable <code>hardDiskSize</code> as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>hardDiskSize="500GB";</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>String</code> values are placed inside the quotes, and the numbers aren&#8217;t.</p>
 </div>
 <div class="paragraph">
 <p>The method parameters (a.k.a. arguments) are also stored in variables. The method saveStore has two arguments: <code>playerName</code> of type <code>String</code> and <code>score</code> of type <code>int</code>:</p>
@@ -1463,7 +1479,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-23 15:00:25 EST
+Last updated 2015-02-24 16:44:19 EST
 </div>
 </div>
 </body>
