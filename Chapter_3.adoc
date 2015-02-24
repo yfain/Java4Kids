@@ -119,9 +119,23 @@ In programmer's jargon, you can create multiple instances of the `PlayStation4` 
 
 === Java Data Types and Variables
 
-In Java values are stored in _variables_. For example, the class attribute that has a value of the disk size can be stored in the variable `hardDiskSize` of type `int`:
+If you already started learning algebra in school, you are familiar with the expressions like `x=2`, which means that the variable `x` represents the number 2. In programming, we used variables a lot.  But in programming a variable can store a value in computer’s memory so you can access these values from various methods in your classes.  Using the same algebra example, we can say that we assign the value of 2 to the variable `x`. The equal sign represents the assignement of the value located to the right of the equal sign to the variable located on the left.
 
-`int hardDiskSize;`
+But Java variables can store not only numbers, but other types of data too, so we need to declare the variable type and the name and then assign some value to it.  For example, the class attribute that has a value of the disk size can be stored in the variable of type `String` that's called `hardDiskSize` that can be declared like this:
+
+[java, source]
+----
+String hardDiskSize;
+----
+
+If the size of the hard disk is 500GB, we can assign this value to the variable `hardDiskSize` as follows:
+
+[java, source]
+----
+hardDiskSize="500GB";
+----
+
+`String` values are placed inside the quotes, and the numbers aren't.
 
 The method parameters (a.k.a. arguments) are also stored in variables. The method saveStore has two arguments: `playerName` of type `String` and `score` of type `int`:
 

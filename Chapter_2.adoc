@@ -46,7 +46,7 @@ Yes, we want to create a Java project. In IDEA projects consist of modules. By s
 .Selecting the project name and JDK
 image::images/fig_2_03.png[]
 
-We don't want our project to be _untitled_, so replace this name with _hello_ in the top box. Note how the name of the folder in the second box changes accordingly. Now you need to select the JDK. If you never worked with Java before, the only JDK you have is the one installed in Chapter 1.  But Java programmers sometimes have more than one JDK installed. For example, the may not be allowed to use the latest JDK 8 for work projects, so the keep the JDK 7 around, but all the fun projects will be created with JDK 8.
+We don't want our project to be _untitled_, so replace this name with _hello_ in the top box. Note how the name of the folder in the Project location box changes accordingly.When you’ll try to do it on your computer, the project location will be different than mine. Now you need to select the JDK. If you never worked with Java before, the only JDK you have is the one installed in Chapter 1.  But Java programmers sometimes have more than one JDK installed. For example, the may not be allowed to use the latest JDK 8 for work projects, so the keep the JDK 7 around, but all the fun projects will be created with JDK 8.
 We don't have such restrictions, so JDK 8 is our only choice. But where to find it?
 
 Click on the button New, select the menu item _JDK_, and you'll see a familiar screen for browsing the folders on your computer. The Chapter 1 in the section _Installing Java on Your Computer_ has the answer for both MAC and Windows. Since I use MAC, I'm choosing _Library_, _Java_, _JavaVirtualMachines_, _jdk1.8.0.jdk_. Now the previous window looks different.
