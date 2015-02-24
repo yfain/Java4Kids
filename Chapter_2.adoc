@@ -11,14 +11,21 @@ In this chapter we'll start with downloading and installing IntelliJ IDEA IDE (l
 
 There are two version of IDEA IDE - Ultimate and Community. The Ultimate version is not free, but it has additional features useful for developing enterprise applications. But this book is about learning basics of Java programming, and using free Community edition is all we need. 
 
-Open the Web page http://www.jetbrains.com/idea/download/[IntelliJ IDEA] and click on the _Download Community_ button. It'll download the installer program with the name that starts with _ideaIC_ - just run it. On MAC OS the installer doesn't ask any questions. On Windows, you'll need to select the folder where IDEA will be install as shown below. Windows installer will also offer to create a desktop icon for IDEA - agree with this.
+Open the Web page http://www.jetbrains.com/idea/download/[IntelliJ IDEA] and click on the _Download Community_ button. It'll download the installer program with the name that starts with _ideaIC_ - just run it. On MAC OS the installer doesn't ask any questions. Just drag the icon onto the Applications folder.
+
+[[FIG2-0-0]]
+.Installing IDEA on MAC OS
+image::images/fig_2_install_idea_mac.png[] 
+
+
+On Windows, you'll need to select the folder where IDEA will be install as shown below. Windows installer will also offer to create a desktop icon for IDEA - agree with this.
 
 [[FIG2-0]]
 .Selecting the destination folder on Windows
 image::images/fig_2_00.png[] 
 
 
-In several second you'll get the IDEA installed. If you use MAC OS, find it using the Spotlight on the top right corner of the screen and click on it. If you use Windows, click on the newly created IDEA icon on the desktop. The first question IDEA asks is if you want to import the settings from the older versions of IDEA - no we don't. Next comes this Welcome screen: 
+In several seconds you'll get the IDEA installed. If you use MAC OS, find it using the Spotlight on the top right corner of the screen and click on it. If you use Windows, click on the newly created IDEA icon on the desktop. The first question IDEA asks is if you want to import the settings from the older versions of IDEA - no we don't. Next comes this Welcome screen: 
 
 [[FIG2-1]]
 .Welcome to IntelliJ IDEA Community Edition
@@ -56,7 +63,7 @@ image::images/fig_2_05.png[]
 
 This project consists from the module hello and External Libraries. The source code of your program(s) will be located in the folder src in the hello module. The file hello.iml is the place where IDEA remembers the setting of the project hello - you don't need to touch it. Under External Libraries you'll find a bunch of files with the names that end with _.jar_. These JAR's are the libraries of code that came with JDK. 
 
-A simple project like our `HelloWorld` will have just one file with the source code – `HelloWorld.java`.  Pretty soon we’ll create more advanced projects that will consist of several files. Then we may need to package them in one or more JARs too. 
+A simple project like our HelloWorld will have just one file with the source code HelloWorld.java. More advanced projects will consist of multiple files. To simplify the application deployment all these files could packaged in one or more JARs too. Both JRE and Java SDK include dozens of JARs. Java comes with a jar utility that is used to archive multiple Java classes and other files into a file having the name extension .jar. Internal formats of .jar and .zip files are the same. If your IDEA project will have multiple classes, you can package them into one JAR by using the menu File | Project Structure | Artifacts and then selecting the type JAR. 
 
 [[FIG2-5-1]]
 image::images/fig_2_Jar.png[]
