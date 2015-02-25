@@ -136,17 +136,19 @@ theFish = (Fish) fishTank.get(i);
 
 === Selected Data Collections
 
-Now let's see how to work with collections of data. Java  packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
+Now let's see how to work with collections of data. Say you have a hundred of songs in your MP3 player. It's a collection. If you'll create a class `Song` you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.
+
+Java  packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
 
 The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to the concept of multi-threadinglater in this chapter, but the coverage of  concurrent collections doesn't belong to the introductory book like this one.
 
 ==== The Class ArrayList
 
-In Chapter 4 you've got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don't know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class `java.util.ArrayList` can give you more flexibility - it can grow or shrink in size as needed.
+In Chapter 4 you've got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don't know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class `ArrayList` can give you more flexibility - it can grow or shrink in size as needed. If you can think of a list of something - a list of songs, a To-Do list, a list of friends names. Pretty much any objects  that can be used with the word _list_ can be stored in an `ArrayList`.
 
 Why use arrays, then?  Let’s just always use `ArrayList`! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The `ArrayList` works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.   
 
-To create and populate an `ArrayList` you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the `ArrayList` by calling its method `add()`. The next little program will populate an `ArrayList`  with `String` objects and then print each element of this collection.
+To create and populate an `ArrayList` you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the `ArrayList` by calling its method `add`. The next little program will populate an `ArrayList`  with `String` objects and then print each element of this collection.
 
 [source, java]
 ----
@@ -184,7 +186,7 @@ Friend #2 is David
 Friend #3 is Roy
 ----
 
-The method `get()` extracts the element located at the specified position in the `ArrayList`. Since you can store any objects in this collection, the method `get()` returns each element of the `Object` type. The program to _cast_ this object to a proper data type. We did not have to do it in the previous example only because we stored `String` objects in the collection `friends`, and Java knows how to convert an `Object` to a `String` automatically. 
+The method `get` extracts the element located at the specified position in the `ArrayList`. Since you can store any objects in this collection, the method `get` returns each element of the `Object` type. The program to _cast_ this object to a proper data type. We did not have to do it in the previous example only because we stored `String` objects in the collection `friends`, and Java knows how to convert an `Object` to a `String` automatically. 
 
 Let's see how you can work with some other objects in `ArrayList`, for example instances of the class `Fish` shown next. 
 
@@ -319,7 +321,7 @@ public class HashTableDemo {
 }
 ----
 
-In this example I used the first name as the key in the method `put()` that adds elements to a `Hashtable`.  Hence one contact can be referred by the key `get("Jackie")`, and the other one as `get("Art")`. The method `get()` returns the collection element as the `Object` type, so I had to cast it to `ContactDetail` to be able to see the field `phone`.
+In this example I used the first name as the key in the method `put` that adds elements to a `Hashtable`.  Hence one contact can be referred by the key `get("Jackie")`, and the other one as `get("Art")`. The method `get` returns the collection element as the `Object` type, so I had to cast it to `ContactDetail` to be able to see the field `phone`.
 
 [[FIG6-4-1]]
 .Contacts can be programmed with Hashtable
@@ -328,7 +330,7 @@ image::images/fig_6-04-1.png[]
 
 `HashTable` requires each key to be unique. Say you have another contact named `Art` and will create a new instance of the `ContactDetail` object. If you'll add it to the same collection under the same key - `friends.put("Art", friend3);`  it'll replace the contact details of the first Art with the data of the second one. This happens because Java `Hashtable` internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like `ArtFromNYC` or use another Java collection like `ArrayList` to store your contacts. By the way, `ArrayList` even allows you to store duplicates (objects with the same values), while `Hashtable` doesn't. 
 
-I'm not going to cover other Java collections here, but if you'd like to do your own research, read about such collections from the `java.util` package as `HashMap`, `HashSet`, and `LinkedList`. There is also a class `Collections` that has a bunch of useful static methods to operate on your data collections (e.g. `sort()`, `copy()`, `binarySearch()` et al.). 
+I'm not going to cover other Java collections here, but if you'd like to do your own research, read about such collections from the `java.util` package as `HashMap`, `HashSet`, and `LinkedList`. There is also a class `Collections` that has a bunch of useful static methods to operate on your data collections (e.g. `sort`, `copy`, `binarySearch` et al.). 
 
 === Introduction to Generics
 
@@ -448,7 +450,7 @@ public class HashTableGenericsDemo {
 }
 ----
 
-The compiler will complain about the line, where I'm trying to call the method `put()` with two `String` objects as arguments. The Java compiler will generate an error message that it can't apply two `String` parameters to a `Hashtable` that was declared with parameters `<String, ContactDetail>`. 
+The compiler will complain about the line, where I'm trying to call the method `put` with two `String` objects as arguments. The Java compiler will generate an error message that it can't apply two `String` parameters to a `Hashtable` that was declared with parameters `<String, ContactDetail>`. 
 
 Another important thing to note is that there is no casting needed when the program gets the information about Jackie's phone. Now the `friends` collection knows from the very beginning that it stores not just some `Object` types, but the `ContactDetail` instances.
 
@@ -613,7 +615,7 @@ public class ContactDetail {
 }
 ----
 +
-Note that I'm overriding the method `toString()` that exists in the class `Object`.
+Note that I'm overriding the method `toString` that exists in the class `Object`.
 
 4. In IntelliJ IDEA right-click on the class name and select the options Refactor | Encapsulate Fields to generate public getters and setters for all fields.
 
@@ -621,10 +623,10 @@ Note that I'm overriding the method `toString()` that exists in the class `Objec
 
 6. Create two or more instances of `ContactDetail` object and populated them with your friends' data using setters.
 
-7. Add all instances of `ContactDetail` to the `friends` collection by using the method `add()`.
+7. Add all instances of `ContactDetail` to the `friends` collection by using the method `add`.
 
 8. Write a for-each loop that will iterate through the collection friends and print all their contact information 
-by simply printing each object from the collection `friends`. Since the class `ContactDetails` has an overriden method `toString()`, you can simply print the objects as shown below - the method `toString()` will be invoked automatically:
+by simply printing each object from the collection `friends`. Since the class `ContactDetails` has an _overriden_ method `toString`, you can simply print the objects as shown below - the method `toString` will be invoked automatically:
 +
 [source, java]
 ---- 

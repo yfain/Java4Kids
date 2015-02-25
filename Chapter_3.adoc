@@ -57,7 +57,7 @@ class VideoGame {
 }
 ---- 
 
-This class has two attributes `color` and `price`. The color attribute has the `String` data type, which is used for storing any text. The `price` is of a type `int` for storing integer numbers. The class `VideoGame` has three _methods_: `start`, `stop`, and `saveScore`. These are the actions that our video game should perform. Each of these methods declarations starts with a keyword void, which means that these method do not return a value to the calling program. In the next chapter I’ll show you a class `Fish`, which will include a method `dive` that returns a value. 
+This class has two attributes `color` and `price`. The color attribute has the `String` data type, which is used for storing any text. The `price` is of a type `int` for storing integer numbers. The class `VideoGame` has three _methods_: `start`, `stop`, and `saveScore`. These are the actions that our video game should perform. Each of these methods declarations starts with a keyword void, which means that these method do not return a value to the caller of the method. In the next chapter I’ll show you a class `Fish`, which will include a method `dive` that returns a value. 
 
 At this point each of these methods has just a single line that starts with two slashes //. 
 
@@ -193,7 +193,7 @@ To see the result of the score calculations, just  click on the console tab at t
 
 `My score is 6`
 
-In this example the argument of the method `println()` was constructed from two pieces – the text “My score is ” and the value of the variable `myScore`. Creation of a `String` from pieces is called _concatenation_.  Even though `myScore` is a number, Java is smart enough to convert this variable into a `String`, and then attach it to the text "My Score is ".
+In this example the argument of the method `println()` was constructed from two pieces – the text “My score is ” and the value of the variable `myScore`. Putting two or more strings together is called _concatenation_. Even though `myScore` is a number, Java is smart enough to convert this variable into a `String`, and then attach it to the text "My Score is ".
 
 Look at some other ways of changing the values of the variables:
 
