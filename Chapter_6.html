@@ -909,7 +909,10 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <div class="sect2">
 <h3 id="_selected-data-collections"><a class="anchor" href="#_selected-data-collections"></a>Selected Data Collections</h3>
 <div class="paragraph">
-<p>Now let&#8217;s see how to work with collections of data. Java  packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in  memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
+<p>Now let&#8217;s see how to work with collections of data. Say you have a hundred of songs in your MP3 player. It&#8217;s a collection. If you&#8217;ll create a class <code>Song</code> you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.</p>
+</div>
+<div class="paragraph">
+<p>Java  packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
 </div>
 <div class="paragraph">
 <p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to the concept of multi-threadinglater in this chapter, but the coverage of  concurrent collections doesn&#8217;t belong to the introductory book like this one.</p>
@@ -917,13 +920,13 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <div class="sect3">
 <h4 id="_the-class-arraylist"><a class="anchor" href="#_the-class-arraylist"></a>The Class ArrayList</h4>
 <div class="paragraph">
-<p>In Chapter 4 you&#8217;ve got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class <code>java.util.ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed.</p>
+<p>In Chapter 4 you&#8217;ve got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class <code>ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed. If you can think of a list of something - a list of songs, a To-Do list, a list of friends names. Pretty much any objects  that can be used with the word <em>list</em> can be stored in an <code>ArrayList</code>.</p>
 </div>
 <div class="paragraph">
 <p>Why use arrays, then?  Let’s just always use <code>ArrayList</code>! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The <code>ArrayList</code> works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.</p>
 </div>
 <div class="paragraph">
-<p>To create and populate an <code>ArrayList</code> you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the <code>ArrayList</code> by calling its method <code>add()</code>. The next little program will populate an <code>ArrayList</code>  with <code>String</code> objects and then print each element of this collection.</p>
+<p>To create and populate an <code>ArrayList</code> you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the <code>ArrayList</code> by calling its method <code>add</code>. The next little program will populate an <code>ArrayList</code>  with <code>String</code> objects and then print each element of this collection.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -963,7 +966,7 @@ Friend #3 is Roy</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>get()</code> extracts the element located at the specified position in the <code>ArrayList</code>. Since you can store any objects in this collection, the method <code>get()</code> returns each element of the <code>Object</code> type. The program to <em>cast</em> this object to a proper data type. We did not have to do it in the previous example only because we stored <code>String</code> objects in the collection <code>friends</code>, and Java knows how to convert an <code>Object</code> to a <code>String</code> automatically.</p>
+<p>The method <code>get</code> extracts the element located at the specified position in the <code>ArrayList</code>. Since you can store any objects in this collection, the method <code>get</code> returns each element of the <code>Object</code> type. The program to <em>cast</em> this object to a proper data type. We did not have to do it in the previous example only because we stored <code>String</code> objects in the collection <code>friends</code>, and Java knows how to convert an <code>Object</code> to a <code>String</code> automatically.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s see how you can work with some other objects in <code>ArrayList</code>, for example instances of the class <code>Fish</code> shown next.</p>
@@ -1118,7 +1121,7 @@ public class HashTableDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>In this example I used the first name as the key in the method <code>put()</code> that adds elements to a <code>Hashtable</code>.  Hence one contact can be referred by the key <code>get("Jackie")</code>, and the other one as <code>get("Art")</code>. The method <code>get()</code> returns the collection element as the <code>Object</code> type, so I had to cast it to <code>ContactDetail</code> to be able to see the field <code>phone</code>.</p>
+<p>In this example I used the first name as the key in the method <code>put</code> that adds elements to a <code>Hashtable</code>.  Hence one contact can be referred by the key <code>get("Jackie")</code>, and the other one as <code>get("Art")</code>. The method <code>get</code> returns the collection element as the <code>Object</code> type, so I had to cast it to <code>ContactDetail</code> to be able to see the field <code>phone</code>.</p>
 </div>
 <div id="FIG6-4-1" class="imageblock">
 <div class="content">
@@ -1130,7 +1133,7 @@ public class HashTableDemo {
 <p><code>HashTable</code> requires each key to be unique. Say you have another contact named <code>Art</code> and will create a new instance of the <code>ContactDetail</code> object. If you&#8217;ll add it to the same collection under the same key - <code>friends.put("Art", friend3);</code>  it&#8217;ll replace the contact details of the first Art with the data of the second one. This happens because Java <code>Hashtable</code> internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like <code>ArtFromNYC</code> or use another Java collection like <code>ArrayList</code> to store your contacts. By the way, <code>ArrayList</code> even allows you to store duplicates (objects with the same values), while <code>Hashtable</code> doesn&#8217;t.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;m not going to cover other Java collections here, but if you&#8217;d like to do your own research, read about such collections from the <code>java.util</code> package as <code>HashMap</code>, <code>HashSet</code>, and <code>LinkedList</code>. There is also a class <code>Collections</code> that has a bunch of useful static methods to operate on your data collections (e.g. <code>sort()</code>, <code>copy()</code>, <code>binarySearch()</code> et al.).</p>
+<p>I&#8217;m not going to cover other Java collections here, but if you&#8217;d like to do your own research, read about such collections from the <code>java.util</code> package as <code>HashMap</code>, <code>HashSet</code>, and <code>LinkedList</code>. There is also a class <code>Collections</code> that has a bunch of useful static methods to operate on your data collections (e.g. <code>sort</code>, <code>copy</code>, <code>binarySearch</code> et al.).</p>
 </div>
 </div>
 </div>
@@ -1267,7 +1270,7 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>The compiler will complain about the line, where I&#8217;m trying to call the method <code>put()</code> with two <code>String</code> objects as arguments. The Java compiler will generate an error message that it can&#8217;t apply two <code>String</code> parameters to a <code>Hashtable</code> that was declared with parameters <code>&lt;String, ContactDetail&gt;</code>.</p>
+<p>The compiler will complain about the line, where I&#8217;m trying to call the method <code>put</code> with two <code>String</code> objects as arguments. The Java compiler will generate an error message that it can&#8217;t apply two <code>String</code> parameters to a <code>Hashtable</code> that was declared with parameters <code>&lt;String, ContactDetail&gt;</code>.</p>
 </div>
 <div class="paragraph">
 <p>Another important thing to note is that there is no casting needed when the program gets the information about Jackie&#8217;s phone. Now the <code>friends</code> collection knows from the very beginning that it stores not just some <code>Object</code> types, but the <code>ContactDetail</code> instances.</p>
@@ -1485,7 +1488,7 @@ The value of i in power of 4 is 1024</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that I&#8217;m overriding the method <code>toString()</code> that exists in the class <code>Object</code>.</p>
+<p>Note that I&#8217;m overriding the method <code>toString</code> that exists in the class <code>Object</code>.</p>
 </div>
 </li>
 <li>
@@ -1498,11 +1501,11 @@ The value of i in power of 4 is 1024</code></pre>
 <p>Create two or more instances of <code>ContactDetail</code> object and populated them with your friends' data using setters.</p>
 </li>
 <li>
-<p>Add all instances of <code>ContactDetail</code> to the <code>friends</code> collection by using the method <code>add()</code>.</p>
+<p>Add all instances of <code>ContactDetail</code> to the <code>friends</code> collection by using the method <code>add</code>.</p>
 </li>
 <li>
 <p>Write a for-each loop that will iterate through the collection friends and print all their contact information
-by simply printing each object from the collection <code>friends</code>. Since the class <code>ContactDetails</code> has an overriden method <code>toString()</code>, you can simply print the objects as shown below - the method <code>toString()</code> will be invoked automatically:</p>
+by simply printing each object from the collection <code>friends</code>. Since the class <code>ContactDetails</code> has an <em>overriden</em> method <code>toString</code>, you can simply print the objects as shown below - the method <code>toString</code> will be invoked automatically:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">for (ContactDetail friend: friends){
@@ -1528,7 +1531,7 @@ Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-11 05:59:17 EST
+Last updated 2015-02-25 10:54:28 EST
 </div>
 </div>
 </body>
