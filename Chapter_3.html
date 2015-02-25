@@ -789,7 +789,7 @@ p { margin-bottom: 1.25rem; }
 </ul>
 </div>
 <div class="paragraph">
-<p>Let’s fill the class <code>VideoGame</code> with some content. This class may have several methods, which can tell <em>what an object of this class can do</em>: start the game, stop it, save the score, ask for additional lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class <code>VideoGame</code> can look like this:</p>
+<p>A method consists of a callable code fragment, that can be called (and executed) by name from another part of the program. For example, a class can have a method named <code>saveScore</code> that contains a dozen of lines of code to save the game score. Let’s add some methods and attributes to the class <code>VideoGame</code>. This class may have several methods, which can tell <em>what an object of this class can do</em>: start the game, stop it, save the score, ask for additional lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class <code>VideoGame</code> can look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -813,7 +813,10 @@ p { margin-bottom: 1.25rem; }
 </div>
 </div>
 <div class="paragraph">
-<p>This class has two attributes <code>color</code> and <code>price</code>. The color attribute has the <code>String</code> data type, which is used for storing any text. The <code>price</code> is of a type <code>int</code> for storing integer numbers. The class <code>VideoGame</code> has three <em>methods</em>: <code>start</code>, <code>stop</code>, and <code>saveScore</code>. These are the actions that our video game should perform. At this point each of these methods has just a single line that starts with two slashes //.</p>
+<p>This class has two attributes <code>color</code> and <code>price</code>. The color attribute has the <code>String</code> data type, which is used for storing any text. The <code>price</code> is of a type <code>int</code> for storing integer numbers. The class <code>VideoGame</code> has three <em>methods</em>: <code>start</code>, <code>stop</code>, and <code>saveScore</code>. These are the actions that our video game should perform. Each of these methods declarations starts with a keyword void, which means that these method do not return a value to the calling program. In the next chapter I’ll show you a class <code>Fish</code>, which will include a method <code>dive</code> that returns a value.</p>
+</div>
+<div class="paragraph">
+<p>At this point each of these methods has just a single line that starts with two slashes //.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -906,7 +909,7 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>String hardDiskSize;</pre>
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">String hardDiskSize;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -914,7 +917,7 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>hardDiskSize="500GB";</pre>
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">hardDiskSize="500GB";</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1479,7 +1482,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-24 16:44:19 EST
+Last updated 2015-02-24 21:57:07 EST
 </div>
 </div>
 </body>
