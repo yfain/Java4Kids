@@ -34,7 +34,7 @@ This class is empty - it knows nothing and can't do anything, because there is n
 * Methods define actions that a class can perform.
 * Attributes describe various properties of a class.
 
-Let’s fill the class `VideoGame` with some content. This class may have several methods, which can tell _what an object of this class can do_: start the game, stop it, save the score, ask for additional lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class `VideoGame` can look like this:
+A method consists of a callable code fragment, that can be called (and executed) by name from another part of the program. For example, a class can have a method named `saveScore` that contains a dozen of lines of code to save the game score. Let’s add some methods and attributes to the class `VideoGame`. This class may have several methods, which can tell _what an object of this class can do_: start the game, stop it, save the score, ask for additional lives on Facebook, and so on. This class also may have some attributes (a.k.a. fields): color, price and others. An object that represents the class `VideoGame` can look like this:
 
 [source, java]
 ----
@@ -57,7 +57,9 @@ class VideoGame {
 }
 ---- 
 
-This class has two attributes `color` and `price`. The color attribute has the `String` data type, which is used for storing any text. The `price` is of a type `int` for storing integer numbers. The class `VideoGame` has three _methods_: `start`, `stop`, and `saveScore`. These are the actions that our video game should perform. At this point each of these methods has just a single line that starts with two slashes //. 
+This class has two attributes `color` and `price`. The color attribute has the `String` data type, which is used for storing any text. The `price` is of a type `int` for storing integer numbers. The class `VideoGame` has three _methods_: `start`, `stop`, and `saveScore`. These are the actions that our video game should perform. Each of these methods declarations starts with a keyword void, which means that these method do not return a value to the calling program. In the next chapter I’ll show you a class `Fish`, which will include a method `dive` that returns a value. 
+
+At this point each of these methods has just a single line that starts with two slashes //. 
 
 NOTE: If a line starts with two slashes, it contains a _single line comment_ - just the description of a code fragment. If you need to write several lines of comments, just type in a slash followed by the asterisk `/*`, then key in as many lines of a text as you want followed by `*/`. 
 
@@ -123,14 +125,14 @@ If you already started learning algebra in school, you are familiar with the exp
 
 But Java variables can store not only numbers, but other types of data too, so we need to declare the variable type and the name and then assign some value to it.  For example, the class attribute that has a value of the disk size can be stored in the variable of type `String` that's called `hardDiskSize` that can be declared like this:
 
-[java, source]
+[source, java]
 ----
 String hardDiskSize;
 ----
 
 If the size of the hard disk is 500GB, we can assign this value to the variable `hardDiskSize` as follows:
 
-[java, source]
+[source, java]
 ----
 hardDiskSize="500GB";
 ----
