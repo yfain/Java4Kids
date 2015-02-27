@@ -639,6 +639,6 @@ for (ContactDetail friend: friends){
 +
 [source, java]
 ----
-Name: Jackie Allen, Facebook ID:  jallen, phone: 212-545-5545, email: jallen@gmail.com
-Name: Art Jones, Facebook ID:  ajones, phone: 212-333-2121, email: ajones@gmail.com
+Name: Jackie Allen, Facebook ID: jallen, phone: 212-545-5545, email: jallen@gmail.com
+Name: Art Jones, Facebook ID: ajones, phone: 212-333-2121, email: ajones@gmail.com
 ----

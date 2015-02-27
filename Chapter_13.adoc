@@ -1126,4 +1126,4 @@ private void updateScore(){
 
 The code that comes with the book has this version of the method `updateScore` implemented. Your goal is to display the score in a nice font on the bottom left corner of the table. you can learn how to work with the `Text` and `Font` classes by studying Oracle's tutorial http://docs.oracle.com/javase/8/javafx/user-interface-tutorial/text.htm#JFXUI734["Working with Text in JavaFX Applications"].
 
-Don't forget to implement the Start New Game functionality. You'll need to write a method `newGame`, where you should reset the scores and put the paddles and the ball in the starting positions.
+Don't forget to implement the Start New Game functionality. You'll need to write a method `newGame`, where you should reset the scores and place the paddles and the ball in the starting positions.
