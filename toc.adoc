@@ -3,7 +3,7 @@
 
 = Java for Kids
 
-This Web site contains the early drafts of the book "Java for Kids" by Yakov Fain. The final version will have about 250 pages with more detailed explanations. The printed book should be published by http://www.nostarch.com/[No Starch Press] in May of 2015 and can be pre-ordered on http://www.amazon.com/Java-Kids-Yakov-Fain/dp/1593276370/ref=sr_1_5[Amazon]. The publisher has allowed posting this content online so the author can get your comments even before the book goes to print. My son http://instagram.com/yurifain[Yuri Fain] is creating illustrations for this book.
+This Web site contains the early drafts of the book "Teach your Kids Java" by Yakov Fain. The final version will have 250+ pages with more detailed explanations. The printed book should be published by http://www.nostarch.com/[No Starch Press] in May of 2015 and can be pre-ordered on http://www.amazon.com/Java-Kids-Yakov-Fain/dp/1593276370/ref=sr_1_5[Amazon]. The publisher has allowed posting this content online so the author can get your comments even before the book goes to print. My son http://instagram.com/yurifain[Yuri Fain] is creating illustrations for this book.
 
 If you find an error in code samples email your comments directly to Yakov at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_NoStarchPress_code[code samples repository] on GitHub. 
 
