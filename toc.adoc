@@ -3,7 +3,17 @@
 
 = Java for Kids
 
-This Web site contains the online book "Java for Kids" by Yakov Fain, https://java-champions.java.net/[Java Champion]. 
+This Web site contains the online book "Java for Kids" by Yakov Fain, https://java-champions.java.net/[Java Champion]. This book starts as a light introduction to the most popular programming language, and then explains how to program such games as Tic-Tac-Toe and Ping-Pong.
+
+[[FIG0-1]]
+image::images/Cover.png[]
+
+The "Java for Kids" book can be used in multiple ways:
+
+1. Teenagers can use it for self-studying
+2. Parents can use this book for teaching their kids Java
+3. School teachers can be use it as a text book in introductory classes on programming
+4. University professors can use it as a supplement to their "Computer Science 101" classes.
 
 If you find an error in code samples email your comments directly to Yakov at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 
 
@@ -28,5 +38,6 @@ Here's a short version of Table of Contents of the book "Java For Kids".
 * <<Chapter_13.adoc#,Chapter 13. Creating a Ping-Pong Game>>
 * <<Appendix_A.adoc#,Chapter 14. Git for Kids>>
 
-   
+Currently this content is offered for free, but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful.
  
+All rights reserved. (C) Yakov Fain 2015.
