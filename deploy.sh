@@ -14,9 +14,7 @@ DIR=temp-java4kid-site
 rm -rf $DIR
 
 # Clone the current repo into temp folder
-git clone --depth=1 -b gh-pages --single-branch https://github.com/yfain/Java4Kids_NoStarchPress.git $DIR
-#git clone --depth=1 -b gh-pages --single-branch https://github.com/gamussa/Java4Kids_NoStarchPress.git $DIR
-#git clone git@github.com:gAmUssA/EnterpriseWebBook.git $DIR
+git clone --depth=1 -b gh-pages --single-branch https://github.com/yfain/Java4Kids.git $DIR
 
 # Move working directory into temp folder
 cd $DIR
