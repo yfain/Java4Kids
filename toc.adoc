@@ -3,11 +3,11 @@
 
 = Java for Kids
 
-This Web site contains the online book "Java for Kids" by Yakov Fain, https://java-champions.java.net/[Java Champion]. http://instagram.com/yurifain[Yuri Fain] created illustrations for this book.
+This Web site contains the online book "Java for Kids" by Yakov Fain, https://java-champions.java.net/[Java Champion]. 
 
 If you find an error in code samples email your comments directly to Yakov at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 
 
-While this book is written for 12 year old kids and older, adults looking for an easy intro to Java may find this book useful too.  If this material looks too easy for you get Yakov's video course "Introduction to Java and Java EE" at http://bit.ly/1HERoVo[Parleys].
+While this book is written for 12 year old kids and older, adults looking for an easy intro to Java may find this book useful too. http://instagram.com/yurifain[Yuri Fain] created illustrations for this book. If this material looks too easy for you get Yakov's video course "Introduction to Java and Java EE" at http://bit.ly/1HERoVo[Parleys].
 
 == TOC 
 
