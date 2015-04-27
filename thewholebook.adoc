@@ -1,4 +1,9 @@
+:toc:
+:source-highlighter: pygments
+
 = Java for Kids
+
+include::toc.adoc[]
 
 include::Chapter_1.adoc[]
 
