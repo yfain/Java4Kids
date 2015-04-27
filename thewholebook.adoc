@@ -2,6 +2,7 @@
 Yakov Fain <yakovfain@gmail.com>
 :email: yakovfain@gmail.com
 :doctype: book
+:source-highlighter: pygments
 :encoding: utf-8
 :toc:
 :numbered:include::toc.adoc[]
