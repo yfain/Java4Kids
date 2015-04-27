@@ -15,7 +15,7 @@ Now Joe has the latest Mary's code, but she doesn't have the latest Joe's code c
 
 In this chapter I'll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer get lost or stolen you can always recover the code by _pulling_ it from GitHub.
 
-I was using Git as a VCS and GitHub as a shared repository of the drafts of all chapters of this book, and you can find them on the GitHub at https://github.com/yfain/Java4Kids_NoStarchPress[https://github.com/yfain/Java4Kids_NoStarchPress].  
+I was using Git as a VCS and GitHub as a shared repository of the drafts of all chapters of this book, and you can find them on the GitHub at https://github.com/yfain/Java4Kids[https://github.com/yfain/Java4Kids].  
 
 Understanding how VCS work is very important - that's why I included this short Git tutorial in the book about Java.
 
@@ -399,7 +399,7 @@ To add a collaborator to your GitHub project, you'd need to visit you shared pro
 
 Say, Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen't have to create a new folder and run the _git init_ command there. Git has a _clone_ command that can take the existing code from a  shared repository and create its copy on Peter's computer. The _clone_ command downloads the latest project's code including the entire Git database with all the history of changes made by Joe and Mary in the past. You can do cloning either by clicking the button "Clone in Desktop" on GitHub or by running _git clone_ in the Command window.
 
-While writing this book I stored all its code examples on GitHub at https://github.com/yfain/Java4Kids_NoStarchPress_code[https://github.com/yfain/Java4Kids_NoStarchPress_code]. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:
+While writing this book I stored all its code examples on GitHub at https://github.com/yfain/Java4Kids_code[https://github.com/yfain/Java4Kids_code]. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:
 
 [[FIG14-16]]
 image::images/fig_14_CloneURL.png[]
@@ -408,17 +408,17 @@ You can see only a part of this URL, but when you copy it into the clipboard it'
 
 [source, html]
 ----
-https://github.com/yfain/Java4Kids_NoStarchPress_code.git
+https://github.com/yfain/Java4Kids_code.git
 ----
 
 Now open the Command (or Terminal) window and run the _clone_ command using the above URL as parameter:
 
 [source, html]
 ----
-git clone https://github.com/yfain/Java4Kids_NoStarchPress_code.git
+git clone https://github.com/yfain/Java4Kids_code.git
 ----
 
-In a couple of seconds you'll find in your computer the directory _Java4Kids_NoStarchPress_code_ with all code samples and the _.git_ folder inside. This is how I did it on my Mac computer:
+In a couple of seconds you'll find in your computer the directory _Java4Kids_code_ with all code samples and the _.git_ folder inside. This is how I did it on my Mac computer:
 
 [[FIG14-17]]
 image::images/fig_14_Cloning.png[]
@@ -460,7 +460,7 @@ All popular Java IDE support working with Git. In IDEA open the menu VCS and sel
 [[FIG14-22]]
 image::images/fig_14_IDEA_vcs1.png[]
 
-IDEA will ask you to login to GitHub. Use the email and the password that you used while creating your GitHub account. Then IDEA will ask you for its own password database - leave it blank. Now IDEA is ready to clone any public repository provided that you know the clone URL, which is https://github.com/yfain/Java4Kids_NoStarchPress_code.git in our case. You should enter this URL in the next window that may look similar to this one:
+IDEA will ask you to login to GitHub. Use the email and the password that you used while creating your GitHub account. Then IDEA will ask you for its own password database - leave it blank. Now IDEA is ready to clone any public repository provided that you know the clone URL, which is https://github.com/yfain/Java4Kids_code.git in our case. You should enter this URL in the next window that may look similar to this one:
 
 [[FIG14-23]]
 image::images/fig_14_IDEA_vcs2.png[]
