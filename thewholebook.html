@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="author" content="Yakov Fain">
 <title>Java for Kids</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
@@ -739,294 +740,295 @@ p { margin-bottom: 1.25rem; }
 <body class="book toc2 toc-left">
 <div id="header">
 <h1>Java for Kids</h1>
+<div class="details">
+<span id="author" class="author">Yakov Fain</span><br>
+<span id="email" class="email"><a href="mailto:yakovfain@gmail.com">yakovfain@gmail.com</a></span><br>
+</div>
 <div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
-<li><a href="#_about-this-site">About This Site</a>
+<div id="toctitle">Table of content</div>
 <ul class="sectlevel1">
-<li><a href="#_chapter-1-writing-your-first-program">Chapter 1. Writing Your First Program</a>
+<li><a href="#preface">Preface</a></li>
+<li><a href="#_writing-your-first-program">1. Writing Your First Program</a>
 <ul class="sectlevel2">
-<li><a href="#_installing-java-on-your-computer">Installing Java on Your Computer</a>
+<li><a href="#_installing-java-on-your-computer">1.1. Installing Java on Your Computer</a>
 <ul class="sectlevel3">
-<li><a href="#_for-windows-users-only">For Windows Users Only</a></li>
+<li><a href="#_for-windows-users-only">1.1.1. For Windows Users Only</a></li>
 </ul>
 </li>
-<li><a href="#_three-main-steps-in-java-programming">Three Main Steps in Java Programming</a>
+<li><a href="#_three-main-steps-in-java-programming">1.2. Three Main Steps in Java Programming</a>
 <ul class="sectlevel3">
-<li><a href="#_command-window">Command Window</a></li>
-<li><a href="#_step-1-write-the-program">Step 1 – Write the Program</a></li>
-<li><a href="#_step-2-compile-the-program">Step 2 – Compile the Program</a></li>
-<li><a href="#_step-3-run-the-program">Step 3 – Run the Program</a></li>
+<li><a href="#_command-window">1.2.1. Command Window</a></li>
+<li><a href="#_step-1-write-the-program">1.2.2. Step 1 – Write the Program</a></li>
+<li><a href="#_step-2-compile-the-program">1.2.3. Step 2 – Compile the Program</a></li>
+<li><a href="#_step-3-run-the-program">1.2.4. Step 3 – Run the Program</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_chapter-2-getting-comfy-in-idea-ide">Chapter 2. Getting Comfy In IDEA IDE</a>
+<li><a href="#_getting-comfy-in-idea-ide">2. Getting Comfy In IDEA IDE</a>
 <ul class="sectlevel2">
-<li><a href="#_installing-intellij-idea">Installing IntelliJ IDEA</a></li>
-<li><a href="#_creating-your-first-project">Creating Your First Project</a></li>
-<li><a href="#_creating-helloworld-class-in-idea">Creating HelloWorld Class in IDEA</a>
+<li><a href="#_installing-intellij-idea">2.1. Installing IntelliJ IDEA</a></li>
+<li><a href="#_creating-your-first-project">2.2. Creating Your First Project</a></li>
+<li><a href="#_creating-helloworld-class-in-idea">2.3. Creating HelloWorld Class in IDEA</a>
 <ul class="sectlevel3">
-<li><a href="#_adding-the-method-main">Adding the method main</a></li>
-<li><a href="#_running-helloworld-in-idea">Running HelloWorld in IDEA</a></li>
+<li><a href="#_adding-the-method-main">2.3.1. Adding the method main</a></li>
+<li><a href="#_running-helloworld-in-idea">2.3.2. Running HelloWorld in IDEA</a></li>
 </ul>
 </li>
-<li><a href="#_how-does-code-helloworld-code-work">How Does <code>HelloWorld</code> Work?</a></li>
+<li><a href="#_how-does-code-helloworld-code-work">2.4. How Does <code>HelloWorld</code> Work?</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-3-meet-classes-the-main-language-constructs">Chapter 3. Meet Classes - the Main Language Constructs</a>
+<li><a href="#_meet-classes-the-main-language-constructs">3. Meet Classes - the Main Language Constructs</a>
 <ul class="sectlevel2">
-<li><a href="#_dissecting-classes-and-objects">Dissecting Classes and Objects</a>
+<li><a href="#_dissecting-classes-and-objects">3.1. Dissecting Classes and Objects</a>
 <ul class="sectlevel3">
-<li><a href="#_classes">Classes</a></li>
-<li><a href="#_objects">Objects</a></li>
+<li><a href="#_classes">3.1.1. Classes</a></li>
+<li><a href="#_objects">3.1.2. Objects</a></li>
 </ul>
 </li>
-<li><a href="#_java-data-types-and-variables">Java Data Types and Variables</a>
+<li><a href="#_java-data-types-and-variables">3.2. Java Data Types and Variables</a>
 <ul class="sectlevel3">
-<li><a href="#_primitives">Primitives</a></li>
-<li><a href="#_classes-as-data-types">Classes as Data Types</a></li>
-<li><a href="#_how-much-memory-is-needed">How Much Memory is Needed</a></li>
+<li><a href="#_primitives">3.2.1. Primitives</a></li>
+<li><a href="#_classes-as-data-types">3.2.2. Classes as Data Types</a></li>
+<li><a href="#_how-much-memory-is-needed">3.2.3. How Much Memory is Needed</a></li>
 </ul>
 </li>
-<li><a href="#_creation-of-a-pet">Creation of a Pet</a></li>
-<li><a href="#_inheritance-a-fish-can-be-a-pet-too">Inheritance – a Fish Can Be a Pet Too</a></li>
-<li><a href="#_method-overriding">Method Overriding</a></li>
-<li><a href="#_challenge-yourself">Challenge Yourself</a></li>
+<li><a href="#_creation-of-a-pet">3.3. Creation of a Pet</a></li>
+<li><a href="#_inheritance-a-fish-can-be-a-pet-too">3.4. Inheritance – a Fish Can Be a Pet Too</a></li>
+<li><a href="#_method-overriding">3.5. Method Overriding</a></li>
+<li><a href="#_challenge-yourself">3.6. Challenge Yourself</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-4-java-building-blocks">Chapter 4. Java Building Blocks</a>
+<li><a href="#_java-building-blocks">4. Java Building Blocks</a>
 <ul class="sectlevel2">
-<li><a href="#_program-comments">Program Comments</a></li>
-<li><a href="#_making-decisions">Making Decisions</a>
+<li><a href="#_program-comments">4.1. Program Comments</a></li>
+<li><a href="#_making-decisions">4.2. Making Decisions</a>
 <ul class="sectlevel3">
-<li><a href="#_the-if-statement">The if Statement</a></li>
-<li><a href="#_logical-operators">Logical Operators</a></li>
-<li><a href="#_conditional-operator">Conditional operator</a></li>
-<li><a href="#_using-code-else-if-code">Using <code>else if</code></a></li>
-<li><a href="#_the-code-switch-code-statement">The <code>switch</code> Statement</a></li>
+<li><a href="#_the-if-statement">4.2.1. The if Statement</a></li>
+<li><a href="#_logical-operators">4.2.2. Logical Operators</a></li>
+<li><a href="#_conditional-operator">4.2.3. Conditional operator</a></li>
+<li><a href="#_using-code-else-if-code">4.2.4. Using <code>else if</code></a></li>
+<li><a href="#_the-code-switch-code-statement">4.2.5. The <code>switch</code> Statement</a></li>
 </ul>
 </li>
-<li><a href="#_how-long-variables-live">How Long Variables Live?</a>
+<li><a href="#_how-long-variables-live">4.3. How Long Variables Live?</a>
 <ul class="sectlevel3">
-<li><a href="#_the-keyword-code-static-code">The Keyword <code>static</code></a></li>
+<li><a href="#_the-keyword-code-static-code">4.3.1. The Keyword <code>static</code></a></li>
 </ul>
 </li>
-<li><a href="#_special-methods-constructors">Special Methods: Constructors</a></li>
-<li><a href="#_the-keyword-code-this-code">The Keyword <code>this</code></a></li>
-<li><a href="#_arrays">Arrays</a></li>
-<li><a href="#_repeating-actions-with-loops">Repeating Actions with Loops</a></li>
-<li><a href="#_challenge-yourself-2">Challenge Yourself</a></li>
+<li><a href="#_special-methods-constructors">4.4. Special Methods: Constructors</a></li>
+<li><a href="#_the-keyword-code-this-code">4.5. The Keyword <code>this</code></a></li>
+<li><a href="#_arrays">4.6. Arrays</a></li>
+<li><a href="#_repeating-actions-with-loops">4.7. Repeating Actions with Loops</a></li>
+<li><a href="#_challenge-yourself-2">4.8. Challenge Yourself</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-5-interfaces-lambdas-abstract-and-anonymous-classes">Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes</a>
+<li><a href="#_interfaces-lambdas-abstract-and-anonymous-classes">5. Interfaces, Lambdas, Abstract and Anonymous Classes</a>
 <ul class="sectlevel2">
-<li><a href="#_java-interfaces">Java Interfaces</a>
+<li><a href="#_java-interfaces">5.1. Java Interfaces</a>
 <ul class="sectlevel3">
-<li><a href="#_default-methods-in-interfaces">Default Methods in Interfaces</a></li>
-<li><a href="#_static-methods-in-interfaces">Static Methods in Interfaces</a></li>
-<li><a href="#_final-static-variables-in-interfaces">Final Static Variables in Interfaces</a></li>
-<li><a href="#_functional-interfaces">Functional Interfaces</a></li>
+<li><a href="#_default-methods-in-interfaces">5.1.1. Default Methods in Interfaces</a></li>
+<li><a href="#_static-methods-in-interfaces">5.1.2. Static Methods in Interfaces</a></li>
+<li><a href="#_final-static-variables-in-interfaces">5.1.3. Final Static Variables in Interfaces</a></li>
+<li><a href="#_functional-interfaces">5.1.4. Functional Interfaces</a></li>
 </ul>
 </li>
-<li><a href="#_abstract-classes">Abstract Classes</a>
+<li><a href="#_abstract-classes">5.2. Abstract Classes</a>
 <ul class="sectlevel3">
-<li><a href="#_what-s-the-difference-between-abstract-classes-and-interfaces">What&#8217;s the difference between abstract classes and interfaces?</a></li>
+<li><a href="#_what-s-the-difference-between-abstract-classes-and-interfaces">5.2.1. What&#8217;s the difference between abstract classes and interfaces?</a></li>
 </ul>
 </li>
-<li><a href="#_anonymous-classes">Anonymous Classes</a></li>
-<li><a href="#_lambda-expressions">Lambda Expressions</a>
+<li><a href="#_anonymous-classes">5.3. Anonymous Classes</a></li>
+<li><a href="#_lambda-expressions">5.4. Lambda Expressions</a>
 <ul class="sectlevel3">
-<li><a href="#_simplifying-code-with-lambdas">Simplifying Code With Lambdas</a></li>
+<li><a href="#_simplifying-code-with-lambdas">5.4.1. Simplifying Code With Lambdas</a></li>
 </ul>
 </li>
-<li><a href="#_project-java-interfaces-and-lambda-expressions">Project: Java Interfaces and Lambda Expressions</a></li>
+<li><a href="#_project-java-interfaces-and-lambda-expressions">5.5. Project: Java Interfaces and Lambda Expressions</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-6-access-levels-collections-generics-and-multi-threading">Chapter 6. Access Levels, Collections, Generics, and Multi-Threading</a>
+<li><a href="#_access-levels-collections-generics-and-multi-threading">6. Access Levels, Collections, Generics, and Multi-Threading</a>
 <ul class="sectlevel2">
-<li><a href="#_access-levels">Access Levels</a></li>
-<li><a href="#_casting">Casting</a></li>
-<li><a href="#_selected-data-collections">Selected Data Collections</a>
+<li><a href="#_access-levels">6.1. Access Levels</a></li>
+<li><a href="#_casting">6.2. Casting</a></li>
+<li><a href="#_selected-data-collections">6.3. Selected Data Collections</a>
 <ul class="sectlevel3">
-<li><a href="#_the-class-arraylist">The Class ArrayList</a></li>
-<li><a href="#_the-class-hashtable">The Class Hashtable</a></li>
+<li><a href="#_the-class-arraylist">6.3.1. The Class ArrayList</a></li>
+<li><a href="#_the-class-hashtable">6.3.2. The Class Hashtable</a></li>
 </ul>
 </li>
-<li><a href="#_introduction-to-generics">Introduction to Generics</a></li>
-<li><a href="#_light-introduction-to-multi-threading">Light Introduction to Multi-Threading</a>
+<li><a href="#_introduction-to-generics">6.4. Introduction to Generics</a></li>
+<li><a href="#_light-introduction-to-multi-threading">6.5. Light Introduction to Multi-Threading</a>
 <ul class="sectlevel3">
-<li><a href="#_how-to-create-a-thread">How to Create a Thread</a></li>
+<li><a href="#_how-to-create-a-thread">6.5.1. How to Create a Thread</a></li>
 </ul>
 </li>
-<li><a href="#_project-using-arraylist-and-generics">Project: Using ArrayList and Generics</a></li>
+<li><a href="#_project-using-arraylist-and-generics">6.6. Project: Using ArrayList and Generics</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-7-introduction-to-gui-with-javafx">Chapter 7. Introduction to GUI with JavaFX</a>
+<li><a href="#_introduction-to-gui-with-javafx">7. Introduction to GUI with JavaFX</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction-to-javafx">Introduction to JavaFX</a></li>
-<li><a href="#_brief-overview-of-javafx-layouts">Brief Overview of JavaFX Layouts</a></li>
-<li><a href="#_getting-started-with-scene-builder">Getting Started With Scene Builder</a></li>
-<li><a href="#_gridpane-layout">GridPane Layout</a>
+<li><a href="#_introduction-to-javafx">7.1. Introduction to JavaFX</a></li>
+<li><a href="#_brief-overview-of-javafx-layouts">7.2. Brief Overview of JavaFX Layouts</a></li>
+<li><a href="#_getting-started-with-scene-builder">7.3. Getting Started With Scene Builder</a></li>
+<li><a href="#_gridpane-layout">7.4. GridPane Layout</a>
 <ul class="sectlevel3">
-<li><a href="#_designing-a-sign-in-window-in-scene-builder">Designing a Sign In Window in Scene Builder</a></li>
-<li><a href="#_programming-the-sign-in-window-in-java">Programming the Sign In Window in Java</a></li>
+<li><a href="#_designing-a-sign-in-window-in-scene-builder">7.4.1. Designing a Sign In Window in Scene Builder</a></li>
+<li><a href="#_programming-the-sign-in-window-in-java">7.4.2. Programming the Sign In Window in Java</a></li>
 </ul>
 </li>
-<li><a href="#_styling-with-css">Styling With CSS</a></li>
-<li><a href="#_borderpane-and-combining-layouts">BorderPane and Combining Layouts</a></li>
-<li><a href="#_project-creating-a-gui-for-calculator">Project: Creating a GUI for Calculator</a></li>
+<li><a href="#_styling-with-css">7.5. Styling With CSS</a></li>
+<li><a href="#_borderpane-and-combining-layouts">7.6. BorderPane and Combining Layouts</a></li>
+<li><a href="#_project-creating-a-gui-for-calculator">7.7. Project: Creating a GUI for Calculator</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-8-programming-user-interaction-in-javafx">Chapter 8. Programming User Interaction in JavaFX</a>
+<li><a href="#_programming-user-interaction-in-javafx">8. Programming User Interaction in JavaFX</a>
 <ul class="sectlevel2">
-<li><a href="#_events">Events</a>
+<li><a href="#_events">8.1. Events</a>
 <ul class="sectlevel3">
-<li><a href="#_assigning-event-handlers-in-fxml">Assigning Event Handlers in FXML</a></li>
-<li><a href="#_adding-controller-to-sign-in-application">Adding Controller to Sign In application</a></li>
-<li><a href="#_data-exchange-between-gui-components-and-controller">Data Exchange Between GUI Components And Controller</a></li>
-<li><a href="#_assigning-event-handlers-in-java">Assigning Event Handlers in Java</a></li>
-<li><a href="#_further-reading-on-event-handling">Further Reading on Event Handling</a></li>
+<li><a href="#_assigning-event-handlers-in-fxml">8.1.1. Assigning Event Handlers in FXML</a></li>
+<li><a href="#_adding-controller-to-sign-in-application">8.1.2. Adding Controller to Sign In application</a></li>
+<li><a href="#_data-exchange-between-gui-components-and-controller">8.1.3. Data Exchange Between GUI Components And Controller</a></li>
+<li><a href="#_assigning-event-handlers-in-java">8.1.4. Assigning Event Handlers in Java</a></li>
+<li><a href="#_further-reading-on-event-handling">8.1.5. Further Reading on Event Handling</a></li>
 </ul>
 </li>
-<li><a href="#_data-binding-and-properties">Data Binding and Properties</a></li>
-<li><a href="#_application-thread-in-javafx">Application Thread in JavaFX</a>
+<li><a href="#_data-binding-and-properties">8.2. Data Binding and Properties</a></li>
+<li><a href="#_application-thread-in-javafx">8.3. Application Thread in JavaFX</a>
 <ul class="sectlevel3">
-<li><a href="#_the-frozen-screen-demo">The Frozen Screen Demo</a></li>
+<li><a href="#_the-frozen-screen-demo">8.3.1. The Frozen Screen Demo</a></li>
 </ul>
 </li>
-<li><a href="#_deploying-with-javafx-packager">Deploying With JavaFX Packager</a></li>
-<li><a href="#_what-to-study-next-about-javafx">What to Study Next About JavaFX</a></li>
-<li><a href="#_project-adding-events-handling-for-calculator">Project: Adding Events Handling for Calculator</a>
+<li><a href="#_deploying-with-javafx-packager">8.4. Deploying With JavaFX Packager</a></li>
+<li><a href="#_what-to-study-next-about-javafx">8.5. What to Study Next About JavaFX</a></li>
+<li><a href="#_project-adding-events-handling-for-calculator">8.6. Project: Adding Events Handling for Calculator</a>
 <ul class="sectlevel3">
-<li><a href="#_challenge-yourself-3">Challenge Yourself</a></li>
+<li><a href="#_challenge-yourself-3">8.6.1. Challenge Yourself</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_chapter-9-error-handling">Chapter 9. Error Handling</a>
+<li><a href="#_error-handling">9. Error Handling</a>
 <ul class="sectlevel2">
-<li><a href="#_reading-the-stack-trace">Reading the Stack Trace</a></li>
-<li><a href="#_genealogical-tree-of-exceptions">Genealogical Tree of Exceptions</a></li>
-<li><a href="#_try-catch-block">Try/Catch Block</a></li>
-<li><a href="#_the-keyword-code-throws-code">The keyword <code>throws</code></a></li>
-<li><a href="#_the-keyword-code-finally-code">The Keyword <code>finally</code></a></li>
-<li><a href="#_the-keyword-code-throw-code">The Keyword <code>throw</code></a></li>
-<li><a href="#_creating-custom-exceptions">Creating Custom Exceptions</a></li>
-<li><a href="#_project-create-a-javafx-bike-store">Project: Create a JavaFX Bike Store</a></li>
+<li><a href="#_reading-the-stack-trace">9.1. Reading the Stack Trace</a></li>
+<li><a href="#_genealogical-tree-of-exceptions">9.2. Genealogical Tree of Exceptions</a></li>
+<li><a href="#_try-catch-block">9.3. Try/Catch Block</a></li>
+<li><a href="#_the-keyword-code-throws-code">9.4. The keyword <code>throws</code></a></li>
+<li><a href="#_the-keyword-code-finally-code">9.5. The Keyword <code>finally</code></a></li>
+<li><a href="#_the-keyword-code-throw-code">9.6. The Keyword <code>throw</code></a></li>
+<li><a href="#_creating-custom-exceptions">9.7. Creating Custom Exceptions</a></li>
+<li><a href="#_project-create-a-javafx-bike-store">9.8. Project: Create a JavaFX Bike Store</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-10-creating-a-tic-tac-toe-game">Chapter 10. Creating a Tic-Tac-Toe Game</a>
+<li><a href="#_creating-a-tic-tac-toe-game">10. Creating a Tic-Tac-Toe Game</a>
 <ul class="sectlevel2">
-<li><a href="#_developing-the-game-step-by-step">Developing the Game: Step by Step</a>
+<li><a href="#_developing-the-game-step-by-step">10.1. Developing the Game: Step by Step</a>
 <ul class="sectlevel3">
-<li><a href="#_developing-the-gui-part-in-scene-builder">Developing the GUI part in Scene Builder</a></li>
-<li><a href="#_handling-button-clicks-in-controller">Handling Button Clicks in Controller</a></li>
-<li><a href="#_styling-buttons-and-the-menu-bar">Styling Buttons and the Menu Bar</a></li>
-<li><a href="#_implementing-the-game-strategy">Implementing the Game Strategy</a></li>
-<li><a href="#_highlighting-the-winning-combination">Highlighting the Winning Combination</a></li>
-<li><a href="#_handling-the-tic-tac-toe-menu-play">Handling the Tic-Tac-Toe Menu Play</a></li>
+<li><a href="#_developing-the-gui-part-in-scene-builder">10.1.1. Developing the GUI part in Scene Builder</a></li>
+<li><a href="#_handling-button-clicks-in-controller">10.1.2. Handling Button Clicks in Controller</a></li>
+<li><a href="#_styling-buttons-and-the-menu-bar">10.1.3. Styling Buttons and the Menu Bar</a></li>
+<li><a href="#_implementing-the-game-strategy">10.1.4. Implementing the Game Strategy</a></li>
+<li><a href="#_highlighting-the-winning-combination">10.1.5. Highlighting the Winning Combination</a></li>
+<li><a href="#_handling-the-tic-tac-toe-menu-play">10.1.6. Handling the Tic-Tac-Toe Menu Play</a></li>
 </ul>
 </li>
-<li><a href="#_project-playing-against-computer">Project: Playing Against Computer</a>
+<li><a href="#_project-playing-against-computer">10.2. Project: Playing Against Computer</a>
 <ul class="sectlevel3">
-<li><a href="#_challenge-yourself-4">Challenge Yourself</a></li>
+<li><a href="#_challenge-yourself-4">10.2.1. Challenge Yourself</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_chapter-11-working-with-files-and-serialization">Chapter 11. Working With Files and Serialization</a>
+<li><a href="#_working-with-files-and-serialization">11. Working With Files and Serialization</a>
 <ul class="sectlevel2">
-<li><a href="#_basics-of-working-with-streams">Basics of Working With Streams</a>
+<li><a href="#_basics-of-working-with-streams">11.1. Basics of Working With Streams</a>
 <ul class="sectlevel3">
-<li><a href="#_byte-streams">Byte Streams</a></li>
-<li><a href="#_bufferred-streams">Bufferred Streams</a></li>
+<li><a href="#_byte-streams">11.1.1. Byte Streams</a></li>
+<li><a href="#_bufferred-streams">11.1.2. Bufferred Streams</a></li>
 </ul>
 </li>
-<li><a href="#_character-streams">Character Streams</a></li>
-<li><a href="#_working-with-files-using-java-nio">Working With Files Using java.nio</a>
+<li><a href="#_character-streams">11.2. Character Streams</a></li>
+<li><a href="#_working-with-files-using-java-nio">11.3. Working With Files Using java.nio</a>
 <ul class="sectlevel3">
-<li><a href="#_using-classes-path-and-paths">Using Classes Path and Paths</a></li>
-<li><a href="#_using-the-class-files">Using the Class Files</a></li>
-<li><a href="#_reading-a-file">Reading a File</a></li>
-<li><a href="#_writing-into-a-file">Writing Into a File</a></li>
+<li><a href="#_using-classes-path-and-paths">11.3.1. Using Classes Path and Paths</a></li>
+<li><a href="#_using-the-class-files">11.3.2. Using the Class Files</a></li>
+<li><a href="#_reading-a-file">11.3.3. Reading a File</a></li>
+<li><a href="#_writing-into-a-file">11.3.4. Writing Into a File</a></li>
 </ul>
 </li>
-<li><a href="#_command-line-arguments">Command-Line Arguments</a></li>
-<li><a href="#_serialization-turning-an-object-into-bytes">Serialization: Turning an Object Into Bytes</a></li>
-<li><a href="#_project-saving-the-game-scores">Project: Saving the Game Scores</a></li>
+<li><a href="#_command-line-arguments">11.4. Command-Line Arguments</a></li>
+<li><a href="#_serialization-turning-an-object-into-bytes">11.5. Serialization: Turning an Object Into Bytes</a></li>
+<li><a href="#_project-saving-the-game-scores">11.6. Project: Saving the Game Scores</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-12-networking-downloading-files-from-the-internet">Chapter 12. Networking: Downloading Files From The Internet</a>
+<li><a href="#_networking-downloading-files-from-the-internet">12. Networking: Downloading Files From the Internet</a>
 <ul class="sectlevel2">
-<li><a href="#_how-computers-find-each-other-on-the-web">How Computers Find Each Other on the Web</a></li>
-<li><a href="#_domain-names-and-ip-addresses">Domain Names and IP Addresses</a></li>
-<li><a href="#_downloading-files-from-the-web">Downloading Files From the Web</a>
+<li><a href="#_how-computers-find-each-other-on-the-web">12.1. How Computers Find Each Other on the Web</a></li>
+<li><a href="#_domain-names-and-ip-addresses">12.2. Domain Names and IP Addresses</a></li>
+<li><a href="#_downloading-files-from-the-web">12.3. Downloading Files From the Web</a>
 <ul class="sectlevel3">
-<li><a href="#_downloading-any-file-from-the-internet">Downloading Any File From the Internet</a></li>
+<li><a href="#_downloading-any-file-from-the-internet">12.3.1. Downloading Any File From the Internet</a></li>
 </ul>
 </li>
-<li><a href="#_project-downloading-music">Project: Downloading Music</a></li>
+<li><a href="#_project-downloading-music">12.4. Project: Downloading Music</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-13-creating-a-ping-pong-game">Chapter 13. Creating a Ping-Pong Game</a>
+<li><a href="#_creating-a-ping-pong-game">13. Creating a Ping-Pong Game</a>
 <ul class="sectlevel2">
-<li><a href="#_the-strategy">The Strategy</a></li>
-<li><a href="#_step-1-creating-the-table">Step 1: Creating the Table</a></li>
-<li><a href="#_step-2-handling-keyboard-events">Step 2: Handling Keyboard Events</a>
+<li><a href="#_the-strategy">13.1. The Strategy</a></li>
+<li><a href="#_step-1-creating-the-table">13.2. Step 1: Creating the Table</a></li>
+<li><a href="#_step-2-handling-keyboard-events">13.3. Step 2: Handling Keyboard Events</a>
 <ul class="sectlevel3">
-<li><a href="#_processing-keyboard-events-in-the-controller">Processing Keyboard Events in the Controller</a></li>
-<li><a href="#_the-enum-type">The enum Type</a></li>
-<li><a href="#_preparing-to-process-the-keys-s-q-and-n">Preparing to Process the Keys S, Q, and N</a></li>
+<li><a href="#_processing-keyboard-events-in-the-controller">13.3.1. Processing Keyboard Events in the Controller</a></li>
+<li><a href="#_the-enum-type">13.3.2. The enum Type</a></li>
+<li><a href="#_preparing-to-process-the-keys-s-q-and-n">13.3.3. Preparing to Process the Keys S, Q, and N</a></li>
 </ul>
 </li>
-<li><a href="#_step-3-moving-the-paddle">Step 3: Moving the Paddle</a></li>
-<li><a href="#_step-4-moving-the-ball">Step 4. Moving the Ball</a>
+<li><a href="#_step-3-moving-the-paddle">13.4. Step 3: Moving the Paddle</a></li>
+<li><a href="#_step-4-moving-the-ball">13.5. Step 4. Moving the Ball</a>
 <ul class="sectlevel3">
-<li><a href="#_moving-the-ball-to-the-right-paddle">Moving the Ball to the Right Paddle</a></li>
-<li><a href="#_serving-the-ball-horizontally">Serving the Ball Horizontally</a></li>
-<li><a href="#_serving-the-ball-in-random-directions">Serving the Ball in Random Directions</a></li>
+<li><a href="#_moving-the-ball-to-the-right-paddle">13.5.1. Moving the Ball to the Right Paddle</a></li>
+<li><a href="#_serving-the-ball-horizontally">13.5.2. Serving the Ball Horizontally</a></li>
+<li><a href="#_serving-the-ball-in-random-directions">13.5.3. Serving the Ball in Random Directions</a></li>
 </ul>
 </li>
-<li><a href="#_step-5-moving-the-computer-s-paddle">Step 5: Moving the Computer&#8217;s Paddle</a></li>
-<li><a href="#_step-6-bouncing-the-ball">Step 6: Bouncing the Ball</a></li>
-<li><a href="#_project-displaying-the-game-score">Project: Displaying the Game Score</a></li>
+<li><a href="#_step-5-moving-the-computer-s-paddle">13.6. Step 5: Moving the Computer&#8217;s Paddle</a></li>
+<li><a href="#_step-6-bouncing-the-ball">13.7. Step 6: Bouncing the Ball</a></li>
+<li><a href="#_project-displaying-the-game-score">13.8. Project: Displaying the Game Score</a></li>
 </ul>
 </li>
-<li><a href="#_chapter-14-git-for-kids">Chapter 14. Git for Kids</a>
+<li><a href="#_git-for-kids">14. Git for Kids</a>
 <ul class="sectlevel2">
-<li><a href="#_two-types-of-version-control-systems">Two Types of Version Control Systems</a></li>
-<li><a href="#_introduction-to-git">Introduction to Git</a>
+<li><a href="#_two-types-of-version-control-systems">14.1. Two Types of Version Control Systems</a></li>
+<li><a href="#_introduction-to-git">14.2. Introduction to Git</a>
 <ul class="sectlevel3">
-<li><a href="#_introducing-yourself-to-git">Introducing Yourself to Git</a></li>
+<li><a href="#_introducing-yourself-to-git">14.2.1. Introducing Yourself to Git</a></li>
 </ul>
 </li>
-<li><a href="#_creating-a-new-git-repository">Creating a New Git Repository</a></li>
-<li><a href="#_selected-git-commands">Selected Git Commands</a>
+<li><a href="#_creating-a-new-git-repository">14.3. Creating a New Git Repository</a></li>
+<li><a href="#_selected-git-commands">14.4. Selected Git Commands</a>
 <ul class="sectlevel3">
-<li><a href="#_the-status-command">The status Command</a></li>
-<li><a href="#_the-add-command">The add Command</a></li>
-<li><a href="#_the-commit-command">The commit Command</a></li>
-<li><a href="#_the-reset-command">The reset Command</a></li>
-<li><a href="#_code-branching">Code Branching</a></li>
-<li><a href="#_conflict-resolution">Conflict Resolution</a></li>
+<li><a href="#_the-status-command">14.4.1. The status Command</a></li>
+<li><a href="#_the-add-command">14.4.2. The add Command</a></li>
+<li><a href="#_the-commit-command">14.4.3. The commit Command</a></li>
+<li><a href="#_the-reset-command">14.4.4. The reset Command</a></li>
+<li><a href="#_code-branching">14.4.5. Code Branching</a></li>
+<li><a href="#_conflict-resolution">14.4.6. Conflict Resolution</a></li>
 </ul>
 </li>
-<li><a href="#_publishing-your-code-on-github">Publishing Your Code on GitHub</a>
+<li><a href="#_publishing-your-code-on-github">14.5. Publishing Your Code on GitHub</a>
 <ul class="sectlevel3">
-<li><a href="#_creating-a-github-repository">Creating a GitHub Repository</a></li>
-<li><a href="#_pushing-the-local-repository-to-github">Pushing the Local Repository to GitHub</a></li>
-<li><a href="#_pulling-the-latest-version-from-github">Pulling The Latest Version from GitHub</a></li>
-<li><a href="#_cloning">Cloning</a></li>
-<li><a href="#_forking-and-pull-requests">Forking and Pull Requests</a></li>
-<li><a href="#_cloning-from-intellij-idea">Cloning From IntelliJ IDEA</a></li>
+<li><a href="#_creating-a-github-repository">14.5.1. Creating a GitHub Repository</a></li>
+<li><a href="#_pushing-the-local-repository-to-github">14.5.2. Pushing the Local Repository to GitHub</a></li>
+<li><a href="#_pulling-the-latest-version-from-github">14.5.3. Pulling The Latest Version from GitHub</a></li>
+<li><a href="#_cloning">14.5.4. Cloning</a></li>
+<li><a href="#_forking-and-pull-requests">14.5.5. Forking and Pull Requests</a></li>
+<li><a href="#_cloning-from-intellij-idea">14.5.6. Cloning From IntelliJ IDEA</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_epilogue">Epilogue</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
@@ -1035,16 +1037,16 @@ p { margin-bottom: 1.25rem; }
 <div class="sectionbody">
 <div id="FIG0-1" class="imageblock">
 <div class="content">
-<img src="./images/Cover.png" alt="Cover">
+<img src="images/Cover.png" alt="Cover">
 </div>
 </div>
 </div>
 </div>
-<h1 id="_about-this-site" class="sect0"><a class="anchor" href="#_about-this-site"></a>About This Site</h1>
-<div class="openblock partintro">
-<div class="content">
+<div class="sect1">
+<h2 id="preface"><a class="anchor" href="#preface"></a>Preface</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>This Web site contains the drafts of the online book "Java for Kids" by Yakov Fain, <a href="https://java-champions.java.net/">Java Champion</a>. This book starts as an introduction to Java programming language and then explains how to program such games as Tic-Tac-Toe and Ping-Pong.</p>
+<p>The book "Java for Kids" is written by Yakov Fain, <a href="https://java-champions.java.net/">Java Champion</a>. The goal is to help students with learning programming in the most popular language in the world: Java. This book starts as an introduction to Java programming language and then explains how to write programs that have Graphic User Interface by writing the Tic-Tac-Toe and Ping-Pong games.</p>
 </div>
 <div class="paragraph">
 <p>The "Java for Kids" book can be used in multiple ways:</p>
@@ -1066,13 +1068,16 @@ p { margin-bottom: 1.25rem; }
 </ol>
 </div>
 <div class="paragraph">
-<p>If you find an error in code samples email your comments directly to Yakov at <a href="mailto:yakovfain@gmail.com">yakovfain@gmail.com</a> or open an issue at <a href="https://github.com/yfain/Java4Kids_code">code samples repository</a> on GitHub.</p>
+<p>While this book is written for 12+ year old kids, the adults looking for an easy intro to Java may find this book useful too. In this book you&#8217;ll be using the same tools in this book as professional programmers do. As a bonus, the last chapter will teach you how to publish your code on the Web in a super popular site called <a href="https://github.com/">GitHub</a>. Millions of programmers share their programs there, and you should too.</p>
 </div>
 <div class="paragraph">
-<p>While this book is written for 12+ year old kids, adults looking for an easy intro to Java may find this book useful too. <a href="http://instagram.com/yurifain">Yuri Fain</a> created illustrations for this book. If this material looks too easy for you get Yakov&#8217;s video course "Introduction to Java and Java EE" at <a href="http://bit.ly/1HERoVo">Parleys</a>.</p>
+<p><a href="http://instagram.com/yurifain">Yuri Fain</a> created illustrations for this book. If this material looks too easy for you get Yakov&#8217;s video course "Introduction to Java and Java EE" at <a href="http://bit.ly/1HERoVo">Parleys</a>.</p>
 </div>
 <div class="paragraph">
 <p>Currently this content is offered for free, but the author would appreciate <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=VQGWLFGZHL55Q">a donation</a> if you find this book useful.</p>
+</div>
+<div class="paragraph">
+<p>If you find an error in the code samples email your comments directly to Yakov Fain at <a href="mailto:yakovfain@gmail.com">yakovfain@gmail.com</a> or open an issue at <a href="https://github.com/yfain/Java4Kids_code">code samples repository</a> on GitHub.</p>
 </div>
 <div class="paragraph">
 <p>All rights reserved. &#169; Yakov Fain 2015.</p>
@@ -1080,7 +1085,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-1-writing-your-first-program"><a class="anchor" href="#_chapter-1-writing-your-first-program"></a>Chapter 1. Writing Your First Program</h2>
+<h2 id="_writing-your-first-program"><a class="anchor" href="#_writing-your-first-program"></a>1. Writing Your First Program</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>People communicate with each other using different languages.These days people often spend more time communicating with computers, smartphones and tablets than with each other. We casually say to each other, “I’ve installed a cool application that can do this and that”.  In other words, people use applications to communicate with computers. So someone has to write these applications. Those who write computer applications are called programmers or software developers.</p>
@@ -1110,7 +1115,7 @@ p { margin-bottom: 1.25rem; }
 <p>But enough talk. Let’s start learning Java.</p>
 </div>
 <div class="sect2">
-<h3 id="_installing-java-on-your-computer"><a class="anchor" href="#_installing-java-on-your-computer"></a>Installing Java on Your Computer</h3>
+<h3 id="_installing-java-on-your-computer"><a class="anchor" href="#_installing-java-on-your-computer"></a>1.1. Installing Java on Your Computer</h3>
 <div class="paragraph">
 <p>To start programming in Java you need to download Java Development Kit (JDK) from the company called Oracle, which leads most of the Java-related work and makes releases and updates of Java versions. The full name of the software to download is Java SE Development Kit. We&#8217;ll download the  Java SE 8, which is the latest version at the time of this writing. Just visit this
 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Oracle&#8217;s Web site</a>. Accept the license agreement and select the proper link depending on the Operational System (OS) installed on your computer.</p>
@@ -1141,7 +1146,7 @@ While Java programmers need JDK installed, the users of your applications need t
 <em>c:\Program Files\Java\jdk1.8.0</em>, where <em>c:</em> is the name of your hard drive or SSD. If you use Mac OS, your installation is complete.</p>
 </div>
 <div class="sect3">
-<h4 id="_for-windows-users-only"><a class="anchor" href="#_for-windows-users-only"></a>For Windows Users Only</h4>
+<h4 id="_for-windows-users-only"><a class="anchor" href="#_for-windows-users-only"></a>1.1.1. For Windows Users Only</h4>
 <div class="paragraph">
 <p>If you use Windows, you&#8217;ll also need to add Java to the environment  variable <code>Path</code>. Click on the menu Start, Control Panel, System and search for <em>Environment Variables</em>. You&#8217;ll see all system variables that exist in your OS As shown on the screenshot <a href="#FIG1-4">Windows OS - System Variables</a>. If you have administrator&#8217;s rights on your Windows PC, you can set user variables that will apply only when a certain user logs into your PC, or system variables that will apply to all users.</p>
 </div>
@@ -1166,7 +1171,7 @@ While Java programmers need JDK installed, the users of your applications need t
 </div>
 </div>
 <div class="sect2">
-<h3 id="_three-main-steps-in-java-programming"><a class="anchor" href="#_three-main-steps-in-java-programming"></a>Three Main Steps in Java Programming</h3>
+<h3 id="_three-main-steps-in-java-programming"><a class="anchor" href="#_three-main-steps-in-java-programming"></a>1.2. Three Main Steps in Java Programming</h3>
 <div class="paragraph">
 <p>If you have an idea <em>what</em> to program, typically you&#8217;ll need to perform the following three steps:</p>
 </div>
@@ -1184,7 +1189,7 @@ While Java programmers need JDK installed, the users of your applications need t
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_command-window"><a class="anchor" href="#_command-window"></a>Command Window</h4>
+<h4 id="_command-window"><a class="anchor" href="#_command-window"></a>1.2.1. Command Window</h4>
 <div class="paragraph">
 <p>In this chapter we&#8217;ll compile and run Hello World program in the Command window if you use Microsoft Windows or from Terminal application if you&#8217;re on Mac OS.</p>
 </div>
@@ -1202,7 +1207,7 @@ While Java programmers need JDK installed, the users of your applications need t
 </div>
 </div>
 <div class="sect3">
-<h4 id="_step-1-write-the-program"><a class="anchor" href="#_step-1-write-the-program"></a>Step 1 – Write the Program</h4>
+<h4 id="_step-1-write-the-program"><a class="anchor" href="#_step-1-write-the-program"></a>1.2.2. Step 1 – Write the Program</h4>
 <div class="paragraph">
 <p>Starting from Chapter 2 will use a special application  called Integrated Development Environment (IDE) to write, compile, and run programs. But to get a better understanding of how things work, let&#8217;s use any plain text editor (e.g. Notepad, TextEdit et al.) to type in the code of our first Java program. Then you need to save the code in a text file with a name ending in <em>.java</em>.</p>
 </div>
@@ -1229,7 +1234,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 </div>
 </div>
 <div class="paragraph">
-<p>Save the above code in this folder in the file named <code>HelloWorld.java</code> in folder <em>practice</em>. Keep in mind that you are not allowed to use blanks in Java file names.</p>
+<p>Save the above code in this folder in the file named <code>HelloWorld.java</code> in the folder <em>practice</em>. Keep in mind that you are not allowed to use blanks in Java file names.</p>
 </div>
 <div class="paragraph">
 <p>I’ll explain how this program works a little later in this chapter. For now just trust me – this program will print the words <em>Hello World</em> on the screen in the step 3, which will happen pretty soon.</p>
@@ -1239,7 +1244,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 </div>
 </div>
 <div class="sect3">
-<h4 id="_step-2-compile-the-program"><a class="anchor" href="#_step-2-compile-the-program"></a>Step 2 – Compile the Program</h4>
+<h4 id="_step-2-compile-the-program"><a class="anchor" href="#_step-2-compile-the-program"></a>1.2.3. Step 2 – Compile the Program</h4>
 <div class="paragraph">
 <p>Now you need to start Java compiler asking to turn the source code of Hello World program into byte code that JRE  understands. The program named <em>javac</em> is Java compiler, which is installed on your computer as a part of the JDK and is located in the <em>bin</em> folder in your JDK.</p>
 </div>
@@ -1272,7 +1277,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 </div>
 </div>
 <div class="sect3">
-<h4 id="_step-3-run-the-program"><a class="anchor" href="#_step-3-run-the-program"></a>Step 3 – Run the Program</h4>
+<h4 id="_step-3-run-the-program"><a class="anchor" href="#_step-3-run-the-program"></a>1.2.4. Step 3 – Run the Program</h4>
 <div class="paragraph">
 <p>Now let’s run the program. In the same Command or Terminal window enter the following:</p>
 </div>
@@ -1308,7 +1313,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-2-getting-comfy-in-idea-ide"><a class="anchor" href="#_chapter-2-getting-comfy-in-idea-ide"></a>Chapter 2. Getting Comfy In IDEA IDE</h2>
+<h2 id="_getting-comfy-in-idea-ide"><a class="anchor" href="#_getting-comfy-in-idea-ide"></a>2. Getting Comfy In IDEA IDE</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Most programmers write, compile and run their applications in special programs that go by the name <em>Integrated Development Environment</em>  (IDE). Any IDE provide help as you type code, highlights the Java <em>keywords</em>,  has a <em>Help</em> menu that describes all elements of the language, and makes it easier to find and fix errors in your programs. There are several excellent IDE that are free to use. The most popular are <a href="http://www.eclipse.org/downloads/">Eclipse</a>, <a href="https://netbeans.org/downloads/">NetBeans</a>, and <a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a>. In this book we&#8217;ll use IntelliJ IDEA Community Edition. This is an excellent IDE for developing Java applications, and if, later on, you&#8217;ll decide to program in other programming languages, IDEA allows supports <a href="http://www.jetbrains.com/idea/webhelp/supported-languages.html">more than a dozen</a> other languages too.</p>
@@ -1317,7 +1322,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <p>In this chapter we&#8217;ll start with downloading and installing IntelliJ IDEA IDE (let&#8217;s just call it IDEA). Then we&#8217;ll create a project called  <code>Hello</code>. You&#8217;ll see that creating Hello World application is a lot easier inside IDEA.</p>
 </div>
 <div class="sect2">
-<h3 id="_installing-intellij-idea"><a class="anchor" href="#_installing-intellij-idea"></a>Installing IntelliJ IDEA</h3>
+<h3 id="_installing-intellij-idea"><a class="anchor" href="#_installing-intellij-idea"></a>2.1. Installing IntelliJ IDEA</h3>
 <div class="paragraph">
 <p>There are two version of IDEA IDE - Ultimate and Community. The Ultimate version is not free, but it has additional features useful for developing enterprise applications. But this book is about learning basics of Java programming, and using free Community edition is all we need.</p>
 </div>
@@ -1350,7 +1355,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating-your-first-project"><a class="anchor" href="#_creating-your-first-project"></a>Creating Your First Project</h3>
+<h3 id="_creating-your-first-project"><a class="anchor" href="#_creating-your-first-project"></a>2.2. Creating Your First Project</h3>
 <div class="paragraph">
 <p>In IDEA, your Java applications will be located in separate projects. As you probably guessed, you&#8217;ll need to select the option <em>Create New Project</em> on the Welcome screen. Then IDEA will ask you about the type of the project you want to create.</p>
 </div>
@@ -1404,7 +1409,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating-helloworld-class-in-idea"><a class="anchor" href="#_creating-helloworld-class-in-idea"></a>Creating HelloWorld Class in IDEA</h3>
+<h3 id="_creating-helloworld-class-in-idea"><a class="anchor" href="#_creating-helloworld-class-in-idea"></a>2.3. Creating HelloWorld Class in IDEA</h3>
 <div class="paragraph">
 <p>Java programs consist of <em>classes</em>, and you’ll start getting familiar classes' internals in the section "How Does Hello World Work". Let’s recreate the <code>HelloWorld</code> class from Chapter 1 in IDEA.  Select the folder <em>src</em> in your project, and then select the menu File | New | Java Class.  You&#8217;ll see a little popup window asking for a class name. Enter HelloWorld there.</p>
 </div>
@@ -1424,10 +1429,10 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="title">Figure 17. An empty class HelloWorld</div>
 </div>
 <div class="paragraph">
-<p>The text between <code>/<strong>*</code> and <code></strong>/</code> is one of the ways to write comments in your programs. This is an area where you can type any text you want that describes your program in general or any particular code inside the class. We&#8217;ll talk about various ways to write comments in the next chapter.</p>
+<p>The text between <code>/**</code> and <code>*/</code> is one of the ways to write comments in your programs. This is an area where you can type any text you want that describes your program in general or any particular code inside the class. We&#8217;ll talk about various ways to write comments in the next chapter.</p>
 </div>
 <div class="sect3">
-<h4 id="_adding-the-method-main"><a class="anchor" href="#_adding-the-method-main"></a>Adding the method main</h4>
+<h4 id="_adding-the-method-main"><a class="anchor" href="#_adding-the-method-main"></a>2.3.1. Adding the method main</h4>
 <div class="paragraph">
 <p>It&#8217;s time to key in the <code>main</code> method declaration inside the class like we did in Chapter 1:</p>
 </div>
@@ -1509,7 +1514,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 </div>
 </div>
 <div class="sect3">
-<h4 id="_running-helloworld-in-idea"><a class="anchor" href="#_running-helloworld-in-idea"></a>Running HelloWorld in IDEA</h4>
+<h4 id="_running-helloworld-in-idea"><a class="anchor" href="#_running-helloworld-in-idea"></a>2.3.2. Running HelloWorld in IDEA</h4>
 <div class="paragraph">
 <p>After all syntax errors are fixed, compiler automatically creates the HelloWorld.class when you save the code. IDEA doesn&#8217;t show you <em>.class</em> files, but if are curious where they are, open the menu File | Project Structure, to see he folder where compiler&#8217;s output goes. When a program is written, tested, and does what it supposed to do (e.g. print Hello World), and if you want to give it to your friends you&#8217;ll need to give the only compiled <code>.class</code> files - they don&#8217;t need the source code of your program. They&#8217;ll also  need the JRE (not JDK) installed on their computer.</p>
 </div>
@@ -1525,7 +1530,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how-does-code-helloworld-code-work"><a class="anchor" href="#_how-does-code-helloworld-code-work"></a>How Does <code>HelloWorld</code> Work?</h3>
+<h3 id="_how-does-code-helloworld-code-work"><a class="anchor" href="#_how-does-code-helloworld-code-work"></a>2.4. How Does <code>HelloWorld</code> Work?</h3>
 <div class="paragraph">
 <p>It&#8217;s great that you&#8217;re following my instructions and the program works. But what exactly is happening in the program <code>HelloWorld</code>? What are all these keywords, braces and parentheses for?</p>
 </div>
@@ -1600,7 +1605,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-3-meet-classes-the-main-language-constructs"><a class="anchor" href="#_chapter-3-meet-classes-the-main-language-constructs"></a>Chapter 3. Meet Classes - the Main Language Constructs</h2>
+<h2 id="_meet-classes-the-main-language-constructs"><a class="anchor" href="#_meet-classes-the-main-language-constructs"></a>3. Meet Classes - the Main Language Constructs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the real world you see and use various objects, and each of them is of some kind like toys, food, animals, electronics et al. In Java instead of saying a kind of objects, we say a class of objects. In other words, each object belongs to a class. A class is like a blueprint of an object. In this chapter you’ll get familiar with classes - the main constructs of the Java language.</p>
@@ -1618,12 +1623,12 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <p>Programmers start working on any application with deciding  which Java classes to include in the program and how many objects of each type to create. Say, they can define a class <code>Player</code> in the gaming application and create two object instances of this type.</p>
 </div>
 <div class="sect2">
-<h3 id="_dissecting-classes-and-objects"><a class="anchor" href="#_dissecting-classes-and-objects"></a>Dissecting Classes and Objects</h3>
+<h3 id="_dissecting-classes-and-objects"><a class="anchor" href="#_dissecting-classes-and-objects"></a>3.1. Dissecting Classes and Objects</h3>
 <div class="paragraph">
 <p>While programmers talk to each other, they may say "Do something with the class Player" or "Do something with the object Player". We need to learn the difference between the meaning of the words <em>class</em> and <em>object</em>.</p>
 </div>
 <div class="sect3">
-<h4 id="_classes"><a class="anchor" href="#_classes"></a>Classes</h4>
+<h4 id="_classes"><a class="anchor" href="#_classes"></a>3.1.1. Classes</h4>
 <div class="paragraph">
 <p>Let&#8217;s see what Java classes can consist of. Actually a very simple class can have nothing inside. Take a look at this class declaration:</p>
 </div>
@@ -1684,7 +1689,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a line starts with two slashes, it contains a <em>single line comment</em> - just the description of a code fragment. If you need to write several lines of comments, just type in a slash followed by the asterisk <code>/<strong></code>, then key in as many lines of a text as you want followed by <code></strong>/</code>.
+If a line starts with two slashes, it contains a <em>single line comment</em> - just the description of a code fragment. If you need to write several lines of comments, just type in a slash followed by the asterisk <code>/*</code>, then key in as many lines of a text as you want followed by <code>*/</code>.
 </td>
 </tr>
 </table>
@@ -1722,7 +1727,7 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_objects"><a class="anchor" href="#_objects"></a>Objects</h4>
+<h4 id="_objects"><a class="anchor" href="#_objects"></a>3.1.2. Objects</h4>
 <div class="paragraph">
 <p>We&#8217;ll often use the phrase <em>create an instance of an object</em>, which means to create an object in computer&#8217;s memory based on some class declaration. If a game factory will produce ten thousand of such games, a programmer can say that they created ten thousand instances of the class <code>PlayStation4</code>.</p>
 </div>
@@ -1759,7 +1764,7 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_java-data-types-and-variables"><a class="anchor" href="#_java-data-types-and-variables"></a>Java Data Types and Variables</h3>
+<h3 id="_java-data-types-and-variables"><a class="anchor" href="#_java-data-types-and-variables"></a>3.2. Java Data Types and Variables</h3>
 <div class="paragraph">
 <p>If you already started learning algebra in school, you are familiar with the expressions like <code>x=2</code>, which means that the variable <code>x</code> represents the number 2. In programming, we used variables a lot.  But in programming a variable can store a value in computer’s memory so you can access these values from various methods in your classes.  Using the same algebra example, we can say that we assign the value of 2 to the variable <code>x</code>. The equal sign represents the assignement of the value located to the right of the equal sign to the variable located on the left.</p>
 </div>
@@ -1789,7 +1794,7 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <p><code>void saveScore(String playerName, int score)</code></p>
 </div>
 <div class="sect3">
-<h4 id="_primitives"><a class="anchor" href="#_primitives"></a>Primitives</h4>
+<h4 id="_primitives"><a class="anchor" href="#_primitives"></a>3.2.1. Primitives</h4>
 <div class="paragraph">
 <p>Simple Java data types are called <em>primitives</em> they are written in small letters (e.g. <code>int</code>, <code>long</code>, <code>char</code>, <code>boolean</code>). So the <code>score</code> is of a primitive data type, while the <code>playerName</code> is not.  In Java you have to declare the type and the name of a variable first, and then use it.</p>
 </div>
@@ -1906,7 +1911,7 @@ long totalCars =4637283648392l;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_classes-as-data-types"><a class="anchor" href="#_classes-as-data-types"></a>Classes as Data Types</h4>
+<h4 id="_classes-as-data-types"><a class="anchor" href="#_classes-as-data-types"></a>3.2.2. Classes as Data Types</h4>
 <div class="paragraph">
 <p>Not all variable have primitive data types. For each primitive data type has a corresponding <em>wrapper</em> class, for example <code>Integer</code>, <code>Double</code>, <code>Boolean</code>, etc. These classes also can store the values of the corresponding primitive type, but also have useful methods to convert data from one type to another.</p>
 </div>
@@ -1933,7 +1938,7 @@ long totalCars =4637283648392l;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_how-much-memory-is-needed"><a class="anchor" href="#_how-much-memory-is-needed"></a>How Much Memory is Needed</h4>
+<h4 id="_how-much-memory-is-needed"><a class="anchor" href="#_how-much-memory-is-needed"></a>3.2.3. How Much Memory is Needed</h4>
 <div class="paragraph">
 <p>Variables are stored in computer&#8217;s memory, and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), gigabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists or eight bits.</p>
 </div>
@@ -1955,7 +1960,7 @@ long totalCars =4637283648392l;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creation-of-a-pet"><a class="anchor" href="#_creation-of-a-pet"></a>Creation of a Pet</h3>
+<h3 id="_creation-of-a-pet"><a class="anchor" href="#_creation-of-a-pet"></a>3.3. Creation of a Pet</h3>
 <div class="paragraph">
 <p>Let’s design and create a class <code>Pet</code>. First we need to decide what actions our pet will be able to do. How about eat, sleep, and say? We’ll program these actions in the methods of the class <code>Pet</code>. We’ll also give our pet the following  attributes: age, height, weight, and color.</p>
 </div>
@@ -2155,7 +2160,7 @@ Good night, see you tomorrow!</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_inheritance-a-fish-can-be-a-pet-too"><a class="anchor" href="#_inheritance-a-fish-can-be-a-pet-too"></a>Inheritance – a Fish Can Be a Pet Too</h3>
+<h3 id="_inheritance-a-fish-can-be-a-pet-too"><a class="anchor" href="#_inheritance-a-fish-can-be-a-pet-too"></a>3.4. Inheritance – a Fish Can Be a Pet Too</h3>
 <div class="paragraph">
 <p>In the real life, every person inherits some features from his or her parents. Similarly, in the Java world you can also create a new class, based on the existing one. The class <code>Pet</code> will help us learn yet another important feature of Java called <em>inheritance</em>.</p>
 </div>
@@ -2261,7 +2266,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_method-overriding"><a class="anchor" href="#_method-overriding"></a>Method Overriding</h3>
+<h3 id="_method-overriding"><a class="anchor" href="#_method-overriding"></a>3.5. Method Overriding</h3>
 <div class="paragraph">
 <p>As you know, fish do not speak (at least they do not do it aloud). But our class <code>Fish</code> has been inherited from the class <code>Pet</code> that has the method <code>talk()</code>. This means that nothing stops you from writing <code>myFish.talk();</code>.</p>
 </div>
@@ -2297,7 +2302,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>Challenge Yourself</h3>
+<h3 id="_challenge-yourself"><a class="anchor" href="#_challenge-yourself"></a>3.6. Challenge Yourself</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2339,13 +2344,13 @@ myLittleFish.sleep();</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-4-java-building-blocks"><a class="anchor" href="#_chapter-4-java-building-blocks"></a>Chapter 4. Java Building Blocks</h2>
+<h2 id="_java-building-blocks"><a class="anchor" href="#_java-building-blocks"></a>4. Java Building Blocks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Classes are the major constructs in Java. But you need to know smaller elements that help you out to program the behavior and the flow of the program.  You need to know how commented your program so other people can understand your intentions (programmers often work in teams and help each other). You need to know how to write code that will invoke one method or the other depending on certain conditions. So in this chapter I&#8217;ll show you some Java elements that you have to know and apply in pretty much any project.</p>
 </div>
 <div class="sect2">
-<h3 id="_program-comments"><a class="anchor" href="#_program-comments"></a>Program Comments</h3>
+<h3 id="_program-comments"><a class="anchor" href="#_program-comments"></a>4.1. Program Comments</h3>
 <div class="paragraph">
 <p>You can add any text comments to your program to explain what a particular line, method or a class is for. First of all, someone else may read your program so comments would help in understanding your intentions. Second, even the  author of the code can&#8217;t remember every program he or she wrote. Besides, if a professional programmer decides to change the employer, if would be nice to leave well-commented code behind.</p>
 </div>
@@ -2364,7 +2369,7 @@ myLittleFish.sleep();</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: <code>/<strong></code> and <code></strong>/</code>, for example:</p>
+<p>If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: <code>/*</code> and <code>*/</code>, for example:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">/* Now we'll handle the current
@@ -2374,7 +2379,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 </li>
 <li>
-<p>Java comes with a special program <code>javadoc</code> that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a <em>technical documentation</em> for your programs. Such comments are enclosed in  symbols <code>/* <strong></code> and   <code></strong>/</code>. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.</p>
+<p>Java comes with a special program <code>javadoc</code> that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a <em>technical documentation</em> for your programs. Such comments are enclosed in  symbols <code>/* *</code> and   <code>*/</code>. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">/** This method calculates the discount that depends
@@ -2397,12 +2402,12 @@ give the user 20% off, otherwise only 10%.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_making-decisions"><a class="anchor" href="#_making-decisions"></a>Making Decisions</h3>
+<h3 id="_making-decisions"><a class="anchor" href="#_making-decisions"></a>4.2. Making Decisions</h3>
 <div class="paragraph">
 <p>We always make decisions in our life: <em>If she is going to tell me  this</em> – <em>I’m going to answer that, otherwise I’ll do something else</em>. You can write a Java program that will "make decisions" with the help of <code>if</code> and <code>switch</code> statements. You can also build more complex either-or conditions using logical operators.</p>
 </div>
 <div class="sect3">
-<h4 id="_the-if-statement"><a class="anchor" href="#_the-if-statement"></a>The if Statement</h4>
+<h4 id="_the-if-statement"><a class="anchor" href="#_the-if-statement"></a>4.2.1. The if Statement</h4>
 <div class="paragraph">
 <p>Java has an <code>if</code> statement that checks if a particular expression is <code>true</code> or <code>false</code>.</p>
 </div>
@@ -2508,7 +2513,7 @@ Good night, see you tomorrow.</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_logical-operators"><a class="anchor" href="#_logical-operators"></a>Logical Operators</h4>
+<h4 id="_logical-operators"><a class="anchor" href="#_logical-operators"></a>4.2.2. Logical Operators</h4>
 <div class="paragraph">
 <p>Sometimes, to make a decision you may need to check more than just one conditional expression, for example if the name of the state is Texas or California, add the state sales tax to the price of every item in the store. This is an example of the <em>logical or</em> case – either Texas or California.</p>
 </div>
@@ -2594,7 +2599,7 @@ if (!(price &lt;= 50)) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_conditional-operator"><a class="anchor" href="#_conditional-operator"></a>Conditional operator</h4>
+<h4 id="_conditional-operator"><a class="anchor" href="#_conditional-operator"></a>4.2.3. Conditional operator</h4>
 <div class="paragraph">
 <p>There is another flavor of an if statement called <em>conditional operator</em>, which allows to assign a value to a variable based on the expression that ends with a question mark. It&#8217;s like you&#8217;re asking, "Is this true?". If such an  expression is <code>true</code>, the value after the question mark is used, otherwise the value after the colon is assigned to the variable on the left:</p>
 </div>
@@ -2615,7 +2620,7 @@ if (!(price &lt;= 50)) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using-code-else-if-code"><a class="anchor" href="#_using-code-else-if-code"></a>Using <code>else if</code></h4>
+<h4 id="_using-code-else-if-code"><a class="anchor" href="#_using-code-else-if-code"></a>4.2.4. Using <code>else if</code></h4>
 <div class="paragraph">
 <p>You are also allowed to build more complex <code>if</code> statements with several <code>else if</code> blocks. To illustrate this technique let&#8217;s create a new class called <code>ReportCard</code>. This class will have two methods: <code>main()</code> and  <code>convertGrades()</code> with one argument  - the school test result. Depending on the number, it should print your grade like A, B, C, or D.</p>
 </div>
@@ -2671,7 +2676,7 @@ if (!(price &lt;= 50)) {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the-code-switch-code-statement"><a class="anchor" href="#_the-code-switch-code-statement"></a>The <code>switch</code> Statement</h4>
+<h4 id="_the-code-switch-code-statement"><a class="anchor" href="#_the-code-switch-code-statement"></a>4.2.5. The <code>switch</code> Statement</h4>
 <div class="paragraph">
 <p>The <code>switch</code> statement sometimes can be used as an alternative to <code>if</code>. The variable after the keyword <code>switch</code>  is evaluated, and program goes only to one of the <code>case</code>  statements:</p>
 </div>
@@ -2719,7 +2724,7 @@ if (!(price &lt;= 50)) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how-long-variables-live"><a class="anchor" href="#_how-long-variables-live"></a>How Long Variables Live?</h3>
+<h3 id="_how-long-variables-live"><a class="anchor" href="#_how-long-variables-live"></a>4.3. How Long Variables Live?</h3>
 <div class="paragraph">
 <p>Class <code>ReportCard</code> declares a variable <code>grade</code> inside the method <code>convertGrades()</code>. If you declare a variable inside any method, such variable is called  <em>local</em>. This means that this variable is available only for the code <em>within this method</em>. When the method completes, this variable automatically gets removed from memory.</p>
 </div>
@@ -2733,7 +2738,7 @@ if (!(price &lt;= 50)) {
 <p>Member variables can be shared and reused by all methods of the class, and we can make them visible from external classes too, if need be. For example the method <code>main()</code> of the class <code>ReportCard</code> includes the statement <code>System.out.println()</code>. It uses the class variable <code>out</code> that was declared in the Java class <code>System</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_the-keyword-code-static-code"><a class="anchor" href="#_the-keyword-code-static-code"></a>The Keyword <code>static</code></h4>
+<h4 id="_the-keyword-code-static-code"><a class="anchor" href="#_the-keyword-code-static-code"></a>4.3.1. The Keyword <code>static</code></h4>
 <div class="paragraph">
 <p>Wait a minute! Can we use a member variable <code>out</code> from the class <code>System</code> if we have not even created an instance of this class?  Yes we can, if the class <code>System</code> declares the variable <code>out</code> with a keyword <code>static</code>.</p>
 </div>
@@ -2786,7 +2791,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_special-methods-constructors"><a class="anchor" href="#_special-methods-constructors"></a>Special Methods: Constructors</h3>
+<h3 id="_special-methods-constructors"><a class="anchor" href="#_special-methods-constructors"></a>4.4. Special Methods: Constructors</h3>
 <div class="paragraph">
 <p>You&#8217;ve already learned that Java uses the operator <code>new</code> to create instances of  objects in memory, for example:</p>
 </div>
@@ -2838,7 +2843,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the-keyword-code-this-code"><a class="anchor" href="#_the-keyword-code-this-code"></a>The Keyword <code>this</code></h3>
+<h3 id="_the-keyword-code-this-code"><a class="anchor" href="#_the-keyword-code-this-code"></a>4.5. The Keyword <code>this</code></h3>
 <div class="paragraph">
 <p>The keyword <code>this</code> is useful when your code needs to refer to the  instance of the object, where this code is running.  Look at the next code example, which is a slight modification of the previous one:</p>
 </div>
@@ -2867,7 +2872,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_arrays"><a class="anchor" href="#_arrays"></a>Arrays</h3>
+<h3 id="_arrays"><a class="anchor" href="#_arrays"></a>4.6. Arrays</h3>
 <div class="paragraph">
 <p>An array is an object that holds several values of the same type - primitives or objects. Let’s say your program has to store the names of four game players. Instead of declaring four different <code>String</code> variables, you can declare one <code>String</code> <em>array</em> that has four <em>elements</em>. Arrays are marked by placing square brackets either after the variable name, or after the data type:</p>
 </div>
@@ -2937,7 +2942,7 @@ System.out.println("Congratulations, " + theWinner + "!");</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_repeating-actions-with-loops"><a class="anchor" href="#_repeating-actions-with-loops"></a>Repeating Actions with Loops</h3>
+<h3 id="_repeating-actions-with-loops"><a class="anchor" href="#_repeating-actions-with-loops"></a>4.7. Repeating Actions with Loops</h3>
 <div class="paragraph">
 <p>A loop is a language construct that allows to repeat the same action multiple times. For example, if we need to print congratulation to several winners, the printing code should be invokes several times <em>in a loop</em>. When you know in advance how many times this action has to be repeated, you can use a loop with a keyword <code>for</code>:</p>
 </div>
@@ -3055,7 +3060,7 @@ while (counter&lt; totalPlayers){
 </div>
 </div>
 <div class="sect2">
-<h3 id="_challenge-yourself-2"><a class="anchor" href="#_challenge-yourself-2"></a>Challenge Yourself</h3>
+<h3 id="_challenge-yourself-2"><a class="anchor" href="#_challenge-yourself-2"></a>4.8. Challenge Yourself</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3123,7 +3128,7 @@ Converting 70F to Celsius. The temperature in Celsius is 21.11111</em></p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-5-interfaces-lambdas-abstract-and-anonymous-classes"><a class="anchor" href="#_chapter-5-interfaces-lambdas-abstract-and-anonymous-classes"></a>Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes</h2>
+<h2 id="_interfaces-lambdas-abstract-and-anonymous-classes"><a class="anchor" href="#_interfaces-lambdas-abstract-and-anonymous-classes"></a>5. Interfaces, Lambdas, Abstract and Anonymous Classes</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this chapter I&#8217;ll focus on discussing how you can program <em>behavior</em> in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called <em>functional</em> (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like <code>eat</code>, <code>sleep</code>, or <code>dive</code>, and these functions can live their independent lives and don&#8217;t have to be declared in classes. In <em>object-oriented</em> languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called <em>lambda expressions</em> covered later in this chapter.</p>
@@ -3132,7 +3137,7 @@ Converting 70F to Celsius. The temperature in Celsius is 21.11111</em></p>
 <p>So far I was declaring and implementing behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation. Such separation can be done using <em>interfaces</em>.</p>
 </div>
 <div class="sect2">
-<h3 id="_java-interfaces"><a class="anchor" href="#_java-interfaces"></a>Java Interfaces</h3>
+<h3 id="_java-interfaces"><a class="anchor" href="#_java-interfaces"></a>5.1. Java Interfaces</h3>
 <div class="paragraph">
 <p>While you can just create a Java class and implements all its methods there, a more formal way of declaring the behavior of the class in a separate <code>interface</code>. Then a class declaration would include the keyword <code>implements</code> followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.</p>
 </div>
@@ -3261,7 +3266,7 @@ Java includes several interfaces that don&#8217;t declare any methods (e.g. <cod
 </table>
 </div>
 <div class="sect3">
-<h4 id="_default-methods-in-interfaces"><a class="anchor" href="#_default-methods-in-interfaces"></a>Default Methods in Interfaces</h4>
+<h4 id="_default-methods-in-interfaces"><a class="anchor" href="#_default-methods-in-interfaces"></a>5.1.1. Default Methods in Interfaces</h4>
 <div class="paragraph">
 <p>To tell you the truth, I don&#8217;t like the fact that I had to implement the method <code>dive</code> in the class <code>Dog</code>. The dogs I&#8217;ve seen can&#8217;t dive. Can the interface <code>Swimmable</code> be changed so I&#8217;m not forced to write the implementation of the method <code>dive</code> in the class <code>Dog</code>? Yes, it can. Java 8 introduced a new keyword <code>default</code>. Now you&#8217;re allowed to write a default implementation of a method in the interface. Such a method won&#8217;t be considered abstract anymore, and you won&#8217;t be forced to implement it in your class. Let&#8217;s add a default implementation of the method <code>dive</code> to <code>Swimmable</code>.</p>
 </div>
@@ -3336,7 +3341,7 @@ OK, will dive 20 feet</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_static-methods-in-interfaces"><a class="anchor" href="#_static-methods-in-interfaces"></a>Static Methods in Interfaces</h4>
+<h4 id="_static-methods-in-interfaces"><a class="anchor" href="#_static-methods-in-interfaces"></a>5.1.2. Static Methods in Interfaces</h4>
 <div class="paragraph">
 <p>Starting from Java 8, interfaces are also allowed to include static methods, which are not specific to any instance and can be used only internally by other methods of the interface. The following example illustrates the use of a static method in the interface. Now the default implementation of the method <code>dive</code> won&#8217;t just reject an offer to swim, but will check the current month: if it&#8217;s June, July, or August then diving is allowed because the water should be warm.</p>
 </div>
@@ -3442,7 +3447,7 @@ class Dog{
 </div>
 </div>
 <div class="sect3">
-<h4 id="_final-static-variables-in-interfaces"><a class="anchor" href="#_final-static-variables-in-interfaces"></a>Final Static Variables in Interfaces</h4>
+<h4 id="_final-static-variables-in-interfaces"><a class="anchor" href="#_final-static-variables-in-interfaces"></a>5.1.3. Final Static Variables in Interfaces</h4>
 <div class="paragraph">
 <p>Beside method declarations, default and static methods you can add <code>static final</code> variables to the interface declaration.  Such variables can be used by the code inside the interface or in the classes that implements it. For example, the interface <code>Swimmable</code> can define the maximum depth allowed for diving. Here&#8217;s yet another version of the interface <code>Swimmable</code>:</p>
 </div>
@@ -3467,14 +3472,14 @@ class Dog{
 </div>
 </div>
 <div class="sect3">
-<h4 id="_functional-interfaces"><a class="anchor" href="#_functional-interfaces"></a>Functional Interfaces</h4>
+<h4 id="_functional-interfaces"><a class="anchor" href="#_functional-interfaces"></a>5.1.4. Functional Interfaces</h4>
 <div class="paragraph">
 <p>If an interface has only one abstract method declared (default and static methods don&#8217;t count) it&#8217;s called <em>functional interface</em>. Both <code>Talkative</code> and <code>Swimmable</code> are  examples of a functional interface - each has only one abstract method. Java 8 introduced a special way of implementing functional interfaces using lambda expressions, which we&#8217;ll discuss later in this lesson.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_abstract-classes"><a class="anchor" href="#_abstract-classes"></a>Abstract Classes</h3>
+<h3 id="_abstract-classes"><a class="anchor" href="#_abstract-classes"></a>5.2. Abstract Classes</h3>
 <div class="paragraph">
 <p>If a method is not implemented we call it abstract. But classes can be declared abstract too, and Java has the keyword <code>abstract</code> for this. An abstract class is called abstract if it was declared with the keyword <code>abstract</code>, for example:</p>
 </div>
@@ -3527,7 +3532,7 @@ class Dog{
 <p>And again you might be wondering, "Why complicating programmer&#8217;s life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from <code>Animal</code> you might want to declare an unified method signature, so each class (<code>Dog</code>, <code>Parrot</code>, <code>Fish</code> et al.) will have the same way of initiating the talk.</p>
 </div>
 <div class="sect3">
-<h4 id="_what-s-the-difference-between-abstract-classes-and-interfaces"><a class="anchor" href="#_what-s-the-difference-between-abstract-classes-and-interfaces"></a>What&#8217;s the difference between abstract classes and interfaces?</h4>
+<h4 id="_what-s-the-difference-between-abstract-classes-and-interfaces"><a class="anchor" href="#_what-s-the-difference-between-abstract-classes-and-interfaces"></a>5.2.1. What&#8217;s the difference between abstract classes and interfaces?</h4>
 <div class="paragraph">
 <p>Abstract classes and interfaces allow to create classes that implement <em>polymorphism</em>, which is an advanced topic and will not be covered in this book. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. <code>setName</code> and <code>sleep</code> in the vertical class hierarchy.</p>
 </div>
@@ -3537,7 +3542,7 @@ class Dog{
 </div>
 </div>
 <div class="sect2">
-<h3 id="_anonymous-classes"><a class="anchor" href="#_anonymous-classes"></a>Anonymous Classes</h3>
+<h3 id="_anonymous-classes"><a class="anchor" href="#_anonymous-classes"></a>5.3. Anonymous Classes</h3>
 <div class="paragraph">
 <p>If you need to use an object of certain type only once, you can kill two birds with one stone: declare an anonymous class and create an instance of it. In this case you don&#8217;t even need to give a class a name, hence it&#8217;s <em>anonymous</em>. I&#8217;ll show you an example of a program that&#8217;s first written without and then with anonymous classes.</p>
 </div>
@@ -3688,7 +3693,7 @@ public class CalculatorWithAnonymousClasses {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lambda-expressions"><a class="anchor" href="#_lambda-expressions"></a>Lambda Expressions</h3>
+<h3 id="_lambda-expressions"><a class="anchor" href="#_lambda-expressions"></a>5.4. Lambda Expressions</h3>
 <div class="paragraph">
 <p>Up till now, to invoke a method we&#8217;ve been creating named or anonymous classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to declare classes or instantiate objects.</p>
 </div>
@@ -3778,7 +3783,7 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 </table>
 </div>
 <div class="sect3">
-<h4 id="_simplifying-code-with-lambdas"><a class="anchor" href="#_simplifying-code-with-lambdas"></a>Simplifying Code With Lambdas</h4>
+<h4 id="_simplifying-code-with-lambdas"><a class="anchor" href="#_simplifying-code-with-lambdas"></a>5.4.1. Simplifying Code With Lambdas</h4>
 <div class="paragraph">
 <p>Let&#8217;s return to our examples with pets. I&#8217;d like to show you how lambda expressions can simplify your code by reducing the number of required classes. Earlier in this chapter we&#8217;ve created the classes <code>Dog</code>, <code>Parrot</code> and the only difference between them was the implementation of the interface <code>Talkative</code>. But we can declare just one class with a method that can take the implementation of the <code>Talkative</code> in a form of lambda expression.</p>
 </div>
@@ -3862,7 +3867,7 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-java-interfaces-and-lambda-expressions"><a class="anchor" href="#_project-java-interfaces-and-lambda-expressions"></a>Project: Java Interfaces and Lambda Expressions</h3>
+<h3 id="_project-java-interfaces-and-lambda-expressions"><a class="anchor" href="#_project-java-interfaces-and-lambda-expressions"></a>5.5. Project: Java Interfaces and Lambda Expressions</h3>
 <div class="paragraph">
 <p><strong>Part 1.</strong> In this part you&#8217;ll do an exercise to prove that you understand Java interfaces.</p>
 </div>
@@ -3943,7 +3948,7 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-6-access-levels-collections-generics-and-multi-threading"><a class="anchor" href="#_chapter-6-access-levels-collections-generics-and-multi-threading"></a>Chapter 6. Access Levels, Collections, Generics, and Multi-Threading</h2>
+<h2 id="_access-levels-collections-generics-and-multi-threading"><a class="anchor" href="#_access-levels-collections-generics-and-multi-threading"></a>6. Access Levels, Collections, Generics, and Multi-Threading</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>I&#8217;ll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we&#8217;ll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Then you&#8217;ll get familiar with the mechanism of <em>generics</em> that allows Java compiler to ensure that you won&#8217;t be using the wrong data types with data collections or other objects.</p>
@@ -3952,7 +3957,7 @@ I'm a parrot. Don't call me Charlie</code></pre>
 <p>Finally, I&#8217;ll give you a very light introduction to parallel computing using multi-threading.</p>
 </div>
 <div class="sect2">
-<h3 id="_access-levels"><a class="anchor" href="#_access-levels"></a>Access Levels</h3>
+<h3 id="_access-levels"><a class="anchor" href="#_access-levels"></a>6.1. Access Levels</h3>
 <div class="paragraph">
 <p>In code samples from previous chapters I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be accessed only from the code located in the same package (directory).</p>
 </div>
@@ -4054,7 +4059,7 @@ public class Car {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_casting"><a class="anchor" href="#_casting"></a>Casting</h3>
+<h3 id="_casting"><a class="anchor" href="#_casting"></a>6.2. Casting</h3>
 <div class="paragraph">
 <p>In Java all classes are directly or indirectly inherited from the class <code>Object</code>, which is the root of the class hierarchy. In Figure 2 you&#8217;ve seen a class <code>Car</code> that has number of methods that we&#8217;ve never declared - they belong to the class <code>Object</code>, and the class <code>Car</code> extends <code>Object</code> even though we&#8217;ve never asked for it.  So any of your application classes has an ancestor - <code>Object</code>.</p>
 </div>
@@ -4109,7 +4114,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_selected-data-collections"><a class="anchor" href="#_selected-data-collections"></a>Selected Data Collections</h3>
+<h3 id="_selected-data-collections"><a class="anchor" href="#_selected-data-collections"></a>6.3. Selected Data Collections</h3>
 <div class="paragraph">
 <p>Now let&#8217;s see how to work with collections of data. Say you have a hundred of songs in your MP3 player. It&#8217;s a collection. If you&#8217;ll create a class <code>Song</code> you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.</p>
 </div>
@@ -4120,7 +4125,7 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to the concept of multi-threadinglater in this chapter, but the coverage of  concurrent collections doesn&#8217;t belong to the introductory book like this one.</p>
 </div>
 <div class="sect3">
-<h4 id="_the-class-arraylist"><a class="anchor" href="#_the-class-arraylist"></a>The Class ArrayList</h4>
+<h4 id="_the-class-arraylist"><a class="anchor" href="#_the-class-arraylist"></a>6.3.1. The Class ArrayList</h4>
 <div class="paragraph">
 <p>In Chapter 4 you&#8217;ve got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class <code>ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed. If you can think of a list of something - a list of songs, a To-Do list, a list of friends names. Pretty much any objects  that can be used with the word <em>list</em> can be stored in an <code>ArrayList</code>.</p>
 </div>
@@ -4274,7 +4279,7 @@ Got the Green fish that weighs 5.0 pounds.</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the-class-hashtable"><a class="anchor" href="#_the-class-hashtable"></a>The Class Hashtable</h4>
+<h4 id="_the-class-hashtable"><a class="anchor" href="#_the-class-hashtable"></a>6.3.2. The Class Hashtable</h4>
 <div class="paragraph">
 <p>While the <code>ArrayList</code> collection only allows referencing its elements by index (e.g. <code>fishTank.get(i)</code>), sometimes it would be easier to reference collection elements by names as <em>key/value</em> pairs. I&#8217;ll illustrate by storing my friends' contact information in a <code>HashTable</code> collection that allows accessing objects by key names. Let&#8217;s declare a simple class <code>ContactDetail</code>, which can store contact details of one person.</p>
 </div>
@@ -4340,7 +4345,7 @@ public class HashTableDemo {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_introduction-to-generics"><a class="anchor" href="#_introduction-to-generics"></a>Introduction to Generics</h3>
+<h3 id="_introduction-to-generics"><a class="anchor" href="#_introduction-to-generics"></a>6.4. Introduction to Generics</h3>
 <div class="paragraph">
 <p>Java generics is a feature that allow to create so called <code>parameterized data types</code>. For example, instead of just declaring a creating a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. For example, declaring and instantiating general collection to store friends like this:</p>
 </div>
@@ -4485,7 +4490,7 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_light-introduction-to-multi-threading"><a class="anchor" href="#_light-introduction-to-multi-threading"></a>Light Introduction to Multi-Threading</h3>
+<h3 id="_light-introduction-to-multi-threading"><a class="anchor" href="#_light-introduction-to-multi-threading"></a>6.5. Light Introduction to Multi-Threading</h3>
 <div class="paragraph">
 <p>So far, all our programs perform actions in a sequence – one after another. So if a program calls two methods, the second method is invoked only after the first one completes. In other words, such a program has only one <em>thread of execution</em>, where the code works sequentially.</p>
 </div>
@@ -4513,7 +4518,7 @@ public class HashTableBrokenDemo {
 <p>A good example of a program that creates multiple threads is a Web browser. For instance, you can browse the Internet while downloading some files so one program (the browser) runs two threads of execution (browsing and downloading) in parallel.</p>
 </div>
 <div class="sect3">
-<h4 id="_how-to-create-a-thread"><a class="anchor" href="#_how-to-create-a-thread"></a>How to Create a Thread</h4>
+<h4 id="_how-to-create-a-thread"><a class="anchor" href="#_how-to-create-a-thread"></a>6.5.1. How to Create a Thread</h4>
 <div class="paragraph">
 <p>All Java applications that we&#8217;ve created so far (even Hello World) were running in so called <em>main thread</em>. We didn&#8217;t need to do any special programming to create a main thread - Java runtime always create one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.</p>
 </div>
@@ -4658,7 +4663,7 @@ The value of i in power of 4 is 1024</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-using-arraylist-and-generics"><a class="anchor" href="#_project-using-arraylist-and-generics"></a>Project: Using ArrayList and Generics</h3>
+<h3 id="_project-using-arraylist-and-generics"><a class="anchor" href="#_project-using-arraylist-and-generics"></a>6.6. Project: Using ArrayList and Generics</h3>
 <div class="paragraph">
 <p>In this exercise I&#8217;d like you to try create your own collection that uses <code>ArrayList</code>, generics, private variables and public getters and setters.</p>
 </div>
@@ -4731,7 +4736,7 @@ Name: Art Jones, Facebook ID: ajones, phone: 212-333-2121, email: ajones@gmail.c
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-7-introduction-to-gui-with-javafx"><a class="anchor" href="#_chapter-7-introduction-to-gui-with-javafx"></a>Chapter 7. Introduction to GUI with JavaFX</h2>
+<h2 id="_introduction-to-gui-with-javafx"><a class="anchor" href="#_introduction-to-gui-with-javafx"></a>7. Introduction to GUI with JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After creating lots of code samples producing outputs to the system console, it&#8217;s time for creating a nice looking Graphic User Interface (GUI). We&#8217;re accustomed to programs that open windows with buttons, text fields, menus and other GUI components.</p>
@@ -4752,7 +4757,7 @@ Name: Art Jones, Facebook ID: ajones, phone: 212-333-2121, email: ajones@gmail.c
 <div class="title">Figure 50. The Calculator</div>
 </div>
 <div class="sect2">
-<h3 id="_introduction-to-javafx"><a class="anchor" href="#_introduction-to-javafx"></a>Introduction to JavaFX</h3>
+<h3 id="_introduction-to-javafx"><a class="anchor" href="#_introduction-to-javafx"></a>7.1. Introduction to JavaFX</h3>
 <div class="paragraph">
 <p>With JavaFX you can create Graphic User Interface in two ways:</p>
 </div>
@@ -4816,7 +4821,7 @@ Name: Art Jones, Facebook ID: ajones, phone: 212-333-2121, email: ajones@gmail.c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_brief-overview-of-javafx-layouts"><a class="anchor" href="#_brief-overview-of-javafx-layouts"></a>Brief Overview of JavaFX Layouts</h3>
+<h3 id="_brief-overview-of-javafx-layouts"><a class="anchor" href="#_brief-overview-of-javafx-layouts"></a>7.2. Brief Overview of JavaFX Layouts</h3>
 <div class="paragraph">
 <p>Users of your application can have computer monitors of different screen sizes and resolutions. JavaFX comes with <em>layouts</em> that help with arranging GUI controls on the scene and keeping the arrangement for different stage sizes (think window sizes). There are following layout container Java classes (and similarly named FXML tags):</p>
 </div>
@@ -4899,7 +4904,7 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_getting-started-with-scene-builder"><a class="anchor" href="#_getting-started-with-scene-builder"></a>Getting Started With Scene Builder</h3>
+<h3 id="_getting-started-with-scene-builder"><a class="anchor" href="#_getting-started-with-scene-builder"></a>7.3. Getting Started With Scene Builder</h3>
 <div class="paragraph">
 <p>Scene Builder 2.0 is a visual layout tool for JavaFX applications by Oracle. Download it from <a href="http://goo.gl/9jOse6" class="bare">http://goo.gl/9jOse6</a>. Follow the <a href="http://goo.gl/rCt8x1">installation instructions</a> for your operational system and install Scene Builder on your computer. In this section I&#8217;ll show you how to quickly get started with Scene Builder, but you should also watch this helpful <a href="https://www.youtube.com/watch?v=rHcnsEoSK_c">Youtube video</a>.</p>
 </div>
@@ -4969,7 +4974,7 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_gridpane-layout"><a class="anchor" href="#_gridpane-layout"></a>GridPane Layout</h3>
+<h3 id="_gridpane-layout"><a class="anchor" href="#_gridpane-layout"></a>7.4. GridPane Layout</h3>
 <div class="paragraph">
 <p>I&#8217;m not going to cover each JavaFX layout in details, but will show you how to use a pretty powerful layout - <code>GridPane</code>. When we&#8217;ll work on the GUI for the calculator, I&#8217;ll also show you how to design a scene using a combination of layouts.</p>
 </div>
@@ -4980,7 +4985,7 @@ AnchorPane.setBottomAnchor(rewindBtn, 10);</code></pre>
 <p>Before placing the node into a particula cell you have to specify the grid constraints such as <code>rowIndex</code> and <code>columnIndex</code> (the coordinate of the cell, which starts with 0,0). The <code>rowSpans</code> and <code>columnSpan</code> allow to make the cell as wide (or as tall) as several other cells. The <code>GridPane</code> <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/GridPane.html">documentation</a> describes lots of various constraints that can define the behavior of each cell&#8217;s content if the windows gets resized. I&#8217;ll show you a basic example that uses some of these constraints.</p>
 </div>
 <div class="sect3">
-<h4 id="_designing-a-sign-in-window-in-scene-builder"><a class="anchor" href="#_designing-a-sign-in-window-in-scene-builder"></a>Designing a Sign In Window in Scene Builder</h4>
+<h4 id="_designing-a-sign-in-window-in-scene-builder"><a class="anchor" href="#_designing-a-sign-in-window-in-scene-builder"></a>7.4.1. Designing a Sign In Window in Scene Builder</h4>
 <div class="paragraph">
 <p>I want to create a Sign In window where the user can enter the id, password and press the button Sign In. The scene will use <code>GridPane</code> layout. The first row will contain a <code>Label</code> and <code>TextField</code> for user id, the second row will have a similar pair for the password, and the third row of the grid will have one <code>Button</code> Sign In that should span two columns. This is how this window should look like:</p>
 </div>
@@ -5119,7 +5124,7 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 </div>
 </div>
 <div class="sect3">
-<h4 id="_programming-the-sign-in-window-in-java"><a class="anchor" href="#_programming-the-sign-in-window-in-java"></a>Programming the Sign In Window in Java</h4>
+<h4 id="_programming-the-sign-in-window-in-java"><a class="anchor" href="#_programming-the-sign-in-window-in-java"></a>7.4.2. Programming the Sign In Window in Java</h4>
 <div class="paragraph">
 <p>Some people like visual design tools, but others don&#8217;t. If you prefer to program everything in Java without using Scene Builder and FXML, you can certainly do it. Below is the Java code of the Sign In window that I&#8217;ve written purely in Java without using Scene Builder. It&#8217;ll produce the same output as in Figure 7.</p>
 </div>
@@ -5175,7 +5180,7 @@ Then we could drag and drop two <code>TextField</code> objects in the top two ce
 </div>
 </div>
 <div class="sect2">
-<h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>Styling With CSS</h3>
+<h3 id="_styling-with-css"><a class="anchor" href="#_styling-with-css"></a>7.5. Styling With CSS</h3>
 <div class="paragraph">
 <p>It would be boring if all applications would look the same. Application windows may have different colors, fonts, buttons with rounded corners or use special visual effects. In other words, applications have different styles. Even though you can style JavaFX GUI components programmatically (e.g. by calling methods <code>setFont()</code> or <code>setFill()</code>) separating styling from programming allows professional UI designers to take care of the look and feel while software developers implement application logic.</p>
 </div>
@@ -5354,7 +5359,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_borderpane-and-combining-layouts"><a class="anchor" href="#_borderpane-and-combining-layouts"></a>BorderPane and Combining Layouts</h3>
+<h3 id="_borderpane-and-combining-layouts"><a class="anchor" href="#_borderpane-and-combining-layouts"></a>7.6. BorderPane and Combining Layouts</h3>
 <div class="paragraph">
 <p>Pretty often you see applications that split the window into several distinct areas - the header goes on top, the navigation bar is on the left (or right), the footer&#8217;s at the bottom of the page and a large content area occupies the middle portion of the window. The <code>BorderPane</code> layout allows you to do exactly this - split the scene into up to five regions called <code>left</code>, <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>center</code>.</p>
 </div>
@@ -5460,7 +5465,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-creating-a-gui-for-calculator"><a class="anchor" href="#_project-creating-a-gui-for-calculator"></a>Project: Creating a GUI for Calculator</h3>
+<h3 id="_project-creating-a-gui-for-calculator"><a class="anchor" href="#_project-creating-a-gui-for-calculator"></a>7.7. Project: Creating a GUI for Calculator</h3>
 <div class="paragraph">
 <p>Using Scene Builder and a combination of the <code>BorderPane</code> and <code>GridPane</code> layout create GUI for the calculator that looks as on Figure 1.  Add the <code>TextField</code> to the <code>north</code> region of the <code>BorderPane</code>. Then add a <code>GridPane</code> container to the <code>center</code> area - you&#8217;ll add buttons to this container.</p>
 </div>
@@ -5548,7 +5553,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-8-programming-user-interaction-in-javafx"><a class="anchor" href="#_chapter-8-programming-user-interaction-in-javafx"></a>Chapter 8. Programming User Interaction in JavaFX</h2>
+<h2 id="_programming-user-interaction-in-javafx"><a class="anchor" href="#_programming-user-interaction-in-javafx"></a>8. Programming User Interaction in JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and Calculator windows from Chapter 7 look good, but none of them would react on user&#8217;s actions. No matter how hard you click on the Sign In or calculator&#8217;s buttons, nothing will happen because we didn&#8217;t teach these application how to react on user-generated events. Events are notifications that something important for the application has happened (e.g. the user clicked on the button). In this chapter I&#8217;ll explain you how to write code to handle some of such events.</p>
@@ -5560,7 +5565,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 <p>You&#8217;ll learn how data binding can make automatically update the properties of a GUI component if a property of a Java controller class changes. I&#8217;ll also show the wrong and the right way of updating the GUI to make the used interaction more responsive.</p>
 </div>
 <div class="sect2">
-<h3 id="_events"><a class="anchor" href="#_events"></a>Events</h3>
+<h3 id="_events"><a class="anchor" href="#_events"></a>8.1. Events</h3>
 <div class="paragraph">
 <p>JavaFX applications have to deal with various events. For example, a button click, a mouse move etc. When the event happens, the event object is represented by the one of the subclasses of the class <code>Event</code> located in the packages <code>javafx.event</code> and <code>javafx.scene.input</code>. You need to decide what events are important to your program and, as the programmers say, "listen to these events". You&#8217;ll always write event handlers (a.k.a. event listeners) in Java, but there are different ways of assigning event handlers to GUI elements. If your GUI is designed using FXML, you&#8217;ll need to specify the name of your controller class right in the FXML file. If your GUI is designed with Java, using a separate controller class is not a must, but is a good idea if your code has to process multiple events.</p>
 </div>
@@ -5573,7 +5578,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 <p>You can create an instance of your controller class either with the <code>new</code> operator or <em>inject</em> it into Java code. I&#8217;ll explain you what injection means in a bit.</p>
 </div>
 <div class="sect3">
-<h4 id="_assigning-event-handlers-in-fxml"><a class="anchor" href="#_assigning-event-handlers-in-fxml"></a>Assigning Event Handlers in FXML</h4>
+<h4 id="_assigning-event-handlers-in-fxml"><a class="anchor" href="#_assigning-event-handlers-in-fxml"></a>8.1.1. Assigning Event Handlers in FXML</h4>
 <div class="paragraph">
 <p>Scene Builder allows you not only to design and arrange the GUI components on the scene, but also assign the Java code that will be handing events. We&#8217;ll stick to our principles of separating GUI and application logic, and will keep the GUI in <code>.fxml</code> file, but application logic will be programmed in Java.</p>
 </div>
@@ -5582,7 +5587,7 @@ userPwdLbl.getStyleClass().add("bluelabel");</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_adding-controller-to-sign-in-application"><a class="anchor" href="#_adding-controller-to-sign-in-application"></a>Adding Controller to Sign In application</h4>
+<h4 id="_adding-controller-to-sign-in-application"><a class="anchor" href="#_adding-controller-to-sign-in-application"></a>8.1.2. Adding Controller to Sign In application</h4>
 <div class="paragraph">
 <p>To illustrate the use of controllers, I&#8217;ll continue working on the sample Sign In project from Chapter 7. It has a file <code>signin.fxml</code> that includes the <code>GridPane</code> tag as a root element:</p>
 </div>
@@ -5666,7 +5671,7 @@ public class Controller {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_data-exchange-between-gui-components-and-controller"><a class="anchor" href="#_data-exchange-between-gui-components-and-controller"></a>Data Exchange Between GUI Components And Controller</h4>
+<h4 id="_data-exchange-between-gui-components-and-controller"><a class="anchor" href="#_data-exchange-between-gui-components-and-controller"></a>8.1.3. Data Exchange Between GUI Components And Controller</h4>
 <div class="paragraph">
 <p>Now that we know how to link controller&#8217;s event handlers to FXML components, the next question is how to read/write data from/to these components. In case of Sign In application we need to know what ID/password the user entered and update the GUI from the controller accordingly.</p>
 </div>
@@ -5700,7 +5705,7 @@ public class Controller {
 <p>Java has so called <a href="http://docs.oracle.com/javase/tutorial/java/annotations/">annotations</a> (not covered in this book). They start with the <code>@</code> sign and can be placed in front of the variable, class, or a method declaration depending on how the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation <code>@FXML</code> instructs runtime to inject the references to the specifies GUI objects into the variables.</p>
 </div>
 <div class="paragraph">
-<p>In other words, JavaFX runtime will read the first line as follows: <em>"I need to get the object that I created after loading <code>signin.fxml</code> file, and find the component with an the <code>fx:id="id"</code> inside this object. Finally, I need to insert the reference to this component into the Java variable <code>id`"</em>. The same applies to the variable `pwd</code>.</p>
+<p>In other words, JavaFX runtime will read the first line as follows: <em>"I need to get the object that I created after loading <code>signin.fxml</code> file, and find the component with an the <code>fx:id="id"</code> inside this object. Finally, I need to insert the reference to this component into the Java variable <code>id</code>"</em>. The same applies to the variable <code>pwd</code>.</p>
 </div>
 <div class="paragraph">
 <p>The rest is easy. Just use the injected values in you event handler. The code of our <code>Controller</code> is shown next. Its method <code>signInClicked</code> checks the value entered in the User ID field in the GUI, and if it&#8217;s not equal to "Yakov", then the code sets the background of the GUI component to the light pink color.</p>
@@ -5766,7 +5771,7 @@ public class Controller {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>Assigning Event Handlers in Java</h4>
+<h4 id="_assigning-event-handlers-in-java"><a class="anchor" href="#_assigning-event-handlers-in-java"></a>8.1.4. Assigning Event Handlers in Java</h4>
 <div class="paragraph">
 <p>If your program is written completely in Java without any use of FXML, you&#8217;ll be assigning event handlers using so called <a href="http://docs.oracle.com/javafx/2/events/convenience_methods.htm">convenience methods</a> that have names that start with <code>setOn</code> like <code>setOnAction</code>, <code>setOnKeyTyped</code>, <code>setOnEditStart</code> etc. Each of the GUI components has has several of such methods.</p>
 </div>
@@ -5912,14 +5917,14 @@ public class MainPureJava extends Application {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>Further Reading on Event Handling</h4>
+<h4 id="_further-reading-on-event-handling"><a class="anchor" href="#_further-reading-on-event-handling"></a>8.1.5. Further Reading on Event Handling</h4>
 <div class="paragraph">
 <p>I&#8217;ve covered the basics of event handling using the <code>ActionEvent</code> and <code>onAction</code> event handler as an example. Some other examples of the events are:`KeyEvent` (the user pressed a key on the keyboard), <code>MouseEvent</code>(the user pressed the mouse key and we need to know coordinates of the mouse pointer), <code>TouchEvent</code> (the user touched the screen), <code>WindowEvent</code> (e.g. the user is about to close the window) et al. For more detailed explanation of JavaFX events visit Oracle&#8217;s tutorial about handling events at <a href="http://docs.oracle.com/javafx/2/events/jfxpub-events.htm" class="bare">http://docs.oracle.com/javafx/2/events/jfxpub-events.htm</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_data-binding-and-properties"><a class="anchor" href="#_data-binding-and-properties"></a>Data Binding and Properties</h3>
+<h3 id="_data-binding-and-properties"><a class="anchor" href="#_data-binding-and-properties"></a>8.2. Data Binding and Properties</h3>
 <div class="paragraph">
 <p>JavaFX has the interface <code>Property</code> located in the package <code>javafx.beans.property</code>, which defines a very useful functionality allowing to <em>bind</em> the GUI components with properties of other Java objects. If a property on a Java object changes, the new value will be automatically reflected on the appropriate GUI component and visa versa. Bi-directional binding is available too, so no matter what changes - the GUI or the Java object - the other party will be immediately notified.</p>
 </div>
@@ -6061,7 +6066,7 @@ SimpleStringProperty signinError =
 </div>
 </div>
 <div class="sect2">
-<h3 id="_application-thread-in-javafx"><a class="anchor" href="#_application-thread-in-javafx"></a>Application Thread in JavaFX</h3>
+<h3 id="_application-thread-in-javafx"><a class="anchor" href="#_application-thread-in-javafx"></a>8.3. Application Thread in JavaFX</h3>
 <div class="paragraph">
 <p>In Chapter 6 I gave you a light introduction to multi-threading. When you work with JavaFX you have to run the code that updates the GUI and the code that performs application logic in separate threads. I&#8217;ll explain you why.</p>
 </div>
@@ -6072,7 +6077,7 @@ SimpleStringProperty signinError =
 <p>Updates of the GUI in JavaFX are done in so called  <em>application thread</em>. The idea is to separate calculations from the GUI updates. Say, the user clicked on the button Play on a JavaFX video streaming application like Netflix. If the requests for the remote video and actual playing of the video (GUI updates) would be done in the same application thread, the video would be choppy - it would be interrupted by running business logic that prepares GUI content. The screen would be "frozen" and the user wouldn&#8217;t be able to use any screen components.</p>
 </div>
 <div class="sect3">
-<h4 id="_the-frozen-screen-demo"><a class="anchor" href="#_the-frozen-screen-demo"></a>The Frozen Screen Demo</h4>
+<h4 id="_the-frozen-screen-demo"><a class="anchor" href="#_the-frozen-screen-demo"></a>8.3.1. The Frozen Screen Demo</h4>
 <div class="paragraph">
 <p>I will demonstrate you a "frozen GUI" effect by making a small change in the class <code>Controller</code> in our Sign In application. The simplest way to emulate a long running process is to place the currently running thread to sleep, as if there is an application logic that takes some time to complete. For example, to put the current thread to sleep for 10 second, you can write the following:</p>
 </div>
@@ -6215,7 +6220,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_deploying-with-javafx-packager"><a class="anchor" href="#_deploying-with-javafx-packager"></a>Deploying With JavaFX Packager</h3>
+<h3 id="_deploying-with-javafx-packager"><a class="anchor" href="#_deploying-with-javafx-packager"></a>8.4. Deploying With JavaFX Packager</h3>
 <div class="paragraph">
 <p>How do you start a JavaFX application? Well, you can start it either from the IDE or from a command line as any other Java application. But if you want to give your application to your grandma, what may not be as good at Java as you are? Of course, you can pay her a visit, install the Java runtime on her computer, and teach her how to open a command or Terminal window and enter <code>java signin.Main</code>.</p>
 </div>
@@ -6236,7 +6241,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_what-to-study-next-about-javafx"><a class="anchor" href="#_what-to-study-next-about-javafx"></a>What to Study Next About JavaFX</h3>
+<h3 id="_what-to-study-next-about-javafx"><a class="anchor" href="#_what-to-study-next-about-javafx"></a>8.5. What to Study Next About JavaFX</h3>
 <div class="paragraph">
 <p>In Chapters 7 and 8 I gave you a very brief introduction to JavaFX. You&#8217;ll be writing more of JavaFX code in chapters 9, 10, and 13, but JavaFX has lots of interesting features that you may want to explore on your own. JavaFX has more than 60 GUI components, so try to play with them. Also, JavaFX allows you to integrate audio and video in your application, create special effects and transitions to make your programs as cool and entertaining as you want them to be. You may find some interesting capabilities by researching classes located in the package <code>javafx.animation</code>.</p>
 </div>
@@ -6245,7 +6250,7 @@ private void wrongStartOfLongRunningProcess(String uID) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-adding-events-handling-for-calculator"><a class="anchor" href="#_project-adding-events-handling-for-calculator"></a>Project: Adding Events Handling for Calculator</h3>
+<h3 id="_project-adding-events-handling-for-calculator"><a class="anchor" href="#_project-adding-events-handling-for-calculator"></a>8.6. Project: Adding Events Handling for Calculator</h3>
 <div class="paragraph">
 <p>The goal of this project is to complete the calculator program. If you completed the project from Chapter 7, you can continue working on it. But if you couldn&#8217;t complete it on your own, download the version of the calculator GUI that comes with the sample code for this chapter.</p>
 </div>
@@ -6293,7 +6298,7 @@ String buttonLabel = clickedButton.getText();</code></pre>
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_challenge-yourself-3"><a class="anchor" href="#_challenge-yourself-3"></a>Challenge Yourself</h4>
+<h4 id="_challenge-yourself-3"><a class="anchor" href="#_challenge-yourself-3"></a>8.6.1. Challenge Yourself</h4>
 <div class="paragraph">
 <p>The step 10 in the project assignment suggests that you should use the the method <code>setText</code> of the <code>TextField</code> component. See if you can apply the property binding technique to display the result in the display field.</p>
 </div>
@@ -6302,7 +6307,7 @@ String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-9-error-handling"><a class="anchor" href="#_chapter-9-error-handling"></a>Chapter 9. Error Handling</h2>
+<h2 id="_error-handling"><a class="anchor" href="#_error-handling"></a>9. Error Handling</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this chapter I&#8217;ll explain you how to handle run-time errors, which in Java are called <em>exceptions</em>.</p>
@@ -6344,7 +6349,7 @@ catch (IOException ioe){
 <p>The print statement from the code above will be executed only in case of the file read error.</p>
 </div>
 <div class="sect2">
-<h3 id="_reading-the-stack-trace"><a class="anchor" href="#_reading-the-stack-trace"></a>Reading the Stack Trace</h3>
+<h3 id="_reading-the-stack-trace"><a class="anchor" href="#_reading-the-stack-trace"></a>9.1. Reading the Stack Trace</h3>
 <div class="paragraph">
 <p>If an unexpected exception occurs that is not handled by the program, it prints a multi-line error message on the screen. Such message is called stack trace. If your program  called several methods before it ran into a problem, the <em>stack trace</em> can help you to trace the program, and find the line that have caused the error.</p>
 </div>
@@ -6388,7 +6393,7 @@ java.lang.ArithmeticException: / by zero
 </div>
 </div>
 <div class="sect2">
-<h3 id="_genealogical-tree-of-exceptions"><a class="anchor" href="#_genealogical-tree-of-exceptions"></a>Genealogical Tree of Exceptions</h3>
+<h3 id="_genealogical-tree-of-exceptions"><a class="anchor" href="#_genealogical-tree-of-exceptions"></a>9.2. Genealogical Tree of Exceptions</h3>
 <div class="paragraph">
 <p>Exceptions in Java are also classes, and some of them are shown in the following inheritance tree:</p>
 </div>
@@ -6420,7 +6425,7 @@ java.lang.ArithmeticException: / by zero
 </div>
 </div>
 <div class="sect2">
-<h3 id="_try-catch-block"><a class="anchor" href="#_try-catch-block"></a>Try/Catch Block</h3>
+<h3 id="_try-catch-block"><a class="anchor" href="#_try-catch-block"></a>9.3. Try/Catch Block</h3>
 <div class="paragraph">
 <p>There are five Java keywords that can be used for error handling: <code>try</code>, <code>catch</code>, <code>finally</code>, <code>throw</code>, and <code>throws</code>.</p>
 </div>
@@ -6483,7 +6488,7 @@ java.lang.ArithmeticException: / by zero
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the-keyword-code-throws-code"><a class="anchor" href="#_the-keyword-code-throws-code"></a>The keyword <code>throws</code></h3>
+<h3 id="_the-keyword-code-throws-code"><a class="anchor" href="#_the-keyword-code-throws-code"></a>9.4. The keyword <code>throws</code></h3>
 <div class="paragraph">
 <p>In some cases, it makes more sense to handle the exception not in the method where it happened, but in the method’s caller.
 In such cases the method signature has to declare (warn) that it may throw a particular exception. This is done using a special keyword <code>throws</code>. Let’s use the same example that reads a file. Since the method <code>read</code> may throw an <code>IOException</code>, you should either handle or declare it. In the next example we are  going to declare that the method <code>getAllScores</code> may throw an IOException:</p>
@@ -6520,7 +6525,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the-keyword-code-finally-code"><a class="anchor" href="#_the-keyword-code-finally-code"></a>The Keyword <code>finally</code></h3>
+<h3 id="_the-keyword-code-finally-code"><a class="anchor" href="#_the-keyword-code-finally-code"></a>9.5. The Keyword <code>finally</code></h3>
 <div class="paragraph">
 <p>Any code within a <code>try/catch</code> block can end in one of the following ways:</p>
 </div>
@@ -6582,7 +6587,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the-keyword-code-throw-code"><a class="anchor" href="#_the-keyword-code-throw-code"></a>The Keyword <code>throw</code></h3>
+<h3 id="_the-keyword-code-throw-code"><a class="anchor" href="#_the-keyword-code-throw-code"></a>9.6. The Keyword <code>throw</code></h3>
 <div class="paragraph">
 <p>When you read in Java documentation that some method may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The  <code>throw</code> keyword is used to throw Java objects, which  are throwable. You can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>. We can guess, that the author of the method that reads a file used the <code>throw</code> keyword in the method <code>read</code>. This could have been done as follows:</p>
 </div>
@@ -6594,7 +6599,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <div class="paragraph">
 <p>The constructor of any exception should get a message that describes the error as an argument. When you’ll be invoking the <code>getMessage</code> method on the exception object in the catch block, it’ll print the message that was given to the constructor in the code that has thrown the exception.</p>
 </div>
-<div id="FIG9-3" class="imageblock">
+<div id="FIG9-2" class="imageblock">
 <div class="content">
 <img src="./images/fig_9_02.png" alt="fig 9 02">
 </div>
@@ -6605,7 +6610,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating-custom-exceptions"><a class="anchor" href="#_creating-custom-exceptions"></a>Creating Custom Exceptions</h3>
+<h3 id="_creating-custom-exceptions"><a class="anchor" href="#_creating-custom-exceptions"></a>9.7. Creating Custom Exceptions</h3>
 <div class="paragraph">
 <p>Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes,  throw the this exception:</p>
 </div>
@@ -6697,7 +6702,7 @@ public void validateOrder(ActionEvent evt){
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-create-a-javafx-bike-store"><a class="anchor" href="#_project-create-a-javafx-bike-store"></a>Project: Create a JavaFX Bike Store</h3>
+<h3 id="_project-create-a-javafx-bike-store"><a class="anchor" href="#_project-create-a-javafx-bike-store"></a>9.8. Project: Create a JavaFX Bike Store</h3>
 <div class="paragraph">
 <p>In this assignment I&#8217;d like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX <code>ComboBox</code> for this). You can find the <a href="http://docs.oracle.com/javase/8/javafx/user-interface-tutorial/combo-box.htm">description</a> of the ComboBox component in Oracle tutorial.</p>
 </div>
@@ -6711,7 +6716,7 @@ public void validateOrder(ActionEvent evt){
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-10-creating-a-tic-tac-toe-game"><a class="anchor" href="#_chapter-10-creating-a-tic-tac-toe-game"></a>Chapter 10. Creating a Tic-Tac-Toe Game</h2>
+<h2 id="_creating-a-tic-tac-toe-game"><a class="anchor" href="#_creating-a-tic-tac-toe-game"></a>10. Creating a Tic-Tac-Toe Game</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this chapter we&#8217;ll return to GUI programming and will  develop a Tic-Tac-Toe game using JavaFX and Scene Builder.</p>
@@ -6756,7 +6761,7 @@ public void validateOrder(ActionEvent evt){
 <p>The content of this chapter is based on the materials covered in Chapter 7 and 8. While developing the game you&#8217;ll learn how to add menus, dynamically change styling of GUI components and apply an animation effect.</p>
 </div>
 <div class="sect2">
-<h3 id="_developing-the-game-step-by-step"><a class="anchor" href="#_developing-the-game-step-by-step"></a>Developing the Game: Step by Step</h3>
+<h3 id="_developing-the-game-step-by-step"><a class="anchor" href="#_developing-the-game-step-by-step"></a>10.1. Developing the Game: Step by Step</h3>
 <div class="paragraph">
 <p>In Chapter 7 we went through the procedure of creating a new IDEA project, and now you&#8217;ll need do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter <em>TicTacToe</em> as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>tictactoe.fxml</em> and <em>Main.java</em> into <em>TicTacToe.java</em>. Accordingly, the <code>TicTacToe</code> class should load the file <em>ticktacktoe.fxml</em>, and the window title should read <code>Tic-Tac-Toe</code>:</p>
 </div>
@@ -6782,7 +6787,7 @@ public void validateOrder(ActionEvent evt){
 <p>Rename the generated package from <em>sample</em> into <em>mygame</em>. Inside the <em>tictactoe.fxml</em> change the reference to controller to be <code>fx:controller="mygame.Controller"</code>. Now you&#8217;re ready to design the GUI for Tic-Tac-Toe in Scene Builder.</p>
 </div>
 <div class="sect3">
-<h4 id="_developing-the-gui-part-in-scene-builder"><a class="anchor" href="#_developing-the-gui-part-in-scene-builder"></a>Developing the GUI part in Scene Builder</h4>
+<h4 id="_developing-the-gui-part-in-scene-builder"><a class="anchor" href="#_developing-the-gui-part-in-scene-builder"></a>10.1.1. Developing the GUI part in Scene Builder</h4>
 <div class="paragraph">
 <p>Similarly to the examples from Chapter 7, we&#8217;ll separate the GUI design from implementation. So right-click on the file <em>tictactoe.fxml</em> and select the menu option Open in SceneBuilder. This is how the IDEA-generated file <em>tictactoe.fxml</em> looks like in Scene Builder:</p>
 </div>
@@ -6975,7 +6980,7 @@ public void validateOrder(ActionEvent evt){
 </div>
 </div>
 <div class="sect3">
-<h4 id="_handling-button-clicks-in-controller"><a class="anchor" href="#_handling-button-clicks-in-controller"></a>Handling Button Clicks in Controller</h4>
+<h4 id="_handling-button-clicks-in-controller"><a class="anchor" href="#_handling-button-clicks-in-controller"></a>10.1.2. Handling Button Clicks in Controller</h4>
 <div class="paragraph">
 <p>There are different ways of programming computer games. In some games you play against another player, in others - against the computer. Our version of TicTac-Toe will have two players. The first one will place X&#8217;s on the blank buttons and the other one will place O&#8217;s.  Hence we need to keep track of the player&#8217;s number.</p>
 </div>
@@ -7018,7 +7023,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 </div>
 </div>
 <div class="sect3">
-<h4 id="_styling-buttons-and-the-menu-bar"><a class="anchor" href="#_styling-buttons-and-the-menu-bar"></a>Styling Buttons and the Menu Bar</h4>
+<h4 id="_styling-buttons-and-the-menu-bar"><a class="anchor" href="#_styling-buttons-and-the-menu-bar"></a>10.1.3. Styling Buttons and the Menu Bar</h4>
 <div class="paragraph">
 <p>Let&#8217;s add more style attributes to the <code>.button</code> and add a new type selector for the <code>.menu-bar</code> to the file <em>tictactoe.css</em>. You can find the color names and their codes in the  <a href="https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor">JavaFX CSS Reference Guide</a>. This is what I came up with:</p>
 </div>
@@ -7057,7 +7062,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementing-the-game-strategy"><a class="anchor" href="#_implementing-the-game-strategy"></a>Implementing the Game Strategy</h4>
+<h4 id="_implementing-the-game-strategy"><a class="anchor" href="#_implementing-the-game-strategy"></a>10.1.4. Implementing the Game Strategy</h4>
 <div class="paragraph">
 <p>In the beginning of this chapter I&#8217;ve described the game strategy. We&#8217;ll implement it in the <code>Controller</code> class. On each button click we need to check if there is already a winning combination of X&#8217;s or O&#8217;s. If there is, the program should highlight the winning combination. In case of a draw, the player may select the menu option Play to start playing again.</p>
 </div>
@@ -7148,7 +7153,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 </div>
 </div>
 <div class="sect3">
-<h4 id="_highlighting-the-winning-combination"><a class="anchor" href="#_highlighting-the-winning-combination"></a>Highlighting the Winning Combination</h4>
+<h4 id="_highlighting-the-winning-combination"><a class="anchor" href="#_highlighting-the-winning-combination"></a>10.1.5. Highlighting the Winning Combination</h4>
 <div class="paragraph">
 <p>The styles of the winning buttons should be changed dynamically (during the runtime). First of all, we need to come up with the style for displaying the winning button and add it to the CSS file. Then the class <code>Controller</code> will invoke the method <code>setStyle</code> on them providing the name of the winning style.</p>
 </div>
@@ -7246,7 +7251,7 @@ applyFadeTransition(third);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_handling-the-tic-tac-toe-menu-play"><a class="anchor" href="#_handling-the-tic-tac-toe-menu-play"></a>Handling the Tic-Tac-Toe Menu Play</h4>
+<h4 id="_handling-the-tic-tac-toe-menu-play"><a class="anchor" href="#_handling-the-tic-tac-toe-menu-play"></a>10.1.6. Handling the Tic-Tac-Toe Menu Play</h4>
 <div class="paragraph">
 <p>The winner is found, but how to start a new game? Our gane has a menu Actions with the menu item Play. Now we need to make it working so the players can start a new game when either a winning combination is found or it&#8217;s a draw.</p>
 </div>
@@ -7313,7 +7318,7 @@ applyFadeTransition(third);</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-playing-against-computer"><a class="anchor" href="#_project-playing-against-computer"></a>Project: Playing Against Computer</h3>
+<h3 id="_project-playing-against-computer"><a class="anchor" href="#_project-playing-against-computer"></a>10.2. Project: Playing Against Computer</h3>
 <div class="paragraph">
 <p>Our version of the game is created for two players. In this assignment you&#8217;ll need to change the program so the player can play against the computer. The player will keep playing with X&#8217;s, and the computer with O&#8217;s.</p>
 </div>
@@ -7324,7 +7329,7 @@ applyFadeTransition(third);</code></pre>
 <p>The method <code>goComputer</code> should be called from the method <code>buttonClickHandler</code> right after the line that invokes the method <code>find3InARow</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_challenge-yourself-4"><a class="anchor" href="#_challenge-yourself-4"></a>Challenge Yourself</h4>
+<h4 id="_challenge-yourself-4"><a class="anchor" href="#_challenge-yourself-4"></a>10.2.1. Challenge Yourself</h4>
 <div class="paragraph">
 <p>Play an audio when the winning combination is found. To do this learn how to use the JavaFX class <code>AudioClip</code> located in the package <code>javafx.scene.media</code>.</p>
 </div>
@@ -7333,7 +7338,7 @@ applyFadeTransition(third);</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-11-working-with-files-and-serialization"><a class="anchor" href="#_chapter-11-working-with-files-and-serialization"></a>Chapter 11. Working With Files and Serialization</h2>
+<h2 id="_working-with-files-and-serialization"><a class="anchor" href="#_working-with-files-and-serialization"></a>11. Working With Files and Serialization</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.</p>
@@ -7358,7 +7363,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <p>I&#8217;ll start with explaining you the basics of working with streams of bytes using classes from the <code>java.io</code> package, and then give you some examples of working with classes from <code>java.nio</code>.</p>
 </div>
 <div class="sect2">
-<h3 id="_basics-of-working-with-streams"><a class="anchor" href="#_basics-of-working-with-streams"></a>Basics of Working With Streams</h3>
+<h3 id="_basics-of-working-with-streams"><a class="anchor" href="#_basics-of-working-with-streams"></a>11.1. Basics of Working With Streams</h3>
 <div class="paragraph">
 <p>Think of a stream as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it&#8217;s another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.</p>
 </div>
@@ -7378,7 +7383,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <p>In the real world people use different types of pipes for carrying different contents (e.g. gas, oil, milkshakes). Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al.</p>
 </div>
 <div class="sect3">
-<h4 id="_byte-streams"><a class="anchor" href="#_byte-streams"></a>Byte Streams</h4>
+<h4 id="_byte-streams"><a class="anchor" href="#_byte-streams"></a>11.1.1. Byte Streams</h4>
 <div class="paragraph">
 <p>To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a <em>set of bytes</em>, and then writes them into a destination folder..</p>
 </div>
@@ -7519,7 +7524,7 @@ public class MyByteWriter {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_bufferred-streams"><a class="anchor" href="#_bufferred-streams"></a>Bufferred Streams</h4>
+<h4 id="_bufferred-streams"><a class="anchor" href="#_bufferred-streams"></a>11.1.2. Bufferred Streams</h4>
 <div class="paragraph">
 <p>The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of <code>read</code> would read one byte, and one invocation of <code>write</code> would write one byte. In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.</p>
 </div>
@@ -7584,7 +7589,7 @@ public class MyBufferedByteReader {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_character-streams"><a class="anchor" href="#_character-streams"></a>Character Streams</h3>
+<h3 id="_character-streams"><a class="anchor" href="#_character-streams"></a>11.2. Character Streams</h3>
 <div class="paragraph">
 <p>Text in Java is represented as a set of <code>char</code> values, which are encoded based on the character sets capable to represent alphabet or other symbols used in a particular human language. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16.</p>
 </div>
@@ -7599,12 +7604,12 @@ public class MyBufferedByteReader {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_working-with-files-using-java-nio"><a class="anchor" href="#_working-with-files-using-java-nio"></a>Working With Files Using java.nio</h3>
+<h3 id="_working-with-files-using-java-nio"><a class="anchor" href="#_working-with-files-using-java-nio"></a>11.3. Working With Files Using java.nio</h3>
 <div class="paragraph">
 <p>The <code>java.nio</code> package contains classes that offer a simplified and more efficient way of working with files, and you&#8217;ll see some useful examples here. But first I&#8217;d like to introduce a classes Path and Paths that will represent a file you&#8217;re planning to work with.</p>
 </div>
 <div class="sect3">
-<h4 id="_using-classes-path-and-paths"><a class="anchor" href="#_using-classes-path-and-paths"></a>Using Classes Path and Paths</h4>
+<h4 id="_using-classes-path-and-paths"><a class="anchor" href="#_using-classes-path-and-paths"></a>11.3.1. Using Classes Path and Paths</h4>
 <div class="paragraph">
 <p>So far we worked with files located in the root directory of our IDEA project. But files are grouped in directories (folders), which in turn can include nested directories and files. More over, files are represented differently in Windows, Mac OS and Linux operational systems. For example, in Windows the pull path to a file may look like this:
 <em>c:\mystuff\games\tictactoeScores.txt</em></p>
@@ -7646,13 +7651,13 @@ public class MyBufferedByteReader {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using-the-class-files"><a class="anchor" href="#_using-the-class-files"></a>Using the Class Files</h4>
+<h4 id="_using-the-class-files"><a class="anchor" href="#_using-the-class-files"></a>11.3.2. Using the Class Files</h4>
 <div class="paragraph">
 <p>The class <code>Files</code> has several methods that will help you with file manipulations. It can create, delete, rename and copy files. There are methods to read and write files too.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_reading-a-file"><a class="anchor" href="#_reading-a-file"></a>Reading a File</h4>
+<h4 id="_reading-a-file"><a class="anchor" href="#_reading-a-file"></a>11.3.3. Reading a File</h4>
 <div class="paragraph">
 <p>The simplest way to read a file is by calling the method <code>readAllBytes</code> on the class <code>Files</code>. The following line reads the file <em>abc.dat</em> into an array of bytes:</p>
 </div>
@@ -7776,7 +7781,7 @@ Your default character encoding is UTF-8</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_writing-into-a-file"><a class="anchor" href="#_writing-into-a-file"></a>Writing Into a File</h4>
+<h4 id="_writing-into-a-file"><a class="anchor" href="#_writing-into-a-file"></a>11.3.4. Writing Into a File</h4>
 <div class="paragraph">
 <p>Writing into a file is as reading one. Start with creating create an instance of the <code>Path</code> object.  If you want to write bytes, create a byte array, populate it with data and call the method <code>write</code> on the class <code>Files</code>. If you want to write some text into a file, just convert the text from a <code>String</code> into a byte array and then call the method <code>write</code>, for example:</p>
 </div>
@@ -7950,7 +7955,7 @@ public class MyTextFileBufferedFileWriter {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_command-line-arguments"><a class="anchor" href="#_command-line-arguments"></a>Command-Line Arguments</h3>
+<h3 id="_command-line-arguments"><a class="anchor" href="#_command-line-arguments"></a>11.4. Command-Line Arguments</h3>
 <div class="paragraph">
 <p>So far all of the code examples had the file names stored right in the code, or as  programmers say, <em>hard-coded</em> in the program.  This means that to create a program that reads a files with a different name you’d have to modify the code and recompile the program, which is not nice. You should create universal programs that can take parameters (e.g.the name of the file) from a command line during the program launch.</p>
 </div>
@@ -8049,7 +8054,7 @@ I've got 123</code></pre>
 <div class="paragraph">
 <p>You can test your programs that take command-line arguments without leaving IntelliJ IDEA. Just open the menu Run, select Edit Configurations and enter the values in the field Program arguments as shown below:</p>
 </div>
-<div id="FIG11-1" class="imageblock">
+<div id="FIG11-2" class="imageblock">
 <div class="content">
 <img src="./images/fig_11_commandline.png" alt="fig 11 commandline">
 </div>
@@ -8094,7 +8099,7 @@ public class FileCopy {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_serialization-turning-an-object-into-bytes"><a class="anchor" href="#_serialization-turning-an-object-into-bytes"></a>Serialization: Turning an Object Into Bytes</h3>
+<h3 id="_serialization-turning-an-object-into-bytes"><a class="anchor" href="#_serialization-turning-an-object-into-bytes"></a>11.5. Serialization: Turning an Object Into Bytes</h3>
 <div class="paragraph">
 <p>Imagine a building that, with a push of a button, can be turned into a pile of construction materials. Load all these materials on the truck and drive to a different city. On arrival push another button, and the building is magically re-created in its original form. This is what Java serialization is about, but instead of a building we&#8217;ll use a Java object. By “clicking the serialize button” JVM turns an instance of an object into a pile of bytes, and “clicking the deserialize button” re-creates the object.</p>
 </div>
@@ -8308,7 +8313,7 @@ Deserialized game state object; PlayerName: Mary, level:0, score: 28000, remaini
 <div class="paragraph">
 <p>If you place the breakpoint right after the invokation of the <code>loadGameState</code> method, you&#8217;ll be able to see two different instances of the <code>GameState</code> object as shown below:</p>
 </div>
-<div id="FIG11-1" class="imageblock">
+<div id="FIG11-3" class="imageblock">
 <div class="content">
 <img src="./images/fig_11_debug_serialize.png" alt="fig 11 debug serialize">
 </div>
@@ -8318,7 +8323,7 @@ Deserialized game state object; PlayerName: Mary, level:0, score: 28000, remaini
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-saving-the-game-scores"><a class="anchor" href="#_project-saving-the-game-scores"></a>Project: Saving the Game Scores</h3>
+<h3 id="_project-saving-the-game-scores"><a class="anchor" href="#_project-saving-the-game-scores"></a>11.6. Project: Saving the Game Scores</h3>
 <div class="paragraph">
 <p>In this project you&#8217;ll write a program that can keep the history of the game scores in a file by using Java serialization. This program should be able to deserialize and sort the saved scores showing the highest scores on top.</p>
 </div>
@@ -8472,10 +8477,10 @@ scores.stream()
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-12-networking-downloading-files-from-the-internet"><a class="anchor" href="#_chapter-12-networking-downloading-files-from-the-internet"></a>Chapter 12. Networking: Downloading Files From The Internet</h2>
+<h2 id="_networking-downloading-files-from-the-internet"><a class="anchor" href="#_networking-downloading-files-from-the-internet"></a>12. Networking: Downloading Files From the Internet</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other if they use the same <em>protocol</em>. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. Such a communication is possible if the program running on the server also supports HTTP.
+<p>People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other, if they use the same <em>protocol</em>. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. Such a communication is possible if the program running on the server also understands HTTP.
 Any network protocol defines the rules of how a program should send or receive data.</p>
 </div>
 <div class="paragraph">
@@ -8488,9 +8493,9 @@ Any network protocol defines the rules of how a program should send or receive d
 <p>Some other popular networking protocols are TCP/IP, FTP, WebSocket. In this chapter you&#8217;ll learn how to write Java programs that can connect to remote servers and download data using HTTP protocol.</p>
 </div>
 <div class="sect2">
-<h3 id="_how-computers-find-each-other-on-the-web"><a class="anchor" href="#_how-computers-find-each-other-on-the-web"></a>How Computers Find Each Other on the Web</h3>
+<h3 id="_how-computers-find-each-other-on-the-web"><a class="anchor" href="#_how-computers-find-each-other-on-the-web"></a>12.1. How Computers Find Each Other on the Web</h3>
 <div class="paragraph">
-<p>If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number.  In the World Wide Web (WWW), to visit a Web site you need to know its Uniform Resource Locator (a URL). Let&#8217;s see which parts a URL consists of by using an example from Nickelodeon&#8217;s Web site:</p>
+<p>If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number. In the World Wide Web (WWW), to visit a Web site you need to know its Uniform Resource Locator (a URL). Let&#8217;s see which parts a URL consists of by using an example from Nickelodeon&#8217;s Web site:</p>
 </div>
 <div id="FIG12-1" class="imageblock">
 <div class="content">
@@ -8527,7 +8532,7 @@ Any network protocol defines the rules of how a program should send or receive d
 </div>
 </div>
 <div class="sect2">
-<h3 id="_domain-names-and-ip-addresses"><a class="anchor" href="#_domain-names-and-ip-addresses"></a>Domain Names and IP Addresses</h3>
+<h3 id="_domain-names-and-ip-addresses"><a class="anchor" href="#_domain-names-and-ip-addresses"></a>12.2. Domain Names and IP Addresses</h3>
 <div class="paragraph">
 <p>The name of the server (the host name) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com).</p>
 </div>
@@ -8542,7 +8547,7 @@ Any network protocol defines the rules of how a program should send or receive d
 </div>
 </div>
 <div class="sect2">
-<h3 id="_downloading-files-from-the-web"><a class="anchor" href="#_downloading-files-from-the-web"></a>Downloading Files From the Web</h3>
+<h3 id="_downloading-files-from-the-web"><a class="anchor" href="#_downloading-files-from-the-web"></a>12.3. Downloading Files From the Web</h3>
 <div class="paragraph">
 <p>In Chapter 11 you&#8217;ve learned that how to read a local file if you know its location. You&#8217;d open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can exchange data with remote hosts using HTTP.</p>
 </div>
@@ -8687,7 +8692,7 @@ BufferedReader buff= new BufferedReader(new InputStreamReader(in));</code></pre>
 <p>The reason you may want use the <code>URLConnection</code> class is that it could give you some additional control over the I/O process. For example, by calling its method <code>setDoOutput</code> with the argument <code>true</code> you enable <code>WebSiteReader</code>  to write to the remote <code>URL</code>. In this case you&#8217;d need to get a reference to an <code>OutputStream</code> object by calling <code>getOutputStream</code> method on the <code>URLConnection</code> object. If you wanted to write a program that can send data to the server, you&#8217;d need to learn server-side programming, which this book doesn&#8217;t cover.</p>
 </div>
 <div class="sect3">
-<h4 id="_downloading-any-file-from-the-internet"><a class="anchor" href="#_downloading-any-file-from-the-internet"></a>Downloading Any File From the Internet</h4>
+<h4 id="_downloading-any-file-from-the-internet"><a class="anchor" href="#_downloading-any-file-from-the-internet"></a>12.3.1. Downloading Any File From the Internet</h4>
 <div class="paragraph">
 <p>In Chapter 11 you&#8217;ve learned how to create a file and write into it. The <code>WebSiteReader</code> program just prints the remote data on the console, but you could have saved the data in the local file as well. It&#8217;s time to add the code that writes into a file. The goal is to write a program that can download any unprotected file (such as images, music, and binary files) available on the Web.</p>
 </div>
@@ -8825,7 +8830,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-downloading-music"><a class="anchor" href="#_project-downloading-music"></a>Project: Downloading Music</h3>
+<h3 id="_project-downloading-music"><a class="anchor" href="#_project-downloading-music"></a>12.4. Project: Downloading Music</h3>
 <div class="paragraph">
 <p>In this project you&#8217;ll see how our <code>FileDownload</code> program to see if it can download an MP3 file as well.</p>
 </div>
@@ -8833,7 +8838,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 <ol class="arabic">
 <li>
 <p>Visit the Web site: <a href="http://www.last.fm/music/+free-music-downloads" class="bare">http://www.last.fm/music/+free-music-downloads</a> and pick an MP3 you like. At the time of this writing the Last.FM Web page looked as follows:</p>
-<div id="FIG12-3" class="imageblock">
+<div id="FIG12-30" class="imageblock">
 <div class="content">
 <img src="./images/fig_12_lastfm.png" alt="fig 12 lastfm">
 </div>
@@ -8887,7 +8892,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-13-creating-a-ping-pong-game"><a class="anchor" href="#_chapter-13-creating-a-ping-pong-game"></a>Chapter 13. Creating a Ping-Pong Game</h2>
+<h2 id="_creating-a-ping-pong-game"><a class="anchor" href="#_creating-a-ping-pong-game"></a>13. Creating a Ping-Pong Game</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In chapters 6, 7, and 10 you’ve learned how to create simple GUI with JavaFX using such components as buttons, labels and text fields. In this chapter we&#8217;ll use JavaFX again, but this time you&#8217;ll be drawing and animating shapes.</p>
@@ -8899,7 +8904,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 <p>Ping-Pong is a perfect game to illustrate the drawing and animating capabilities of JavaFX. In this game you&#8217;ll have another chance to work with event handlers, and will learn how to move (animate) shapes around the stage.</p>
 </div>
 <div class="sect2">
-<h3 id="_the-strategy"><a class="anchor" href="#_the-strategy"></a>The Strategy</h3>
+<h3 id="_the-strategy"><a class="anchor" href="#_the-strategy"></a>13.1. The Strategy</h3>
 <div class="paragraph">
 <p>Let’s come up with some rules of our Ping-Pong game:</p>
 </div>
@@ -8948,7 +8953,7 @@ bottom table borders the point is given to the computer.The computer can also ea
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step-1-creating-the-table"><a class="anchor" href="#_step-1-creating-the-table"></a>Step 1: Creating the Table</h3>
+<h3 id="_step-1-creating-the-table"><a class="anchor" href="#_step-1-creating-the-table"></a>13.2. Step 1: Creating the Table</h3>
 <div class="paragraph">
 <p>In this section or goal is to draw a 2D ping-pong table, which should look as a green rectangle.</p>
 </div>
@@ -9106,7 +9111,7 @@ public class PingPong extends Application {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step-2-handling-keyboard-events"><a class="anchor" href="#_step-2-handling-keyboard-events"></a>Step 2: Handling Keyboard Events</h3>
+<h3 id="_step-2-handling-keyboard-events"><a class="anchor" href="#_step-2-handling-keyboard-events"></a>13.3. Step 2: Handling Keyboard Events</h3>
 <div class="paragraph">
 <p>We need to add the event handler methods to the class <code>PingPongController</code> to process keyboard events. Every key on the keyboard has a special code assigned, and our first goal is to figure out which key the player pressed.</p>
 </div>
@@ -9165,7 +9170,7 @@ IDEA can help you to find out which event handlers can be used with a particular
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_processing-keyboard-events-in-the-controller"><a class="anchor" href="#_processing-keyboard-events-in-the-controller"></a>Processing Keyboard Events in the Controller</h4>
+<h4 id="_processing-keyboard-events-in-the-controller"><a class="anchor" href="#_processing-keyboard-events-in-the-controller"></a>13.3.1. Processing Keyboard Events in the Controller</h4>
 <div class="paragraph">
 <p>In the code that comes with this chapter the final version of the controller is called <code>PingPongController</code>. But I&#8217;ve also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with <code>PingPongController</code> followed with a different suffix with a version number (e.g. <code>PingPongController_v1</code>, <code>PingPongController_v2</code> etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as <code>fx:controller</code> in the file <code>pingpong.fxml</code> and run the <code>PingPong</code> program.</p>
 </div>
@@ -9219,7 +9224,7 @@ You pressed S</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the-enum-type"><a class="anchor" href="#_the-enum-type"></a>The enum Type</h4>
+<h4 id="_the-enum-type"><a class="anchor" href="#_the-enum-type"></a>13.3.2. The enum Type</h4>
 <div class="paragraph">
 <p>Our controller class declares a variable of type <code>KeyCode</code>, which is neither a class nor an interface. It&#8217;s a special Java data type <code>enum</code> used for declaring a bunch of pre-defined constants that never change. For example, you can declare a new <code>enum</code> type day-of-the-week:</p>
 </div>
@@ -9268,7 +9273,7 @@ You pressed S</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_preparing-to-process-the-keys-s-q-and-n"><a class="anchor" href="#_preparing-to-process-the-keys-s-q-and-n"></a>Preparing to Process the Keys S, Q, and N</h4>
+<h4 id="_preparing-to-process-the-keys-s-q-and-n"><a class="anchor" href="#_preparing-to-process-the-keys-s-q-and-n"></a>13.3.3. Preparing to Process the Keys S, Q, and N</h4>
 <div class="paragraph">
 <p>Now we&#8217;ll add a <code>switch</code> statement to the controller to invoke the method that corresponds to the pressed key. Let&#8217;s not worry about implementing the application logic just yet. We want to make sure that the programs invokes the correct method for each key.</p>
 </div>
@@ -9329,7 +9334,7 @@ public class PingPongController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step-3-moving-the-paddle"><a class="anchor" href="#_step-3-moving-the-paddle"></a>Step 3: Moving the Paddle</h3>
+<h3 id="_step-3-moving-the-paddle"><a class="anchor" href="#_step-3-moving-the-paddle"></a>13.4. Step 3: Moving the Paddle</h3>
 <div class="paragraph">
 <p>Now let&#8217;s teach the keys Up and Down to move the kid&#8217;s paddle vertically. Pressing the Up-arrow should move the kid&#8217;s paddle several pixels up according to the predefined moving increment. Pressing the Down-arrow should move the paddle down. We&#8217;ll declare an movement increment as a <code>final</code> variable in <code>PingPongController</code>:</p>
 </div>
@@ -9477,7 +9482,7 @@ public class PingPongController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step-4-moving-the-ball"><a class="anchor" href="#_step-4-moving-the-ball"></a>Step 4. Moving the Ball</h3>
+<h3 id="_step-4-moving-the-ball"><a class="anchor" href="#_step-4-moving-the-ball"></a>13.5. Step 4. Moving the Ball</h3>
 <div class="paragraph">
 <p>Let&#8217;s start implementing step 4 of the game strategy by calculating the starting position and painting the ball depending on the location of the right paddle.
 When the user preses the S-key, we need to serve the ball from the position where the right paddle is currently located. Initially it&#8217;s located in the middle of the table, but the user may move it up or down before serving the ball.</p>
@@ -9502,7 +9507,7 @@ When the user preses the S-key, we need to serve the ball from the position wher
 </div>
 </div>
 <div class="sect3">
-<h4 id="_moving-the-ball-to-the-right-paddle"><a class="anchor" href="#_moving-the-ball-to-the-right-paddle"></a>Moving the Ball to the Right Paddle</h4>
+<h4 id="_moving-the-ball-to-the-right-paddle"><a class="anchor" href="#_moving-the-ball-to-the-right-paddle"></a>13.5.1. Moving the Ball to the Right Paddle</h4>
 <div class="paragraph">
 <p>Since the ball will be moving, we&#8217;ll keep track of its center in the new properties <code>ballCenterX</code> and <code>ballCenterY</code>:</p>
 </div>
@@ -9546,7 +9551,7 @@ ball.centerYProperty().bind(ballCenterY);</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_serving-the-ball-horizontally"><a class="anchor" href="#_serving-the-ball-horizontally"></a>Serving the Ball Horizontally</h4>
+<h4 id="_serving-the-ball-horizontally"><a class="anchor" href="#_serving-the-ball-horizontally"></a>13.5.2. Serving the Ball Horizontally</h4>
 <div class="paragraph">
 <p>The ball is ready to start moving now. To make the movement smooth we&#8217;ll use the class <code>javafx.animation.Timeline</code> that allows change the values of the GUI component&#8217;s properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement we&#8217;ll declare the variable <code>timeline</code> of the type <code>TimeLine</code>, which we&#8217;ll use to display a set of snapshots of a ball at different positions along its trajectory.</p>
 </div>
@@ -9665,7 +9670,7 @@ private void moveTheBall(){
 </div>
 </div>
 <div class="sect3">
-<h4 id="_serving-the-ball-in-random-directions"><a class="anchor" href="#_serving-the-ball-in-random-directions"></a>Serving the Ball in Random Directions</h4>
+<h4 id="_serving-the-ball-in-random-directions"><a class="anchor" href="#_serving-the-ball-in-random-directions"></a>13.5.3. Serving the Ball in Random Directions</h4>
 <div class="paragraph">
 <p>The game that serves the ball horizontally is pretty boring, so let&#8217;s change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let&#8217;s change the y-coordinate in a random manner, so each ball serving sends the ball in a different direction. We&#8217;ll create a ball serving machine.</p>
 </div>
@@ -9746,7 +9751,7 @@ private void moveTheBall(){
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step-5-moving-the-computer-s-paddle"><a class="anchor" href="#_step-5-moving-the-computer-s-paddle"></a>Step 5: Moving the Computer&#8217;s Paddle</h3>
+<h3 id="_step-5-moving-the-computer-s-paddle"><a class="anchor" href="#_step-5-moving-the-computer-s-paddle"></a>13.6. Step 5: Moving the Computer&#8217;s Paddle</h3>
 <div class="paragraph">
 <p>When the ball is served, the Computer needs to move its paddle in the right direction to bounce the ball. This is a pretty easy task since the computer knows that if the Kid&#8217;s paddle served from the top, the ball will move down, and if the ball was served from the bottom it&#8217;ll move up. So the moment the ball is served, the computer&#8217;s paddle should also start moving.</p>
 </div>
@@ -9832,7 +9837,7 @@ compPaddle.layoutYProperty().bind(currentComputerPaddleY);</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_step-6-bouncing-the-ball"><a class="anchor" href="#_step-6-bouncing-the-ball"></a>Step 6: Bouncing the Ball</h3>
+<h3 id="_step-6-bouncing-the-ball"><a class="anchor" href="#_step-6-bouncing-the-ball"></a>13.7. Step 6: Bouncing the Ball</h3>
 <div class="paragraph">
 <p>There is no guarantee that the Computer&#8217;s paddle will be advanced to the position to bounce the ball. Our Ping-Pong game doesn&#8217;t implement the algorithm the adjust the movement of the Computer&#8217;s paddle based on the trajectory of the ball&#8217;s movement. But if the ball accidentally contacts the paddle we need to bounce the ball and send it from left to right.</p>
 </div>
@@ -10209,7 +10214,7 @@ public class PingPongController {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_project-displaying-the-game-score"><a class="anchor" href="#_project-displaying-the-game-score"></a>Project: Displaying the Game Score</h3>
+<h3 id="_project-displaying-the-game-score"><a class="anchor" href="#_project-displaying-the-game-score"></a>13.8. Project: Displaying the Game Score</h3>
 <div class="paragraph">
 <p>The goal of this project is to keep track and display the game score. I&#8217;ll just show you how to print the score on the system console, but you&#8217;ll need research how to display the text right on the ping-pong table.</p>
 </div>
@@ -10265,7 +10270,7 @@ int kidScore;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_chapter-14-git-for-kids"><a class="anchor" href="#_chapter-14-git-for-kids"></a>Chapter 14. Git for Kids</h2>
+<h2 id="_git-for-kids"><a class="anchor" href="#_git-for-kids"></a>14. Git for Kids</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>So you wrote a great application, and it worked as expected. Sometime later you&#8217;ve got an idea how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday&#8217;s version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the working code?</p>
@@ -10292,7 +10297,7 @@ int kidScore;</code></pre>
 <p>Understanding how VCS work is very important - that&#8217;s why I included this short Git tutorial in the book about Java.</p>
 </div>
 <div class="sect2">
-<h3 id="_two-types-of-version-control-systems"><a class="anchor" href="#_two-types-of-version-control-systems"></a>Two Types of Version Control Systems</h3>
+<h3 id="_two-types-of-version-control-systems"><a class="anchor" href="#_two-types-of-version-control-systems"></a>14.1. Two Types of Version Control Systems</h3>
 <div class="paragraph">
 <p>There are two types of VCS: centralized and distributed. With centralized systems the source code repository is stored a server, which is <em>the only</em> place that has the latest version of the application as well as all historical files committed by developers in the past.</p>
 </div>
@@ -10320,7 +10325,7 @@ int kidScore;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_introduction-to-git"><a class="anchor" href="#_introduction-to-git"></a>Introduction to Git</h3>
+<h3 id="_introduction-to-git"><a class="anchor" href="#_introduction-to-git"></a>14.2. Introduction to Git</h3>
 <div class="paragraph">
 <p>Git is a free distributed VCS, which you can download and install from <a href="http://git-scm.com">http://git-scm.com</a>. There is a chance that your computer already has Git installed, and you can check it out by opening a Command or Terminal window and entering the command <em>git</em>. If it prints a list of available Git commands, you already have Git installed. But still, I&#8217;d suggest to install the latest Git version by following <a href="http://git-scm.com/book/en/v2/Getting-Started-Installing-Git">these instructions</a> for your operational system.</p>
 </div>
@@ -10328,7 +10333,7 @@ int kidScore;</code></pre>
 <p>There are several <a href="http://git-scm.com/download/gui/linux">GUI tools</a> for working with Git repositories, but we&#8217;ll be using a Command or Terminal window for executing all commands. After the installation is complete, enter the command <em>git --version</em>, and you&#8217;ll see which version of Git you&#8217;ll be using.</p>
 </div>
 <div class="sect3">
-<h4 id="_introducing-yourself-to-git"><a class="anchor" href="#_introducing-yourself-to-git"></a>Introducing Yourself to Git</h4>
+<h4 id="_introducing-yourself-to-git"><a class="anchor" href="#_introducing-yourself-to-git"></a>14.2.1. Introducing Yourself to Git</h4>
 <div class="paragraph">
 <p>The next step is to introduce yourself to Git by providing your name and the email address. Typically you&#8217;ll be running the <em>git</em> program followed by the command name, which may have various options that start with <em>--</em> or <em>-</em>. To introduce yourself to Git, use the <em>config</em> command with the <em>--global</em> option. This is how I did it:</p>
 </div>
@@ -10356,7 +10361,7 @@ If you want to be able to use different user names and emails for different proj
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating-a-new-git-repository"><a class="anchor" href="#_creating-a-new-git-repository"></a>Creating a New Git Repository</h3>
+<h3 id="_creating-a-new-git-repository"><a class="anchor" href="#_creating-a-new-git-repository"></a>14.3. Creating a New Git Repository</h3>
 <div class="paragraph">
 <p>For illustration purposes I&#8217;ll create a new folder called <em>gitIntro</em> and will copy there the files <em>Pet.java</em>, <em>Fish.java</em>, and <em>PetMaster.java</em> from Chapter 3. Then I&#8217;ll  open the Terminal window on my MacBook (Windows users open the Command window) and will create a new Git repository by entering the command <em>git init</em>. The content of my <em>gitIntro</em> folder looks as follows:</p>
 </div>
@@ -10373,7 +10378,7 @@ If you want to be able to use different user names and emails for different proj
 </div>
 </div>
 <div class="sect2">
-<h3 id="_selected-git-commands"><a class="anchor" href="#_selected-git-commands"></a>Selected Git Commands</h3>
+<h3 id="_selected-git-commands"><a class="anchor" href="#_selected-git-commands"></a>14.4. Selected Git Commands</h3>
 <div class="paragraph">
 <p>Git has a couple of dozens commands, but knowing just a half dozen of them may be enough for all your project activities. I&#8217;ll show you several commands that I use daily. Each command may be issued with several options. I&#8217;ll just show you the basic commands to quickly get you started with Git. For more detailed coverage of all Git features and commands you&#8217;ll need to study <a href="http://git-scm.com/doc">online documentation</a>.</p>
 </div>
@@ -10403,7 +10408,7 @@ If you want to be able to use different user names and emails for different proj
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_the-status-command"><a class="anchor" href="#_the-status-command"></a>The status Command</h4>
+<h4 id="_the-status-command"><a class="anchor" href="#_the-status-command"></a>14.4.1. The status Command</h4>
 <div class="paragraph">
 <p>I always start working with Git by opening my project directory and typing <em>git status</em> to see which files I&#8217;ve modified since the last time I&#8217;ve committed the changes to Git repository. Let&#8217;s do it in the directory <em>gitIntro</em>. I havn&#8217;t committed any files to my brand new code repository just yet, and Git will respond with the following status:</p>
 </div>
@@ -10417,7 +10422,7 @@ If you want to be able to use different user names and emails for different proj
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the-add-command"><a class="anchor" href="#_the-add-command"></a>The add Command</h4>
+<h4 id="_the-add-command"><a class="anchor" href="#_the-add-command"></a>14.4.2. The add Command</h4>
 <div class="paragraph">
 <p>Adding files to a Git repository is done by the command <em>add</em>, which is easy to understand to the process of adding toys to a shopping cart in a toy store. There are lots of toys on the shelves, but you pick only selected ones by placing them into your cart.</p>
 </div>
@@ -10468,7 +10473,7 @@ If you want to know which options exist for any Git command, just enter <em>git 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the-commit-command"><a class="anchor" href="#_the-commit-command"></a>The commit Command</h4>
+<h4 id="_the-commit-command"><a class="anchor" href="#_the-commit-command"></a>14.4.3. The commit Command</h4>
 <div class="paragraph">
 <p>If we&#8217;ll continue using the analogy with a toy store, committing is similar to paying for the toys that you placed in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes. For example, you can issue the following command:</p>
 </div>
@@ -10545,7 +10550,7 @@ git commit -m "Modified the opening comment in PetMaster.java"</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_the-reset-command"><a class="anchor" href="#_the-reset-command"></a>The reset Command</h4>
+<h4 id="_the-reset-command"><a class="anchor" href="#_the-reset-command"></a>14.4.4. The reset Command</h4>
 <div class="paragraph">
 <p>Here&#8217;s another scenario to consider. I&#8217;ve just committed the changes to the file <em>PetMaster.java</em> and&#8230;&#8203; got goose bumps. Suddenly I realized that it was a mistake, and I wanted to undo the last commit. The file <em>PetMaster.java</em> has an opening statement "Created by Yakov on 3/28/15.", but I changed my mind and don&#8217;t want to reveal my name. Luckily Git stores all committed code changes (the deltas) in its database.</p>
 </div>
@@ -10594,7 +10599,7 @@ If you want to see the history of all commits, use the command <em>git log</em>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_code-branching"><a class="anchor" href="#_code-branching"></a>Code Branching</h4>
+<h4 id="_code-branching"><a class="anchor" href="#_code-branching"></a>14.4.5. Code Branching</h4>
 <div class="paragraph">
 <p>What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the application? She doesn&#8217;t want to modify the code that other programmers may rely on. Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the <em>master</em> branch, which has tested and working code.</p>
 </div>
@@ -10689,7 +10694,7 @@ If you want to see the history of all commits, use the command <em>git log</em>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>Conflict Resolution</h4>
+<h4 id="_conflict-resolution"><a class="anchor" href="#_conflict-resolution"></a>14.4.6. Conflict Resolution</h4>
 <div class="paragraph">
 <p>Since Mary was the only programmer working with the file <em>Fish.java</em> Git just kept track of all insertions, deletions, and changes and re-applied them to the older version of the file during the merge. But when more than one programmer works on the same file they could accidentally modify the same piece of code in different branches. This may cause merge conflicts, and Git will mark the code fragments that need to be merged manually.</p>
 </div>
@@ -10750,7 +10755,7 @@ You can find more detailed explanations of all Git features in the free book tit
 </div>
 </div>
 <div class="sect2">
-<h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>Publishing Your Code on GitHub</h3>
+<h3 id="_publishing-your-code-on-github"><a class="anchor" href="#_publishing-your-code-on-github"></a>14.5. Publishing Your Code on GitHub</h3>
 <div class="paragraph">
 <p>If you have a shared Git repository on a remote computer, you&#8217;ll need to synchronize with is the content from your local Git repository. Usually I do it several times a day. Even if you work on the project alone, you may want to have a current copy of your Git repository in the remote computer.</p>
 </div>
@@ -10770,7 +10775,7 @@ GitHub is not the only hosting service for Git repositories on the Web. <a href=
 </table>
 </div>
 <div class="sect3">
-<h4 id="_creating-a-github-repository"><a class="anchor" href="#_creating-a-github-repository"></a>Creating a GitHub Repository</h4>
+<h4 id="_creating-a-github-repository"><a class="anchor" href="#_creating-a-github-repository"></a>14.5.1. Creating a GitHub Repository</h4>
 <div class="paragraph">
 <p>To be able to publish your Git repository on GitHub, you need to create an account there. Visit the Web site <a href="https://github.com/">https://github.com</a> and sign up for it. You&#8217;ll need to pick a user name for yourself and enter the email, which should be the same as you&#8217;ve used with  the <em>git config</em> command (see the section Introducing Yourself to Git). GitHub will send you a verification  email to this address, and you&#8217;ll need to respond to it. For illustration purposes I&#8217;ve created a new GitHub account with the user ID <em>java4kids</em>.</p>
 </div>
@@ -10795,7 +10800,7 @@ GitHub is not the only hosting service for Git repositories on the Web. <a href=
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pushing-the-local-repository-to-github"><a class="anchor" href="#_pushing-the-local-repository-to-github"></a>Pushing the Local Repository to GitHub</h4>
+<h4 id="_pushing-the-local-repository-to-github"><a class="anchor" href="#_pushing-the-local-repository-to-github"></a>14.5.2. Pushing the Local Repository to GitHub</h4>
 <div class="paragraph">
 <p>Since we already have an existing repository in the directory local directory <em>gitIntro</em>, we&#8217;ll need to go there in the Command or Terminal window and enter the suggested commands:</p>
 </div>
@@ -10832,7 +10837,7 @@ git push -u origin master                           <i class="conum" data-value=
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pulling-the-latest-version-from-github"><a class="anchor" href="#_pulling-the-latest-version-from-github"></a>Pulling The Latest Version from GitHub</h4>
+<h4 id="_pulling-the-latest-version-from-github"><a class="anchor" href="#_pulling-the-latest-version-from-github"></a>14.5.3. Pulling The Latest Version from GitHub</h4>
 <div class="paragraph">
 <p>The <em>pull</em> command downloads and merges the latest code from GitHub to your computer.</p>
 </div>
@@ -10865,7 +10870,7 @@ git push -u origin master                           <i class="conum" data-value=
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cloning"><a class="anchor" href="#_cloning"></a>Cloning</h4>
+<h4 id="_cloning"><a class="anchor" href="#_cloning"></a>14.5.4. Cloning</h4>
 <div class="paragraph">
 <p>Say, Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen&#8217;t have to create a new folder and run the <em>git init</em> command there. Git has a <em>clone</em> command that can take the existing code from a  shared repository and create its copy on Peter&#8217;s computer. The <em>clone</em> command downloads the latest project&#8217;s code including the entire Git database with all the history of changes made by Joe and Mary in the past. You can do cloning either by clicking the button "Clone in Desktop" on GitHub or by running <em>git clone</em> in the Command window.</p>
 </div>
@@ -10906,7 +10911,7 @@ git push -u origin master                           <i class="conum" data-value=
 </div>
 </div>
 <div class="sect3">
-<h4 id="_forking-and-pull-requests"><a class="anchor" href="#_forking-and-pull-requests"></a>Forking and Pull Requests</h4>
+<h4 id="_forking-and-pull-requests"><a class="anchor" href="#_forking-and-pull-requests"></a>14.5.5. Forking and Pull Requests</h4>
 <div class="paragraph">
 <p>If cloning creates a copy of someone&#8217;s remote repository on your computer, forking creates a new GitHub repository from the existing one. If you fork a project on GitHub, you can clone this project from your own GitHub account, and work with it as if it&#8217;s yours. Then if you want to contact the author offering your version of the code, you need to send a <em>pull request</em> to the author. By creating a pull request you are saying to the author, "I just improved your code and committed it into my repository. Please look at it and pull it from my repository if, you like it".</p>
 </div>
@@ -10950,7 +10955,7 @@ git push -u origin master                           <i class="conum" data-value=
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cloning-from-intellij-idea"><a class="anchor" href="#_cloning-from-intellij-idea"></a>Cloning From IntelliJ IDEA</h4>
+<h4 id="_cloning-from-intellij-idea"><a class="anchor" href="#_cloning-from-intellij-idea"></a>14.5.6. Cloning From IntelliJ IDEA</h4>
 <div class="paragraph">
 <p>All popular Java IDE support working with Git. In IDEA open the menu VCS and select the menu item Checkout from Version Control and then GitHub as shown below.</p>
 </div>
@@ -10982,8 +10987,11 @@ Note that this project directory has a folder named <em>.git</em>, which contain
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_epilogue"><a class="anchor" href="#_epilogue"></a>Epilogue</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_epilogue"><a class="anchor" href="#_epilogue"></a>Epilogue</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This book is over. I hope you&#8217;ve enjoyed reading it as much as I enjoyed my writing. Your process of studying Java is far from being over. If you liked this book and want to continue your Java journey, consider reading my other Java book for adults, which is called "Java 24-Hour Trainer", 2nd Edition, Wiley. That book comes with videos that illustrate the materials covered in each chapter. I also explain the server-side programming in Java there.
 Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you for reading my book, and good luck!</p>
@@ -10991,10 +10999,9 @@ Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-27 09:53:20 EDT
+Last updated 2015-04-27 17:06:41 EDT
 </div>
 </div>
 </body>
