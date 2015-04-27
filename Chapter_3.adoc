@@ -61,7 +61,7 @@ This class has two attributes `color` and `price`. The color attribute has the `
 
 At this point each of these methods has just a single line that starts with two slashes //. 
 
-NOTE: If a line starts with two slashes, it contains a _single line comment_ - just the description of a code fragment. If you need to write several lines of comments, just type in a slash followed by the asterisk `/*`, then key in as many lines of a text as you want followed by `*/`. 
+NOTE: If a line starts with two slashes, it contains a _single line comment_ - just the description of a code fragment. If you need to write several lines of comments, just type in a slash followed by the asterisk `/\*`, then key in as many lines of a text as you want followed by `*/`. 
 
 Our class `VideoGame` can be used as a starting building block for pretty much any video game – all game consoles have the color attribute, all of them allow to save score, and all of them have price tags.  
 

@@ -244,7 +244,7 @@ throw new IOException(“The file scores.txt contains invalid characters”);
 The constructor of any exception should get a message that describes the error as an argument. When you’ll be invoking the `getMessage` method on the exception object in the catch block, it’ll print the message that was given to the constructor in the code that has thrown the exception.
  
 
-[[FIG9-3]]
+[[FIG9-2]]
 .Throwing exceptions
 image::images/fig_9_02.png[]
 

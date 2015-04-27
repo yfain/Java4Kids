@@ -17,7 +17,7 @@ There are three different types of comments - single-line comments, block commen
 ----
 // This method calculates the distance between A and B.
 ----
-* If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: `/*` and `*/`, for example:
+* If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: `/\*` and `*/`, for example:
 +
 [source, java]
 ----
@@ -26,7 +26,7 @@ There are three different types of comments - single-line comments, block commen
 */
 ----
 
-* Java comes with a special program `javadoc` that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a _technical documentation_ for your programs. Such comments are enclosed in  symbols `/* *` and   `*/`. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.
+* Java comes with a special program `javadoc` that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a _technical documentation_ for your programs. Such comments are enclosed in  symbols `/* \*` and   `*/`. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.
 +
 [source, java]
 ----

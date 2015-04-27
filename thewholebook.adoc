@@ -5,7 +5,9 @@ Yakov Fain <yakovfain@gmail.com>
 :source-highlighter: pygments
 :encoding: utf-8
 :toc:
-:numbered:include::toc.adoc[]
+:numbered:
+
+include::toc.adoc[]
 
 include::Chapter_1.adoc[]
 

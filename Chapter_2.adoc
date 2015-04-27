@@ -83,7 +83,7 @@ In a second IDEA will create an empty class `HelloWorld` shown below. The white 
 image::images/fig_2_07.png[]
 
 
-The text between `/**` and `*/` is one of the ways to write comments in your programs. This is an area where you can type any text you want that describes your program in general or any particular code inside the class. We'll talk about various ways to write comments in the next chapter. 
+The text between `/\**` and `*/` is one of the ways to write comments in your programs. This is an area where you can type any text you want that describes your program in general or any particular code inside the class. We'll talk about various ways to write comments in the next chapter. 
 
 ==== Adding the method main
 

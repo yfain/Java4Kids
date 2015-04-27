@@ -117,7 +117,7 @@ Only the `TextField` and `PasswordField` have an attribute `fx:id` - this is how
 
 Java has so called http://docs.oracle.com/javase/tutorial/java/annotations/[annotations] (not covered in this book). They start with the `@` sign and can be placed in front of the variable, class, or a method declaration depending on how the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation `@FXML` instructs runtime to inject the references to the specifies GUI objects into the variables. 
 
-In other words, JavaFX runtime will read the first line as follows: _"I need to get the object that I created after loading `signin.fxml` file, and find the component with an the `fx:id="id"` inside this object. Finally, I need to insert the reference to this component into the Java variable `id`"_. The same applies to the variable `pwd`.
+In other words, JavaFX runtime will read the first line as follows: _"I need to get the object that I created after loading `signin.fxml` file, and find the component with an the `fx:id="id"` inside this object. Finally, I need to insert the reference to this component into the Java variable ``id``"_. The same applies to the variable `pwd`.
 
 The rest is easy. Just use the injected values in you event handler. The code of our `Controller` is shown next. Its method `signInClicked` checks the value entered in the User ID field in the GUI, and if it's not equal to "Yakov", then the code sets the background of the GUI component to the light pink color.
 
