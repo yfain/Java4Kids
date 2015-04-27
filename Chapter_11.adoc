@@ -571,7 +571,7 @@ public static void main(String[] args) {
 
 You can test your programs that take command-line arguments without leaving IntelliJ IDEA. Just open the menu Run, select Edit Configurations and enter the values in the field Program arguments as shown below:
 
-[[FIG11-1]]
+[[FIG11-2]]
 image::images/fig_11_commandline.png[]
  
 Now let's write a program to copy files. To make this program working with any files, the names of the original and destination files have to be passed to this program as command-line arguments.
@@ -775,7 +775,7 @@ Deserialized game state object; PlayerName: Mary, level:0, score: 28000, remaini
 
 If you place the breakpoint right after the invokation of the `loadGameState` method, you'll be able to see two different instances of the `GameState` object as shown below:
 
-[[FIG11-1]]
+[[FIG11-3]]
 image::images/fig_11_debug_serialize.png[]
 
 Note how IDEA conveniently shows the values of the variables not only in the debugger's view at the bottom but in the source code of the program in grayed out font.

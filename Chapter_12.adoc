@@ -269,7 +269,7 @@ In this project you'll see how our `FileDownload` program to see if it can downl
 
 1. Visit the Web site: http://www.last.fm/music/+free-music-downloads and pick an MP3 you like. At the time of this writing the Last.FM Web page looked as follows:
 +
-[[FIG12-3]]
+[[FIG12-30]]
 image::images/fig_12_lastfm.png[]
 +
 2. Right-click on the blue button "Free MP3", and you'll see a browser's popup menu. Select the menu item that allows you to copy the link address. The link will be copied in your computer's clipboard. I've selected a link to a music file that looked like this:
