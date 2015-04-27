@@ -20,5 +20,25 @@ If you find an error in code samples email your comments directly to Yakov at ya
 While this book is written for 12+ year old kids, adults looking for an easy intro to Java may find this book useful too. http://instagram.com/yurifain[Yuri Fain] created illustrations for this book. If this material looks too easy for you get Yakov's video course "Introduction to Java and Java EE" at http://bit.ly/1HERoVo[Parleys].
 
 Currently this content is offered for free, but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful.
+
+== TOC 
+
+Here's a short version of Table of Contents of the book "Java For Kids".  
+
+* <<Chapter_1.adoc#,Chapter 1. Your First Java Program>>
+* <<Chapter_2.adoc#,Chapter 2. Getting Comfy In IDEA IDE>>
+* <<Chapter_3.adoc#,Chapter 3. Meet Classes - the Main Language Constructs>>
+* <<Chapter_4.adoc#,Chapter 4. Java Building Blocks>>
+* <<Chapter_5.adoc#,Chapter 5. Interfaces, Lambdas, and Anonymous Classes >>
+* <<Chapter_6.adoc#,Chapter 6. Access Levels, Collections, Generics, and Multi-Threading >>
+* <<Chapter_7.adoc#,Chapter 7. Introduction to GUI with JavaFX>>
+* <<Chapter_8.adoc#,Chapter 8. User Interaction in JavaFX>> 
+* <<Chapter_9.adoc#,Chapter 9. Error Handling>>
+* <<Chapter_10.adoc#,Chapter 10. Creating a Tic-Tac-Toe Game>>
+* <<Chapter_11.adoc#,Chapter 11. Working With Files and Serialization>>
+* <<Chapter_12.adoc#,Chapter 12. Networking: Downloading Files From the Internet>>
+* <<Chapter_13.adoc#,Chapter 13. Creating a Ping-Pong Game>>
+* <<Appendix_A.adoc#,Chapter 14. Git for Kids>>
+
  
 All rights reserved. (C) Yakov Fain 2015.
