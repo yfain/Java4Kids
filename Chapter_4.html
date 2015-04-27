@@ -766,12 +766,12 @@ p { margin-bottom: 1.25rem; }
 <div class="ulist">
 <ul>
 <li>
-<p>If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire  text with these symbols: <code>/<strong></code> and <code></strong>/</code>, for example:</p>
+<p>If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: <code>/<strong></code> and <code></strong>/</code>, for example:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">_/* Now we'll handle the current
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">/* Now we'll handle the current
    position of the Fish.
-*/_</code></pre>
+*/</code></pre>
 </div>
 </div>
 </li>
@@ -779,10 +779,10 @@ p { margin-bottom: 1.25rem; }
 <p>Java comes with a special program <code>javadoc</code> that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a <em>technical documentation</em> for your programs. Such comments are enclosed in  symbols <code>/* <strong></code> and   <code></strong>/</code>. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">_/** This method calculates the discount that depends
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">/** This method calculates the discount that depends
 on the price paid. If the price is more than $100,
 give the user 20% off, otherwise only 10%.
-*/_</code></pre>
+*/</code></pre>
 </div>
 </div>
 </li>
@@ -816,7 +816,7 @@ give the user 20% off, otherwise only 10%.
 </div>
 <div id="FIG4-1" class="imageblock">
 <div class="content">
-<img src=".//images/fig_4_01.png" alt="fig 4 01">
+<img src="./images/fig_4_01.png" alt="fig 4 01">
 </div>
 <div class="title">Figure 1. The fork</div>
 </div>
@@ -833,14 +833,14 @@ float discountedPrice;
 
 if (totalSpent &gt; 100){
   discountedPrice=totalSpent*0.8;
-  System.out.println("You’ll get a 20% discount”);
+  System.out.println("You’ll get a 20% discount");
 }
 else{
   discountedPrice=totalSpent*0.9;
-  System.out.println("You’ll get a 10% discount”);
+  System.out.println("You’ll get a 10% discount");
 }
 
-System.out.println("Your discounted price is ” + discountedPrice);</code></pre>
+System.out.println("Your discounted price is " + discountedPrice);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -865,11 +865,11 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
                         " feet below the sea level");
       }
       return currentDepth;
-	}
+  }
 
-	public String talk(String something){
+  public String talk(String something){
        return "Don't you know that fish do not talk?";
-	}
+  }
 }</code></pre>
 </div>
 </div>
@@ -887,10 +887,10 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
   // Try to have the fish go below 100 feet
 
    myFish.dive(2);  // go 2 feet down
-	 myFish.dive(97); // go another 97 feet down
-	 myFish.dive(3);  // go 3 more feet down
+   myFish.dive(97); // go another 97 feet down
+   myFish.dive(3);  // go 3 more feet down
 
-	 myFish.sleep();
+   myFish.sleep();
   }
 }</code></pre>
 </div>
@@ -898,13 +898,15 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 <div class="paragraph">
 <p>Run this program and it’ll print the following on the system console:</p>
 </div>
-<div class="paragraph">
-<p>'Diving for 2 feet.'
-'I&#8217;m at 2 feet below the sea level.'
-'Diving for 97 feet.'
-'I&#8217;m at 99 feet below the sea level.'
-'I am a little fish and can&#8217;t dive below 100 feet.'
-'Good night, see you tomorrow.'</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html" data-lang="html">Diving for 2 feet.
+I'm at 2 feet below the sea level.
+Diving for 97 feet.
+I'm at 99 feet below the sea level.
+I am a little fish and can't dive below 100 feet.
+Good night, see you tomorrow.</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -918,14 +920,24 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 <div class="paragraph">
 <p>In the following examples I use a variable of type <code>String</code>, which has a method <code>equals()</code> that compares the values of two strings. I use it to see the value of the variable <code>state</code> is <em>"Texas"</em> or  <em>"California"</em>:</p>
 </div>
-<div class="paragraph">
-<p><code>if (state.equals("Texas") | state.equals("California"))</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">if (state.equals("Texas") | state.equals("California"))
+{
+   // do something
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>You can also rewrite this <code>if</code> statement using two vertical bars:</p>
 </div>
-<div class="paragraph">
-<p><code>if (state.equals("Texas") || state.equals("California"))</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">if (state.equals("Texas") || state.equals("California"))
+{
+   // do something
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>The difference between these two examples is that if you use two bars, and the first expression is <code>true</code>, the second expression won’t  even be  checked.  If you place just a single bar, JVM will evaluate both expressions anyway.</p>
@@ -933,14 +945,24 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 <div class="paragraph">
 <p>The <em>logical and</em> is represented by one or two ampersands (<code>&amp;&amp;</code>) and each expression in the parentheses must be <code>true</code> to make the entire expression <code>true</code>. For example, charge the sales tax only if the state is New York and the price is more than $110. Both conditions must be <code>true</code> <em>at the same time</em>:</p>
 </div>
-<div class="paragraph">
-<p><code>if (state.equals("New York") &amp;&amp; price &gt;110)</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">if (state.equals("New York") &amp;&amp; price &gt;110)
+{
+   // do something
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>or</p>
 </div>
-<div class="paragraph">
-<p><code>if (state.equals("New York") &amp; price &gt;110)</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">if (state.equals("New York") &amp; price &gt;110)
+{
+   // do something
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>If you use double ampersand and the first expression is <code>false</code>, the second one won’t even be checked, because the entire expression will be <code>false</code> anyway.  With the single ampersand both expressions will be evaluated.</p>
@@ -948,17 +970,26 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 <div class="paragraph">
 <p>The <em>logical not</em> is also known as <code>negation</code> and is  represented by the exclamation point. The logical <em>not</em>  changes  expression to the opposite meaning. For example, if you want to perform some actions only if the state is not New York, use this syntax:</p>
 </div>
-<div class="paragraph">
-<p><code>if (!state.equals("New York"))</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">if (!state.equals("New York")) {
+   // do something
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>The following two expressions will produce the same result, because <em>more than 50</em> and <em>not less or or equal to 50</em> have the same meaning:</p>
 </div>
-<div class="paragraph">
-<p><code>if (price &gt; 50)</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">if (price &gt; 50) {
+   // do something
+}
+
+if (!(price &lt;= 50)) {
+   // do something
+}</code></pre>
 </div>
-<div class="paragraph">
-<p><code>if (!(price &#8656;50))</code></p>
 </div>
 <div class="paragraph">
 <p>In the second example the <em>logical not</em> is applied to the expression in parentheses.</p>
@@ -1001,31 +1032,31 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 */
  public char convertGrades( int testResult){
 
-	char grade;
+  char grade;
 
-	if (testResult &gt;= 90){
-		grade = 'A';
-	} else if (testResult &gt;= 80 &amp;&amp; testResult &lt; 90){
-	      grade = 'B';
+  if (testResult &gt;= 90){
+    grade = 'A';
+  } else if (testResult &gt;= 80 &amp;&amp; testResult &lt; 90){
+        grade = 'B';
   }else if (testResult &gt;= 70 &amp;&amp; testResult &lt; 80){
-	    	grade = 'C';
-	}else {
-	    	grade = 'D';
-	}
+        grade = 'C';
+  }else {
+        grade = 'D';
+  }
 
-	return grade;
+  return grade;
  }
 
  public static void main(String[] args){
 
-	ReportCard rc = new ReportCard();
+  ReportCard rc = new ReportCard();
 
-	char yourGrade = rc.convertGrades(88);
-	System.out.println("Your first grade is " +
+  char yourGrade = rc.convertGrades(88);
+  System.out.println("Your first grade is " +
                                           yourGrade);
 
-	yourGrade = rc.convertGrades(79);
-	System.out.println("Your second grade is " +
+  yourGrade = rc.convertGrades(79);
+  System.out.println("Your second grade is " +
                                           yourGrade);
  }
 }</code></pre>
@@ -1038,7 +1069,7 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 <p><code>testResult &gt;= 80 &amp;&amp; testResult &lt; 89</code></p>
 </div>
 <div class="paragraph">
-<p>Take a guess, why we could not use the <em>logical or</em> operator here? Say the <code>testResult</code> is 100. It&#8217;s greater than 80, and the above expression would evaluate to true, because for  the || operator having one <code>true</code> is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of <code>testResult</code> is between 80 and 89. The <em>logiacl and</em> operator does the job by ensuring that both conditions are true.</p>
+<p>Take a guess, why we could not use the <em>logical or</em> operator here? Say the <code>testResult</code> is 100. It&#8217;s greater than 80, and the above expression would evaluate to true, because for  the || operator having one <code>true</code> is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of <code>testResult</code> is between 80 and 89. The <em>logical and</em> operator does the job by ensuring that both conditions are true.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1059,16 +1090,16 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 
    case 'A':
      System.out.println("Excellent Job!");
-	   break;
+     break;
    case 'B':
-	   System.out.println("Good Job!");
-	   break;
+     System.out.println("Good Job!");
+     break;
    case 'C':
-	   System.out.println("Need to work more!");
- 	   break;
+     System.out.println("Need to work more!");
+     break;
    case 'D':
      System.out.println("Change your attitude!");
-	 break;
+   break;
  }
  // Some other program code goes here
 
@@ -1083,7 +1114,7 @@ System.out.println("Your discounted price is ” + discountedPrice);</code></pre
 </div>
 <div id="FIG4-2" class="imageblock">
 <div class="content">
-<img src=".//images/fig_4_02.png" alt="fig 4 02">
+<img src="./images/fig_4_02.png" alt="fig 4 02">
 </div>
 <div class="title">Figure 2. The switch statement</div>
 </div>
@@ -1137,7 +1168,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-code" data-lang="code">public static char convertGrades( int testResult){
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">public static char convertGrades( int testResult){
    // the code of this method goes here
 }</code></pre>
 </div>
@@ -1191,10 +1222,10 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class Fish extends Pet {
     int currentDepth;
 
-	// This is constructor
+  // This is constructor
   Fish(int startingPosition){
-		currentDepth=startingPosition;
-	}
+    currentDepth=startingPosition;
+  }
 }</code></pre>
 </div>
 </div>
@@ -1219,7 +1250,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
   int currentDepth ;
 
   Fish(int currentDepth){
-	this.currentDepth = currentDepth;
+  this.currentDepth = currentDepth;
   }
 }</code></pre>
 </div>
@@ -1229,7 +1260,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 </div>
 <div id="FIG4-3" class="imageblock">
 <div class="content">
-<img src=".//images/fig_4_03.png" alt="fig 4 03">
+<img src="./images/fig_4_03.png" alt="fig 4 03">
 </div>
 <div class="title">Figure 3. I&#8217;m this object</div>
 </div>
@@ -1254,14 +1285,15 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <div class="paragraph">
 <p>These declarations just tell the Java compiler that you are planning to store several text strings in the array <code>players</code>.  Each element has its own index (the position number) starting from zero. The next sample actually creates an instance of an array that can store four <code>String</code> elements and assigns the values to the elements of this array:</p>
 </div>
-<div class="paragraph">
-<p><code>players = new String [4];</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">players = new String [4];
+
+players[0] = "David";
+players[1] = "Daniel";
+players[2] = "Anna";
+players[3] = "Gregory";</code></pre>
 </div>
-<div class="paragraph">
-<p><code>players[0] = "David";</code>
-<code>players[1] = "Daniel";</code>
-<code>players[2] = "Anna";</code>
-<code>players[3] = "Gregory";</code></p>
 </div>
 <div class="paragraph">
 <p>You must declare the size of the array before assigning values to its elements. If you do not know in advance how many elements you are going to have, you cannot use arrays, but should look into other classes - Java collections. For example the <code>ArrayList</code> object does not require you to announce the exact number of elements in advance. I&#8217;ll show you some example of using the <code>ArrayList</code> collection in Chapter 10 about data collections.</p>
@@ -1280,7 +1312,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 </div>
 <div id="FIG4-4" class="imageblock">
 <div class="content">
-<img src=".//images/fig_4_04.png" alt="fig 4 04">
+<img src="./images/fig_4_04.png" alt="fig 4 04">
 </div>
 <div class="title">Figure 4. The array of players</div>
 </div>
@@ -1289,7 +1321,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-Java" data-lang="Java">String theWinner = players[1];
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">String theWinner = players[1];
 System.out.println("Congratulations, " + theWinner + "!");</code></pre>
 </div>
 </div>
@@ -1448,7 +1480,7 @@ while (counter&lt; totalPlayers){
 </div>
 </li>
 <li>
-<p>Write the if statement inside the method <code>convertTemp()</code> to check the value of the argument <code>convertTo</code>. If it&#8217;s <code>F</code>, the temperature has to be converted to Fahrenheit, and if it’s <code>C</code>, convert it to Celsius. Return the result. The method convertTemp() should look like this:</p>
+<p>Write the if statement inside the method <code>convertTemp()</code> to check the value of the argument <code>convertTo</code>. If it&#8217;s <code>F</code>, the temperature has to be converted to Fahrenheit, and if it’s <code>C</code>, convert it to Celsius. Return the result. The method <code>convertTemp()</code> should look like this:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">    public static String convertTemp (float temperature, char convertTo) {
@@ -1456,7 +1488,7 @@ while (counter&lt; totalPlayers){
         if (convertTo=='F'){
              return "The temperature in Fahrenheit is " + (9*temperature/5 + 32);
          } else if(convertTo=='C') {
-            return "The temperature in Celsius is " + (temperature - 32)*5/9;
+            return "The temperature in Celsius is " + (temperature - 32) * 5/9;
         }  else{
             return "You can enter either F or C as convertTo argument";
         }
@@ -1465,7 +1497,7 @@ while (counter&lt; totalPlayers){
 </div>
 </li>
 <li>
-<p>Add a method main() using the shortcut psvm + Tab as explained in Chapter 2. It should look like this:</p>
+<p>Add the method <code>main</code> using the shortcut psvm + Tab as explained in Chapter 2. It should look like this:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">    public static void main(String[] args) {
@@ -1495,7 +1527,7 @@ Converting 70F to Celsius. The temperature in Celsius is 21.11111</em></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-24 05:40:32 EDT
+Last updated 2015-04-26 12:37:29 EDT
 </div>
 </div>
 </body>
