@@ -17,7 +17,7 @@ While this book is written for 12+ year old kids, the adults looking for an easy
 
 http://instagram.com/yurifain[Yuri Fain] created illustrations for this book. If this material looks too easy for you get Yakov's video course "Introduction to Java and Java EE" at http://bit.ly/1HERoVo[Parleys].
 
-IMPORTANT: Currently this book has no official publisher and the content is offered for free, but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful.
+Currently this book has no official publisher and the content is offered for free, but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful.
 
 If you find an error in the code samples email your comments directly to Yakov Fain at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 
 

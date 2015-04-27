@@ -1,5 +1,4 @@
 = Java for Kids
-
 :doctype: book
 :source-highlighter: pygments
 :encoding: utf-8
