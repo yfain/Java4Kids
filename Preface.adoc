@@ -19,6 +19,8 @@ http://instagram.com/yurifain[Yuri Fain] created illustrations for this book. If
 
 Currently this book has no official publisher and the content is offered for free, but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful.
 
+The author has created an https://groups.google.com/d/forum/java4kids[Internet group] where the readers can post their questions/comments regarding the content of this book. The readers are encouraged to help each other, and the author will be monitoring this group too. 
+
 If you find an error in the code samples email your comments directly to Yakov Fain at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 
 
 All rights reserved. (C) Yakov Fain 2015.
