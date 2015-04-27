@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Chapter 8. Programming User Interaction in JavaFX</title>
+<title>Programming User Interaction in JavaFX</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -741,7 +741,7 @@ p { margin-bottom: 1.25rem; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter-8-programming-user-interaction-in-javafx"><a class="anchor" href="#_chapter-8-programming-user-interaction-in-javafx"></a>Chapter 8. Programming User Interaction in JavaFX</h2>
+<h2 id="_programming-user-interaction-in-javafx"><a class="anchor" href="#_programming-user-interaction-in-javafx"></a>Programming User Interaction in JavaFX</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and Calculator windows from Chapter 7 look good, but none of them would react on user&#8217;s actions. No matter how hard you click on the Sign In or calculator&#8217;s buttons, nothing will happen because we didn&#8217;t teach these application how to react on user-generated events. Events are notifications that something important for the application has happened (e.g. the user clicked on the button). In this chapter I&#8217;ll explain you how to write code to handle some of such events.</p>
@@ -893,7 +893,7 @@ public class Controller {
 <p>Java has so called <a href="http://docs.oracle.com/javase/tutorial/java/annotations/">annotations</a> (not covered in this book). They start with the <code>@</code> sign and can be placed in front of the variable, class, or a method declaration depending on how the annotation was defined. Some annotations are used by Java compiler, and some by the JVM. The JavaFX annotation <code>@FXML</code> instructs runtime to inject the references to the specifies GUI objects into the variables.</p>
 </div>
 <div class="paragraph">
-<p>In other words, JavaFX runtime will read the first line as follows: <em>"I need to get the object that I created after loading <code>signin.fxml</code> file, and find the component with an the <code>fx:id="id"</code> inside this object. Finally, I need to insert the reference to this component into the Java variable <code>id`"</em>. The same applies to the variable `pwd</code>.</p>
+<p>In other words, JavaFX runtime will read the first line as follows: <em>"I need to get the object that I created after loading <code>signin.fxml</code> file, and find the component with an the <code>fx:id="id"</code> inside this object. Finally, I need to insert the reference to this component into the Java variable <code>id</code>"</em>. The same applies to the variable <code>pwd</code>.</p>
 </div>
 <div class="paragraph">
 <p>The rest is easy. Just use the injected values in you event handler. The code of our <code>Controller</code> is shown next. Its method <code>signInClicked</code> checks the value entered in the User ID field in the GUI, and if it&#8217;s not equal to "Yakov", then the code sets the background of the GUI component to the light pink color.</p>
@@ -1497,7 +1497,7 @@ String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-26 13:22:39 EDT
+Last updated 2015-04-27 15:31:55 EDT
 </div>
 </div>
 </body>
