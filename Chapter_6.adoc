@@ -1,5 +1,5 @@
 :toc-placement!:
-:imagesdir: ./
+:imagesdir: .
 
 == Chapter 6. Access Levels, Collections, Generics, and Multi-Threading 
 

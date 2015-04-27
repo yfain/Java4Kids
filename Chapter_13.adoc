@@ -1,5 +1,5 @@
 :toc-placement!:
-:imagesdir: ./
+:imagesdir: .
 
 == Chapter 13. Creating a Ping-Pong Game 
 

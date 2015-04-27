@@ -1,5 +1,5 @@
 :toc-placement!:
-:imagesdir: ./
+:imagesdir: .
 
 == Chapter 12. Networking: Downloading Files From The Internet 
 

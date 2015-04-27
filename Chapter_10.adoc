@@ -1,5 +1,5 @@
 :toc-placement!:
-:imagesdir: ./
+:imagesdir: .
 
 == Chapter 10. Creating a Tic-Tac-Toe Game  
 

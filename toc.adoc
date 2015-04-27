@@ -12,7 +12,7 @@ The "Java for Kids" book can be used in multiple ways:
 
 1. Teenagers can use it for self-studying
 2. Parents can use this book for teaching their kids Java
-3. School teachers can be use it as a text book in introductory classes on programming
+3. School teachers can use it as a text book in introductory classes on programming
 4. University professors can use it as a supplement to their "Computer Science 101" classes.
 
 If you find an error in code samples email your comments directly to Yakov at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 

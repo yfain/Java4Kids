@@ -1,5 +1,5 @@
 :toc-placement!:
-:imagesdir: ./
+:imagesdir: .
 
 == Chapter 4. Java Building Blocks
 
@@ -17,23 +17,23 @@ There are three different types of comments - single-line comments, block commen
 ----
 // This method calculates the distance between A and B.
 ----
-* If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire  text with these symbols: `/*` and `*/`, for example:
+* If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: `/*` and `*/`, for example:
 +
 [source, java]
 ----
-_/* Now we'll handle the current 
+/* Now we'll handle the current 
    position of the Fish.
-*/_ 
+*/
 ----
 
 * Java comes with a special program `javadoc` that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a _technical documentation_ for your programs. Such comments are enclosed in  symbols `/* *` and   `*/`. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.
 +
 [source, java]
 ----
-_/** This method calculates the discount that depends  
+/** This method calculates the discount that depends  
 on the price paid. If the price is more than $100,
 give the user 20% off, otherwise only 10%.
-*/_
+*/
 ----
 
 The javadoc tool can process your code, extract all comments that start with `/**` and create program documentation that can be published online or kept locally on the company server. We are not going to use javadoc in this book, but if you're interested to learn more about this tool, read Oracle's tutorial http://goo.gl/Bwm6Cb[How to Write Doc Comments for the Javadoc Tool].
@@ -41,7 +41,6 @@ The javadoc tool can process your code, extract all comments that start with `/*
 From now on, I’ll be adding comments to code samples to  give you a better idea how and where to use them.
 
 === Making Decisions 
-
 We always make decisions in our life: _If she is going to tell me  this_ – _I’m going to answer that, otherwise I’ll do something else_. You can write a Java program that will "make decisions" with the help of `if` and `switch` statements. You can also build more complex either-or conditions using logical operators.
 
 ==== The if Statement 
@@ -50,7 +49,7 @@ Java has an `if` statement that checks if a particular expression is `true` or `
 
 Based on the result of evaluating this expression, your program execution forks, and only the relevant portion of the code will be invoked.
 
-For example, if the expression _Do I want to go to grandma's?_ is `true`,  turn to the left, otherwise turn to the right.	
+For example, if the expression _Do I want to go to grandma's?_ is `true`,  turn to the left, otherwise turn to the right. 
 
 [[FIG4-1]]
 .The fork
@@ -68,14 +67,14 @@ float discountedPrice;
 
 if (totalSpent > 100){
   discountedPrice=totalSpent*0.8;
-  System.out.println("You’ll get a 20% discount”);
+  System.out.println("You’ll get a 20% discount");
 }
 else{
   discountedPrice=totalSpent*0.9;
-  System.out.println("You’ll get a 10% discount”);
+  System.out.println("You’ll get a 10% discount");
 }
 
-System.out.println("Your discounted price is ” + discountedPrice);
+System.out.println("Your discounted price is " + discountedPrice);
 ----
 
 Let’s modify the method `dive()` in the class `Fish` from Chapter 3 to make sure that our fish is not allowed to dive below 100 feet:
@@ -99,11 +98,11 @@ public class Fish extends Pet {
                         " feet below the sea level");
       }
       return currentDepth; 
-	}
+  }
 
-	public String talk(String something){
+  public String talk(String something){
        return "Don't you know that fish do not talk?";
-	} 
+  } 
 }
 ----
 
@@ -114,28 +113,31 @@ Now just make a small change in the class `FishMaster` – let it  try  to make 
 public class FishMaster {
 
   public static void main(String[] args) {
-		
+    
     Fish myFish = new Fish();
  
-  // Try to have the fish go below 100 feet	
-	
+  // Try to have the fish go below 100 feet 
+  
    myFish.dive(2);  // go 2 feet down
-	 myFish.dive(97); // go another 97 feet down
-	 myFish.dive(3);  // go 3 more feet down
-		
-	 myFish.sleep();
+   myFish.dive(97); // go another 97 feet down
+   myFish.dive(3);  // go 3 more feet down
+    
+   myFish.sleep();
   }
 }
 ----
 
 Run this program and it’ll print the following on the system console:
 
-'Diving for 2 feet.'
-'I'm at 2 feet below the sea level.'
-'Diving for 97 feet.'
-'I'm at 99 feet below the sea level.'
-'I am a little fish and can't dive below 100 feet.'
-'Good night, see you tomorrow.'
+[source, html]
+----
+Diving for 2 feet.
+I'm at 2 feet below the sea level.
+Diving for 97 feet.
+I'm at 99 feet below the sea level.
+I am a little fish and can't dive below 100 feet.
+Good night, see you tomorrow.
+----
 
 ==== Logical Operators
 
@@ -145,34 +147,69 @@ In Java the sign for a logical `or` is one or two vertical bars. It works like t
 
 In the following examples I use a variable of type `String`, which has a method `equals()` that compares the values of two strings. I use it to see the value of the variable `state` is _"Texas"_ or  _"California"_: 
 
-`if (state.equals("Texas") | state.equals("California"))`
+[source, java]
+----
+if (state.equals("Texas") | state.equals("California"))
+{ 
+   // do something 
+}
+----
 
 You can also rewrite this `if` statement using two vertical bars: 
 
-`if (state.equals("Texas") || state.equals("California"))`
+[source, java]
+----
+if (state.equals("Texas") || state.equals("California"))
+{ 
+   // do something 
+}
+----
 
 The difference between these two examples is that if you use two bars, and the first expression is `true`, the second expression won’t  even be  checked.  If you place just a single bar, JVM will evaluate both expressions anyway.
 
 The _logical and_ is represented by one or two ampersands (`&&`) and each expression in the parentheses must be `true` to make the entire expression `true`. For example, charge the sales tax only if the state is New York and the price is more than $110. Both conditions must be `true` _at the same time_:
 
-`if (state.equals("New York") && price >110)`
+[source, java]
+----
+if (state.equals("New York") && price >110)
+{ 
+   // do something 
+}
+----
 
 or 
 
-`if (state.equals("New York") & price >110)`
+[source, java]
+----
+if (state.equals("New York") & price >110)
+{ 
+   // do something 
+}
+----
 
 If you use double ampersand and the first expression is `false`, the second one won’t even be checked, because the entire expression will be `false` anyway.  With the single ampersand both expressions will be evaluated.
 
 The _logical not_ is also known as `negation` and is  represented by the exclamation point. The logical _not_  changes  expression to the opposite meaning. For example, if you want to perform some actions only if the state is not New York, use this syntax:
 
-`if (!state.equals("New York"))`
+[source, java]
+----
+if (!state.equals("New York")) { 
+   // do something 
+}
+----
 
 The following two expressions will produce the same result, because _more than 50_ and _not less or or equal to 50_ have the same meaning:
 
-`if (price > 50)`
+[source, java]
+----
+if (price > 50) { 
+   // do something 
+}
 
-`if (!(price <=50))`
-
+if (!(price <= 50)) { 
+   // do something 
+}
+----
 In the second example the _logical not_ is applied to the expression in parentheses.
 
 ==== Conditional operator
@@ -207,33 +244,33 @@ public class ReportCard {
 */
  public char convertGrades( int testResult){
 
-	char grade;
+  char grade;
 
-	if (testResult >= 90){
-		grade = 'A';
-	} else if (testResult >= 80 && testResult < 90){
-	      grade = 'B';
+  if (testResult >= 90){
+    grade = 'A';
+  } else if (testResult >= 80 && testResult < 90){
+        grade = 'B';
   }else if (testResult >= 70 && testResult < 80){
-	    	grade = 'C';
-	}else {
-	    	grade = 'D';
-	}
-	
-	return grade; 
+        grade = 'C';
+  }else {
+        grade = 'D';
+  }
+  
+  return grade; 
  }
 
  public static void main(String[] args){
 
-	ReportCard rc = new ReportCard();
-		
-	char yourGrade = rc.convertGrades(88);
-	System.out.println("Your first grade is " + 
+  ReportCard rc = new ReportCard();
+    
+  char yourGrade = rc.convertGrades(88);
+  System.out.println("Your first grade is " + 
                                           yourGrade);
-		
-	yourGrade = rc.convertGrades(79);
-	System.out.println("Your second grade is " +  
+    
+  yourGrade = rc.convertGrades(79);
+  System.out.println("Your second grade is " +  
                                           yourGrade);
- }			
+ }      
 }
 ----
 
@@ -241,7 +278,7 @@ Beside using the `else if` condition, this example also shows you how to use var
 
 `testResult >= 80 && testResult < 89`
 
-Take a guess, why we could not use the _logical or_ operator here? Say the `testResult` is 100. It's greater than 80, and the above expression would evaluate to true, because for  the || operator having one `true` is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of `testResult` is between 80 and 89. The _logiacl and_ operator does the job by ensuring that both conditions are true. 
+Take a guess, why we could not use the _logical or_ operator here? Say the `testResult` is 100. It's greater than 80, and the above expression would evaluate to true, because for  the || operator having one `true` is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of `testResult` is between 80 and 89. The _logical and_ operator does the job by ensuring that both conditions are true. 
 
 ==== The `switch` Statement 
 
@@ -260,16 +297,16 @@ public static void main(String[] args){
 
    case 'A':
      System.out.println("Excellent Job!");
-	   break;
+     break;
    case 'B':
-	   System.out.println("Good Job!");
-	   break;
+     System.out.println("Good Job!");
+     break;
    case 'C':
-	   System.out.println("Need to work more!");
- 	   break;
+     System.out.println("Need to work more!");
+     break;
    case 'D':
      System.out.println("Change your attitude!");
-	 break;
+   break;
  }
  // Some other program code goes here
 
@@ -282,8 +319,7 @@ Do not forget to put the keyword `break` at the end of each `case` statement to 
 [[FIG4-2]]
 .The switch statement
 image::images/fig_4_02.png[]
-	 
-
+   
 === How Long Variables Live? 
 
 Class `ReportCard` declares a variable `grade` inside the method `convertGrades()`. If you declare a variable inside any method, such variable is called  _local_. This means that this variable is available only for the code _within this method_. When the method completes, this variable automatically gets removed from memory.
@@ -319,7 +355,7 @@ Moreover, if the declaration of a member variable or a method starts with `stati
 
 For example, the method `convertGrades()` should be declared as `static` in the class `ReportCard`, because its code does not use  member variables to store values specific to a particular instance of the class.
 
-[source, code]
+[source, java]
 ----
 public static char convertGrades( int testResult){
    // the code of this method goes here
@@ -342,9 +378,9 @@ You've already learned that Java uses the operator `new` to create instances of 
 
 Parentheses after the word `Fish` tell us that this class has some method called `Fish()`. Yes, there are special methods that are  called  _constructors_, and these methods have the following features:
 
-*	Constructors are special methods that are called only once  during construction of the object in memory.
-*	They must have the same name as the class itself.
-*	They do not return a value, and you do not even have to  use  the keyword  `void` in the constructor’s declaration.
+* Constructors are special methods that are called only once  during construction of the object in memory.
+* They must have the same name as the class itself.
+* They do not return a value, and you do not even have to  use  the keyword  `void` in the constructor’s declaration.
 
 Any class can have more than one constructor. If you do not create a constructor for the class, Java automatically creates one during the compilation time - it's so-called _default no-argument constructor_.  That’s why Java compiler has never complained about the statements  `new Fish()` or `new ReportCard()`, even though neither class `Fish` nor class `ReportCard` has any explicitly declared constructor.
 
@@ -355,10 +391,10 @@ In general, constructors are used to assign initial values to  member variables 
 public class Fish extends Pet {
     int currentDepth;
 
-	// This is constructor
+  // This is constructor
   Fish(int startingPosition){
-		currentDepth=startingPosition;
-	}
+    currentDepth=startingPosition;
+  }
 }
 ----
 
@@ -378,12 +414,12 @@ class Fish {
   int currentDepth ;  
 
   Fish(int currentDepth){
-	this.currentDepth = currentDepth;
+  this.currentDepth = currentDepth;
   }
 }
 ----
 
-Have you noticed that the member variable and the constructor's argument have the same name? The keyword `this` helps to avoid name conflicts. In this code sample `this.currentDepth` refers to the object's member variable `currentDepth`, while the `currentDepth` refers to the argument’s value. In other words, the code points at the current instance of the `Fish` object.	 
+Have you noticed that the member variable and the constructor's argument have the same name? The keyword `this` helps to avoid name conflicts. In this code sample `this.currentDepth` refers to the object's member variable `currentDepth`, while the `currentDepth` refers to the argument’s value. In other words, the code points at the current instance of the `Fish` object.   
 
 [[FIG4-3]]
 .I'm this object
@@ -403,12 +439,15 @@ or
 
 These declarations just tell the Java compiler that you are planning to store several text strings in the array `players`.  Each element has its own index (the position number) starting from zero. The next sample actually creates an instance of an array that can store four `String` elements and assigns the values to the elements of this array:
 
-`players = new String [4];`
+[source, java]
+----
+players = new String [4];
 
-`players[0] = "David";`
-`players[1] = "Daniel";`
-`players[2] = "Anna";`
-`players[3] = "Gregory";`
+players[0] = "David";
+players[1] = "Daniel";
+players[2] = "Anna";
+players[3] = "Gregory";
+----
 
 You must declare the size of the array before assigning values to its elements. If you do not know in advance how many elements you are going to have, you cannot use arrays, but should look into other classes - Java collections. For example the `ArrayList` object does not require you to announce the exact number of elements in advance. I'll show you some example of using the `ArrayList` collection in Chapter 10 about data collections.
 
@@ -426,7 +465,8 @@ image::images/fig_4_04.png[]
 
 Imagine that the second player is a winner and you’d like to write the code to congratulate this kid. If the players’ names are stored in an array get its second element:
 
-[source, Java]
+
+[source, java]
 ----
 String theWinner = players[1];
 System.out.println("Congratulations, " + theWinner + "!");
@@ -546,7 +586,6 @@ Such loops check an expression _after_ executing the code between curly braces, 
 1. Create a new IntelliJ Idea Java project as described in Chapter 2. Name it Chapter4.
 
 2. In the src directory of the project create a new class (the menu File | New) named _TemperatureConverter_. 
-
 3. Add the method `convertTemp()` so the code of the class looks like this:
 +
 [source, java]
@@ -559,7 +598,7 @@ public class TemperatureConverter {
 }
 ----
 
-4. Write the if statement inside the method `convertTemp()` to check the value of the argument `convertTo`. If it's `F`, the temperature has to be converted to Fahrenheit, and if it’s `C`, convert it to Celsius. Return the result. The method convertTemp() should look like this:
+4. Write the if statement inside the method `convertTemp()` to check the value of the argument `convertTo`. If it's `F`, the temperature has to be converted to Fahrenheit, and if it’s `C`, convert it to Celsius. Return the result. The method `convertTemp()` should look like this:
 +
 [source, java]
 ----
@@ -568,14 +607,14 @@ public class TemperatureConverter {
         if (convertTo=='F'){
              return "The temperature in Fahrenheit is " + (9*temperature/5 + 32);
          } else if(convertTo=='C') {
-            return "The temperature in Celsius is " + (temperature - 32)*5/9;
+            return "The temperature in Celsius is " + (temperature - 32) * 5/9;
         }  else{
             return "You can enter either F or C as convertTo argument";
         }
     }
 ----
 
-5. Add a method main() using the shortcut psvm + Tab as explained in Chapter 2. It should look like this:
+5. Add the method `main` using the shortcut psvm + Tab as explained in Chapter 2. It should look like this:
 +
 [source, java]
 ----
