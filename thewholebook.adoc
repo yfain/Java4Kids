@@ -2,6 +2,7 @@
 :doctype: book
 :source-highlighter: pygments
 :encoding: utf-8
+:toc:
 :toc: auto
 :toc-placement: auto
 :toc-position: left
