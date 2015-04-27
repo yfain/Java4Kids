@@ -1,9 +1,10 @@
-:toc:
-:source-highlighter: pygments
-
 = Java for Kids
-
-include::toc.adoc[]
+Yakov Fain <yakovfain@gmail.com>
+:email: yakovfain@gmail.com
+:doctype: book
+:encoding: utf-8
+:toc:
+:numbered:include::toc.adoc[]
 
 include::Chapter_1.adoc[]
 

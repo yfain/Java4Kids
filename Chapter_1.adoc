@@ -100,7 +100,7 @@ public class HelloWorld{
 }
 ----
 
-Save the above code in this folder in the file named `HelloWorld.java` in folder _practice_. Keep in mind that you are not allowed to use blanks in Java file names. 
+Save the above code in this folder in the file named `HelloWorld.java` in the folder _practice_. Keep in mind that you are not allowed to use blanks in Java file names. 
 
 I’ll explain how this program works a little later in this chapter. For now just trust me – this program will print the words _Hello World_ on the screen in the step 3, which will happen pretty soon.
 
