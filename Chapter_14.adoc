@@ -474,8 +474,9 @@ If you see any compilation errors, open the menu File | Project Structure and ma
 
 IntelliJ IDEA fully supports Git, so you can run all Git commands without the need to use the Command window. You can find the description of Git support in the https://www.jetbrains.com/idea/help/using-git-integration.html[IDEA documentation].
 
+:numbered!:
 
-=== Epilogue
+== Epilogue
 
 This book is over. I hope you've enjoyed reading it as much as I enjoyed my writing. Your process of studying Java is far from being over. If you liked this book and want to continue your Java journey, consider reading my other Java book for adults, which is called "Java 24-Hour Trainer", 2nd Edition, Wiley. That book comes with videos that illustrate the materials covered in each chapter. I also explain the server-side programming in Java there.   
 Maybe one day I'll write a more advanced Java book for kids too. Thank you for reading my book, and good luck!

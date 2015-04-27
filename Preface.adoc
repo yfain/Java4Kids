@@ -1,0 +1,24 @@
+:toc-placement!:
+:imagesdir: .
+
+[[preface]]
+== Preface
+
+The book "Java for Kids" is written by Yakov Fain, https://java-champions.java.net/[Java Champion]. The goal is to help students with learning programming in the most popular language in the world: Java. This book starts as an introduction to Java programming language and then explains how to write programs that have Graphic User Interface by writing the Tic-Tac-Toe and Ping-Pong games.
+
+The "Java for Kids" book can be used in multiple ways:
+
+1. Teenagers can use it for self-studying
+2. Parents can use this book for teaching their kids Java
+3. School teachers can use it as a text book in introductory classes on programming
+4. University professors can use it as a supplement to their "Computer Science 101" classes.
+
+While this book is written for 12+ year old kids, the adults looking for an easy intro to Java may find this book useful too. In this book you'll be using the same tools in this book as professional programmers do. As a bonus, the last chapter will teach you how to publish your code on the Web in a super popular site called https://github.com/[GitHub]. Millions of programmers share their programs there, and you should too.
+
+http://instagram.com/yurifain[Yuri Fain] created illustrations for this book. If this material looks too easy for you get Yakov's video course "Introduction to Java and Java EE" at http://bit.ly/1HERoVo[Parleys].
+
+Currently this content is offered for free, but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful.
+
+If you find an error in the code samples email your comments directly to Yakov Fain at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 
+
+All rights reserved. (C) Yakov Fain 2015.

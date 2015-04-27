@@ -4,10 +4,21 @@ Yakov Fain <yakovfain@gmail.com>
 :doctype: book
 :source-highlighter: pygments
 :encoding: utf-8
-:toc:
-:numbered:
+:toc: auto
+:toc-placement: auto
+:toc-position: left
+:toc-title: Table of content
+:toclevels: 3
 
-include::toc.adoc[]
+[[FIG0-1]]
+image::images/Cover.png[]
+
+:numbered!:
+
+[preface]
+include::Preface.adoc[]
+
+:numbered:
 
 include::Chapter_1.adoc[]
 
@@ -35,4 +46,4 @@ include::Chapter_12.adoc[]
 
 include::Chapter_13.adoc[]
 
-include::Appendix_A.adoc[]
+include::Chapter_14.adoc[]
