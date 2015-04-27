@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 4. Java Building Blocks
+== Java Building Blocks
 
 Classes are the major constructs in Java. But you need to know smaller elements that help you out to program the behavior and the flow of the program.  You need to know how commented your program so other people can understand your intentions (programmers often work in teams and help each other). You need to know how to write code that will invoke one method or the other depending on certain conditions. So in this chapter I'll show you some Java elements that you have to know and apply in pretty much any project.
 

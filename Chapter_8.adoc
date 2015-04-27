@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 8. Programming User Interaction in JavaFX
+== Programming User Interaction in JavaFX
 
 After the GUI design is done, we need hook it up with the  application code written in Java. The Sign In and Calculator windows from Chapter 7 look good, but none of them would react on user's actions. No matter how hard you click on the Sign In or calculator's buttons, nothing will happen because we didn't teach these application how to react on user-generated events. Events are notifications that something important for the application has happened (e.g. the user clicked on the button). In this chapter I'll explain you how to write code to handle some of such events.  
 

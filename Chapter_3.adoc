@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 3. Meet Classes - the Main Language Constructs
+== Meet Classes - the Main Language Constructs
 
 In the real world you see and use various objects, and each of them is of some kind like toys, food, animals, electronics et al. In Java instead of saying a kind of objects, we say a class of objects. In other words, each object belongs to a class. A class is like a blueprint of an object. In this chapter you’ll get familiar with classes - the main constructs of the Java language. 
 

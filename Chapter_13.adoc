@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 13. Creating a Ping-Pong Game 
+== Creating a Ping-Pong Game 
 
 In chapters 6, 7, and 10 you’ve learned how to create simple GUI with JavaFX using such components as buttons, labels and text fields. In this chapter we'll use JavaFX again, but this time you'll be drawing and animating shapes. 
 

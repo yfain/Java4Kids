@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 7. Introduction to GUI with JavaFX 
+== Introduction to GUI with JavaFX 
 
 After creating lots of code samples producing outputs to the system console, it's time for creating a nice looking Graphic User Interface (GUI). We're accustomed to programs that open windows with buttons, text fields, menus and other GUI components. 
 

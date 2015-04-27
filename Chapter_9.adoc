@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 9. Error Handling  
+== Error Handling  
 
 In this chapter I'll explain you how to handle run-time errors, which in Java are called _exceptions_.
 

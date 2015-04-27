@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 1. Writing Your First Program
+== Writing Your First Program
 
 People communicate with each other using different languages.These days people often spend more time communicating with computers, smartphones and tablets than with each other. We casually say to each other, “I’ve installed a cool application that can do this and that”.  In other words, people use applications to communicate with computers. So someone has to write these applications. Those who write computer applications are called programmers or software developers. 
 

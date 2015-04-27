@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 14. Git for Kids
+== Git for Kids
 
 So you wrote a great application, and it worked as expected. Sometime later you've got an idea how to make it even better. After several hours of making changes in your code you've noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday's version of the code that was working fine? Can you undo (_rollback_) the latest changes that broke the working code?
 

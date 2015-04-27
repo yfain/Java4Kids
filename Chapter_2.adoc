@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 2. Getting Comfy In IDEA IDE
+== Getting Comfy In IDEA IDE
 
 Most programmers write, compile and run their applications in special programs that go by the name _Integrated Development Environment_  (IDE). Any IDE provide help as you type code, highlights the Java _keywords_,  has a _Help_ menu that describes all elements of the language, and makes it easier to find and fix errors in your programs. There are several excellent IDE that are free to use. The most popular are http://www.eclipse.org/downloads/[Eclipse], https://netbeans.org/downloads/[NetBeans], and http://www.jetbrains.com/idea/download/[IntelliJ IDEA]. In this book we'll use IntelliJ IDEA Community Edition. This is an excellent IDE for developing Java applications, and if, later on, you'll decide to program in other programming languages, IDEA allows supports http://www.jetbrains.com/idea/webhelp/supported-languages.html[more than a dozen] other languages too.
 

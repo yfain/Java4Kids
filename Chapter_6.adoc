@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 6. Access Levels, Collections, Generics, and Multi-Threading 
+== Access Levels, Collections, Generics, and Multi-Threading 
 
 I'll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Then you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects. 
 

@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 10. Creating a Tic-Tac-Toe Game  
+== Creating a Tic-Tac-Toe Game  
 
 In this chapter we'll return to GUI programming and will  develop a Tic-Tac-Toe game using JavaFX and Scene Builder.
 

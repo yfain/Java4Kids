@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 11. Working With Files and Serialization 
+== Working With Files and Serialization 
 
 After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.  
 

@@ -1,9 +1,9 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 12. Networking: Downloading Files From The Internet 
+== Networking: Downloading Files From the Internet 
 
-People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other if they use the same _protocol_. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. Such a communication is possible if the program running on the server also supports HTTP. 
+People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other, if they use the same _protocol_. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. Such a communication is possible if the program running on the server also understands HTTP. 
 Any network protocol defines the rules of how a program should send or receive data. 
 
 Say, you want to find a book about Harry Potter in the online bookstore. Usually you'd need to enter Harry Potter in the search field of that bookstore Web site and press the button to start the search. But the browser sends a request with a lot more data than a dozen of characters you've entered. According to HTTP protocol, every request should include a _request header_, which defines the method of sending data, identifies the browser that sends it, asks to connection to stay open (or not), and has other attributes.
@@ -14,7 +14,7 @@ Some other popular networking protocols are TCP/IP, FTP, WebSocket. In this chap
 
 === How Computers Find Each Other on the Web
 
-If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number.  In the World Wide Web (WWW), to visit a Web site you need to know its Uniform Resource Locator (a URL). Let's see which parts a URL consists of by using an example from Nickelodeon's Web site:
+If you want to visit a person, you need to know his or her exact address - the street, the building and apartment number. In the World Wide Web (WWW), to visit a Web site you need to know its Uniform Resource Locator (a URL). Let's see which parts a URL consists of by using an example from Nickelodeon's Web site:
 
 [[FIG12-1]]
 image::images/fig_12_url.png[]

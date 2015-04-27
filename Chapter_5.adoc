@@ -1,7 +1,7 @@
 :toc-placement!:
 :imagesdir: .
 
-== Chapter 5. Interfaces, Lambdas, Abstract and Anonymous Classes
+== Interfaces, Lambdas, Abstract and Anonymous Classes
 
 In this chapter I'll focus on discussing how you can program _behavior_ in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called _functional_ (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like `eat`, `sleep`, or `dive`, and these functions can live their independent lives and don't have to be declared in classes. In _object-oriented_ languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. 
 
