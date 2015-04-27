@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
@@ -731,10 +731,362 @@ p { margin-bottom: 1.25rem; }
   .show-for-print { display: inherit !important; } }
 
 </style>
+<style>
+.listingblock .pygments .hll { background-color: #ffffcc }
+.listingblock .pygments  { background: #f8f8f8; }
+.listingblock .pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+.listingblock .pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+.listingblock .pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+.listingblock .pygments .tok-o { color: #666666 } /* Operator */
+.listingblock .pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.listingblock .pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+.listingblock .pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+.listingblock .pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+.listingblock .pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
+.listingblock .pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+.listingblock .pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.listingblock .pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+.listingblock .pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.listingblock .pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+.listingblock .pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.listingblock .pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.listingblock .pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.listingblock .pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+.listingblock .pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.listingblock .pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+.listingblock .pygments .tok-m { color: #666666 } /* Literal.Number */
+.listingblock .pygments .tok-s { color: #BA2121 } /* Literal.String */
+.listingblock .pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+.listingblock .pygments .tok-nb { color: #008000 } /* Name.Builtin */
+.listingblock .pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.listingblock .pygments .tok-no { color: #880000 } /* Name.Constant */
+.listingblock .pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+.listingblock .pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+.listingblock .pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.listingblock .pygments .tok-nf { color: #0000FF } /* Name.Function */
+.listingblock .pygments .tok-nl { color: #A0A000 } /* Name.Label */
+.listingblock .pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.listingblock .pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+.listingblock .pygments .tok-nv { color: #19177C } /* Name.Variable */
+.listingblock .pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.listingblock .pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+.listingblock .pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+.listingblock .pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+.listingblock .pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+.listingblock .pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+.listingblock .pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+.listingblock .pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.listingblock .pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+.listingblock .pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.listingblock .pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+.listingblock .pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.listingblock .pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+.listingblock .pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+.listingblock .pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+.listingblock .pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+.listingblock .pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+.listingblock .pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+.listingblock .pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+.listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
 </head>
-<body class="book">
+<body class="book toc2 toc-left">
 <div id="header">
 <h1>Java for Kids</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of content</div>
+<ul class="sectlevel1">
+<li><a href="#preface">Preface</a></li>
+<li><a href="#_writing_your_first_program">1. Writing Your First Program</a>
+<ul class="sectlevel2">
+<li><a href="#_installing_java_on_your_computer">1.1. Installing Java on Your Computer</a>
+<ul class="sectlevel3">
+<li><a href="#_for_windows_users_only">1.1.1. For Windows Users Only</a></li>
+</ul>
+</li>
+<li><a href="#_three_main_steps_in_java_programming">1.2. Three Main Steps in Java Programming</a>
+<ul class="sectlevel3">
+<li><a href="#_command_window">1.2.1. Command Window</a></li>
+<li><a href="#_step_1_write_the_program">1.2.2. Step 1 – Write the Program</a></li>
+<li><a href="#_step_2_compile_the_program">1.2.3. Step 2 – Compile the Program</a></li>
+<li><a href="#_step_3_run_the_program">1.2.4. Step 3 – Run the Program</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_getting_comfy_in_idea_ide">2. Getting Comfy In IDEA IDE</a>
+<ul class="sectlevel2">
+<li><a href="#_installing_intellij_idea">2.1. Installing IntelliJ IDEA</a></li>
+<li><a href="#_creating_your_first_project">2.2. Creating Your First Project</a></li>
+<li><a href="#_creating_helloworld_class_in_idea">2.3. Creating HelloWorld Class in IDEA</a>
+<ul class="sectlevel3">
+<li><a href="#_adding_the_method_main">2.3.1. Adding the method main</a></li>
+<li><a href="#_running_helloworld_in_idea">2.3.2. Running HelloWorld in IDEA</a></li>
+</ul>
+</li>
+<li><a href="#_how_does_code_helloworld_code_work">2.4. How Does <code>HelloWorld</code> Work?</a></li>
+</ul>
+</li>
+<li><a href="#_meet_classes_the_main_language_constructs">3. Meet Classes - the Main Language Constructs</a>
+<ul class="sectlevel2">
+<li><a href="#_dissecting_classes_and_objects">3.1. Dissecting Classes and Objects</a>
+<ul class="sectlevel3">
+<li><a href="#_classes">3.1.1. Classes</a></li>
+<li><a href="#_objects">3.1.2. Objects</a></li>
+</ul>
+</li>
+<li><a href="#_java_data_types_and_variables">3.2. Java Data Types and Variables</a>
+<ul class="sectlevel3">
+<li><a href="#_primitives">3.2.1. Primitives</a></li>
+<li><a href="#_classes_as_data_types">3.2.2. Classes as Data Types</a></li>
+<li><a href="#_how_much_memory_is_needed">3.2.3. How Much Memory is Needed</a></li>
+</ul>
+</li>
+<li><a href="#_creation_of_a_pet">3.3. Creation of a Pet</a></li>
+<li><a href="#_inheritance_a_fish_can_be_a_pet_too">3.4. Inheritance – a Fish Can Be a Pet Too</a></li>
+<li><a href="#_method_overriding">3.5. Method Overriding</a></li>
+<li><a href="#_challenge_yourself">3.6. Challenge Yourself</a></li>
+</ul>
+</li>
+<li><a href="#_java_building_blocks">4. Java Building Blocks</a>
+<ul class="sectlevel2">
+<li><a href="#_program_comments">4.1. Program Comments</a></li>
+<li><a href="#_making_decisions">4.2. Making Decisions</a>
+<ul class="sectlevel3">
+<li><a href="#_the_if_statement">4.2.1. The if Statement</a></li>
+<li><a href="#_logical_operators">4.2.2. Logical Operators</a></li>
+<li><a href="#_conditional_operator">4.2.3. Conditional operator</a></li>
+<li><a href="#_using_code_else_if_code">4.2.4. Using <code>else if</code></a></li>
+<li><a href="#_the_code_switch_code_statement">4.2.5. The <code>switch</code> Statement</a></li>
+</ul>
+</li>
+<li><a href="#_how_long_variables_live">4.3. How Long Variables Live?</a>
+<ul class="sectlevel3">
+<li><a href="#_the_keyword_code_static_code">4.3.1. The Keyword <code>static</code></a></li>
+</ul>
+</li>
+<li><a href="#_special_methods_constructors">4.4. Special Methods: Constructors</a></li>
+<li><a href="#_the_keyword_code_this_code">4.5. The Keyword <code>this</code></a></li>
+<li><a href="#_arrays">4.6. Arrays</a></li>
+<li><a href="#_repeating_actions_with_loops">4.7. Repeating Actions with Loops</a></li>
+<li><a href="#_challenge_yourself_2">4.8. Challenge Yourself</a></li>
+</ul>
+</li>
+<li><a href="#_interfaces_lambdas_abstract_and_anonymous_classes">5. Interfaces, Lambdas, Abstract and Anonymous Classes</a>
+<ul class="sectlevel2">
+<li><a href="#_java_interfaces">5.1. Java Interfaces</a>
+<ul class="sectlevel3">
+<li><a href="#_default_methods_in_interfaces">5.1.1. Default Methods in Interfaces</a></li>
+<li><a href="#_static_methods_in_interfaces">5.1.2. Static Methods in Interfaces</a></li>
+<li><a href="#_final_static_variables_in_interfaces">5.1.3. Final Static Variables in Interfaces</a></li>
+<li><a href="#_functional_interfaces">5.1.4. Functional Interfaces</a></li>
+</ul>
+</li>
+<li><a href="#_abstract_classes">5.2. Abstract Classes</a>
+<ul class="sectlevel3">
+<li><a href="#_what_s_the_difference_between_abstract_classes_and_interfaces">5.2.1. What&#8217;s the difference between abstract classes and interfaces?</a></li>
+</ul>
+</li>
+<li><a href="#_anonymous_classes">5.3. Anonymous Classes</a></li>
+<li><a href="#_lambda_expressions">5.4. Lambda Expressions</a>
+<ul class="sectlevel3">
+<li><a href="#_simplifying_code_with_lambdas">5.4.1. Simplifying Code With Lambdas</a></li>
+</ul>
+</li>
+<li><a href="#_project_java_interfaces_and_lambda_expressions">5.5. Project: Java Interfaces and Lambda Expressions</a></li>
+</ul>
+</li>
+<li><a href="#_access_levels_collections_generics_and_multi_threading">6. Access Levels, Collections, Generics, and Multi-Threading</a>
+<ul class="sectlevel2">
+<li><a href="#_access_levels">6.1. Access Levels</a></li>
+<li><a href="#_casting">6.2. Casting</a></li>
+<li><a href="#_selected_data_collections">6.3. Selected Data Collections</a>
+<ul class="sectlevel3">
+<li><a href="#_the_class_arraylist">6.3.1. The Class ArrayList</a></li>
+<li><a href="#_the_class_hashtable">6.3.2. The Class Hashtable</a></li>
+</ul>
+</li>
+<li><a href="#_introduction_to_generics">6.4. Introduction to Generics</a></li>
+<li><a href="#_light_introduction_to_multi_threading">6.5. Light Introduction to Multi-Threading</a>
+<ul class="sectlevel3">
+<li><a href="#_how_to_create_a_thread">6.5.1. How to Create a Thread</a></li>
+</ul>
+</li>
+<li><a href="#_project_using_arraylist_and_generics">6.6. Project: Using ArrayList and Generics</a></li>
+</ul>
+</li>
+<li><a href="#_introduction_to_gui_with_javafx">7. Introduction to GUI with JavaFX</a>
+<ul class="sectlevel2">
+<li><a href="#_introduction_to_javafx">7.1. Introduction to JavaFX</a></li>
+<li><a href="#_brief_overview_of_javafx_layouts">7.2. Brief Overview of JavaFX Layouts</a></li>
+<li><a href="#_getting_started_with_scene_builder">7.3. Getting Started With Scene Builder</a></li>
+<li><a href="#_gridpane_layout">7.4. GridPane Layout</a>
+<ul class="sectlevel3">
+<li><a href="#_designing_a_sign_in_window_in_scene_builder">7.4.1. Designing a Sign In Window in Scene Builder</a></li>
+<li><a href="#_programming_the_sign_in_window_in_java">7.4.2. Programming the Sign In Window in Java</a></li>
+</ul>
+</li>
+<li><a href="#_styling_with_css">7.5. Styling With CSS</a></li>
+<li><a href="#_borderpane_and_combining_layouts">7.6. BorderPane and Combining Layouts</a></li>
+<li><a href="#_project_creating_a_gui_for_calculator">7.7. Project: Creating a GUI for Calculator</a></li>
+</ul>
+</li>
+<li><a href="#_programming_user_interaction_in_javafx">8. Programming User Interaction in JavaFX</a>
+<ul class="sectlevel2">
+<li><a href="#_events">8.1. Events</a>
+<ul class="sectlevel3">
+<li><a href="#_assigning_event_handlers_in_fxml">8.1.1. Assigning Event Handlers in FXML</a></li>
+<li><a href="#_adding_controller_to_sign_in_application">8.1.2. Adding Controller to Sign In application</a></li>
+<li><a href="#_data_exchange_between_gui_components_and_controller">8.1.3. Data Exchange Between GUI Components And Controller</a></li>
+<li><a href="#_assigning_event_handlers_in_java">8.1.4. Assigning Event Handlers in Java</a></li>
+<li><a href="#_further_reading_on_event_handling">8.1.5. Further Reading on Event Handling</a></li>
+</ul>
+</li>
+<li><a href="#_data_binding_and_properties">8.2. Data Binding and Properties</a></li>
+<li><a href="#_application_thread_in_javafx">8.3. Application Thread in JavaFX</a>
+<ul class="sectlevel3">
+<li><a href="#_the_frozen_screen_demo">8.3.1. The Frozen Screen Demo</a></li>
+</ul>
+</li>
+<li><a href="#_deploying_with_javafx_packager">8.4. Deploying With JavaFX Packager</a></li>
+<li><a href="#_what_to_study_next_about_javafx">8.5. What to Study Next About JavaFX</a></li>
+<li><a href="#_project_adding_events_handling_for_calculator">8.6. Project: Adding Events Handling for Calculator</a>
+<ul class="sectlevel3">
+<li><a href="#_challenge_yourself_3">8.6.1. Challenge Yourself</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_error_handling">9. Error Handling</a>
+<ul class="sectlevel2">
+<li><a href="#_reading_the_stack_trace">9.1. Reading the Stack Trace</a></li>
+<li><a href="#_genealogical_tree_of_exceptions">9.2. Genealogical Tree of Exceptions</a></li>
+<li><a href="#_try_catch_block">9.3. Try/Catch Block</a></li>
+<li><a href="#_the_keyword_code_throws_code">9.4. The keyword <code>throws</code></a></li>
+<li><a href="#_the_keyword_code_finally_code">9.5. The Keyword <code>finally</code></a></li>
+<li><a href="#_the_keyword_code_throw_code">9.6. The Keyword <code>throw</code></a></li>
+<li><a href="#_creating_custom_exceptions">9.7. Creating Custom Exceptions</a></li>
+<li><a href="#_project_create_a_javafx_bike_store">9.8. Project: Create a JavaFX Bike Store</a></li>
+</ul>
+</li>
+<li><a href="#_creating_a_tic_tac_toe_game">10. Creating a Tic-Tac-Toe Game</a>
+<ul class="sectlevel2">
+<li><a href="#_developing_the_game_step_by_step">10.1. Developing the Game: Step by Step</a>
+<ul class="sectlevel3">
+<li><a href="#_developing_the_gui_part_in_scene_builder">10.1.1. Developing the GUI part in Scene Builder</a></li>
+<li><a href="#_handling_button_clicks_in_controller">10.1.2. Handling Button Clicks in Controller</a></li>
+<li><a href="#_styling_buttons_and_the_menu_bar">10.1.3. Styling Buttons and the Menu Bar</a></li>
+<li><a href="#_implementing_the_game_strategy">10.1.4. Implementing the Game Strategy</a></li>
+<li><a href="#_highlighting_the_winning_combination">10.1.5. Highlighting the Winning Combination</a></li>
+<li><a href="#_handling_the_tic_tac_toe_menu_play">10.1.6. Handling the Tic-Tac-Toe Menu Play</a></li>
+</ul>
+</li>
+<li><a href="#_project_playing_against_computer">10.2. Project: Playing Against Computer</a>
+<ul class="sectlevel3">
+<li><a href="#_challenge_yourself_4">10.2.1. Challenge Yourself</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_working_with_files_and_serialization">11. Working With Files and Serialization</a>
+<ul class="sectlevel2">
+<li><a href="#_basics_of_working_with_streams">11.1. Basics of Working With Streams</a>
+<ul class="sectlevel3">
+<li><a href="#_byte_streams">11.1.1. Byte Streams</a></li>
+<li><a href="#_bufferred_streams">11.1.2. Bufferred Streams</a></li>
+</ul>
+</li>
+<li><a href="#_character_streams">11.2. Character Streams</a></li>
+<li><a href="#_working_with_files_using_java_nio">11.3. Working With Files Using java.nio</a>
+<ul class="sectlevel3">
+<li><a href="#_using_classes_path_and_paths">11.3.1. Using Classes Path and Paths</a></li>
+<li><a href="#_using_the_class_files">11.3.2. Using the Class Files</a></li>
+<li><a href="#_reading_a_file">11.3.3. Reading a File</a></li>
+<li><a href="#_writing_into_a_file">11.3.4. Writing Into a File</a></li>
+</ul>
+</li>
+<li><a href="#_command_line_arguments">11.4. Command-Line Arguments</a></li>
+<li><a href="#_serialization_turning_an_object_into_bytes">11.5. Serialization: Turning an Object Into Bytes</a></li>
+<li><a href="#_project_saving_the_game_scores">11.6. Project: Saving the Game Scores</a></li>
+</ul>
+</li>
+<li><a href="#_networking_downloading_files_from_the_internet">12. Networking: Downloading Files From the Internet</a>
+<ul class="sectlevel2">
+<li><a href="#_how_computers_find_each_other_on_the_web">12.1. How Computers Find Each Other on the Web</a></li>
+<li><a href="#_domain_names_and_ip_addresses">12.2. Domain Names and IP Addresses</a></li>
+<li><a href="#_downloading_files_from_the_web">12.3. Downloading Files From the Web</a>
+<ul class="sectlevel3">
+<li><a href="#_downloading_any_file_from_the_internet">12.3.1. Downloading Any File From the Internet</a></li>
+</ul>
+</li>
+<li><a href="#_project_downloading_music">12.4. Project: Downloading Music</a></li>
+</ul>
+</li>
+<li><a href="#_creating_a_ping_pong_game">13. Creating a Ping-Pong Game</a>
+<ul class="sectlevel2">
+<li><a href="#_the_strategy">13.1. The Strategy</a></li>
+<li><a href="#_step_1_creating_the_table">13.2. Step 1: Creating the Table</a></li>
+<li><a href="#_step_2_handling_keyboard_events">13.3. Step 2: Handling Keyboard Events</a>
+<ul class="sectlevel3">
+<li><a href="#_processing_keyboard_events_in_the_controller">13.3.1. Processing Keyboard Events in the Controller</a></li>
+<li><a href="#_the_enum_type">13.3.2. The enum Type</a></li>
+<li><a href="#_preparing_to_process_the_keys_s_q_and_n">13.3.3. Preparing to Process the Keys S, Q, and N</a></li>
+</ul>
+</li>
+<li><a href="#_step_3_moving_the_paddle">13.4. Step 3: Moving the Paddle</a></li>
+<li><a href="#_step_4_moving_the_ball">13.5. Step 4. Moving the Ball</a>
+<ul class="sectlevel3">
+<li><a href="#_moving_the_ball_to_the_right_paddle">13.5.1. Moving the Ball to the Right Paddle</a></li>
+<li><a href="#_serving_the_ball_horizontally">13.5.2. Serving the Ball Horizontally</a></li>
+<li><a href="#_serving_the_ball_in_random_directions">13.5.3. Serving the Ball in Random Directions</a></li>
+</ul>
+</li>
+<li><a href="#_step_5_moving_the_computer_s_paddle">13.6. Step 5: Moving the Computer&#8217;s Paddle</a></li>
+<li><a href="#_step_6_bouncing_the_ball">13.7. Step 6: Bouncing the Ball</a></li>
+<li><a href="#_project_displaying_the_game_score">13.8. Project: Displaying the Game Score</a></li>
+</ul>
+</li>
+<li><a href="#_git_for_kids">14. Git for Kids</a>
+<ul class="sectlevel2">
+<li><a href="#_two_types_of_version_control_systems">14.1. Two Types of Version Control Systems</a></li>
+<li><a href="#_introduction_to_git">14.2. Introduction to Git</a>
+<ul class="sectlevel3">
+<li><a href="#_introducing_yourself_to_git">14.2.1. Introducing Yourself to Git</a></li>
+</ul>
+</li>
+<li><a href="#_creating_a_new_git_repository">14.3. Creating a New Git Repository</a></li>
+<li><a href="#_selected_git_commands">14.4. Selected Git Commands</a>
+<ul class="sectlevel3">
+<li><a href="#_the_status_command">14.4.1. The status Command</a></li>
+<li><a href="#_the_add_command">14.4.2. The add Command</a></li>
+<li><a href="#_the_commit_command">14.4.3. The commit Command</a></li>
+<li><a href="#_the_reset_command">14.4.4. The reset Command</a></li>
+<li><a href="#_code_branching">14.4.5. Code Branching</a></li>
+<li><a href="#_conflict_resolution">14.4.6. Conflict Resolution</a></li>
+</ul>
+</li>
+<li><a href="#_publishing_your_code_on_github">14.5. Publishing Your Code on GitHub</a>
+<ul class="sectlevel3">
+<li><a href="#_creating_a_github_repository">14.5.1. Creating a GitHub Repository</a></li>
+<li><a href="#_pushing_the_local_repository_to_github">14.5.2. Pushing the Local Repository to GitHub</a></li>
+<li><a href="#_pulling_the_latest_version_from_github">14.5.3. Pulling The Latest Version from GitHub</a></li>
+<li><a href="#_cloning">14.5.4. Cloning</a></li>
+<li><a href="#_forking_and_pull_requests">14.5.5. Forking and Pull Requests</a></li>
+<li><a href="#_cloning_from_intellij_idea">14.5.6. Cloning From IntelliJ IDEA</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_epilogue">Epilogue</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -777,17 +1129,8 @@ p { margin-bottom: 1.25rem; }
 <div class="paragraph">
 <p><a href="http://instagram.com/yurifain">Yuri Fain</a> created illustrations for this book. If this material looks too easy for you get Yakov&#8217;s video course "Introduction to Java and Java EE" at <a href="http://bit.ly/1HERoVo">Parleys</a>.</p>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Important</div>
-</td>
-<td class="content">
-Currently this book has no official publisher and the content is offered for free, but the author would appreciate <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=VQGWLFGZHL55Q">a donation</a> if you find this book useful.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Currently this book has no official publisher and the content is offered for free, but the author would appreciate <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=VQGWLFGZHL55Q">a donation</a> if you find this book useful.</p>
 </div>
 <div class="paragraph">
 <p>If you find an error in the code samples email your comments directly to Yakov Fain at <a href="mailto:yakovfain@gmail.com">yakovfain@gmail.com</a> or open an issue at <a href="https://github.com/yfain/Java4Kids_code">code samples repository</a> on GitHub.</p>
@@ -10606,7 +10949,7 @@ Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-27 17:11:09 EDT
+Last updated 2015-04-27 17:26:35 EDT
 </div>
 </div>
 </body>
