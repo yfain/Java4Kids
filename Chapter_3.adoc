@@ -139,7 +139,7 @@ hardDiskSize="500GB";
 
 `String` values are placed inside the quotes, and the numbers aren't.
 
-The method parameters (a.k.a. arguments) are also stored in variables. The method saveStore has two arguments: `playerName` of type `String` and `score` of type `int`:
+The method parameters (a.k.a. arguments) are also stored in variables. The method `saveStore` has two arguments: `playerName` of type `String` and `score` of type `int`:
 
 `void saveScore(String playerName, int score)`
 
@@ -162,7 +162,7 @@ In Java you are also allowed to change the value of a variable in a somewhat unu
 `int y=5;`
 `y++;`
 
-Despite the two plus signs, JVM is still going to increment the value of the variable `y` by one. The `y++` means, read the value of the variable `y`, increment it by one, and assign it back to `y`. The longer way to achieve the same result would be `y=y+1`. After the next code fragment the value of the variable `myScore` is also equal to six:
+Despite the two plus signs, JVM is still going to increment the value of the variable `y` by one. The `y++` means, read the value of the variable `y`, increment it by one, and assign it back to `y`. The longer syntax to achieve the same result would be `y=y+1`. After the next code fragment the value of the variable `myScore` is also equal to six:
 
 `int myScore=5;`
 `myScore=myScore+1;`

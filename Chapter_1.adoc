@@ -3,19 +3,19 @@
 
 == Writing Your First Program
 
-People communicate with each other using different languages.These days people often spend more time communicating with computers, smartphones and tablets than with each other. We casually say to each other, “I’ve installed a cool application that can do this and that”.  In other words, people use applications to communicate with computers. So someone has to write these applications. Those who write computer applications are called programmers or software developers. 
+People communicate with each other using different languages. These days people often spend more time communicating with computers, smartphones and tablets than with each other. We casually say to each other, “I’ve installed a cool application that can do this and that”.  In other words, people use applications to communicate with computers. So someone has to write these applications. Those who write computer applications are known as programmers or software developers. 
 
-Programmers write applications like games, calculators, text editors using different programming languages. Without applications, computer, smartphone, or game console would have very limited use for most of the people.  Computing devices usually come with an Operational System (OS) installed, e.g. Windows, Mac OS, iOS, Android etc. But imagine an iPhone that has no applications at all. Or a laptop that can only show the logo of Windows OS. Who would want such a device?
+Programmers write applications like games, calculators, and text editors using different programming languages. Without applications, computers, smartphones, and game consoles would have very limited use for most people.  Computing devices usually come with an Operational System (OS) installed such as Windows, Mac OS, iOS, and Android, but imagine an iPhone that has no applications at all or a laptop that can only show the OS logo. Who would want such a device?
 
-Programmers create application using different programming languages like Java, Python, C++, JavaScript, C, and others. Some of the languages are good for produce small programs that require very little memory space and can be embedded in the computer chips. Some programming languages are great for programming Web applications that run inside the Web browsers. Some programming languages are great for running on the server and handling thousands of users’ requests.  There are languages are fine tuned for creating beautiful graphics. Similarly to human languages, programming languages have a set of words (a.k.a. keywords) that are allowed in the programs and the rules for using them (the syntax).  
+Programmers create applications using different programming languages such as Java, Python, C++, JavaScript, C, and many others. Some of the languages are good for producing small programs that require very little memory space and can be embedded in computer chips. Some programming languages are great for programming Web applications that run inside the Web browsers. Some programming languages are great for running on the server and handling thousands of users’ requests.  There are languages that are fine tuned for creating beautiful graphics. Similar to human languages, programming languages have a set of words (a.k.a. keywords) and the rules for using them (the syntax).  
 
-In this book you’ll be learning the syntax of the Java programming language, which can be used for programming most of the application types. And for many many years the Java programming language has been one of the world’s most popular computer languages. In fact, as I write this, estimates are that there are close to 10 million professional Java programmers in the world. What makes it so popular?
+In this book you’ll learn the syntax of the Java programming language, which can be used for programming most types of applications. And for many years the Java programming language has been one of the world’s most popular computer languages. In fact, as I write this, estimates are that there is an estimated 10 million professional Java programmers in the world, but what makes it so popular?
 
-For one thing, the same Java program can run on different devices: from desktop computers running Windows or MacOS to handheld devices like smartphones and tablets. As a matter of fact, Java programs don’t care what they’re running on, because they run inside a kind of virtual hardware called a virtual machine. We’ll talk about the Java Virtual Machine a bit later in this chapter. 
+For one thing, the same Java program can run on different devices: from desktop computers running Windows or MacOS to handheld devices such as smartphones and tablets. As a matter of fact, Java programs don’t care what device they’re running on because they run inside a kind of virtual hardware called a virtual machine. We’ll talk about the Java Virtual Machine a bit later in this chapter. 
 
-Java can be embedded in tiny microchips that control various home appliances or industrial devices like the ones that power smart homes where the heater or light can be programmed remotely from your phone. These Internet connected things can be programmed in Java.
+Java can be embedded in tiny microchips that control various home appliances or industrial devices like the ones that power smart homes where the heat or light can be programmed remotely from your phone. These Internet-connected things can be programmed in Java.
 
-Programming language can have some general characteristics, and we say that Java is an object-oriented language. Its program elements (called classes) represent objects from the real world. For example, you can create a class called `Car` and give it attributes that real cars have, like doors, wheels, a chassis, and so on. Next, you can create another class based on the `Car` class, like `Tesla`, with all the features of the `Car` class (doors, wheels, chassis) plus an electric motor.
+Programming languages can have some general characteristics and we say that Java is an object-oriented language. Its program elements (_classes_) represent objects from the real world. For example, you can create a class called `Car` and give it attributes that real cars have, like doors, wheels, and so on. Next, you can create another class based on the `Car` class, like `Tesla`, with all the features of the `Car` class (doors, wheels) plus an electric motor.
 
 And the software required to write Java is free. With so many million of professional Java programmers in the world, you’ll find lots of sample program online so if you’re run into a problem, you can either find the solution by searching or ask in one of the popular online forums like http://stackoverflow.com[Stack Overflow], and someone will probably answer your question!
 
@@ -24,42 +24,42 @@ But enough talk. Let’s start learning Java.
 
 === Installing Java on Your Computer
 
-To start programming in Java you need to download Java Development Kit (JDK) from the company called Oracle, which leads most of the Java-related work and makes releases and updates of Java versions. The full name of the software to download is Java SE Development Kit. We'll download the  Java SE 8, which is the latest version at the time of this writing. Just visit this   
+To start programming in Java you need to download the Java Development Kit (JDK) from the company called Oracle, which makes releases and updates of Java versions. The full name of the software to download is Java SE Development Kit. We'll download the  Java SE 8, which was the latest version of Java available while writing this book. Just visit   
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[Oracle's Web site]. Accept the license agreement and select the proper link depending on the Operational System (OS) installed on your computer. 
 
-NOTE: While Java programmers need JDK installed, the users of your applications need to have Java Runtime Environment (JRE) installed on their machines. JRE is included in JDK, but can be downloaded separately too.
+NOTE: While Java programmers need JDK installed, the users of your applications need to have Java Runtime Environment (JRE) installed on their machines. JRE is included in JDK, but can be downloaded separately as well.
 
 [[FIG1-1]]
 .Selecting the Java SE version 
 image::images/fig_1_01.png[]
 
-If you use Windows OS, download the file named jdk-8-windows-i586.exe. Since I work with Apple computers with Mac OS X, the file'jdk-8-macosx-x64.dmg' is my Java installer. Run your installer program, agree with all default answers (just press the button Next) and you're almost ready to go.
+If you use Windows OS, download the file named jdk-8-windows-i586.exe. Since I work with Apple computers running Mac OS X, the file _jdk-8-macosx-x64.dmg_ is my Java installer. Run your installer program, agree with all default answers (just press the button Next) and you're almost ready to go.
  
-In Mac OS Java is installed in the folder _/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk_. On Windows computers it'll be installed under  
+In Mac OS, Java is installed in the folder _/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk_ (there could other digits after zero, which indicates the update number). On Windows computers it'll be installed under  
 _c:\Program Files\Java\jdk1.8.0_, where _c:_ is the name of your hard drive or SSD. If you use Mac OS, your installation is complete. 
 
 ==== For Windows Users Only
 
-If you use Windows, you'll also need to add Java to the environment  variable `Path`. Click on the menu Start, Control Panel, System and search for _Environment Variables_. You'll see all system variables that exist in your OS As shown on the screenshot <<FIG1-4>>. If you have administrator's rights on your Windows PC, you can set user variables that will apply only when a certain user logs into your PC, or system variables that will apply to all users.
+If you use Windows, you'll also need to add Java to the environment  variable `Path`. Click on the menu Start, Control Panel, System and search for _Environment Variables_. You'll see all system variables that exist in your OS As shown on the screenshot <<FIG1-4>>. If you have administrator's rights onto your Windows PC, you can set user variables that will apply only when a certain user logs into your PC, or system variables that will apply to all users.
 
 
 [[FIG1-4]]
 .Windows OS - System Variables
 image::images/fig_1_04.png[]
 
-Press the lower button _Edit_ - you need to add the _bin_ directory from your JDK at the beginning of the `Path` variable value. For example, add  _c:\Program Files\java\jdk1.8.0\bin;_ if this is where your JDK is installed:
+Press the lower button _Edit_ and add the _bin_ directory from your JDK at the beginning of the `Path` variable value. For example, add  _c:\Program Files\java\jdk1.8.0\bin;_ if this is where your JDK is installed:
 
 [[FIG1-5]]
 .Adding the bin directory Path variable
 image::images/fig_1_05.png[] 
 
-Now the Windows installation of JDK is complete! I'm sure you're eager to start writing your first program now. Let's do it. 
+Now the Windows installation of JDK is complete! I'm sure you're eager to start writing your first program now so let's do it. 
 
 === Three Main Steps in Java Programming
  
 If you have an idea _what_ to program, typically you'll need to perform the following three steps: 
 
-. _Write_ the program in Java programming language and save it in a file.
+. _Write_ the program in Java and save it in a file.
 
 . _Compile_ the program to translate it from Java language into a special _byte code_ that JVM understands.
 
@@ -67,19 +67,19 @@ If you have an idea _what_ to program, typically you'll need to perform the foll
 
 ==== Command Window
 
-In this chapter we'll compile and run Hello World program in the Command window if you use Microsoft Windows or from Terminal application if you're on Mac OS.
+In this chapter we'll compile and run the Hello World program in the Command window if you use Microsoft Windows or from Terminal if you're on Mac OS.
 
-In Windows to open the Command window click on the _Start_ menu and enter the letters _cmd_ in the field that read _Search programs and files_ . On Mac, open the Spotlight window by clicking on the looking glass icon at the top right corner of the screen, type the word Terminal and hit the button Return on the keyboard. 
+In Windows, to open the Command window click on the _Start_ menu and enter the letters _cmd_ in the field that reads _Search programs and files_ . On a Mac, open the Spotlight window by clicking on the looking glass icon at the top right corner of the screen, type the word Terminal and hit the Return on the keyboard. 
 
-First, create a folder name _practice_ by entering the following command:
+First, create a folder named _practice_ by entering the following command:
 
 _mkdir practice_
 
-This will be the place, where we'll store all our Java programs. 
+This will be the place where we'll store all of our Java programs. 
 
 ==== Step 1 – Write the Program
 
-Starting from Chapter 2 will use a special application  called Integrated Development Environment (IDE) to write, compile, and run programs. But to get a better understanding of how things work, let's use any plain text editor (e.g. Notepad, TextEdit et al.) to type in the code of our first Java program. Then you need to save the code in a text file with a name ending in _.java_. 
+Starting from Chapter 2, we will use a special application  called Integrated Development Environment (IDE) to write, compile, and run programs. But to get a better understanding of how things work, let's use any plain text editor (e.g. Notepad, TextEdit et al.) to type the code for our first Java program. Afterwards, save the code in a text file with a name ending in _.java_. 
 
 [[FIG1-8]]
 .Typing the code 
@@ -100,9 +100,9 @@ public class HelloWorld{
 }
 ----
 
-Save the above code in this folder in the file named `HelloWorld.java` in the folder _practice_. Keep in mind that you are not allowed to use blanks in Java file names. 
+Save the above code with the name _HelloWorld.java_ in the folder _practice_. Keep in mind that you are not allowed to use blank spaces in Java file names. 
 
-I’ll explain how this program works a little later in this chapter. For now just trust me – this program will print the words _Hello World_ on the screen in the step 3, which will happen pretty soon.
+I’ll explain how and why this program works a little later in this chapter. For now, if you followed each step correctly, the program will print the words _Hello World_ on the screen that we will go over in step 3.
 
 Programmers often use the words _the source code_ to refer to a program. So it's safe to say the we wrote the source code of the program Hello World. Unless you're experienced Java programmer, you can's just say if this program is written correctly. Let's proceed to Step 2 to find out.
 
