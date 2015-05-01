@@ -15,11 +15,9 @@ The "Java for Kids" book can be used in multiple ways:
 
 While this book is written for 12+ year old kids, adults looking for an easy intro to Java may find this book useful as well. In the book you'll be using the same tools used by professional programmers. As a bonus, the last chapter will teach you how to publish your code on the Web on a super popular site called https://github.com/[GitHub]. Millions of programmers share their programs there and you should too.
 
-http://instagram.com/yurifain[Yuri Fain] produced illustrations for this book. If this material seems too easy for you get Yakov's video course "Introduction to Java and Java EE" at http://bit.ly/1HERoVo[Parleys].
+http://instagram.com/yurifain[Yuri Fain] produced illustrations for this book. If this material seems too easy for you get the second edition of my book for adults http://www.amazon.com/Java-Programming-24-Hour-Trainer-Yakov/dp/111895145X["Java 24-Hour Trainer"] or a video course http://javatraining.eu/["Introduction to Java and Java EE"].
 
-This book currently has no official publisher and the content is offered for free, but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful.
-
-I have created an https://groups.google.com/d/forum/java4kids[Internet group] where readers can post their questions/comments regarding the content of this book. Readers are encouraged to help each other, and I will be monitoring this group too. 
+The online version of this book is offered for free under http://creativecommons.org/about/license/[Creative Commons license], but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful. After making a donation, you'll be entitled to receive the PDF version of the book as well as in MOBI (for Kindle) and EPUB (for iBook) formats. You'll also be able to join https://groups.google.com/d/forum/java4kids[the Internet group] where readers can post their questions and comments regarding the content of this book.  
 
 If you find an error in the code samples email your comments directly to me at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 
 

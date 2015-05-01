@@ -104,30 +104,30 @@ Save the above code with the name _HelloWorld.java_ in the folder _practice_. Ke
 
 I’ll explain how and why this program works a little later in this chapter. For now, if you followed each step correctly, the program will print the words _Hello World_ on the screen that we will go over in step 3.
 
-Programmers often use the words _the source code_ to refer to a program. So it's safe to say the we wrote the source code of the program Hello World. Unless you're experienced Java programmer, you can's just say if this program is written correctly. Let's proceed to Step 2 to find out.
+Programmers often use the words _the source code_ to refer to a program. So it's safe to say the we wrote the source code of the program Hello World. Unless you're an experienced Java programmer, you can't just assume that this program is written correctly. Let's proceed to Step 2 to find out.
 
 ==== Step 2 – Compile the Program
 
-Now you need to start Java compiler asking to turn the source code of Hello World program into byte code that JRE  understands. The program named _javac_ is Java compiler, which is installed on your computer as a part of the JDK and is located in the _bin_ folder in your JDK.
+Now you need to use Java compiler to turn the source code of Hello World program into byte code that JRE  understands. The program named _javac_ is Java compiler, which is installed on your computer as a part of the JDK and can be located in the _bin_ folder in your JDK.
 
 [[FIG1-10]]
 .Compiling the source code 
 image::images/fig_1_10.png[width=400, height=550]
 
 
-Change the directory to _practice_ with the command _cd practice_. If you never used the command _cd_ before, read  the online instructions on how to do it on http://www.wikihow.com/Change-Directories-in-Command-Prompt[Windows] or on http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line[Mac OS]. Now compile the program using the following command:
+Change the directory to _practice_ with the command _cd practice_. If you have never used the command _cd_ before, read  the online instructions on how to do it on http://www.wikihow.com/Change-Directories-in-Command-Prompt[Windows] or on http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line[Mac OS]. Now compile the program using the following command:
 
 _javac HelloWorld.java_
 
-You won’t see any confirmation message that your program `HelloWorld` has been compiled successfully. Having no messages means there is no problems. Type a command _dir_ on Windows or _ls_ on Mac and you'll see the list of files in folder _practice_. This is how it looks in my Terminal window:
+You won’t see any confirmation message that your program `HelloWorld` has been compiled successfully. Having no messages means there no problems occurred during compilation. Type a command _dir_ on Windows or _ls_ on Mac and you'll see the list of files in folder _practice_. This is how it looks in my Terminal window:
 
 [[FIG1-11]]
 .HelloWorld compiled successfully
 image::images/fig_1_11.png[]
 
-First, I've entered the _pwd_ command to make sure I'm in the _practice_ folder. You should see there a new file named `HelloWorld.class`. This proves that your program has been successfully compiled. Your original file `HelloWorld.java` is also there, and you can modify this file later to print _Hello Mom_ or something else.
+First, I've entered the _pwd_ command to make sure I'm in the _practice_ folder. You should see a new file named `HelloWorld.class`. This proves that your program has been successfully compiled. Your original file `HelloWorld.java` can also be found there, and you can modify this file later to print _Hello Mom_ or something else.
 
-If the program has syntax errors, let’s say you forgot to type the last curly brace, Java compiler will print an error message. Now you’d need to fix the error, and recompile the program again. If you have several errors, you may need to repeat these actions more than once until the file `HelloWorld.class` is created.
+If the program has syntax errors, for example you forgot to type the last curly brace, Java compiler will print an error message. Now you’d need to fix the error, and recompile the program again. If you have several errors, you may need to repeat these actions more than once until the file `HelloWorld.class` is created.
 
 
 ==== Step 3 – Run the Program
@@ -136,15 +136,15 @@ Now let’s run the program. In the same Command or Terminal window enter the fo
 
 _java HelloWorld_
 
-After running this command, you'll see the text _Hello World!_ printed in the Terminal window as shown on <<FIG1-12>>. Have you noticed that this time you’ve used the program _java_ and not _javac_?  This is how you start JRE providing it the name of the application to run (HelloWorld in this case).
+After running this command, you'll see the text _Hello World!_ printed in the Terminal window as shown in <<FIG1-12>>. Have you noticed that this time you’ve used the program _java_ and not _javac_?  This is how you start JRE by providing it the name of the application to run (`HelloWorld` in this case).
 
 [[FIG1-12]]
 .Running HelloWorld
 image::images/fig_1_12.png[]
 
-Keep in mind that Java does not treat capital and small letters the same, which means that if you named the program `HelloWorld` with a capital `H` and a capital `W`, do not try to start the program `helloworld` or `helloWorld` – the JRE will complain. The file name should match the class name too. Typically, each file of your application contains the code of one class even though you can keep the code of more than one class in the same file.  
+Keep in mind that Java does not treat capital and small letters the same, which means that if you originally named the program `HelloWorld` with a capital `H` and a capital `W`, do not try to start the program `helloworld` or `helloWorld` – the JRE will signal an error. The file name should match the class name as well. Typically, each file of your application contains the code of one class.  
 
-Now let’s have some fun - try to guess how to modify the code of the program that prints Hello World.  I’ll explain how this program works in the next chapter, but still, try to guess what has to be done to say hello to your pet, friend or print your address. Go through all three steps to see if the program still works after your changes. If you don't have a pet, you can always say hello to my puppy - his name is Sammy. Are you up for the challenge to write a program that prints Hello Sammy! on the screen?
+Now let’s have some fun trying to guess how to modify the code of the program that prints Hello World.  I’ll explain how this program works in the next chapter, but for now attempt to guess what has to be done to say hello to your pet, friend or print your address. Go through all three steps to see if the program still works after your changes. If you don't have a pet, you can always say hello to my puppy - his name is Sammy. Are you up for the challenge to write a program that prints Hello Sammy! on the screen?
 
 [[FIG1-07]]
 .Sammy is 4 months old here
