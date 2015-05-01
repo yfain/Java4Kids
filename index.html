@@ -1372,18 +1372,18 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <h2 id="_getting_comfy_in_idea_ide">2. Getting Comfy In IDEA IDE</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Most programmers write, compile and run their applications in special programs that go by the name <em>Integrated Development Environment</em>  (IDE). Any IDE provide help as you type code, highlights the Java <em>keywords</em>,  has a <em>Help</em> menu that describes all elements of the language, and makes it easier to find and fix errors in your programs. There are several excellent IDE that are free to use. The most popular are <a href="http://www.eclipse.org/downloads/">Eclipse</a>, <a href="https://netbeans.org/downloads/">NetBeans</a>, and <a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a>. In this book we&#8217;ll use IntelliJ IDEA Community Edition. This is an excellent IDE for developing Java applications, and if, later on, you&#8217;ll decide to program in other programming languages, IDEA allows supports <a href="http://www.jetbrains.com/idea/webhelp/supported-languages.html">more than a dozen</a> other languages too.</p>
+<p>Most programmers write, compile and run their applications in special programs that go by the name <em>Integrated Development Environment</em>  (IDE). Any IDE provides help as you type code, highlights the Java <em>keywords</em>,  has a <em>Help</em> menu that describes all elements of the language, and makes it easier to find and fix errors in your programs. There are several excellent IDEs that are free to use. The most popular are <a href="http://www.eclipse.org/downloads/">Eclipse</a>, <a href="https://netbeans.org/downloads/">NetBeans</a>, and <a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a>. In this book we&#8217;ll use IntelliJ IDEA Community Edition. This is an excellent IDE for developing Java applications, and if you decide to program later on in other programming languages, IDEA supports <a href="http://www.jetbrains.com/idea/webhelp/supported-languages.html">more than a dozen</a> other languages too.</p>
 </div>
 <div class="paragraph">
-<p>In this chapter we&#8217;ll start with downloading and installing IntelliJ IDEA IDE (let&#8217;s just call it IDEA). Then we&#8217;ll create a project called  <code>Hello</code>. You&#8217;ll see that creating Hello World application is a lot easier inside IDEA.</p>
+<p>In this chapter we&#8217;ll start with downloading and installing IntelliJ IDEA IDE (let&#8217;s just call it IDEA). Then we&#8217;ll create a project called  <code>Hello</code>. You&#8217;ll see that creating the Hello World application is a lot easier inside IDEA.</p>
 </div>
 <div class="sect2">
 <h3 id="_installing_intellij_idea">2.1. Installing IntelliJ IDEA</h3>
 <div class="paragraph">
-<p>There are two version of IDEA IDE - Ultimate and Community. The Ultimate version is not free, but it has additional features useful for developing enterprise applications. But this book is about learning basics of Java programming, and using free Community edition is all we need.</p>
+<p>There are two version of IDEA IDE - Ultimate and Community. The Ultimate version is not free, but it has additional features useful for developing enterprise applications. But this book is about learning the basics of Java programming so using the free Community edition is all we will need.</p>
 </div>
 <div class="paragraph">
-<p>Open the Web page <a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> and click on the <em>Download Community</em> button. It&#8217;ll download the installer program with the name that starts with <em>ideaIC</em> - just run it. On MAC OS the installer doesn&#8217;t ask any questions. Just drag the icon onto the Applications folder.</p>
+<p>Open the Web page <a href="http://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> and click on the <em>Download Community</em> button. It&#8217;ll download the installer program with the name that starts with <em>ideaIC</em> - just run it. On MAC OS the installer doesn&#8217;t prompt any questions. Just drag the icon onto the Applications folder.</p>
 </div>
 <div id="FIG2-0-0" class="imageblock">
 <div class="content">
@@ -1401,7 +1401,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="title">Figure 10. Selecting the destination folder on Windows</div>
 </div>
 <div class="paragraph">
-<p>In several seconds you&#8217;ll get the IDEA installed. If you use MAC OS, find it using the Spotlight on the top right corner of the screen and click on it. If you use Windows, click on the newly created IDEA icon on the desktop. The first question IDEA asks is if you want to import the settings from the older versions of IDEA - no we don&#8217;t. Next comes this Welcome screen:</p>
+<p>In several seconds you&#8217;ll get the IDEA installed by clicking on the Next button. If you use MAC OS, find it using Spotlight on the top right corner of the screen and click on it. If you use Windows, click on the newly created IDEA icon on your desktop. The first question IDEA asks is if you want to import the settings from the older versions of IDEA. Do not select this. Next comes this Welcome screen:</p>
 </div>
 <div id="FIG2-1" class="imageblock">
 <div class="content">
@@ -1413,7 +1413,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="sect2">
 <h3 id="_creating_your_first_project">2.2. Creating Your First Project</h3>
 <div class="paragraph">
-<p>In IDEA, your Java applications will be located in separate projects. As you probably guessed, you&#8217;ll need to select the option <em>Create New Project</em> on the Welcome screen. Then IDEA will ask you about the type of the project you want to create.</p>
+<p>In IDEA, your Java applications will be located in separate projects. As you&#8217;ve probably guessed, you&#8217;ll need to select the option <em>Create New Project</em> on the Welcome screen. Then IDEA will ask you about the type of the project you want to create.</p>
 </div>
 <div id="FIG2-2" class="imageblock">
 <div class="content">
@@ -1422,7 +1422,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="title">Figure 12. Selecting the project type</div>
 </div>
 <div class="paragraph">
-<p>Yes, we want to create a Java project. In IDEA projects consist of modules. By selecting Java we state that our project will have a Java module. Hit the button Next and then again on the following window that will ask about selecting a template. Now we need to give our project a name and select the JDK to be used with this project.</p>
+<p>Select the option to create a Java project. In IDEA projects consist of modules. By selecting Java we state that our project will have a Java module. Hit the button Next and then again on the following window that will ask about selecting a template that will be used in this project. Now we need to give our project a name and select the JDK to be used with this project.</p>
 </div>
 <div id="FIG2-3" class="imageblock">
 <div class="content">
@@ -1431,11 +1431,13 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="title">Figure 13. Selecting the project name and JDK</div>
 </div>
 <div class="paragraph">
-<p>We don&#8217;t want our project to be <em>untitled</em>, so replace this name with <em>hello</em> in the top box. Note how the name of the folder in the Project location box changes accordingly.When you’ll try to do it on your computer, the project location will be different than mine. Now you need to select the JDK. If you never worked with Java before, the only JDK you have is the one installed in Chapter 1.  But Java programmers sometimes have more than one JDK installed. For example, the may not be allowed to use the latest JDK 8 for work projects, so the keep the JDK 7 around, but all the fun projects will be created with JDK 8.
-We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to find it?</p>
+<p>We don&#8217;t want our project to be <em>untitled</em>, so replace this name with <em>hello</em> in the top box. Note how the name of the folder in the Project location box changes accordingly. When you’ll try to do it on your computer, the project location will appear different than mine. Now you need to select the JDK. If you have never worked with Java before, the only JDK you will have is the one installed in Chapter 1 although Java programmers sometimes have more than one JDK installed. For example, they may not be allowed to use the latest JDK 8 for work projects, so they keep the JDK 7 around, but all the fun projects will be created with JDK 8.</p>
 </div>
 <div class="paragraph">
-<p>Click on the button New, select the menu item <em>JDK</em>, and you&#8217;ll see a familiar screen for browsing the folders on your computer. The Chapter 1 in the section <em>Installing Java on Your Computer</em> has the answer for both MAC and Windows. Since I use MAC, I&#8217;m choosing <em>Library</em>, <em>Java</em>, <em>JavaVirtualMachines</em>, <em>jdk1.8.0.jdk</em>. Now the previous window looks different.</p>
+<p>We don&#8217;t have such restrictions, so JDK 8 is our only choice. Now figure out where to locate it.</p>
+</div>
+<div class="paragraph">
+<p>Click on the button New, select the menu item <em>JDK</em>, and you&#8217;ll see a familiar screen for browsing the folders on your computer. Please refer to the first section of Chapter 1 ( <em>Installing Java on Your Computer</em>) depending on whether you are working with  MAC or Windows. I&#8217;m using MAC, so I&#8217;m choosing <em>Library</em>, <em>Java</em>, <em>JavaVirtualMachines</em>, <em>jdk1.8.0.jdk</em>. Notice the previous window now looks different.</p>
 </div>
 <div id="FIG2-4" class="imageblock">
 <div class="content">
@@ -1444,7 +1446,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="title">Figure 14. The project name and JDK selected</div>
 </div>
 <div class="paragraph">
-<p>Press the button Finish and your new project is created. Every time you start IDEA it offers you little tips on how to use its cool features. You can opt out from this, but I recommend you to read them - you might find some little gems that will make your work with IDEA more fun. The project <em>hello</em> is ready, and you can start writing your Hello World program.</p>
+<p>Press the button Finish and your new project is created. Every time you start IDEA it offers you little tips on how to use its cool features. You can opt out from this, but I recommend you read them - you might find some little gems that will make your work with IDEA more fun. The project <em>hello</em> is ready, and you can start writing your Hello World program.</p>
 </div>
 <div id="FIG2-5" class="imageblock">
 <div class="content">
@@ -1453,10 +1455,10 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="title">Figure 15. The project hello</div>
 </div>
 <div class="paragraph">
-<p>This project consists from the module hello and External Libraries. The source code of your program(s) will be located in the folder src in the hello module. The file hello.iml is the place where IDEA remembers the setting of the project hello - you don&#8217;t need to touch it. Under External Libraries you&#8217;ll find a bunch of files with the names that end with <em>.jar</em>. These JAR&#8217;s are the libraries of code that came with JDK.</p>
+<p>This project consists of the module hello and External Libraries. The source code of your program(s) will be located in the folder src in the hello module. The file <em>hello.iml</em> is where IDEA remembers the settings of the project hello - you don&#8217;t need to touch it. Under External Libraries you&#8217;ll find a bunch of files that end in <em>.jar</em>. These JAR&#8217;s are the libraries of code that came with JDK.</p>
 </div>
 <div class="paragraph">
-<p>A simple project like our HelloWorld will have just one file with the source code HelloWorld.java. More advanced projects will consist of multiple files. To simplify the application deployment all these files could packaged in one or more JARs too. Both JRE and Java SDK include dozens of JARs. Java comes with a jar utility that is used to archive multiple Java classes and other files into a file having the name extension .jar. Internal formats of .jar and .zip files are the same. If your IDEA project will have multiple classes, you can package them into one JAR by using the menu File | Project Structure | Artifacts and then selecting the type JAR.</p>
+<p>A simple project like our <code>HelloWorld</code> will have just one file with the source code <em>HelloWorld.java</em>. More advanced projects will consist of multiple files. To simplify the application deployment, all these files could be packaged in one or more JARs too. Both JRE and Java SDK include dozens of JARs. Java comes with a jar utility that is used to archive multiple Java classes and other files into a file having the name extension .jar. Internal formats of .jar and .zip files are the same. If your IDEA project will have multiple classes, you can package them into one JAR by using the menu File | Project Structure | Artifacts and then selecting the type JAR.</p>
 </div>
 <div id="FIG2-5-1" class="imageblock">
 <div class="content">
@@ -1467,7 +1469,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="sect2">
 <h3 id="_creating_helloworld_class_in_idea">2.3. Creating HelloWorld Class in IDEA</h3>
 <div class="paragraph">
-<p>Java programs consist of <em>classes</em>, and you’ll start getting familiar classes' internals in the section "How Does Hello World Work". Let’s recreate the <code>HelloWorld</code> class from Chapter 1 in IDEA.  Select the folder <em>src</em> in your project, and then select the menu File | New | Java Class.  You&#8217;ll see a little popup window asking for a class name. Enter HelloWorld there.</p>
+<p>Java programs consist of <em>classes</em>, and you’ll start getting familiar classes' internals in the section "How Does Hello World Work". Let’s recreate the <code>HelloWorld</code> class from Chapter 1 in IDEA.  Select the folder <em>src</em> in your project, and then select the menu File | New | Java Class.  You&#8217;ll see a little popup window asking for a class name. Enter the name <code>HelloWorld</code> there.</p>
 </div>
 <div id="FIG2-6" class="imageblock">
 <div class="content">
@@ -1476,7 +1478,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="title">Figure 16. Naming the class</div>
 </div>
 <div class="paragraph">
-<p>In a second IDEA will create an empty class <code>HelloWorld</code> shown below. The white area on the right is a very smart text editor that will allow you to not only enter the text of your program, but will also help you suggesting what to type next as you type. This editor is really smart!</p>
+<p>In a second IDEA will generate an empty class <code>HelloWorld</code> as shown below. The white area on the right is a very smart text editor that will allow you to not only enter the text of your program, but will also help you by suggesting what to type next as you type. This editor is really smart!</p>
 </div>
 <div id="FIG2-7" class="imageblock">
 <div class="content">
@@ -1496,7 +1498,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <p><code>public static void main(String[] args)</code></p>
 </div>
 <div class="paragraph">
-<p>You can certainly type the above declaration, and IDEA will obediently start helping as you start typing. For example, I started typing the word <code>public</code>, and after entering the <code>pu</code> IDEA suggested me the following selection of keywords that are appropriate in the current location inside the class.</p>
+<p>You can certainly type the above declaration, and IDEA will obediently start helping as you start typing. For example, I started typing the word <code>public</code>, and after entering the <code>pu</code> IDEA suggested the following selection of keywords that are appropriate in the current location inside the class.</p>
 </div>
 <div id="FIG2-8" class="imageblock">
 <div class="content">
@@ -1505,7 +1507,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="title">Figure 18. Code Competion</div>
 </div>
 <div class="paragraph">
-<p>Pressing the button <em>Tab</em> on the keyboard will turn <code>pu</code> into <code>public</code>. Nice! You can also press the keys <em>Control-Space</em> to see suggested code completion at any time. But there is even a faster way to enter the declaration of the <code>main</code> method. Just type in the first letters of these keywords <code>psvm</code>, and press the <em>Tab</em> key. IDEA will unfold these letters into the following:</p>
+<p>Pressing the button <em>Tab</em> on the keyboard will turn <code>pu</code> into <code>public</code>. You can also press the keys <em>Control-Space</em> to see suggested code completion at any time. But there is an even faster way to enter the declaration of the <code>main</code> method. Just type in the first letters of these keywords <code>psvm</code>, and press the <em>Tab</em> key. IDEA will unfold these letters into the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1515,7 +1517,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 </div>
 </div>
 <div class="paragraph">
-<p>Great job, IDEA! Such code completion minimizes typing and the number of typos you could make. At the end of this chapter in the section Additional Reading you&#8217;ll find the link to a Web page showing more advanced features of code completion in IDEA. It may be a little early for you to understand everything that&#8217;s explained there, but bookmark a link to this page for future references.</p>
+<p>Great job, IDEA! Such code completion minimizes typing and the number of typos you could make. At the end of this chapter in the section Additional Reading you&#8217;ll find the link to a Web page showing more advanced features of code completion in IDEA. It may be a little early for you to understand everything that&#8217;s explained there, but bookmark a link to this page for future reference.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1524,7 +1526,7 @@ We don&#8217;t have such restrictions, so JDK 8 is our only choice. But where to
 <div class="title">Tip</div>
 </td>
 <td class="content">
-To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are combinations of key-presses on the keyboard. With hotkeys you&#8217;ll be able to navigate in your IDEA projects a lot faster than clicking through menus. You can find the link to the document listing IDEA&#8217;s hotkeys in the section Additional Reading at the end of this chapter.
+To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are combinations of key-presses on the keyboard. With hotkeys you&#8217;ll be able to navigate in your IDEA projects a lot faster than by clicking through menus. You can find the link to the document listing IDEA&#8217;s hotkeys in the section Additional Reading at the end of this chapter.
 </td>
 </tr>
 </table>
@@ -1539,10 +1541,10 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <p><code>System.out.println("Hello World!");</code></p>
 </div>
 <div class="paragraph">
-<p>After learning about the <code>psvm</code> shortcut you may be wondering, is there a way to do a similar trick with <code>System.out.println()</code>. OK, I&#8217;ll tell you the secret shortcut for this. Just key in <code>sout</code> and press the <em>Tab</em> key. Voila! The <code>sout</code> magically turns into <code>System.out.println();</code>. Java programmers often use printing to the console so creators of IDEA provided a shortcut for it.</p>
+<p>After learning about the <code>psvm</code> shortcut you may be wondering, is there a way to do a similar trick with <code>System.out.println()</code>. Just type in <code>sout</code> and press the <em>Tab</em> key. Voila! The <code>sout</code> magically turns into <code>System.out.println();</code>. Java programmers often use printing to the console so the creators of IDEA provided a shortcut for it.</p>
 </div>
 <div class="paragraph">
-<p>To save the code changes and compile the class, just press at the same time <em>Ctrl-S</em> on your keyboard. If you did not make any syntax errors, you won’t see any error messages – the program is compiled. But let’s introduce a syntax error on purpose to see what’s going to happen. Erase the last curly brace in the class <code>HelloWorld</code> and hit <em>Ctrl-S</em> again. IDEA will add a squiggly line where Java compiler found the error, the line is marked with the red mark on the right, and if you&#8217;ll hover the mouse pointer over this little red rectangle, you&#8217;ll see the error message:</p>
+<p>To save the code changes and compile the class, just press <em>Ctrl-S</em> on your keyboard. If you did not make any syntax errors, you won’t see any error messages therefore the program is compiled, but let’s introduce a syntax error on purpose to see what’s going to happen. Erase the last curly brace in the class <code>HelloWorld</code> and hit <em>Ctrl-S</em> again. IDEA will add a squiggly line where Java compiler found the error, the line is marked with the red mark on the right, and if you&#8217;ll hover the mouse pointer over this little red rectangle, you&#8217;ll see the error message:</p>
 </div>
 <div id="FIG2-9" class="imageblock">
 <div class="content">
@@ -1551,7 +1553,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="title">Figure 19. Compiler caught a syntax error</div>
 </div>
 <div class="paragraph">
-<p>As your project become larger, it’ll have several files and compiler may catch more than one error. Can you see a list of errors from all classes? By default, IDEA doesn&#8217;t compile all the classes from your project. But you can request compiling of the entire project every time you make a change or save the source code. Go to the IDEA menu Preferences (or Settings), select <em>Compiler</em> and check off the option <em>Make project automatically</em>. Now select the menu View | Tool Windows | Problems to see all the problems in one list:</p>
+<p>As your project becomes larger, it’ll have several files and the compiler may catch more than one error. Can you see a list of errors from all classes? By default, IDEA doesn&#8217;t compile all the classes from your project, but you can request compiling of the entire project every time you make a change or save the source code. Go to the IDEA menu Preferences (or Settings), select <em>Compiler</em> and check off the option <em>Make project automatically</em>. Now select the menu View | Tool Windows | Problems to see all the problems in one list:</p>
 </div>
 <div id="FIG2-10" class="imageblock">
 <div class="content">
@@ -1560,7 +1562,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="title">Figure 20. The Problems View</div>
 </div>
 <div class="paragraph">
-<p>In our case we have only one compiler error. Java reached the end of file while parsing (trying to understand your code), and something could not be found - the curly brace, of course. But what this mysterious <em>(8,6)</em> means? The error was found in the line number 8 around the sixth character from the left. To see line numbers, right-click on the gray vertical bar to the left of the code editor and select the option Show Line Numbers. Now it&#8217;s easier to map the error messages to the lines in the source code:</p>
+<p>In our case we only have one compiler error. Java reached the end of the file while parsing (trying to understand your code), and something could not be found - the curly brace, of course. But what does this mysterious <em>(8,6)</em> mean? The error was found in the line number 8 around the sixth character from the left. To see line numbers, right-click on the gray vertical bar to the left of the code editor and select the option Show Line Numbers. Now it&#8217;s easier to map the error messages to the lines in the source code:</p>
 </div>
 <div id="FIG2-11" class="imageblock">
 <div class="content">
@@ -1572,10 +1574,10 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="sect3">
 <h4 id="_running_helloworld_in_idea">2.3.2. Running HelloWorld in IDEA</h4>
 <div class="paragraph">
-<p>After all syntax errors are fixed, compiler automatically creates the HelloWorld.class when you save the code. IDEA doesn&#8217;t show you <em>.class</em> files, but if are curious where they are, open the menu File | Project Structure, to see he folder where compiler&#8217;s output goes. When a program is written, tested, and does what it supposed to do (e.g. print Hello World), and if you want to give it to your friends you&#8217;ll need to give the only compiled <code>.class</code> files - they don&#8217;t need the source code of your program. They&#8217;ll also  need the JRE (not JDK) installed on their computer.</p>
+<p>After all syntax errors are fixed, compiler automatically creates the HelloWorld.class when you save the code. IDEA doesn&#8217;t show you <em>.class</em> files, but if you are curious where they are, open the menu File | Project Structure to see the folder where the compiler&#8217;s output goes. When a program is written, tested, does what it supposed to do (e.g. print Hello World), and if you want to give it to your friends you&#8217;ll need to give  only compiled <code>.class</code> files. They don&#8217;t need source code of your program, but they do need the JRE (not JDK) installed on their computer.</p>
 </div>
 <div class="paragraph">
-<p>But us, Java programmers can run our programs not only from a command window as in Chapter 1, but right from the IDE. Just right-click on the name HelloWorld in the Project view and select the menu item <em>Run HelloWorld.main()</em>. The program will run and you&#8217;ll see the result in the Console View right inside IDEA:</p>
+<p>Java programmers can run their programs not only from a command window demonstrated in Chapter 1, but right from the IDE. Just right-click on the name HelloWorld in the Project view and select the menu item <em>Run HelloWorld.main()</em>. The program will run and you&#8217;ll see the results in the Console View right inside IDEA:</p>
 </div>
 <div id="FIG2-12" class="imageblock">
 <div class="content">
@@ -1591,7 +1593,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <p>It&#8217;s great that you&#8217;re following my instructions and the program works. But what exactly is happening in the program <code>HelloWorld</code>? What are all these keywords, braces and parentheses for?</p>
 </div>
 <div class="paragraph">
-<p>Every Java program has at least one class, and Chapter 3 explains classes in detail. Classes can contain <em>methods</em> - these are the actions that the class can perform. The class <code>HelloWorld</code> has only one method <code>main</code>, which is a special action - it&#8217;s a program starter or an entry point of any Java application. You can tell that <code>main</code> is not a Java keyword, but a method, because it has parentheses after the word <code>main</code>. Methods can <em>call</em> (invoke) other methods, for example our method <code>main</code> calls the method <code>println</code> to display <code>Hello World!</code> on the screen.</p>
+<p>Every Java program has at least one class, and Chapter 3 explains classes in detail. Classes can contain <em>methods</em>, which are the actions that the class can perform. The class <code>HelloWorld</code> has only one method <code>main</code>, which is a special action. It&#8217;s a program starter or an entry point of any Java application. You can tell that <code>main</code> is not a Java keyword, but a method, because it has parentheses after the word <code>main</code>. Methods can <em>call</em> (invoke) other methods, for example our method <code>main</code> calls the method <code>println</code> to display <code>Hello World!</code> on the screen.</p>
 </div>
 <div class="paragraph">
 <p>Each method starts with a <em>declaration line</em> a.k.a. a <em>method signature</em>:</p>
@@ -1611,30 +1613,30 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <p>This method is <code>static</code>. The keyword <code>static</code> means that you don’t have to create an <em>instance</em>  of the <code>HelloWorld</code> object in memory to use this method. We’ll talk about classes and object instances in the next chapter.</p>
 </li>
 <li>
-<p>Does the method <code>main</code> <em>return</em> any data? Say, if you&#8217;ll write a method to add two numbers, it can return a result. The keyword <code>void</code> means that the method <code>main</code> doesn’t return any data to whoever calls it (JRE in this case).</p>
+<p>Does the method <code>main</code> <em>return</em> any data? Say, if you&#8217;ll write a method to add two numbers, it can return a result. The keyword <code>void</code> means that the method <code>main</code> doesn’t return any data to whomever calls it (JRE in this case).</p>
 </li>
 <li>
-<p>Right before parentheses goes the method name - <code>main</code>.</p>
+<p>The method name <code>main</code> goes right before parentheses.</p>
 </li>
 <li>
-<p>Some methods have parameters (a.k.a. arguments), which go inside the parentheses. It&#8217;s the data that could be given to the method from a calling program. The method <code>main</code> has parameters - and array of text values <code>String[] args</code>. You&#8217;ll learn how to use the parameters of the method <code>main</code> in Chapter 9 in the section Command Line Arguments.</p>
+<p>Some methods have parameters (a.k.a. arguments), which go inside the parentheses. It&#8217;s the data that could be given to the method from another place of the program that invokes this method. The method <code>main</code> has parameters - and an array of text values <code>String[] args</code>. You&#8217;ll learn how to use the parameters of the method <code>main</code> in Chapter 9 in the section Command Line Arguments.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>A Java program can consist of several classes, and each class may have methods. Usually, a Java class has several  methods. For example, a class Game can have the methods <code>startGame</code>, <code>stopGame</code>, <code>readScore</code>, and so on. But only one class in the application will have the method <code>main</code>.</p>
+<p>A Java program can consist of several classes, and each class may include methods. Usually, a Java class has several methods. For example, a class <code>Game</code> can have the methods <code>startGame</code>, <code>stopGame</code>, <code>readScore</code>, and so on. But only one class in the application will have the method <code>main</code>.</p>
 </div>
 <div class="paragraph">
-<p>The body of our method  <code>main</code> has only only one <em>statement</em>:</p>
+<p>The body of our method <code>main</code> has only only one <em>statement</em>:</p>
 </div>
 <div class="paragraph">
 <p><code>System.out.println("Hello World!");</code></p>
 </div>
 <div class="paragraph">
-<p>Every statement or a method call must end with a semicolon. The method <code>println`knows how to print data on the <em>system console</em> (command window). Java method names are always followed by parentheses. If you see a method with empty parentheses, this means that  this method does not have any arguments and doesn&#8217;t expect to receive data any data. The above method `println</code> has one argument - a <code>String</code> with the value <code>Hello World!</code>.</p>
+<p>Every statement or a method call must end with a semicolon. The method <code>println</code> knows how to print data on the <em>system console</em> (command window). Java method names are always followed by parentheses. If you see a method with empty parentheses, this means that  this method does not have any arguments and doesn&#8217;t expect to receive any data. The above method <code>println</code> has one argument - a <code>String</code> with the value <code>Hello World!</code>.</p>
 </div>
 <div class="paragraph">
-<p>The <code>System.out</code> means that the variable <code>out</code> is defined inside the class <code>System</code> that comes with Java.  How are you supposed to know that there’s something called <code>out</code> in the class <code>System</code>? IDEA will help you with this. After you type the word <code>System</code> and a dot, IDEA will show you everything that is available in this class.  At any time you can also put a cursor after the dot and press <em>Ctrl-Space</em> to bring up a help box similar to this one:</p>
+<p><code>System.out</code> means that the variable <code>out</code> is defined inside the class <code>System</code> that comes with Java. How are you supposed to know that there’s something called <code>out</code> in the class <code>System</code>? IDEA will help you with this. After you type the word <code>System</code> and a dot, IDEA will show you everything that is available in this class. You can also put a cursor after the dot and press <em>Ctrl-Space</em> at any time to bring up a help box similar to this one:</p>
 </div>
 <div id="FIG2-15" class="imageblock">
 <div class="content">
@@ -1643,16 +1645,16 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <div class="title">Figure 23. Peeking inside the System class with code completion</div>
 </div>
 <div class="paragraph">
-<p>This tells me that the Java class System has a variable <code>out</code> of type <code>PrintStream</code>. Wonder what&#8217;s <code>PrintStream</code>? Click on <code>out`in your code and select the menu <em>View | Quick Documentation</em> to read the dry documentation. The fact that after `out</code> goes  a period followed by a method name after`out.println()` tells us that <code>out</code> represents an object, which aparently has a method called <code>println()</code>.</p>
+<p>This tells me that the Java class <code>System</code> has a variable <code>out</code> of type <code>PrintStream</code>. Are you curious as to what <code>PrintStream</code> is? Click on <code>out</code> in your code and select the menu <em>View | Quick Documentation</em> to read the dry documentation. The fact that a period goes after <code>out</code> followed by a method name - <code>out.println()</code> - tells us that <code>out</code> represents an object, which apparently has a method called <code>println()</code>.</p>
 </div>
 <div class="paragraph">
-<p>We call it a <em>dot notation</em>. We write <em>class_name.method_name</em> or <em>variable_name.method_name</em>. Say you have a class <code>PingPongGame</code> that has a method <code>saveScore</code>.  If the method <code>saveScore</code> was declared with two arguments player and score, this is how you may <em>call</em> this method for Dave who won three games:</p>
+<p>We call it a <em>dot notation</em>. We write <em>class_name.method_name</em> or <em>variable_name.method_name</em>. Say you have a class <code>PingPongGame</code> that has a method <code>saveScore</code>.  If the method <code>saveScore</code> was declared with the two arguments <code>player</code> and <code>score</code>, you may <em>call</em> this method for Dave who won three games:</p>
 </div>
 <div class="paragraph">
 <p><code>PingPongGame.saveScore("Dave", 3);</code></p>
 </div>
 <div class="paragraph">
-<p>In this example, the arguments may be given to the method for some kind of processing like saving the score on the disk. Since the name Dave was placed in parentheses, we can guess  that the type of the first argument was <code>String</code>, which is used for texts. The second arguments is clearly of a numeric type but we can tell what&#8217;s the exact type only after reading the declaration of the method <code>saveScore</code> inside the source code of the class <code>PingPongGame</code>.</p>
+<p>In this example, the arguments may be given to the method for some kind of processing like saving the score on the disk. Since the name Dave was placed in parentheses, we can guess that the first argument has a <code>String</code> type, which is used for text. The second argument is clearly of a numeric type but we can tell what&#8217;s the exact type only after reading the declaration of the method <code>saveScore</code> inside the source code of the class <code>PingPongGame</code>.</p>
 </div>
 <div class="paragraph">
 <p>In the next chapter we&#8217;ll spend a lot more time seeing what Java classes consist of.</p>
