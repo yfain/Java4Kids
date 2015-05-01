@@ -1066,13 +1066,10 @@ p { margin-bottom: 1.25rem; }
 <p>While this book is written for 12+ year old kids, adults looking for an easy intro to Java may find this book useful as well. In the book you&#8217;ll be using the same tools used by professional programmers. As a bonus, the last chapter will teach you how to publish your code on the Web on a super popular site called <a href="https://github.com/">GitHub</a>. Millions of programmers share their programs there and you should too.</p>
 </div>
 <div class="paragraph">
-<p><a href="http://instagram.com/yurifain">Yuri Fain</a> produced illustrations for this book. If this material seems too easy for you get Yakov&#8217;s video course "Introduction to Java and Java EE" at <a href="http://bit.ly/1HERoVo">Parleys</a>.</p>
+<p><a href="http://instagram.com/yurifain">Yuri Fain</a> produced illustrations for this book. If this material seems too easy for you get the second edition of my book for adults <a href="http://www.amazon.com/Java-Programming-24-Hour-Trainer-Yakov/dp/111895145X">"Java 24-Hour Trainer"</a> or a video course <a href="http://javatraining.eu/">"Introduction to Java and Java EE"</a>.</p>
 </div>
 <div class="paragraph">
-<p>This book currently has no official publisher and the content is offered for free, but the author would appreciate <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=VQGWLFGZHL55Q">a donation</a> if you find this book useful.</p>
-</div>
-<div class="paragraph">
-<p>I have created an <a href="https://groups.google.com/d/forum/java4kids">Internet group</a> where readers can post their questions/comments regarding the content of this book. Readers are encouraged to help each other, and I will be monitoring this group too.</p>
+<p>The online version of this book is offered for free under <a href="http://creativecommons.org/about/license/">Creative Commons license</a>, but the author would appreciate <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=VQGWLFGZHL55Q">a donation</a> if you find this book useful. After making a donation, you&#8217;ll be entitled to receive the PDF version of the book as well as in MOBI (for Kindle) and EPUB (for iBook) formats. You&#8217;ll also be able to join <a href="https://groups.google.com/d/forum/java4kids">the Internet group</a> where readers can post their questions and comments regarding the content of this book.</p>
 </div>
 <div class="paragraph">
 <p>If you find an error in the code samples email your comments directly to me at <a href="mailto:yakovfain@gmail.com">yakovfain@gmail.com</a> or open an issue at <a href="https://github.com/yfain/Java4Kids_code">code samples repository</a> on GitHub.</p>
@@ -1238,13 +1235,13 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <p>I’ll explain how and why this program works a little later in this chapter. For now, if you followed each step correctly, the program will print the words <em>Hello World</em> on the screen that we will go over in step 3.</p>
 </div>
 <div class="paragraph">
-<p>Programmers often use the words <em>the source code</em> to refer to a program. So it&#8217;s safe to say the we wrote the source code of the program Hello World. Unless you&#8217;re experienced Java programmer, you can&#8217;s just say if this program is written correctly. Let&#8217;s proceed to Step 2 to find out.</p>
+<p>Programmers often use the words <em>the source code</em> to refer to a program. So it&#8217;s safe to say the we wrote the source code of the program Hello World. Unless you&#8217;re an experienced Java programmer, you can&#8217;t just assume that this program is written correctly. Let&#8217;s proceed to Step 2 to find out.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_step-2-compile-the-program"><a class="anchor" href="#_step-2-compile-the-program"></a>1.2.3. Step 2 – Compile the Program</h4>
 <div class="paragraph">
-<p>Now you need to start Java compiler asking to turn the source code of Hello World program into byte code that JRE  understands. The program named <em>javac</em> is Java compiler, which is installed on your computer as a part of the JDK and is located in the <em>bin</em> folder in your JDK.</p>
+<p>Now you need to use Java compiler to turn the source code of Hello World program into byte code that JRE  understands. The program named <em>javac</em> is Java compiler, which is installed on your computer as a part of the JDK and can be located in the <em>bin</em> folder in your JDK.</p>
 </div>
 <div id="FIG1-10" class="imageblock">
 <div class="content">
@@ -1253,13 +1250,13 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="title">Figure 5. Compiling the source code</div>
 </div>
 <div class="paragraph">
-<p>Change the directory to <em>practice</em> with the command <em>cd practice</em>. If you never used the command <em>cd</em> before, read  the online instructions on how to do it on <a href="http://www.wikihow.com/Change-Directories-in-Command-Prompt">Windows</a> or on <a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line">Mac OS</a>. Now compile the program using the following command:</p>
+<p>Change the directory to <em>practice</em> with the command <em>cd practice</em>. If you have never used the command <em>cd</em> before, read  the online instructions on how to do it on <a href="http://www.wikihow.com/Change-Directories-in-Command-Prompt">Windows</a> or on <a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line">Mac OS</a>. Now compile the program using the following command:</p>
 </div>
 <div class="paragraph">
 <p><em>javac HelloWorld.java</em></p>
 </div>
 <div class="paragraph">
-<p>You won’t see any confirmation message that your program <code>HelloWorld</code> has been compiled successfully. Having no messages means there is no problems. Type a command <em>dir</em> on Windows or <em>ls</em> on Mac and you&#8217;ll see the list of files in folder <em>practice</em>. This is how it looks in my Terminal window:</p>
+<p>You won’t see any confirmation message that your program <code>HelloWorld</code> has been compiled successfully. Having no messages means there no problems occurred during compilation. Type a command <em>dir</em> on Windows or <em>ls</em> on Mac and you&#8217;ll see the list of files in folder <em>practice</em>. This is how it looks in my Terminal window:</p>
 </div>
 <div id="FIG1-11" class="imageblock">
 <div class="content">
@@ -1268,10 +1265,10 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="title">Figure 6. HelloWorld compiled successfully</div>
 </div>
 <div class="paragraph">
-<p>First, I&#8217;ve entered the <em>pwd</em> command to make sure I&#8217;m in the <em>practice</em> folder. You should see there a new file named <code>HelloWorld.class</code>. This proves that your program has been successfully compiled. Your original file <code>HelloWorld.java</code> is also there, and you can modify this file later to print <em>Hello Mom</em> or something else.</p>
+<p>First, I&#8217;ve entered the <em>pwd</em> command to make sure I&#8217;m in the <em>practice</em> folder. You should see a new file named <code>HelloWorld.class</code>. This proves that your program has been successfully compiled. Your original file <code>HelloWorld.java</code> can also be found there, and you can modify this file later to print <em>Hello Mom</em> or something else.</p>
 </div>
 <div class="paragraph">
-<p>If the program has syntax errors, let’s say you forgot to type the last curly brace, Java compiler will print an error message. Now you’d need to fix the error, and recompile the program again. If you have several errors, you may need to repeat these actions more than once until the file <code>HelloWorld.class</code> is created.</p>
+<p>If the program has syntax errors, for example you forgot to type the last curly brace, Java compiler will print an error message. Now you’d need to fix the error, and recompile the program again. If you have several errors, you may need to repeat these actions more than once until the file <code>HelloWorld.class</code> is created.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1283,7 +1280,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <p><em>java HelloWorld</em></p>
 </div>
 <div class="paragraph">
-<p>After running this command, you&#8217;ll see the text <em>Hello World!</em> printed in the Terminal window as shown on <a href="#FIG1-12">Running HelloWorld</a>. Have you noticed that this time you’ve used the program <em>java</em> and not <em>javac</em>?  This is how you start JRE providing it the name of the application to run (HelloWorld in this case).</p>
+<p>After running this command, you&#8217;ll see the text <em>Hello World!</em> printed in the Terminal window as shown in <a href="#FIG1-12">Running HelloWorld</a>. Have you noticed that this time you’ve used the program <em>java</em> and not <em>javac</em>?  This is how you start JRE by providing it the name of the application to run (<code>HelloWorld</code> in this case).</p>
 </div>
 <div id="FIG1-12" class="imageblock">
 <div class="content">
@@ -1292,10 +1289,10 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="title">Figure 7. Running HelloWorld</div>
 </div>
 <div class="paragraph">
-<p>Keep in mind that Java does not treat capital and small letters the same, which means that if you named the program <code>HelloWorld</code> with a capital <code>H</code> and a capital <code>W</code>, do not try to start the program <code>helloworld</code> or <code>helloWorld</code> – the JRE will complain. The file name should match the class name too. Typically, each file of your application contains the code of one class even though you can keep the code of more than one class in the same file.</p>
+<p>Keep in mind that Java does not treat capital and small letters the same, which means that if you originally named the program <code>HelloWorld</code> with a capital <code>H</code> and a capital <code>W</code>, do not try to start the program <code>helloworld</code> or <code>helloWorld</code> – the JRE will signal an error. The file name should match the class name as well. Typically, each file of your application contains the code of one class.</p>
 </div>
 <div class="paragraph">
-<p>Now let’s have some fun - try to guess how to modify the code of the program that prints Hello World.  I’ll explain how this program works in the next chapter, but still, try to guess what has to be done to say hello to your pet, friend or print your address. Go through all three steps to see if the program still works after your changes. If you don&#8217;t have a pet, you can always say hello to my puppy - his name is Sammy. Are you up for the challenge to write a program that prints Hello Sammy! on the screen?</p>
+<p>Now let’s have some fun trying to guess how to modify the code of the program that prints Hello World.  I’ll explain how this program works in the next chapter, but for now attempt to guess what has to be done to say hello to your pet, friend or print your address. Go through all three steps to see if the program still works after your changes. If you don&#8217;t have a pet, you can always say hello to my puppy - his name is Sammy. Are you up for the challenge to write a program that prints Hello Sammy! on the screen?</p>
 </div>
 <div id="FIG1-07" class="imageblock">
 <div class="content">
