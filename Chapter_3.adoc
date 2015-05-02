@@ -203,7 +203,7 @@ To see the result of the score calculations, just  click on the console tab at t
 
 `My score is 6`
 
-In this example the argument of the method `println()` was constructed from two pieces – the text “My score is ” and the value of the variable `myScore`. Putting two or more strings together is called _concatenation_. Even though `myScore` is a number, Java is smart enough to convert this variable into a `String` and then attach it to the text "My Score is ".
+In this example the argument of the method `println` was constructed from two pieces – the text “My score is ” and the value of the variable `myScore`. Putting two or more strings together is called _concatenation_. Even though `myScore` is a number, Java is smart enough to convert this variable into a `String` and then attach it to the text "My Score is ".
 
 Look at some other ways of changing the values of the variables:
 
@@ -303,11 +303,11 @@ public class Pet {
 
 The next step is to add some methods to this class. Before declaring a method you should decide if it should take any arguments and should return a value. This is what I suggest:
 
-* The method `sleep()` will just print a message _Good night, see you tomorrow_ – it does not need any arguments and will not return any value. 
+* The method `sleep` will just print a message _Good night, see you tomorrow_ – it does not need any arguments and will not return any value. 
 
-* The same is true for the method `eat()`.It will print the message _I’m so hungry, let me have a snack like nachos!_.  
+* The same is true for the method `eat`.It will print the message _I’m so hungry, let me have a snack like nachos!_.  
 
-* The method `talk()` will not be printing any messages, but will prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program. 
+* The method `talk` will not be printing any messages, but will prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program. 
 
 The new version of the class `Pet` will look like this:
 
@@ -347,11 +347,11 @@ Let’s talk now about the signatures of each method in detail starting with the
 
 `public void sleep()`
 
-This method signature tells us that `sleep()` can be called from any other Java class ( because it's `public`). This method does not return any data (the keyword `void`).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text. 
+This method signature tells us that `sleep` can be called from any other Java class ( because it's `public`). This method does not return any data (the keyword `void`).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text. 
 
-The signature of the method `eat()` is similar to `sleep()`. 
+The signature of the method `eat` is similar to `sleep`. 
 
-The signature of the method `talk()` looks like this:
+The signature of the method `talk` looks like this:
 
 `public String talk(String aWord)`
 
@@ -363,7 +363,7 @@ image::images/fig_3_06.png[width=400, height=550]
 
 How do you decide if a method should or should not return a value? If a method performs some data manipulations and has to give the result of these  manipulations back to the  calling class, it has to return a value.  You may say that the class `Pet` does not have any calling class! That’s correct, so let’s create one called `PetMaster`. We'll create it in the same IDEA project MyPet. 
 
-This class will need a method `main()` to become a runnable program (the class `Pet` didn't have one). Remember from Chapter 2, typing _psvm_ followed by the Tab key will quickly create the method `main()`. We'll place the code communicating with the class `Pet` inside the method `main()`.
+This class will need a method `main` to become a runnable program (the class `Pet` didn't have one). Remember from Chapter 2, typing _psvm_ followed by the Tab key will quickly create the method `main`. We'll place the code communicating with the class `Pet` inside the method `main`.
 
 NOTE: Do not forget to press _Ctrl-S_ (_CMD-S_ on Mac) to save and compile this class! 
 
@@ -392,13 +392,13 @@ public class PetMaster {
 
 <2> This is how to create an instance of the object `Pet` using the Java operator `new`. This line declares a variable of type `Pet` - that’s right, you can treat any classes created by you as new Java data types.
 
-<3> Calling the method `eat()` on the object `Pet`. After the instance of `Pet` was created, the variable `myPet` knows its address in memory. So you can call the method `eat()` (as well as any other) on this particular instance of `Pet`. 
+<3> Calling the method `eat` on the object `Pet`. After the instance of `Pet` was created, the variable `myPet` knows its address in memory. So you can call the method `eat` (as well as any other) on this particular instance of `Pet`. 
 
 <4> If a method returns a value, specify a variable that will store returned value to the left of the equal sign. In our code it's `petReaction` of type `String`.  Such variable should have the same type as the return value of the method. 
 
 <5> The value of the variable `petReaction` is passed as an argument to the method `prinln` for output.
 
-<6> Calling the method `sleep()` on the object `Pet`.
+<6> Calling the method `sleep` on the object `Pet`.
 
 To run the class `PetMaster` right-click on its name in the Project view in IDEA, and select the option _Run PetMaster.main()_. This program will output the following:
 
@@ -411,7 +411,7 @@ Good night, see you tomorrow!_
 .Tweet, Tweet!
 image::images/fig_3_07.png[width=400, height=550]
   
-At this point the project MyPet consists of two Java classes: `Pet` and `PetMaster`. The role of the class `Pet` is to represent attributes and behavior of a pet, while the class `PetMaster` starts the program, _instantiates_ the class `Pet` and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the `main()` method, which is the entry point of the application.  
+At this point the project MyPet consists of two Java classes: `Pet` and `PetMaster`. The role of the class `Pet` is to represent attributes and behavior of a pet, while the class `PetMaster` starts the program, _instantiates_ the class `Pet` and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the `main` method, which is the entry point of the application.  
 
 === Inheritance – a Fish Can Be a Pet Too
 
@@ -430,7 +430,7 @@ class Fish extends Pet{
 
 This class `Fish` is a _subclass_ of the class `Pet`. Accordingly, the class `Pet` is a _superclass_ of the class `Fish`. In other words, you use the class `Pet` as a template for creating a class `Fish`. The keyword `extends` defines relationship between classes. Since our `Fish` extends a `Pet`, we can say that a fish is a pet. But we can't say that a pet is a fish.
 
-Even if you will leave the class `Fish` empty as it is now, you can still use every method and attribute inherited from  the class `Pet`, because a fish is a pet! Take a look, we're creating an instance of the object `Fish` and are calling its method `sleep()`:
+Even if you will leave the class `Fish` empty as it is now, you can still use every method and attribute inherited from  the class `Pet`, because a fish is a pet! Take a look, we're creating an instance of the object `Fish` and are calling its method `sleep`:
 
 [source, java]
 ----
@@ -438,13 +438,13 @@ Fish myLittleFish = new Fish();
 myLittleFish.sleep();
 ----
 
-Even though we have not declared any methods in the class `Fish` yet, we call (invoke) the method `sleep()`, which was declared in its superclass `Pet`! In Java all classes are automatically inherited from the class `Object`. Even though we've declared the class `Pet` without using the keyword `extends` it still extends the class `Object`. With the keyword `extends` you can build class hierarchies. For example, many animal classes can extend the class `Pet`. 
+Even though we have not declared any methods in the class `Fish` yet, we call (invoke) the method `sleep`, which was declared in its superclass `Pet`! In Java all classes are automatically inherited from the class `Object`. Even though we've declared the class `Pet` without using the keyword `extends` it still extends the class `Object`. With the keyword `extends` you can build class hierarchies. For example, many animal classes can extend the class `Pet`. 
 
 [[FIG3-8]]
 .Class Hierarchy
 image::images/fig_3_08.png[width=400, height=550]
 
-Let’s not forget, however, that we’ve  created the class `Fish` as a subclass of `Pet`, because we wanted to add some additional features that only fish have and reuse some of  the code that we wrote for a _general pet_.For instance, not all pets can dive, but fish certainly can. Let’s add a new method `dive()` to the class `Fish`. 
+Let’s not forget, however, that we’ve  created the class `Fish` as a subclass of `Pet`, because we wanted to add some additional features that only fish have and reuse some of  the code that we wrote for a _general pet_.For instance, not all pets can dive, but fish certainly can. Let’s add a new method `dive` to the class `Fish`. 
 
 [source, java]
 ----
@@ -506,9 +506,9 @@ One more thing, even though the method `dive` returns the value of  `currentDept
 
 === Method Overriding
 
-As you know, fish do not speak (at least they do not do it aloud). But our class `Fish` has been inherited from the class `Pet` that has the method `talk()`. This means that nothing stops you from writing `myFish.talk();`.
+As you know, fish do not speak, but our class `Fish` has been inherited from the class `Pet` that has the method `talk`. This means that nothing stops you from writing `myFish.talk();`.
 
-Do you really want our fish to talk? If you do not want this to happen, the class `Fish` has to _override_ the `Pet`’s typical behavior - the method `talk()`. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method `talk()` to the class `Fish`.
+Do you really want our fish to talk? If you do not want this to happen, the class `Fish` has to _override_ the `Pet`’s typical behavior - the method `talk`. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method `talk` to the class `Fish`.
 
 [source, java]
 ----
@@ -517,7 +517,7 @@ public String talk(String something){
 } 
 ----
 
-Now add the following three lines to the method `main()` of the class `FishMaster`:
+Now add the following three lines to the method `main` of the class `FishMaster`:
 
 `String fishReaction;`
 `fishReaction = myFish.talk("Hello");`
@@ -527,7 +527,7 @@ Run the program and it’ll print
 
 `Don't you know that fish do not talk?`
 
-This proves that `Pet`’s method `talk()` has been _overridden_, or in other words, suppressed.
+This proves that `Pet`’s method `talk` has been _overridden_, or in other words, suppressed.
 
 Wow!  We’ve learned a lot in this chapter – let’s just take a break.
  
@@ -544,14 +544,14 @@ Wow!  We’ve learned a lot in this chapter – let’s just take a break.
 +
 `public int drive(int howlong)`
 +
-The method `drive()` has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: `distance = howlong*60;`. Use the statement `return distance` as the last line in the method `drive()`. 
+The method `drive` has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: `distance = howlong*60;`. Use the statement `return distance` as the last line in the method `drive`. 
 
 3. Run this program by using the menu Run in IDEA.
 
-4. Write another class `CarOwner` with the method `main()` that creates an instance of the object `Car` and call its methods. The result of each method call has to be printed using `System.out.println()`.
+4. Write another class `CarOwner` with the method `main` that creates an instance of the object `Car` and call its methods. The result of each method call has to be printed using `System.out.println()`.
 
-5. Create a subclass of `Car` named `JamesBondCar` and override the method `drive()` there. Now use the following formula to calculate the distance: `distance = howlong*180;`
+5. Create a subclass of `Car` named `JamesBondCar` and override the method `drive` there. Now use the following formula to calculate the distance: `distance = howlong*180;`
 +
-Be creative, print some funny messages from the method `drive()`!
+Be creative, print some funny messages from the method `drive`!
 
-6. Create an instance of the class `JamesBondCar` in the `main()` method of `CarOwner`. Re-run the program `CarOwner` to see that it calls the overridden method `drive()`.
+6. Create an instance of the class `JamesBondCar` in the `main` method of `CarOwner`. Re-run the program `CarOwner` to see that it calls the overridden method `drive`.

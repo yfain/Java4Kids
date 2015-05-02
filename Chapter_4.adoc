@@ -3,22 +3,22 @@
 
 == Java Building Blocks
 
-Classes are the major constructs in Java. But you need to know smaller elements that help you out to program the behavior and the flow of the program.  You need to know how commented your program so other people can understand your intentions (programmers often work in teams and help each other). You need to know how to write code that will invoke one method or the other depending on certain conditions. So in this chapter I'll show you some Java elements that you have to know and apply in pretty much any project.
+Classes are the major constructs in Java, but you need to know smaller elements that help you program the behavior and flow of the program. You need to know how commented your program so other people can understand your intentions (programmers often work in teams and help each other). You need to know how to write code that will invoke one method or the other depending on certain conditions. In this chapter I'll show you some Java elements that you have to know and apply in pretty much any project.
 
 === Program Comments
 
-You can add any text comments to your program to explain what a particular line, method or a class is for. First of all, someone else may read your program so comments would help in understanding your intentions. Second, even the  author of the code can't remember every program he or she wrote. Besides, if a professional programmer decides to change the employer, if would be nice to leave well-commented code behind.
+You can add any text comments to your program to explain what a particular line, method or class is for. First of all, someone else may read your program so comments would help in understanding your intentions. Second, even the  author of the code can't remember every program he or she wrote. Besides, if a professional programmer decides to change the employer, if would be nice to leave well-commented code behind.
 
 There are three different types of comments - single-line comments, block comments, and a javadoc comments. Here's what they are for:
 
-1. If your comment fits in one line, start it with two slashes: 
-+
+If your comment fits in one line, start it with two slashes: 
+
 [source,java]
 ----
 // This method calculates the distance between A and B.
 ----
-* If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: `/\*` and `*/`, for example:
-+
+If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: `/\*` and `*/`, for example:
+
 [source, java]
 ----
 /* Now we'll handle the current 
@@ -26,8 +26,8 @@ There are three different types of comments - single-line comments, block commen
 */
 ----
 
-* Java comes with a special program `javadoc` that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a _technical documentation_ for your programs. Such comments are enclosed in  symbols `/* \*` and   `*/`. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.
-+
+Java comes with a special program `javadoc` that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a _technical documentation_ for your programs. Such comments are enclosed in  symbols `/\**` and `*/`. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.
+
 [source, java]
 ----
 /** This method calculates the discount that depends  
@@ -36,11 +36,12 @@ give the user 20% off, otherwise only 10%.
 */
 ----
 
-The javadoc tool can process your code, extract all comments that start with `/**` and create program documentation that can be published online or kept locally on the company server. We are not going to use javadoc in this book, but if you're interested to learn more about this tool, read Oracle's tutorial http://goo.gl/Bwm6Cb[How to Write Doc Comments for the Javadoc Tool].
+The javadoc tool can process your code, extract all comments that start with `/**` and create program documentation that can be published online or kept locally on the company server. We are not going to use javadoc in this book, but if you're interested in learning more about this tool, read Oracle's tutorial http://goo.gl/Bwm6Cb[How to Write Doc Comments for the Javadoc Tool].
 
 From now on, I’ll be adding comments to code samples to  give you a better idea how and where to use them.
 
 === Making Decisions 
+
 We always make decisions in our life: _If she is going to tell me  this_ – _I’m going to answer that, otherwise I’ll do something else_. You can write a Java program that will "make decisions" with the help of `if` and `switch` statements. You can also build more complex either-or conditions using logical operators.
 
 ==== The if Statement 
@@ -141,11 +142,11 @@ Good night, see you tomorrow.
 
 ==== Logical Operators
 
-Sometimes, to make a decision you may need to check more than just one conditional expression, for example if the name of the state is Texas or California, add the state sales tax to the price of every item in the store. This is an example of the _logical or_ case – either Texas or California. 
+Sometimes, to make a decision you may need to check more than just one conditional expression, for example if the name of the state is Texas or California, add the state sales tax to the price of every item in the store. This is an example of the _logical or_ – either Texas or California. 
 
 In Java the sign for a logical `or` is one or two vertical bars. It works like this – if any of the two conditions is `true`, the result of the entire expression is also `true`. 
 
-In the following examples I use a variable of type `String`, which has a method `equals()` that compares the values of two strings. I use it to see the value of the variable `state` is _"Texas"_ or  _"California"_: 
+In the following examples I use a variable of type `String`, which has a method `equals()` that compares the values of two strings. I use it to see whether the value of the variable `state` is _"Texas"_ or  _"California"_: 
 
 [source, java]
 ----
@@ -165,7 +166,7 @@ if (state.equals("Texas") || state.equals("California"))
 }
 ----
 
-The difference between these two examples is that if you use two bars, and the first expression is `true`, the second expression won’t  even be  checked.  If you place just a single bar, JVM will evaluate both expressions anyway.
+The difference between these two examples is that if you use two bars, and the first expression is `true`, the second expression won’t even be  checked. If you place just a single bar, JVM will evaluate both expressions.
 
 The _logical and_ is represented by one or two ampersands (`&&`) and each expression in the parentheses must be `true` to make the entire expression `true`. For example, charge the sales tax only if the state is New York and the price is more than $110. Both conditions must be `true` _at the same time_:
 
@@ -198,7 +199,7 @@ if (!state.equals("New York")) {
 }
 ----
 
-The following two expressions will produce the same result, because _more than 50_ and _not less or or equal to 50_ have the same meaning:
+The following two expressions will produce the same result, because _more than 50_ and _not less than or equal to 50_ have the same meaning:
 
 [source, java]
 ----
@@ -214,11 +215,11 @@ In the second example the _logical not_ is applied to the expression in parenthe
 
 ==== Conditional operator
 
-There is another flavor of an if statement called _conditional operator_, which allows to assign a value to a variable based on the expression that ends with a question mark. It's like you're asking, "Is this true?". If such an  expression is `true`, the value after the question mark is used, otherwise the value after the colon is assigned to the variable on the left:
+There is another type of an if-statement called _conditional operator_, which allows you to assign a value to a variable based on the expression that ends with a question mark. It's like you're asking, "Is this true?". If such an  expression is `true`, the value after the question mark is used, otherwise the value after the colon is assigned to the variable on the left:
 
 `discount = price > 50? 10:5;`
 
-If the price is greater than fifty, the variable `discount` will get the value of 10, otherwise the value of 5. It’s just a shorter replacement of the following if statement:
+If the price is greater than fifty, the variable `discount` will get a value of 10, otherwise `discount` will have a value of 5. It’s just a shorter replacement of the following if statement:
 
 [source, java]
 ----
@@ -274,11 +275,11 @@ public class ReportCard {
 }
 ----
 
-Beside using the `else if` condition, this example also shows you how to use variables of type `char`. You can also see that with the `&&` operator you can check if a number falls into some range. You can not just write _if testResult between 80 and 89_,  but with _logical and_ you can check the condition when `testResult` is greater or equal to 80 and less then 89 at the same time: 
+Beside using the `else if` condition, this example also shows you how to use variables of type `char`. You can also see that with the `&&` operator you can check if a number falls into specific range. You can not just write _if testResult between 80 and 89_, but with _logical and_ you can check the condition when `testResult` is greater than or equal to 80 and less then 89 at the same time: 
 
 `testResult >= 80 && testResult < 89`
 
-Take a guess, why we could not use the _logical or_ operator here? Say the `testResult` is 100. It's greater than 80, and the above expression would evaluate to true, because for  the || operator having one `true` is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of `testResult` is between 80 and 89. The _logical and_ operator does the job by ensuring that both conditions are true. 
+Take a guess as to why we could not use the _logical or_ operator here? Say the `testResult` is 100. It's greater than 80, and the above expression would evaluate to true, because for  the || operator having one `true` is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of `testResult` is between 80 and 89. The _logical and_ operator does the job by ensuring that both conditions are true. 
 
 ==== The `switch` Statement 
 
@@ -320,21 +321,21 @@ Do not forget to put the keyword `break` at the end of each `case` statement to 
 .The switch statement
 image::images/fig_4_02.png[]
    
-=== How Long Variables Live? 
+=== How Long Will A Variables Live? 
 
-Class `ReportCard` declares a variable `grade` inside the method `convertGrades()`. If you declare a variable inside any method, such variable is called  _local_. This means that this variable is available only for the code _within this method_. When the method completes, this variable automatically gets removed from memory.
+Class `ReportCard` declares a variable `grade` inside the method `convertGrades()`. If you declare a variable inside any method, such variable is called  _local_. This means that this variable is available only for the code _within this method_. When the method is complete, this variable automatically gets removed from memory.
 
 Programmers use the word _scope_ to say how long a variable will live, for example you can say that variables declared inside a method have a local scope. If a variable is declared within the code block surrounded with curly braces (e.g. in the if statement), it has a block scope and won't be visible outside of this block.
 
-If a variable has to be reused by several method calls, or it has to be visible from more than one method in a class, you should declare such a variable outside of any method. In the class `Fish` from Chapter 3, the `currentDepth` is a _member variable_. The member variable `currentDepth` is  alive until the instance of the object `Fish` exists in memory. You can call `currentDepth` _a instance variable_, because its declaration doesn't include the keyword `static`, which we'll discuss shortly. 
+If a variable has to be reused by several method calls, or it has to be visible from more than one method in a class, you should declare such a variable outside of any method. In the class `Fish` from Chapter 3, the `currentDepth` is a _member variable_. The member variable `currentDepth` is  alive until the instance of the object `Fish` exists in the computer's memory. You can call `currentDepth` _a instance variable_, because its declaration doesn't include the keyword `static`, which we'll discuss shortly. 
 
-Member variables can be shared and reused by all methods of the class, and we can make them visible from external classes too, if need be. For example the method `main()` of the class `ReportCard` includes the statement `System.out.println()`. It uses the class variable `out` that was declared in the Java class `System`. 
+Member variables can be shared and reused by all methods of the class, and we can make them visible from external classes too, if need be. For example the method `main` of the class `ReportCard` includes the statement `System.out.println()`. It uses the class variable `out` that was declared in the Java class `System`. 
 
 ==== The Keyword `static`
 
-Wait a minute! Can we use a member variable `out` from the class `System` if we have not even created an instance of this class?  Yes we can, if the class `System` declares the variable `out` with a keyword `static`. 
+Wait a minute! Can we use a member variable `out` from the class `System` if we haven't even created an instance of this class? Yes we can, if the class `System` declares the variable `out` with a keyword `static`. 
 
-When you start any Java program if _loads_ the definition of the required classes in memory. The definition of a class can be used for creating of one or mode instances of this class for example:
+When you start any Java program it _loads_ the definition of the required classes in memory. The definition of a class can be used for creation of one or more instances of this class. For example:
 
 [source, java]
 ----
@@ -349,11 +350,11 @@ In this example we have two instances of the class `ReportCard`, and each of the
 
 `static String studentName;`
 
-In this case both instances of the `ReportCard` would share the same variable `studentName`, and the above code would first assign "Jerry Lee" to this variable, and then it would be replaced with "Sarah Smith". This is not a good idea, is it? 
+In this case both instances of the `ReportCard` would share the same variable `studentName`, and the above code would first assign "Jerry Lee" to this variable, and then it would be replaced with "Sarah Smith". This doesn't seem like a good idea does it? 
 
 Moreover, if the declaration of a member variable or a method starts with `static`, you do not have to create an instance of this class to use such a variable or a method. Static members of a class are used to store the values that are the same for all instances of the class.
 
-For example, the method `convertGrades()` should be declared as `static` in the class `ReportCard`, because its code does not use  member variables to store values specific to a particular instance of the class.
+For example, the method `convertGrades` should be declared as `static` in the class `ReportCard`, because its code does not use  member variables to store values specific to a particular instance of the class.
 
 [source, java]
 ----
@@ -366,7 +367,7 @@ There is no need to create instances to call static methods or access static var
 
 `char yourGrade = ReportCard.convertGrades(88);`
 
-Here’s another example: Java has a class `Math` that contains several dozens of mathematical methods like `sqrt()`,  `sin()`, `abs()` and others. All these methods are `static` and you do not need to create an instance of the class `Math` to call them, for example:
+Here’s another example: Java has a class `Math` that contains several dozen mathematical methods like `sqrt`, `sin`, `abs` and others. All these methods are `static` and you do not need to create an instance of the class `Math` to invoke them, for example:
 
 `double squareRoot = Math.sqrt(4.0);`
 
@@ -376,7 +377,7 @@ You've already learned that Java uses the operator `new` to create instances of 
 
 `Fish myFish = new Fish();`
 
-Parentheses after the word `Fish` tell us that this class has some method called `Fish()`. Yes, there are special methods that are  called  _constructors_, and these methods have the following features:
+Parentheses after the word `Fish` tell us that this class has some method called `Fish`. Yes, there are special methods that are called  _constructors_, and these methods have the following features:
 
 * Constructors are special methods that are called only once  during construction of the object in memory.
 * They must have the same name as the class itself.
@@ -384,7 +385,7 @@ Parentheses after the word `Fish` tell us that this class has some method called
 
 Any class can have more than one constructor. If you do not create a constructor for the class, Java automatically creates one during the compilation time - it's so-called _default no-argument constructor_.  That’s why Java compiler has never complained about the statements  `new Fish()` or `new ReportCard()`, even though neither class `Fish` nor class `ReportCard` has any explicitly declared constructor.
 
-In general, constructors are used to assign initial values to  member variables of the class, for example the next version of class `Fish` has a one-argument constructor that  just assigns the argument’s value to the instance variable `currentDepth` for future  use.
+In general, constructors are used to assign initial values to  member variables of the class, for example the next version of the class `Fish` has a one-argument constructor that  just assigns the argument’s value to the instance variable `currentDepth` for future use.
 
 [source, java]
 ----
@@ -406,7 +407,7 @@ If a constructor with arguments has been defined in a class, you can no longer u
 
 === The Keyword `this`
 
-The keyword `this` is useful when your code needs to refer to the  instance of the object, where this code is running.  Look at the next code example, which is a slight modification of the previous one: 
+The keyword `this` is useful when your code needs to refer to the  instance of the object, where this code is running. Look at the next code example, which is a slight modification of the previous one: 
 
 [source, java]
 ----
@@ -437,7 +438,7 @@ or
 
 `String players[];`
 
-These declarations just tell the Java compiler that you are planning to store several text strings in the array `players`.  Each element has its own index (the position number) starting from zero. The next sample actually creates an instance of an array that can store four `String` elements and assigns the values to the elements of this array:
+These declarations just tell the Java compiler that you are planning to store several text strings in the array `players`.  Each element has its own index (position number) starting from zero. The next sample actually creates an instance of an array that can store four `String` elements and assigns the values to the elements of this array:
 
 [source, java]
 ----
@@ -449,7 +450,7 @@ players[2] = "Anna";
 players[3] = "Gregory";
 ----
 
-You must declare the size of the array before assigning values to its elements. If you do not know in advance how many elements you are going to have, you cannot use arrays, but should look into other classes - Java collections. For example the `ArrayList` object does not require you to announce the exact number of elements in advance. I'll show you some example of using the `ArrayList` collection in Chapter 10 about data collections.
+You must declare the size of the array before assigning values to its elements. If you do not know in advance how many elements you are going to have, you cannot use arrays, but you should look into other classes - Java collections. For example the `ArrayList` object does not require you to announce the exact number of elements in advance. I'll show you some examples of using the `ArrayList` collection in Chapter 10 about data collections.
 
 Any array has an attribute called `length` that stores the  number of elements in this array, and you can always find out how many elements are there:
 
@@ -464,7 +465,6 @@ If you know all the values that will be stored in the array at the time when you
 image::images/fig_4_04.png[]
 
 Imagine that the second player is a winner and you’d like to write the code to congratulate this kid. If the players’ names are stored in an array get its second element:
-
 
 [source, java]
 ----
@@ -501,7 +501,7 @@ _Print the value of the element from the `players` array  whose number is the sa
 
 JVM executes every line between the curly braces and then returns back to the first line of the loop to increment the counter and check the conditional expression.
 
-There is another flavor of the `for` loop that's called _for each loop_. It allows to repeat the same action to every element of the collection without even knowing how many are there. You are basically saying, do this for each element.The for-each loop allows to congratulate players in a more concise manner:
+There is another flavor of the `for` loop known as _for each loop_. It allows the program to repeat the same action to every element of the collection without even knowing how many are there. You are basically saying, do this for each element.The for-each loop allows to congratulate players in a more concise manner:
 
 [source, java]
 ----
@@ -512,9 +512,9 @@ for (String pl: players){
 
 You can read the above code as follows:
 
-_The variable_ `pl` _has the same type as the array's elements:_ `String` _. Use this variable as a cursor, point it to each element in the array_ `players` _one by one and repeatedly execute the code inside the curly brackets for the current element._ 
+_The variable_ `pl` _has the type_ `String` _- the same as as the array's elements. Use this variable as a cursor, point it to each element in the array_ `players` _one by one and repeatedly execute the code inside the curly brackets for the current element._ 
 
-There is another keyword for writing loops - `while`. In these loops you do not have to declare exactly how many times to repeat the action, but you still need to know when to end the loop.  Let’s see how we can congratulate players using the `while` loop that will end when the value of the variable `counter` becomes equal to the value of  `totalPlayers`:
+There is another keyword for writing loops - `while`. In these loops you do not have to declare exactly how many times to repeat the action, but you still need to know when to end the loop. Let’s see how we can congratulate players using the `while` loop that will end when the value of the variable `counter` becomes equal to the value of `totalPlayers`:
  
 [source, java]
 ----
@@ -535,7 +535,7 @@ You can also use two important keywords with loops: `break` and `continue`.
 
 As with `switch` statements, the keyword `break` is used to jump out of the loop when some particular condition is `true`. Let’s say we do not want to print more than 3 congratulations, regardless of how many players we’ve got. In the next example, after printing the array elements 0, 1 and 2, the `break` will make the code go out of the loop and the program will continue from the line after the closing curly brace. 
 
-The next code sample has the double equal sign `==` in the `if` statement. This means that you are comparing the value of the variable `counter` with number 3.  A single equal sign in the here would mean assignment of the value of 3 to the variable `counter`.  Placing `=` in an `if` statement instead of `==` is a very tricky mistake, and it can lead to unpredictable program errors that may not be so easy to find.
+The next code sample has the double equal sign `==` in the `if` statement. This means that you are comparing the value of the variable `counter` with number 3. A single equal sign in the here would mean assigning the value of 3 to the variable `counter`. Placing `=` in an `if` statement instead of `==` is a very tricky mistake, and it can lead to unpredictable program errors that may be dificcult to find.
 
 [source, java]
 ----
@@ -567,7 +567,7 @@ while (counter< totalPlayers){
 }
 ----
 
-There is yet another flavor of the `while` loop that starts with the word `do`, for example:
+There is yet another type of the `while` loop that starts with the word `do`, for example:
 
 [source, java]
 ----
@@ -583,7 +583,7 @@ Such loops check an expression _after_ executing the code between curly braces, 
 
 === Challenge Yourself
 
-1. Create a new IntelliJ Idea Java project as described in Chapter 2. Name it Chapter4.
+1. Create a new IntelliJ Idea Java project as described in Chapter 2. Name it `Chapter4`.
 
 2. In the src directory of the project create a new class (the menu File | New) named _TemperatureConverter_. 
 3. Add the method `convertTemp()` so the code of the class looks like this:
@@ -593,12 +593,11 @@ Such loops check an expression _after_ executing the code between curly braces, 
 public class TemperatureConverter {
     public static float convertTemp (float temperature, 
                                char convertTo) {
-
     }
 }
 ----
 
-4. Write the if statement inside the method `convertTemp()` to check the value of the argument `convertTo`. If it's `F`, the temperature has to be converted to Fahrenheit, and if it’s `C`, convert it to Celsius. Return the result. The method `convertTemp()` should look like this:
+4. Write the if statement inside the method `convertTemp` to check the value of the argument `convertTo`. If it's `F`, the temperature has to be converted to Fahrenheit, and if it’s `C`, convert it to Celsius. Return the result. The method `convertTemp` should look like this:
 +
 [source, java]
 ----
@@ -628,7 +627,10 @@ public class TemperatureConverter {
 
 6. Run the program `TemperatureConverter` using the IDEA menu Run | Run TemperatureConverter. If you did everything right, you should see the following output on the IDEA console:
 +
-_Converting 21C to Fahrenheit. The temperature in Fahrenheit is 69.8
-Converting 70F to Celsius. The temperature in Celsius is 21.11111_
+[source,ext]
+----
+Converting 21C to Fahrenheit. The temperature in Fahrenheit is 69.8
+Converting 70F to Celsius. The temperature in Celsius is 21.11111
+----
 
 7. Do a little research to change this program so it always prints the temperature with two digits after the decimal point. Study Oracle's tutorial about formatting numeric output: http://goo.gl/3riLIZ.
