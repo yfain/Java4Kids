@@ -3,24 +3,24 @@
 
 == Meet Classes - the Main Language Constructs
 
-In the real world you see and use various objects, and each of them is of some kind like toys, food, animals, electronics et al. In Java instead of saying a kind of objects, we say a class of objects. In other words, each object belongs to a class. A class is like a blueprint of an object. In this chapter you’ll get familiar with classes - the main constructs of the Java language. 
+In the real world you see and use various objects, and each of them is belongs to some _kind_ such as toys, food, animals, electronics et al. In Java, instead of saying what kind of objects, we say what _class_ of objects. In other words, each object belongs to a class. A class is like a blueprint of an object. In this chapter you’ll get familiar with classes - the main constructs of the Java language. 
 
-Any program that you’ll write will have at least one class. You’ll learn how to declare a class and how to create one or more object based on the class declaration. You’ll also learn about a class internals – what a class can consist of. Finally, I’ll show you how to create a class that inherits features of another class.
+Any program that you’ll write will have at least one class. You’ll learn how to declare a class and how to create one or more objects based on the class declaration. You’ll also learn about a class's internals – what a class can consist of. Finally, I’ll show you how to create a class that inherits features of another class.
 
 
-Java defines a number of data types. Some of them are simple, like `int`, which represents integer numbers. Some of them are more complex - they are called _classes_, like `System`, which can be used for things like printing texts on the screen, exiting a program or cleaning computer's memory. 
+Java defines a number of data types. Some of them are simple, like `int`, which represents integer numbers. Some of them are more complex - they are called _classes_, like `System`, which can be used for things like printing text on the screen, exiting a program, or cleaning a computer's memory. 
 
-When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of _classes_ that can represent _objects_ from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the  class `Dog`. 
+When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of _classes_ that can represent _objects_ from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the class `Dog`. 
 
-Programmers start working on any application with deciding  which Java classes to include in the program and how many objects of each type to create. Say, they can define a class `Player` in the gaming application and create two object instances of this type. 
+Programmers start working on any application by deciding  which Java classes to include in the program and how many of each object type to create. Say, they can define a class `Player` in the gaming application and create two object instances of this type. 
 
 === Dissecting Classes and Objects
 
-While programmers talk to each other, they may say "Do something with the class Player" or "Do something with the object Player". We need to learn the difference between the meaning of the words _class_ and _object_.
+When programmers talk to each other, they may say "Do something with the class Player" or "Do something with the object Player". We need to learn the difference between the meaning of the words _class_ and _object_.
 
 ==== Classes
 
-Let's see what Java classes can consist of. Actually a very simple class can have nothing inside. Take a look at this class declaration:
+Let's see what Java classes can consist of. A very simple class can have nothing inside. Take a look at this class declaration:
 
 [source, java]
 ----
@@ -29,7 +29,7 @@ class VideoGame {
 }
 ----
 
-This class is empty - it knows nothing and can't do anything, because there is no code between the curly braces. From the Java syntax perspective this class is legit, and compiler won't complain - there is a valid keyword `class` followed by its name `VideoGame`, and the opening curly brace has the matching closing one. But we need classes that can do stuff. We can place methods and attributes inside the class.
+This class is empty. It knows nothing and can't do anything because there is no code between the curly braces. From the Java syntax perspective, this class is legitimate and compiler won't complain. There is a valid keyword `class` followed by its name `VideoGame`. The opening curly brace has the matching closing one. We need classes that can do stuff. We can place methods and attributes inside the class.
 
 * Methods define actions that a class can perform.
 * Attributes describe various properties of a class.
@@ -57,7 +57,7 @@ class VideoGame {
 }
 ---- 
 
-This class has two attributes `color` and `price`. The color attribute has the `String` data type, which is used for storing any text. The `price` is of a type `int` for storing integer numbers. The class `VideoGame` has three _methods_: `start`, `stop`, and `saveScore`. These are the actions that our video game should perform. Each of these methods declarations starts with a keyword void, which means that these method do not return a value to the caller of the method. In the next chapter I’ll show you a class `Fish`, which will include a method `dive` that returns a value. 
+This class has two attributes `color` and `price`. The color attribute has the `String` data type, which is used for storing any text. The `price` attribute is of an `int` type, which is used for storing integer numbers. The class `VideoGame` has three _methods_: `start`, `stop`, and `saveScore`. These are the actions that our video game should perform. Each of these method declarations start with a keyword `void`, which means that these methods do not return a value to the caller of the method. In the next chapter I’ll show you a class `Fish`, which will include a method `dive` that returns a value. 
 
 At this point each of these methods has just a single line that starts with two slashes //. 
 
@@ -86,13 +86,12 @@ class PlayStation4{
   void shareOnTwitter(){
      // Code to share on Twitter go here
   }
-
 }
 ----
 
 ==== Objects
 
-We'll often use the phrase _create an instance of an object_, which means to create an object in computer's memory based on some class declaration. If a game factory will produce ten thousand of such games, a programmer can say that they created ten thousand instances of the class `PlayStation4`. 
+We'll often use the phrase _create an instance of an object_, which means to create an object in a computer's memory based on some class declaration. If a game factory will produce ten thousand games, a programmer can say that they created ten thousand instances of the class `PlayStation4`. 
 
 The factory description of `PlayStation4` relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  `PlayStation4` objects in Java. For example, the next code sample creates one instance of the class `PlayStation4` and calls its method `shareOnFacebook`.
 
@@ -111,7 +110,7 @@ public class CreatePlayStation4Objects {
 }
 ----
 
-In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different _values_ in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB. 
+In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different _values_ in their attributes - some of them are black while others can be silver. Some of them have 500GB hard disk dive while some are upgraded to 1TB. 
 
 [[FIG3-2]]
 .One Class, Two Instances
@@ -121,9 +120,9 @@ In programmer's jargon, you can create multiple instances of the `PlayStation4` 
 
 === Java Data Types and Variables
 
-If you already started learning algebra in school, you are familiar with the expressions like `x=2`, which means that the variable `x` represents the number 2. In programming, we used variables a lot.  But in programming a variable can store a value in computer’s memory so you can access these values from various methods in your classes.  Using the same algebra example, we can say that we assign the value of 2 to the variable `x`. The equal sign represents the assignement of the value located to the right of the equal sign to the variable located on the left.
+If you ever covered algebra at any point in school, you are familiar with expressions like `x=2`, which means that the variable `x` represents the number 2. In programming, we use variables a lot. In programming a variable can store a value in computer’s memory so you can access these values from various methods in your classes.  Using the same algebra example, we can say that we assign the value of 2 to the variable `x`. The equal sign represents the assignment of the value located to the right of the equal sign to the variable located on the left.
 
-But Java variables can store not only numbers, but other types of data too, so we need to declare the variable type and the name and then assign some value to it.  For example, the class attribute that has a value of the disk size can be stored in the variable of type `String` that's called `hardDiskSize` that can be declared like this:
+Java variables not only can store numbers, but other types of data as well so we need to declare the variable type, the name, and then assign some value to it.  For example, the class attribute that has a value of the disk size can be stored in the variable of type `String` that's called `hardDiskSize`, which can be declared like this:
 
 [source, java]
 ----
@@ -145,27 +144,38 @@ The method parameters (a.k.a. arguments) are also stored in variables. The metho
 
 ==== Primitives
 
-Simple Java data types are called _primitives_ they are written in small letters (e.g. `int`, `long`, `char`, `boolean`). So the `score` is of a primitive data type, while the `playerName` is not.  In Java you have to declare the type and the name of a variable first, and then use it. 
+Simple Java data types are called _primitives_. Their keywords are written in small letters (e.g. `int`, `long`, `char`, `boolean`). So the `score` is of a primitive data type, while the `playerName` is not. In Java you have to declare the type and the name of a variable first and then use it. 
 
 Remember algebra equations like `y=x+2`?  In Java you’d need to start with declaring the variables `x` and `y` of some numeric data type like `int`, `float` or `double`:
 
-`int x;`
-`int y;`
+[source, java]
+----
+int x;
+int y;
+----
 
 Now you can use the variables. The next two lines show how you can assign them values. If your program assigns the value of five to the variable `x`, after evaluating `x+2` the variable `y` will be equal to seven:
 
-`x=5;`
-`y=x+2;`
+[source, java]
+----
+x=5;
+y=x+2;
+----
 
 In Java you are also allowed to change the value of a variable in a somewhat unusual way. The following two lines change the value of the variable `y` from five to six:
 
-`int y=5;`
-`y++;`
+[source, java]
+----
+int y=5;
+y++;
+----
+Despite the two plus signs, JVM is still going to increment the value of the variable `y` by one. The `y++` means read the value of the variable `y`, increment it by one, and assign it back to `y`. The longer syntax to achieve the same result would be `y=y+1`. After the next code fragment, the value of the variable `myScore` is also equal to six:
 
-Despite the two plus signs, JVM is still going to increment the value of the variable `y` by one. The `y++` means, read the value of the variable `y`, increment it by one, and assign it back to `y`. The longer syntax to achieve the same result would be `y=y+1`. After the next code fragment the value of the variable `myScore` is also equal to six:
-
-`int myScore=5;`
-`myScore=myScore+1;`
+[source, java]
+----
+int myScore=5;
+myScore=myScore+1;
+----
 
 You can also use multiplication, division and subtraction the same way. Look at the following piece of code:
 
@@ -193,7 +203,7 @@ To see the result of the score calculations, just  click on the console tab at t
 
 `My score is 6`
 
-In this example the argument of the method `println()` was constructed from two pieces – the text “My score is ” and the value of the variable `myScore`. Putting two or more strings together is called _concatenation_. Even though `myScore` is a number, Java is smart enough to convert this variable into a `String`, and then attach it to the text "My Score is ".
+In this example the argument of the method `println()` was constructed from two pieces – the text “My score is ” and the value of the variable `myScore`. Putting two or more strings together is called _concatenation_. Even though `myScore` is a number, Java is smart enough to convert this variable into a `String` and then attach it to the text "My Score is ".
 
 Look at some other ways of changing the values of the variables:
 
@@ -233,13 +243,13 @@ If you declare, but won’t initialize primitive variables, Java will do it for 
 
 ==== Classes as Data Types
 
-Not all variable have primitive data types. For each primitive data type has a corresponding _wrapper_ class, for example `Integer`, `Double`, `Boolean`, etc. These classes also can store the values of the corresponding primitive type, but also have useful methods to convert data from one type to another. 
+Not all variables have primitive data types. Each primitive data type has a corresponding _wrapper_ class, for example `Integer`, `Double`, `Boolean`, etc. These classes also can store the values of the corresponding primitive type, but also have useful methods to convert data from one type to another. 
 
-In some cases there is no primitive type that suit your needs. For example, there is no primitive type for storing long texts. While the `char` data type is used to store only one character, Java also has a class `String` for working with a longer text, for example: 
+In some cases there is no primitive type that suits your needs. For example, there is no primitive type for storing long texts. While the `char` data type is used to store only one character, Java also has a class `String` for working with a longer text, for example: 
 
 `String lastName="Smith";`
 
-If you declare your own class, consider it a new data type, and you can start declaring variables of this type, for example, you can declare the variable named `myFirstGame`  of type `VideoGame`:
+If you declare your own class, consider it a new data type. You can start declaring variables of this type, for example, you can declare the variable named `myFirstGame`  of type `VideoGame`:
 
 `VideoGame myFirstGame`
 
@@ -251,25 +261,24 @@ Java also has a special keyword `final`, and if it’s used in a declaration of 
 
 ==== How Much Memory is Needed 
 
-Variables are stored in computer's memory, and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), gigabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists or eight bits.
+Variables are stored in a computer's memory and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), gigabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists of eight bits.
 
-A `char` variable occupies two bytes in memory.
+* A `char` variable occupies two bytes in memory.
 
-An `int` and a `float` take four bytes of memory each.
+* An `int` and a `float` take four bytes of memory each.
 
-Variables of `long` and `double` types use eight bytes each.
+* Variables of `long` and `double` types use eight bytes each.
 
-Only one bit is required to store the value of `boolean` variable.
+* Only one bit is required to store the value of `boolean` variable.
 
 Numeric data types that take more bytes can store larger numbers.
 
 
 === Creation of a Pet
 
-Let’s design and create a class `Pet`. First we need to decide what actions our pet will be able to do. How about eat, sleep, and say? We’ll program these actions in the methods of the class `Pet`. We’ll also give our pet the following  attributes: age, height, weight, and color.
+Let’s design and create a class `Pet`. First we need to decide what actions our pet will be able to do. How about eat, sleep, and speak? We’ll program these actions in the methods of the class `Pet`. We’ll also give our pet the following  attributes: age, height, weight, and color.
 
-It's time for hands-on work. Start IDEA IDE and create a new project as explained in Chapter 2. But this time name it MyPet instead of Hello. Click on the _src_ folder in IDEA and create a Java class called `Pet` using the menu File | New | Java Class.
-
+It's time for hands-on work. Start IDEA IDE and create a new project as explained in Chapter 2. This time name it `MyPet` instead of `Hello`. Click on the _src_ folder in IDEA and create a Java class called `Pet` using the menu File | New | Java Class.
 
 Your screen should look similar to this one:
 
@@ -298,7 +307,7 @@ The next step is to add some methods to this class. Before declaring a method yo
 
 * The same is true for the method `eat()`.It will print the message _I’m so hungry, let me have a snack like nachos!_.  
 
-* The method `talk()` will not be printing any messages, but will the prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program. 
+* The method `talk()` will not be printing any messages, but will prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program. 
 
 The new version of the class `Pet` will look like this:
 
@@ -334,7 +343,7 @@ This class represents these friendly little monsters from the "real world":
 .Little Monster
 image::images/fig_3_05.png[]
 
-Let’s talk now about the signatures of each methods in detail starting with the method `sleep`:
+Let’s talk now about the signatures of each method in detail starting with the method `sleep`:
 
 `public void sleep()`
 
@@ -352,7 +361,7 @@ This method can also be called from any other Java class, but has to return some
 .Little Monster eats
 image::images/fig_3_06.png[width=400, height=550]
 
-How do you decide if a method should or should not return a value? If a method performs some data manipulations and has to give the result of these  manipulations back to the  calling class, it has to return a value.  You may say, that the class `Pet` does not have any calling class! That’s correct, so let’s create one called `PetMaster`. We'll create it in the same IDEA project MyPet. 
+How do you decide if a method should or should not return a value? If a method performs some data manipulations and has to give the result of these  manipulations back to the  calling class, it has to return a value.  You may say that the class `Pet` does not have any calling class! That’s correct, so let’s create one called `PetMaster`. We'll create it in the same IDEA project MyPet. 
 
 This class will need a method `main()` to become a runnable program (the class `Pet` didn't have one). Remember from Chapter 2, typing _psvm_ followed by the Tab key will quickly create the method `main()`. We'll place the code communicating with the class `Pet` inside the method `main()`.
 
@@ -381,11 +390,11 @@ public class PetMaster {
 
 <1> The variable `petReaction` will store the value returned by the method `say`.  
 
-<2> This is how to create an instance of the object `Pet` using the Java operator `new`. This line declares a variable of type `Pet`  - that’s right, you can treat any classes created by you as new Java data types.
+<2> This is how to create an instance of the object `Pet` using the Java operator `new`. This line declares a variable of type `Pet` - that’s right, you can treat any classes created by you as new Java data types.
 
 <3> Calling the method `eat()` on the object `Pet`. After the instance of `Pet` was created, the variable `myPet` knows its address in memory. So you can call the method `eat()` (as well as any other) on this particular instance of `Pet`. 
 
-<4> If a method returns a value,  specify a variable that will store returned value to the left of the equal sign. In out code it's `petReaction` of type `String`.  Such variable should have the same type as the return value of the method. 
+<4> If a method returns a value, specify a variable that will store returned value to the left of the equal sign. In our code it's `petReaction` of type `String`.  Such variable should have the same type as the return value of the method. 
 
 <5> The value of the variable `petReaction` is passed as an argument to the method `prinln` for output.
 
@@ -408,9 +417,9 @@ At this point the project MyPet consists of two Java classes: `Pet` and `PetMast
 
 In the real life, every person inherits some features from his or her parents. Similarly, in the Java world you can also create a new class, based on the existing one. The class `Pet` will help us learn yet another important feature of Java called _inheritance_.  
 
-The class `Pet` can include behaviors and attributes that are shared by many pets – all of them eat and sleep, some of them make sounds, their skins have different colors, and so on. On the other hand, not all pets are the same. Dogs bark, fish swim and don't make sounds, parakeets  speak better than dogs. But all of them eat and sleep. That’s why it’s easier to create a class `Fish` that will _inherit_ some common behavior and attributes from the class `Pet`, rather than creating `Dog`, `Parrot` or `Fish` from scratch every time. 
+The class `Pet` can include behaviors and attributes that are shared by many pets – all of them eat and sleep, some of them make sounds, their skin has different colors, and so on. On the other hand, not all pets are the same. Dogs bark, fish swim and don't make sounds, and parakeets speak better than dogs. But all of them eat and sleep. That’s why it’s easier to create a class `Fish` that will _inherit_ some common behavior and attributes from the class `Pet`, rather than creating `Dog`, `Parrot` or `Fish` from scratch every time. 
 
-Java has a special keyword `extends` that will do the trick. Create in IDEA a new class `Fish` and then add to its declaration `extends Pet` so it'll look as follows: 
+Java has a special keyword `extends` that will do the trick. Create a new class `Fish` in IDEA and then add to its declaration `extends Pet` so it'll look as follows: 
 
 [source, java]
 ----
@@ -429,7 +438,7 @@ Fish myLittleFish = new Fish();
 myLittleFish.sleep();
 ----
 
-Even though we have not declared any methods in the class `Fish` yet, we call the method `sleep()`, which was declared in its superclass `Pet`! In Java all classes are automatically inherited from the class `Object`. Even though we've declared the class `Pet` without using the keyword `extends` it still extends the class `Object`. With the keyword `extends` you can build class hierarchies. For example, many animal classes can extend the class `Pet`. 
+Even though we have not declared any methods in the class `Fish` yet, we call (invoke) the method `sleep()`, which was declared in its superclass `Pet`! In Java all classes are automatically inherited from the class `Object`. Even though we've declared the class `Pet` without using the keyword `extends` it still extends the class `Object`. With the keyword `extends` you can build class hierarchies. For example, many animal classes can extend the class `Pet`. 
 
 [[FIG3-8]]
 .Class Hierarchy
@@ -456,9 +465,9 @@ public class Fish extends Pet {
 }
 ----
 
-The method `dive()` has an _argument_ `howDeep` that tells the fish how deep it should go. We’ve also declared a class variable `currentDepth` that will store and update the current depth every time you call the method `dive()`. This method returns the current value of the variable `currenDepth` to the calling class. The plus signs in the `pintln()` lines are not about addition - we're building strings of characters by concatenating their pieces. 
+The method `dive` has an _argument (a.k.a. parameter)_ `howDeep` that tells the fish how deep it should go. We’ve also declared a class variable `currentDepth` that will store and update the current depth every time you call the method `dive`. This method returns the current value of the variable `currenDepth` to the calling class. The plus sign in the `pintln` lines are not about addition - we're building strings of characters by concatenating their pieces. 
 
-Using IDEA create another class `FishMaster` that will look like this:
+Using IDEA, create another class named `FishMaster` that will look like this:
 
 [source, java]
 ----
@@ -476,21 +485,24 @@ public class FishMaster {
 }
 ----
 
-The method `main()` instantiates the object `Fish` and calls its method `dive()` twice with different arguments - two and three. After that, it calls the method `sleep()`. When you run the program `FishMaster`, it will print the following messages:
+The method `main` instantiates the object `Fish` and calls its method `dive` twice with different arguments - two and three. After that, it calls the method `sleep`. When you run the program `FishMaster`, it will print the following messages:
 
-_Diving for 2 feet_
-_I'm at 2 feet below sea level_
-_Diving for 3 feet_
-_I'm at 5 feet below sea level_
-_Good night, see you tomorrow_
+[source, text]
+----
+Diving for 2 feet
+I'm at 2 feet below sea level
+Diving for 3 feet
+I'm at 5 feet below sea level
+Good night, see you tomorrow
+----
 
-Have you noticed that beside the methods defined in the class `Fish`, the `FishMaster` also calls method `sleep()`  from its superclass `Pet`? This is what inheritance is all about – you do not have to copy and paste code from the class `Pet` – just use the keyword `extends`, and the class `Fish` can use `Pet`’s methods! 
+Have you noticed that beside the methods defined in the class `Fish`, the `FishMaster` also calls method `sleep`  from its superclass `Pet`? This is what inheritance is all about – you do not have to copy and paste code from the class `Pet` – just use the keyword `extends`, and the class `Fish` can use `Pet`’s methods! 
 
 [[FIG3-9]]
 .What's the current depth?
 image::images/fig_3_09.png[width=400, height=550]
 
-One more thing, even though the method `dive()` returns the value of  `currentDepth`, our `FishMaster` does not use it. That’s fine, -  our `FishMaster` does not need this value, but there may be some other classes that will also use the class `Fish`, and they may find knowing the current depth  useful. For example, think of a class `FishTrafficDispatcher` that has to know positions of other fish under the sea before giving permissions to dive to avoid traffic accidents.
+One more thing, even though the method `dive` returns the value of  `currentDepth`, our `FishMaster` does not use it. That’s fine, because our class`FishMaster` does not use the returned value, but there may be some other classes that will also use the class `Fish`, and they may find knowing the current depth  useful. For example, think of a class `FishTrafficDispatcher` that has to know positions of other fish under the sea before giving permissions to dive to avoid traffic accidents.
 
 === Method Overriding
 
