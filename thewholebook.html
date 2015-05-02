@@ -806,7 +806,7 @@ p { margin-bottom: 1.25rem; }
 <li><a href="#_the-code-switch-code-statement">4.2.5. The <code>switch</code> Statement</a></li>
 </ul>
 </li>
-<li><a href="#_how-long-variables-live">4.3. How Long Variables Live?</a>
+<li><a href="#_how-long-will-a-variables-live">4.3. How Long Will A Variables Live?</a>
 <ul class="sectlevel3">
 <li><a href="#_the-keyword-code-static-code">4.3.1. The Keyword <code>static</code></a></li>
 </ul>
@@ -1301,7 +1301,9 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <div class="title">Figure 8. Sammy is 4 months old here</div>
 </div>
 <div class="paragraph">
-<p>In the next chapter you&#8217;ll learn how to write, compile and run your programs in a more convenient environment than just a text editor and a Command window.</p>
+<p>In the next chapter you&#8217;ll learn how to write, compile and run your programs in a more convenient environment than just a text editor and a Command window.
+:toc-placement!:
+:imagesdir: .</p>
 </div>
 </div>
 </div>
@@ -1596,7 +1598,9 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <p>In this example, the arguments may be given to the method for some kind of processing like saving the score on the disk. Since the name Dave was placed in parentheses, we can guess that the first argument has a <code>String</code> type, which is used for text. The second argument is clearly of a numeric type but we can tell what&#8217;s the exact type only after reading the declaration of the method <code>saveScore</code> inside the source code of the class <code>PingPongGame</code>.</p>
 </div>
 <div class="paragraph">
-<p>In the next chapter we&#8217;ll spend a lot more time seeing what Java classes consist of.</p>
+<p>In the next chapter we&#8217;ll spend a lot more time seeing what Java classes consist of.
+:toc-placement!:
+:imagesdir: .</p>
 </div>
 </div>
 </div>
@@ -1605,29 +1609,29 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 <h2 id="_meet-classes-the-main-language-constructs"><a class="anchor" href="#_meet-classes-the-main-language-constructs"></a>3. Meet Classes - the Main Language Constructs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the real world you see and use various objects, and each of them is of some kind like toys, food, animals, electronics et al. In Java instead of saying a kind of objects, we say a class of objects. In other words, each object belongs to a class. A class is like a blueprint of an object. In this chapter you’ll get familiar with classes - the main constructs of the Java language.</p>
+<p>In the real world you see and use various objects, and each of them is belongs to some <em>kind</em> such as toys, food, animals, electronics et al. In Java, instead of saying what kind of objects, we say what <em>class</em> of objects. In other words, each object belongs to a class. A class is like a blueprint of an object. In this chapter you’ll get familiar with classes - the main constructs of the Java language.</p>
 </div>
 <div class="paragraph">
-<p>Any program that you’ll write will have at least one class. You’ll learn how to declare a class and how to create one or more object based on the class declaration. You’ll also learn about a class internals – what a class can consist of. Finally, I’ll show you how to create a class that inherits features of another class.</p>
+<p>Any program that you’ll write will have at least one class. You’ll learn how to declare a class and how to create one or more objects based on the class declaration. You’ll also learn about a class&#8217;s internals – what a class can consist of. Finally, I’ll show you how to create a class that inherits features of another class.</p>
 </div>
 <div class="paragraph">
-<p>Java defines a number of data types. Some of them are simple, like <code>int</code>, which represents integer numbers. Some of them are more complex - they are called <em>classes</em>, like <code>System</code>, which can be used for things like printing texts on the screen, exiting a program or cleaning computer&#8217;s memory.</p>
+<p>Java defines a number of data types. Some of them are simple, like <code>int</code>, which represents integer numbers. Some of them are more complex - they are called <em>classes</em>, like <code>System</code>, which can be used for things like printing text on the screen, exiting a program, or cleaning a computer&#8217;s memory.</p>
 </div>
 <div class="paragraph">
-<p>When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of <em>classes</em> that can represent <em>objects</em> from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the  class <code>Dog</code>.</p>
+<p>When you installed Java on your computer, you installed thousands of Java classes. Your Java programs will also consist of <em>classes</em> that can represent <em>objects</em> from the real world. If a class is a data type, an object is a representative of a specific type. For instance, you can see ten dogs on the street, and they all represent the class <code>Dog</code>.</p>
 </div>
 <div class="paragraph">
-<p>Programmers start working on any application with deciding  which Java classes to include in the program and how many objects of each type to create. Say, they can define a class <code>Player</code> in the gaming application and create two object instances of this type.</p>
+<p>Programmers start working on any application by deciding  which Java classes to include in the program and how many of each object type to create. Say, they can define a class <code>Player</code> in the gaming application and create two object instances of this type.</p>
 </div>
 <div class="sect2">
 <h3 id="_dissecting-classes-and-objects"><a class="anchor" href="#_dissecting-classes-and-objects"></a>3.1. Dissecting Classes and Objects</h3>
 <div class="paragraph">
-<p>While programmers talk to each other, they may say "Do something with the class Player" or "Do something with the object Player". We need to learn the difference between the meaning of the words <em>class</em> and <em>object</em>.</p>
+<p>When programmers talk to each other, they may say "Do something with the class Player" or "Do something with the object Player". We need to learn the difference between the meaning of the words <em>class</em> and <em>object</em>.</p>
 </div>
 <div class="sect3">
 <h4 id="_classes"><a class="anchor" href="#_classes"></a>3.1.1. Classes</h4>
 <div class="paragraph">
-<p>Let&#8217;s see what Java classes can consist of. Actually a very simple class can have nothing inside. Take a look at this class declaration:</p>
+<p>Let&#8217;s see what Java classes can consist of. A very simple class can have nothing inside. Take a look at this class declaration:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1637,7 +1641,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 </div>
 </div>
 <div class="paragraph">
-<p>This class is empty - it knows nothing and can&#8217;t do anything, because there is no code between the curly braces. From the Java syntax perspective this class is legit, and compiler won&#8217;t complain - there is a valid keyword <code>class</code> followed by its name <code>VideoGame</code>, and the opening curly brace has the matching closing one. But we need classes that can do stuff. We can place methods and attributes inside the class.</p>
+<p>This class is empty. It knows nothing and can&#8217;t do anything because there is no code between the curly braces. From the Java syntax perspective, this class is legitimate and compiler won&#8217;t complain. There is a valid keyword <code>class</code> followed by its name <code>VideoGame</code>. The opening curly brace has the matching closing one. We need classes that can do stuff. We can place methods and attributes inside the class.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1674,7 +1678,7 @@ To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are com
 </div>
 </div>
 <div class="paragraph">
-<p>This class has two attributes <code>color</code> and <code>price</code>. The color attribute has the <code>String</code> data type, which is used for storing any text. The <code>price</code> is of a type <code>int</code> for storing integer numbers. The class <code>VideoGame</code> has three <em>methods</em>: <code>start</code>, <code>stop</code>, and <code>saveScore</code>. These are the actions that our video game should perform. Each of these methods declarations starts with a keyword void, which means that these method do not return a value to the caller of the method. In the next chapter I’ll show you a class <code>Fish</code>, which will include a method <code>dive</code> that returns a value.</p>
+<p>This class has two attributes <code>color</code> and <code>price</code>. The color attribute has the <code>String</code> data type, which is used for storing any text. The <code>price</code> attribute is of an <code>int</code> type, which is used for storing integer numbers. The class <code>VideoGame</code> has three <em>methods</em>: <code>start</code>, <code>stop</code>, and <code>saveScore</code>. These are the actions that our video game should perform. Each of these method declarations start with a keyword <code>void</code>, which means that these methods do not return a value to the caller of the method. In the next chapter I’ll show you a class <code>Fish</code>, which will include a method <code>dive</code> that returns a value.</p>
 </div>
 <div class="paragraph">
 <p>At this point each of these methods has just a single line that starts with two slashes //.</p>
@@ -1718,7 +1722,6 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
   void shareOnTwitter(){
      // Code to share on Twitter go here
   }
-
 }</code></pre>
 </div>
 </div>
@@ -1726,7 +1729,7 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <div class="sect3">
 <h4 id="_objects"><a class="anchor" href="#_objects"></a>3.1.2. Objects</h4>
 <div class="paragraph">
-<p>We&#8217;ll often use the phrase <em>create an instance of an object</em>, which means to create an object in computer&#8217;s memory based on some class declaration. If a game factory will produce ten thousand of such games, a programmer can say that they created ten thousand instances of the class <code>PlayStation4</code>.</p>
+<p>We&#8217;ll often use the phrase <em>create an instance of an object</em>, which means to create an object in a computer&#8217;s memory based on some class declaration. If a game factory will produce ten thousand games, a programmer can say that they created ten thousand instances of the class <code>PlayStation4</code>.</p>
 </div>
 <div class="paragraph">
 <p>The factory description of <code>PlayStation4</code> relates to an actual game the same way as a Java class relates to its instance in memory. The process of building actual games based on this description in the game factory is similar to the process of creating instances of  <code>PlayStation4</code> objects in Java. For example, the next code sample creates one instance of the class <code>PlayStation4</code> and calls its method <code>shareOnFacebook</code>.</p>
@@ -1747,7 +1750,7 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 </div>
 </div>
 <div class="paragraph">
-<p>In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different <em>values</em> in their attributes - some of them are black, while others can be silver. Some of them have 500GB hard disk dive, while some are upgraded to 1TB.</p>
+<p>In many cases, a program can use a Java class only after creating the instance of an object. The same with manufacturers - they create thousands of game copies based on the same description. Even though these copies represent the same class, they may have different <em>values</em> in their attributes - some of them are black while others can be silver. Some of them have 500GB hard disk dive while some are upgraded to 1TB.</p>
 </div>
 <div id="FIG3-2" class="imageblock">
 <div class="content">
@@ -1763,10 +1766,10 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <div class="sect2">
 <h3 id="_java-data-types-and-variables"><a class="anchor" href="#_java-data-types-and-variables"></a>3.2. Java Data Types and Variables</h3>
 <div class="paragraph">
-<p>If you already started learning algebra in school, you are familiar with the expressions like <code>x=2</code>, which means that the variable <code>x</code> represents the number 2. In programming, we used variables a lot.  But in programming a variable can store a value in computer’s memory so you can access these values from various methods in your classes.  Using the same algebra example, we can say that we assign the value of 2 to the variable <code>x</code>. The equal sign represents the assignement of the value located to the right of the equal sign to the variable located on the left.</p>
+<p>If you ever covered algebra at any point in school, you are familiar with expressions like <code>x=2</code>, which means that the variable <code>x</code> represents the number 2. In programming, we use variables a lot. In programming a variable can store a value in computer’s memory so you can access these values from various methods in your classes.  Using the same algebra example, we can say that we assign the value of 2 to the variable <code>x</code>. The equal sign represents the assignment of the value located to the right of the equal sign to the variable located on the left.</p>
 </div>
 <div class="paragraph">
-<p>But Java variables can store not only numbers, but other types of data too, so we need to declare the variable type and the name and then assign some value to it.  For example, the class attribute that has a value of the disk size can be stored in the variable of type <code>String</code> that&#8217;s called <code>hardDiskSize</code> that can be declared like this:</p>
+<p>Java variables not only can store numbers, but other types of data as well so we need to declare the variable type, the name, and then assign some value to it.  For example, the class attribute that has a value of the disk size can be stored in the variable of type <code>String</code> that&#8217;s called <code>hardDiskSize</code>, which can be declared like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1793,35 +1796,43 @@ If a line starts with two slashes, it contains a <em>single line comment</em> - 
 <div class="sect3">
 <h4 id="_primitives"><a class="anchor" href="#_primitives"></a>3.2.1. Primitives</h4>
 <div class="paragraph">
-<p>Simple Java data types are called <em>primitives</em> they are written in small letters (e.g. <code>int</code>, <code>long</code>, <code>char</code>, <code>boolean</code>). So the <code>score</code> is of a primitive data type, while the <code>playerName</code> is not.  In Java you have to declare the type and the name of a variable first, and then use it.</p>
+<p>Simple Java data types are called <em>primitives</em>. Their keywords are written in small letters (e.g. <code>int</code>, <code>long</code>, <code>char</code>, <code>boolean</code>). So the <code>score</code> is of a primitive data type, while the <code>playerName</code> is not. In Java you have to declare the type and the name of a variable first and then use it.</p>
 </div>
 <div class="paragraph">
 <p>Remember algebra equations like <code>y=x+2</code>?  In Java you’d need to start with declaring the variables <code>x</code> and <code>y</code> of some numeric data type like <code>int</code>, <code>float</code> or <code>double</code>:</p>
 </div>
-<div class="paragraph">
-<p><code>int x;</code>
-<code>int y;</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">int x;
+int y;</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Now you can use the variables. The next two lines show how you can assign them values. If your program assigns the value of five to the variable <code>x</code>, after evaluating <code>x+2</code> the variable <code>y</code> will be equal to seven:</p>
 </div>
-<div class="paragraph">
-<p><code>x=5;</code>
-<code>y=x+2;</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">x=5;
+y=x+2;</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>In Java you are also allowed to change the value of a variable in a somewhat unusual way. The following two lines change the value of the variable <code>y</code> from five to six:</p>
 </div>
-<div class="paragraph">
-<p><code>int y=5;</code>
-<code>y++;</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">int y=5;
+y++;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Despite the two plus signs, JVM is still going to increment the value of the variable <code>y</code> by one. The <code>y++</code> means, read the value of the variable <code>y</code>, increment it by one, and assign it back to <code>y</code>. The longer syntax to achieve the same result would be <code>y=y+1</code>. After the next code fragment the value of the variable <code>myScore</code> is also equal to six:</p>
+<p>Despite the two plus signs, JVM is still going to increment the value of the variable <code>y</code> by one. The <code>y++</code> means read the value of the variable <code>y</code>, increment it by one, and assign it back to <code>y</code>. The longer syntax to achieve the same result would be <code>y=y+1</code>. After the next code fragment, the value of the variable <code>myScore</code> is also equal to six:</p>
 </div>
-<div class="paragraph">
-<p><code>int myScore=5;</code>
-<code>myScore=myScore+1;</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">int myScore=5;
+myScore=myScore+1;</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>You can also use multiplication, division and subtraction the same way. Look at the following piece of code:</p>
@@ -1855,7 +1866,7 @@ System.out.println("My score is " + myScore);</code></pre>
 <p><code>My score is 6</code></p>
 </div>
 <div class="paragraph">
-<p>In this example the argument of the method <code>println()</code> was constructed from two pieces – the text “My score is ” and the value of the variable <code>myScore</code>. Putting two or more strings together is called <em>concatenation</em>. Even though <code>myScore</code> is a number, Java is smart enough to convert this variable into a <code>String</code>, and then attach it to the text "My Score is ".</p>
+<p>In this example the argument of the method <code>println</code> was constructed from two pieces – the text “My score is ” and the value of the variable <code>myScore</code>. Putting two or more strings together is called <em>concatenation</em>. Even though <code>myScore</code> is a number, Java is smart enough to convert this variable into a <code>String</code> and then attach it to the text "My Score is ".</p>
 </div>
 <div class="paragraph">
 <p>Look at some other ways of changing the values of the variables:</p>
@@ -1910,16 +1921,16 @@ long totalCars =4637283648392l;</code></pre>
 <div class="sect3">
 <h4 id="_classes-as-data-types"><a class="anchor" href="#_classes-as-data-types"></a>3.2.2. Classes as Data Types</h4>
 <div class="paragraph">
-<p>Not all variable have primitive data types. For each primitive data type has a corresponding <em>wrapper</em> class, for example <code>Integer</code>, <code>Double</code>, <code>Boolean</code>, etc. These classes also can store the values of the corresponding primitive type, but also have useful methods to convert data from one type to another.</p>
+<p>Not all variables have primitive data types. Each primitive data type has a corresponding <em>wrapper</em> class, for example <code>Integer</code>, <code>Double</code>, <code>Boolean</code>, etc. These classes also can store the values of the corresponding primitive type, but also have useful methods to convert data from one type to another.</p>
 </div>
 <div class="paragraph">
-<p>In some cases there is no primitive type that suit your needs. For example, there is no primitive type for storing long texts. While the <code>char</code> data type is used to store only one character, Java also has a class <code>String</code> for working with a longer text, for example:</p>
+<p>In some cases there is no primitive type that suits your needs. For example, there is no primitive type for storing long texts. While the <code>char</code> data type is used to store only one character, Java also has a class <code>String</code> for working with a longer text, for example:</p>
 </div>
 <div class="paragraph">
 <p><code>String lastName="Smith";</code></p>
 </div>
 <div class="paragraph">
-<p>If you declare your own class, consider it a new data type, and you can start declaring variables of this type, for example, you can declare the variable named <code>myFirstGame</code>  of type <code>VideoGame</code>:</p>
+<p>If you declare your own class, consider it a new data type. You can start declaring variables of this type, for example, you can declare the variable named <code>myFirstGame</code>  of type <code>VideoGame</code>:</p>
 </div>
 <div class="paragraph">
 <p><code>VideoGame myFirstGame</code></p>
@@ -1937,19 +1948,23 @@ long totalCars =4637283648392l;</code></pre>
 <div class="sect3">
 <h4 id="_how-much-memory-is-needed"><a class="anchor" href="#_how-much-memory-is-needed"></a>3.2.3. How Much Memory is Needed</h4>
 <div class="paragraph">
-<p>Variables are stored in computer&#8217;s memory, and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), gigabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists or eight bits.</p>
+<p>Variables are stored in a computer&#8217;s memory and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), gigabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists of eight bits.</p>
 </div>
-<div class="paragraph">
+<div class="ulist">
+<ul>
+<li>
 <p>A <code>char</code> variable occupies two bytes in memory.</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>An <code>int</code> and a <code>float</code> take four bytes of memory each.</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>Variables of <code>long</code> and <code>double</code> types use eight bytes each.</p>
-</div>
-<div class="paragraph">
+</li>
+<li>
 <p>Only one bit is required to store the value of <code>boolean</code> variable.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Numeric data types that take more bytes can store larger numbers.</p>
@@ -1959,10 +1974,10 @@ long totalCars =4637283648392l;</code></pre>
 <div class="sect2">
 <h3 id="_creation-of-a-pet"><a class="anchor" href="#_creation-of-a-pet"></a>3.3. Creation of a Pet</h3>
 <div class="paragraph">
-<p>Let’s design and create a class <code>Pet</code>. First we need to decide what actions our pet will be able to do. How about eat, sleep, and say? We’ll program these actions in the methods of the class <code>Pet</code>. We’ll also give our pet the following  attributes: age, height, weight, and color.</p>
+<p>Let’s design and create a class <code>Pet</code>. First we need to decide what actions our pet will be able to do. How about eat, sleep, and speak? We’ll program these actions in the methods of the class <code>Pet</code>. We’ll also give our pet the following  attributes: age, height, weight, and color.</p>
 </div>
 <div class="paragraph">
-<p>It&#8217;s time for hands-on work. Start IDEA IDE and create a new project as explained in Chapter 2. But this time name it MyPet instead of Hello. Click on the <em>src</em> folder in IDEA and create a Java class called <code>Pet</code> using the menu File | New | Java Class.</p>
+<p>It&#8217;s time for hands-on work. Start IDEA IDE and create a new project as explained in Chapter 2. This time name it <code>MyPet</code> instead of <code>Hello</code>. Click on the <em>src</em> folder in IDEA and create a Java class called <code>Pet</code> using the menu File | New | Java Class.</p>
 </div>
 <div class="paragraph">
 <p>Your screen should look similar to this one:</p>
@@ -1996,13 +2011,13 @@ long totalCars =4637283648392l;</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>The method <code>sleep()</code> will just print a message <em>Good night, see you tomorrow</em> – it does not need any arguments and will not return any value.</p>
+<p>The method <code>sleep</code> will just print a message <em>Good night, see you tomorrow</em> – it does not need any arguments and will not return any value.</p>
 </li>
 <li>
-<p>The same is true for the method <code>eat()</code>.It will print the message <em>I’m so hungry, let me have a snack like nachos!</em>.</p>
+<p>The same is true for the method <code>eat</code>.It will print the message <em>I’m so hungry, let me have a snack like nachos!</em>.</p>
 </li>
 <li>
-<p>The method <code>talk()</code> will not be printing any messages, but will the prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program.</p>
+<p>The method <code>talk</code> will not be printing any messages, but will prepare a message based on the word or a phrase passed to this method as an argument. This method will build a phrase using the argument and will return it back to the calling program.</p>
 </li>
 </ul>
 </div>
@@ -2045,19 +2060,19 @@ long totalCars =4637283648392l;</code></pre>
 <div class="title">Figure 28. Little Monster</div>
 </div>
 <div class="paragraph">
-<p>Let’s talk now about the signatures of each methods in detail starting with the method <code>sleep</code>:</p>
+<p>Let’s talk now about the signatures of each method in detail starting with the method <code>sleep</code>:</p>
 </div>
 <div class="paragraph">
 <p><code>public void sleep()</code></p>
 </div>
 <div class="paragraph">
-<p>This method signature tells us that <code>sleep()</code> can be called from any other Java class ( because it&#8217;s <code>public</code>). This method does not return any data (the keyword <code>void</code>).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text.</p>
+<p>This method signature tells us that <code>sleep</code> can be called from any other Java class ( because it&#8217;s <code>public</code>). This method does not return any data (the keyword <code>void</code>).  The empty parentheses mean that this method does not take any arguments - it does not need any data from the outside world to print the same text.</p>
 </div>
 <div class="paragraph">
-<p>The signature of the method <code>eat()</code> is similar to <code>sleep()</code>.</p>
+<p>The signature of the method <code>eat</code> is similar to <code>sleep</code>.</p>
 </div>
 <div class="paragraph">
-<p>The signature of the method <code>talk()</code> looks like this:</p>
+<p>The signature of the method <code>talk</code> looks like this:</p>
 </div>
 <div class="paragraph">
 <p><code>public String talk(String aWord)</code></p>
@@ -2072,10 +2087,10 @@ long totalCars =4637283648392l;</code></pre>
 <div class="title">Figure 29. Little Monster eats</div>
 </div>
 <div class="paragraph">
-<p>How do you decide if a method should or should not return a value? If a method performs some data manipulations and has to give the result of these  manipulations back to the  calling class, it has to return a value.  You may say, that the class <code>Pet</code> does not have any calling class! That’s correct, so let’s create one called <code>PetMaster</code>. We&#8217;ll create it in the same IDEA project MyPet.</p>
+<p>How do you decide if a method should or should not return a value? If a method performs some data manipulations and has to give the result of these  manipulations back to the  calling class, it has to return a value.  You may say that the class <code>Pet</code> does not have any calling class! That’s correct, so let’s create one called <code>PetMaster</code>. We&#8217;ll create it in the same IDEA project MyPet.</p>
 </div>
 <div class="paragraph">
-<p>This class will need a method <code>main()</code> to become a runnable program (the class <code>Pet</code> didn&#8217;t have one). Remember from Chapter 2, typing <em>psvm</em> followed by the Tab key will quickly create the method <code>main()</code>. We&#8217;ll place the code communicating with the class <code>Pet</code> inside the method <code>main()</code>.</p>
+<p>This class will need a method <code>main</code> to become a runnable program (the class <code>Pet</code> didn&#8217;t have one). Remember from Chapter 2, typing <em>psvm</em> followed by the Tab key will quickly create the method <code>main</code>. We&#8217;ll place the code communicating with the class <code>Pet</code> inside the method <code>main</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2118,15 +2133,15 @@ Do not forget to press <em>Ctrl-S</em> (<em>CMD-S</em> on Mac) to save and compi
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>This is how to create an instance of the object <code>Pet</code> using the Java operator <code>new</code>. This line declares a variable of type <code>Pet</code>  - that’s right, you can treat any classes created by you as new Java data types.</td>
+<td>This is how to create an instance of the object <code>Pet</code> using the Java operator <code>new</code>. This line declares a variable of type <code>Pet</code> - that’s right, you can treat any classes created by you as new Java data types.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Calling the method <code>eat()</code> on the object <code>Pet</code>. After the instance of <code>Pet</code> was created, the variable <code>myPet</code> knows its address in memory. So you can call the method <code>eat()</code> (as well as any other) on this particular instance of <code>Pet</code>.</td>
+<td>Calling the method <code>eat</code> on the object <code>Pet</code>. After the instance of <code>Pet</code> was created, the variable <code>myPet</code> knows its address in memory. So you can call the method <code>eat</code> (as well as any other) on this particular instance of <code>Pet</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>If a method returns a value,  specify a variable that will store returned value to the left of the equal sign. In out code it&#8217;s <code>petReaction</code> of type <code>String</code>.  Such variable should have the same type as the return value of the method.</td>
+<td>If a method returns a value, specify a variable that will store returned value to the left of the equal sign. In our code it&#8217;s <code>petReaction</code> of type <code>String</code>.  Such variable should have the same type as the return value of the method.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -2134,7 +2149,7 @@ Do not forget to press <em>Ctrl-S</em> (<em>CMD-S</em> on Mac) to save and compi
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>Calling the method <code>sleep()</code> on the object <code>Pet</code>.</td>
+<td>Calling the method <code>sleep</code> on the object <code>Pet</code>.</td>
 </tr>
 </table>
 </div>
@@ -2153,7 +2168,7 @@ Good night, see you tomorrow!</em></p>
 <div class="title">Figure 30. Tweet, Tweet!</div>
 </div>
 <div class="paragraph">
-<p>At this point the project MyPet consists of two Java classes: <code>Pet</code> and <code>PetMaster</code>. The role of the class <code>Pet</code> is to represent attributes and behavior of a pet, while the class <code>PetMaster</code> starts the program, <em>instantiates</em> the class <code>Pet</code> and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the <code>main()</code> method, which is the entry point of the application.</p>
+<p>At this point the project MyPet consists of two Java classes: <code>Pet</code> and <code>PetMaster</code>. The role of the class <code>Pet</code> is to represent attributes and behavior of a pet, while the class <code>PetMaster</code> starts the program, <em>instantiates</em> the class <code>Pet</code> and calls its methods.  Your typical projects will consist of multiple Java classes, but only one of them will have have the <code>main</code> method, which is the entry point of the application.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2162,10 +2177,10 @@ Good night, see you tomorrow!</em></p>
 <p>In the real life, every person inherits some features from his or her parents. Similarly, in the Java world you can also create a new class, based on the existing one. The class <code>Pet</code> will help us learn yet another important feature of Java called <em>inheritance</em>.</p>
 </div>
 <div class="paragraph">
-<p>The class <code>Pet</code> can include behaviors and attributes that are shared by many pets – all of them eat and sleep, some of them make sounds, their skins have different colors, and so on. On the other hand, not all pets are the same. Dogs bark, fish swim and don&#8217;t make sounds, parakeets  speak better than dogs. But all of them eat and sleep. That’s why it’s easier to create a class <code>Fish</code> that will <em>inherit</em> some common behavior and attributes from the class <code>Pet</code>, rather than creating <code>Dog</code>, <code>Parrot</code> or <code>Fish</code> from scratch every time.</p>
+<p>The class <code>Pet</code> can include behaviors and attributes that are shared by many pets – all of them eat and sleep, some of them make sounds, their skin has different colors, and so on. On the other hand, not all pets are the same. Dogs bark, fish swim and don&#8217;t make sounds, and parakeets speak better than dogs. But all of them eat and sleep. That’s why it’s easier to create a class <code>Fish</code> that will <em>inherit</em> some common behavior and attributes from the class <code>Pet</code>, rather than creating <code>Dog</code>, <code>Parrot</code> or <code>Fish</code> from scratch every time.</p>
 </div>
 <div class="paragraph">
-<p>Java has a special keyword <code>extends</code> that will do the trick. Create in IDEA a new class <code>Fish</code> and then add to its declaration <code>extends Pet</code> so it&#8217;ll look as follows:</p>
+<p>Java has a special keyword <code>extends</code> that will do the trick. Create a new class <code>Fish</code> in IDEA and then add to its declaration <code>extends Pet</code> so it&#8217;ll look as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2178,7 +2193,7 @@ Good night, see you tomorrow!</em></p>
 <p>This class <code>Fish</code> is a <em>subclass</em> of the class <code>Pet</code>. Accordingly, the class <code>Pet</code> is a <em>superclass</em> of the class <code>Fish</code>. In other words, you use the class <code>Pet</code> as a template for creating a class <code>Fish</code>. The keyword <code>extends</code> defines relationship between classes. Since our <code>Fish</code> extends a <code>Pet</code>, we can say that a fish is a pet. But we can&#8217;t say that a pet is a fish.</p>
 </div>
 <div class="paragraph">
-<p>Even if you will leave the class <code>Fish</code> empty as it is now, you can still use every method and attribute inherited from  the class <code>Pet</code>, because a fish is a pet! Take a look, we&#8217;re creating an instance of the object <code>Fish</code> and are calling its method <code>sleep()</code>:</p>
+<p>Even if you will leave the class <code>Fish</code> empty as it is now, you can still use every method and attribute inherited from  the class <code>Pet</code>, because a fish is a pet! Take a look, we&#8217;re creating an instance of the object <code>Fish</code> and are calling its method <code>sleep</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2187,7 +2202,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Even though we have not declared any methods in the class <code>Fish</code> yet, we call the method <code>sleep()</code>, which was declared in its superclass <code>Pet</code>! In Java all classes are automatically inherited from the class <code>Object</code>. Even though we&#8217;ve declared the class <code>Pet</code> without using the keyword <code>extends</code> it still extends the class <code>Object</code>. With the keyword <code>extends</code> you can build class hierarchies. For example, many animal classes can extend the class <code>Pet</code>.</p>
+<p>Even though we have not declared any methods in the class <code>Fish</code> yet, we call (invoke) the method <code>sleep</code>, which was declared in its superclass <code>Pet</code>! In Java all classes are automatically inherited from the class <code>Object</code>. Even though we&#8217;ve declared the class <code>Pet</code> without using the keyword <code>extends</code> it still extends the class <code>Object</code>. With the keyword <code>extends</code> you can build class hierarchies. For example, many animal classes can extend the class <code>Pet</code>.</p>
 </div>
 <div id="FIG3-8" class="imageblock">
 <div class="content">
@@ -2196,7 +2211,7 @@ myLittleFish.sleep();</code></pre>
 <div class="title">Figure 31. Class Hierarchy</div>
 </div>
 <div class="paragraph">
-<p>Let’s not forget, however, that we’ve  created the class <code>Fish</code> as a subclass of <code>Pet</code>, because we wanted to add some additional features that only fish have and reuse some of  the code that we wrote for a <em>general pet</em>.For instance, not all pets can dive, but fish certainly can. Let’s add a new method <code>dive()</code> to the class <code>Fish</code>.</p>
+<p>Let’s not forget, however, that we’ve  created the class <code>Fish</code> as a subclass of <code>Pet</code>, because we wanted to add some additional features that only fish have and reuse some of  the code that we wrote for a <em>general pet</em>.For instance, not all pets can dive, but fish certainly can. Let’s add a new method <code>dive</code> to the class <code>Fish</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2218,10 +2233,10 @@ myLittleFish.sleep();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>dive()</code> has an <em>argument</em> <code>howDeep</code> that tells the fish how deep it should go. We’ve also declared a class variable <code>currentDepth</code> that will store and update the current depth every time you call the method <code>dive()</code>. This method returns the current value of the variable <code>currenDepth</code> to the calling class. The plus signs in the <code>pintln()</code> lines are not about addition - we&#8217;re building strings of characters by concatenating their pieces.</p>
+<p>The method <code>dive</code> has an <em>argument (a.k.a. parameter)</em> <code>howDeep</code> that tells the fish how deep it should go. We’ve also declared a class variable <code>currentDepth</code> that will store and update the current depth every time you call the method <code>dive</code>. This method returns the current value of the variable <code>currenDepth</code> to the calling class. The plus sign in the <code>pintln</code> lines are not about addition - we&#8217;re building strings of characters by concatenating their pieces.</p>
 </div>
 <div class="paragraph">
-<p>Using IDEA create another class <code>FishMaster</code> that will look like this:</p>
+<p>Using IDEA, create another class named <code>FishMaster</code> that will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2240,17 +2255,19 @@ myLittleFish.sleep();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>main()</code> instantiates the object <code>Fish</code> and calls its method <code>dive()</code> twice with different arguments - two and three. After that, it calls the method <code>sleep()</code>. When you run the program <code>FishMaster</code>, it will print the following messages:</p>
+<p>The method <code>main</code> instantiates the object <code>Fish</code> and calls its method <code>dive</code> twice with different arguments - two and three. After that, it calls the method <code>sleep</code>. When you run the program <code>FishMaster</code>, it will print the following messages:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text" data-lang="text">Diving for 2 feet
+I'm at 2 feet below sea level
+Diving for 3 feet
+I'm at 5 feet below sea level
+Good night, see you tomorrow</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><em>Diving for 2 feet</em>
-<em>I&#8217;m at 2 feet below sea level</em>
-<em>Diving for 3 feet</em>
-<em>I&#8217;m at 5 feet below sea level</em>
-<em>Good night, see you tomorrow</em></p>
-</div>
-<div class="paragraph">
-<p>Have you noticed that beside the methods defined in the class <code>Fish</code>, the <code>FishMaster</code> also calls method <code>sleep()</code>  from its superclass <code>Pet</code>? This is what inheritance is all about – you do not have to copy and paste code from the class <code>Pet</code> – just use the keyword <code>extends</code>, and the class <code>Fish</code> can use <code>Pet</code>’s methods!</p>
+<p>Have you noticed that beside the methods defined in the class <code>Fish</code>, the <code>FishMaster</code> also calls method <code>sleep</code>  from its superclass <code>Pet</code>? This is what inheritance is all about – you do not have to copy and paste code from the class <code>Pet</code> – just use the keyword <code>extends</code>, and the class <code>Fish</code> can use <code>Pet</code>’s methods!</p>
 </div>
 <div id="FIG3-9" class="imageblock">
 <div class="content">
@@ -2259,16 +2276,16 @@ myLittleFish.sleep();</code></pre>
 <div class="title">Figure 32. What&#8217;s the current depth?</div>
 </div>
 <div class="paragraph">
-<p>One more thing, even though the method <code>dive()</code> returns the value of  <code>currentDepth</code>, our <code>FishMaster</code> does not use it. That’s fine, -  our <code>FishMaster</code> does not need this value, but there may be some other classes that will also use the class <code>Fish</code>, and they may find knowing the current depth  useful. For example, think of a class <code>FishTrafficDispatcher</code> that has to know positions of other fish under the sea before giving permissions to dive to avoid traffic accidents.</p>
+<p>One more thing, even though the method <code>dive</code> returns the value of  <code>currentDepth</code>, our <code>FishMaster</code> does not use it. That’s fine, because our class`FishMaster` does not use the returned value, but there may be some other classes that will also use the class <code>Fish</code>, and they may find knowing the current depth  useful. For example, think of a class <code>FishTrafficDispatcher</code> that has to know positions of other fish under the sea before giving permissions to dive to avoid traffic accidents.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_method-overriding"><a class="anchor" href="#_method-overriding"></a>3.5. Method Overriding</h3>
 <div class="paragraph">
-<p>As you know, fish do not speak (at least they do not do it aloud). But our class <code>Fish</code> has been inherited from the class <code>Pet</code> that has the method <code>talk()</code>. This means that nothing stops you from writing <code>myFish.talk();</code>.</p>
+<p>As you know, fish do not speak, but our class <code>Fish</code> has been inherited from the class <code>Pet</code> that has the method <code>talk</code>. This means that nothing stops you from writing <code>myFish.talk();</code>.</p>
 </div>
 <div class="paragraph">
-<p>Do you really want our fish to talk? If you do not want this to happen, the class <code>Fish</code> has to <em>override</em> the <code>Pet</code>’s typical behavior - the method <code>talk()</code>. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method <code>talk()</code> to the class <code>Fish</code>.</p>
+<p>Do you really want our fish to talk? If you do not want this to happen, the class <code>Fish</code> has to <em>override</em> the <code>Pet</code>’s typical behavior - the method <code>talk</code>. If you declare  a method with exactly the same signature in a subclass as in its superclass, the subclass' method will be used instead of  the method of the superclass. Let’s add the following method <code>talk</code> to the class <code>Fish</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2278,7 +2295,7 @@ myLittleFish.sleep();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now add the following three lines to the method <code>main()</code> of the class <code>FishMaster</code>:</p>
+<p>Now add the following three lines to the method <code>main</code> of the class <code>FishMaster</code>:</p>
 </div>
 <div class="paragraph">
 <p><code>String fishReaction;</code>
@@ -2292,7 +2309,7 @@ myLittleFish.sleep();</code></pre>
 <p><code>Don&#8217;t you know that fish do not talk?</code></p>
 </div>
 <div class="paragraph">
-<p>This proves that <code>Pet</code>’s method <code>talk()</code> has been <em>overridden</em>, or in other words, suppressed.</p>
+<p>This proves that <code>Pet</code>’s method <code>talk</code> has been <em>overridden</em>, or in other words, suppressed.</p>
 </div>
 <div class="paragraph">
 <p>Wow!  We’ve learned a lot in this chapter – let’s just take a break.</p>
@@ -2317,23 +2334,25 @@ myLittleFish.sleep();</code></pre>
 <p><code>public int drive(int howlong)</code></p>
 </div>
 <div class="paragraph">
-<p>The method <code>drive()</code> has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: <code>distance = howlong*60;</code>. Use the statement <code>return distance</code> as the last line in the method <code>drive()</code>.</p>
+<p>The method <code>drive</code> has one argument - the driving time. The method has to return the total distance driven by the car for the specified time. Use the following formula to calculate the distance: <code>distance = howlong*60;</code>. Use the statement <code>return distance</code> as the last line in the method <code>drive</code>.</p>
 </div>
 </li>
 <li>
 <p>Run this program by using the menu Run in IDEA.</p>
 </li>
 <li>
-<p>Write another class <code>CarOwner</code> with the method <code>main()</code> that creates an instance of the object <code>Car</code> and call its methods. The result of each method call has to be printed using <code>System.out.println()</code>.</p>
+<p>Write another class <code>CarOwner</code> with the method <code>main</code> that creates an instance of the object <code>Car</code> and call its methods. The result of each method call has to be printed using <code>System.out.println()</code>.</p>
 </li>
 <li>
-<p>Create a subclass of <code>Car</code> named <code>JamesBondCar</code> and override the method <code>drive()</code> there. Now use the following formula to calculate the distance: <code>distance = howlong*180;</code></p>
+<p>Create a subclass of <code>Car</code> named <code>JamesBondCar</code> and override the method <code>drive</code> there. Now use the following formula to calculate the distance: <code>distance = howlong*180;</code></p>
 <div class="paragraph">
-<p>Be creative, print some funny messages from the method <code>drive()</code>!</p>
+<p>Be creative, print some funny messages from the method <code>drive</code>!</p>
 </div>
 </li>
 <li>
-<p>Create an instance of the class <code>JamesBondCar</code> in the <code>main()</code> method of <code>CarOwner</code>. Re-run the program <code>CarOwner</code> to see that it calls the overridden method <code>drive()</code>.</p>
+<p>Create an instance of the class <code>JamesBondCar</code> in the <code>main</code> method of <code>CarOwner</code>. Re-run the program <code>CarOwner</code> to see that it calls the overridden method <code>drive</code>.
+:toc-placement!:
+:imagesdir: .</p>
 </li>
 </ol>
 </div>
@@ -2344,29 +2363,27 @@ myLittleFish.sleep();</code></pre>
 <h2 id="_java-building-blocks"><a class="anchor" href="#_java-building-blocks"></a>4. Java Building Blocks</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Classes are the major constructs in Java. But you need to know smaller elements that help you out to program the behavior and the flow of the program.  You need to know how commented your program so other people can understand your intentions (programmers often work in teams and help each other). You need to know how to write code that will invoke one method or the other depending on certain conditions. So in this chapter I&#8217;ll show you some Java elements that you have to know and apply in pretty much any project.</p>
+<p>Classes are the major constructs in Java, but you need to know smaller elements that help you program the behavior and flow of the program. You need to know how commented your program so other people can understand your intentions (programmers often work in teams and help each other). You need to know how to write code that will invoke one method or the other depending on certain conditions. In this chapter I&#8217;ll show you some Java elements that you have to know and apply in pretty much any project.</p>
 </div>
 <div class="sect2">
 <h3 id="_program-comments"><a class="anchor" href="#_program-comments"></a>4.1. Program Comments</h3>
 <div class="paragraph">
-<p>You can add any text comments to your program to explain what a particular line, method or a class is for. First of all, someone else may read your program so comments would help in understanding your intentions. Second, even the  author of the code can&#8217;t remember every program he or she wrote. Besides, if a professional programmer decides to change the employer, if would be nice to leave well-commented code behind.</p>
+<p>You can add any text comments to your program to explain what a particular line, method or class is for. First of all, someone else may read your program so comments would help in understanding your intentions. Second, even the  author of the code can&#8217;t remember every program he or she wrote. Besides, if a professional programmer decides to change the employer, if would be nice to leave well-commented code behind.</p>
 </div>
 <div class="paragraph">
 <p>There are three different types of comments - single-line comments, block comments, and a javadoc comments. Here&#8217;s what they are for:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
+<div class="paragraph">
 <p>If your comment fits in one line, start it with two slashes:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">// This method calculates the distance between A and B.</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
+<div class="paragraph">
 <p>If you want to write multi-line comments, instead of starting each line with two slashes, just surround the entire text with these symbols: <code>/*</code> and <code>*/</code>, for example:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">/* Now we'll handle the current
@@ -2374,9 +2391,9 @@ myLittleFish.sleep();</code></pre>
 */</code></pre>
 </div>
 </div>
-</li>
-<li>
-<p>Java comes with a special program <code>javadoc</code> that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a <em>technical documentation</em> for your programs. Such comments are enclosed in  symbols <code>/* *</code> and   <code>*/</code>. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.</p>
+<div class="paragraph">
+<p>Java comes with a special program <code>javadoc</code> that can extract all comments from your programs into a separate help file that can be displayed by any Web browser. This file can be used as a <em>technical documentation</em> for your programs. Such comments are enclosed in  symbols <code>/**</code> and <code>*/</code>. Note the two asterisks after the first slash. Only the most important comments like the description of a class or a method should be placed between these symbols.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">/** This method calculates the discount that depends
@@ -2385,14 +2402,8 @@ give the user 20% off, otherwise only 10%.
 */</code></pre>
 </div>
 </div>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
 <div class="paragraph">
-<p>The javadoc tool can process your code, extract all comments that start with <code>/**</code> and create program documentation that can be published online or kept locally on the company server. We are not going to use javadoc in this book, but if you&#8217;re interested to learn more about this tool, read Oracle&#8217;s tutorial <a href="http://goo.gl/Bwm6Cb">How to Write Doc Comments for the Javadoc Tool</a>.</p>
+<p>The javadoc tool can process your code, extract all comments that start with <code>/**</code> and create program documentation that can be published online or kept locally on the company server. We are not going to use javadoc in this book, but if you&#8217;re interested in learning more about this tool, read Oracle&#8217;s tutorial <a href="http://goo.gl/Bwm6Cb">How to Write Doc Comments for the Javadoc Tool</a>.</p>
 </div>
 <div class="paragraph">
 <p>From now on, I’ll be adding comments to code samples to  give you a better idea how and where to use them.</p>
@@ -2512,13 +2523,13 @@ Good night, see you tomorrow.</code></pre>
 <div class="sect3">
 <h4 id="_logical-operators"><a class="anchor" href="#_logical-operators"></a>4.2.2. Logical Operators</h4>
 <div class="paragraph">
-<p>Sometimes, to make a decision you may need to check more than just one conditional expression, for example if the name of the state is Texas or California, add the state sales tax to the price of every item in the store. This is an example of the <em>logical or</em> case – either Texas or California.</p>
+<p>Sometimes, to make a decision you may need to check more than just one conditional expression, for example if the name of the state is Texas or California, add the state sales tax to the price of every item in the store. This is an example of the <em>logical or</em> – either Texas or California.</p>
 </div>
 <div class="paragraph">
 <p>In Java the sign for a logical <code>or</code> is one or two vertical bars. It works like this – if any of the two conditions is <code>true</code>, the result of the entire expression is also <code>true</code>.</p>
 </div>
 <div class="paragraph">
-<p>In the following examples I use a variable of type <code>String</code>, which has a method <code>equals()</code> that compares the values of two strings. I use it to see the value of the variable <code>state</code> is <em>"Texas"</em> or  <em>"California"</em>:</p>
+<p>In the following examples I use a variable of type <code>String</code>, which has a method <code>equals()</code> that compares the values of two strings. I use it to see whether the value of the variable <code>state</code> is <em>"Texas"</em> or  <em>"California"</em>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2540,7 +2551,7 @@ Good night, see you tomorrow.</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The difference between these two examples is that if you use two bars, and the first expression is <code>true</code>, the second expression won’t  even be  checked.  If you place just a single bar, JVM will evaluate both expressions anyway.</p>
+<p>The difference between these two examples is that if you use two bars, and the first expression is <code>true</code>, the second expression won’t even be  checked. If you place just a single bar, JVM will evaluate both expressions.</p>
 </div>
 <div class="paragraph">
 <p>The <em>logical and</em> is represented by one or two ampersands (<code>&amp;&amp;</code>) and each expression in the parentheses must be <code>true</code> to make the entire expression <code>true</code>. For example, charge the sales tax only if the state is New York and the price is more than $110. Both conditions must be <code>true</code> <em>at the same time</em>:</p>
@@ -2578,7 +2589,7 @@ Good night, see you tomorrow.</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following two expressions will produce the same result, because <em>more than 50</em> and <em>not less or or equal to 50</em> have the same meaning:</p>
+<p>The following two expressions will produce the same result, because <em>more than 50</em> and <em>not less than or equal to 50</em> have the same meaning:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2598,13 +2609,13 @@ if (!(price &lt;= 50)) {
 <div class="sect3">
 <h4 id="_conditional-operator"><a class="anchor" href="#_conditional-operator"></a>4.2.3. Conditional operator</h4>
 <div class="paragraph">
-<p>There is another flavor of an if statement called <em>conditional operator</em>, which allows to assign a value to a variable based on the expression that ends with a question mark. It&#8217;s like you&#8217;re asking, "Is this true?". If such an  expression is <code>true</code>, the value after the question mark is used, otherwise the value after the colon is assigned to the variable on the left:</p>
+<p>There is another type of an if-statement called <em>conditional operator</em>, which allows you to assign a value to a variable based on the expression that ends with a question mark. It&#8217;s like you&#8217;re asking, "Is this true?". If such an  expression is <code>true</code>, the value after the question mark is used, otherwise the value after the colon is assigned to the variable on the left:</p>
 </div>
 <div class="paragraph">
 <p><code>discount = price &gt; 50? 10:5;</code></p>
 </div>
 <div class="paragraph">
-<p>If the price is greater than fifty, the variable <code>discount</code> will get the value of 10, otherwise the value of 5. It’s just a shorter replacement of the following if statement:</p>
+<p>If the price is greater than fifty, the variable <code>discount</code> will get a value of 10, otherwise <code>discount</code> will have a value of 5. It’s just a shorter replacement of the following if statement:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2663,13 +2674,13 @@ if (!(price &lt;= 50)) {
 </div>
 </div>
 <div class="paragraph">
-<p>Beside using the <code>else if</code> condition, this example also shows you how to use variables of type <code>char</code>. You can also see that with the <code>&amp;&amp;</code> operator you can check if a number falls into some range. You can not just write <em>if testResult between 80 and 89</em>,  but with <em>logical and</em> you can check the condition when <code>testResult</code> is greater or equal to 80 and less then 89 at the same time:</p>
+<p>Beside using the <code>else if</code> condition, this example also shows you how to use variables of type <code>char</code>. You can also see that with the <code>&amp;&amp;</code> operator you can check if a number falls into specific range. You can not just write <em>if testResult between 80 and 89</em>, but with <em>logical and</em> you can check the condition when <code>testResult</code> is greater than or equal to 80 and less then 89 at the same time:</p>
 </div>
 <div class="paragraph">
 <p><code>testResult &gt;= 80 &amp;&amp; testResult &lt; 89</code></p>
 </div>
 <div class="paragraph">
-<p>Take a guess, why we could not use the <em>logical or</em> operator here? Say the <code>testResult</code> is 100. It&#8217;s greater than 80, and the above expression would evaluate to true, because for  the || operator having one <code>true</code> is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of <code>testResult</code> is between 80 and 89. The <em>logical and</em> operator does the job by ensuring that both conditions are true.</p>
+<p>Take a guess as to why we could not use the <em>logical or</em> operator here? Say the <code>testResult</code> is 100. It&#8217;s greater than 80, and the above expression would evaluate to true, because for  the || operator having one <code>true</code> is enough to make the entire expression true. But this is not what we want - we need the above expression to be true only if the value of <code>testResult</code> is between 80 and 89. The <em>logical and</em> operator does the job by ensuring that both conditions are true.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2721,26 +2732,26 @@ if (!(price &lt;= 50)) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how-long-variables-live"><a class="anchor" href="#_how-long-variables-live"></a>4.3. How Long Variables Live?</h3>
+<h3 id="_how-long-will-a-variables-live"><a class="anchor" href="#_how-long-will-a-variables-live"></a>4.3. How Long Will A Variables Live?</h3>
 <div class="paragraph">
-<p>Class <code>ReportCard</code> declares a variable <code>grade</code> inside the method <code>convertGrades()</code>. If you declare a variable inside any method, such variable is called  <em>local</em>. This means that this variable is available only for the code <em>within this method</em>. When the method completes, this variable automatically gets removed from memory.</p>
+<p>Class <code>ReportCard</code> declares a variable <code>grade</code> inside the method <code>convertGrades()</code>. If you declare a variable inside any method, such variable is called  <em>local</em>. This means that this variable is available only for the code <em>within this method</em>. When the method is complete, this variable automatically gets removed from memory.</p>
 </div>
 <div class="paragraph">
 <p>Programmers use the word <em>scope</em> to say how long a variable will live, for example you can say that variables declared inside a method have a local scope. If a variable is declared within the code block surrounded with curly braces (e.g. in the if statement), it has a block scope and won&#8217;t be visible outside of this block.</p>
 </div>
 <div class="paragraph">
-<p>If a variable has to be reused by several method calls, or it has to be visible from more than one method in a class, you should declare such a variable outside of any method. In the class <code>Fish</code> from Chapter 3, the <code>currentDepth</code> is a <em>member variable</em>. The member variable <code>currentDepth</code> is  alive until the instance of the object <code>Fish</code> exists in memory. You can call <code>currentDepth</code> <em>a instance variable</em>, because its declaration doesn&#8217;t include the keyword <code>static</code>, which we&#8217;ll discuss shortly.</p>
+<p>If a variable has to be reused by several method calls, or it has to be visible from more than one method in a class, you should declare such a variable outside of any method. In the class <code>Fish</code> from Chapter 3, the <code>currentDepth</code> is a <em>member variable</em>. The member variable <code>currentDepth</code> is  alive until the instance of the object <code>Fish</code> exists in the computer&#8217;s memory. You can call <code>currentDepth</code> <em>a instance variable</em>, because its declaration doesn&#8217;t include the keyword <code>static</code>, which we&#8217;ll discuss shortly.</p>
 </div>
 <div class="paragraph">
-<p>Member variables can be shared and reused by all methods of the class, and we can make them visible from external classes too, if need be. For example the method <code>main()</code> of the class <code>ReportCard</code> includes the statement <code>System.out.println()</code>. It uses the class variable <code>out</code> that was declared in the Java class <code>System</code>.</p>
+<p>Member variables can be shared and reused by all methods of the class, and we can make them visible from external classes too, if need be. For example the method <code>main</code> of the class <code>ReportCard</code> includes the statement <code>System.out.println()</code>. It uses the class variable <code>out</code> that was declared in the Java class <code>System</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="_the-keyword-code-static-code"><a class="anchor" href="#_the-keyword-code-static-code"></a>4.3.1. The Keyword <code>static</code></h4>
 <div class="paragraph">
-<p>Wait a minute! Can we use a member variable <code>out</code> from the class <code>System</code> if we have not even created an instance of this class?  Yes we can, if the class <code>System</code> declares the variable <code>out</code> with a keyword <code>static</code>.</p>
+<p>Wait a minute! Can we use a member variable <code>out</code> from the class <code>System</code> if we haven&#8217;t even created an instance of this class? Yes we can, if the class <code>System</code> declares the variable <code>out</code> with a keyword <code>static</code>.</p>
 </div>
 <div class="paragraph">
-<p>When you start any Java program if <em>loads</em> the definition of the required classes in memory. The definition of a class can be used for creating of one or mode instances of this class for example:</p>
+<p>When you start any Java program it <em>loads</em> the definition of the required classes in memory. The definition of a class can be used for creation of one or more instances of this class. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2758,13 +2769,13 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <p><code>static String studentName;</code></p>
 </div>
 <div class="paragraph">
-<p>In this case both instances of the <code>ReportCard</code> would share the same variable <code>studentName</code>, and the above code would first assign "Jerry Lee" to this variable, and then it would be replaced with "Sarah Smith". This is not a good idea, is it?</p>
+<p>In this case both instances of the <code>ReportCard</code> would share the same variable <code>studentName</code>, and the above code would first assign "Jerry Lee" to this variable, and then it would be replaced with "Sarah Smith". This doesn&#8217;t seem like a good idea does it?</p>
 </div>
 <div class="paragraph">
 <p>Moreover, if the declaration of a member variable or a method starts with <code>static</code>, you do not have to create an instance of this class to use such a variable or a method. Static members of a class are used to store the values that are the same for all instances of the class.</p>
 </div>
 <div class="paragraph">
-<p>For example, the method <code>convertGrades()</code> should be declared as <code>static</code> in the class <code>ReportCard</code>, because its code does not use  member variables to store values specific to a particular instance of the class.</p>
+<p>For example, the method <code>convertGrades</code> should be declared as <code>static</code> in the class <code>ReportCard</code>, because its code does not use  member variables to store values specific to a particular instance of the class.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2780,7 +2791,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <p><code>char yourGrade = ReportCard.convertGrades(88);</code></p>
 </div>
 <div class="paragraph">
-<p>Here’s another example: Java has a class <code>Math</code> that contains several dozens of mathematical methods like <code>sqrt()</code>,  <code>sin()</code>, <code>abs()</code> and others. All these methods are <code>static</code> and you do not need to create an instance of the class <code>Math</code> to call them, for example:</p>
+<p>Here’s another example: Java has a class <code>Math</code> that contains several dozen mathematical methods like <code>sqrt</code>, <code>sin</code>, <code>abs</code> and others. All these methods are <code>static</code> and you do not need to create an instance of the class <code>Math</code> to invoke them, for example:</p>
 </div>
 <div class="paragraph">
 <p><code>double squareRoot = Math.sqrt(4.0);</code></p>
@@ -2796,7 +2807,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <p><code>Fish myFish = new Fish();</code></p>
 </div>
 <div class="paragraph">
-<p>Parentheses after the word <code>Fish</code> tell us that this class has some method called <code>Fish()</code>. Yes, there are special methods that are  called  <em>constructors</em>, and these methods have the following features:</p>
+<p>Parentheses after the word <code>Fish</code> tell us that this class has some method called <code>Fish</code>. Yes, there are special methods that are called  <em>constructors</em>, and these methods have the following features:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2815,7 +2826,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <p>Any class can have more than one constructor. If you do not create a constructor for the class, Java automatically creates one during the compilation time - it&#8217;s so-called <em>default no-argument constructor</em>.  That’s why Java compiler has never complained about the statements  <code>new Fish()</code> or <code>new ReportCard()</code>, even though neither class <code>Fish</code> nor class <code>ReportCard</code> has any explicitly declared constructor.</p>
 </div>
 <div class="paragraph">
-<p>In general, constructors are used to assign initial values to  member variables of the class, for example the next version of class <code>Fish</code> has a one-argument constructor that  just assigns the argument’s value to the instance variable <code>currentDepth</code> for future  use.</p>
+<p>In general, constructors are used to assign initial values to  member variables of the class, for example the next version of the class <code>Fish</code> has a one-argument constructor that  just assigns the argument’s value to the instance variable <code>currentDepth</code> for future use.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2842,7 +2853,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <div class="sect2">
 <h3 id="_the-keyword-code-this-code"><a class="anchor" href="#_the-keyword-code-this-code"></a>4.5. The Keyword <code>this</code></h3>
 <div class="paragraph">
-<p>The keyword <code>this</code> is useful when your code needs to refer to the  instance of the object, where this code is running.  Look at the next code example, which is a slight modification of the previous one:</p>
+<p>The keyword <code>this</code> is useful when your code needs to refer to the  instance of the object, where this code is running. Look at the next code example, which is a slight modification of the previous one:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2883,7 +2894,7 @@ rc2.studentName = "Sarah Smith";</code></pre>
 <p><code>String players[];</code></p>
 </div>
 <div class="paragraph">
-<p>These declarations just tell the Java compiler that you are planning to store several text strings in the array <code>players</code>.  Each element has its own index (the position number) starting from zero. The next sample actually creates an instance of an array that can store four <code>String</code> elements and assigns the values to the elements of this array:</p>
+<p>These declarations just tell the Java compiler that you are planning to store several text strings in the array <code>players</code>.  Each element has its own index (position number) starting from zero. The next sample actually creates an instance of an array that can store four <code>String</code> elements and assigns the values to the elements of this array:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2896,7 +2907,7 @@ players[3] = "Gregory";</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You must declare the size of the array before assigning values to its elements. If you do not know in advance how many elements you are going to have, you cannot use arrays, but should look into other classes - Java collections. For example the <code>ArrayList</code> object does not require you to announce the exact number of elements in advance. I&#8217;ll show you some example of using the <code>ArrayList</code> collection in Chapter 10 about data collections.</p>
+<p>You must declare the size of the array before assigning values to its elements. If you do not know in advance how many elements you are going to have, you cannot use arrays, but you should look into other classes - Java collections. For example the <code>ArrayList</code> object does not require you to announce the exact number of elements in advance. I&#8217;ll show you some examples of using the <code>ArrayList</code> collection in Chapter 10 about data collections.</p>
 </div>
 <div class="paragraph">
 <p>Any array has an attribute called <code>length</code> that stores the  number of elements in this array, and you can always find out how many elements are there:</p>
@@ -2965,7 +2976,7 @@ for (counter=0; counter &lt; totalPlayers; counter++){
 <p>JVM executes every line between the curly braces and then returns back to the first line of the loop to increment the counter and check the conditional expression.</p>
 </div>
 <div class="paragraph">
-<p>There is another flavor of the <code>for</code> loop that&#8217;s called <em>for each loop</em>. It allows to repeat the same action to every element of the collection without even knowing how many are there. You are basically saying, do this for each element.The for-each loop allows to congratulate players in a more concise manner:</p>
+<p>There is another flavor of the <code>for</code> loop known as <em>for each loop</em>. It allows the program to repeat the same action to every element of the collection without even knowing how many are there. You are basically saying, do this for each element.The for-each loop allows to congratulate players in a more concise manner:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2978,10 +2989,10 @@ for (counter=0; counter &lt; totalPlayers; counter++){
 <p>You can read the above code as follows:</p>
 </div>
 <div class="paragraph">
-<p><em>The variable</em> <code>pl</code> <em>has the same type as the array&#8217;s elements:</em> <code>String</code> <em>. Use this variable as a cursor, point it to each element in the array</em> <code>players</code> <em>one by one and repeatedly execute the code inside the curly brackets for the current element.</em></p>
+<p><em>The variable</em> <code>pl</code> <em>has the type</em> <code>String</code> <em>- the same as as the array&#8217;s elements. Use this variable as a cursor, point it to each element in the array</em> <code>players</code> <em>one by one and repeatedly execute the code inside the curly brackets for the current element.</em></p>
 </div>
 <div class="paragraph">
-<p>There is another keyword for writing loops - <code>while</code>. In these loops you do not have to declare exactly how many times to repeat the action, but you still need to know when to end the loop.  Let’s see how we can congratulate players using the <code>while</code> loop that will end when the value of the variable <code>counter</code> becomes equal to the value of  <code>totalPlayers</code>:</p>
+<p>There is another keyword for writing loops - <code>while</code>. In these loops you do not have to declare exactly how many times to repeat the action, but you still need to know when to end the loop. Let’s see how we can congratulate players using the <code>while</code> loop that will end when the value of the variable <code>counter</code> becomes equal to the value of <code>totalPlayers</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3006,7 +3017,7 @@ while (counter&lt; totalPlayers){
 <p>As with <code>switch</code> statements, the keyword <code>break</code> is used to jump out of the loop when some particular condition is <code>true</code>. Let’s say we do not want to print more than 3 congratulations, regardless of how many players we’ve got. In the next example, after printing the array elements 0, 1 and 2, the <code>break</code> will make the code go out of the loop and the program will continue from the line after the closing curly brace.</p>
 </div>
 <div class="paragraph">
-<p>The next code sample has the double equal sign <code>==</code> in the <code>if</code> statement. This means that you are comparing the value of the variable <code>counter</code> with number 3.  A single equal sign in the here would mean assignment of the value of 3 to the variable <code>counter</code>.  Placing <code>=</code> in an <code>if</code> statement instead of <code>==</code> is a very tricky mistake, and it can lead to unpredictable program errors that may not be so easy to find.</p>
+<p>The next code sample has the double equal sign <code>==</code> in the <code>if</code> statement. This means that you are comparing the value of the variable <code>counter</code> with number 3. A single equal sign in the here would mean assigning the value of 3 to the variable <code>counter</code>. Placing <code>=</code> in an <code>if</code> statement instead of <code>==</code> is a very tricky mistake, and it can lead to unpredictable program errors that may be dificcult to find.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3040,7 +3051,7 @@ while (counter&lt; totalPlayers){
 </div>
 </div>
 <div class="paragraph">
-<p>There is yet another flavor of the <code>while</code> loop that starts with the word <code>do</code>, for example:</p>
+<p>There is yet another type of the <code>while</code> loop that starts with the word <code>do</code>, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3061,7 +3072,7 @@ while (counter&lt; totalPlayers){
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create a new IntelliJ Idea Java project as described in Chapter 2. Name it Chapter4.</p>
+<p>Create a new IntelliJ Idea Java project as described in Chapter 2. Name it <code>Chapter4</code>.</p>
 </li>
 <li>
 <p>In the src directory of the project create a new class (the menu File | New) named <em>TemperatureConverter</em>.</p>
@@ -3073,14 +3084,13 @@ while (counter&lt; totalPlayers){
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class TemperatureConverter {
     public static float convertTemp (float temperature,
                                char convertTo) {
-
     }
 }</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>Write the if statement inside the method <code>convertTemp()</code> to check the value of the argument <code>convertTo</code>. If it&#8217;s <code>F</code>, the temperature has to be converted to Fahrenheit, and if it’s <code>C</code>, convert it to Celsius. Return the result. The method <code>convertTemp()</code> should look like this:</p>
+<p>Write the if statement inside the method <code>convertTemp</code> to check the value of the argument <code>convertTo</code>. If it&#8217;s <code>F</code>, the temperature has to be converted to Fahrenheit, and if it’s <code>C</code>, convert it to Celsius. Return the result. The method <code>convertTemp</code> should look like this:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">    public static String convertTemp (float temperature, char convertTo) {
@@ -3111,13 +3121,17 @@ while (counter&lt; totalPlayers){
 </li>
 <li>
 <p>Run the program <code>TemperatureConverter</code> using the IDEA menu Run | Run TemperatureConverter. If you did everything right, you should see the following output on the IDEA console:</p>
-<div class="paragraph">
-<p><em>Converting 21C to Fahrenheit. The temperature in Fahrenheit is 69.8
-Converting 70F to Celsius. The temperature in Celsius is 21.11111</em></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ext" data-lang="ext">Converting 21C to Fahrenheit. The temperature in Fahrenheit is 69.8
+Converting 70F to Celsius. The temperature in Celsius is 21.11111</code></pre>
+</div>
 </div>
 </li>
 <li>
-<p>Do a little research to change this program so it always prints the temperature with two digits after the decimal point. Study Oracle&#8217;s tutorial about formatting numeric output: <a href="http://goo.gl/3riLIZ" class="bare">http://goo.gl/3riLIZ</a>.</p>
+<p>Do a little research to change this program so it always prints the temperature with two digits after the decimal point. Study Oracle&#8217;s tutorial about formatting numeric output: <a href="http://goo.gl/3riLIZ" class="bare">http://goo.gl/3riLIZ</a>.
+:toc-placement!:
+:imagesdir: .</p>
 </li>
 </ol>
 </div>
@@ -3937,7 +3951,9 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 </li>
 <li>
-<p>Write a new version of the class <code>PetMasterLambda</code> that will define talking rules for dogs and parrots. It should create two instances of <code>Pet</code> (one for a dog, and one for a parrot) and invoke the method <code>speakup</code> on each instance.</p>
+<p>Write a new version of the class <code>PetMasterLambda</code> that will define talking rules for dogs and parrots. It should create two instances of <code>Pet</code> (one for a dog, and one for a parrot) and invoke the method <code>speakup</code> on each instance.
+:toc-placement!:
+:imagesdir: .</p>
 </li>
 </ol>
 </div>
@@ -6297,7 +6313,9 @@ String buttonLabel = clickedButton.getText();</code></pre>
 <div class="sect3">
 <h4 id="_challenge-yourself-3"><a class="anchor" href="#_challenge-yourself-3"></a>8.6.1. Challenge Yourself</h4>
 <div class="paragraph">
-<p>The step 10 in the project assignment suggests that you should use the the method <code>setText</code> of the <code>TextField</code> component. See if you can apply the property binding technique to display the result in the display field.</p>
+<p>The step 10 in the project assignment suggests that you should use the the method <code>setText</code> of the <code>TextField</code> component. See if you can apply the property binding technique to display the result in the display field.
+:toc-placement!:
+:imagesdir: .</p>
 </div>
 </div>
 </div>
@@ -7328,7 +7346,9 @@ applyFadeTransition(third);</code></pre>
 <div class="sect3">
 <h4 id="_challenge-yourself-4"><a class="anchor" href="#_challenge-yourself-4"></a>10.2.1. Challenge Yourself</h4>
 <div class="paragraph">
-<p>Play an audio when the winning combination is found. To do this learn how to use the JavaFX class <code>AudioClip</code> located in the package <code>javafx.scene.media</code>.</p>
+<p>Play an audio when the winning combination is found. To do this learn how to use the JavaFX class <code>AudioClip</code> located in the package <code>javafx.scene.media</code>.
+:toc-placement!:
+:imagesdir: .</p>
 </div>
 </div>
 </div>
@@ -8466,7 +8486,9 @@ scores.stream()
 </div>
 </li>
 <li>
-<p>Run the program <code>ScoreManager</code> and observe that all scores are printed in descending order.</p>
+<p>Run the program <code>ScoreManager</code> and observe that all scores are printed in descending order.
+:toc-placement!:
+:imagesdir: .</p>
 </li>
 </ol>
 </div>
@@ -10261,7 +10283,9 @@ int kidScore;</code></pre>
 <p>The code that comes with the book has this version of the method <code>updateScore</code> implemented. Your goal is to display the score in a nice font on the bottom left corner of the table. you can learn how to work with the <code>Text</code> and <code>Font</code> classes by studying Oracle&#8217;s tutorial <a href="http://docs.oracle.com/javase/8/javafx/user-interface-tutorial/text.htm#JFXUI734">"Working with Text in JavaFX Applications"</a>.</p>
 </div>
 <div class="paragraph">
-<p>Don&#8217;t forget to implement the Start New Game functionality. You&#8217;ll need to write a method <code>newGame</code>, where you should reset the scores and place the paddles and the ball in the starting positions.</p>
+<p>Don&#8217;t forget to implement the Start New Game functionality. You&#8217;ll need to write a method <code>newGame</code>, where you should reset the scores and place the paddles and the ball in the starting positions.
+:toc-placement!:
+:imagesdir: .</p>
 </div>
 </div>
 </div>
@@ -10998,7 +11022,7 @@ Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-05-01 15:00:02 EDT
+Last updated 2015-05-02 16:27:41 EDT
 </div>
 </div>
 </body>
