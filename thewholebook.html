@@ -3142,7 +3142,10 @@ Converting 70F to Celsius. The temperature in Celsius is 21.11111</code></pre>
 <h2 id="_interfaces-lambdas-abstract-and-anonymous-classes"><a class="anchor" href="#_interfaces-lambdas-abstract-and-anonymous-classes"></a>5. Interfaces, Lambdas, Abstract and Anonymous Classes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter I&#8217;ll focus on discussing how you can program <em>behavior</em> in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called <em>functional</em> (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like <code>eat</code>, <code>sleep</code>, or <code>dive</code>, and these functions can live their independent lives and don&#8217;t have to be declared in classes. In <em>object-oriented</em> languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called <em>lambda expressions</em> covered later in this chapter.</p>
+<p>In this chapter I&#8217;ll focus on discussing how you can program <em>behavior</em> in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called <em>functional</em> (e.g. JavaScript, Scala et al). In these languages you can simply write functions like <code>eat</code>, <code>sleep</code>, or <code>dive</code>, and these functions can live their independent lives and don&#8217;t have to be declared in classes. In <em>object-oriented</em> languages behavior is implemented in methods defined in classes.</p>
+</div>
+<div class="paragraph">
+<p>The phrase <em>to implement a method</em> simply means <em>to write code in a method</em>. Starting from Java 8 you can also program behavior in so called <em>lambda expressions</em> covered later in this chapter.</p>
 </div>
 <div class="paragraph">
 <p>So far I was declaring and implementing behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation. Such separation can be done using <em>interfaces</em>.</p>
@@ -3150,7 +3153,7 @@ Converting 70F to Celsius. The temperature in Celsius is 21.11111</code></pre>
 <div class="sect2">
 <h3 id="_java-interfaces"><a class="anchor" href="#_java-interfaces"></a>5.1. Java Interfaces</h3>
 <div class="paragraph">
-<p>While you can just create a Java class and implements all its methods there, a more formal way of declaring the behavior of the class in a separate <code>interface</code>. Then a class declaration would include the keyword <code>implements</code> followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.</p>
+<p>While you can just create a Java class and implement all its methods there, a more formal way of declaring the behavior of the class in a separate <code>interface</code>. Then a class declaration would include the keyword <code>implements</code> followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.</p>
 </div>
 <div class="paragraph">
 <p>For years, Java <em>interfaces</em> were used mainly for holding method declarations and <code>final</code> <code>static</code> variables. For example, the interface <code>Talkable</code> contains the declaration of just one method <code>talk</code>:</p>
@@ -3208,10 +3211,10 @@ public class Cat implements Talkative {
 </div>
 </div>
 <div class="paragraph">
-<p>These three classes use the Java keyword <code>implements</code>, which means they promise to implement all abstract methods in the interface(s) listed after the keyword <code>implements</code> otherwise the Java compiler will complain: "You promised to implement all abstract methods from <code>Talkable</code>, where are they? Keep the promise!"</p>
+<p>These three classes use the Java keyword <code>implements</code>, which means they promise to implement all abstract methods in the interface(s) listed after the keyword <code>implements</code> otherwise the Java compiler will complain: "You promised to implement all abstract methods from <code>Talkable</code>, where are they? Keep your promise!"</p>
 </div>
 <div class="paragraph">
-<p>What if we need to create the class <code>Fish</code> that uses interfaces? Fish don&#8217;t talk. But they swim. Dogs can talk and swim, right?  Why won&#8217;t we declare yet another interface <code>Swimmable</code> with the methods <code>swim</code> and <code>dive</code>?</p>
+<p>What if we need to create the class <code>Fish</code> that uses interfaces? Fish don&#8217;t talk. But they swim. Dogs can talk (bark) and swim, right? Why won&#8217;t we declare yet another interface <code>Swimmable</code> with the methods <code>swim</code> and <code>dive</code>?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3253,7 +3256,7 @@ public class Dog implements Talkative, Swimmable {
 </div>
 </div>
 <div class="paragraph">
-<p>When a class implements several interfaces, make sure to implement each and every abstract method declared in these interfaces. I&#8217;ll tell you more: a class can extend another class and implement interfaces at the same time, for example:</p>
+<p>When a class implements several interfaces, make sure to implement each and every abstract method declared in these interfaces. A class can extend another class and implement interfaces at the same time, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3310,7 +3313,7 @@ Java includes several interfaces that don&#8217;t declare any methods (e.g. <cod
 </div>
 </div>
 <div class="paragraph">
-<p>There is no need to change the class <code>Fish</code>. It also implements <code>Swimmable</code>, but has its own version of the method <code>dive</code>, which will override the default implementation of the <code>dive</code> from <code>Swimmable</code>. You can still call the method <code>dive</code> on the instance of the <code>Dog</code> class - the default implementation will be invoked. The next class <code>PetMaster</code> will demonstrate this.</p>
+<p>There is no need to change the class <code>Fish</code>. It also implements <code>Swimmable</code>, but has its own version of the method <code>dive</code>, which will override the default implementation of the <code>dive</code> from <code>Swimmable</code>. You can still invoke the method <code>dive</code> on the instance of the <code>Dog</code> class - the default implementation will be invoked. The next class <code>PetMaster</code> will demonstrate this.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3479,7 +3482,7 @@ class Dog{
 </div>
 </div>
 <div class="paragraph">
-<p>A class that implements <code>Swimmable</code> can use the value of <code>MAX_DEPTH</code> too.</p>
+<p>A class that implements <code>Swimmable</code> can use the value of <code>MAX_DEPTH</code> as well.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3492,7 +3495,7 @@ class Dog{
 <div class="sect2">
 <h3 id="_abstract-classes"><a class="anchor" href="#_abstract-classes"></a>5.2. Abstract Classes</h3>
 <div class="paragraph">
-<p>If a method is not implemented we call it abstract. But classes can be declared abstract too, and Java has the keyword <code>abstract</code> for this. An abstract class is called abstract if it was declared with the keyword <code>abstract</code>, for example:</p>
+<p>If a method is not implemented we call it abstract, but classes can be declared abstract too, and Java has the keyword <code>abstract</code> for this. An abstract class is called abstract if it was declared with the keyword <code>abstract</code>, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3502,7 +3505,7 @@ class Dog{
 </div>
 </div>
 <div class="paragraph">
-<p>If a class declared as abstract, you can&#8217;t create an instance of it. Typically, abstract classes have some non-implemented methods that are also declared with the <code>abstract</code> keyword:</p>
+<p>If a class is declared as abstract, you can&#8217;t create an instance of it. Typically, abstract classes have some non-implemented methods that are also declared with the <code>abstract</code> keyword:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3537,15 +3540,15 @@ class Dog{
 </div>
 </div>
 <div class="paragraph">
-<p>Strictly speaking, it&#8217;s not a must to implement the method <code>talk</code> in the class <code>Dog</code>, but in this case <code>Dog</code> remains  abstract and can&#8217;t be instantiated. Maybe the programmer wants to create a class <code>Puppy</code> that extends <code>Dog</code> and implement the <code>talk</code> there?</p>
+<p>Strictly speaking, it&#8217;s not a must to implement the method <code>talk</code> in the class <code>Dog</code>, but in this case <code>Dog</code> remains  abstract and can&#8217;t be instantiated. Maybe the programmer wants to create a class <code>Puppy</code> that extends <code>Dog</code> and implements the method <code>talk</code> there?</p>
 </div>
 <div class="paragraph">
-<p>And again you might be wondering, "Why complicating programmer&#8217;s life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from <code>Animal</code> you might want to declare an unified method signature, so each class (<code>Dog</code>, <code>Parrot</code>, <code>Fish</code> et al.) will have the same way of initiating the talk.</p>
+<p>And again you might be wondering, "Why complicate a programmer&#8217;s life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from <code>Animal</code> you might want to declare an unified method signature, so each class (<code>Dog</code>, <code>Parrot</code>, <code>Fish</code> et al.) will have the same way of initiating the talk.</p>
 </div>
 <div class="sect3">
 <h4 id="_what-s-the-difference-between-abstract-classes-and-interfaces"><a class="anchor" href="#_what-s-the-difference-between-abstract-classes-and-interfaces"></a>5.2.1. What&#8217;s the difference between abstract classes and interfaces?</h4>
 <div class="paragraph">
-<p>Abstract classes and interfaces allow to create classes that implement <em>polymorphism</em>, which is an advanced topic and will not be covered in this book. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. <code>setName</code> and <code>sleep</code> in the vertical class hierarchy.</p>
+<p>Abstract classes and interfaces allow to create classes that implement <em>polymorphism</em>, which is an advanced topic and won&#8217;t be covered in this book. You can read about it in <a href="https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html">Oracle&#8217;s tutorial</a> if interested. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. <code>setName</code> and <code>sleep</code> in the vertical class hierarchy.</p>
 </div>
 <div class="paragraph">
 <p>Interfaces can&#8217;t have instance methods, but they don&#8217;t enforce any class hierarchy. So you can have a class <code>Dog</code> that extends any class, while implementing an interface <code>Talkative</code> that declares the method <code>talk</code>.</p>
@@ -3555,13 +3558,13 @@ class Dog{
 <div class="sect2">
 <h3 id="_anonymous-classes"><a class="anchor" href="#_anonymous-classes"></a>5.3. Anonymous Classes</h3>
 <div class="paragraph">
-<p>If you need to use an object of certain type only once, you can kill two birds with one stone: declare an anonymous class and create an instance of it. In this case you don&#8217;t even need to give a class a name, hence it&#8217;s <em>anonymous</em>. I&#8217;ll show you an example of a program that&#8217;s first written without and then with anonymous classes.</p>
+<p>If you need to use an object of certain type only once, you can kill two birds with one stone: declare an anonymous class and create an instance of it. In this case you don&#8217;t even need to give a class a name, hence why it&#8217;s <em>anonymous</em>. I&#8217;ll show you an example of a program that&#8217;s first written without and then written with them.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s say I want to write a simple calculator in Java. In chapters 8 and 9 you&#8217;ll create a real calculator with the  graphical Users Interface (GUI). But for now, I&#8217;ll show you how to program such operations as addition and subtraction. The multiplication and division operations can be programmed  similarly, so I won&#8217;t be implementing these operations.</p>
+<p>Let&#8217;s say I want to write a simple calculator in Java. In chapters 8 and 9 you&#8217;ll create a real calculator with the  graphical Users Interface (GUI), but for now I&#8217;ll show you how to program operations such as addition and subtraction. The multiplication and division operations can be programmed  similarly, so I won&#8217;t be implementing these operations.</p>
 </div>
 <div class="paragraph">
-<p>I want to keep these examples in the package called <code>calc</code>. You can create a subdirectory named <em>calc</em> in your project and save your classes there. The other choice is to right-click on the folder <em>src</em> in your IDEA project and select the menu New | Package and enter the package name there:</p>
+<p>I want to keep these examples in the package called <code>calc</code>. You can create a subdirectory named <em>calc</em> in your project and save your classes there. The other option is to right-click on the folder <em>src</em> in your IDEA project and select the menu New | Package and enter the package name there:</p>
 </div>
 <div id="FIG5-2" class="imageblock">
 <div class="content">
@@ -3612,7 +3615,7 @@ public class Calculator {
 </div>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s redesign this application. Instead of writing a separate method for each operation, I want to write a generic method that can receive the code of the operation and two numbers to be operated upon. This method will have three arguments: the arithmetic operation, the first and the second number.</p>
+<p>Now let&#8217;s redesign this application. Instead of writing a separate method for each operation, I want to write a generic method that can receive the code of the operation and two numbers to be operated upon. This method will have three arguments: the arithmetic operation, the first, and the second number.</p>
 </div>
 <div class="paragraph">
 <p>The operation is a behavior, so let&#8217;s declare an interface to represent it using a functional interface with a single abstract method:</p>
@@ -3671,31 +3674,31 @@ public class CalculatorWithAnonymousClasses {
 </div>
 </div>
 <div class="paragraph">
-<p>The output of the <code>CalculatorWithAnonymousClasses</code> program will be the same as from <code>Calculator</code>. What did we achieve by re-writing calculator this way? We separated the declaration of the behavior and its implementation. The behavior is declared in the interface, and if more than one class needs to implement <code>ArithmeticOperation</code>, we&#8217;ll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method <code>performOperation</code>, so this object could be passes as an argument to the method <code>calculate</code>. In the next section I&#8217;ll rewrite this calculator again in a more elegant way with lambda expressions.</p>
+<p>The output of the <code>CalculatorWithAnonymousClasses</code> program will be the same as from <code>Calculator</code>. What did we achieve by re-writing calculator this way? We separated the declaration of the behavior and its implementation. The behavior is declared in the interface, and if more than one class needs to implement <code>ArithmeticOperation</code>, we&#8217;ll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method <code>performOperation</code>, so this object could be passed as an argument to the method <code>calculate</code>. In the next section I&#8217;ll rewrite this calculator again in a more elegant way with lambda expressions.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="title">Access Levels</div>
 <div class="paragraph">
-<p>In many code samples I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be access only from the code located in the same package ( directory).</p>
+<p>In many code samples I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accessed by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be accessed only from the code located in the same package ( directory).</p>
 </div>
 <div class="paragraph">
-<p>Let’s make a simple experiment – remove the keyword public from the declaration of the class PingPongEngine.  Now the class PingPongTable won’t even compile giving an error PingPongEngine can not be resolved or is not a type. This means that the class PingPongTable does not see the class PingPongEngine anymore.</p>
+<p>Let’s make a simple experiment – remove the keyword public from the declaration of the class <code>PingPongEngine</code>.  Now the class <code>PingPongTable</code> won’t even compile giving an error <code>PingPongEngine</code> can not be resolved or is not a type. This means that the class <code>PingPongTable</code> does not see the class <code>PingPongEngine</code> anymore.</p>
 </div>
 <div class="paragraph">
-<p>Similarly, if  you forget to give a public access to  methods of the class PingPongEngine, the PingPongTable will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.</p>
+<p>Similarly, if you forget to give public access to  methods of the class <code>PingPongEngine</code>, the <code>PingPongTable</code> will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.</p>
 </div>
 <div class="paragraph">
-<p>The private access level is used to hide class variables or  methods from the outside world. Think of a car – most of the people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal.</p>
+<p>The <code>private</code> access level is used to hide class variables or  methods from the outside world. Think of a car – most people have no clue how many parts there are under the hood, and what actually occurs when a driver pushes the brake pedal.</p>
 </div>
 <div class="paragraph">
-<p>Look at the next code sample - in Java, we can say that the object Car exposes only one public method – <code>brake</code>, which internally  may  call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as Mars rovers, let alone simple cars.</p>
+<p>Look at the next code sample - in Java, we can say that the object <code>Car</code> exposes only one public method – <code>brake</code>, which internally may call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as the Mars Rover, let alone simple cars.</p>
 </div>
 <div class="paragraph">
-<p>There is one more Java keyword protected that controls access level. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package. But it won’t be available for independent classes located in other packages.</p>
+<p>There is one more Java keyword <code>protected</code> that controls access levels. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package, but it won’t be available for independent classes located in other packages.</p>
 </div>
 <div class="paragraph">
-<p>When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges.</p>
+<p>When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide the controls of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gages.</p>
 </div>
 <div class="paragraph">
 <p>In the next section you can find a class Score that hides its attributes in private variables.</p>
@@ -3706,16 +3709,16 @@ public class CalculatorWithAnonymousClasses {
 <div class="sect2">
 <h3 id="_lambda-expressions"><a class="anchor" href="#_lambda-expressions"></a>5.4. Lambda Expressions</h3>
 <div class="paragraph">
-<p>Up till now, to invoke a method we&#8217;ve been creating named or anonymous classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to declare classes or instantiate objects.</p>
+<p>Up till now, to invoke a method we&#8217;ve been creating named or anonymous classes and instantiating objects, but <em>lambda expressions</em> allow to define and invoke a piece of code even without the need to declare classes or instantiate objects.</p>
 </div>
 <div class="paragraph">
 <p>First, let me introduce a new term - <em>a function</em>. So far to implement any behavior you&#8217;d write a method that could be invoked by specifying the class name and a method name (static methods) or by specifying the object variable and a method name (non-static methods). This is a main idea of any object-oriented programming language - the classes and objects are the first-class citizens. You can&#8217;t write a program without them.</p>
 </div>
 <div class="paragraph">
-<p>But there are functional programming languages that don&#8217;t need to wrap behavior inside classes. They allow you to implement behavior by writing functions, which are similar to methods in that they can have names, take arguments and return results. But functions don&#8217;t have to be placed inside classes and can live independently.</p>
+<p>But there are functional programming languages that don&#8217;t need to wrap behavior inside classes. They allow you to implement behavior by writing functions, which are similar to methods in that they can have names, take arguments, and return results. But functions don&#8217;t have to be placed inside classes and can live independently.</p>
 </div>
 <div class="paragraph">
-<p>A lambda expression is a function without a name or <em>anonymous function</em> that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java you could pass a value to a method only if this value was an object or a primitive. But now a function (a piece of code) becomes a value that can be passed around. Let&#8217;s see it in action.</p>
+<p>A lambda expression is a function without a name or <em>anonymous function</em> that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java you could pass a value to a method only if this value was an object or a primitive. But now a function (a piece of code) becomes a value that can be passed around. Now let&#8217;s see it in action.</p>
 </div>
 <div id="FIG5-3" class="imageblock">
 <div class="content">
@@ -3760,7 +3763,7 @@ public class CalculatorWithAnonymousClasses {
 </div>
 </div>
 <div class="paragraph">
-<p>The difference between <code>CalculatorWithAnonymousClasses</code> from the previous section and <code>CalculatorWithLambdas</code> is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces. To write a lambda expression you need the play by the following rules:</p>
+<p>The difference between <code>CalculatorWithAnonymousClasses</code> from the previous section and <code>CalculatorWithLambdas</code> is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces. To write a lambda expression you need the play by the rules:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -3768,7 +3771,7 @@ public class CalculatorWithAnonymousClasses {
 <p>Declare an the interface that has only one abstract method.</p>
 </li>
 <li>
-<p>Make sure that the arguments of your lambda expression match the argument of the abstract method.</p>
+<p>Make sure that the arguments of your lambda expression match the arguments of the abstract method.</p>
 </li>
 <li>
 <p>Make sure that the return value of your lambda expression matches the return value of the abstract method.</p>
@@ -3779,7 +3782,7 @@ public class CalculatorWithAnonymousClasses {
 <p>Review the code of the <code>CalculatorWithLambdas</code>. Both lambdas <code>addition</code> and <code>subtraction</code> abide by these rules.</p>
 </div>
 <div class="paragraph">
-<p>You may say, "Why there are no data types specified for the lambda parameters first and second?" The reason being that Java compiler is smart enough to guess their data types because it knows which abstract method this lambda implements. Such an educated guess is called <em>type inference</em>.</p>
+<p>You may wonder, "Why are there no data types specified for the lambda parameters first and second?" The reason being that Java compiler is smart enough to guess their data types because it knows which abstract method this lambda implements. An educated guess such as this is called <em>type inference</em>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3799,7 +3802,7 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 <p>Let&#8217;s return to our examples with pets. I&#8217;d like to show you how lambda expressions can simplify your code by reducing the number of required classes. Earlier in this chapter we&#8217;ve created the classes <code>Dog</code>, <code>Parrot</code> and the only difference between them was the implementation of the interface <code>Talkative</code>. But we can declare just one class with a method that can take the implementation of the <code>Talkative</code> in a form of lambda expression.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start with defining the functional interface <code>Talkative</code>. This time I&#8217;ll slightly change the signature of the method <code>talk</code> comparing to the version shown earlier in this chapter. I do it just to show you how to write a lambda expression that implements a method that has an argument and returns some value.</p>
+<p>Let&#8217;s start with defining the functional interface <code>Talkative</code>. This time I&#8217;ll slightly change the signature of the method <code>talk</code> comparing to the version shown earlier in this chapter. I do this to show you how to write a lambda expression that implements a method that has an argument and returns some value.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3853,7 +3856,7 @@ IntelliJ IDEA can automatically convert anonymous classes that implement functio
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;ve defined different rules for talking parrots and dogs as lambdas in variables <code>parrotTalkRules</code> and dogTalkRules accordingly. Not that I have not specified the data type of the variable <code>name</code>. It&#8217;s yet another example of the inferred typing - the <code>Talkative</code> interface has a single abstract method with the argument of type <code>String</code>. The second argument of the method <code>speakup</code> will be passed to the method <code>talk</code>. Run this program and it&#8217;ll print the following:</p>
+<p>We&#8217;ve defined different rules for talking parrots and dogs as lambdas in variables <code>parrotTalkRules</code> and <code>dogTalkRules</code> accordingly. Not that I have not specified the data type of the variable <code>name</code>. It&#8217;s yet another example of the inferred typing - the <code>Talkative</code> interface has a single abstract method with the argument of type <code>String</code>. The second argument of the method <code>speakup</code> will be passed to the method <code>talk</code>. Run this program and it&#8217;ll print the following:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3862,10 +3865,10 @@ I'm a parrot. Don't call me Charlie</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>By using lambda expressions I was able to eliminate the need of creating a separate class for each animal. Of course, this is possible only if the only difference between classes <code>Dog</code> and <code>Parrot</code> was implementation of the talking behavior.</p>
+<p>By using lambda expressions I was able to eliminate the need for creating a separate class for each animal. Of course, this is possible only if the only difference between classes <code>Dog</code> and <code>Parrot</code> was implementation of the talking behavior.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;d like to draw your attention to the fact, that my class Pet has no state - it doesn&#8217;t define any class variables. This means that we don&#8217;t even need to create instances of the class <code>Pet</code>, but could simply define its method <code>speakup</code> as <code>static</code> and call it just like this</p>
+<p>I&#8217;d like to draw your attention to the fact, that my class Pet has no state - it doesn&#8217;t define any class variables. This means that we don&#8217;t even need to create instances of the class <code>Pet</code>, but could simply define its method <code>speakup</code> as <code>static</code> and call it just like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3897,7 +3900,7 @@ I'm a parrot. Don't call me Charlie</code></pre>
 <p>In the package <em>pets</em> create a new class <code>Pet</code> with a constructor that will take the name of the pet (of type <code>String</code>) as an argument.</p>
 </li>
 <li>
-<p>Change the declarations of the classes <code>Dog</code> and <code>Fish</code> so each of them extends <code>Pet</code> while implementing <code>Talkable</code> and <code>Swimable</code> interfaces.</p>
+<p>Change the declarations of the classes <code>Dog</code> and <code>Fish</code> so each of them extend <code>Pet</code> while implementing <code>Talkable</code> and <code>Swimable</code> interfaces.</p>
 </li>
 <li>
 <p>Create the class <code>PetMaster</code> from the section "Interfaces", but give pets names while instantiating classes <code>Dog</code> and <code>Fish</code>.</p>
