@@ -3680,28 +3680,7 @@ public class CalculatorWithAnonymousClasses {
 <div class="content">
 <div class="title">Access Levels</div>
 <div class="paragraph">
-<p>In many code samples I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accessed by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be accessed only from the code located in the same package ( directory).</p>
-</div>
-<div class="paragraph">
-<p>Let’s make a simple experiment – remove the keyword public from the declaration of the class <code>PingPongEngine</code>.  Now the class <code>PingPongTable</code> won’t even compile giving an error <code>PingPongEngine</code> can not be resolved or is not a type. This means that the class <code>PingPongTable</code> does not see the class <code>PingPongEngine</code> anymore.</p>
-</div>
-<div class="paragraph">
-<p>Similarly, if you forget to give public access to  methods of the class <code>PingPongEngine</code>, the <code>PingPongTable</code> will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.</p>
-</div>
-<div class="paragraph">
-<p>The <code>private</code> access level is used to hide class variables or  methods from the outside world. Think of a car – most people have no clue how many parts there are under the hood, and what actually occurs when a driver pushes the brake pedal.</p>
-</div>
-<div class="paragraph">
-<p>Look at the next code sample - in Java, we can say that the object <code>Car</code> exposes only one public method – <code>brake</code>, which internally may call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as the Mars Rover, let alone simple cars.</p>
-</div>
-<div class="paragraph">
-<p>There is one more Java keyword <code>protected</code> that controls access levels. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package, but it won’t be available for independent classes located in other packages.</p>
-</div>
-<div class="paragraph">
-<p>When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide the controls of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gages.</p>
-</div>
-<div class="paragraph">
-<p>In the next section you can find a class Score that hides its attributes in private variables.</p>
+<p>In many code samples I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accessed by any other code from the project. In the next chapter I&#8217;ll explain how to control access levels in Java.</p>
 </div>
 </div>
 </div>
@@ -3975,13 +3954,13 @@ I'm a parrot. Don't call me Charlie</code></pre>
 <div class="sect2">
 <h3 id="_access-levels"><a class="anchor" href="#_access-levels"></a>6.1. Access Levels</h3>
 <div class="paragraph">
-<p>In code samples from previous chapters I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be accessed only from the code located in the same package (directory).</p>
+<p>In code samples from previous chapters I&#8217;ve been using the keyword <code>public</code> in declaration of member variables and methods. This means that such a variable or method can be accessed by any other code from the project. You can declare a class, a method, or a member variable to be <code>public</code>, <code>private</code>, or <code>protected</code>. If one of these keywords is missing, Java compiler assumes that it&#8217;s a <em>package access level</em> - this element can be accessed only from the code located in the same package (directory).</p>
 </div>
 <div class="paragraph">
-<p>One of the main features of object-oriented languages is <em>encapsulation</em> - an ability to hide and protect data or code. But who do you need to hide or protect the code from? This is not a protection from bad guys who are not allowed to see your code. You hide and protect the code from misuse.</p>
+<p>One of the main features of object-oriented languages is <em>encapsulation</em> - the ability to hide and protect data or code. But who do you need to hide or protect the code from? This is not a protection from bad guys who are not allowed to see your code. You hide and protect the code from misuse. For example, another programmer extended your class and is trying to change the value of a variable in your class, which may result in bug.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s consider an example from the real world. Think of a car – most people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal. If car designers would not be hiding control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges on the car&#8217;s dashboard.</p>
+<p>Let&#8217;s consider an example from the real world. Think of a car – most people have no clue how many parts are under the hood, and what actually happens when a driver pushes the brake pedal. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges on the car&#8217;s dashboard.</p>
 </div>
 <div id="FIG6-1" class="imageblock">
 <div class="content">
@@ -4004,7 +3983,7 @@ public class Car {
  // This private variable is visible only inside this class
   private String brakesCondition;
 
- // The public method brake() calls private methods
+ // The public method brake calls private methods
  // to decide which brakes to use
   public void brake(int pedalPressure){
     boolean useRegularBrakes;
@@ -4044,16 +4023,16 @@ public class Car {
 </div>
 </div>
 <div class="paragraph">
-<p>By looking at this code I can say that the class <code>Car</code> exposes only one public method <code>brake()</code>, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods.</p>
+<p>By looking at this code I can say that the class <code>Car</code> exposes only one public method <code>brake</code>, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods.</p>
 </div>
 <div class="paragraph">
-<p>I took the next screen shot in IntelliJ IDEA while writing a class <code>CarMaster</code> that uses <code>Car</code>. IDEA helps me with suggesting the <code>Car</code> class members that I can use in this context. Only the method <code>brake()</code> is visible from the class <code>Car</code> (other methods are from the class <code>Object</code>).</p>
+<p>I took the next screen shot in IntelliJ IDEA while writing a class <code>CarMaster</code> that uses <code>Car</code>. IDEA helps me with suggesting the <code>Car</code> class members that I can use in this context. Only the method <code>brake</code> is visible from the class <code>Car</code> (other methods are from the class <code>Object</code>).</p>
 </div>
 <div id="FIG6-2" class="imageblock">
 <div class="content">
 <img src="./images/fig_6_02.png" alt="fig 6 02">
 </div>
-<div class="title">Figure 43. Can use the brake() method only</div>
+<div class="title">Figure 43. Can use the brake method only</div>
 </div>
 <div class="paragraph">
 <p>The <code>private</code> access level is the most restrictive one. If you&#8217;re not sure when to use it, just declare all of your call member variables and methods as private, and loosen this restriction if other classes need to use these members.</p>
@@ -4071,13 +4050,13 @@ public class Car {
 <p>The class members declared with the <code>protected</code> keyword can be accessed from other members of the same class, from its descendants or classes located in the same package. Even if a descendant class is located in a different package, it&#8217;ll be able to access <code>protected</code> methods of its ancestors.</p>
 </div>
 <div class="paragraph">
-<p>Some software developer are creating libraries or frameworks of classes to be used by other developers. These classes can be extended, and their creators may use the keyword <code>protected</code> trying to allow access to certain member only descendant classes. But in the real world no one can predict what the developer may want to do with there libraries, and the keyword <code>protected</code> may become an obstacle in achieving of their goals. I do not use the keyword <code>protected</code> in my projects. As you gain more experience with Java, see for yourself if the keyword <code>protected</code> brings some value to your programs.</p>
+<p>Some software developers are creating libraries or frameworks of classes to be used by other developers. These classes can be extended, and their creators may use the keyword <code>protected</code> trying to allow access to certain member only descendant classes. But in the real world no one can predict what the developer may want to do with their libraries, and the keyword <code>protected</code> may become an obstacle in achieving of their goals. I do not use the keyword <code>protected</code> in my projects. As you gain more experience with Java, see for yourself if the keyword <code>protected</code> brings some value to your programs.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_casting"><a class="anchor" href="#_casting"></a>6.2. Casting</h3>
 <div class="paragraph">
-<p>In Java all classes are directly or indirectly inherited from the class <code>Object</code>, which is the root of the class hierarchy. In Figure 2 you&#8217;ve seen a class <code>Car</code> that has number of methods that we&#8217;ve never declared - they belong to the class <code>Object</code>, and the class <code>Car</code> extends <code>Object</code> even though we&#8217;ve never asked for it.  So any of your application classes has an ancestor - <code>Object</code>.</p>
+<p>In Java all classes are directly or indirectly inherited from the class <code>Object</code>, which is the root of the class hierarchy. In Figure 2 you&#8217;ve seen a class <code>Car</code> that has number of methods that we&#8217;ve never declared - they belong to the class <code>Object</code>, and the class <code>Car</code> extends <code>Object</code> even though we&#8217;ve never asked for it.  So any of your application classes have an ancestor - <code>Object</code>.</p>
 </div>
 <div class="paragraph">
 <p>When you declare a variable to represent an instance of your class, you can give it a type either of your class or any of its ancestors. For example, both of the following declarations are correct:</p>
@@ -4090,7 +4069,7 @@ Object myOtherCar = new Car();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Java compiler can <em>cast</em> (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called <em>upcasting</em>. But if a variable has the type of a super class, it won&#8217;t see any members of the subclass. The next screen shot shows that the variable <code>myOtherCar</code> doesn&#8217;t see the method <code>brake()</code> declared in the class <code>Car</code>.</p>
+<p>Java compiler can <em>cast</em> (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called <em>upcasting</em>. But if a variable has the type of a super class, it won&#8217;t see any members of the subclass. The next screen shot shows that the variable <code>myOtherCar</code> doesn&#8217;t see the method <code>brake</code> declared in the class <code>Car</code>.</p>
 </div>
 <div id="FIG6-4" class="imageblock">
 <div class="content">
@@ -4099,7 +4078,7 @@ Object myOtherCar = new Car();</code></pre>
 <div class="title">Figure 45. The Object type variable doesn&#8217;t see Car&#8217;s members</div>
 </div>
 <div class="paragraph">
-<p>But you can say, "Doesn&#8217;t the variable <code>myOtherCar</code> point at the instance of the class <code>Car</code>, which has a public method <code>brake()</code>?" That&#8217;s right, but since I declared this variable of the type <code>Object</code> the variable <code>myOtherCar</code> assumes that its just a general object.  The programmer can <em>downcast</em> the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example:</p>
+<p>But you can say, "Doesn&#8217;t the variable <code>myOtherCar</code> point at the instance of the class <code>Car</code>, which has a public method <code>brake</code>?" That&#8217;s right, but since I declared this variable of the type <code>Object</code> the variable <code>myOtherCar</code> assumes that its just a general object.  The programmer can <em>downcast</em> the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4132,24 +4111,22 @@ Car myOtherCarAfterCasting = (Car) myOtherCar;</code></pre>
 <div class="sect2">
 <h3 id="_selected-data-collections"><a class="anchor" href="#_selected-data-collections"></a>6.3. Selected Data Collections</h3>
 <div class="paragraph">
-<p>Now let&#8217;s see how to work with collections of data. Say you have a hundred of songs in your MP3 player. It&#8217;s a collection. If you&#8217;ll create a class <code>Song</code> you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.</p>
+<p>Now let&#8217;s see how to work with collections of data. Say you have a hundred songs in your MP3 player. It&#8217;s a collection. If you&#8217;ll create a class <code>Song</code> you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.</p>
 </div>
 <div class="paragraph">
-<p>Java  packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
+<p>Java packages <code>java.util</code> and <code>java.util.concurrent</code> include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I&#8217;ll just show you a couple of them. Some of the popular collection classes from the  package <code>java.util</code> are <code>ArrayList</code>,  <code>HashTable</code>, <code>HashMap</code>, and <code>List</code>.</p>
 </div>
 <div class="paragraph">
-<p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to the concept of multi-threadinglater in this chapter, but the coverage of  concurrent collections doesn&#8217;t belong to the introductory book like this one.</p>
+<p>The package <code>java.util.concurrent</code> has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple <em>threads</em>). I&#8217;ll introduce you briefly to the concept of multi-threading later in this chapter, but the coverage of  concurrent collections doesn&#8217;t belong to the introductory book like this one.</p>
 </div>
 <div class="sect3">
 <h4 id="_the-class-arraylist"><a class="anchor" href="#_the-class-arraylist"></a>6.3.1. The Class ArrayList</h4>
 <div class="paragraph">
-<p>In Chapter 4 you&#8217;ve got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don&#8217;t know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class <code>ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed. If you can think of a list of something - a list of songs, a To-Do list, a list of friends names. Pretty much any objects  that can be used with the word <em>list</em> can be stored in an <code>ArrayList</code>.</p>
+<p>In Chapter 4 you&#8217;ve gotten familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of an array. But often you don&#8217;t know in advance how many elements there are. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class <code>ArrayList</code> can give you more flexibility - it can grow or shrink in size as needed. Think of a list of something - a list of songs, a To-Do list, a list of friends names. Pretty much any objects that can be used with the word <em>list</em> can be stored in an <code>ArrayList</code>.</p>
 </div>
 <div class="paragraph">
-<p>Why use arrays, then?  Let’s just always use <code>ArrayList</code>! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The <code>ArrayList</code> works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.</p>
-</div>
-<div class="paragraph">
-<p>To create and populate an <code>ArrayList</code> you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the <code>ArrayList</code> by calling its method <code>add</code>. The next little program will populate an <code>ArrayList</code>  with <code>String</code> objects and then print each element of this collection.</p>
+<p>Why use arrays, then? Let’s just always use <code>ArrayList</code>! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The <code>ArrayList</code> works a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.
+To create and populate an <code>ArrayList</code> you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the <code>ArrayList</code> by calling its method <code>add</code>. The next little program will populate an <code>ArrayList</code>  with <code>String</code> objects and then print each element of this collection.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4189,7 +4166,7 @@ Friend #3 is Roy</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>get</code> extracts the element located at the specified position in the <code>ArrayList</code>. Since you can store any objects in this collection, the method <code>get</code> returns each element of the <code>Object</code> type. The program to <em>cast</em> this object to a proper data type. We did not have to do it in the previous example only because we stored <code>String</code> objects in the collection <code>friends</code>, and Java knows how to convert an <code>Object</code> to a <code>String</code> automatically.</p>
+<p>The method <code>get</code> extracts the element located at the specified position in the <code>ArrayList</code>. Since you can store any objects in this collection, the method <code>get</code> returns each element of the <code>Object</code> type. The program has to <em>cast</em> this object to a proper data type. We did not do it in the previous example only because we stored <code>String</code> objects in the collection <code>friends</code>, and Java knows how to convert an <code>Object</code> to a <code>String</code> automatically.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s see how you can work with some other objects in <code>ArrayList</code>, for example instances of the class <code>Fish</code> shown next.</p>
@@ -4245,7 +4222,7 @@ IntelliJ IDEA can automatically generate setters and getters for the class. Just
 </table>
 </div>
 <div class="paragraph">
-<p>The code to add (and extract) a particular <code>Fish</code> to the <code>ArrayList</code> collection may look as in the program <code>FishTank</code> that comes next.</p>
+<p>The code to add (and extract) a particular <code>Fish</code> to the <code>ArrayList</code> collection may look similar to the program <code>FishTank</code> that comes next.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4353,7 +4330,7 @@ public class HashTableDemo {
 <div class="title">Figure 47. Contacts can be programmed with Hashtable</div>
 </div>
 <div class="paragraph">
-<p><code>HashTable</code> requires each key to be unique. Say you have another contact named <code>Art</code> and will create a new instance of the <code>ContactDetail</code> object. If you&#8217;ll add it to the same collection under the same key - <code>friends.put("Art", friend3);</code>  it&#8217;ll replace the contact details of the first Art with the data of the second one. This happens because Java <code>Hashtable</code> internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like <code>ArtFromNYC</code> or use another Java collection like <code>ArrayList</code> to store your contacts. By the way, <code>ArrayList</code> even allows you to store duplicates (objects with the same values), while <code>Hashtable</code> doesn&#8217;t.</p>
+<p><code>HashTable</code> requires each key to be unique. Say you have another contact named <code>Art</code> and will create a new instance of the <code>ContactDetail</code> object. If you&#8217;ll add it to the same collection under the same key - <code>friends.put("Art", friend3);</code>  it&#8217;ll replace the contact details of the first Art with the data of the second one. This happens because Java <code>Hashtable</code> internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nickname like <code>ArtFromNYC</code> or use another Java collection like <code>ArrayList</code> to store your contacts. By the way, <code>ArrayList</code> even allows you to store duplicates (objects with the same values) while <code>Hashtable</code> doesn&#8217;t.</p>
 </div>
 <div class="paragraph">
 <p>I&#8217;m not going to cover other Java collections here, but if you&#8217;d like to do your own research, read about such collections from the <code>java.util</code> package as <code>HashMap</code>, <code>HashSet</code>, and <code>LinkedList</code>. There is also a class <code>Collections</code> that has a bunch of useful static methods to operate on your data collections (e.g. <code>sort</code>, <code>copy</code>, <code>binarySearch</code> et al.).</p>
@@ -4363,7 +4340,7 @@ public class HashTableDemo {
 <div class="sect2">
 <h3 id="_introduction-to-generics"><a class="anchor" href="#_introduction-to-generics"></a>6.4. Introduction to Generics</h3>
 <div class="paragraph">
-<p>Java generics is a feature that allow to create so called <code>parameterized data types</code>. For example, instead of just declaring a creating a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. For example, declaring and instantiating general collection to store friends like this:</p>
+<p>Java generics is a feature that allows you to create so called <code>parameterized data types</code>. For example, instead of just declaring a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. Instead of declaring and instantiating a general collection to store friends like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4371,7 +4348,7 @@ public class HashTableDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>you can do it with a parameter so it can store only <code>String</code> object like this:</p>
+<p>you can do it with a parameter so it can store only <code>String</code> objects like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4379,7 +4356,7 @@ public class HashTableDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>The parameter(s) goes in the angle brackets right after the data type. Note so called <em>diamond operator &lt;&gt;</em> on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It&#8217;s also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you&#8217;ll try to add an object of another type to <code>friends</code> the Java compiler will complain.</p>
+<p>The parameter(s) goes in the angle brackets right after the data type. Note the so called <em>diamond operator &lt;&gt;</em> on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It&#8217;s also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you&#8217;ll try to add an object of another type to <code>friends</code> the Java compiler will complain.</p>
 </div>
 <div class="paragraph">
 <p>I was able to specify a parameter for <code>ArrayList</code> only because it was created with this ability. If you&#8217;ll read the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">online documentation</a> for <code>ArrayList</code> you&#8217;ll see that it&#8217;s declared as follows:</p>
@@ -4445,7 +4422,7 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>Java compiler sees no crime here - the <code>Hashtable</code> can store any descendants of the class <code>Object</code>.  But if you&#8217;ll run this program, you&#8217;ll get an error in the line that tries to cast the collection element to <code>ContactDetail</code> type. This is how my IntelliJ IDEA screen with the error look like:</p>
+<p>Java compiler sees no crime here - the <code>Hashtable</code> can store any descendants of the class <code>Object</code>.  But if you&#8217;ll run this program, you&#8217;ll get an error in the line that tries to cast the collection element to <code>ContactDetail</code> type. This is how my IntelliJ IDEA screen with the error looks like:</p>
 </div>
 <div id="FIG6-6" class="imageblock">
 <div class="content">
@@ -4465,30 +4442,30 @@ public class HashTableBrokenDemo {
 </div>
 </div>
 <div class="paragraph">
-<p>Now I&#8217;m explicitly stating that my intention is to use the <code>String</code> objects for keys, and <code>ContactDetail</code> objects as values. The program <code>HashTableGenericsDemo</code> is shown next - it won&#8217;t even compile, yay!</p>
+<p>Now I&#8217;m explicitly stating that my intention is to use the <code>String</code> objects for keys, and <code>ContactDetail</code> objects as values. The program <code>HashTableGenericsDemo</code> is shown next - it won&#8217;t even compile!</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">public class HashTableGenericsDemo {
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        ContactDetail friend1 = new ContactDetail();
-        friend1.fullName = "Jackie Allen";
-        friend1.email = "jallen@gmail.com";
-        friend1.facebookID = "jallen";
-        friend1.phone="212-545-5545";
+      ContactDetail friend1 = new ContactDetail();
+      friend1.fullName = "Jackie Allen";
+      friend1.email = "jallen@gmail.com";
+      friend1.facebookID = "jallen";
+      friend1.phone="212-545-5545";
 
-        Hashtable&lt;String, ContactDetail&gt; friends = new Hashtable&lt;&gt;();
-        friends.put("Jackie", friend1);
+      Hashtable&lt;String, ContactDetail&gt; friends = new Hashtable&lt;&gt;();
+      friends.put("Jackie", friend1);
 
-        // compiler will complain about this line
-       friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
+      // compiler will complain about this line
+     friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
 
-        // No casting from Object to ContactDetail needed
-        String jackiesPhone = friends.get("Jackie").phone;
+      // No casting from Object to ContactDetail needed
+      String jackiesPhone = friends.get("Jackie").phone;
 
-        System.out.println("Jackie's phone number is " + jackiesPhone);
-    }
+      System.out.println("Jackie's phone number is " + jackiesPhone);
+  }
 }</code></pre>
 </div>
 </div>
@@ -4499,10 +4476,10 @@ public class HashTableBrokenDemo {
 <p>Another important thing to note is that there is no casting needed when the program gets the information about Jackie&#8217;s phone. Now the <code>friends</code> collection knows from the very beginning that it stores not just some <code>Object</code> types, but the <code>ContactDetail</code> instances.</p>
 </div>
 <div class="paragraph">
-<p>What have we achieved? The program <code>HashTableBrokenDemo</code> allowed us to store anything in the collection but crashed during the runtime, but <code>HashTableGenericsDemo</code> prevented this error from happening. Having a compiler&#8217;s error it&#8217;s a lot better than getting surprises during the runtime, isn&#8217;t it? Besides, with generics we&#8217;ve eliminating the need to cast objects.</p>
+<p>What have we achieved? The program <code>HashTableBrokenDemo</code> allowed us to store anything in the collection but crashed during the runtime, but <code>HashTableGenericsDemo</code> prevented this error from happening. Having a compiler&#8217;s error it&#8217;s a lot better than getting surprises during the runtime, isn&#8217;t it? Besides, with generics we&#8217;ve eliminated the need to cast objects.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;ve been using parameterized data type <code>Hashtable</code> that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won&#8217;t be covering it in this book.</p>
+<p>I&#8217;ve been using the parameterized data type <code>Hashtable</code> that was conveniently offered by the creators of Java, but you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won&#8217;t be covering it in this book. Check out <a href="https://docs.oracle.com/javase/tutorial/java/generics/types.html">Oracle&#8217;s tutorial</a> if interested.</p>
 </div>
 </div>
 <div class="sect2">
@@ -4536,7 +4513,7 @@ public class HashTableBrokenDemo {
 <div class="sect3">
 <h4 id="_how-to-create-a-thread"><a class="anchor" href="#_how-to-create-a-thread"></a>6.5.1. How to Create a Thread</h4>
 <div class="paragraph">
-<p>All Java applications that we&#8217;ve created so far (even Hello World) were running in so called <em>main thread</em>. We didn&#8217;t need to do any special programming to create a main thread - Java runtime always create one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.</p>
+<p>All Java applications that we&#8217;ve created so far (even Hello World) were running in so called <em>main thread</em>. We didn&#8217;t need to do any special programming to create a main thread - Java runtime always creates one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.</p>
 </div>
 <div class="paragraph">
 <p>There are different ways of creating threads. I won&#8217;t be explaining details of each method because it&#8217;s a pretty advanced topic and is not a good fit for this book. But I&#8217;ll just list some of the ways of creating threads and will illustrate it with one simple example. These are the main methods of writing code to be executed in a separate thread:</p>
@@ -4586,7 +4563,7 @@ As a refresher, you can use lambdas to implement functional interfaces - those t
 </div>
 </div>
 <div class="paragraph">
-<p>In first loop I simply multiply the variable <code>i</code> to itself four times. In the second loop I simply concatenate a String, the value of <code>k</code> and an exclamation point. The second loop will start only after the first loop is complete, and no matter how many times you&#8217;ll run this program, the output on the console will always look like this:</p>
+<p>The first loop simply multiplies the variable <code>i</code> to itself four times. In the second loop I simply concatenate a String, the value of <code>k</code> and an exclamation point. The second loop will start only after the first loop is complete, and no matter how many times you&#8217;ll run this program, the output on the console will always look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4606,7 +4583,7 @@ The value of i in power of 4 is 1024
 <p>This was an example of a sequential code execution in a single thread. But the actions that we do in each loop don&#8217;t depend on each other and can be executed in parallel, right?</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s change this example a little bit. The following class <code>MultiThreadedDemo</code> executes two loops in parallel. It creates a separate thread for the fist loop, and starts it in a separate thread so the main thread, which has the second loop doesn&#8217;t wait for the first on to complete.</p>
+<p>Let&#8217;s change this example a little bit. The following class <code>MultiThreadedDemo</code> executes two loops in parallel. It creates a separate thread for the fist loop, and starts it in a separate thread so the main thread, which has the second loop doesn&#8217;t wait for the first one to complete.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4646,12 +4623,12 @@ The value of i in power of 4 is 1024
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>To start the execution of the thread, we need to call the method <code>start</code>, which is define in the class <code>Thread</code> and will internally invoke the method <code>run</code>, which is implemented as lambda. The method <code>start</code> doesn&#8217;t wait for the completion of the method <code>run</code> so the next line in our <code>main</code> method is executed.</td>
+<td>To start the execution of the thread, we need to call the method <code>start</code>, which is defined in the class <code>Thread</code> and will internally invoke the method <code>run</code>, which is implemented as lambda. The method <code>start</code> doesn&#8217;t wait for the completion of the method <code>run</code> so the next line in our <code>main</code> method is executed.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>If you run the program <code>MultiThreadedDemo</code> several times, it may print the output differently each time depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look:</p>
+<p>If you run the program <code>MultiThreadedDemo</code> several times, it may print the output differently each time depending on how busy is the CPU is on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4674,7 +4651,7 @@ The value of i in power of 4 is 1024</code></pre>
 <p>You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.</p>
 </div>
 <div class="paragraph">
-<p>For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I&#8217;ll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.</p>
+<p>For a more realistic scenario think of a game with fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such a program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I&#8217;ll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.</p>
 </div>
 </div>
 </div>
@@ -4721,7 +4698,7 @@ The value of i in power of 4 is 1024</code></pre>
 <p>In the package contacts write a program <code>MyContacts</code> that will declare and instantiate an <code>ArrayList</code> called <code>friends</code> it should  allow only the objects of type <code>ContactDetail</code>.</p>
 </li>
 <li>
-<p>Create two or more instances of <code>ContactDetail</code> object and populated them with your friends' data using setters.</p>
+<p>Create two or more instances of <code>ContactDetail</code> object and populate them with your friends' data using setters.</p>
 </li>
 <li>
 <p>Add all instances of <code>ContactDetail</code> to the <code>friends</code> collection by using the method <code>add</code>.</p>
