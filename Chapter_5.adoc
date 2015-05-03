@@ -3,13 +3,15 @@
 
 == Interfaces, Lambdas, Abstract and Anonymous Classes
 
-In this chapter I'll focus on discussing how you can program _behavior_ in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called _functional_ (e.g. JavaScript, Scala et al.) In these languages you can simply write functions like `eat`, `sleep`, or `dive`, and these functions can live their independent lives and don't have to be declared in classes. In _object-oriented_ languages behavior is implemented in methods defined in classes. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. 
+In this chapter I'll focus on discussing how you can program _behavior_ in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called _functional_ (e.g. JavaScript, Scala et al). In these languages you can simply write functions like `eat`, `sleep`, or `dive`, and these functions can live their independent lives and don't have to be declared in classes. In _object-oriented_ languages behavior is implemented in methods defined in classes. 
+
+The phrase _to implement a method_ simply means _to write code in a method_. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. 
 
 So far I was declaring and implementing behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation. Such separation can be done using _interfaces_.
 
 === Java Interfaces
 
-While you can just create a Java class and implements all its methods there, a more formal way of declaring the behavior of the class in a separate `interface`. Then a class declaration would include the keyword `implements` followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.   
+While you can just create a Java class and implement all its methods there, a more formal way of declaring the behavior of the class in a separate `interface`. Then a class declaration would include the keyword `implements` followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.   
 
 For years, Java _interfaces_ were used mainly for holding method declarations and `final` `static` variables. For example, the interface `Talkable` contains the declaration of just one method `talk`:
 
@@ -51,9 +53,9 @@ public class Cat implements Talkative {
 }
 ----
 
-These three classes use the Java keyword `implements`, which means they promise to implement all abstract methods in the interface(s) listed after the keyword `implements` otherwise the Java compiler will complain: "You promised to implement all abstract methods from `Talkable`, where are they? Keep the promise!" 
+These three classes use the Java keyword `implements`, which means they promise to implement all abstract methods in the interface(s) listed after the keyword `implements` otherwise the Java compiler will complain: "You promised to implement all abstract methods from `Talkable`, where are they? Keep your promise!" 
 
-What if we need to create the class `Fish` that uses interfaces? Fish don't talk. But they swim. Dogs can talk and swim, right?  Why won't we declare yet another interface `Swimmable` with the methods `swim` and `dive`?
+What if we need to create the class `Fish` that uses interfaces? Fish don't talk. But they swim. Dogs can talk (bark) and swim, right? Why won't we declare yet another interface `Swimmable` with the methods `swim` and `dive`?
 
 [source, java]
 ----
@@ -93,7 +95,7 @@ public class Dog implements Talkative, Swimmable {
 }
 ----
 
-When a class implements several interfaces, make sure to implement each and every abstract method declared in these interfaces. I'll tell you more: a class can extend another class and implement interfaces at the same time, for example:
+When a class implements several interfaces, make sure to implement each and every abstract method declared in these interfaces. A class can extend another class and implement interfaces at the same time, for example:
 
 [source, java]
 ----
@@ -137,7 +139,7 @@ public class Dog implements Talkative, Swimmable {
 }
 ----
 
-There is no need to change the class `Fish`. It also implements `Swimmable`, but has its own version of the method `dive`, which will override the default implementation of the `dive` from `Swimmable`. You can still call the method `dive` on the instance of the `Dog` class - the default implementation will be invoked. The next class `PetMaster` will demonstrate this.
+There is no need to change the class `Fish`. It also implements `Swimmable`, but has its own version of the method `dive`, which will override the default implementation of the `dive` from `Swimmable`. You can still invoke the method `dive` on the instance of the `Dog` class - the default implementation will be invoked. The next class `PetMaster` will demonstrate this.
 
 [source, java]
 ----
@@ -282,7 +284,7 @@ public interface Swimmable {
 }    
 ----
 
-A class that implements `Swimmable` can use the value of `MAX_DEPTH` too.
+A class that implements `Swimmable` can use the value of `MAX_DEPTH` as well.
 
 ==== Functional Interfaces
 
@@ -290,7 +292,7 @@ If an interface has only one abstract method declared (default and static method
 
 === Abstract Classes
 
-If a method is not implemented we call it abstract. But classes can be declared abstract too, and Java has the keyword `abstract` for this. An abstract class is called abstract if it was declared with the keyword `abstract`, for example: 
+If a method is not implemented we call it abstract, but classes can be declared abstract too, and Java has the keyword `abstract` for this. An abstract class is called abstract if it was declared with the keyword `abstract`, for example: 
 
 [source,java]
 ----
@@ -299,7 +301,7 @@ public abstract class Animal{
 }
 ---- 
 
-If a class declared as abstract, you can't create an instance of it. Typically, abstract classes have some non-implemented methods that are also declared with the `abstract` keyword:
+If a class is declared as abstract, you can't create an instance of it. Typically, abstract classes have some non-implemented methods that are also declared with the `abstract` keyword:
 
 [source, java]
 ----
@@ -332,24 +334,24 @@ public class Dog extends Animal{
 } 
 ----
 
-Strictly speaking, it's not a must to implement the method `talk` in the class `Dog`, but in this case `Dog` remains  abstract and can't be instantiated. Maybe the programmer wants to create a class `Puppy` that extends `Dog` and implement the `talk` there?
+Strictly speaking, it's not a must to implement the method `talk` in the class `Dog`, but in this case `Dog` remains  abstract and can't be instantiated. Maybe the programmer wants to create a class `Puppy` that extends `Dog` and implements the method `talk` there?
 
-And again you might be wondering, "Why complicating programmer's life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from `Animal` you might want to declare an unified method signature, so each class (`Dog`, `Parrot`, `Fish` et al.) will have the same way of initiating the talk.
+And again you might be wondering, "Why complicate a programmer's life by declaring non-implemented methods?" If you want to build a hierarchy of classes that extend from `Animal` you might want to declare an unified method signature, so each class (`Dog`, `Parrot`, `Fish` et al.) will have the same way of initiating the talk.
 
 ==== What's the difference between abstract classes and interfaces?
 
-Abstract classes and interfaces allow to create classes that implement _polymorphism_, which is an advanced topic and will not be covered in this book. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. `setName` and `sleep` in the vertical class hierarchy. 
+Abstract classes and interfaces allow to create classes that implement _polymorphism_, which is an advanced topic and won't be covered in this book. You can read about it in https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html[Oracle's tutorial] if interested. Abstract classes allow you to implement some common static or instance-specific behavior, e.g. `setName` and `sleep` in the vertical class hierarchy. 
 
 Interfaces can't have instance methods, but they don't enforce any class hierarchy. So you can have a class `Dog` that extends any class, while implementing an interface `Talkative` that declares the method `talk`. 
 
 
 === Anonymous Classes
 
-If you need to use an object of certain type only once, you can kill two birds with one stone: declare an anonymous class and create an instance of it. In this case you don't even need to give a class a name, hence it's _anonymous_. I'll show you an example of a program that's first written without and then with anonymous classes. 
+If you need to use an object of certain type only once, you can kill two birds with one stone: declare an anonymous class and create an instance of it. In this case you don't even need to give a class a name, hence why it's _anonymous_. I'll show you an example of a program that's first written without and then written with them. 
 
-Let's say I want to write a simple calculator in Java. In chapters 8 and 9 you'll create a real calculator with the  graphical Users Interface (GUI). But for now, I'll show you how to program such operations as addition and subtraction. The multiplication and division operations can be programmed  similarly, so I won't be implementing these operations. 
+Let's say I want to write a simple calculator in Java. In chapters 8 and 9 you'll create a real calculator with the  graphical Users Interface (GUI), but for now I'll show you how to program operations such as addition and subtraction. The multiplication and division operations can be programmed  similarly, so I won't be implementing these operations. 
 
-I want to keep these examples in the package called `calc`. You can create a subdirectory named _calc_ in your project and save your classes there. The other choice is to right-click on the folder _src_ in your IDEA project and select the menu New | Package and enter the package name there: 
+I want to keep these examples in the package called `calc`. You can create a subdirectory named _calc_ in your project and save your classes there. The other option is to right-click on the folder _src_ in your IDEA project and select the menu New | Package and enter the package name there: 
 
 [[FIG5-2]]
 .Creating a new package in IDEA
@@ -395,7 +397,7 @@ This class has two methods that manipulate numbers (one per operation), and its 
 3.55 - 50.0 = -46.45
 ----
 
-Now let's redesign this application. Instead of writing a separate method for each operation, I want to write a generic method that can receive the code of the operation and two numbers to be operated upon. This method will have three arguments: the arithmetic operation, the first and the second number. 
+Now let's redesign this application. Instead of writing a separate method for each operation, I want to write a generic method that can receive the code of the operation and two numbers to be operated upon. This method will have three arguments: the arithmetic operation, the first, and the second number. 
 
 The operation is a behavior, so let's declare an interface to represent it using a functional interface with a single abstract method:
 
@@ -451,27 +453,23 @@ public class CalculatorWithAnonymousClasses {
 }
 ----
 
-The output of the `CalculatorWithAnonymousClasses` program will be the same as from `Calculator`. What did we achieve by re-writing calculator this way? We separated the declaration of the behavior and its implementation. The behavior is declared in the interface, and if more than one class needs to implement `ArithmeticOperation`, we'll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method `performOperation`, so this object could be passes as an argument to the method `calculate`. In the next section I'll rewrite this calculator again in a more elegant way with lambda expressions.
+The output of the `CalculatorWithAnonymousClasses` program will be the same as from `Calculator`. What did we achieve by re-writing calculator this way? We separated the declaration of the behavior and its implementation. The behavior is declared in the interface, and if more than one class needs to implement `ArithmeticOperation`, we'll reuse this interface. The anonymous classes allowed me to create a wrapper object around the method `performOperation`, so this object could be passed as an argument to the method `calculate`. In the next section I'll rewrite this calculator again in a more elegant way with lambda expressions.
 
 .Access Levels
 **********************
-In many code samples I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be access only from the code located in the same package ( directory). 
+In many code samples I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accessed by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be accessed only from the code located in the same package ( directory). 
 
-Let’s make a simple experiment – remove the keyword public from the declaration of the class PingPongEngine.  Now the class PingPongTable won’t even compile giving an error PingPongEngine can not be resolved or is not a type. This means that the class PingPongTable does not see the class PingPongEngine anymore.
+Let’s make a simple experiment – remove the keyword public from the declaration of the class `PingPongEngine`.  Now the class `PingPongTable` won’t even compile giving an error `PingPongEngine` can not be resolved or is not a type. This means that the class `PingPongTable` does not see the class `PingPongEngine` anymore.
 
-
-Similarly, if  you forget to give a public access to  methods of the class PingPongEngine, the PingPongTable will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.
+Similarly, if you forget to give public access to  methods of the class `PingPongEngine`, the `PingPongTable` will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.
  
+The `private` access level is used to hide class variables or  methods from the outside world. Think of a car – most people have no clue how many parts there are under the hood, and what actually occurs when a driver pushes the brake pedal. 
+
+Look at the next code sample - in Java, we can say that the object `Car` exposes only one public method – `brake`, which internally may call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as the Mars Rover, let alone simple cars.
  
+There is one more Java keyword `protected` that controls access levels. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package, but it won’t be available for independent classes located in other packages.
 
-The private access level is used to hide class variables or  methods from the outside world. Think of a car – most of the people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal. 
-
-Look at the next code sample - in Java, we can say that the object Car exposes only one public method – `brake`, which internally  may  call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as Mars rovers, let alone simple cars.
- 
-
-There is one more Java keyword protected that controls access level. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package. But it won’t be available for independent classes located in other packages.
-
-When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges. 
+When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide the controls of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gages. 
 
 In the next section you can find a class Score that hides its attributes in private variables. 
 **********************
@@ -479,13 +477,13 @@ In the next section you can find a class Score that hides its attributes in priv
 
 === Lambda Expressions
 
-Up till now, to invoke a method we've been creating named or anonymous classes and instantiating objects. But lambda expressions allow to define and invoke a piece of code even without the need to declare classes or instantiate objects.
+Up till now, to invoke a method we've been creating named or anonymous classes and instantiating objects, but _lambda expressions_ allow to define and invoke a piece of code even without the need to declare classes or instantiate objects.
 
 First, let me introduce a new term - _a function_. So far to implement any behavior you'd write a method that could be invoked by specifying the class name and a method name (static methods) or by specifying the object variable and a method name (non-static methods). This is a main idea of any object-oriented programming language - the classes and objects are the first-class citizens. You can't write a program without them. 
 
-But there are functional programming languages that don't need to wrap behavior inside classes. They allow you to implement behavior by writing functions, which are similar to methods in that they can have names, take arguments and return results. But functions don't have to be placed inside classes and can live independently.
+But there are functional programming languages that don't need to wrap behavior inside classes. They allow you to implement behavior by writing functions, which are similar to methods in that they can have names, take arguments, and return results. But functions don't have to be placed inside classes and can live independently.
 
-A lambda expression is a function without a name or _anonymous function_ that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java you could pass a value to a method only if this value was an object or a primitive. But now a function (a piece of code) becomes a value that can be passed around. Let's see it in action.
+A lambda expression is a function without a name or _anonymous function_ that you can assign to a variable, pass as an argument to a method or return from a method. In earlier versions of Java you could pass a value to a method only if this value was an object or a primitive. But now a function (a piece of code) becomes a value that can be passed around. Now let's see it in action.
 
 [[FIG5-3]]
 .The Lambda sign
@@ -526,15 +524,15 @@ public class CalculatorWithLambdas {
 }
 ----
 
-The difference between `CalculatorWithAnonymousClasses` from the previous section and `CalculatorWithLambdas` is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces. To write a lambda expression you need the play by the following rules:
+The difference between `CalculatorWithAnonymousClasses` from the previous section and `CalculatorWithLambdas` is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces. To write a lambda expression you need the play by the rules:
 
 1. Declare an the interface that has only one abstract method. 
-2. Make sure that the arguments of your lambda expression match the argument of the abstract method.
+2. Make sure that the arguments of your lambda expression match the arguments of the abstract method.
 3. Make sure that the return value of your lambda expression matches the return value of the abstract method.
 
 Review the code of the `CalculatorWithLambdas`. Both lambdas `addition` and `subtraction` abide by these rules.
 
-You may say, "Why there are no data types specified for the lambda parameters first and second?" The reason being that Java compiler is smart enough to guess their data types because it knows which abstract method this lambda implements. Such an educated guess is called _type inference_.  
+You may wonder, "Why are there no data types specified for the lambda parameters first and second?" The reason being that Java compiler is smart enough to guess their data types because it knows which abstract method this lambda implements. An educated guess such as this is called _type inference_.  
 
 NOTE: IntelliJ IDEA can automatically convert anonymous classes that implement functional interfaces into lambda expressions. Just make sure that your project language level is 8.0. You can do this by selecting the menu File | Project Structure.
 
@@ -542,7 +540,7 @@ NOTE: IntelliJ IDEA can automatically convert anonymous classes that implement f
 
 Let's return to our examples with pets. I'd like to show you how lambda expressions can simplify your code by reducing the number of required classes. Earlier in this chapter we've created the classes `Dog`, `Parrot` and the only difference between them was the implementation of the interface `Talkative`. But we can declare just one class with a method that can take the implementation of the `Talkative` in a form of lambda expression. 
 
-Let's start with defining the functional interface `Talkative`. This time I'll slightly change the signature of the method `talk` comparing to the version shown earlier in this chapter. I do it just to show you how to write a lambda expression that implements a method that has an argument and returns some value.
+Let's start with defining the functional interface `Talkative`. This time I'll slightly change the signature of the method `talk` comparing to the version shown earlier in this chapter. I do this to show you how to write a lambda expression that implements a method that has an argument and returns some value.
 
 [source, java]
 ----
@@ -592,7 +590,7 @@ public class PetMasterLambda {
 }
 ----
 
-We've defined different rules for talking parrots and dogs as lambdas in variables `parrotTalkRules` and dogTalkRules accordingly. Not that I have not specified the data type of the variable `name`. It's yet another example of the inferred typing - the `Talkative` interface has a single abstract method with the argument of type `String`. The second argument of the method `speakup` will be passed to the method `talk`. Run this program and it'll print the following:
+We've defined different rules for talking parrots and dogs as lambdas in variables `parrotTalkRules` and `dogTalkRules` accordingly. Not that I have not specified the data type of the variable `name`. It's yet another example of the inferred typing - the `Talkative` interface has a single abstract method with the argument of type `String`. The second argument of the method `speakup` will be passed to the method `talk`. Run this program and it'll print the following:
 
 [source, java]
 ----
@@ -600,9 +598,9 @@ I'm a dog. My name is Sammy
 I'm a parrot. Don't call me Charlie
 ----
 
-By using lambda expressions I was able to eliminate the need of creating a separate class for each animal. Of course, this is possible only if the only difference between classes `Dog` and `Parrot` was implementation of the talking behavior.
+By using lambda expressions I was able to eliminate the need for creating a separate class for each animal. Of course, this is possible only if the only difference between classes `Dog` and `Parrot` was implementation of the talking behavior.
 
-I'd like to draw your attention to the fact, that my class Pet has no state - it doesn't define any class variables. This means that we don't even need to create instances of the class `Pet`, but could simply define its method `speakup` as `static` and call it just like this
+I'd like to draw your attention to the fact, that my class Pet has no state - it doesn't define any class variables. This means that we don't even need to create instances of the class `Pet`, but could simply define its method `speakup` as `static` and call it just like this:
 
 [source, java]
 ----
@@ -623,7 +621,7 @@ In Chapter 9 I'll show you more lambda expressions while explaining how to proce
 
 4. In the package _pets_ create a new class `Pet` with a constructor that will take the name of the pet (of type `String`) as an argument.
 
-5. Change the declarations of the classes `Dog` and `Fish` so each of them extends `Pet` while implementing `Talkable` and `Swimable` interfaces.
+5. Change the declarations of the classes `Dog` and `Fish` so each of them extend `Pet` while implementing `Talkable` and `Swimable` interfaces.
 
 6. Create the class `PetMaster` from the section "Interfaces", but give pets names while instantiating classes `Dog` and `Fish`.
 
