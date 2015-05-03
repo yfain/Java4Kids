@@ -9,11 +9,11 @@ Finally, I'll give you a very light introduction to parallel computing using mul
 
 === Access Levels 
 
-In code samples from previous chapters I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accesses by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be accessed only from the code located in the same package (directory).
+In code samples from previous chapters I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or method can be accessed by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be accessed only from the code located in the same package (directory).
 
-One of the main features of object-oriented languages is _encapsulation_ - an ability to hide and protect data or code. But who do you need to hide or protect the code from? This is not a protection from bad guys who are not allowed to see your code. You hide and protect the code from misuse.
+One of the main features of object-oriented languages is _encapsulation_ - the ability to hide and protect data or code. But who do you need to hide or protect the code from? This is not a protection from bad guys who are not allowed to see your code. You hide and protect the code from misuse. For example, another programmer extended your class and is trying to change the value of a variable in your class, which may result in bug. 
 
-Let's consider an example from the real world. Think of a car – most people have no clue how many parts are there under the hood, and what actually happens when a driver pushes the brake pedal. If car designers would not be hiding control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges on the car's dashboard.
+Let's consider an example from the real world. Think of a car – most people have no clue how many parts are under the hood, and what actually happens when a driver pushes the brake pedal. If car designers would not hide control of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gauges on the car's dashboard.
 
 [[FIG6-1]]
 .Overwhelmed by the "public user interface"
@@ -32,7 +32,7 @@ public class Car {
  // This private variable is visible only inside this class
   private String brakesCondition;
 
- // The public method brake() calls private methods
+ // The public method brake calls private methods
  // to decide which brakes to use
   public void brake(int pedalPressure){
     boolean useRegularBrakes; 
@@ -70,14 +70,13 @@ public class Car {
   }
 }
 ----
-By looking at this code I can say that the class `Car` exposes only one public method `brake()`, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods. 
+By looking at this code I can say that the class `Car` exposes only one public method `brake`, which internally may invoke several other functions that a driver does not need to know about. For example, if the driver pushes the brakes pedal too hard, the car’s computer may apply special anti-lock brakes implemented in private methods. 
 
-I took the next screen shot in IntelliJ IDEA while writing a class `CarMaster` that uses `Car`. IDEA helps me with suggesting the `Car` class members that I can use in this context. Only the method `brake()` is visible from the class `Car` (other methods are from the class `Object`).
+I took the next screen shot in IntelliJ IDEA while writing a class `CarMaster` that uses `Car`. IDEA helps me with suggesting the `Car` class members that I can use in this context. Only the method `brake` is visible from the class `Car` (other methods are from the class `Object`).
 
 [[FIG6-2]]
-.Can use the brake() method only
+.Can use the brake method only
 image::images/fig_6_02.png[]
-
 
 The `private` access level is the most restrictive one. If you're not sure when to use it, just declare all of your call member variables and methods as private, and loosen this restriction if other classes need to use these members.
 
@@ -89,11 +88,11 @@ What do you think will happen if you simply remove the `private` keyword from on
 
 The class members declared with the `protected` keyword can be accessed from other members of the same class, from its descendants or classes located in the same package. Even if a descendant class is located in a different package, it'll be able to access `protected` methods of its ancestors. 
 
-Some software developer are creating libraries or frameworks of classes to be used by other developers. These classes can be extended, and their creators may use the keyword `protected` trying to allow access to certain member only descendant classes. But in the real world no one can predict what the developer may want to do with there libraries, and the keyword `protected` may become an obstacle in achieving of their goals. I do not use the keyword `protected` in my projects. As you gain more experience with Java, see for yourself if the keyword `protected` brings some value to your programs. 
+Some software developers are creating libraries or frameworks of classes to be used by other developers. These classes can be extended, and their creators may use the keyword `protected` trying to allow access to certain member only descendant classes. But in the real world no one can predict what the developer may want to do with their libraries, and the keyword `protected` may become an obstacle in achieving of their goals. I do not use the keyword `protected` in my projects. As you gain more experience with Java, see for yourself if the keyword `protected` brings some value to your programs. 
 
 === Casting
 
-In Java all classes are directly or indirectly inherited from the class `Object`, which is the root of the class hierarchy. In Figure 2 you've seen a class `Car` that has number of methods that we've never declared - they belong to the class `Object`, and the class `Car` extends `Object` even though we've never asked for it.  So any of your application classes has an ancestor - `Object`.
+In Java all classes are directly or indirectly inherited from the class `Object`, which is the root of the class hierarchy. In Figure 2 you've seen a class `Car` that has number of methods that we've never declared - they belong to the class `Object`, and the class `Car` extends `Object` even though we've never asked for it.  So any of your application classes have an ancestor - `Object`.
 
 When you declare a variable to represent an instance of your class, you can give it a type either of your class or any of its ancestors. For example, both of the following declarations are correct:
 
@@ -104,13 +103,13 @@ Car myCar = new Car();
 Object myOtherCar = new Car();
 ----
 
-Java compiler can _cast_ (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called _upcasting_. But if a variable has the type of a super class, it won't see any members of the subclass. The next screen shot shows that the variable `myOtherCar` doesn't see the method `brake()` declared in the class `Car`.
+Java compiler can _cast_ (convert) one data type to another as long they have inheritance relation. In particular, Java compiler can automatically cast the type to the class ancestors. This is called _upcasting_. But if a variable has the type of a super class, it won't see any members of the subclass. The next screen shot shows that the variable `myOtherCar` doesn't see the method `brake` declared in the class `Car`.
 
 [[FIG6-4]]
 .The Object type variable doesn't see Car's members
 image::images/fig_6_04.png[]
 
-But you can say, "Doesn't the variable `myOtherCar` point at the instance of the class `Car`, which has a public method `brake()`?" That's right, but since I declared this variable of the type `Object` the variable `myOtherCar` assumes that its just a general object.  The programmer can _downcast_ the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example: 
+But you can say, "Doesn't the variable `myOtherCar` point at the instance of the class `Car`, which has a public method `brake`?" That's right, but since I declared this variable of the type `Object` the variable `myOtherCar` assumes that its just a general object.  The programmer can _downcast_ the general type to a more specific one, but this has to be done explicitly by placing the specific type of the object in parentheses before the variable of more general type, for example: 
 
 [source, java]
 ----
@@ -136,18 +135,17 @@ theFish = (Fish) fishTank.get(i);
 
 === Selected Data Collections
 
-Now let's see how to work with collections of data. Say you have a hundred of songs in your MP3 player. It's a collection. If you'll create a class `Song` you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.
+Now let's see how to work with collections of data. Say you have a hundred songs in your MP3 player. It's a collection. If you'll create a class `Song` you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.
 
-Java  packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
+Java packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection classes from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
 
-The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to the concept of multi-threadinglater in this chapter, but the coverage of  concurrent collections doesn't belong to the introductory book like this one.
+The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to the concept of multi-threading later in this chapter, but the coverage of  concurrent collections doesn't belong to the introductory book like this one.
 
 ==== The Class ArrayList
 
-In Chapter 4 you've got familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of array. But often you don't know in advance how many elements are there. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class `ArrayList` can give you more flexibility - it can grow or shrink in size as needed. If you can think of a list of something - a list of songs, a To-Do list, a list of friends names. Pretty much any objects  that can be used with the word _list_ can be stored in an `ArrayList`.
+In Chapter 4 you've gotten familiar with Java arrays, which have a limitation - you have to specify the number of array elements during the declaration of an array. But often you don't know in advance how many elements there are. For example, if you want to write a program that would print all your followers in Twitter, their number may change many times a day. The class `ArrayList` can give you more flexibility - it can grow or shrink in size as needed. Think of a list of something - a list of songs, a To-Do list, a list of friends names. Pretty much any objects that can be used with the word _list_ can be stored in an `ArrayList`.
 
-Why use arrays, then?  Let’s just always use `ArrayList`! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The `ArrayList` works is a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.   
-
+Why use arrays, then? Let’s just always use `ArrayList`! Unfortunately, nothing  comes for free, and you have to pay the price for having a convenience of dynamically sized arrays. The `ArrayList` works a little slower than a regular array. Besides, you can only store objects there, while arrays allows you to store primitives too.   
 To create and populate an `ArrayList` you should instantiate it first and then create instances of the objects you are planning to store there. Add each object to the `ArrayList` by calling its method `add`. The next little program will populate an `ArrayList`  with `String` objects and then print each element of this collection.
 
 [source, java]
@@ -186,7 +184,7 @@ Friend #2 is David
 Friend #3 is Roy
 ----
 
-The method `get` extracts the element located at the specified position in the `ArrayList`. Since you can store any objects in this collection, the method `get` returns each element of the `Object` type. The program to _cast_ this object to a proper data type. We did not have to do it in the previous example only because we stored `String` objects in the collection `friends`, and Java knows how to convert an `Object` to a `String` automatically. 
+The method `get` extracts the element located at the specified position in the `ArrayList`. Since you can store any objects in this collection, the method `get` returns each element of the `Object` type. The program has to _cast_ this object to a proper data type. We did not do it in the previous example only because we stored `String` objects in the collection `friends`, and Java knows how to convert an `Object` to a `String` automatically. 
 
 Let's see how you can work with some other objects in `ArrayList`, for example instances of the class `Fish` shown next. 
 
@@ -229,7 +227,7 @@ Note that the class fields `color` and `weight` are `private` variables. But thi
 
 NOTE: IntelliJ IDEA can automatically generate setters and getters for the class. Just right-click on the class name and select the options Refactor | Encapsulate Fields. 
 
-The code to add (and extract) a particular `Fish` to the `ArrayList` collection may look as in the program `FishTank` that comes next. 
+The code to add (and extract) a particular `Fish` to the `ArrayList` collection may look similar to the program `FishTank` that comes next. 
 
 [source, java]
 ----
@@ -328,27 +326,27 @@ In this example I used the first name as the key in the method `put` that adds e
 image::images/fig_6-04-1.png[]
 
 
-`HashTable` requires each key to be unique. Say you have another contact named `Art` and will create a new instance of the `ContactDetail` object. If you'll add it to the same collection under the same key - `friends.put("Art", friend3);`  it'll replace the contact details of the first Art with the data of the second one. This happens because Java `Hashtable` internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nick like `ArtFromNYC` or use another Java collection like `ArrayList` to store your contacts. By the way, `ArrayList` even allows you to store duplicates (objects with the same values), while `Hashtable` doesn't. 
+`HashTable` requires each key to be unique. Say you have another contact named `Art` and will create a new instance of the `ContactDetail` object. If you'll add it to the same collection under the same key - `friends.put("Art", friend3);`  it'll replace the contact details of the first Art with the data of the second one. This happens because Java `Hashtable` internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nickname like `ArtFromNYC` or use another Java collection like `ArrayList` to store your contacts. By the way, `ArrayList` even allows you to store duplicates (objects with the same values) while `Hashtable` doesn't. 
 
 I'm not going to cover other Java collections here, but if you'd like to do your own research, read about such collections from the `java.util` package as `HashMap`, `HashSet`, and `LinkedList`. There is also a class `Collections` that has a bunch of useful static methods to operate on your data collections (e.g. `sort`, `copy`, `binarySearch` et al.). 
 
 === Introduction to Generics
 
-Java generics is a feature that allow to create so called `parameterized data types`. For example, instead of just declaring a creating a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. For example, declaring and instantiating general collection to store friends like this:
+Java generics is a feature that allows you to create so called `parameterized data types`. For example, instead of just declaring a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. Instead of declaring and instantiating a general collection to store friends like this:
 
 [source, java]
 ----
   ArrayList friends = new ArrayList();
 ----
 
-you can do it with a parameter so it can store only `String` object like this:
+you can do it with a parameter so it can store only `String` objects like this:
 
 [source, java]
 ----
   ArrayList<String> friends = new ArrayList<>();
 ----
 
-The parameter(s) goes in the angle brackets right after the data type. Note so called _diamond operator <>_ on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It's also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you'll try to add an object of another type to `friends` the Java compiler will complain. 
+The parameter(s) goes in the angle brackets right after the data type. Note the so called _diamond operator <>_ on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It's also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you'll try to add an object of another type to `friends` the Java compiler will complain. 
 
 I was able to specify a parameter for `ArrayList` only because it was created with this ability. If you'll read the http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html[online documentation] for `ArrayList` you'll see that it's declared as follows:
 
@@ -408,7 +406,7 @@ The `HashTableBrokenDemo` adds the first object (for Jackie) of type `ContactDet
 "Art Jones, ajones@gmail.com, ajones, 212-333-2121"
 ----
 
-Java compiler sees no crime here - the `Hashtable` can store any descendants of the class `Object`.  But if you'll run this program, you'll get an error in the line that tries to cast the collection element to `ContactDetail` type. This is how my IntelliJ IDEA screen with the error look like:
+Java compiler sees no crime here - the `Hashtable` can store any descendants of the class `Object`.  But if you'll run this program, you'll get an error in the line that tries to cast the collection element to `ContactDetail` type. This is how my IntelliJ IDEA screen with the error looks like:
 
 [[FIG6-6]]
 .The runtime exception: ClassCastException
@@ -423,30 +421,30 @@ Now I'll copy the code of `HashTableBrokenDemo` into the new class called `HashT
 Hashtable<String, ContactDetail> friends = new Hashtable<>();
 ----
 
-Now I'm explicitly stating that my intention is to use the `String` objects for keys, and `ContactDetail` objects as values. The program `HashTableGenericsDemo` is shown next - it won't even compile, yay! 
+Now I'm explicitly stating that my intention is to use the `String` objects for keys, and `ContactDetail` objects as values. The program `HashTableGenericsDemo` is shown next - it won't even compile! 
 
 [source, java]
 ----
 public class HashTableGenericsDemo {
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        ContactDetail friend1 = new ContactDetail();
-        friend1.fullName = "Jackie Allen";
-        friend1.email = "jallen@gmail.com";
-        friend1.facebookID = "jallen";
-        friend1.phone="212-545-5545";
+      ContactDetail friend1 = new ContactDetail();
+      friend1.fullName = "Jackie Allen";
+      friend1.email = "jallen@gmail.com";
+      friend1.facebookID = "jallen";
+      friend1.phone="212-545-5545";
 
-        Hashtable<String, ContactDetail> friends = new Hashtable<>();
-        friends.put("Jackie", friend1);
+      Hashtable<String, ContactDetail> friends = new Hashtable<>();
+      friends.put("Jackie", friend1);
 
-        // compiler will complain about this line
-       friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
+      // compiler will complain about this line
+     friends.put("Art", "Art Jones, ajones@gmail.com, ajones, 212-333-2121");
 
-        // No casting from Object to ContactDetail needed
-        String jackiesPhone = friends.get("Jackie").phone;
+      // No casting from Object to ContactDetail needed
+      String jackiesPhone = friends.get("Jackie").phone;
 
-        System.out.println("Jackie's phone number is " + jackiesPhone);
-    }
+      System.out.println("Jackie's phone number is " + jackiesPhone);
+  }
 }
 ----
 
@@ -454,9 +452,9 @@ The compiler will complain about the line, where I'm trying to call the method `
 
 Another important thing to note is that there is no casting needed when the program gets the information about Jackie's phone. Now the `friends` collection knows from the very beginning that it stores not just some `Object` types, but the `ContactDetail` instances.
 
-What have we achieved? The program `HashTableBrokenDemo` allowed us to store anything in the collection but crashed during the runtime, but `HashTableGenericsDemo` prevented this error from happening. Having a compiler's error it's a lot better than getting surprises during the runtime, isn't it? Besides, with generics we've eliminating the need to cast objects.
+What have we achieved? The program `HashTableBrokenDemo` allowed us to store anything in the collection but crashed during the runtime, but `HashTableGenericsDemo` prevented this error from happening. Having a compiler's error it's a lot better than getting surprises during the runtime, isn't it? Besides, with generics we've eliminated the need to cast objects.
 
-I've been using parameterized data type `Hashtable` that was conveniently offered by the creators of Java. But you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book.  
+I've been using the parameterized data type `Hashtable` that was conveniently offered by the creators of Java, but you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book. Check out https://docs.oracle.com/javase/tutorial/java/generics/types.html[Oracle's tutorial] if interested. 
 
 === Light Introduction to Multi-Threading 
 
@@ -479,7 +477,7 @@ A good example of a program that creates multiple threads is a Web browser. For 
 
 ==== How to Create a Thread
 
-All Java applications that we've created so far (even Hello World) were running in so called _main thread_. We didn't need to do any special programming to create a main thread - Java runtime always create one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.
+All Java applications that we've created so far (even Hello World) were running in so called _main thread_. We didn't need to do any special programming to create a main thread - Java runtime always creates one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.
 
 There are different ways of creating threads. I won't be explaining details of each method because it's a pretty advanced topic and is not a good fit for this book. But I'll just list some of the ways of creating threads and will illustrate it with one simple example. These are the main methods of writing code to be executed in a separate thread:
 
@@ -516,7 +514,7 @@ public class SingleThreadedDemo {
 }
 ----
 
-In first loop I simply multiply the variable `i` to itself four times. In the second loop I simply concatenate a String, the value of `k` and an exclamation point. The second loop will start only after the first loop is complete, and no matter how many times you'll run this program, the output on the console will always look like this:
+The first loop simply multiplies the variable `i` to itself four times. In the second loop I simply concatenate a String, the value of `k` and an exclamation point. The second loop will start only after the first loop is complete, and no matter how many times you'll run this program, the output on the console will always look like this:
 
 [source, java]
 ----
@@ -534,7 +532,7 @@ The value of i in power of 4 is 1024
 
 This was an example of a sequential code execution in a single thread. But the actions that we do in each loop don't depend on each other and can be executed in parallel, right? 
 
-Let's change this example a little bit. The following class `MultiThreadedDemo` executes two loops in parallel. It creates a separate thread for the fist loop, and starts it in a separate thread so the main thread, which has the second loop doesn't wait for the first on to complete.
+Let's change this example a little bit. The following class `MultiThreadedDemo` executes two loops in parallel. It creates a separate thread for the fist loop, and starts it in a separate thread so the main thread, which has the second loop doesn't wait for the first one to complete.
 
 [source, java]
 ----
@@ -564,9 +562,9 @@ public class MultiThreadedDemo {
 
 <3> The lambda expression ends here.
 
-<4> To start the execution of the thread, we need to call the method `start`, which is define in the class `Thread` and will internally invoke the method `run`, which is implemented as lambda. The method `start` doesn't wait for the completion of the method `run` so the next line in our `main` method is executed.
+<4> To start the execution of the thread, we need to call the method `start`, which is defined in the class `Thread` and will internally invoke the method `run`, which is implemented as lambda. The method `start` doesn't wait for the completion of the method `run` so the next line in our `main` method is executed.
 
-If you run the program `MultiThreadedDemo` several times, it may print the output differently each time depending on how busy is the CPU on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look: 
+If you run the program `MultiThreadedDemo` several times, it may print the output differently each time depending on how busy is the CPU is on your computer. I ran this program several times and selected the console output that illustrates that the code was not executed sequentially, take a look: 
 
 [source, java]
 ----
@@ -586,7 +584,7 @@ Note that the first two lines print the output from the second loop! This means 
 
 You may say, is it even a real-world example? Who needs to run such simple loops in parallel? I made this example simple to get across the message that one program can do stuff in parallel.
 
-For more realistic scenario think of a game with a fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I'll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.
+For a more realistic scenario think of a game with fancy graphics that needs to update the images on the screen and perform some complex algorithms. If such a program would sequentially do the screen updates and algorithms, the game would run slow with noticeable delays in the graphics during times when the program does number crunching. In Chapter 8 I'll illustrate the effect of the "frozen" screen and how to deal with it using a separate thread for screen updates.
 
 === Project: Using ArrayList and Generics
 
@@ -621,7 +619,7 @@ Note that I'm overriding the method `toString` that exists in the class `Object`
 
 5. In the package contacts write a program `MyContacts` that will declare and instantiate an `ArrayList` called `friends` it should  allow only the objects of type `ContactDetail`.
 
-6. Create two or more instances of `ContactDetail` object and populated them with your friends' data using setters.
+6. Create two or more instances of `ContactDetail` object and populate them with your friends' data using setters.
 
 7. Add all instances of `ContactDetail` to the `friends` collection by using the method `add`.
 

@@ -457,21 +457,7 @@ The output of the `CalculatorWithAnonymousClasses` program will be the same as f
 
 .Access Levels
 **********************
-In many code samples I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accessed by any other code from the project. You can declare a class, a method, or a member variable to be `public`, `private`, or `protected`. If one of these keywords is missing, Java compiler assumes that it's a _package access level_ - this element can be accessed only from the code located in the same package ( directory). 
-
-Let’s make a simple experiment – remove the keyword public from the declaration of the class `PingPongEngine`.  Now the class `PingPongTable` won’t even compile giving an error `PingPongEngine` can not be resolved or is not a type. This means that the class `PingPongTable` does not see the class `PingPongEngine` anymore.
-
-Similarly, if you forget to give public access to  methods of the class `PingPongEngine`, the `PingPongTable` will complain saying that these methods are not visible. You’ll see how the access levels are used in the next chapter while creating a ping pong game.
- 
-The `private` access level is used to hide class variables or  methods from the outside world. Think of a car – most people have no clue how many parts there are under the hood, and what actually occurs when a driver pushes the brake pedal. 
-
-Look at the next code sample - in Java, we can say that the object `Car` exposes only one public method – `brake`, which internally may call several other methods that a driver does not need to know about. For example, if the driver pushes the brake pedal too hard, the car’s computer may apply special anti-lock brakes. I already mentioned before that Java programs control such complicated robots as the Mars Rover, let alone simple cars.
- 
-There is one more Java keyword `protected` that controls access levels. If you use this keyword in a method signature, this method will be visible  inside the class, from  its subclasses, and from other classes located in the same package, but it won’t be available for independent classes located in other packages.
-
-When you design a  class, hide methods and member variables that should not be visible from outside. If car designers would not hide the controls of some of the under-the-hood operations, the driver would have to deal with hundreds of buttons, switches and gages. 
-
-In the next section you can find a class Score that hides its attributes in private variables. 
+In many code samples I've been using the keyword `public` in declaration of member variables and methods. This means that such a variable or a method can be accessed by any other code from the project. In the next chapter I'll explain how to control access levels in Java.
 **********************
 
 
