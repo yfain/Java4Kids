@@ -17,7 +17,9 @@ While this book is written for 12+ year old kids, adults looking for an easy int
 
 http://instagram.com/yurifain[Yuri Fain] produced illustrations for this book. If this material seems too easy for you get the second edition of my book for adults http://www.amazon.com/Java-Programming-24-Hour-Trainer-Yakov/dp/111895145X["Java 24-Hour Trainer"] or a video course http://javatraining.eu/["Introduction to Java and Java EE"].
 
-The online version of this book is offered for free under http://creativecommons.org/about/license/[Creative Commons license], but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful. After making a donation, you'll be entitled to receive the PDF version of the book as well as in MOBI (for Kindle) and EPUB (for iBook) formats. You'll also be able to join https://groups.google.com/d/forum/java4kids[the Internet group] where readers can post their questions and comments regarding the content of this book.  
+The online version of this book is offered for free under http://creativecommons.org/about/license/[Creative Commons license], but the author would appreciate https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VQGWLFGZHL55Q[a donation] if you find this book useful. After making a donation, you'll be entitled to receive the PDF version of the book as well as in MOBI (for Kindle) and EPUB (for iBook) formats. 
+
+Join https://groups.google.com/d/forum/java4kids[the Internet group] where readers can post their questions and comments regarding the content of this book.  
 
 If you find an error in the code samples email your comments directly to me at yakovfain@gmail.com or open an issue at https://github.com/yfain/Java4Kids_code[code samples repository] on GitHub. 
 
