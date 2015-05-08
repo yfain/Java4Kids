@@ -903,7 +903,7 @@ p { margin-bottom: 1.25rem; }
 </li>
 </ul>
 </li>
-<li><a href="#_error-handling">9. Error Handling</a>
+<li><a href="#_dealing-with-run-time-errors">9. Dealing With Run-time Errors</a>
 <ul class="sectlevel2">
 <li><a href="#_reading-the-stack-trace">9.1. Reading the Stack Trace</a></li>
 <li><a href="#_genealogical-tree-of-exceptions">9.2. Genealogical Tree of Exceptions</a></li>
@@ -6306,13 +6306,13 @@ String buttonLabel = clickedButton.getText();</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_error-handling"><a class="anchor" href="#_error-handling"></a>9. Error Handling</h2>
+<h2 id="_dealing-with-run-time-errors"><a class="anchor" href="#_dealing-with-run-time-errors"></a>9. Dealing With Run-time Errors</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter I&#8217;ll explain you how to handle run-time errors, which in Java are called <em>exceptions</em>.</p>
+<p>In this chapter I&#8217;ll explain to you how to handle run-time errors, which in Java are called <em>exceptions</em>.</p>
 </div>
 <div class="paragraph">
-<p>Say you forgot to write one closing curly brace in your Java code. This will result in the compilation error that can be fixed easily. But there are so called <em>run-time errors</em>, when all of a sudden your program stops working properly.</p>
+<p>Say you forgot to write one closing curly brace in your Java code. This will result in a compilation error that can be fixed easily. But there are so called <em>run-time errors</em>, when your program stops working properly and prints error messages.</p>
 </div>
 <div class="paragraph">
 <p>For example, a Java class reads a file with the game scores. What’s going to happen if someone will delete this file? Will the program crash with a scary error message, or will it stay alive displaying a user friendly message like this one: <em>Dear friend, for some reason I could not read the file scores.txt. Please make sure that the file exists?</em> This is an example of a situation when Java compiler won&#8217;t be able to help - the Java syntax was written properly.</p>
@@ -6345,15 +6345,15 @@ catch (IOException ioe){
 <p>In the Java world, a method <em>throws an exception</em> in case of a runtime error. Different exceptions will be thrown for different type of errors.  If the <code>catch</code> block exists in the program for this particular type of an error, it will be caught and the program will jump into the <code>catch</code> block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.</p>
 </div>
 <div class="paragraph">
-<p>The print statement from the code above will be executed only in case of the file read error.</p>
+<p>The print statement from the code above will be executed only in case of a file read error.</p>
 </div>
 <div class="sect2">
 <h3 id="_reading-the-stack-trace"><a class="anchor" href="#_reading-the-stack-trace"></a>9.1. Reading the Stack Trace</h3>
 <div class="paragraph">
-<p>If an unexpected exception occurs that is not handled by the program, it prints a multi-line error message on the screen. Such message is called stack trace. If your program  called several methods before it ran into a problem, the <em>stack trace</em> can help you to trace the program, and find the line that have caused the error.</p>
+<p>If an unexpected exception occurs that is not handled by the program, it prints a multi-line error message on the screen. Such message is called a stack trace. If your program  called several methods before it ran into a problem, the <em>stack trace</em> can help you to trace the program, and find the line that have caused the error.</p>
 </div>
 <div class="paragraph">
-<p>We know that dividing by zero is illegal. But, for the illustration purposes, I wrote a program <code>TestStackTrace</code> that divides by zero on purpose  (line numbers are not the part of the code).</p>
+<p>We know that dividing by zero is illegal, but I wrote a program <code>TestStackTrace</code> that divides by zero on purpose just to show how the error and the stack trace could look like.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6388,7 +6388,7 @@ java.lang.ArithmeticException: / by zero
 </div>
 </div>
 <div class="paragraph">
-<p>This means that the program started in the method <code>main</code>, then went to <code>init</code>, which is a constructor, and then called the method <code>divideByZero</code>. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an <code>ArithmeticException</code> was thrown – the line number nine tried to divide by zero.</p>
+<p>This means that the program started in the method <code>main</code>, then went to <code>init</code>, which is a constructor, and then called the method <code>divideByZero</code>. The numbers 14, 4 and 9 show the program line numbers where these methods were called. After that, an exception (an error) <code>ArithmeticException</code> was thrown – the line number nine tried to divide by zero.</p>
 </div>
 </div>
 <div class="sect2">
@@ -6409,10 +6409,10 @@ java.lang.ArithmeticException: / by zero
 <p>Subclasses of the class <code>Error</code> are fatal JVM errors and the running program can’t handle them.</p>
 </div>
 <div class="paragraph">
-<p>The <code>TooManyBikesException</code> is an example of exception that can be created by a programmer.</p>
+<p>The <code>TooManyBikesException</code> is an example of an exception that can be created by a programmer.</p>
 </div>
 <div class="paragraph">
-<p>How a programmer is supposed to know in advance if some Java method may throw an exception and that a <code>try/catch</code> block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one:</p>
+<p>How is a programmer supposed to know in advance if some Java method may throw an exception and that a <code>try/catch</code> block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6449,13 +6449,13 @@ java.lang.ArithmeticException: / by zero
 </div>
 </div>
 <div class="paragraph">
-<p>If the method <code>read</code> fails, the program jumps over the line <code>println</code>  and tries to land in the <code>catch</code> block that matches the error. If it finds such block, the appropriate methid <code>println</code> will be executed, but if the matching catch block is not found, the method <code>getScores</code> will re-throw this exception to its caller.</p>
+<p>If the method <code>read</code> fails, the program jumps over the line <code>println</code>  and tries to land in the <code>catch</code> block that matches the error. If it finds such block, the appropriate method <code>println</code> will be executed, but if the matching catch block is not found, the method <code>getScores</code> will re-throw this exception to its caller.</p>
 </div>
 <div class="paragraph">
 <p>If you write several <code>catch</code> blocks, you may need to place them in a particular order if these exceptions are inherited from each other. For example, since the <code>EOFException</code> is a subclass of the <code>IOException</code>, you have to put the <code>catch</code> block for the subclass first.  If you would put the <code>catch</code> for <code>IOException</code> first, the program would never reach the <code>FileNotFound</code> or <code>EOFException</code>, because the first <code>catch</code> would intercept them.</p>
 </div>
 <div class="paragraph">
-<p>Lazybones would program the method <code>getScores</code> just like this:</p>
+<p>Some lazy programmers would write the method <code>getScores</code> just like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6588,7 +6588,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <div class="sect2">
 <h3 id="_the-keyword-code-throw-code"><a class="anchor" href="#_the-keyword-code-throw-code"></a>9.6. The Keyword <code>throw</code></h3>
 <div class="paragraph">
-<p>When you read in Java documentation that some method may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The  <code>throw</code> keyword is used to throw Java objects, which  are throwable. You can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>. We can guess, that the author of the method that reads a file used the <code>throw</code> keyword in the method <code>read</code>. This could have been done as follows:</p>
+<p>When you read in Java documentation that some methods may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The  <code>throw</code> keyword is used to throw Java objects, which  are throwable. You can only throw objects that are direct or indirect subclasses of the class <code>Throwable</code>. We can guess, that the author of the method that reads a file used the <code>throw</code> keyword in the method <code>read</code>. This could have been done as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6611,7 +6611,7 @@ In such cases the method signature has to declare (warn) that it may throw a par
 <div class="sect2">
 <h3 id="_creating-custom-exceptions"><a class="anchor" href="#_creating-custom-exceptions"></a>9.7. Creating Custom Exceptions</h3>
 <div class="paragraph">
-<p>Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes,  throw the this exception:</p>
+<p>Programmers could also create new  exception classes that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to <em>validate</em> customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of <code>Exception</code> called <code>TooManyBikesException</code>, and if someone tries to order more than three of these bikes, throw this exception:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6682,7 +6682,7 @@ public void validateOrder(ActionEvent evt){
 </div>
 </div>
 <div class="paragraph">
-<p>If the order won’t fit in the truck, the method <code>validateOrder</code> throws the exception, the <code>catch</code> block in <code>placeOrder</code> intercepts it and displays an error message in a text field on the window. When you throw custom exceptions provide user-friendly message that clearly describe the error.</p>
+<p>If the order won’t fit in the truck, the method <code>validateOrder</code> throws the exception, the <code>catch</code> block in <code>placeOrder</code> intercepts it and displays an error message in a text field on the window. When you throw custom exceptions, provide a user-friendly message that clearly describes the error.</p>
 </div>
 <div id="FIG9-3" class="imageblock">
 <div class="content">
@@ -6691,10 +6691,10 @@ public void validateOrder(ActionEvent evt){
 <div class="title">Figure 79. Showing a user-friendly message</div>
 </div>
 <div class="paragraph">
-<p>I&#8217;m not going to provide you an explanation of how JavaFX <code>ComboBox</code> control works, because I want you to do a little research as a part of the project assignment below.</p>
+<p>I&#8217;m not going to provide you with an explanation of how JavaFX <code>ComboBox</code> control works, because I want you to do a little research as a part of the project assignment below.</p>
 </div>
 <div class="paragraph">
-<p>In a perfect world, every program would work properly, but realistically you have to be ready for the unexpected situations. It helps that Java often forces you to write code that is prepared for these situations. You can also use the Java exception handling mechanism to process situation specific to your application as illustrated using the bike store example.</p>
+<p>In a perfect world, every program would work properly, but realistically you have to be ready for  unexpected situations. It helps that Java often forces you to write code that is prepared for these situations. You can also use the Java exception handling mechanism to process situations specific to your application as illustrated using the bike store example.</p>
 </div>
 <div class="paragraph">
 <p>For more detailed coverage of exceptions read Oracle&#8217;s   <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/">lesson on exceptions</a>.</p>
@@ -6709,7 +6709,9 @@ public void validateOrder(ActionEvent evt){
 <p>Use a <code>TextField</code> control for entering the quantity, a <code>Button</code> for placing an order, and a <code>Label</code> to display either order confirmation or an error message.</p>
 </div>
 <div class="paragraph">
-<p>In the controller class use the code fragment from the section "Creating Custom Exceptions".</p>
+<p>In the controller class use the code fragment from the section "Creating Custom Exceptions".
+:toc-placement!:
+:imagesdir: .</p>
 </div>
 </div>
 </div>
