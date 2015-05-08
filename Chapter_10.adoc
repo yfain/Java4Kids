@@ -5,7 +5,7 @@
 
 In this chapter we'll return to GUI programming and will  develop a Tic-Tac-Toe game using JavaFX and Scene Builder.
 
-This game may go by different names around the world, but it comes down to placing X's and O's on the game board. If you're not familiar with this game, read its description in  http://en.wikipedia.org/wiki/Tic-tac-toe[this Wikipedia article]. 
+This game may go by different names around the world, but it comes down to placing X's and O's on the game board. If you're not familiar with this game, read its description in http://en.wikipedia.org/wiki/Tic-tac-toe[this Wikipedia article]. 
 
 Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:
 
@@ -14,7 +14,7 @@ Every game implements a set of rules or a strategy that has to be applied depend
 * The winner must have a full row, column, or diagonal of X's or O's.
 * After each move, the program has to check if there is a winner.
 * The winning combination of squares has to be displayed in different colors.
-* After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.
+* After the winner is found or there are no empty squares left, the players may select the menu Actions | Play to play again.
 * In a new game the first player plays with X's.
 
 [[FIG10-1]]
@@ -22,10 +22,9 @@ image::images/fig_10_01.png[]
  
 The content of this chapter is based on the materials covered in Chapter 7 and 8. While developing the game you'll learn how to add menus, dynamically change styling of GUI components and apply an animation effect.  
 
-
 === Developing the Game: Step by Step
 
-In Chapter 7 we went through the procedure of creating a new IDEA project, and now you'll need do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter _TicTacToe_ as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _tictactoe.fxml_ and _Main.java_ into _TicTacToe.java_. Accordingly, the `TicTacToe` class should load the file _ticktacktoe.fxml_, and the window title should read `Tic-Tac-Toe`:
+In Chapter 7 we went through the procedure of creating a new IDEA project, and now you'll need to do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter _TicTacToe_ as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _tictactoe.fxml_ and _Main.java_ into _TicTacToe.java_. Accordingly, the `TicTacToe` class should load the file _ticktacktoe.fxml_, and the window title should read `Tic-Tac-Toe`:
 
 [source, java]
 ----
@@ -55,7 +54,7 @@ Similarly to the examples from Chapter 7, we'll separate the GUI design from imp
 .Opening the generated tictactoe.fxml in Scene Builder
 image::images/fig_10_02.png[]
 
-Firs of all, the `<GridPane>` is not a good candidate to serve as a root container for our game, which has to have a menu on top. The `<BorderPane>` is a better choice when you need to have some GUI components to be located on the top of the window. Our game will have a menu on top and a 3x3 grid of squares in the center of the window.
+First of all, the `<GridPane>` is not a good candidate to serve as a root container for our game, which has to have a menu on top. The `<BorderPane>` is a better choice when you need to have some GUI components to be located on the top of the window. Our game will have a menu on top and a 3x3 grid of squares in the center of the window.
 
 Let's delete the `GridPane` from the Hierarchy panel at the bottom left and drag-drop the `BorderPane` there. The Scene Builder's Window should look like this:
 
@@ -63,7 +62,7 @@ Let's delete the `GridPane` from the Hierarchy panel at the bottom left and drag
 .The BorderPane is a root container
 image::images/fig_10_03.png[]
 
-JavaFX menus are created as a hierarchy of nested components. A `Menu` container can contain one or more `MenuItem` components and other `Menu` components. You can also create a `MenuBar` or a `ContextMenu` that include one or more `Menu` components. I'll show how to create a menu bar with two menus _Actions_ and _Help_ for our Tic-Tac-Toe game. 
+JavaFX menus are created as a hierarchy of nested components. A `Menu` container can contain one or more `MenuItem` components and other `Menu` components. You can also create a `MenuBar` or a `ContextMenu` that includes one or more `Menu` components. I'll show you how to create a menu bar with two menus _Actions_ and _Help_ for our Tic-Tac-Toe game. 
 
 A menu bar is usually located at the top of a window. In Scene Builder drop the `MenuBar` component from the Controls panel onto `Insert TOP` line in the `BorderPane` at the bottom left panel. Press a little plus sign to expand the `MenuBar` in the Hierarchy panel. You'll see that it'll have the default menus named File, Edit and Help. 
 
@@ -73,7 +72,7 @@ image::images/fig_10_04.png[]
 
 We're not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.The `Menu` File was created with the `MenuItem` Close - rename it into Quit.
 
-Now we'll add menu items to the menus Actions and Help. Drop a `MenuItem` component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create Unspecified Action. Rename it into Play. you can use drag and drop to change the order of the menu items.
+Now we'll add menu items to the menus Actions and Help. Drop a `MenuItem` component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create an Unspecified Action. Rename it to Play. You can use drag and drop to change the order of the menu items.
 
 Drop another `MenuItem` component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play. The Hierarchy panel should look as follows:
 
@@ -82,7 +81,6 @@ Drop another `MenuItem` component onto the menu Help. Scene Builder by default c
 image::images/fig_10_05.png[]
 
 Now drop a `GridPane` from the Containers panel onto the center of the BorderPane. By default, Scene Builder creates a 2x3 grid. Right-click at the column tab "1" and add a column to change the grid dimensions to be 3x3. 
-
 Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. This is what we've got so far:
 
 [[FIG10-6]]
@@ -95,7 +93,7 @@ Save this layout in Scene Builder and run the TicTacToe class in IDEA. You'll se
 .Running TicTacToe with an empty grid
 image::images/fig_10_07.png[]
 
-The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder as we did in the Calculator in Chapter 7. But it'll be faster to do it manually in by editing the content of the file _tictactoe.fxml_ in IDEA's editor. Modify the content of this file to look as follows:
+The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder as we did in the Calculator in Chapter 7. But it'll be faster to do it manually by editing the content of the file _tictactoe.fxml_ in IDEA's editor. Modify the content of this file to look as follows:
 
 [source, xml]
 ----
@@ -151,7 +149,7 @@ Note that each button has an id. We'll need them while processing button clicks 
 .Running TicTacToe - the first square has a focus
 image::images/fig_10_08.png[]
 
-Do yo see this thin border around the top left square? It happens because by default the firs grid cell _has a focus_, which means that this particular GUI component is ready to receive input. But we don't want to suggest the player starting the game from the top left corner, do we? We want to remove this little border, and it's time to create a a special style for a button that will not show the focus.
+Do yo see this thin border around the top left square? It occurs because by default the firs grid cell _has a focus_, which means that this particular GUI component is ready to receive input. But we don't want to suggest the player starting the game from the top left corner, do we? We want to remove this little border, and it's time to create a special style for a button that will not show the focus.
 
 Let's create a new file named _tictactoe.css_. In IDEA, right click on the package name _mygame_  and use the menu  File | New | File. It'll create an empty file. Type the following in there:
 
@@ -163,13 +161,13 @@ Let's create a new file named _tictactoe.css_. In IDEA, right click on the packa
 }
 ----
 
-From Chapter 7 you may remember that this means that every button in our application will have these attributes. Web designers call the styles created for certain types of GUI element _type selectors_. Hence the attributes defined in the `.button` section of CSS will apply only for buttons. If we wanted to style, menus, we'd need to add a section `.menu` to the CSS file.  Labels would be styled in the `.label` section, and so on.
+From Chapter 7 you may remember that this means that every button in our application will have these attributes. Web designers call the styles created for certain types of GUI element _type selectors_. Hence the attributes defined in the `.button` section of CSS will apply only for buttons. If we wanted to style menus, we'd need to add a section `.menu` to the CSS file.  Labels would be styled in the `.label` section, and so on.
 
 When I did my search on line to figure out how to remove the focus border, the online documentation suggested that adding the rule `-fx-focus-color: transparent;` would do the trick. But it didn't. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding `-fx-background-insets: -1, 0, 1, 1;` is needed too. 
 
-Don't be scared that not everything works as it should from the first time. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site http://stackoverflow.com/[StackOverflow]. 
+Don't be scared that not everything works as it should the first time around. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site http://stackoverflow.com/[StackOverflow]. 
 
-Now we need to add a line to the `main` method of the TicTacToe class to load the file `tictactoe.css`. We did something like this in Chapter 7 while styling the Sign In application. We'll also need to do small changes in the `main` method to keep store the reference to a `scene` in a separate variable. We also want to set fix the size of the game board by invoking _setResizable(false);_ on the stage object. After these modifications the class `TicTacToe` will look like this:
+Now we need to add a line to the `main` method of the TicTacToe class to load the file `tictactoe.css`. We did something like this in Chapter 7 while styling the Sign In application. We'll also need to do small changes in the `main` method to store the reference to a `scene` in a separate variable. We also want to set fix the size of the game board by invoking _setResizable(false);_ on the stage object. After these modifications, the class `TicTacToe` will look like this:
 
 [source, java]
 ----
@@ -265,15 +263,15 @@ If you run the `TicTacToe` program now and start clicking on buttons, the game b
 .Adding colors to the game board
 image::images/fig_10_11.png[]
 
-As you can see, my artistic abilities are limited, but if you spend some time learning CSS, you may come up with a lot fancier game board than mine. 
+As you can see, my artistic abilities are limited, but if you spend some time learning CSS, you may come up with a much fancier game board than mine. 
 
 All JavaFX components are pre-styled, and the combination of the styles is called _theme_. The default theme of all JavaFX components is called caspian. By defining your own CSS rules you can override the defaults. Scene Builder has a menu View | Show CSS analyzer, which allows you to see the default styles of your GUI components. If you're interesting in learning more about styling with Scene Builder, watch the video titled https://www.youtube.com/watch?v=7Nu3_5doZK4["In-Depth Layout and Styling with the JavaFX Scene Builder"].
 
 ==== Implementing the Game Strategy
 
-In the beginning of this chapter I've described the game strategy. We'll implement it in the `Controller` class. On each button click we need to check if there is already a winning combination of X's or O's. If there is, the program should highlight the winning combination. In case of a draw, the player may select the menu option Play to start playing again.
+In the beginning of this chapter I've described the game strategy. We'll implement it in the `Controller` class. For each button click we need to check if there is already a winning combination of X's or O's. If there is, the program should highlight the winning combination. In case of a draw, the player may select the menu option Play to start playing again.
 
-We'll write a method `find3InARow`, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method `find3InARow` will be invoked from the method `buttonClickHandler`. If the winning combination is found, the program will invoke the method `highlightWinningCombo` to show the winning combination in different style. 
+We'll write a method `find3InARow`, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method `find3InARow` will be invoked from the method `buttonClickHandler`. If the winning combination is found, the program will invoke the method `highlightWinningCombo` to show the winning combination in a different style. 
 
 To compare the labels of the buttons we need to have references to their `Button` objects, which we'll get using the injection mechanism offered by the `@FXML` annotation as we did in Chapter 8. We'll also need to have a reference to the `GridPane`, which is a container for all buttons. You'll see its use in the section "Handling the Tic-Tac-Toe Menu Play".
 
@@ -357,7 +355,7 @@ If you'll check the `fx:id` of each button in the file _tictactoe.fxml_, you'll 
 
 The styles of the winning buttons should be changed dynamically (during the runtime). First of all, we need to come up with the style for displaying the winning button and add it to the CSS file. Then the class `Controller` will invoke the method `setStyle` on them providing the name of the winning style.
 
-I want to change the background of the winning buttons, but this time I won't use just a single color, but a _color gradient_. In computer graphics color gradients refer to filling the area with different colors that are smoothly transitioning from one color to another. The color transitioning can be linear or radial, and http://en.wikipedia.org/wiki/Color_gradient[this Wikipedia article] gives you some examples of both. 
+I want to change the background of the winning buttons, but this time I won't use just a single color, but a _color gradient_. In computer graphics, color gradients refer to filling the area with different colors that are smoothly transitioning from one color to another. The color transitioning can be linear or radial, and http://en.wikipedia.org/wiki/Color_gradient[this Wikipedia article] gives you some examples of both. 
 
 We'll use radial gradients in our game. With gradients you can use more than two colors. I'll use three colors in the gradient for the winning squares. The background color will transition from white to light yellow, and then to lawn green. I'll use red for the text of the label on the winning square. 
 
@@ -365,7 +363,7 @@ To dynamically change the style of a GUI component you can call the method `setS
 
 `myButton.setStyle("-fx-text-fill: red;");`
 
-But embedding CSS rules in your Java program is not a good idea. What if you decide to change the styling (e.g. to change the color from red to pink)? You don't want to search for all places in your Java where this style was used. Besides, changing the styles in the code would require to recompile your Java program. It's much better to keep the style definitions in the CSS file.
+But embedding CSS rules in your Java program is not a good idea. What if you decide to change the styling (e.g. to change the color from red to pink)? You don't want to search for all the places in your Java code where this style was used. Besides, changing the styles in the code would require to recompile your Java program. It's much better to keep the style definitions in the CSS file.
 
 So far we've been using CSS _type selectors_ that can change the style of the specified component types. But CSS allows you to define and name a style that's not intended for a specific component type and can be applied by name to various components. In CSS such styles are called _class selectors_. Let's add a style selector called `.winning-square` to the file `tictactoe.css`. 
 
