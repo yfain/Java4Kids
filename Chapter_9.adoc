@@ -1,13 +1,13 @@
 :toc-placement!:
 :imagesdir: .
 
-== Error Handling  
+== Dealing With Run-time Errors
 
-In this chapter I'll explain you how to handle run-time errors, which in Java are called _exceptions_.
+In this chapter I'll explain to you how to handle run-time errors, which in Java are called _exceptions_.
 
-Say you forgot to write one closing curly brace in your Java code. This will result in the compilation error that can be fixed easily. But there are so called _run-time errors_, when all of a sudden your program stops working properly.
+Say you forgot to write one closing curly brace in your Java code. This will result in a compilation error that can be fixed easily. But there are so called _run-time errors_, when your program stops working properly and prints error messages.
 
-For example, a Java class reads a file with the game scores. What’s going to happen if someone will delete this file? Will the program crash with a scary error message, or will it stay alive displaying a user friendly message like this one: _Dear friend, for some reason I could not read the file scores.txt. Please make sure that the file exists?_ This is an example of a situation when Java compiler won't be able to help - the Java syntax was written properly. 
+For example, a Java class reads a file with the game scores. What’s going to happen if someone will delete this file? Will the program crash with a scary error message, or will it stay alive displaying a user friendly message like this one: _Dear friend, for some reason I could not read the file scores.txt. Please make sure that the file exists?_ This is an example of a situation when Java compiler won't be able to help - the Java syntax was written properly.
 
 You should make your programs ready for unexpected situations. you should foresee what might go wrong when the program will be running, and what to do if something went wrong. In many programming languages the programmer decides if he wants to add error processing code to a program. But in many cases Java forces you to include error processing code, otherwise the programs will not even compile.
 
@@ -16,7 +16,7 @@ Runtime errors in Java are called exceptions, and error processing is called _ex
 [source, java]
 ----
 try{
-  fileScores.read();     
+  fileScores.read();
 }
 catch (IOException ioe){
   System.out.println(
@@ -29,19 +29,19 @@ The `ioe` in the above code fragment is a variable that represents the `IOExcept
 
 We’ll learn how to work with files in Chapter 11, but at this point I'd like to introduce a new term _I/O_ or _input/output_. Read and write operations (from/to disk or other device) are also known as I/O operations, and the class `IOException` is a class that contains information about input/output errors.
 
-In the Java world, a method _throws an exception_ in case of a runtime error. Different exceptions will be thrown for different type of errors.  If the `catch` block exists in the program for this particular type of an error, it will be caught and the program will jump into the `catch` block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.  
+In the Java world, a method _throws an exception_ in case of a runtime error. Different exceptions will be thrown for different type of errors.  If the `catch` block exists in the program for this particular type of an error, it will be caught and the program will jump into the `catch` block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.
 
-The print statement from the code above will be executed only in case of the file read error. 
+The print statement from the code above will be executed only in case of a file read error.
 
 === Reading the Stack Trace
 
-If an unexpected exception occurs that is not handled by the program, it prints a multi-line error message on the screen. Such message is called stack trace. If your program  called several methods before it ran into a problem, the _stack trace_ can help you to trace the program, and find the line that have caused the error.
+If an unexpected exception occurs that is not handled by the program, it prints a multi-line error message on the screen. Such message is called a stack trace. If your program  called several methods before it ran into a problem, the _stack trace_ can help you to trace the program, and find the line that have caused the error.
 
-We know that dividing by zero is illegal. But, for the illustration purposes, I wrote a program `TestStackTrace` that divides by zero on purpose  (line numbers are not the part of the code).
+We know that dividing by zero is illegal, but I wrote a program `TestStackTrace` that divides by zero on purpose just to show how the error and the stack trace could look like.
 
 [source, java]
 ----
-1 class TestStackTrace{    
+1 class TestStackTrace{
 2  TestStackTrace()
 3   {
 4    divideByZero();
@@ -59,7 +59,7 @@ We know that dividing by zero is illegal. But, for the illustration purposes, I 
 16 }
 ----
 
-The output of this program shows the sequence of method calls that were made up to the moment when the run-time error had happened. Start reading this output from the last line going up. 
+The output of this program shows the sequence of method calls that were made up to the moment when the run-time error had happened. Start reading this output from the last line going up.
 
 [source, java]
 ----
@@ -70,12 +70,12 @@ java.lang.ArithmeticException: / by zero
    at TestStackTrace.main(TestStackTrace.java:14)
 ----
 
-This means that the program started in the method `main`, then went to `init`, which is a constructor, and then called the method `divideByZero`. The numbers 14, 4 and 9 show in which lines of the program these methods were called. After that, an `ArithmeticException` was thrown – the line number nine tried to divide by zero. 
+This means that the program started in the method `main`, then went to `init`, which is a constructor, and then called the method `divideByZero`. The numbers 14, 4 and 9 show the program line numbers where these methods were called. After that, an exception (an error) `ArithmeticException` was thrown – the line number nine tried to divide by zero.
 
-=== Genealogical Tree of Exceptions 
+=== Genealogical Tree of Exceptions
 
 Exceptions in Java are also classes, and some of them are shown in the following inheritance tree:
- 
+
 [[FIG9-1]]
 .Exceptions Hierarchy
 image::images/fig_9_01.png[]
@@ -85,9 +85,9 @@ Subclasses of the class `Exception` are called _checked exceptions_ and you must
 
 Subclasses of the class `Error` are fatal JVM errors and the running program can’t handle them.
 
-The `TooManyBikesException` is an example of exception that can be created by a programmer. 
+The `TooManyBikesException` is an example of an exception that can be created by a programmer.
 
-How a programmer is supposed to know in advance if some Java method may throw an exception and that a `try/catch` block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one: 
+How is a programmer supposed to know in advance if some Java method may throw an exception and that a `try/catch` block should be used?  Not to worry, if you call a method that may throw an exception, Java compiler will print an error message similar to this one:
 
 [source, java]
 ----
@@ -100,38 +100,38 @@ Of course you are welcome to read Java documentation that describes exceptions t
 
 There are five Java keywords that can be used for error handling: `try`, `catch`, `finally`, `throw`, and `throws`.
 
-After one `try` block you may put several `catch` blocks, if you believe that more than one error may happen. For example, when a program tries to read a file, the file may not be there, and you’ll get the `FileNotFoundException`, or the file is there, but the code keeps reading the file after reaching the end of  file – this generates `EOFException`. The next code fragment  will print messages in plain English if the program can’t find a file with game scores or reached the end of the file. For any other read errors it’ll print the message _Problem reading_ file and a technical description of the error. 
+After one `try` block you may put several `catch` blocks, if you believe that more than one error may happen. For example, when a program tries to read a file, the file may not be there, and you’ll get the `FileNotFoundException`, or the file is there, but the code keeps reading the file after reaching the end of  file – this generates `EOFException`. The next code fragment  will print messages in plain English if the program can’t find a file with game scores or reached the end of the file. For any other read errors it’ll print the message _Problem reading_ file and a technical description of the error.
 
 [source, java]
 ----
-public void getScores(){ 
+public void getScores(){
  try{
     fileScores.read();
-    System.out.println(“Scores loaded successfully”); 
+    System.out.println(“Scores loaded successfully”);
  }catch(FileNotFoundException e){
      System.out.println(“Can not find file Scores”);
  }catch(EOFException e1){
       System.out.println(“Reached end of file”);
  }catch(IOException e2){
-      System.out.println(“Problem reading  file “ + 
+      System.out.println(“Problem reading  file “ +
                                     e2.getMessage());
  }
 }
 ----
 
-If the method `read` fails, the program jumps over the line `println`  and tries to land in the `catch` block that matches the error. If it finds such block, the appropriate methid `println` will be executed, but if the matching catch block is not found, the method `getScores` will re-throw this exception to its caller.
+If the method `read` fails, the program jumps over the line `println`  and tries to land in the `catch` block that matches the error. If it finds such block, the appropriate method `println` will be executed, but if the matching catch block is not found, the method `getScores` will re-throw this exception to its caller.
 
 If you write several `catch` blocks, you may need to place them in a particular order if these exceptions are inherited from each other. For example, since the `EOFException` is a subclass of the `IOException`, you have to put the `catch` block for the subclass first.  If you would put the `catch` for `IOException` first, the program would never reach the `FileNotFound` or `EOFException`, because the first `catch` would intercept them.
 
-Lazybones would program the method `getScores` just like this:
+Some lazy programmers would write the method `getScores` just like this:
 
 [source, java]
 ----
-public void getScores(){ 
+public void getScores(){
  try{
   fileScores.read();
  }catch(Exception e){
-  System.out.println(“Problem reading  file ”+      
+  System.out.println(“Problem reading  file ”+
                                       e.getMessage());
    }
 }
@@ -152,28 +152,28 @@ If you need more detailed information about the exception, use the method `print
 
 === The keyword `throws`
 
-In some cases, it makes more sense to handle the exception not in the method where it happened, but in the method’s caller. 
-In such cases the method signature has to declare (warn) that it may throw a particular exception. This is done using a special keyword `throws`. Let’s use the same example that reads a file. Since the method `read` may throw an `IOException`, you should either handle or declare it. In the next example we are  going to declare that the method `getAllScores` may throw an IOException: 
+In some cases, it makes more sense to handle the exception not in the method where it happened, but in the method’s caller.
+In such cases the method signature has to declare (warn) that it may throw a particular exception. This is done using a special keyword `throws`. Let’s use the same example that reads a file. Since the method `read` may throw an `IOException`, you should either handle or declare it. In the next example we are  going to declare that the method `getAllScores` may throw an IOException:
 
 [source, java]
 ----
 class MySuperGame{
 
   void getAllScores() throws IOException{
-   // …    
-   // Do not use try/catch  if you are 
+   // …
+   // Do not use try/catch  if you are
    // not handling exceptions in this method
    file.read();
   }
 
   public static void main(String[] args){
-    MySuperGame msg = new MySuperGame();  
+    MySuperGame msg = new MySuperGame();
     System.out.println(“List of Scores”);
 
     try{
-     // Since the  getAllScores()declares exception,       
+     // Since the  getAllScores()declares exception,
      // we handle  it over here
-       msg.getAllScores();  
+       msg.getAllScores();
 
     }catch(IOException e){
        System.out.println(
@@ -209,8 +209,8 @@ try{
 }catch(Exception e){
    printStackTrace();
 }finally{
-  // the code that must always be executed 
-  // goes here, for example file.close(); 
+  // the code that must always be executed
+  // goes here, for example file.close();
 }
 
 ----
@@ -234,7 +234,7 @@ If the myMethod will throw an exception it will be handled in the calling method
 
 === The Keyword `throw`
 
-When you read in Java documentation that some method may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The  `throw` keyword is used to throw Java objects, which  are throwable. You can only throw objects that are direct or indirect subclasses of the class `Throwable`. We can guess, that the author of the method that reads a file used the `throw` keyword in the method `read`. This could have been done as follows:
+When you read in Java documentation that some methods may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The  `throw` keyword is used to throw Java objects, which  are throwable. You can only throw objects that are direct or indirect subclasses of the class `Throwable`. We can guess, that the author of the method that reads a file used the `throw` keyword in the method `read`. This could have been done as follows:
 
 [source, java]
 ----
@@ -242,38 +242,38 @@ throw new IOException(“The file scores.txt contains invalid characters”);
 ----
 
 The constructor of any exception should get a message that describes the error as an argument. When you’ll be invoking the `getMessage` method on the exception object in the catch block, it’ll print the message that was given to the constructor in the code that has thrown the exception.
- 
+
 
 [[FIG9-2]]
 .Throwing exceptions
 image::images/fig_9_02.png[]
 
-In the next section I’ll show you how create your own exception classes and throw them with the throw keyword.   
+In the next section I’ll show you how create your own exception classes and throw them with the throw keyword.
 
-=== Creating Custom Exceptions 
+=== Creating Custom Exceptions
 
-Programmers could also create new  exception classes  that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to _validate_ customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of `Exception` called `TooManyBikesException`, and if someone tries to order more than three of these bikes,  throw the this exception: 
+Programmers could also create new  exception classes that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to _validate_ customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of `Exception` called `TooManyBikesException`, and if someone tries to order more than three of these bikes, throw this exception:
 
 [source, java]
 ----
 class TooManyBikesException extends Exception{
 
-  // Constructor 
+  // Constructor
   TooManyBikesException (){
 
-    super("Can't ship so many bikes.");      
-  }  
+    super("Can't ship so many bikes.");
+  }
 }
 ----
 
-This class has only a constructor that takes the message describing this error and passes it to the superclass of `TooManyBikesException` for reporting the same way as Java runtime reports any other exception. When some `catch` block receives this exception it can extract the message describing what happened by calling the method `getMessage` on the caught object `TooManyBikesException`. 
+This class has only a constructor that takes the message describing this error and passes it to the superclass of `TooManyBikesException` for reporting the same way as Java runtime reports any other exception. When some `catch` block receives this exception it can extract the message describing what happened by calling the method `getMessage` on the caught object `TooManyBikesException`.
 
 [[FIG9-4]]
 image::images/fig_9_04.png[]
 
-Visualize a JavaFX GUI where the user selects several bicycles of some model and hits the button _Place Order_. As you know from Chapter 8, this action will result in the call to the event handler method (e.g. `placeOrder`) assigned to the `onAction` property of the button.  The event handler can apply some business logic (e.g. call a method `validateOrder`) to check if the order can be delivered.  
+Visualize a JavaFX GUI where the user selects several bicycles of some model and hits the button _Place Order_. As you know from Chapter 8, this action will result in the call to the event handler method (e.g. `placeOrder`) assigned to the `onAction` property of the button.  The event handler can apply some business logic (e.g. call a method `validateOrder`) to check if the order can be delivered.
 
-The next code fragment shows how the method `placeOrder` invokes `validateOrder`, which can throw `TooManyBikesException`.  
+The next code fragment shows how the method `placeOrder` invokes `validateOrder`, which can throw `TooManyBikesException`.
 
 [source, java]
 ----
@@ -282,59 +282,57 @@ The next code fragment shows how the method `placeOrder` invokes `validateOrder`
 
 @FXML private Label txtFieldOrderConfirmation;
 
-public void validateOrder(ActionEvent evt){ 
+public void validateOrder(ActionEvent evt){
 
    String selectedModel = model.getSelectionModel()
                                .getSelectedItem();
-   String selectedQuantity =  
+   String selectedQuantity =
                           txtFieldQuantity.getText();
-   int quantity = Integer.parseInt(selectedQuantity);   
+   int quantity = Integer.parseInt(selectedQuantity);
 
-   try{   
+   try{
       validateOrder(selectedModel, quantity);
-      
+
       //the next line will be skipped in case of exception
       txtFieldOrderConfirmation.setText(
-                           "Your order is complete"); 
+                           "Your order is complete");
 
    } catch(TooManyBikesException bikesException){
        txtFieldOrderConfirmation.setText(
               bikesException.getMessage());
-   }                          
+   }
  }
- 
- void validateOrder(String bikeModel, int quantity) 
+
+ void validateOrder(String bikeModel, int quantity)
                          throws TooManyBikesException{
 
-   /* Here should go the code to checks if the requested 
-      quantity of bikes of selected model fits in the 
-      truck. If they won't fit, do the following: 
+   /* Here should go the code to checks if the requested
+      quantity of bikes of selected model fits in the
+      truck. If they won't fit, do the following:
    */
 
-   throw new TooManyBikesException("Can not ship" + 
+   throw new TooManyBikesException("Can not ship" +
                     quantity + " bikes of the model " + bikeModel + " in one shipment" );
  }
 }
 ----
 
-If the order won’t fit in the truck, the method `validateOrder` throws the exception, the `catch` block in `placeOrder` intercepts it and displays an error message in a text field on the window. When you throw custom exceptions provide user-friendly message that clearly describe the error.
+If the order won’t fit in the truck, the method `validateOrder` throws the exception, the `catch` block in `placeOrder` intercepts it and displays an error message in a text field on the window. When you throw custom exceptions, provide a user-friendly message that clearly describes the error.
 
 [[FIG9-3]]
 .Showing a user-friendly message
 image::images/fig_9_03.png[]
 
-I'm not going to provide you an explanation of how JavaFX `ComboBox` control works, because I want you to do a little research as a part of the project assignment below.
+I'm not going to provide you with an explanation of how JavaFX `ComboBox` control works, because I want you to do a little research as a part of the project assignment below.
 
-In a perfect world, every program would work properly, but realistically you have to be ready for the unexpected situations. It helps that Java often forces you to write code that is prepared for these situations. You can also use the Java exception handling mechanism to process situation specific to your application as illustrated using the bike store example.
+In a perfect world, every program would work properly, but realistically you have to be ready for  unexpected situations. It helps that Java often forces you to write code that is prepared for these situations. You can also use the Java exception handling mechanism to process situations specific to your application as illustrated using the bike store example.
 
 For more detailed coverage of exceptions read Oracle's   http://docs.oracle.com/javase/tutorial/essential/exceptions/[lesson on exceptions].
 
-
 === Project: Create a JavaFX Bike Store
 
-In this assignment I'd like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX `ComboBox` for this). You can find the http://docs.oracle.com/javase/8/javafx/user-interface-tutorial/combo-box.htm[description] of the ComboBox component in Oracle tutorial. 
+In this assignment I'd like you to create a JavaFX application for a bicycle store. It should have GUI that allows the user to select a bicycle model (do a little research and learn on your own how to use the JavaFX `ComboBox` for this). You can find the http://docs.oracle.com/javase/8/javafx/user-interface-tutorial/combo-box.htm[description] of the ComboBox component in Oracle tutorial.
 
-Use a `TextField` control for entering the quantity, a `Button` for placing an order, and a `Label` to display either order confirmation or an error message.   
+Use a `TextField` control for entering the quantity, a `Button` for placing an order, and a `Label` to display either order confirmation or an error message.
 
 In the controller class use the code fragment from the section "Creating Custom Exceptions".
-
