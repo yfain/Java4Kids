@@ -6723,7 +6723,7 @@ public void validateOrder(ActionEvent evt){
 <p>In this chapter we&#8217;ll return to GUI programming and will  develop a Tic-Tac-Toe game using JavaFX and Scene Builder.</p>
 </div>
 <div class="paragraph">
-<p>This game may go by different names around the world, but it comes down to placing X&#8217;s and O&#8217;s on the game board. If you&#8217;re not familiar with this game, read its description in  <a href="http://en.wikipedia.org/wiki/Tic-tac-toe">this Wikipedia article</a>.</p>
+<p>This game may go by different names around the world, but it comes down to placing X&#8217;s and O&#8217;s on the game board. If you&#8217;re not familiar with this game, read its description in <a href="http://en.wikipedia.org/wiki/Tic-tac-toe">this Wikipedia article</a>.</p>
 </div>
 <div class="paragraph">
 <p>Every game implements a set of rules or a strategy that has to be applied depending on the player’s actions. Let’s come up with a simple algorithm for the Tic-Tac-Toe game. Our version of this game will implement the following rules:</p>
@@ -6746,7 +6746,7 @@ public void validateOrder(ActionEvent evt){
 <p>The winning combination of squares has to be displayed in different colors.</p>
 </li>
 <li>
-<p>After the winner is found or there is no empty squares left the players may select the menu  Actions | Play to play again.</p>
+<p>After the winner is found or there are no empty squares left, the players may select the menu Actions | Play to play again.</p>
 </li>
 <li>
 <p>In a new game the first player plays with X&#8217;s.</p>
@@ -6764,7 +6764,7 @@ public void validateOrder(ActionEvent evt){
 <div class="sect2">
 <h3 id="_developing-the-game-step-by-step"><a class="anchor" href="#_developing-the-game-step-by-step"></a>10.1. Developing the Game: Step by Step</h3>
 <div class="paragraph">
-<p>In Chapter 7 we went through the procedure of creating a new IDEA project, and now you&#8217;ll need do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter <em>TicTacToe</em> as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>tictactoe.fxml</em> and <em>Main.java</em> into <em>TicTacToe.java</em>. Accordingly, the <code>TicTacToe</code> class should load the file <em>ticktacktoe.fxml</em>, and the window title should read <code>Tic-Tac-Toe</code>:</p>
+<p>In Chapter 7 we went through the procedure of creating a new IDEA project, and now you&#8217;ll need to do it again. Create a new project selecting JavaFX as a project type. Press Next, and on the next popup window enter <em>TicTacToe</em> as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>tictactoe.fxml</em> and <em>Main.java</em> into <em>TicTacToe.java</em>. Accordingly, the <code>TicTacToe</code> class should load the file <em>ticktacktoe.fxml</em>, and the window title should read <code>Tic-Tac-Toe</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6799,7 +6799,7 @@ public void validateOrder(ActionEvent evt){
 <div class="title">Figure 80. Opening the generated tictactoe.fxml in Scene Builder</div>
 </div>
 <div class="paragraph">
-<p>Firs of all, the <code>&lt;GridPane&gt;</code> is not a good candidate to serve as a root container for our game, which has to have a menu on top. The <code>&lt;BorderPane&gt;</code> is a better choice when you need to have some GUI components to be located on the top of the window. Our game will have a menu on top and a 3x3 grid of squares in the center of the window.</p>
+<p>First of all, the <code>&lt;GridPane&gt;</code> is not a good candidate to serve as a root container for our game, which has to have a menu on top. The <code>&lt;BorderPane&gt;</code> is a better choice when you need to have some GUI components to be located on the top of the window. Our game will have a menu on top and a 3x3 grid of squares in the center of the window.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s delete the <code>GridPane</code> from the Hierarchy panel at the bottom left and drag-drop the <code>BorderPane</code> there. The Scene Builder&#8217;s Window should look like this:</p>
@@ -6811,7 +6811,7 @@ public void validateOrder(ActionEvent evt){
 <div class="title">Figure 81. The BorderPane is a root container</div>
 </div>
 <div class="paragraph">
-<p>JavaFX menus are created as a hierarchy of nested components. A <code>Menu</code> container can contain one or more <code>MenuItem</code> components and other <code>Menu</code> components. You can also create a <code>MenuBar</code> or a <code>ContextMenu</code> that include one or more <code>Menu</code> components. I&#8217;ll show how to create a menu bar with two menus <em>Actions</em> and <em>Help</em> for our Tic-Tac-Toe game.</p>
+<p>JavaFX menus are created as a hierarchy of nested components. A <code>Menu</code> container can contain one or more <code>MenuItem</code> components and other <code>Menu</code> components. You can also create a <code>MenuBar</code> or a <code>ContextMenu</code> that includes one or more <code>Menu</code> components. I&#8217;ll show you how to create a menu bar with two menus <em>Actions</em> and <em>Help</em> for our Tic-Tac-Toe game.</p>
 </div>
 <div class="paragraph">
 <p>A menu bar is usually located at the top of a window. In Scene Builder drop the <code>MenuBar</code> component from the Controls panel onto <code>Insert TOP</code> line in the <code>BorderPane</code> at the bottom left panel. Press a little plus sign to expand the <code>MenuBar</code> in the Hierarchy panel. You&#8217;ll see that it&#8217;ll have the default menus named File, Edit and Help.</p>
@@ -6826,7 +6826,7 @@ public void validateOrder(ActionEvent evt){
 <p>We&#8217;re not going to edit anything in the TicTacToe game, so right-click on Edit and select Delete option. Rename the menu File into Actions using the Properties panel of Scene Builder.The <code>Menu</code> File was created with the <code>MenuItem</code> Close - rename it into Quit.</p>
 </div>
 <div class="paragraph">
-<p>Now we&#8217;ll add menu items to the menus Actions and Help. Drop a <code>MenuItem</code> component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create Unspecified Action. Rename it into Play. you can use drag and drop to change the order of the menu items.</p>
+<p>Now we&#8217;ll add menu items to the menus Actions and Help. Drop a <code>MenuItem</code> component from the panel Menu onto the menu Actions in the Hierarchy panel. Scene Builder will automatically create an Unspecified Action. Rename it to Play. You can use drag and drop to change the order of the menu items.</p>
 </div>
 <div class="paragraph">
 <p>Drop another <code>MenuItem</code> component onto the menu Help. Scene Builder by default creates two menu items:  About and Unspecified Action. Rename the latter to be How to Play. The Hierarchy panel should look as follows:</p>
@@ -6838,10 +6838,8 @@ public void validateOrder(ActionEvent evt){
 <div class="title">Figure 83. The menu bar with 2 menus and 4 menu items</div>
 </div>
 <div class="paragraph">
-<p>Now drop a <code>GridPane</code> from the Containers panel onto the center of the BorderPane. By default, Scene Builder creates a 2x3 grid. Right-click at the column tab "1" and add a column to change the grid dimensions to be 3x3.</p>
-</div>
-<div class="paragraph">
-<p>Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. This is what we&#8217;ve got so far:</p>
+<p>Now drop a <code>GridPane</code> from the Containers panel onto the center of the BorderPane. By default, Scene Builder creates a 2x3 grid. Right-click at the column tab "1" and add a column to change the grid dimensions to be 3x3.
+Change the preferred height of each row to 100 by selecting each row and entering 100 in the Pref Height field on the right panel named Layout: RowConstraints. This is what we&#8217;ve got so far:</p>
 </div>
 <div id="FIG10-6" class="imageblock">
 <div class="content">
@@ -6859,7 +6857,7 @@ public void validateOrder(ActionEvent evt){
 <div class="title">Figure 85. Running TicTacToe with an empty grid</div>
 </div>
 <div class="paragraph">
-<p>The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder as we did in the Calculator in Chapter 7. But it&#8217;ll be faster to do it manually in by editing the content of the file <em>tictactoe.fxml</em> in IDEA&#8217;s editor. Modify the content of this file to look as follows:</p>
+<p>The grid has 9 cells and we want to add 9 buttons - each button will represent a square on the Tic-Tac-Toe board. You can add the buttons to the grid in Scene Builder as we did in the Calculator in Chapter 7. But it&#8217;ll be faster to do it manually by editing the content of the file <em>tictactoe.fxml</em> in IDEA&#8217;s editor. Modify the content of this file to look as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6919,7 +6917,7 @@ public void validateOrder(ActionEvent evt){
 <div class="title">Figure 86. Running TicTacToe - the first square has a focus</div>
 </div>
 <div class="paragraph">
-<p>Do yo see this thin border around the top left square? It happens because by default the firs grid cell <em>has a focus</em>, which means that this particular GUI component is ready to receive input. But we don&#8217;t want to suggest the player starting the game from the top left corner, do we? We want to remove this little border, and it&#8217;s time to create a a special style for a button that will not show the focus.</p>
+<p>Do yo see this thin border around the top left square? It occurs because by default the firs grid cell <em>has a focus</em>, which means that this particular GUI component is ready to receive input. But we don&#8217;t want to suggest the player starting the game from the top left corner, do we? We want to remove this little border, and it&#8217;s time to create a special style for a button that will not show the focus.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s create a new file named <em>tictactoe.css</em>. In IDEA, right click on the package name <em>mygame</em>  and use the menu  File | New | File. It&#8217;ll create an empty file. Type the following in there:</p>
@@ -6933,16 +6931,16 @@ public void validateOrder(ActionEvent evt){
 </div>
 </div>
 <div class="paragraph">
-<p>From Chapter 7 you may remember that this means that every button in our application will have these attributes. Web designers call the styles created for certain types of GUI element <em>type selectors</em>. Hence the attributes defined in the <code>.button</code> section of CSS will apply only for buttons. If we wanted to style, menus, we&#8217;d need to add a section <code>.menu</code> to the CSS file.  Labels would be styled in the <code>.label</code> section, and so on.</p>
+<p>From Chapter 7 you may remember that this means that every button in our application will have these attributes. Web designers call the styles created for certain types of GUI element <em>type selectors</em>. Hence the attributes defined in the <code>.button</code> section of CSS will apply only for buttons. If we wanted to style menus, we&#8217;d need to add a section <code>.menu</code> to the CSS file.  Labels would be styled in the <code>.label</code> section, and so on.</p>
 </div>
 <div class="paragraph">
 <p>When I did my search on line to figure out how to remove the focus border, the online documentation suggested that adding the rule <code>-fx-focus-color: transparent;</code> would do the trick. But it didn&#8217;t. Every programmer knows, that not everything works by the book. By doing a little more online research I figured out that adding <code>-fx-background-insets: -1, 0, 1, 1;</code> is needed too.</p>
 </div>
 <div class="paragraph">
-<p>Don&#8217;t be scared that not everything works as it should from the first time. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site <a href="http://stackoverflow.com/">StackOverflow</a>.</p>
+<p>Don&#8217;t be scared that not everything works as it should the first time around. Luckily, each programming language has an online community of people who are willing to share their findings and answer the questions of the rookies. One of the best resources for asking questions and getting help is the Web site <a href="http://stackoverflow.com/">StackOverflow</a>.</p>
 </div>
 <div class="paragraph">
-<p>Now we need to add a line to the <code>main</code> method of the TicTacToe class to load the file <code>tictactoe.css</code>. We did something like this in Chapter 7 while styling the Sign In application. We&#8217;ll also need to do small changes in the <code>main</code> method to keep store the reference to a <code>scene</code> in a separate variable. We also want to set fix the size of the game board by invoking <em>setResizable(false);</em> on the stage object. After these modifications the class <code>TicTacToe</code> will look like this:</p>
+<p>Now we need to add a line to the <code>main</code> method of the TicTacToe class to load the file <code>tictactoe.css</code>. We did something like this in Chapter 7 while styling the Sign In application. We&#8217;ll also need to do small changes in the <code>main</code> method to store the reference to a <code>scene</code> in a separate variable. We also want to set fix the size of the game board by invoking <em>setResizable(false);</em> on the stage object. After these modifications, the class <code>TicTacToe</code> will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7056,7 +7054,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 <div class="title">Figure 89. Adding colors to the game board</div>
 </div>
 <div class="paragraph">
-<p>As you can see, my artistic abilities are limited, but if you spend some time learning CSS, you may come up with a lot fancier game board than mine.</p>
+<p>As you can see, my artistic abilities are limited, but if you spend some time learning CSS, you may come up with a much fancier game board than mine.</p>
 </div>
 <div class="paragraph">
 <p>All JavaFX components are pre-styled, and the combination of the styles is called <em>theme</em>. The default theme of all JavaFX components is called caspian. By defining your own CSS rules you can override the defaults. Scene Builder has a menu View | Show CSS analyzer, which allows you to see the default styles of your GUI components. If you&#8217;re interesting in learning more about styling with Scene Builder, watch the video titled <a href="https://www.youtube.com/watch?v=7Nu3_5doZK4">"In-Depth Layout and Styling with the JavaFX Scene Builder"</a>.</p>
@@ -7065,10 +7063,10 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 <div class="sect3">
 <h4 id="_implementing-the-game-strategy"><a class="anchor" href="#_implementing-the-game-strategy"></a>10.1.4. Implementing the Game Strategy</h4>
 <div class="paragraph">
-<p>In the beginning of this chapter I&#8217;ve described the game strategy. We&#8217;ll implement it in the <code>Controller</code> class. On each button click we need to check if there is already a winning combination of X&#8217;s or O&#8217;s. If there is, the program should highlight the winning combination. In case of a draw, the player may select the menu option Play to start playing again.</p>
+<p>In the beginning of this chapter I&#8217;ve described the game strategy. We&#8217;ll implement it in the <code>Controller</code> class. For each button click we need to check if there is already a winning combination of X&#8217;s or O&#8217;s. If there is, the program should highlight the winning combination. In case of a draw, the player may select the menu option Play to start playing again.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll write a method <code>find3InARow</code>, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method <code>find3InARow</code> will be invoked from the method <code>buttonClickHandler</code>. If the winning combination is found, the program will invoke the method <code>highlightWinningCombo</code> to show the winning combination in different style.</p>
+<p>We&#8217;ll write a method <code>find3InARow</code>, which on every click  will check each row, column, and diagonals on the board to see if they have the same labels. The method <code>find3InARow</code> will be invoked from the method <code>buttonClickHandler</code>. If the winning combination is found, the program will invoke the method <code>highlightWinningCombo</code> to show the winning combination in a different style.</p>
 </div>
 <div class="paragraph">
 <p>To compare the labels of the buttons we need to have references to their <code>Button</code> objects, which we&#8217;ll get using the injection mechanism offered by the <code>@FXML</code> annotation as we did in Chapter 8. We&#8217;ll also need to have a reference to the <code>GridPane</code>, which is a container for all buttons. You&#8217;ll see its use in the section "Handling the Tic-Tac-Toe Menu Play".</p>
@@ -7159,7 +7157,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 <p>The styles of the winning buttons should be changed dynamically (during the runtime). First of all, we need to come up with the style for displaying the winning button and add it to the CSS file. Then the class <code>Controller</code> will invoke the method <code>setStyle</code> on them providing the name of the winning style.</p>
 </div>
 <div class="paragraph">
-<p>I want to change the background of the winning buttons, but this time I won&#8217;t use just a single color, but a <em>color gradient</em>. In computer graphics color gradients refer to filling the area with different colors that are smoothly transitioning from one color to another. The color transitioning can be linear or radial, and <a href="http://en.wikipedia.org/wiki/Color_gradient">this Wikipedia article</a> gives you some examples of both.</p>
+<p>I want to change the background of the winning buttons, but this time I won&#8217;t use just a single color, but a <em>color gradient</em>. In computer graphics, color gradients refer to filling the area with different colors that are smoothly transitioning from one color to another. The color transitioning can be linear or radial, and <a href="http://en.wikipedia.org/wiki/Color_gradient">this Wikipedia article</a> gives you some examples of both.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll use radial gradients in our game. With gradients you can use more than two colors. I&#8217;ll use three colors in the gradient for the winning squares. The background color will transition from white to light yellow, and then to lawn green. I&#8217;ll use red for the text of the label on the winning square.</p>
@@ -7171,7 +7169,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 <p><code>myButton.setStyle("-fx-text-fill: red;");</code></p>
 </div>
 <div class="paragraph">
-<p>But embedding CSS rules in your Java program is not a good idea. What if you decide to change the styling (e.g. to change the color from red to pink)? You don&#8217;t want to search for all places in your Java where this style was used. Besides, changing the styles in the code would require to recompile your Java program. It&#8217;s much better to keep the style definitions in the CSS file.</p>
+<p>But embedding CSS rules in your Java program is not a good idea. What if you decide to change the styling (e.g. to change the color from red to pink)? You don&#8217;t want to search for all the places in your Java code where this style was used. Besides, changing the styles in the code would require to recompile your Java program. It&#8217;s much better to keep the style definitions in the CSS file.</p>
 </div>
 <div class="paragraph">
 <p>So far we&#8217;ve been using CSS <em>type selectors</em> that can change the style of the specified component types. But CSS allows you to define and name a style that&#8217;s not intended for a specific component type and can be applied by name to various components. In CSS such styles are called <em>class selectors</em>. Let&#8217;s add a style selector called <code>.winning-square</code> to the file <code>tictactoe.css</code>.</p>
