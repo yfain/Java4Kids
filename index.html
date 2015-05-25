@@ -7368,7 +7368,7 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 <h2 id="_working_with_files_and_serialization">11. Working With Files and Serialization</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.</p>
+<p>After a program ends, it gets erased from the memory. When you run it again, its content is loaded into the memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or any other device that can store the data for a long time.</p>
 </div>
 <div class="paragraph">
 <p>In this chapter you’ll learn how to save data on disks and read them back into memory using Java Input/Output(I/O) streams.A program can open an <em>output stream</em> with a file on disk and write the important data there. Similarly, you can open an <em>input stream</em> and read the data from a file.</p>
@@ -7387,12 +7387,12 @@ After this is done, run the <code>TicTacToe</code> program again. Start clicking
 implement blocking I/O: When bytes are being read/written, they become unavailable for other threads of execution. This may not be an issue with small files like a history of game scores, but may become an issue with large files that contain a gigabyte or more. The package <code>java.nio</code> offers a set of classes with improved performance as well as some useful utility classes.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;ll start with explaining you the basics of working with streams of bytes using classes from the <code>java.io</code> package, and then give you some examples of working with classes from <code>java.nio</code>.</p>
+<p>I&#8217;ll start with explaining the basics of working with streams of bytes using classes from the <code>java.io</code> package, and then give you some examples of working with classes from <code>java.nio</code>.</p>
 </div>
 <div class="sect2">
 <h3 id="_basics_of_working_with_streams">11.1. Basics of Working With Streams</h3>
 <div class="paragraph">
-<p>Think of a stream as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it&#8217;s another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.</p>
+<p>Think of a stream as a pipe. If you just need to read the data from some source, imagine that the data flows through a pipe into your program. If you need to write the data into storage, it&#8217;s another pipe where the data flow from your program to this storage. As with any pipe, it has to be opened to start the flow and closed to stop it.</p>
 </div>
 <div class="paragraph">
 <p>Java supports several types of streams, but no matter what type you are going to use, the following three steps should be done in your program:</p>
@@ -7407,21 +7407,18 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <p>• Close the stream (Java can do it automatically).</p>
 </div>
 <div class="paragraph">
-<p>In the real world people use different types of pipes for carrying different contents (e.g. gas, oil, milkshakes). Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al.</p>
+<p>In the real world people use different types of pipes for carrying different content (e.g. gas, oil, milkshakes). Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al.</p>
 </div>
 <div class="sect3">
 <h4 id="_byte_streams">11.1.1. Byte Streams</h4>
 <div class="paragraph">
-<p>To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a <em>set of bytes</em>, and then writes them into a destination folder..</p>
+<p>To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another does not even need to know if this file represents an image, a text, or a file with music. Such a copy program reads the original file into computer&#8217;s memory as a <em>set of bytes</em>, and then writes them into another file located in the destination folder.</p>
 </div>
 <div class="paragraph">
-<p>Originaly <code>java.io</code> package have not offered a fast way to copy files and you&#8217;d need to write a program that reads byte after byte using Java classes <code>FileInputStream</code> or <code>FileOutputStream</code>.</p>
+<p>The <code>java.io</code> package includes the classes <code>FileInputStream</code> and <code>FileOutputStream</code> that allow you to read and write files one byte at a time. If your program has to work only with text files, you could use the classes <code>Reader</code> and <code>Writer</code>, which are specifically meant for reading character streams.</p>
 </div>
 <div class="paragraph">
-<p>If your program has to work only with text files, you could use the classes <code>Reader</code> and <code>Writer</code>, which are specifically meant for reading character streams.</p>
-</div>
-<div class="paragraph">
-<p>After selecting the appropriate class you&#8217;ll be invoking one of its methods to read or write the file. For example the <a href="http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html">online documentation</a> of the class <code>FileInputStream</code> includes the method <code>read</code> having the following signature:</p>
+<p>After selecting, say <code>FileInputStream</code> you&#8217;d be invoking one of its methods to read the file data. For example the <a href="http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html">online documentation</a> of the class <code>FileInputStream</code> includes the method <code>read</code> having the following signature:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7429,7 +7426,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 </div>
 </div>
 <div class="paragraph">
-<p>This should tell you that the method <code>read</code> returns an integer value and may throw the <code>IOException</code>, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method <code>read</code> into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you&#8217;ll call the method <code>getMessage</code> on the exception object.</p>
+<p>This should tell you that the method <code>read</code> returns an integer value and may throw the <code>IOException</code>, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method <code>read</code> into a try-catch block as explained in Chapter 9. To get a specific reason for this exception you&#8217;ll call the method <code>getMessage</code> on the exception object.</p>
 </div>
 <div class="paragraph">
 <p>Each byte in a file is represented by a code, which is a positive integer number. The method <code>read</code> returns the value of this code.</p>
@@ -7475,7 +7472,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <div class="colist arabic">
 <ol>
 <li>
-<p>First we open the file for reading (using a default character set) by creating an instance of the class <code>FileInputStream</code> passing the file name <code>abc.dat</code> as a parameter. In Chapter 9 you&#8217;ve learned the syntax of the try-catch blocks. But here I use a special syntax called <em>try-with-resources</em>. When there are some program resources that has to be opened and closed (e.g. <code>FileInputStream</code>), just instantiate them in parentheses right after the <code>try</code> keyword and Java will close them for you automatically. This spares you from writing a <code>finally</code> block containing the code for closing resources.</p>
+<p>First we open the file for reading (using a default character set) by creating an instance of the class <code>FileInputStream</code> passing the file name <code>abc.dat</code> as a parameter. In Chapter 9 you&#8217;ve learned the syntax of the try-catch blocks, but here I used a special syntax called <em>try-with-resources</em>. When there are some program resources that have to be opened and closed (e.g. <code>FileInputStream</code>), just instantiate them in parentheses right after the <code>try</code> keyword and Java will close them for you automatically. This spares you from writing a <code>finally</code> block containing the code for closing resources.</p>
 </li>
 <li>
 <p>This line starts a <code>while</code> loop that calls the method <code>read()</code>, which reads one byte, assigns its value to the variable <code>byteCode</code>, and compares it with <code>-1</code> (the end of file indicator).</p>
@@ -7484,7 +7481,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <p>If the value in the current byte is not equal to <code>-1</code>, we print it followed by a space character. The loop ends when it reads the <code>-1</code> byte.</p>
 </li>
 <li>
-<p>If an <code>IOException</code> occurs, catch it and print the reason of this error.</p>
+<p>If an <code>IOException</code> occurs, catch it and print the reason for this error.</p>
 </li>
 </ol>
 </div>
@@ -7531,10 +7528,10 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <p>The program <code>MyByteWriter</code> populates an array <code>someData</code> with integer codes that may represent some characters</p>
 </li>
 <li>
-<p>Then the program opens the file <em>xyz.dat</em></p>
+<p>Then the program opens the file <em>xyz.dat</em>.</p>
 </li>
 <li>
-<p>and writes each of the integers into the file.</p>
+<p>Then it proceeds to writes each of the integers into the file.</p>
 </li>
 <li>
 <p>If an error occurs, we catch it and print the reason.</p>
@@ -7545,7 +7542,7 @@ implement blocking I/O: When bytes are being read/written, they become unavailab
 <div class="sect3">
 <h4 id="_bufferred_streams">11.1.2. Bufferred Streams</h4>
 <div class="paragraph">
-<p>The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of <code>read</code> would read one byte, and one invocation of <code>write</code> would write one byte. In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.</p>
+<p>The code examples in the Byte Streams section were reading or writing into a file one byte at a time. One invocation of <code>read</code> would read one byte, and one invocation of <code>write</code> would write one byte. In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.</p>
 </div>
 <div id="FIG11-1" class="imageblock">
 <div class="content">
@@ -7596,7 +7593,7 @@ Buffered streams are not changing the type of the original streams — they just
 <p>Here we use the try-with-resources syntax again. This time we create an instance of <code>FileInputReader</code> and then and instance of <code>BufferedInputReader</code> providing the <code>FileInputReader</code> as an argument. This is how we connect to fragments of the pipe that uses the file <em>abc.dat</em> as the source of data.</p>
 </li>
 <li>
-<p>Under the hood the <code>BufferedInputReader</code> reads  bytes from disk in chunks into a memory buffer, and then the method <code>read</code> reads one byte at time from memory.</p>
+<p>Under the hood the <code>BufferedInputReader</code> reads  bytes from the disk in chunks into a memory buffer, and then the method <code>read</code> reads one byte at time from memory.</p>
 </li>
 </ol>
 </div>
@@ -7611,7 +7608,7 @@ Buffered streams are not changing the type of the original streams — they just
 <p>Text in Java is represented as a set of <code>char</code> values, which are encoded based on the character sets capable to represent alphabet or other symbols used in a particular human language. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16.</p>
 </div>
 <div class="paragraph">
-<p>Each JVM has a default character set, which could be changed during the JVM startup. You can also find out what&#8217;s the default character in your Java installation by invoking the method <code>defaultCharset</code> on the class <code>Charset</code>, and I&#8217;ll show how to do it in the section "Reading Text Files".</p>
+<p>Each JVM has a default character set, which could be changed during the JVM startup. You can also find out what&#8217;s the default character in your Java installation by invoking the method <code>defaultCharset</code> on the class <code>Charset</code>, and I&#8217;ll show you how to do it in the section "Reading Text Files".</p>
 </div>
 <div class="paragraph">
 <p>The Java classes <code>FileReader</code> and <code>FileWriter</code> from the package <code>java.io</code> were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.</p>
@@ -7623,7 +7620,7 @@ Buffered streams are not changing the type of the original streams — they just
 <div class="sect2">
 <h3 id="_working_with_files_using_java_nio">11.3. Working With Files Using java.nio</h3>
 <div class="paragraph">
-<p>The <code>java.nio</code> package contains classes that offer a simplified and more efficient way of working with files, and you&#8217;ll see some useful examples here. But first I&#8217;d like to introduce a classes Path and Paths that will represent a file you&#8217;re planning to work with.</p>
+<p>The <code>java.nio</code> package contains classes that offer a simplified and more efficient way of working with files, and you&#8217;ll see some useful examples here. But first I&#8217;d like to introduce the classes <code>Path</code> and <code>Paths</code> that will represent a file you&#8217;re planning to work with.</p>
 </div>
 <div class="sect3">
 <h4 id="_using_classes_path_and_paths">11.3.1. Using Classes Path and Paths</h4>
@@ -7632,13 +7629,13 @@ Buffered streams are not changing the type of the original streams — they just
 <em>c:\mystuff\games\tictactoeScores.txt</em></p>
 </div>
 <div class="paragraph">
-<p>In Mac OS or Linux disks are not named with letters like <em>c:</em> or <em>d:</em>. For example, the path to user&#8217;s files starts from the <em>Users</em> directory. Besides a backslash is not used for a separator symbol there. A full path to a file <em>tictactoeScores.txt</em> of the user <em>mary</em> may look like this:</p>
+<p>In Mac OS or Linux, disks are not named with letters like <em>c:</em> or <em>d:</em>. For example, the path to user&#8217;s files starts from the <em>Users</em> directory. Besides a backslash is not used for a separator symbol there. A full path to a file <em>tictactoeScores.txt</em> of the user <em>mary</em> may look like this:</p>
 </div>
 <div class="paragraph">
 <p><em>/Users/mary/mystuff/games/tictactoeScores.txt</em></p>
 </div>
 <div class="paragraph">
-<p>So before even opening a file you can create an instance of the object <code>Path</code>, which doesn&#8217;t open or reads a file, but represents the location of the file on the disk.</p>
+<p>So before even opening a file you can create an instance of the object <code>Path</code>, which doesn&#8217;t open or read a file, but represents the location of the file on the disk.</p>
 </div>
 <div class="paragraph">
 <p>There is a special class <code>Paths</code> (yes, in plural) that includes a number of static methods, and in particular, can build the <code>Path</code> object for you. For example, you can invoke the method <code>get</code> passing the name of the file as the argument:</p>
@@ -7780,7 +7777,7 @@ Buffered streams are not changing the type of the original streams — they just
 </div>
 </div>
 <div class="paragraph">
-<p>Now make an experiment to see if the <code>IOException</code> is thrown if the file is not found where expected to be. Just move the file <em>abc.dat</em> into a different directory and re-run <code>MyTextFileReader</code>. Now the console output looks different:</p>
+<p>Now experiment to see if the <code>IOException</code> is thrown if the file is not found where it is expected to be. Just move the file <em>abc.dat</em> into a different directory and re-run <code>MyTextFileReader</code>. Now the console output looks different:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7890,7 +7887,7 @@ Buffered streams are not changing the type of the original streams — they just
 </div>
 <div class="paragraph">
 <p>Each time the program saved the same score of 28000
-attaching the system date and time. Of course, you could calculate and write the real score of a game. This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package <code>java.time</code> you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle&#8217;s tutorial on working with <a href="http://docs.oracle.com/javase/tutorial/datetime/TOC.html">Date and Time API</a> if interested.</p>
+attaching the system date and time. Of course, you could calculate and write the real score of a game. This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package <code>java.time</code> you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle&#8217;s tutorial on working with <a href="http://docs.oracle.com/javase/tutorial/datetime/TOC.html">Date and Time API</a> if you&#8217;re interested.</p>
 </div>
 <div class="paragraph">
 <p>For writing small files like <em>scores.txt</em> you don&#8217;t need to use buffered streams. For large files though, use BufferedWriter, for example:</p>
@@ -7955,17 +7952,17 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </div>
 <div class="paragraph">
-<p>In this class I&#8217;ve moved the code that check if the file exists into a separate method <code>getBufferedWriter</code>. I did it to illustrate so-called <em>factory design pattern</em>. A factory can build different objects, right?  The method <code>getBufferedWriter</code> also builds different instances of a <code>BufferedReader</code> depending on the existence of the file referred by <code>path</code>. In programmers jargon the methods that create and return different object instances based on some parameter are called factories.</p>
+<p>In this class I&#8217;ve moved the code that checks if the file exists into a separate method <code>getBufferedWriter</code>. I did it to illustrate so-called <em>factory design pattern</em>. A factory can build different objects, right?  The method <code>getBufferedWriter</code> also builds different instances of a <code>BufferedReader</code> depending on the existence of the file referred by <code>path</code>. In programmers jargon, the methods that create and return different object instances, based on some parameter, are called factories.</p>
 </div>
 <div class="paragraph">
-<p>If you run the program <code>MyTextFileBufferedFileWriter</code> it&#8217;ll produce the same results as <code>MyTextFileFileWriter</code>. If you use these programs for writing short texts you won&#8217;t notice the difference in the speed of execution. But when you need to write large amount of information  <code>MyTextFileBufferedFileWriter</code> will work faster.</p>
+<p>If you run the program <code>MyTextFileBufferedFileWriter</code> it&#8217;ll produce the same results as <code>MyTextFileFileWriter</code>. If you use these programs for writing short text, you won&#8217;t notice the difference in speed of execution. But when you need to write large amounts of information  <code>MyTextFileBufferedFileWriter</code> will work faster.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_command_line_arguments">11.4. Command-Line Arguments</h3>
 <div class="paragraph">
-<p>So far all of the code examples had the file names stored right in the code, or as  programmers say, <em>hard-coded</em> in the program.  This means that to create a program that reads a files with a different name you’d have to modify the code and recompile the program, which is not nice. You should create universal programs that can take parameters (e.g.the name of the file) from a command line during the program launch.</p>
+<p>So far all of the code examples had the file names stored right in the code, or as  programmers say, <em>hard-coded</em> in the program. This means that to create a program that reads a file with a different name you’d have to modify the code and recompile the program, which is not nice. You should create universal programs that can take parameters (e.g.the name of the file) from a command line during the program launch.</p>
 </div>
 <div class="paragraph">
 <p>In the first lesson of this book you&#8217;ve been running the program HelloWorld from a command window:</p>
@@ -7984,7 +7981,7 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </div>
 <div class="paragraph">
-<p>In this case the program HelloWorld would get two command line parameters: Mary and Smith. If you remember, we always write the method main with a <code>String</code> array as an  argument:</p>
+<p>In this case, the program <code>HelloWorld</code> would get two command line parameters: Mary and Smith. If you remember, we always write the method main with a <code>String</code> array as an argument:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7992,7 +7989,7 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </div>
 <div class="paragraph">
-<p>The JVM passes the <code>String</code> array to the main method, and if you start a program without any command line arguments, this array remains empty.  Otherwise, this array will have exactly as many elements as the number of command-line arguments  passed to the program.</p>
+<p>The JVM passes the <code>String</code> array to the main method, and if you start a program without any command line arguments, this array remains empty. Otherwise, this array will have exactly as many elements as the number of command-line arguments  passed to the program.</p>
 </div>
 <div class="paragraph">
 <p>Let’s see  how we can use these command line arguments in a very simple class that will just print them:</p>
@@ -8032,10 +8029,10 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </div>
 <div class="paragraph">
-<p>The JVM placed <code>Mary</code> into the array element <code>args[0]</code>, <code>Smith</code> into <code>args[1]</code>, and <code>123</code> into `args[2].</p>
+<p>The JVM placed <code>Mary</code> into the array element <code>args[0]</code>, <code>Smith</code> into <code>args[1]</code>, and <code>123</code> into <code>args[2]</code>.</p>
 </div>
 <div class="paragraph">
-<p>Command-line arguments are always being passed to a program as strings.  It’s the responsibility of a program to convert the data to the appropriate data type, for example:</p>
+<p>Command-line arguments are always being passed to a program as strings. It’s the responsibility of a program to convert the data to the appropriate data type, for example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8043,7 +8040,7 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </div>
 <div class="paragraph">
-<p>It’s always a good idea to check if the command line contains  correct number of arguments. Do this right in the beginning of the method <code>main</code>. If the program doesn’t receive expected arguments, it should print a brief message about it and immediately stop by using a special method <code>exit</code> of the class <code>System</code>:</p>
+<p>It’s always a good idea to check if the command line contains the correct number of arguments. Check this right in the beginning of the method <code>main</code>. If the program doesn’t receive expected arguments, it should print a brief message about it and immediately stop by using a special method <code>exit</code> of the class <code>System</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8103,7 +8100,7 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </div>
 <div class="paragraph">
-<p>The file copy is done by calling the method <code>copy</code> on the class <code>Files</code>. This program will work fine as long as the destination file doesn&#8217;t exist. You can check for file existence in the program by using the method <code>exists</code> of the class <code>Files</code> as it was done in the class <code>MyTextFileReader</code> earlier.</p>
+<p>The file copy is done by calling the method <code>copy</code> on the class <code>Files</code>. This program will work fine as long as the destination file doesn&#8217;t exist. You can check for the file&#8217;s existence in the program by using the method <code>exists</code> of the class <code>Files</code> as it was done in the class <code>MyTextFileReader</code> earlier.</p>
 </div>
 </div>
 <div class="sect2">
@@ -8112,7 +8109,7 @@ attaching the system date and time. Of course, you could calculate and write the
 <p>Imagine a building that, with a push of a button, can be turned into a pile of construction materials. Load all these materials on the truck and drive to a different city. On arrival push another button, and the building is magically re-created in its original form. This is what Java serialization is about, but instead of a building we&#8217;ll use a Java object. By “clicking the serialize button” JVM turns an instance of an object into a pile of bytes, and “clicking the deserialize button” re-creates the object.</p>
 </div>
 <div class="paragraph">
-<p>Why would you need such functionality? Say you are working on a board game and want to be able to save the current state of the game so the player and continue playing it tomorrow even if the computer will need to be turned off. The program needs to save the state of the game in a file, and when the player launches the game again, the program should load the saved state and recreate the situation on the board.  Creating a Java class with fields like player name, level, score, lives can be a good way to represent a state of the game.</p>
+<p>Why would you need such functionality? Say you are working on a board game and want to be able to save the current state of the game so the player can continue playing it tomorrow even if the computer will need to be rebooted. The program needs to save the state of the game in a file, and when the player launches the game again, the program should load the saved state and recreate the situation on the board. Creating a Java class with fields like player name, level, score, and lives can be a good way to represent a state of the game.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8127,10 +8124,10 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </div>
 <div class="paragraph">
-<p>When the user selects the menu option <em>Save Game State</em>, the program has to create an instance of the object <code>GameState</code>, assign the values to its fields and save these values in a file. But which format to save these values in? Create a <code>String</code> variable, and concatenate all these values into it separating the values with commas? It&#8217;s a lot of work. Also, you&#8217;d need to remember the order of these concatenated values so when you need to read them you know to which fields of the object <code>GameState</code> to assign them to.</p>
+<p>When the user selects the menu option <em>Save Game State</em>, the program has to create an instance of the object <code>GameState</code>, assign the values to its fields and save these values in a file. But which format to save these values in? Create a <code>String</code> variable, and concatenate all these values into it separating the values with commas? It&#8217;s a lot of work. Also, you&#8217;d need to remember the order of these concatenated values so that when you need to read them you know which fields of the object <code>GameState</code> to assign them to.</p>
 </div>
 <div class="paragraph">
-<p>Luckily, Java greatly simplifies this process. You can create and instance of the Java object, populate it with the values, and then <em>serialize</em> this instance into a bunch of bytes in a special format that remembers the structure of the class <code>GameState</code>. Accordingly, when you need to re-create the instance of the <code>GameState</code> for these bytes, you can <em>deserialize</em> the object in one shot with all its fields values.</p>
+<p>Luckily, Java greatly simplifies this process. You can create an instance of the Java object, populate it with the values, and then <em>serialize</em> this instance into a bunch of bytes in a special format that remembers the structure of the class <code>GameState</code>. Accordingly, when you need to re-create the instance of the <code>GameState</code> for these bytes, you can <em>deserialize</em> the object in one shot with all its fields' values.</p>
 </div>
 <div class="paragraph">
 <p>A Java object can be serialized if it implements <code>Serializabe</code> interface. It&#8217;s a very simple interface to implement, as it doesn&#8217;t declare any abstract methods. Just add <code>implements Serializable</code> to the class declaration to make a class serializable. The following class <code>GameState</code> will represent the state of the game.</p>
@@ -8289,7 +8286,7 @@ attaching the system date and time. Of course, you could calculate and write the
 <p>It takes just one line of code to serialize the <code>GameState</code> object into the file using the method <code>write</code>.</p>
 </li>
 <li>
-<p>The method <code>loadGameState</code> deserializes the object from a file, and we&#8217;re opening the <code>InputStream</code> and pipe it up with the <code>ObjectInputStream</code>.The data from file will be read in the same format and order as it was written. So if you&#8217;ll change the declaration of the class <code>GameState</code> between serialization and deserialization, Java will throw <code>InvalidClassException</code>.</p>
+<p>The method <code>loadGameState</code> deserializes the object from a file, and we&#8217;re opening the <code>InputStream</code> and pipe it up with the <code>ObjectInputStream</code>.The data from the file will be read in the same format and order as it was written. So if you change the declaration of the class <code>GameState</code> between serialization and deserialization, Java will throw <code>InvalidClassException</code>.</p>
 </li>
 <li>
 <p>It takes just one line of code to deserialize the file into a <code>GameState</code> object using the method <code>read</code>. In this example the same program serializes and deserializes the game state, but this may not be the case. You can send the serialized object to another computer on the network, and another program may deserialize the <code>GameState</code>. Hence it&#8217;s important that the declaration of the <code>GameState</code> is available on both computers. The exception <code>ClassNotFoundException</code> will be thrown if the declaration of the class <code>GameState</code> is not available.</p>
@@ -8297,7 +8294,7 @@ attaching the system date and time. Of course, you could calculate and write the
 </ol>
 </div>
 <div class="paragraph">
-<p>Run the program <code>GameStateManager</code>, and you&#8217;ll see that it creates a new file <code>gamestate.ser</code>. Open this file in a text editor, and you&#8217;ll see some gibberish. Java serializes objects in its internal format, which is not meant for reading by the humans. The console output will look like this:</p>
+<p>Run the program <code>GameStateManager</code>, and you&#8217;ll see that it creates a new file <code>gamestate.ser</code>. Open this file in a text editor, and you&#8217;ll see some gibberish. Java serializes objects in its internal format, which is not meant to be read by people. The console output will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8377,7 +8374,7 @@ attaching the system date and time. Of course, you could calculate and write the
 </div>
 </li>
 <li>
-<p>Write the code in the method <code>saveScore</code> to serialize the collection <code>scores</code> into a file <code>scores.ser</code>. Use the code from the class <code>GameStateManager</code> as an example, but this time you&#8217;ll need to serialize not just one object instance, but a collection of objects, for example:</p>
+<p>Write the code in the method <code>saveScore</code> to serialize the collection <code>scores</code> into a file <code>scores.ser</code>. Use the code from the class <code>GameStateManager</code> as an example, but this time you&#8217;ll need to serialize not one object instance, but a collection of objects, for example:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="java"><span class="tok-k">try</span> <span class="tok-o">(</span><span class="tok-n">ObjectOutputStream</span> <span class="tok-n">whereToWrite</span> <span class="tok-o">=</span> <span class="tok-k">new</span> <span class="tok-nf">ObjectOutputStream</span><span class="tok-o">(</span>
@@ -8478,11 +8475,11 @@ attaching the system date and time. Of course, you could calculate and write the
 <h2 id="_networking_downloading_files_from_the_internet">12. Networking: Downloading Files From the Internet</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other, if they use the same <em>protocol</em>. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. Such a communication is possible if the program running on the server also understands HTTP.
+<p>People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other if they use the same <em>protocol</em>. For example, your Web browser uses HTTP protocol to send requests and receive responses from a remote server. Such a communication is possible if the program running on the server also understands HTTP.
 Any network protocol defines the rules of how a program should send or receive data.</p>
 </div>
 <div class="paragraph">
-<p>Say, you want to find a book about Harry Potter in the online bookstore. Usually you&#8217;d need to enter Harry Potter in the search field of that bookstore Web site and press the button to start the search. But the browser sends a request with a lot more data than a dozen of characters you&#8217;ve entered. According to HTTP protocol, every request should include a <em>request header</em>, which defines the method of sending data, identifies the browser that sends it, asks to connection to stay open (or not), and has other attributes.</p>
+<p>Say, you want to find a book about Harry Potter in the online bookstore. Usually you&#8217;d need to enter Harry Potter in the search field of that bookstore Web site and press the button to start the search, but the browser sends a request with a lot more data than a dozen of characters you&#8217;ve entered. According to HTTP protocol, every request should include a <em>request header</em>, which defines the method of sending data, identifies the browser that sends it, requests to keep the connection open (or not), and has other attributes.</p>
 </div>
 <div class="paragraph">
 <p>Similarly, a server should run a program that receives and understands the HTTP request, finds all books that have Harry Potter in the title, and sends a response back to you, adding a <em>response header</em> to the data. Both request and response headers can add several hundred bytes to the actual data being sent.</p>
@@ -8501,7 +8498,7 @@ Any network protocol defines the rules of how a program should send or receive d
 </div>
 </div>
 <div class="paragraph">
-<p>This URL tells me that on the host (the server) nick.com exists the file called <em>nickelodeon-football-stars.html</em> located in the folder <em>games</em>. The port number plays the same role as an apartment number in a building.</p>
+<p>This URL tells me that the host (the server) nick.com has the file called <em>nickelodeon-football-stars.html</em> located in the folder <em>games</em>. The port number plays the same role as an apartment number in a building.</p>
 </div>
 <div class="paragraph">
 <p>The server nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, the port number 80 is a default port number for all Web servers that use HTTP. That&#8217;s why if you skip the port number, your Web browser will try to connect to the Web server via the port 80.</p>
@@ -8518,7 +8515,7 @@ Any network protocol defines the rules of how a program should send or receive d
 </div>
 </div>
 <div class="paragraph">
-<p>There is no file name here. What <em>video</em> stands for in this URL? It&#8217;s not a file, and it&#8217;s not a folder on the host either. It&#8217;s just an ID that represents some resources at nick.com. There is a program running at nick.com that understands what this ID means and redirects the request to the application that serves the Web page with videos that may look like this:</p>
+<p>There is no file name here. What does <em>video</em> stand for in this URL? It&#8217;s not a file, and it&#8217;s not a folder on the host either. It&#8217;s just an ID that represents some resources at nick.com. There is a program running at nick.com that understands what this ID means and redirects the request to the application that serves the Web page with videos that may look like this:</p>
 </div>
 <div id="FIG12-3" class="imageblock">
 <div class="content">
@@ -8532,7 +8529,7 @@ Any network protocol defines the rules of how a program should send or receive d
 <div class="sect2">
 <h3 id="_domain_names_and_ip_addresses">12.2. Domain Names and IP Addresses</h3>
 <div class="paragraph">
-<p>The name of the server (the host name) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com).</p>
+<p>The name of the server (the host name) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called an IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). Remembering these long numbers would be difficult for people hence why we&#8217;re using domain names that are easier to remember (e.g. nick.com or google.com).</p>
 </div>
 <div class="paragraph">
 <p>When you&#8217;re entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format. If not found, you&#8217;ll get an error message that your search didn&#8217;t match any documents.</p>
@@ -8541,13 +8538,13 @@ Any network protocol defines the rules of how a program should send or receive d
 <p>You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn&#8217;t specify any. Often they name the file with the home page content <em>index.html</em>, but it can be any other file too.</p>
 </div>
 <div class="paragraph">
-<p>Most of the people connected to the Internet are getting dynamic (temporary) IP addresses assigned to their computers, which can change without notice.</p>
+<p>Most people connected to the Internet are getting dynamic (temporary) IP addresses assigned to their computers, which can change without notice.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_downloading_files_from_the_web">12.3. Downloading Files From the Web</h3>
 <div class="paragraph">
-<p>In Chapter 11 you&#8217;ve learned that how to read a local file if you know its location. You&#8217;d open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can exchange data with remote hosts using HTTP.</p>
+<p>In Chapter 11 you&#8217;ve learned how to read a local file if you know its location. You&#8217;d open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package <a href="http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html">java.net</a>. In this chapter we&#8217;ll use the classes that can exchange data between your computer and remote hosts using HTTP.</p>
 </div>
 <div class="paragraph">
 <p>In particular, Java has a class <code>java.net.URL</code> that helps your program to connect to a remote computer on the Internet and get access to a resource there, provided that it&#8217;s not protected from public access.</p>
@@ -8590,7 +8587,7 @@ Any network protocol defines the rules of how a program should send or receive d
 </ol>
 </div>
 <div class="paragraph">
-<p>While writing code for reading streams over the networks you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11.
+<p>While writing code for reading streams over the network, you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11.
 The following program <code>WebSiteReader</code> reads and prints the code of google.com page.</p>
 </div>
 <div class="listingblock">
@@ -8696,7 +8693,7 @@ The following program <code>WebSiteReader</code> reads and prints the code of go
 </div>
 </div>
 <div class="paragraph">
-<p>The following class <code>FileDownload</code> creates the <code>URLConnection</code> object and get its <code>InputStream</code>. This class also creates an <code>OutputStream</code> to the local file. The URL and the local filename are given to <code>FileDownload</code> program as command-line arguments (explained in Chapter 11). The <code>FileDownload</code> connects to the provided URL, downloads its content and saves it in a local file.</p>
+<p>The following class <code>FileDownload</code> creates the <code>URLConnection</code> object and gets its <code>InputStream</code>. This class also creates an <code>OutputStream</code> to the local file. The URL and the local filename are given to <code>FileDownload</code> program as command-line arguments (explained in Chapter 11). The <code>FileDownload</code> connects to the provided URL, downloads its content, and saves it on local file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8757,7 +8754,7 @@ The following program <code>WebSiteReader</code> reads and prints the code of go
 <div class="colist arabic">
 <ol>
 <li>
-<p>This program starts with checking that two command-line arguments were provided. If not, it prints the message showing the right way to start <code>FileDownload</code> and exits the program by invoking the method <code>exit</code> on the <code>System</code> object.</p>
+<p>This program starts by checking that two command-line arguments were provided. If not, it prints the message showing the right way to start <code>FileDownload</code> and exits the program by invoking the method <code>exit</code> on the <code>System</code> object.</p>
 </li>
 <li>
 <p>Then the program creates an instance of the <code>URL</code> object using the URL provided as the first command-line argument.</p>
@@ -8811,7 +8808,7 @@ The following program <code>WebSiteReader</code> reads and prints the code of go
 </div>
 </div>
 <div class="paragraph">
-<p>In this chapter I showed you how to download a file using HTTP. Professional Java developers use various techniques, technologies, and protocols for working with remote content. If you&#8217;re interested in exploring these advanced topics on your own, the <a href="http://docs.oracle.com/javaee/7/tutorial/">Java EE Tutorial</a> is a good start. Maybe one day I&#8217;ll write a book about the server side programming for kids.</p>
+<p>In this chapter I&#8217;ve shown you how to download a file using HTTP. Professional Java developers use various techniques, technologies, and protocols for working with remote content. If you&#8217;re interested in exploring these advanced topics on your own, the <a href="http://docs.oracle.com/javaee/7/tutorial/">Java EE Tutorial</a> is a good start. Maybe one day I&#8217;ll write a book about the server side programming for kids.</p>
 </div>
 </div>
 </div>
@@ -8839,7 +8836,7 @@ The following program <code>WebSiteReader</code> reads and prints the code of go
 </div>
 </li>
 <li>
-<p>In IDEA select the menu Run | Edit Configuration and paste this link into the Program arguments field for the <code>FileDownload</code> program. This link will be the first command-line argument.</p>
+<p>In IDEA, select the menu Run | Edit Configuration and paste this link into the Program arguments field for the <code>FileDownload</code> program. This link will be the first command-line argument.</p>
 <div id="FIG12-4" class="imageblock">
 <div class="content">
 <img src="./images/fig_12_EditConfigIDEA.png" alt="fig 12 EditConfigIDEA">
@@ -8847,7 +8844,7 @@ The following program <code>WebSiteReader</code> reads and prints the code of go
 </div>
 </li>
 <li>
-<p>Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where you want to save the song. I&#8217;ve entered song1.mp3. Press the button OK.</p>
+<p>Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where you want to save the song. I&#8217;ve entered <em>song1.mp3</em>. Then press the button OK.</p>
 </li>
 <li>
 <p>Run the program <code>FileDownload</code>. The MP3 file will be downloaded into the local file song1.mp3. Here&#8217;s the console output I&#8217;ve got:</p>
@@ -8862,7 +8859,7 @@ Finished downloading the file. It&#39;s located at /Users/yfain11/IdeaProjects/j
 <p>Open this file in your MP3 player and enjoy the music!</p>
 </li>
 <li>
-<p>Close the IDEA and repeat the same exercise from the command line. You&#8217;ll need to open a Command (or Terminal) window, change the directory to where the file <code>FileDownload.class</code> is located. By default, IDEA stores compiled classes in the directory <em>out/production</em>. My IDEA project was named Chapter12, and this is where its compiled classes were located in my computer:</p>
+<p>Close IDEA and repeat the same exercise from the command line. You&#8217;ll need to open a Command (or Terminal) window, change the directory to where the file <code>FileDownload.class</code> is located. By default, IDEA stores compiled classes in the directory <em>out/production</em>. My IDEA project was named Chapter12, and this is where its compiled classes were located in my computer:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="html">/Users/yfain11/IdeaProjects/jfk/Chapter12/out/production/Chapter12</code></pre>
@@ -8887,17 +8884,17 @@ Finished downloading the file. It&#39;s located at /Users/yfain11/IdeaProjects/j
 <p>JavaFX includes the package <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/package-summary.html">javafx.scene.shape</a>, which includes such classes as <code>Circle</code>, <code>Rectangle</code>, <code>Line</code> and more. All of these classes are inherited from the class <code>Shape</code>.</p>
 </div>
 <div class="paragraph">
-<p>Ping-Pong is a perfect game to illustrate the drawing and animating capabilities of JavaFX. In this game you&#8217;ll have another chance to work with event handlers, and will learn how to move (animate) shapes around the stage.</p>
+<p>Ping-Pong is the perfect game to illustrate the drawing and animating capabilities of JavaFX. In this game you&#8217;ll have another chance to work with event handlers, and will learn how to move (animate) shapes around the stage.</p>
 </div>
 <div class="sect2">
 <h3 id="_the_strategy">13.1. The Strategy</h3>
 <div class="paragraph">
-<p>Let’s come up with some rules of our Ping-Pong game:</p>
+<p>Let’s come up with some rules for our Ping-Pong game:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>This game will have two players named Kid and Computer. The table should be painted green, the left paddle should be painted blue - it&#8217;ll be controlled by the Computer. The right paddle should be yellow - it&#8217;s controlled by the Kid. Initially the red ball should be located in the center of the table.</p>
+<p>This game will have two players named Kid and Computer. The table should be painted green, and the left paddle should be painted blue - it&#8217;ll be controlled by the Computer. The right paddle should be yellow - it&#8217;ll be controlled by the Kid. Initially the red ball should be located in the center of the table.</p>
 </li>
 <li>
 <p>A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serve the ball. Only the kid can serve the ball.</p>
@@ -8906,7 +8903,7 @@ Finished downloading the file. It&#39;s located at /Users/yfain11/IdeaProjects/j
 <p>The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle vertically by the preset number of pixels up or down. The paddle shouldn&#8217;t cross the table borders.</p>
 </li>
 <li>
-<p>The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball cam move at an angle, which means that its x and y coordinate should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point.</p>
+<p>The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball can move at an angle, which means that its x and y coordinates should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point.</p>
 </li>
 <li>
 <p>While the ball is moving to the left, the Computer should move the left paddle in the direction of the ball movement.</p>
@@ -8919,12 +8916,12 @@ Finished downloading the file. It&#39;s located at /Users/yfain11/IdeaProjects/j
 bottom table borders the point is given to the computer.The computer can also earn the point if it bounces the ball and it crosses the right border of the table. These rules are not the same as in a real Ping-Pong game, but they are good enough for our game.</p>
 </li>
 <li>
-<p>The game score should be displayed in the left bottom corner of the table.</p>
+<p>The game score should be displayed in the bottom left corner of the table.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called <em>analytical thinking</em>, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones an reach them one at time!</p>
+<p>At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called <em>analytical thinking</em>, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones and reach them one at time!</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s start breaking our complex task. Try to visualize a ping-pong table. Can you write a program that will draw a green rectangle? That’s our first goal to achieve. Then we&#8217;ll add the paddle. Then we&#8217;ll see how to draw the ball. Learning how to move the ball will be the next task. Writing the keyboard event handlers shouldn&#8217;t be too difficult.</p>
@@ -8941,13 +8938,13 @@ bottom table borders the point is given to the computer.The computer can also ea
 <div class="sect2">
 <h3 id="_step_1_creating_the_table">13.2. Step 1: Creating the Table</h3>
 <div class="paragraph">
-<p>In this section or goal is to draw a 2D ping-pong table, which should look as a green rectangle.</p>
+<p>In this section our goal is to draw a 2D ping-pong table, which should look as a green rectangle.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start with creating a new JavaFX project in IntelliJ IDEA selecting JavaFX as a project type. Press Next, and on the next popup window enter PingPong as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>pingpong.fxml</em>, the <code>Main</code> class into <code>PingPong</code>, and <code>Controller</code> into <code>PingPongController</code>. The same way change the name of the package from <em>sample</em> to <em>pong</em>.</p>
+<p>Let&#8217;s start with creating a new JavaFX project in IntelliJ IDEA. Select JavaFX as a project type. Press Next, and enter PingPong as a project name on the next popup window. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file <em>sample.fxml</em> into <em>pingpong.fxml</em>, the <code>Main</code> class into <code>PingPong</code>, and <code>Controller</code> into <code>PingPongController</code>. Change the name of the package from <em>sample</em> to <em>pong</em> in the same fashion.</p>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s draw the ping-pong table in Scene Builder. Right-click on the file <em>pingpong.fxml</em> and open it in Scene Builder. As you&#8217;ve seen in Chapter 7, the generated FXML uses the <code>&lt;GridBag&gt;</code> as a default container, and you&#8217;ll see an empty <code>GridBag</code> in the Hierarchy pane. The left side of the SceneBuilder panels will look as follows:</p>
+<p>Now let&#8217;s draw the ping-pong table in Scene Builder. Right-click on the file <em>pingpong.fxml</em> and open it in Scene Builder. As you&#8217;ve seen in Chapter 7, the generated FXML uses the <code>&lt;GridBag&gt;</code> as a default container. You&#8217;ll see an empty <code>GridBag</code> in the Hierarchy pane. The left side of the Scene Builder panels will look as follows:</p>
 </div>
 <div id="FIG13-2" class="imageblock">
 <div class="content">
@@ -8955,10 +8952,10 @@ bottom table borders the point is given to the computer.The computer can also ea
 </div>
 </div>
 <div class="paragraph">
-<p>But I&#8217;m not going to use any layouts in the PingPong game. The game will consist of a number of shapes that I&#8217;ll keep in the <code>Group</code> container. We haven&#8217;t use it yet - the <code>Group</code> is used just to keep several child components together. Grouping components in a container can come handy, if you need to assign one event handler to all child components or auto-resize all of them as a group.</p>
+<p>I&#8217;m not going to use any layouts in the PingPong game. The game will consist of a number of shapes that I&#8217;ll keep in the <code>Group</code> container. We haven&#8217;t use it yet - the <code>Group</code> is used just to keep several child components together. Grouping components in a container can come in handy if you need to assign one event handler to all child components or auto-resize all of them as a group.</p>
 </div>
 <div class="paragraph">
-<p>In Scene Builder delete the <code>GridBag</code> container and drag/drop the <code>Group</code> from the Miscellaneous section down to the Hierarchy panel. Then drag/drop a <code>Rectangle</code> from the Shapes panel onto the <code>Group</code>. Resize it an pick a nice green color from the Fill property on the right side. You&#8217;ll be picking a color from a dropdown palette, and the corresponding color code will be automatically inserted as a <code>fill</code> property of the <code>Rectangle</code>. Your Screen Builder should look like this:</p>
+<p>In Scene Builder delete the <code>GridBag</code> container and drag/drop the <code>Group</code> from the Miscellaneous section down to the Hierarchy panel. Then drag/drop a <code>Rectangle</code> from the Shapes panel onto the <code>Group</code>. Resize it and pick a nice green color from the Fill property on the right side. You&#8217;ll be picking a color from a dropdown palette, and the corresponding color code will be automatically inserted as a <code>fill</code> property of the <code>Rectangle</code>. Your Scene Builder should look like this:</p>
 </div>
 <div id="FIG13-3" class="imageblock">
 <div class="content">
@@ -8989,10 +8986,10 @@ bottom table borders the point is given to the computer.The computer can also ea
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>archHeight</code> and <code>arcWidth</code> were auto-generated in case you need to create rounded corners in the rectangle. The properties <code>stroke</code> and <code>strokeType</code> define the look and the placement of the rectangle&#8217;s border. Every rectangle has the <code>x</code> and <code>y</code> properties that define the coordinates of its upper left corner inside the container. By default the values of <code>x</code> and <code>y</code> are zeros, so this rectangle will be drawn starting from the upper left corner of the <code>Group</code> container.</p>
+<p>The <code>archHeight</code> and <code>arcWidth</code> were auto-generated in case you need to create rounded corners in the rectangle. The properties <code>stroke</code> and <code>strokeType</code> define the look and the placement of the rectangle&#8217;s border. Every rectangle has the <code>x</code> and <code>y</code> properties that define the coordinates of its upper left corner inside the container. By default, the values of <code>x</code> and <code>y</code> are zeros, so this rectangle will be drawn starting from the upper left corner of the <code>Group</code> container.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;re interested in learning how different properties change the look of the rectangle visit the <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Rectangle.html">online documentation</a> for this class. Keep in mind that some of the properties are defined in the class <code>Shape</code>, the ancestor of the <code>Rectangle</code>.</p>
+<p>If you&#8217;re interested in learning how different properties change the look of the rectangle, visit the <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Rectangle.html">online documentation</a> for this class. Keep in mind that some of the properties are defined in the class <code>Shape</code>, the ancestor of the <code>Rectangle</code>.</p>
 </div>
 <div class="paragraph">
 <p>Running the auto-generated <code>PingPong</code> class will show the following window:</p>
@@ -9009,7 +9006,7 @@ bottom table borders the point is given to the computer.The computer can also ea
 <p>Second, the window has a title Hello World set by the auto-generated code in IntelliJ IDEA. It&#8217;s easy to change in the class <code>PingPong</code>, but I don&#8217;t even want to see a title bar!</p>
 </div>
 <div class="paragraph">
-<p>This is also an easy change in JavaFX. Set the stage style to <code>UNDECORATED</code> will remove the standard window title and borders. But if I&#8217;ll remove the title bar, I&#8217;ll lose the ability to close the window by clicking on the circle (or a little cross in Windows) will be gone. A bit later we&#8217;ll write the code to close the window by pressing the Q-key on the keyboard. At this point the code of the <code>PingPong</code> class looks like this:</p>
+<p>This is also an easy fix in JavaFX. Setting the stage style to <code>UNDECORATED</code> will remove the standard window title and borders. But if I&#8217;ll remove the title bar, I&#8217;ll lose the ability to close the window by clicking on the circle (or a little cross in Windows). A bit later we&#8217;ll write the code to close the window by pressing the Q-key on the keyboard. At this point the code of the <code>PingPong</code> class looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9051,7 +9048,7 @@ bottom table borders the point is given to the computer.The computer can also ea
 </div>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s open <em>pingpong.fxml</em> in Scene Builder again add the paddles and the ball on top of the table. For paddles, I&#8217;ll drag/drop two <code>Rectangle</code> objects from the Shapes section onto the Group container. Our paddles will have size of 10 by 50 pixels. The left paddle will be blue, aand the right one - yellow. Then I drag/drop, resize and color the <code>Circle</code> setting its radius to 9 pixels and painting it red. My Scene Builder will look like this:</p>
+<p>Now let&#8217;s open <em>pingpong.fxml</em> in Scene Builder again and add the paddles and the ball on top of the table. For paddles, I&#8217;ll drag/drop two <code>Rectangle</code> objects from the Shapes section onto the Group container. Our paddles will have a size of 10 by 50 pixels. The left paddle will be blue, and the right one will be yellow. Then I drag/drop, resize and color the <code>Circle</code> to set its radius to 9 pixels, and then will paint it red. My Scene Builder will look like this:</p>
 </div>
 <div id="FIG13-6" class="imageblock">
 <div class="content">
@@ -9062,7 +9059,7 @@ bottom table borders the point is given to the computer.The computer can also ea
 <p>Now back to IDEA. Since our shapes will need to communicate with the controller class, we need to assign an <code>fx:id</code> to each of them. Let&#8217;s assign the <code>fx:id="theGroup"</code> to the <code>Group</code> container. Our green <code>Rectangle</code> will get <code>fx:id="table"</code>.</p>
 </div>
 <div class="paragraph">
-<p>Computer will play with the left paddle, and I&#8217;ll give it <code>fx:id="compPaddle"</code>. The Kid will play with the right paddle that will go by <code>fx:id="kidPaddle"</code>. The ball will get <code>fx:id="ball"</code>. Now The <code>Group</code> container in my file <em>pingpong.fxml</em> will look like this:</p>
+<p>The computer will play with the left paddle, and I&#8217;ll give it <code>fx:id="compPaddle"</code>. The Kid will play with the right paddle that will go by <code>fx:id="kidPaddle"</code>. The ball will get <code>fx:id="ball"</code>. Now The <code>Group</code> container in my file <em>pingpong.fxml</em> will look like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9105,7 +9102,7 @@ bottom table borders the point is given to the computer.The computer can also ea
 <p>For processing keyboard events JavaFX components have special event handler properties <code>onKeyPressed</code>, <code>onKeyReleased</code>, and <code>onKeyTyped</code>. The first two properties allow you to program different actions for the downward and upward key motions, if needed.</p>
 </div>
 <div class="paragraph">
-<p>The <code>onKeyTyped</code> is used to assign a handler to the event when the key code is sent to the system output. This event is <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyEvent.html">not generated</a> for the keys that don&#8217;t produce character output. We&#8217;ll use <code>onKeyReleased</code> - this is when the the user lift his finger up.</p>
+<p>The <code>onKeyTyped</code> is used to assign a handler to the event when the key code is sent to the system output. This event is <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyEvent.html">not generated</a> for the keys that don&#8217;t produce character output. We&#8217;ll use <code>onKeyReleased</code> - this is when the the user lifts his finger up.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -9114,7 +9111,7 @@ bottom table borders the point is given to the computer.The computer can also ea
 <div class="title">Note</div>
 </td>
 <td class="content">
-IDEA can help you to find out which event handlers can be used with a particular component. Just click CTRL-Space inside this component&#8217;s FXML tag and start typing with the letters <code>on</code> - you&#8217;ll see all applicable event handlers.
+IDEA can help you find out which event handlers can be used with a particular component. Just click CTRL-Space inside this component&#8217;s FXML tag and start typing with the letters <code>on</code> and you&#8217;ll see all applicable event handlers.
 </td>
 </tr>
 </table>
@@ -9158,7 +9155,7 @@ IDEA can help you to find out which event handlers can be used with a particular
 <div class="sect3">
 <h4 id="_processing_keyboard_events_in_the_controller">13.3.1. Processing Keyboard Events in the Controller</h4>
 <div class="paragraph">
-<p>In the code that comes with this chapter the final version of the controller is called <code>PingPongController</code>. But I&#8217;ve also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with <code>PingPongController</code> followed with a different suffix with a version number (e.g. <code>PingPongController_v1</code>, <code>PingPongController_v2</code> etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as <code>fx:controller</code> in the file <code>pingpong.fxml</code> and run the <code>PingPong</code> program.</p>
+<p>In the code that comes with this chapter the final version of the controller is called <code>PingPongController</code>. I&#8217;ve also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with <code>PingPongController</code> followed by a different suffix with a version number (e.g. <code>PingPongController_v1</code>, <code>PingPongController_v2</code> etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as <code>fx:controller</code> in the file <code>pingpong.fxml</code> and run the <code>PingPong</code> program.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -9261,7 +9258,7 @@ You pressed S</code></pre>
 <div class="sect3">
 <h4 id="_preparing_to_process_the_keys_s_q_and_n">13.3.3. Preparing to Process the Keys S, Q, and N</h4>
 <div class="paragraph">
-<p>Now we&#8217;ll add a <code>switch</code> statement to the controller to invoke the method that corresponds to the pressed key. Let&#8217;s not worry about implementing the application logic just yet. We want to make sure that the programs invokes the correct method for each key.</p>
+<p>Now we&#8217;ll add a <code>switch</code> statement to the controller to invoke the method that corresponds to the pressed key. Let&#8217;s not worry about implementing the application logic just yet. We want to make sure that the program invokes the correct method for each key.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9315,14 +9312,14 @@ You pressed S</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>switch</code> statement checks the value of <code>enum KeyCode</code> and calls the corresponding method which just prints a hard-coded message - we&#8217;ll implement them shortly. But the Q-key in the above <code>PingPongController</code> is fully functional. When the user presses the Q-key, the program invokes the method <code>exit</code> on the class <code>Platform</code>, which terminates the program.</p>
+<p>The <code>switch</code> statement checks the value of <code>enum KeyCode</code> and calls the corresponding method which just prints a hard-coded message. We&#8217;ll implement them shortly, but the Q-key in the above <code>PingPongController</code> is fully functional. When the user presses the Q-key, the program invokes the method <code>exit</code> on the class <code>Platform</code>, which terminates the program.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_step_3_moving_the_paddle">13.4. Step 3: Moving the Paddle</h3>
 <div class="paragraph">
-<p>Now let&#8217;s teach the keys Up and Down to move the kid&#8217;s paddle vertically. Pressing the Up-arrow should move the kid&#8217;s paddle several pixels up according to the predefined moving increment. Pressing the Down-arrow should move the paddle down. We&#8217;ll declare an movement increment as a <code>final</code> variable in <code>PingPongController</code>:</p>
+<p>Now let&#8217;s teach the keys Up and Down to move the Kid&#8217;s paddle vertically. Pressing the Up-arrow should move the Kid&#8217;s paddle several pixels up according to the predefined moving increment. Pressing the Down-arrow should move the paddle down. We&#8217;ll declare an movement increment as a <code>final</code> variable in <code>PingPongController</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9449,7 +9446,7 @@ You pressed S</code></pre>
 <p>Here we set the limits for the paddle movements. We set the variable <code>allowedPaddleTopY=PADDLE_MOVEMENT_INCREMENT</code> to make sure that if the Kid keeps pressing the Up arrow, the paddle will never cross the top border of the table. The bottom restriction <code>allowedPaddleBottomY</code> is calculated by subtracting the height of the paddle and <code>PADDLE_MOVEMENT_INCREMENT</code> from the table height.</p>
 </li>
 <li>
-<p>The method <code>process_key_Up</code> gets the current y-coordinate of the top border of the paddle, and if it&#8217;s far enough from the table top, the code decrements the value of the property <code>currentKidPaddleY</code> by <code>PADDLE_MOVEMENT_INCREMENT</code>. Because <code>currentKidPaddleY</code> is bound to the <code>layoutY</code> property of the GUI component <code>kidPaddle</code>, the latter moves up on stage. The movement stops if the <code>currentKidPaddleY</code> value is higher than <code>allowedPaddleTopY</code>. Remember, the y-coordinate increases from top down, so the higher y-coordinates means that it&#8217;s physically lower on stage.</p>
+<p>The method <code>process_key_Up</code> gets the current y-coordinate of the top border of the paddle, and if it&#8217;s far enough from the table top, the code lowers the value of the property <code>currentKidPaddleY</code> by <code>PADDLE_MOVEMENT_INCREMENT</code>. Because <code>currentKidPaddleY</code> is bound to the <code>layoutY</code> property of the GUI component <code>kidPaddle</code>, the latter moves up on stage. The movement stops if the <code>currentKidPaddleY</code> value is higher than <code>allowedPaddleTopY</code>. Remember, the y-coordinate increases from top down, so the higher y-coordinates means that it&#8217;s physically lower on stage.</p>
 </li>
 <li>
 <p>The method <code>process_key_Down</code> works similarly to <code>process_key_Up</code> but ensures that the paddle won&#8217;t cross the bottom border of the table.</p>
@@ -9475,7 +9472,7 @@ When the user preses the S-key, we need to serve the ball from the position wher
 </div>
 </div>
 <div class="paragraph">
-<p>But why the above tag <code>&lt;Circle&gt;</code> doesn&#8217;t include <code>centerX</code> and <code>centerY</code>?  Actually we can and will replace the attributes <code>layoutX</code> and <code>layoutY</code> with <code>centerX</code> and <code>centerY</code> because we use the <code>Group</code> container that&#8217;s not a part of any other layout (e.g. <code>BorderPane</code> or <code>GridPane</code>). But JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container.</p>
+<p>But why doesn&#8217;t the above tag <code>&lt;Circle&gt;</code> include <code>centerX</code> and <code>centerY</code>?  Actually we can and will replace the attributes <code>layoutX</code> and <code>layoutY</code> with <code>centerX</code> and <code>centerY</code> because we use the <code>Group</code> container that&#8217;s not a part of any other layout (e.g. <code>BorderPane</code> or <code>GridPane</code>). JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s modify the attributes of the tag <code>&lt;Circle&gt;</code> so it&#8217;ll look like this:</p>
@@ -9532,10 +9529,10 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="sect3">
 <h4 id="_serving_the_ball_horizontally">13.5.2. Serving the Ball Horizontally</h4>
 <div class="paragraph">
-<p>The ball is ready to start moving now. To make the movement smooth we&#8217;ll use the class <code>javafx.animation.Timeline</code> that allows change the values of the GUI component&#8217;s properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement we&#8217;ll declare the variable <code>timeline</code> of the type <code>TimeLine</code>, which we&#8217;ll use to display a set of snapshots of a ball at different positions along its trajectory.</p>
+<p>The ball is ready to start moving now. To make the movement smooth, we&#8217;ll use the class <code>javafx.animation.Timeline</code> that allows us to change the values of the GUI component&#8217;s properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement we&#8217;ll declare the variable <code>timeline</code> of the type <code>TimeLine</code>, which we&#8217;ll use to display a set of snapshots of a ball at different positions along its trajectory.</p>
 </div>
 <div class="paragraph">
-<p>Each frame is represented by a class <code>KeyFrame</code>. Each snapshot is a represented by the class <code>KeyValue</code>. Let&#8217;s write a method <code>moveTheBall</code> that will move the ball horizontally all the way to the left until the <code>centerX</code> will become equal to zero.  If we&#8217;ll be changing only the <code>centerX</code> property of the <code>Circle</code>, it&#8217;ll be moving horizontally.</p>
+<p>Each frame is represented by a class <code>KeyFrame</code>. Each snapshot is represented by the class <code>KeyValue</code>. Let&#8217;s write a method <code>moveTheBall</code> that will move the ball horizontally all the way to the left until the <code>centerX</code> will become equal to zero.  If we change only the <code>centerX</code> property of the <code>Circle</code>, it&#8217;ll be moving horizontally.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9562,13 +9559,13 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <p>Then we&#8217;ll create the <code>KeyValue</code> object to specify which changing value to display in frames. In this case we want the animation to change the x-coordinate of the ball center from its current value <code>ballCenterX</code> to zero.</p>
 </li>
 <li>
-<p>We want the <code>KeyFrame</code> to reach the target (change the <code>centerX</code> specified in <code>KeyValue</code> from the current value to zero) over the period of 1000 milliseconds. The smaller the number, the faster the ball will move. The number of frames will be automatically calculated based on the duration and the target position of the ball.</p>
+<p>We want the <code>KeyFrame</code> to reach the target (change the <code>centerX</code> specified in <code>KeyValue</code> from the current value to zero) over a period of 1000 milliseconds. The smaller the number, the faster the ball will move. The number of frames will be automatically calculated based on the duration and the target position of the ball.</p>
 </li>
 <li>
-<p>Adding the our <code>KeyFrame</code> object to the timeline completes the preparations.</p>
+<p>Adding the our <code>KeyFrame</code> object to the <code>timeline</code> completes the preparations.</p>
 </li>
 <li>
-<p>The method <code>play</code> will play the timeline.</p>
+<p>The method <code>play</code> will play the <code>timeline</code>.</p>
 </li>
 </ol>
 </div>
@@ -9584,7 +9581,7 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <p>Our ball is not smart enough to notice that there was a left paddle on its way and went right through it. We&#8217;ll take care of the GUI component collisions a bit later.</p>
 </div>
 <div class="paragraph">
-<p>Depending on the provided duration, the <code>Timeline</code> object will calculate how many snapshots (key frames) to create while the <code>KeyValue</code> is changing to reach the target. The <code>Timeline</code> class has several <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary">overloaded constructors</a>, and one of the allows to specify the frames per second for the animation.</p>
+<p>Depending on the provided duration, the <code>Timeline</code> object will calculate how many snapshots (key frames) to create while the <code>KeyValue</code> is changing to reach the target. The <code>Timeline</code> class has several <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary">overloaded constructors</a>, and one of them allows you to specify the frames per second for the animation.</p>
 </div>
 <div class="paragraph">
 <p>The <code>KeyFrame</code> class also has several <a href="http://docs.oracle.com/javase/8/javafx/api/javafx/animation/KeyFrame.html#constructor.summary">overloaded constructors</a>, and one of them allows you to specify the duration, the event handler for the <code>ActionEvent</code>, and optional key value(s). The handler for the <code>ActionEvent</code> can be implemented as a  lambda expression.</p>
@@ -9627,13 +9624,13 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <p>The lambda expression starts with checking if the current value of the x-coordinate of the ball center is larger than the value in <code>BALL_MOVEMENT_INCREMENT</code> to ensure that the ball will not cross the left border and will stay at the 0 coordinates. To make our game more realistic, we&#8217;ll let the ball go off the table in the next version of the <code>moveTheBall</code>.</p>
 </li>
 <li>
-<p>Decrement the value of the <code>ballCenterX</code> by <code>BALL_MOVEMENT_INCREMENT</code>. Because of binding this will move the ball on the GUI.</p>
+<p>Decrement the value of the <code>ballCenterX</code> by <code>BALL_MOVEMENT_INCREMENT</code>. Because of binding, this will move the ball on the GUI.</p>
 </li>
 <li>
-<p>Stop the animation if the ball would fall off the table on the next move.</p>
+<p>Stop the animation if the ball were to fall off the table on the next move.</p>
 </li>
 <li>
-<p>Create the <code>Timeline</code> using our <code>KeyFrame</code> and play it. In this case I requested to play the animation indefinitely, because I don&#8217;t want to calculate how many moves would it take to reach the target position. I&#8217;ll stop the animation manually anyway as explained in step 4.</p>
+<p>Create the <code>Timeline</code> using our <code>KeyFrame</code> and play it. In this case I requested to play the animation indefinitely because I don&#8217;t want to calculate how many moves would it take to reach the target position. I&#8217;ll stop the animation manually anyway as explained in step 4.</p>
 </li>
 </ol>
 </div>
@@ -9641,7 +9638,7 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="sect3">
 <h4 id="_serving_the_ball_in_random_directions">13.5.3. Serving the Ball in Random Directions</h4>
 <div class="paragraph">
-<p>The game that serves the ball horizontally is pretty boring, so let&#8217;s change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let&#8217;s change the y-coordinate in a random manner, so each ball serving sends the ball in a different direction. We&#8217;ll create a ball serving machine.</p>
+<p>The game that serves the ball horizontally is pretty boring, so let&#8217;s change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let&#8217;s change the y-coordinate in a random manner, so that each ball serving sends the ball in a different direction. We&#8217;ll create a ball serving machine.</p>
 </div>
 <div class="paragraph">
 <p>If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or upward. To know the y-coordinate of the table center we&#8217;ll declare the <code>double</code> variable <code>centerTableY</code> and set its value in the method <code>initialize</code> like this:</p>
@@ -9652,7 +9649,7 @@ When the user preses the S-key, we need to serve the ball from the position wher
 </div>
 </div>
 <div class="paragraph">
-<p>As the ball moves, we&#8217;ll modified value of the y-coordinate of the ball center will be assigning it to the property <code>ballCenterY</code>.The following version version of the method <code>moveTheBall</code> implements the random ball servings.</p>
+<p>As the ball moves, the modified value of the y-coordinate of the ball center will be assigned to the property <code>ballCenterY</code>. The following version of the method <code>moveTheBall</code> implements the random ball servings.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9698,10 +9695,10 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <p>We create an instance of the class <code>java.util.Random</code>. This class has methods to generate random numbers of different types. Invoking the method <code>nextInt</code> generates a random integer number in the range between zero and the value of the method argument. I decided to use the value of <code>BALL_MOVEMENT_INCREMENT</code> as a top limit. This random number will be used as an increment for the y-coordinate of the moving ball.</p>
 </li>
 <li>
-<p>Using the conditional operator (it&#8217;s explained in Chapter 4) we set the variable <code>isServingFromTop</code> to true if the right paddle is located on the upper half of the table, or to false if the paddle is in the lower half.</p>
+<p>Using the conditional operator (as explained in Chapter 4) we set the variable <code>isServingFromTop</code> to true if the right paddle is located on the upper half of the table, or to false if the paddle is in the lower half.</p>
 </li>
 <li>
-<p>In the previous version of the method <code>moveTheBall</code> we were keeping the ball on the table when it was reaching the left edge of the table. Now we let the ball fall off the table. The <code>-20</code> is just an arbitrary number - we stop the ball movement after the ball moved 20 pixels past the left table edge. In the final version of the game we&#8217;ll enable the movement for the left paddle, and sometimes it&#8217;ll bounce the ball back.</p>
+<p>In the previous version of the method <code>moveTheBall</code>, we were keeping the ball on the table when it was reaching the left edge of the table. Now we will let the ball fall off the table. The <code>-20</code> is just an arbitrary number - we stopped the ball movement after the ball moved 20 pixels past the left table edge. In the final version of the game we&#8217;ll enable the movement for the left paddle, and sometimes it&#8217;ll bounce the ball back.</p>
 </li>
 <li>
 <p>If <code>isServingFromTop</code> is true, we&#8217;re increasing the y-coordinate of the ball&#8217;s center by <code>randomYincrement</code>, otherwise we&#8217;re decreasing it by the same amount. Now the ball will be served in an unpredictable manner and will pretty often fall off the table crossing the top or bottom edge of the table. I took the following screen shot when the moving ball was about to cross the bottom edge of the table.</p>
@@ -9718,10 +9715,10 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="sect2">
 <h3 id="_step_5_moving_the_computer_s_paddle">13.6. Step 5: Moving the Computer&#8217;s Paddle</h3>
 <div class="paragraph">
-<p>When the ball is served, the Computer needs to move its paddle in the right direction to bounce the ball. This is a pretty easy task since the computer knows that if the Kid&#8217;s paddle served from the top, the ball will move down, and if the ball was served from the bottom it&#8217;ll move up. So the moment the ball is served, the computer&#8217;s paddle should also start moving.</p>
+<p>When the ball is served, the Computer needs to move its paddle in the right direction to bounce the ball. This is a pretty easy task since the computer knows that if the Kid&#8217;s paddle served from the top, the ball would move down, and if the ball was served from the bottom it&#8217;ll move up. So the moment the ball is served, the computer&#8217;s paddle should also start moving.</p>
 </div>
 <div class="paragraph">
-<p>First of all, we&#8217;ll declare the property <code>currentComputerPaddleY</code> to keep track of the y-coordinate of the Computer&#8217;s paddle. We&#8217;ll also need to store the initial y-coordinate of the Computer&#8217;s paddle, because on each ball serving this paddle should be in the middle of the left side f the table:</p>
+<p>First of all, we&#8217;ll declare the property <code>currentComputerPaddleY</code> to keep track of the y-coordinate of the Computer&#8217;s paddle. We&#8217;ll also need to store the initial y-coordinate of the Computer&#8217;s paddle, because on each ball serving this paddle should be in the middle of the left side of the table:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9801,10 +9798,10 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="sect2">
 <h3 id="_step_6_bouncing_the_ball">13.7. Step 6: Bouncing the Ball</h3>
 <div class="paragraph">
-<p>There is no guarantee that the Computer&#8217;s paddle will be advanced to the position to bounce the ball. Our Ping-Pong game doesn&#8217;t implement the algorithm the adjust the movement of the Computer&#8217;s paddle based on the trajectory of the ball&#8217;s movement. But if the ball accidentally contacts the paddle we need to bounce the ball and send it from left to right.</p>
+<p>There is no guarantee that the Computer&#8217;s paddle will advance to a position to bounce the ball. Our Ping-Pong game doesn&#8217;t implement the algorithm that adjusts the movement of the Computer&#8217;s paddle based on the trajectory of the ball&#8217;s movement. But if the ball accidentally contacts the paddle, we need to bounce the ball and send it from left to right.</p>
 </div>
 <div class="paragraph">
-<p>Every JavaFX GUI component is a subclass of a <code>Node</code>, which has a special property <code>boundsInParent</code>. It&#8217;s an invisible rectangle that encapsulates the component when it&#8217;s places inside a layout. So our ball and paddles are is sitting inside of these invisible rectangle too. When the ball or paddles are being moved, the coordinates of their <code>boundsInParent</code> properties are being recalculated. If these invisible rectangles of the ball and the paddle intersect, we can say that there was a contact. The method <code>checkForBallPaddleContact</code> returns true if there was a contact, and false if not.</p>
+<p>Every JavaFX GUI component is a subclass of a <code>Node</code>, which has a special property <code>boundsInParent</code>. It&#8217;s an invisible rectangle that encapsulates the component when it&#8217;s placed inside a layout. So our ball and paddles are sitting inside of these invisible rectangles too. When the ball or paddles are being moved, the coordinates of their <code>boundsInParent</code> properties are being recalculated. If these invisible rectangles of the ball and the paddle intersect, we can say that there was a contact. The method <code>checkForBallPaddleContact</code> returns true if there was a contact, and false if not.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9872,19 +9869,19 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <li>
 <p>If there was a ball/paddle contact, we need to stop playing the current <code>timeline</code>, set the Computer&#8217;s paddle to its initial position.</p>
 </li>
+<li>
+<p>Then we&#8217;ll need to call the method <code>bounceTheBall</code>, which we&#8217;ll write next.</p>
+</li>
 </ol>
 </div>
 <div class="paragraph">
-<p>&lt;2&gt;Then we&#8217;ll need to call the method <code>bounceTheBall</code>, which we&#8217;ll write next.</p>
+<p>According to step 6 in our game strategy, the computer can only serve the ball horizontally, so writing the <code>bounceTheBall</code> method seems like a pretty simple thing to do. We already wrote a version of the <code>moveTheBall</code> method that sends the ball horizontally from right to left, so reversing the ball moving direction should be easy.</p>
 </div>
 <div class="paragraph">
-<p>According to step 6 in our game strategy, the computer can only serve the ball horizontally, so writing the <code>bounceTheBall</code> method seems like a pretty simple thing to do. We already wrote a version of the <code>moveTheBall</code> method that sends the ball horizontally from right to left, so just reversing the ball moving direction should be easy.</p>
+<p>But what if the Kid will move his or her paddle to hit the ball back? OK, then we need to be checking if the ball contacts the Kid&#8217;s paddle as well. Can we reuse the method <code>checkForBallPaddleContact</code> for this? Not in its current form, because it&#8217;s written specifically for the computer paddle. We can certainly write a similar method for the Kid&#8217;s paddle and have two almost identical methods, but it&#8217;s better to re-write <code>checkForBallPaddleContact</code> to work for both paddles.</p>
 </div>
 <div class="paragraph">
-<p>But what if the Kid will move his or her paddle to hit the ball back? OK, then we need to be checking if the ball contacts the Kid&#8217;s paddle too. Can we reuse the method <code>checkForBallPaddleContact</code> for this? Not in its current form, because it&#8217;s written specifically for the computer paddle. We can certainly write a similar method for the Kid&#8217;s paddle and have two almost identical methods, but it&#8217;s better to re-write <code>checkForBallPaddleContact</code> to work for both paddles.</p>
-</div>
-<div class="paragraph">
-<p>In programmer&#8217;s jargon re-writing an existing and working code is called <em>refactoring</em>. So let&#8217;s refactor the method <code>checkForBallPaddleContact</code> by providing the paddle as an argument. Here&#8217;s the refactored version that can be used for both p:</p>
+<p>In programmer&#8217;s jargon re-writing an existing and working code is called <em>refactoring</em>. So let&#8217;s refactor the method <code>checkForBallPaddleContact</code> by providing the paddle as an argument. Here&#8217;s the refactored version that can be used for both paddles:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9915,7 +9912,7 @@ When the user preses the S-key, we need to serve the ball from the position wher
 </div>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s write the method <code>bounceTheBall</code>, which should be very similar to <code>moveTheBall</code>. The ball should move from left to write, if  you&#8217;ve been decreasing the x-coordinate in <code>moveTheBall</code>, you&#8217;ll need to decrease it now. If you&#8217;ve been stopping the game where the coordinate of the ball was less than -20, now it has to be more that the table width plus 20. I could refactor the method <code>moveTheBall</code> to introduce these values as methods arguments, but let&#8217;s keep it as a small project for you. As long as you understand how the code works, you should be able to do it on your own. Here&#8217;s the code of the method <code>bounceTheBall</code>:</p>
+<p>Now let&#8217;s write the method <code>bounceTheBall</code>, which should be very similar to <code>moveTheBall</code>. The ball should move from left to write, if  you&#8217;ve been decreasing the x-coordinate in <code>moveTheBall</code>, you&#8217;ll need to decrease it now. If you&#8217;ve been stopping the game where the coordinate of the ball was less than -20, now it has to be more than the table width plus 20. I could refactor the method <code>moveTheBall</code> to introduce these values as methods arguments, but let&#8217;s keep it as a small project for you. As long as you understand how the code works, you should be able to do it on your own. Here&#8217;s the code of the method <code>bounceTheBall</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9963,10 +9960,10 @@ When the user preses the S-key, we need to serve the ball from the position wher
 </ol>
 </div>
 <div class="paragraph">
-<p>The basic functionality of the game is implemented except displaying the game score and starting the new game when one of the players gets 21 points. I leave this part for you to implement on your own.</p>
+<p>The basic functionality of the game is implemented aside from displaying the game score and starting the new game when one of the players gets 21 points. I&#8217;ll leave this part for you to implement on your own.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;ve been showing and explaining various code fragments of the <code>PingPongController</code> as we&#8217;ve been implementing the game strategy one step at a time. Now I&#8217;ll just show how the code of the <code>PingPongConroller</code> class looks without any additional explanations. You should be able to read and understand the code.</p>
+<p>I&#8217;ve been showing and explaining various code fragments of the <code>PingPongController</code> as we&#8217;ve been implementing the game strategy one step at a time. Now I&#8217;ll just show how the code of the <code>PingPongConroller</code> class looks like without any additional explanations. You should be able to read and understand the code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10026,11 +10023,9 @@ When the user preses the S-key, we need to serve the ball from the position wher
      <span class="tok-n">ball</span><span class="tok-o">.</span><span class="tok-na">centerXProperty</span><span class="tok-o">().</span><span class="tok-na">bind</span><span class="tok-o">(</span><span class="tok-n">ballCenterX</span><span class="tok-o">);</span>
      <span class="tok-n">ball</span><span class="tok-o">.</span><span class="tok-na">centerYProperty</span><span class="tok-o">().</span><span class="tok-na">bind</span><span class="tok-o">(</span><span class="tok-n">ballCenterY</span><span class="tok-o">);</span>
 
-
      <span class="tok-n">initialComputerPaddleY</span> <span class="tok-o">=</span> <span class="tok-n">compPaddle</span><span class="tok-o">.</span><span class="tok-na">getLayoutY</span><span class="tok-o">();</span>
      <span class="tok-n">currentComputerPaddleY</span><span class="tok-o">.</span><span class="tok-na">set</span><span class="tok-o">(</span><span class="tok-n">initialComputerPaddleY</span><span class="tok-o">);</span>
      <span class="tok-n">compPaddle</span><span class="tok-o">.</span><span class="tok-na">layoutYProperty</span><span class="tok-o">().</span><span class="tok-na">bind</span><span class="tok-o">(</span><span class="tok-n">currentComputerPaddleY</span><span class="tok-o">);</span>
-
 
      <span class="tok-n">allowedPaddleTopY</span> <span class="tok-o">=</span> <span class="tok-n">PADDLE_MOVEMENT_INCREMENT</span><span class="tok-o">;</span>
      <span class="tok-n">allowedPaddleBottomY</span> <span class="tok-o">=</span> <span class="tok-n">table</span><span class="tok-o">.</span><span class="tok-na">getHeight</span><span class="tok-o">()</span> <span class="tok-o">-</span> <span class="tok-n">kidPaddle</span><span class="tok-o">.</span><span class="tok-na">getHeight</span><span class="tok-o">()</span> <span class="tok-o">-</span> <span class="tok-n">PADDLE_MOVEMENT_INCREMENT</span><span class="tok-o">;</span>
@@ -10059,7 +10054,6 @@ When the user preses the S-key, we need to serve the ball from the position wher
              <span class="tok-k">break</span><span class="tok-o">;</span>
      <span class="tok-o">}</span>
  <span class="tok-o">}</span>
-
 
  <span class="tok-kd">private</span> <span class="tok-kt">void</span> <span class="tok-nf">process_key_Up</span><span class="tok-o">()</span> <span class="tok-o">{</span>
 
@@ -10130,7 +10124,6 @@ When the user preses the S-key, we need to serve the ball from the position wher
      <span class="tok-n">timeline</span><span class="tok-o">.</span><span class="tok-na">play</span><span class="tok-o">();</span>
  <span class="tok-o">}</span>
 
-
  <span class="tok-kd">private</span> <span class="tok-kt">boolean</span> <span class="tok-nf">checkForBallPaddleContact</span><span class="tok-o">(</span><span class="tok-n">Rectangle</span> <span class="tok-n">paddle</span><span class="tok-o">){</span>
 
      <span class="tok-k">if</span> <span class="tok-o">(</span><span class="tok-n">ball</span><span class="tok-o">.</span><span class="tok-na">intersects</span><span class="tok-o">(</span><span class="tok-n">paddle</span><span class="tok-o">.</span><span class="tok-na">getBoundsInParent</span><span class="tok-o">())){</span>
@@ -10165,7 +10158,6 @@ When the user preses the S-key, we need to serve the ball from the position wher
      <span class="tok-n">timeline</span><span class="tok-o">.</span><span class="tok-na">setCycleCount</span><span class="tok-o">(</span><span class="tok-n">Timeline</span><span class="tok-o">.</span><span class="tok-na">INDEFINITE</span><span class="tok-o">);</span>
 
      <span class="tok-n">timeline</span><span class="tok-o">.</span><span class="tok-na">play</span><span class="tok-o">();</span>
-
    <span class="tok-o">}</span>
 <span class="tok-o">}</span></code></pre>
 </div>
@@ -10174,14 +10166,13 @@ When the user preses the S-key, we need to serve the ball from the position wher
 <div class="sect2">
 <h3 id="_project_displaying_the_game_score">13.8. Project: Displaying the Game Score</h3>
 <div class="paragraph">
-<p>The goal of this project is to keep track and display the game score. I&#8217;ll just show you how to print the score on the system console, but you&#8217;ll need research how to display the text right on the ping-pong table.</p>
+<p>The goal of this project is to keep track and display the game score. I&#8217;ll just show you how to print the score on the system console, but you&#8217;ll need to research how to display the text right on the ping-pong table.</p>
 </div>
 <div class="paragraph">
-<p>If the Kid would serve the ball horizontally, he or she would score one point when the ball goes off the table and its x-coordinate is less than zero. But since the ball is served in a random direction, it can go off the table by crossing top or bottom table&#8217;s borders. In this case the Kid loses the point. When the method <em>moveTheBall</em> stops playing the timeline, the ball&#8217;s x-coordinate is definitely less than zero. So we need to check the y-coordinate of the ball.</p>
+<p>If the Kid would serve the ball horizontally, he or she would score one point when the ball goes off the table and its x-coordinate is less than zero. But since the ball is served in a random direction, it can go off the table by crossing top or bottom table&#8217;s borders. In this case the Kid loses the point. When the method <em>moveTheBall</em> stops playing the timeline, the ball&#8217;s x-coordinate is definitely less than zero so you need to check the y-coordinate of the ball.</p>
 </div>
 <div class="paragraph">
-<p>If the y-coordinate of the ball has a value between zero and the table height, we can assume that the ball crossed the left border of the table and the Kid scores one point.
-Otherwise the ball crossed either top or bottom table&#8217;s borders and the Kid should loose the point.</p>
+<p>If the y-coordinate of the ball has a value between zero and the table height, you can assume that the ball crossed the left border of the table and the Kid scored one point. Otherwise the ball crossed either top or bottom table&#8217;s borders and the Kid should loose the point.</p>
 </div>
 <div class="paragraph">
 <p>The Computer scores one point if it bounces the ball and it crosses the right border of the table.</p>
@@ -10233,10 +10224,10 @@ Otherwise the ball crossed either top or bottom table&#8217;s borders and the Ki
 <h2 id="_git_for_kids">14. Git for Kids</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>So you wrote a great application, and it worked as expected. Sometime later you&#8217;ve got an idea how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that yesterday&#8217;s version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the working code?</p>
+<p>So you wrote a great application, and it worked as expected. Sometime later you&#8217;ve got an idea on how to make it even better. After several hours of making changes in your code you&#8217;ve noticed that the application has new bugs in the code that was working fine yesterday. But where is that previous version of the code that was working fine? Can you undo (<em>rollback</em>) the latest changes that broke the working code?</p>
 </div>
 <div class="paragraph">
-<p>Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives would have multiple folders named like <em>TicTacToe_Feb_1</em>, <em>TicTacToe_Feb_5</em>, <em>TicTacToe_Feb_20</em> an so on. But programmers often work in teams, and what if Joe and Mary are working on the same application? How to make sure that Joe&#8217;s and Mary&#8217;s computers have the working copy of the application with the ability to keep the history of code changes and return to a working version if need be?</p>
+<p>Many years ago programmers simply were creating backup copies of their code now and then. After some time their hard drives would have multiple folders named like <em>TicTacToe_Feb_1</em>, <em>TicTacToe_Feb_5</em>, <em>TicTacToe_Feb_20</em> an so on. But programmers often work in teams, and what if Joe and Mary are working on the same application? How can you make sure that Joe&#8217;s and Mary&#8217;s computers have the working copy of the application with the ability to keep the history of code changes and return to a working version if need be?</p>
 </div>
 <div class="paragraph">
 <p>Programmers use a special software called Version Control Systems (VCS) that allows to keep track of different versions of the source code stored in common <em>source code repositories</em> located on the company&#8217;s servers. There are also special web hosting facilities, where Joe and Mary can safely keep their application code.</p>
@@ -10248,18 +10239,18 @@ Otherwise the ball crossed either top or bottom table&#8217;s borders and the Ki
 <p>Now Joe has the latest Mary&#8217;s code, but she doesn&#8217;t have the latest Joe&#8217;s code changes. When Joe decides to commit his latest code to the shared repository, Mary can check them out to her computer.</p>
 </div>
 <div class="paragraph">
-<p>In this chapter I&#8217;ll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer get lost or stolen you can always recover the code by <em>pulling</em> it from GitHub.</p>
+<p>In this chapter I&#8217;ll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS&#8217;s are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer gets lost or stolen you can always recover the code by <em>pulling</em> it from GitHub.</p>
 </div>
 <div class="paragraph">
 <p>I was using Git as a VCS and GitHub as a shared repository of the drafts of all chapters of this book, and you can find them on the GitHub at <a href="https://github.com/yfain/Java4Kids">https://github.com/yfain/Java4Kids</a>.</p>
 </div>
 <div class="paragraph">
-<p>Understanding how VCS work is very important - that&#8217;s why I included this short Git tutorial in the book about Java.</p>
+<p>Understanding how a VCS works is very important - that&#8217;s why I included this short Git tutorial in the book about Java.</p>
 </div>
 <div class="sect2">
 <h3 id="_two_types_of_version_control_systems">14.1. Two Types of Version Control Systems</h3>
 <div class="paragraph">
-<p>There are two types of VCS: centralized and distributed. With centralized systems the source code repository is stored a server, which is <em>the only</em> place that has the latest version of the application as well as all historical files committed by developers in the past.</p>
+<p>There are two types of VCS: centralized and distributed. With centralized systems the source code repository is stored in a server, which is <em>the only</em> place that has the latest version of the application as well as all historical files committed by developers in the past.</p>
 </div>
 <div id="FIG14-1" class="imageblock">
 <div class="content">
@@ -10267,13 +10258,13 @@ Otherwise the ball crossed either top or bottom table&#8217;s borders and the Ki
 </div>
 </div>
 <div class="paragraph">
-<p>If Pete, the new programmer, joins the team, he&#8217;d need to check out the latest code from the central repository and start making his code modifications on his computer. There are many centralized VCS, and some the most popular are CVS, SVN, and Perforce.</p>
+<p>If Pete, the new programmer, joins the team, he&#8217;d need to check out the latest code from the central repository and start making his code modifications on his computer. There are many centralized VCS, and some of the most popular are CVS, SVN, and Perforce.</p>
 </div>
 <div class="paragraph">
 <p>Distributed VCS store the latest version of the code as well as all historical files <em>on each</em> programmer&#8217;s computer. Popular distributed VCS are Git, Mercurial, and Bazaar. Technically, if you work alone, you can install Git on your computer and have your private VCS without using any remote server as a shared repository. But again, having an extra copy of your project files on a remote server is always a good idea.</p>
 </div>
 <div class="paragraph">
-<p>Programmers usually work in teams, so the following diagram shows three computers - one shared repository on the right and to local repositories (Mary&#8217;s and Joe&#8217;s) on the left.</p>
+<p>Programmers usually work in teams, so the following diagram shows three computers - one shared repository on the right and two local repositories (Mary&#8217;s and Joe&#8217;s) on the left.</p>
 </div>
 <div id="FIG14-2" class="imageblock">
 <div class="content">
@@ -10340,7 +10331,7 @@ If you want to be able to use different user names and emails for different proj
 <div class="sect2">
 <h3 id="_selected_git_commands">14.4. Selected Git Commands</h3>
 <div class="paragraph">
-<p>Git has a couple of dozens commands, but knowing just a half dozen of them may be enough for all your project activities. I&#8217;ll show you several commands that I use daily. Each command may be issued with several options. I&#8217;ll just show you the basic commands to quickly get you started with Git. For more detailed coverage of all Git features and commands you&#8217;ll need to study <a href="http://git-scm.com/doc">online documentation</a>.</p>
+<p>Git has a couple of dozens commands, but knowing just a half dozen of them may be enough for all of your project activities. I&#8217;ll show you several commands that I use daily. Each command may be issued with several options. I&#8217;ll just show you the basic commands to quickly get you started with Git. For more detailed coverage of all Git features and commands you&#8217;ll need to study <a href="http://git-scm.com/doc">online documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>Typically, my work with Git-controlled projects consists of the following activities:</p>
@@ -10378,13 +10369,13 @@ If you want to be able to use different user names and emails for different proj
 </div>
 </div>
 <div class="paragraph">
-<p>Note the first statement indicates that I work with the code branch called <em>master</em>. I&#8217;ll explain how and why create separate code branches a bit later, but for now I have no other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.</p>
+<p>Note the first statement indicates that I work with the code branch called <em>master</em>. I&#8217;ll explain how and why you may need to create separate code branches a bit later, but for now I have no other branches. The untracked files are displayed in red, which means that they are either new to Git or have been modified after the last commit to the repository. The changes made to the untracked files are not stored in the Git database.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_the_add_command">14.4.2. The add Command</h4>
 <div class="paragraph">
-<p>Adding files to a Git repository is done by the command <em>add</em>, which is easy to understand to the process of adding toys to a shopping cart in a toy store. There are lots of toys on the shelves, but you pick only selected ones by placing them into your cart.</p>
+<p>Adding files to a Git repository is done by the command <em>add</em>, which is as easy as understanding to the process of adding toys to a shopping cart in a toy store. There are lots of toys on the shelves, but you pick only selected ones by placing them into your cart.</p>
 </div>
 <div id="FIG14-4-1" class="imageblock">
 <div class="content">
@@ -10392,7 +10383,7 @@ If you want to be able to use different user names and emails for different proj
 </div>
 </div>
 <div class="paragraph">
-<p>Similarly, you have lots of files in your project&#8217;s folder(s), but you may want to add only selected ones to the git repository, for example <em>git add Fish.java</em>. We call the modified files that must be saved in the Git database <em>trackable</em>, and those the should be ignores - <em>untracked</em>.</p>
+<p>Similarly, you have lots of files in your project&#8217;s folder(s), but you may want to add only selected ones to the git repository, for example <em>git add Fish.java</em>. We call the modified files that must be saved in the Git database <em>trackable</em>. The modified files that will be ignored by Git are called <em>untracked</em>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -10421,7 +10412,7 @@ If you want to know which options exist for any Git command, just enter <em>git 
 <div class="content">
 <div class="title">NOTE</div>
 <div class="paragraph">
-<p>You shouldn&#8217;t store compiled Java classes or JARs in the source code repositories. You can let Git know which files to ignore by creating a text file named <em>.gitignore</em> in your project directory. Then add there the types of files that Git should ignore. For example, if you&#8217;ll add the following two lines to your <em>.gitigore</em> file, coompiled classes and JARS won&#8217;t be included in your Git database:</p>
+<p>You shouldn&#8217;t store compiled Java classes or JARs in the source code repositories. You can let Git know which files to ignore by creating a text file named <em>.gitignore</em> in your project directory. Then open it with a plain text editor and add the types of files that Git should ignore. For example, if you&#8217;ll add the following two lines to your <em>.gitigore</em> file, compiled classes and JARS won&#8217;t be included in your Git database:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10435,7 +10426,7 @@ If you want to know which options exist for any Git command, just enter <em>git 
 <div class="sect3">
 <h4 id="_the_commit_command">14.4.3. The commit Command</h4>
 <div class="paragraph">
-<p>If we&#8217;ll continue using the analogy with a toy store, committing is similar to paying for the toys that you placed in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow to keep tracks of the code changes. For example, you can issue the following command:</p>
+<p>If we&#8217;ll continue using the analogy with the toy store, committing is similar to paying for the toys that you placed in your shopping cart. But when you pay at the cash register, you get a receipt, right? On the same note, when you issue a <em>commit</em> command, you need to write a comment about what are you committing. Programmers make multiple commits over the life of each project, and such comments allow you to keep tracks of the code changes. For example, you can issue the following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10494,7 +10485,7 @@ If you want to know which options exist for any Git command, just enter <em>git 
 </div>
 </div>
 <div class="paragraph">
-<p>Git has noticed that the file <em>PetMaster.java</em> has been changed, but until I issue the command <em>add</em> for this file (or all files), Git won&#8217;t track the changes in <em>PetMaster.java</em>. In the toy store setup, it&#8217;s a situation when a toy is displayed on the shelf, you noticed it but have not added to your shopping cart yet. The following two commands will save my latest change in the Git database:</p>
+<p>Git has noticed that the file <em>PetMaster.java</em> has been changed, but until I issue the command <em>add</em> for this file (or all files), Git won&#8217;t track the changes in <em>PetMaster.java</em>. In the toy store setup, it&#8217;s a situation when a toy is displayed on the shelf, you noticed it but have not added it to your shopping cart yet. The following two commands will save my latest change in the Git database:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10555,13 +10546,13 @@ If you want to see the history of all commits, use the command <em>git log</em>.
 </table>
 </div>
 <div class="paragraph">
-<p>So far we&#8217;ve been working with the default branch called <em>master</em>, and now I&#8217;ll explain you what branches are for.</p>
+<p>So far we&#8217;ve been working with the default branch called <em>master</em>, and now I&#8217;ll explain what branches are for.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_code_branching">14.4.5. Code Branching</h4>
 <div class="paragraph">
-<p>What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs in the application? She doesn&#8217;t want to modify the code that other programmers may rely on. Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the <em>master</em> branch, which has tested and working code.</p>
+<p>What if Mary wants to add a new feature to the application, but she&#8217;s afraid that her new code may introduce bugs to the application? She doesn&#8217;t want to modify the code that other programmers may rely on. Joe works on adding another feature and he also wants to keep his code separately. There is a solution to this - both Mary and Joe can create their own branches to keep the new code being developed separately from the <em>master</em> branch, which has a tested and working code.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s see how Mary can create a separate code branch and add a new method <code>surface</code> to the class <code>Fish</code>, which currently looks like this:</p>
@@ -10594,7 +10585,7 @@ If you want to see the history of all commits, use the command <em>git log</em>.
 </div>
 </div>
 <div class="paragraph">
-<p>The new branch will be created in the Git database, but Mary remain in the <em>master</em> branch until she switches to the new branch by executing the <em>checkout</em> command:</p>
+<p>The new branch <em>mary</em> will be created in the Git database, but Mary remains in the <em>master</em> branch until she switches to the new branch by executing the <em>checkout</em> command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10631,7 +10622,7 @@ If you want to see the history of all commits, use the command <em>git log</em>.
 </div>
 </div>
 <div class="paragraph">
-<p>At any given time the working directory will have only one copy of each file with the content that correspond to the current branch. Hence the class <code>Fish</code> from the branch <em>mary</em> has the method <code>surface</code>. Now Mary  switches back to the branch <em>master</em> by running <em>git checkout master</em> and opens the file <em>Fish.java</em> - the method <code>surface</code> isn&#8217;t there! Git seamlessly moved the older version of <em>Fish.java</em> from its database back to the working directory. It happened really fast, because in the distributed VCS the complete code repository is located on the programmers computer and there is no need to do any communication over the network.</p>
+<p>At any given time the working directory will have only one copy of each file with the content that corresponds to the current branch. Hence the class <code>Fish</code> from the branch <em>mary</em> has the method <code>surface</code>. Now Mary  switches back to the branch <em>master</em> by running <em>git checkout master</em> and opens the file <em>Fish.java</em> - the method <code>surface</code> isn&#8217;t there! Git seamlessly moved the older version of <em>Fish.java</em> from its database back to the working directory. It happened really fast, because in the distributed VCS the complete code repository is located on the programmers computer and there is no need to do any communication over the network.</p>
 </div>
 <div class="paragraph">
 <p>Mary tested the new version of the class <code>Fish</code> and she&#8217;s ready to include it in the <em>master</em> branch. Using the VCS terminology, she wants to merge the code located in the branch <em>mary</em> into the code in the <em>master</em> branch. From the <em>master</em> branch Mary runs the following <em>merge</em> command:</p>
@@ -10675,7 +10666,7 @@ If you want to see the history of all commits, use the command <em>git log</em>.
 </div>
 </div>
 <div class="paragraph">
-<p>Now I&#8217;ll switch back to <em>master</em> branch and will try to do a merge. Clearly Git can&#8217;t take a responsibility in picking one version over the other. We got a conflict:</p>
+<p>Now I&#8217;ll switch back to <em>master</em> branch and will try to do a merge. Clearly Git can&#8217;t take a responsibility in picking one version over the other. We&#8217;ve got a conflict:</p>
 </div>
 <div id="FIG14-12" class="imageblock">
 <div class="content">
@@ -10683,7 +10674,7 @@ If you want to see the history of all commits, use the command <em>git log</em>.
 </div>
 </div>
 <div class="paragraph">
-<p>If you&#8217;ll open the file <em>Fish.java</em> you&#8217;ll find some duplicate code with marked with special tags:</p>
+<p>If you&#8217;ll open the file <em>Fish.java</em> you&#8217;ll find some duplicate code marked with special tags:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10717,7 +10708,7 @@ You can find more detailed explanations of all Git features in the free book tit
 <div class="sect2">
 <h3 id="_publishing_your_code_on_github">14.5. Publishing Your Code on GitHub</h3>
 <div class="paragraph">
-<p>If you have a shared Git repository on a remote computer, you&#8217;ll need to synchronize with is the content from your local Git repository. Usually I do it several times a day. Even if you work on the project alone, you may want to have a current copy of your Git repository in the remote computer.</p>
+<p>If you have a shared Git repository on a remote computer, you&#8217;ll need to synchronize with it the content from your local Git repository. Usually I do it several times a day. Even if you work on the project alone, you may want to have a current copy of your Git repository in the remote computer.</p>
 </div>
 <div class="paragraph">
 <p><a href="https://github.com/">GitHub</a> is a Web-based Git repository hosting service, where you can create a shared code repository free of charge as long as you don&#8217;t mind keeping your code open to the public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide. Moreover, programmers who have their code published on GitHub are treated with additional respect.</p>
@@ -10737,10 +10728,10 @@ GitHub is not the only hosting service for Git repositories on the Web. <a href=
 <div class="sect3">
 <h4 id="_creating_a_github_repository">14.5.1. Creating a GitHub Repository</h4>
 <div class="paragraph">
-<p>To be able to publish your Git repository on GitHub, you need to create an account there. Visit the Web site <a href="https://github.com/">https://github.com</a> and sign up for it. You&#8217;ll need to pick a user name for yourself and enter the email, which should be the same as you&#8217;ve used with  the <em>git config</em> command (see the section Introducing Yourself to Git). GitHub will send you a verification  email to this address, and you&#8217;ll need to respond to it. For illustration purposes I&#8217;ve created a new GitHub account with the user ID <em>java4kids</em>.</p>
+<p>To be able to publish your Git repository on GitHub, you need to create an account there. Visit the Web site <a href="https://github.com/">https://github.com</a> and sign up for it. You&#8217;ll need to pick a user name for yourself and enter an email address, which should be the same as you&#8217;ve used with  the <em>git config</em> command (see the section Introducing Yourself to Git). GitHub will send you a verification  email to this address, and you&#8217;ll need to respond to it. For illustrative purposes I&#8217;ve created a new GitHub account with the user ID <em>java4kids</em>.</p>
 </div>
 <div class="paragraph">
-<p>After creating a free account you&#8217;ll see a green button titled "+ New repository". Click on it and enter the name and description of your project. Since our goal is to publish the files from the local directory <em>gitIntro</em>, I&#8217;ll use the same name for my GitHub repository. As you see in the following screen shot, I&#8217;ve entered the repository name and its description:</p>
+<p>After creating a free account you&#8217;ll see a green button titled "+ New repository". Click on it and enter the name and description of your project. Since our goal is to publish the files from the local directory <em>gitIntro</em>, I&#8217;ll use the same name for my GitHub repository. The following screen shot shows how I&#8217;ve entered the repository name and its description:</p>
 </div>
 <div id="FIG14-13" class="imageblock">
 <div class="content">
@@ -10748,7 +10739,7 @@ GitHub is not the only hosting service for Git repositories on the Web. <a href=
 </div>
 </div>
 <div class="paragraph">
-<p>Pressing the button titled "Create Repository" and an empty repository is ready. The GitHub will show you the following page with short instructions on how to upload your code there.</p>
+<p>Press the button titled "Create Repository" and an empty repository is ready. GitHub will show you the following page with short instructions on how to upload your code there.</p>
 </div>
 <div id="FIG14-14" class="imageblock">
 <div class="content">
@@ -10756,7 +10747,7 @@ GitHub is not the only hosting service for Git repositories on the Web. <a href=
 </div>
 </div>
 <div class="paragraph">
-<p>Note the HTTPS URL of this repository on top. It&#8217;s used for cloning that&#8217;s described later.</p>
+<p>Note the HTTPS URL of this repository on top. It&#8217;s used for cloning, which is described later on.</p>
 </div>
 </div>
 <div class="sect3">
@@ -10776,7 +10767,7 @@ git push -u origin master <b class="conum">(2)</b></code></pre>
 <p>When a remote repository is created, it gets a name, which by default is <em>origin</em>. So the first command adds a URL of the newly created origin to the configuration of your Git project. The name <em>origin</em> serves as an alias name to that long GitHub URL.</p>
 </li>
 <li>
-<p>The Git <em>push</em> command uploads the local code to the remote repository. So you commit changes to a local Git repository, and push them to the remote one. Accordingly, the second command uploaded my Git-managed repository to GitHub. The <em>-u</em> option means upstream. You&#8217;ll use it with the first push to link you local repository to the the remote one. Subsequent <em>push</em> commands will be issued without the <em>-u</em> option.</p>
+<p>The Git <em>push</em> command uploads the local code to the remote repository. So you commit changes to a local Git repository, and push them to the remote one. Accordingly, the second command uploaded my Git-managed repository to GitHub. The <em>-u</em> option means upstream. You&#8217;ll use it with the first push to link your local repository to the the remote one. Subsequent <em>push</em> commands will be issued without the <em>-u</em> option.</p>
 </li>
 </ol>
 </div>
@@ -10786,7 +10777,7 @@ git push -u origin master <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After running these commands the code and the Git database from my local directory <em>gitIntro</em> is published on GitHub. Now if you or anyone else will visit the URL <a href="https://github.com/java4kids/gitIntro">https://github.com/java4kids/gitIntro</a>, they&#8217;ll see the Web page that looks similar to this:</p>
+<p>After running these commands the code and the Git database from my local directory <em>gitIntro</em> is published on GitHub. Now if you or anyone else will visit the URL <a href="https://github.com/java4kids/gitIntro">https://github.com/java4kids/gitIntro</a>, they&#8217;ll see a Web page that looks similar to this:</p>
 </div>
 <div id="FIG14-15" class="imageblock">
 <div class="content">
@@ -10830,7 +10821,7 @@ git push -u origin master <b class="conum">(2)</b></code></pre>
 <div class="sect3">
 <h4 id="_cloning">14.5.4. Cloning</h4>
 <div class="paragraph">
-<p>Say, Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen&#8217;t have to create a new folder and run the <em>git init</em> command there. Git has a <em>clone</em> command that can take the existing code from a  shared repository and create its copy on Peter&#8217;s computer. The <em>clone</em> command downloads the latest project&#8217;s code including the entire Git database with all the history of changes made by Joe and Mary in the past. You can do cloning either by clicking the button "Clone in Desktop" on GitHub or by running <em>git clone</em> in the Command window.</p>
+<p>Say Peter joins the existing project and Joe and Mary want him to get the latest code installed. Peter will also use Git and GitHub, so he needs to install Git on his computer, but Peter doen&#8217;t have to create a new folder and run the <em>git init</em> command there. Git has a <em>clone</em> command that can take the existing code from a  shared repository and create its copy on Peter&#8217;s computer. The <em>clone</em> command downloads the latest project&#8217;s code including the entire Git database with all of the history of changes made by Joe and Mary in the past. You can do cloning either by clicking the button "Clone in Desktop" on GitHub or by running <em>git clone</em> in the Command window.</p>
 </div>
 <div class="paragraph">
 <p>While writing this book I stored all its code examples on GitHub at <a href="https://github.com/yfain/Java4Kids_code">https://github.com/yfain/Java4Kids_code</a>. You can clone my Git repository from GitHub and start using, improving, or adding new code samples. Just visit the above Web page and copy the URL from the box HTTPS clone URL on the right hand side:</p>
@@ -10909,7 +10900,7 @@ git push -u origin master <b class="conum">(2)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Not every pull request can be automatically merged, especially if multiple code changes have been done. In this case you&#8217;d need to do a manual merge right in the GitHub. I always leave a Thank You comment to people who helped making my code better.</p>
+<p>Not every pull request can be automatically merged, especially if multiple code changes have been done. In this case you&#8217;d need to do a manual merge right in GitHub. I always leave a Thank You comment to people who have helped make my code better.</p>
 </div>
 </div>
 <div class="sect3">
@@ -10934,7 +10925,7 @@ git push -u origin master <b class="conum">(2)</b></code></pre>
 <p>The field with the name of the project directory will be populated automatically, but you can change it if you want. Press the button Clone and IDEA will clone all the projects into the specified directory and will ask you if you want to open a project. Selecting Yes will open one of the IDEA projects (e.g. Chapter7). You&#8217;ll also see a warning about unregistered VCS root, which you can ignore, as you won&#8217;t be directly pushing any code changes into my GitHub repository.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;ll open the project directory with File Manager (or Finder), you&#8217;ll see there other folders that contain code samples for all the chapters. You can open any of these projects in IDEA by selecting the menu File | Open.
+<p>If you open the project directory with File Manager (or Finder), you&#8217;ll see that there are other folders that contain code samples for all of the chapters. You can open any of these projects in IDEA by selecting the menu File | Open.
 Note that this project directory has a folder named <em>.git</em>, which contains Git database with the history of all commits that I did while writing code samples for this book.</p>
 </div>
 <div class="paragraph">
@@ -10951,7 +10942,7 @@ Note that this project directory has a folder named <em>.git</em>, which contain
 <h2 id="_epilogue">Epilogue</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This book is over. I hope you&#8217;ve enjoyed reading it as much as I enjoyed my writing. Your process of studying Java is far from being over. If you liked this book and want to continue your Java journey, consider reading my other Java book for adults, which is called "Java 24-Hour Trainer", 2nd Edition, Wiley. That book comes with videos that illustrate the materials covered in each chapter. I also explain the server-side programming in Java there.
+<p>This book is over. I hope you&#8217;ve enjoyed reading it as much as I enjoyed writing it. Your process of studying Java is far from being over. If you liked this book and want to continue your journey, consider reading my other Java book for adults, which is called "Java 24-Hour Trainer", 2nd Edition, Wiley. That book comes with videos that illustrate the materials covered in each chapter. I also explain the server-side programming in Java there.
 Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you for reading my book, and good luck!</p>
 </div>
 </div>
