@@ -3,7 +3,7 @@
 
 == Working With Files and Serialization 
 
-After a program ends it gets erased from memory. When you run it again, its content is loaded into memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or other device that can store the data for a long time.  
+After a program ends, it gets erased from the memory. When you run it again, its content is loaded into the memory and all Java objects are created from scratch. If you’d like to save some results of the program execution, they must be stored in files on a hard disk, a solid-state drive, a memory stick, or any other device that can store the data for a long time.  
 
 In this chapter you’ll learn how to save data on disks and read them back into memory using Java Input/Output(I/O) streams.A program can open an _output stream_ with a file on disk and write the important data there. Similarly, you can open an _input stream_ and read the data from a file. 
 
@@ -16,11 +16,11 @@ In this chapter I'll show you how to use I/O streams with files located in your 
 All classes that can work with file streams are located in packages  `java.io` and `java.nio`.  Classes from the `java.io`  
 implement blocking I/O: When bytes are being read/written, they become unavailable for other threads of execution. This may not be an issue with small files like a history of game scores, but may become an issue with large files that contain a gigabyte or more. The package `java.nio` offers a set of classes with improved performance as well as some useful utility classes.
 
-I'll start with explaining you the basics of working with streams of bytes using classes from the `java.io` package, and then give you some examples of working with classes from `java.nio`.
+I'll start with explaining the basics of working with streams of bytes using classes from the `java.io` package, and then give you some examples of working with classes from `java.nio`.
 
 === Basics of Working With Streams
 
-Think of a stream as a pipe. If you just need to read the data you have one pipe where the data flow through this pipe from the data source into your program. If you need to write the data into a storage, it's another pipe where the data flow from your program. As with any pipe, it has to be opened to start the flow and closed to stop it.
+Think of a stream as a pipe. If you just need to read the data from some source, imagine that the data flows through a pipe into your program. If you need to write the data into storage, it's another pipe where the data flow from your program to this storage. As with any pipe, it has to be opened to start the flow and closed to stop it.
 
 Java supports several types of streams, but no matter what type you are going to use, the following three steps should be done in your program:
 
@@ -30,24 +30,22 @@ Java supports several types of streams, but no matter what type you are going to
 
 • Close the stream (Java can do it automatically).
  
-In the real world people use different types of pipes for carrying different contents (e.g. gas, oil, milkshakes). Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al. 
+In the real world people use different types of pipes for carrying different content (e.g. gas, oil, milkshakes). Similarly, Java programmers use different classes depending on the type of data they need to carry over a stream. Some streams are used for carrying text, some for bytes, et al. 
 
 ==== Byte Streams
 
-To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another, does not even need to know is it an image, a text, or a file with music. Such a copy program reads the original file in memory as a _set of bytes_, and then writes them into a destination folder.. 
+To create a program that reads a file, interprets and displays its content on the screen, you need to know what type of data is stored in this file. On the other hand, a program that just copies files from one place to another does not even need to know if this file represents an image, a text, or a file with music. Such a copy program reads the original file into computer's memory as a _set of bytes_, and then writes them into another file located in the destination folder. 
 
-Originaly `java.io` package have not offered a fast way to copy files and you'd need to write a program that reads byte after byte using Java classes `FileInputStream` or `FileOutputStream`.
+The `java.io` package includes the classes `FileInputStream` and `FileOutputStream` that allow you to read and write files one byte at a time. If your program has to work only with text files, you could use the classes `Reader` and `Writer`, which are specifically meant for reading character streams. 
 
-If your program has to work only with text files, you could use the classes `Reader` and `Writer`, which are specifically meant for reading character streams. 
-
-After selecting the appropriate class you'll be invoking one of its methods to read or write the file. For example the http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html[online documentation] of the class `FileInputStream` includes the method `read` having the following signature:
+After selecting, say `FileInputStream` you'd be invoking one of its methods to read the file data. For example the http://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html[online documentation] of the class `FileInputStream` includes the method `read` having the following signature:
 
 [source, java]
 ----
 public int read() throws IOException
 ----
 
-This should tell you that the method `read` returns an integer value and may throw the `IOException`, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method `read` into a try-catch block as explained in Chapter 9. To get a specific reason of this exception you'll call the method `getMessage` on the exception object.
+This should tell you that the method `read` returns an integer value and may throw the `IOException`, which is an error that may happen if the file is corrupted or deleted, a device failure happened et al. Hence, you must enclose the invocation of the method `read` into a try-catch block as explained in Chapter 9. To get a specific reason for this exception you'll call the method `getMessage` on the exception object.
 
 Each byte in a file is represented by a code, which is a positive integer number. The method `read` returns the value of this code.
 
@@ -85,13 +83,13 @@ public class MyByteReader {
 }
 ----
 
-<1> First we open the file for reading (using a default character set) by creating an instance of the class `FileInputStream` passing the file name `abc.dat` as a parameter. In Chapter 9 you've learned the syntax of the try-catch blocks. But here I use a special syntax called _try-with-resources_. When there are some program resources that has to be opened and closed (e.g. `FileInputStream`), just instantiate them in parentheses right after the `try` keyword and Java will close them for you automatically. This spares you from writing a `finally` block containing the code for closing resources.
+<1> First we open the file for reading (using a default character set) by creating an instance of the class `FileInputStream` passing the file name `abc.dat` as a parameter. In Chapter 9 you've learned the syntax of the try-catch blocks, but here I used a special syntax called _try-with-resources_. When there are some program resources that have to be opened and closed (e.g. `FileInputStream`), just instantiate them in parentheses right after the `try` keyword and Java will close them for you automatically. This spares you from writing a `finally` block containing the code for closing resources.
 
 <2> This line starts a `while` loop that calls the method `read()`, which reads one byte, assigns its value to the variable `byteCode`, and compares it with `-1` (the end of file indicator). 
 
 <3> If the value in the current byte is not equal to `-1`, we print it followed by a space character. The loop ends when it reads the `-1` byte. 
 
-<4> If an `IOException` occurs, catch it and print the reason of this error.
+<4> If an `IOException` occurs, catch it and print the reason for this error.
 
 Running this program prints the following numbers that represent encoding of the text "This is a test file":
 
@@ -130,15 +128,15 @@ public class MyByteWriter {
 
 <1> The program `MyByteWriter` populates an array `someData` with integer codes that may represent some characters
 
-<2> Then the program opens the file _xyz.dat_ 
+<2> Then the program opens the file _xyz.dat_. 
 
-<3> and writes each of the integers into the file.
+<3> Then it proceeds to writes each of the integers into the file.
 
 <4> If an error occurs, we catch it and print the reason.
 
 ==== Bufferred Streams
 
-The code examples in the Byte Streams section were reading or writing into a a file one byte at a time. One invocation of `read` would read one byte, and one invocation of `write` would write one byte. In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.
+The code examples in the Byte Streams section were reading or writing into a file one byte at a time. One invocation of `read` would read one byte, and one invocation of `write` would write one byte. In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.
 
 [[FIG11-1]]
 image::images/fig_11_BufferedStream.png[]
@@ -179,7 +177,7 @@ public class MyBufferedByteReader {
 ----
 <1> Here we use the try-with-resources syntax again. This time we create an instance of `FileInputReader` and then and instance of `BufferedInputReader` providing the `FileInputReader` as an argument. This is how we connect to fragments of the pipe that uses the file _abc.dat_ as the source of data.
 
-<2> Under the hood the `BufferedInputReader` reads  bytes from disk in chunks into a memory buffer, and then the method `read` reads one byte at time from memory.
+<2> Under the hood the `BufferedInputReader` reads  bytes from the disk in chunks into a memory buffer, and then the method `read` reads one byte at time from memory.
 
 The program `MyBufferedByteReader` produces the same output as `MyByteReader`, but will work just a little bit faster.
 
@@ -187,7 +185,7 @@ The program `MyBufferedByteReader` produces the same output as `MyByteReader`, b
 
 Text in Java is represented as a set of `char` values, which are encoded based on the character sets capable to represent alphabet or other symbols used in a particular human language. As you can imagine, the text in English, Ukrainian, and Japanese should use different character encodings. The names of some of the standard character sets for English-speaking people are US-ASCII, UTF-8, and UTF-16. 
 
-Each JVM has a default character set, which could be changed during the JVM startup. You can also find out what's the default character in your Java installation by invoking the method `defaultCharset` on the class `Charset`, and I'll show how to do it in the section "Reading Text Files".
+Each JVM has a default character set, which could be changed during the JVM startup. You can also find out what's the default character in your Java installation by invoking the method `defaultCharset` on the class `Charset`, and I'll show you how to do it in the section "Reading Text Files".
 
 The Java classes `FileReader` and `FileWriter` from the package `java.io` were specifically created to work with text files, but they work only with default character encoding and don’t handle localization properly.
  
@@ -196,18 +194,18 @@ For efficiency, the reading can be piped with the `BufferedReader` or `BufferedW
 
 === Working With Files Using java.nio
 
-The `java.nio` package contains classes that offer a simplified and more efficient way of working with files, and you'll see some useful examples here. But first I'd like to introduce a classes Path and Paths that will represent a file you're planning to work with. 
+The `java.nio` package contains classes that offer a simplified and more efficient way of working with files, and you'll see some useful examples here. But first I'd like to introduce the classes `Path` and `Paths` that will represent a file you're planning to work with. 
 
 ==== Using Classes Path and Paths
 
 So far we worked with files located in the root directory of our IDEA project. But files are grouped in directories (folders), which in turn can include nested directories and files. More over, files are represented differently in Windows, Mac OS and Linux operational systems. For example, in Windows the pull path to a file may look like this:
 _c:\mystuff\games\tictactoeScores.txt_
 
-In Mac OS or Linux disks are not named with letters like _c:_ or _d:_. For example, the path to user's files starts from the _Users_ directory. Besides a backslash is not used for a separator symbol there. A full path to a file _tictactoeScores.txt_ of the user _mary_ may look like this:
+In Mac OS or Linux, disks are not named with letters like _c:_ or _d:_. For example, the path to user's files starts from the _Users_ directory. Besides a backslash is not used for a separator symbol there. A full path to a file _tictactoeScores.txt_ of the user _mary_ may look like this:
 
 _/Users/mary/mystuff/games/tictactoeScores.txt_
 
-So before even opening a file you can create an instance of the object `Path`, which doesn't open or reads a file, but represents the location of the file on the disk. 
+So before even opening a file you can create an instance of the object `Path`, which doesn't open or read a file, but represents the location of the file on the disk. 
 
 There is a special class `Paths` (yes, in plural) that includes a number of static methods, and in particular, can build the `Path` object for you. For example, you can invoke the method `get` passing the name of the file as the argument:
 
@@ -325,7 +323,7 @@ This is a test file
 Your default character encoding is UTF-8
 ----
 
-Now make an experiment to see if the `IOException` is thrown if the file is not found where expected to be. Just move the file _abc.dat_ into a different directory and re-run `MyTextFileReader`. Now the console output looks different:
+Now experiment to see if the `IOException` is thrown if the file is not found where it is expected to be. Just move the file _abc.dat_ into a different directory and re-run `MyTextFileReader`. Now the console output looks different:
 
 [source, java]
 ----
@@ -418,7 +416,7 @@ My game score is 28000 2015-01-11T09:10:11.049
 ----
 
 Each time the program saved the same score of 28000
-attaching the system date and time. Of course, you could calculate and write the real score of a game. This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package `java.time` you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle's tutorial on working with http://docs.oracle.com/javase/tutorial/datetime/TOC.html[Date and Time API] if interested. 
+attaching the system date and time. Of course, you could calculate and write the real score of a game. This is a simple way of printing the local date and time. The time portion goes after the letter "T" and shows hours, minutes, seconds, and nanoseconds. In the Java package `java.time` you can find multiple classes and methods providing formatting date and time for pretty printing. Go through Oracle's tutorial on working with http://docs.oracle.com/javase/tutorial/datetime/TOC.html[Date and Time API] if you're interested. 
 
 For writing small files like _scores.txt_ you don't need to use buffered streams. For large files though, use BufferedWriter, for example:
 
@@ -480,13 +478,13 @@ public class MyTextFileBufferedFileWriter {
 }
 ----
 
-In this class I've moved the code that check if the file exists into a separate method `getBufferedWriter`. I did it to illustrate so-called _factory design pattern_. A factory can build different objects, right?  The method `getBufferedWriter` also builds different instances of a `BufferedReader` depending on the existence of the file referred by `path`. In programmers jargon the methods that create and return different object instances based on some parameter are called factories.    
+In this class I've moved the code that checks if the file exists into a separate method `getBufferedWriter`. I did it to illustrate so-called _factory design pattern_. A factory can build different objects, right?  The method `getBufferedWriter` also builds different instances of a `BufferedReader` depending on the existence of the file referred by `path`. In programmers jargon, the methods that create and return different object instances, based on some parameter, are called factories.    
 
-If you run the program `MyTextFileBufferedFileWriter` it'll produce the same results as `MyTextFileFileWriter`. If you use these programs for writing short texts you won't notice the difference in the speed of execution. But when you need to write large amount of information  `MyTextFileBufferedFileWriter` will work faster.
+If you run the program `MyTextFileBufferedFileWriter` it'll produce the same results as `MyTextFileFileWriter`. If you use these programs for writing short text, you won't notice the difference in speed of execution. But when you need to write large amounts of information  `MyTextFileBufferedFileWriter` will work faster.
 
 === Command-Line Arguments
 
-So far all of the code examples had the file names stored right in the code, or as  programmers say, _hard-coded_ in the program.  This means that to create a program that reads a files with a different name you’d have to modify the code and recompile the program, which is not nice. You should create universal programs that can take parameters (e.g.the name of the file) from a command line during the program launch.
+So far all of the code examples had the file names stored right in the code, or as  programmers say, _hard-coded_ in the program. This means that to create a program that reads a file with a different name you’d have to modify the code and recompile the program, which is not nice. You should create universal programs that can take parameters (e.g.the name of the file) from a command line during the program launch.
  
 In the first lesson of this book you've been running the program HelloWorld from a command window:
 
@@ -502,14 +500,14 @@ But you're allowed to add command-line arguments right after the name of the pro
 java HelloWorld Mary Smith
 ----
 
-In this case the program HelloWorld would get two command line parameters: Mary and Smith. If you remember, we always write the method main with a `String` array as an  argument:
+In this case, the program `HelloWorld` would get two command line parameters: Mary and Smith. If you remember, we always write the method main with a `String` array as an argument:
 
 [source, java]
 ----
 public static void main(String[] args) {}
 ----
 
-The JVM passes the `String` array to the main method, and if you start a program without any command line arguments, this array remains empty.  Otherwise, this array will have exactly as many elements as the number of command-line arguments  passed to the program. 
+The JVM passes the `String` array to the main method, and if you start a program without any command line arguments, this array remains empty. Otherwise, this array will have exactly as many elements as the number of command-line arguments  passed to the program. 
 
 Let’s see  how we can use these command line arguments in a very simple class that will just print them:
 
@@ -544,16 +542,16 @@ I've got Smith
 I've got 123
 ---- 
 
-The JVM placed `Mary` into the array element `args[0]`, `Smith` into `args[1]`, and `123` into `args[2].
+The JVM placed `Mary` into the array element `args[0]`, `Smith` into `args[1]`, and `123` into `args[2]`.
 
-Command-line arguments are always being passed to a program as strings.  It’s the responsibility of a program to convert the data to the appropriate data type, for example: 
+Command-line arguments are always being passed to a program as strings. It’s the responsibility of a program to convert the data to the appropriate data type, for example: 
 
 [source, java]
 ----
 int myScore = Integer.parseInt(args[2]);
 ----
 
-It’s always a good idea to check if the command line contains  correct number of arguments. Do this right in the beginning of the method `main`. If the program doesn’t receive expected arguments, it should print a brief message about it and immediately stop by using a special method `exit` of the class `System`:
+It’s always a good idea to check if the command line contains the correct number of arguments. Check this right in the beginning of the method `main`. If the program doesn’t receive expected arguments, it should print a brief message about it and immediately stop by using a special method `exit` of the class `System`:
  
 [source, java]
 ----
@@ -608,13 +606,13 @@ public class FileCopy {
 }
 ----
 
-The file copy is done by calling the method `copy` on the class `Files`. This program will work fine as long as the destination file doesn't exist. You can check for file existence in the program by using the method `exists` of the class `Files` as it was done in the class `MyTextFileReader` earlier.
+The file copy is done by calling the method `copy` on the class `Files`. This program will work fine as long as the destination file doesn't exist. You can check for the file's existence in the program by using the method `exists` of the class `Files` as it was done in the class `MyTextFileReader` earlier.
 
 === Serialization: Turning an Object Into Bytes
 
 Imagine a building that, with a push of a button, can be turned into a pile of construction materials. Load all these materials on the truck and drive to a different city. On arrival push another button, and the building is magically re-created in its original form. This is what Java serialization is about, but instead of a building we'll use a Java object. By “clicking the serialize button” JVM turns an instance of an object into a pile of bytes, and “clicking the deserialize button” re-creates the object.
 
-Why would you need such functionality? Say you are working on a board game and want to be able to save the current state of the game so the player and continue playing it tomorrow even if the computer will need to be turned off. The program needs to save the state of the game in a file, and when the player launches the game again, the program should load the saved state and recreate the situation on the board.  Creating a Java class with fields like player name, level, score, lives can be a good way to represent a state of the game. 
+Why would you need such functionality? Say you are working on a board game and want to be able to save the current state of the game so the player can continue playing it tomorrow even if the computer will need to be rebooted. The program needs to save the state of the game in a file, and when the player launches the game again, the program should load the saved state and recreate the situation on the board. Creating a Java class with fields like player name, level, score, and lives can be a good way to represent a state of the game. 
 
 [source, java]
 ----
@@ -628,9 +626,9 @@ class GameState {
 }
 ----
 
-When the user selects the menu option _Save Game State_, the program has to create an instance of the object `GameState`, assign the values to its fields and save these values in a file. But which format to save these values in? Create a `String` variable, and concatenate all these values into it separating the values with commas? It's a lot of work. Also, you'd need to remember the order of these concatenated values so when you need to read them you know to which fields of the object `GameState` to assign them to.
+When the user selects the menu option _Save Game State_, the program has to create an instance of the object `GameState`, assign the values to its fields and save these values in a file. But which format to save these values in? Create a `String` variable, and concatenate all these values into it separating the values with commas? It's a lot of work. Also, you'd need to remember the order of these concatenated values so that when you need to read them you know which fields of the object `GameState` to assign them to.
 
-Luckily, Java greatly simplifies this process. You can create and instance of the Java object, populate it with the values, and then _serialize_ this instance into a bunch of bytes in a special format that remembers the structure of the class `GameState`. Accordingly, when you need to re-create the instance of the `GameState` for these bytes, you can _deserialize_ the object in one shot with all its fields values.
+Luckily, Java greatly simplifies this process. You can create an instance of the Java object, populate it with the values, and then _serialize_ this instance into a bunch of bytes in a special format that remembers the structure of the class `GameState`. Accordingly, when you need to re-create the instance of the `GameState` for these bytes, you can _deserialize_ the object in one shot with all its fields' values.
 
 A Java object can be serialized if it implements `Serializabe` interface. It's a very simple interface to implement, as it doesn't declare any abstract methods. Just add `implements Serializable` to the class declaration to make a class serializable. The following class `GameState` will represent the state of the game.
 
@@ -760,11 +758,11 @@ public class GameStateManager {
 
 <7>  It takes just one line of code to serialize the `GameState` object into the file using the method `write`.
 
-<8> The method `loadGameState` deserializes the object from a file, and we're opening the `InputStream` and pipe it up with the `ObjectInputStream`.The data from file will be read in the same format and order as it was written. So if you'll change the declaration of the class `GameState` between serialization and deserialization, Java will throw `InvalidClassException`.  
+<8> The method `loadGameState` deserializes the object from a file, and we're opening the `InputStream` and pipe it up with the `ObjectInputStream`.The data from the file will be read in the same format and order as it was written. So if you change the declaration of the class `GameState` between serialization and deserialization, Java will throw `InvalidClassException`.  
 
 <9> It takes just one line of code to deserialize the file into a `GameState` object using the method `read`. In this example the same program serializes and deserializes the game state, but this may not be the case. You can send the serialized object to another computer on the network, and another program may deserialize the `GameState`. Hence it's important that the declaration of the `GameState` is available on both computers. The exception `ClassNotFoundException` will be thrown if the declaration of the class `GameState` is not available. 
 
-Run the program `GameStateManager`, and you'll see that it creates a new file `gamestate.ser`. Open this file in a text editor, and you'll see some gibberish. Java serializes objects in its internal format, which is not meant for reading by the humans. The console output will look like this:
+Run the program `GameStateManager`, and you'll see that it creates a new file `gamestate.ser`. Open this file in a text editor, and you'll see some gibberish. Java serializes objects in its internal format, which is not meant to be read by people. The console output will look like this:
 
 [source, java]
 ----
@@ -829,7 +827,7 @@ private static void saveScores(Path path, List<Score> gameScores) {}
 private static List<Score> loadScores(Path path){}
 ----
 +
-4. Write the code in the method `saveScore` to serialize the collection `scores` into a file `scores.ser`. Use the code from the class `GameStateManager` as an example, but this time you'll need to serialize not just one object instance, but a collection of objects, for example:
+4. Write the code in the method `saveScore` to serialize the collection `scores` into a file `scores.ser`. Use the code from the class `GameStateManager` as an example, but this time you'll need to serialize not one object instance, but a collection of objects, for example:
 +
 [source, java]
 ----

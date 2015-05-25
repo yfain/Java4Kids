@@ -3,10 +3,10 @@
 
 == Networking: Downloading Files From the Internet 
 
-People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other, if they use the same _protocol_. For example, your Web browser uses HTTP protocol to send requests and receive responses from remote server. Such a communication is possible if the program running on the server also understands HTTP. 
+People can talk to each other if they speak and understand the same language. Computers connected to a network can communicate with each other if they use the same _protocol_. For example, your Web browser uses HTTP protocol to send requests and receive responses from a remote server. Such a communication is possible if the program running on the server also understands HTTP. 
 Any network protocol defines the rules of how a program should send or receive data. 
 
-Say, you want to find a book about Harry Potter in the online bookstore. Usually you'd need to enter Harry Potter in the search field of that bookstore Web site and press the button to start the search. But the browser sends a request with a lot more data than a dozen of characters you've entered. According to HTTP protocol, every request should include a _request header_, which defines the method of sending data, identifies the browser that sends it, asks to connection to stay open (or not), and has other attributes.
+Say, you want to find a book about Harry Potter in the online bookstore. Usually you'd need to enter Harry Potter in the search field of that bookstore Web site and press the button to start the search, but the browser sends a request with a lot more data than a dozen of characters you've entered. According to HTTP protocol, every request should include a _request header_, which defines the method of sending data, identifies the browser that sends it, requests to keep the connection open (or not), and has other attributes.
 
 Similarly, a server should run a program that receives and understands the HTTP request, finds all books that have Harry Potter in the title, and sends a response back to you, adding a _response header_ to the data. Both request and response headers can add several hundred bytes to the actual data being sent.
 
@@ -19,7 +19,7 @@ If you want to visit a person, you need to know his or her exact address - the s
 [[FIG12-1]]
 image::images/fig_12_url.png[]
 
-This URL tells me that on the host (the server) nick.com exists the file called _nickelodeon-football-stars.html_ located in the folder _games_. The port number plays the same role as an apartment number in a building. 
+This URL tells me that the host (the server) nick.com has the file called _nickelodeon-football-stars.html_ located in the folder _games_. The port number plays the same role as an apartment number in a building. 
 
 The server nick.com can run many programs, which serve users' requests, but we want to enter this server through "the door" number 80. As a matter of fact, the port number 80 is a default port number for all Web servers that use HTTP. That's why if you skip the port number, your Web browser will try to connect to the Web server via the port 80. 
 
@@ -30,7 +30,7 @@ Now let's dissect another URL from Nickelodeon.
 [[FIG12-1-0]]
 image::images/fig_12_uri.png[]
 
-There is no file name here. What _video_ stands for in this URL? It's not a file, and it's not a folder on the host either. It's just an ID that represents some resources at nick.com. There is a program running at nick.com that understands what this ID means and redirects the request to the application that serves the Web page with videos that may look like this:
+There is no file name here. What does _video_ stand for in this URL? It's not a file, and it's not a folder on the host either. It's just an ID that represents some resources at nick.com. There is a program running at nick.com that understands what this ID means and redirects the request to the application that serves the Web page with videos that may look like this:
 
 [[FIG12-3]]
 image::images/fig_12_nick_videos.png[]
@@ -39,18 +39,18 @@ Often the content that corresponds to a resource ID is not stored in a file, but
 
 === Domain Names and IP Addresses
 
-The name of the server (the host name) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). But remembering these long numbers would be difficult for people hence we're using domain names that are easier to remember (e.g. nick.com or google.com). 
+The name of the server (the host name) must be unique, and when a person or an organization registers a Web site, a unique number is assigned to this physical server. This number is called an IP address. The IP address is either a group of four numbers (e.g. 122.65.98.11) or up to eight hexadecimal numbers (e.g. 2001:cdba:0000:0000:0000:0000:3257:9652). Remembering these long numbers would be difficult for people hence why we're using domain names that are easier to remember (e.g. nick.com or google.com). 
 
 When you're entering a domain name in the browser, your Internet service provider uses special software to find the IP address that corresponds to the entered domain name. If found, your browser receives the requested Web page, which is a document in HTML format. If not found, you'll get an error message that your search didn't match any documents.
 
 You can say,"But entering nick.com shows a lot of content even without providing any document name!" This happens because Web sites creators configure their servers to serve a certain HTML file if the user doesn't specify any. Often they name the file with the home page content _index.html_, but it can be any other file too.
  
-Most of the people connected to the Internet are getting dynamic (temporary) IP addresses assigned to their computers, which can change without notice. 
+Most people connected to the Internet are getting dynamic (temporary) IP addresses assigned to their computers, which can change without notice. 
 
 
 === Downloading Files From the Web
 
-In Chapter 11 you've learned that how to read a local file if you know its location. You'd open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html[java.net]. In this chapter we'll use the classes that can exchange data with remote hosts using HTTP. 
+In Chapter 11 you've learned how to read a local file if you know its location. You'd open a stream pointing to this file and read it. The same holds true for reading remote files. The only difference is that you need open the stream over the network. Java offers a variety of classes for reading (or writing) remote files. All these classes are located in the package http://docs.oracle.com/javase/8/docs/api/java/net/package-summary.html[java.net]. In this chapter we'll use the classes that can exchange data between your computer and remote hosts using HTTP. 
 
 In particular, Java has a class `java.net.URL` that helps your program to connect to a remote computer on the Internet and get access to a resource there, provided that it's not protected from public access. 
 
@@ -77,7 +77,7 @@ Creation of the `URL` object does not establish a connection with the remote com
 3. Get a reference to the input stream of this object by calling the method `getInputStream` from `URLConnection`.
 4. Read the data from the stream.
 
-While writing code for reading streams over the networks you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11. 
+While writing code for reading streams over the network, you’ll have to handle possible I/O exceptions the same way you did while reading the local files in Chapter 11. 
 The following program `WebSiteReader` reads and prints the code of google.com page.  
 
 [source, java]
@@ -167,7 +167,7 @@ In Chapter 11 you've learned how to create a file and write into it. The `WebSit
 [[FIG12-1-1]]
 image::images/fig_12_DownloadUpload.png[]
 
-The following class `FileDownload` creates the `URLConnection` object and get its `InputStream`. This class also creates an `OutputStream` to the local file. The URL and the local filename are given to `FileDownload` program as command-line arguments (explained in Chapter 11). The `FileDownload` connects to the provided URL, downloads its content and saves it in a local file.
+The following class `FileDownload` creates the `URLConnection` object and gets its `InputStream`. This class also creates an `OutputStream` to the local file. The URL and the local filename are given to `FileDownload` program as command-line arguments (explained in Chapter 11). The `FileDownload` connects to the provided URL, downloads its content, and saves it on local file.
 
 [source, java]
 ----
@@ -224,7 +224,7 @@ class FileDownload{
   }
 }
 ----
-<1> This program starts with checking that two command-line arguments were provided. If not, it prints the message showing the right way to start `FileDownload` and exits the program by invoking the method `exit` on the `System` object.
+<1> This program starts by checking that two command-line arguments were provided. If not, it prints the message showing the right way to start `FileDownload` and exits the program by invoking the method `exit` on the `System` object.
 
 <2> Then the program creates an instance of the `URL` object using the URL provided as the first command-line argument.
 
@@ -261,7 +261,7 @@ If you'll open the downloaded file with a program that can show images, you'll s
 [[FIG12-2]]
 image::images/fig_12_nyc.jpg[]
 
-In this chapter I showed you how to download a file using HTTP. Professional Java developers use various techniques, technologies, and protocols for working with remote content. If you're interested in exploring these advanced topics on your own, the http://docs.oracle.com/javaee/7/tutorial/[Java EE Tutorial] is a good start. Maybe one day I'll write a book about the server side programming for kids.  
+In this chapter I've shown you how to download a file using HTTP. Professional Java developers use various techniques, technologies, and protocols for working with remote content. If you're interested in exploring these advanced topics on your own, the http://docs.oracle.com/javaee/7/tutorial/[Java EE Tutorial] is a good start. Maybe one day I'll write a book about the server side programming for kids.  
 
 === Project: Downloading Music 
 
@@ -279,12 +279,12 @@ image::images/fig_12_lastfm.png[]
 http://freedownloads.last.fm/download/59565166/From%2BEmbrace%2BTo%2BEmbrace.mp3
 ----
 +
-3. In IDEA select the menu Run | Edit Configuration and paste this link into the Program arguments field for the `FileDownload` program. This link will be the first command-line argument.
+3. In IDEA, select the menu Run | Edit Configuration and paste this link into the Program arguments field for the `FileDownload` program. This link will be the first command-line argument.
 +
 [[FIG12-4]]
 image::images/fig_12_EditConfigIDEA.png[]
 +
-4. Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where you want to save the song. I've entered song1.mp3. Press the button OK.
+4. Move the cursor to the very end of the Program arguments field and add a space followed by the name of the local file, where you want to save the song. I've entered _song1.mp3_. Then press the button OK.
 
 5. Run the program `FileDownload`. The MP3 file will be downloaded into the local file song1.mp3. Here's the console output I've got:
 +
@@ -296,7 +296,7 @@ Finished downloading the file. It's located at /Users/yfain11/IdeaProjects/jfk/C
 +
 6. Open this file in your MP3 player and enjoy the music! 
 
-7. Close the IDEA and repeat the same exercise from the command line. You'll need to open a Command (or Terminal) window, change the directory to where the file `FileDownload.class` is located. By default, IDEA stores compiled classes in the directory _out/production_. My IDEA project was named Chapter12, and this is where its compiled classes were located in my computer:
+7. Close IDEA and repeat the same exercise from the command line. You'll need to open a Command (or Terminal) window, change the directory to where the file `FileDownload.class` is located. By default, IDEA stores compiled classes in the directory _out/production_. My IDEA project was named Chapter12, and this is where its compiled classes were located in my computer:
 +
 [source, html]
 ----

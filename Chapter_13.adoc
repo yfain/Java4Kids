@@ -7,19 +7,19 @@ In chapters 6, 7, and 10 you’ve learned how to create simple GUI with JavaFX u
 
 JavaFX includes the package http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/package-summary.html[javafx.scene.shape], which includes such classes as `Circle`, `Rectangle`, `Line` and more. All of these classes are inherited from the class `Shape`.
 
-Ping-Pong is a perfect game to illustrate the drawing and animating capabilities of JavaFX. In this game you'll have another chance to work with event handlers, and will learn how to move (animate) shapes around the stage. 
+Ping-Pong is the perfect game to illustrate the drawing and animating capabilities of JavaFX. In this game you'll have another chance to work with event handlers, and will learn how to move (animate) shapes around the stage. 
 
 === The Strategy
 
-Let’s come up with some rules of our Ping-Pong game:
+Let’s come up with some rules for our Ping-Pong game:
 
-1. This game will have two players named Kid and Computer. The table should be painted green, the left paddle should be painted blue - it'll be controlled by the Computer. The right paddle should be yellow - it's controlled by the Kid. Initially the red ball should be located in the center of the table.
+1. This game will have two players named Kid and Computer. The table should be painted green, and the left paddle should be painted blue - it'll be controlled by the Computer. The right paddle should be yellow - it'll be controlled by the Kid. Initially the red ball should be located in the center of the table.
 
 2.  A new game starts when a player presses the N-key on the keyboard, pressing Q will end the game, and the S-key will serve the ball. Only the kid can serve the ball.
 
 3. The Kid’s paddle movements should be controlled by the Up and Down arrow keys. Pressing the key once should move the paddle vertically by the preset number of pixels up or down. The paddle shouldn't cross the table borders.
 
-4.  The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball cam move at an angle, which means that its x and y coordinate should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point. 
+4.  The Kid can move the right paddle and press the S-key. This should serve the ball from the position where the right paddle is located. The ball can move at an angle, which means that its x and y coordinates should change while moving. If the ball crosses the top or bottom borders of the table, the Kid loses a point. 
 
 5. While the ball is moving to the left, the Computer should move the left paddle in the direction of the ball movement. 
 
@@ -28,9 +28,9 @@ Let’s come up with some rules of our Ping-Pong game:
 7.  If the ball contacts the Kid’s paddle in the upper half of the table, the ball should be moving in the up-and-left direction.  If the ball was located in the bottom part of the table, it should move in the down-and-left direction.The game lasts until one of the players reaches the score of 21. Since the computer can't serve the ball, the Kid should score a point if the ball crosses the left border of the table. If the ball crosses the top or
 bottom table borders the point is given to the computer.The computer can also earn the point if it bounces the ball and it crosses the right border of the table. These rules are not the same as in a real Ping-Pong game, but they are good enough for our game.
 
-8. The game score should be displayed in the left bottom corner of the table.
+8. The game score should be displayed in the bottom left corner of the table.
 
-At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called _analytical thinking_, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones an reach them one at time!  
+At first, it seems to be a very challenging task. In programming we often have to break the complicated problem into a set of smaller and simpler tasks. The ability to do so is called _analytical thinking_, and it helps not only in programming, but  everywhere in your life. Do not get frustrated if you can’t achieve a big goal, split it in a set of the smaller ones and reach them one at time!  
 
 Let's start breaking our complex task. Try to visualize a ping-pong table. Can you write a program that will draw a green rectangle? That’s our first goal to achieve. Then we'll add the paddle. Then we'll see how to draw the ball. Learning how to move the ball will be the next task. Writing the keyboard event handlers shouldn't be too difficult.
 
@@ -41,18 +41,18 @@ Now let's implement each step from the game strategy, one step at a time.
 
 === Step 1: Creating the Table
 
-In this section or goal is to draw a 2D ping-pong table, which should look as a green rectangle. 
+In this section our goal is to draw a 2D ping-pong table, which should look as a green rectangle. 
 
-Let's start with creating a new JavaFX project in IntelliJ IDEA selecting JavaFX as a project type. Press Next, and on the next popup window enter PingPong as a project name. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _pingpong.fxml_, the `Main` class into `PingPong`, and `Controller` into `PingPongController`. The same way change the name of the package from _sample_ to _pong_. 
+Let's start with creating a new JavaFX project in IntelliJ IDEA. Select JavaFX as a project type. Press Next, and enter PingPong as a project name on the next popup window. Press the button Finish and IDEA will generate a new project for you. Rename (right-click | Refactor | Rename) the file _sample.fxml_ into _pingpong.fxml_, the `Main` class into `PingPong`, and `Controller` into `PingPongController`. Change the name of the package from _sample_ to _pong_ in the same fashion. 
 
-Now let's draw the ping-pong table in Scene Builder. Right-click on the file _pingpong.fxml_ and open it in Scene Builder. As you've seen in Chapter 7, the generated FXML uses the `<GridBag>` as a default container, and you'll see an empty `GridBag` in the Hierarchy pane. The left side of the SceneBuilder panels will look as follows:
+Now let's draw the ping-pong table in Scene Builder. Right-click on the file _pingpong.fxml_ and open it in Scene Builder. As you've seen in Chapter 7, the generated FXML uses the `<GridBag>` as a default container. You'll see an empty `GridBag` in the Hierarchy pane. The left side of the Scene Builder panels will look as follows:
 
 [[FIG13-2]]
 image::images/fig_13_Group.png[]
 
-But I'm not going to use any layouts in the PingPong game. The game will consist of a number of shapes that I'll keep in the `Group` container. We haven't use it yet - the `Group` is used just to keep several child components together. Grouping components in a container can come handy, if you need to assign one event handler to all child components or auto-resize all of them as a group.
+I'm not going to use any layouts in the PingPong game. The game will consist of a number of shapes that I'll keep in the `Group` container. We haven't use it yet - the `Group` is used just to keep several child components together. Grouping components in a container can come in handy if you need to assign one event handler to all child components or auto-resize all of them as a group.
 
-In Scene Builder delete the `GridBag` container and drag/drop the `Group` from the Miscellaneous section down to the Hierarchy panel. Then drag/drop a `Rectangle` from the Shapes panel onto the `Group`. Resize it an pick a nice green color from the Fill property on the right side. You'll be picking a color from a dropdown palette, and the corresponding color code will be automatically inserted as a `fill` property of the `Rectangle`. Your Screen Builder should look like this:
+In Scene Builder delete the `GridBag` container and drag/drop the `Group` from the Miscellaneous section down to the Hierarchy panel. Then drag/drop a `Rectangle` from the Shapes panel onto the `Group`. Resize it and pick a nice green color from the Fill property on the right side. You'll be picking a color from a dropdown palette, and the corresponding color code will be automatically inserted as a `fill` property of the `Rectangle`. Your Scene Builder should look like this:
 
 [[FIG13-3]]
 image::images/fig_13_Rectangle.png[]
@@ -79,9 +79,9 @@ Open the file _pingpong.fxml_ and you'll see the tag `<Rectangle>` inside the `<
 </Group>
 ----
 
-The `archHeight` and `arcWidth` were auto-generated in case you need to create rounded corners in the rectangle. The properties `stroke` and `strokeType` define the look and the placement of the rectangle's border. Every rectangle has the `x` and `y` properties that define the coordinates of its upper left corner inside the container. By default the values of `x` and `y` are zeros, so this rectangle will be drawn starting from the upper left corner of the `Group` container. 
+The `archHeight` and `arcWidth` were auto-generated in case you need to create rounded corners in the rectangle. The properties `stroke` and `strokeType` define the look and the placement of the rectangle's border. Every rectangle has the `x` and `y` properties that define the coordinates of its upper left corner inside the container. By default, the values of `x` and `y` are zeros, so this rectangle will be drawn starting from the upper left corner of the `Group` container. 
 
-If you're interested in learning how different properties change the look of the rectangle visit the http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Rectangle.html[online documentation] for this class. Keep in mind that some of the properties are defined in the class `Shape`, the ancestor of the `Rectangle`.
+If you're interested in learning how different properties change the look of the rectangle, visit the http://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Rectangle.html[online documentation] for this class. Keep in mind that some of the properties are defined in the class `Shape`, the ancestor of the `Rectangle`.
 
 Running the auto-generated `PingPong` class will show the following window:
 
@@ -92,7 +92,7 @@ There are a couple of things that I don't like here. First, the corners of the r
 
 Second, the window has a title Hello World set by the auto-generated code in IntelliJ IDEA. It's easy to change in the class `PingPong`, but I don't even want to see a title bar! 
 
-This is also an easy change in JavaFX. Set the stage style to `UNDECORATED` will remove the standard window title and borders. But if I'll remove the title bar, I'll lose the ability to close the window by clicking on the circle (or a little cross in Windows) will be gone. A bit later we'll write the code to close the window by pressing the Q-key on the keyboard. At this point the code of the `PingPong` class looks like this:
+This is also an easy fix in JavaFX. Setting the stage style to `UNDECORATED` will remove the standard window title and borders. But if I'll remove the title bar, I'll lose the ability to close the window by clicking on the circle (or a little cross in Windows). A bit later we'll write the code to close the window by pressing the Q-key on the keyboard. At this point the code of the `PingPong` class looks like this:
 
 [source, java]
 ----
@@ -130,14 +130,14 @@ This class was generated by IDEA, but I've removed the Hello World title, set th
 [[FIG13-5]]
 image::images/fig_13_undecorated.png[]
 
-Now let's open _pingpong.fxml_ in Scene Builder again add the paddles and the ball on top of the table. For paddles, I'll drag/drop two `Rectangle` objects from the Shapes section onto the Group container. Our paddles will have size of 10 by 50 pixels. The left paddle will be blue, aand the right one - yellow. Then I drag/drop, resize and color the `Circle` setting its radius to 9 pixels and painting it red. My Scene Builder will look like this:
+Now let's open _pingpong.fxml_ in Scene Builder again and add the paddles and the ball on top of the table. For paddles, I'll drag/drop two `Rectangle` objects from the Shapes section onto the Group container. Our paddles will have a size of 10 by 50 pixels. The left paddle will be blue, and the right one will be yellow. Then I drag/drop, resize and color the `Circle` to set its radius to 9 pixels, and then will paint it red. My Scene Builder will look like this:
 
 [[FIG13-6]]
 image::images/fig_13_paddles_and_ball.png[]
 
 Now back to IDEA. Since our shapes will need to communicate with the controller class, we need to assign an `fx:id` to each of them. Let's assign the `fx:id="theGroup"` to the `Group` container. Our green `Rectangle` will get `fx:id="table"`. 
 
-Computer will play with the left paddle, and I'll give it `fx:id="compPaddle"`. The Kid will play with the right paddle that will go by `fx:id="kidPaddle"`. The ball will get `fx:id="ball"`. Now The `Group` container in my file _pingpong.fxml_ will look like this: 
+The computer will play with the left paddle, and I'll give it `fx:id="compPaddle"`. The Kid will play with the right paddle that will go by `fx:id="kidPaddle"`. The ball will get `fx:id="ball"`. Now The `Group` container in my file _pingpong.fxml_ will look like this: 
 
 [source, xml]
 ----
@@ -171,9 +171,9 @@ We need to add the event handler methods to the class `PingPongController` to pr
 
 For processing keyboard events JavaFX components have special event handler properties `onKeyPressed`, `onKeyReleased`, and `onKeyTyped`. The first two properties allow you to program different actions for the downward and upward key motions, if needed. 
 
-The `onKeyTyped` is used to assign a handler to the event when the key code is sent to the system output. This event is http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyEvent.html[not generated] for the keys that don't produce character output. We'll use `onKeyReleased` - this is when the the user lift his finger up.
+The `onKeyTyped` is used to assign a handler to the event when the key code is sent to the system output. This event is http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input/KeyEvent.html[not generated] for the keys that don't produce character output. We'll use `onKeyReleased` - this is when the the user lifts his finger up.
 
-NOTE: IDEA can help you to find out which event handlers can be used with a particular component. Just click CTRL-Space inside this component's FXML tag and start typing with the letters `on` - you'll see all applicable event handlers. 
+NOTE: IDEA can help you find out which event handlers can be used with a particular component. Just click CTRL-Space inside this component's FXML tag and start typing with the letters `on` and you'll see all applicable event handlers. 
 
 When the user releases a key, the `onKeyReleased` method handler receives the `KeyEvent` object as an argument. The method `getCode` from the class `KeyEvent` returns the `KeyCode` object that represents the key pressed. For example, if you press the button Q, the `getCode` will return `Q`. If you press the arrow up, the `getCode` will return `UP`.
 
@@ -203,7 +203,7 @@ To set the focus to the `Group` container we'll need to do two things:
 
 ==== Processing Keyboard Events in the Controller
 
-In the code that comes with this chapter the final version of the controller is called `PingPongController`. But I've also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with `PingPongController` followed with a different suffix with a version number (e.g. `PingPongController_v1`, `PingPongController_v2` etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as `fx:controller` in the file `pingpong.fxml` and run the `PingPong` program. 
+In the code that comes with this chapter the final version of the controller is called `PingPongController`. I've also included multiple versions of the controller that gradually implement the steps listed in the game strategy. Each "intermediate" controller class name starts with `PingPongController` followed by a different suffix with a version number (e.g. `PingPongController_v1`, `PingPongController_v2` etc.) The starting comment in each  class briefly describes what was added in this version of the controller. To see any of these controllers in action, just specify its name as `fx:controller` in the file `pingpong.fxml` and run the `PingPong` program. 
 
 NOTE: In InelliJ IDEA you can easily compare two files to see the difference. Press CTRL or CMD button and click on the names of two files you'd like to compare (e.g. `PingPongController_v1` and `PingPongController_v2`). Then select the menu View | Compare Two Files, and you'll see the source code of these files next to each other with highlighted differences.
 
@@ -287,7 +287,7 @@ If you'll open the http://docs.oracle.com/javase/8/javafx/api/javafx/scene/input
 
 ==== Preparing to Process the Keys S, Q, and N
 
-Now we'll add a `switch` statement to the controller to invoke the method that corresponds to the pressed key. Let's not worry about implementing the application logic just yet. We want to make sure that the programs invokes the correct method for each key. 
+Now we'll add a `switch` statement to the controller to invoke the method that corresponds to the pressed key. Let's not worry about implementing the application logic just yet. We want to make sure that the program invokes the correct method for each key. 
 
 [source, java]
 ----
@@ -340,11 +340,11 @@ public class PingPongController {
 }
 ----
 
-The `switch` statement checks the value of `enum KeyCode` and calls the corresponding method which just prints a hard-coded message - we'll implement them shortly. But the Q-key in the above `PingPongController` is fully functional. When the user presses the Q-key, the program invokes the method `exit` on the class `Platform`, which terminates the program.      
+The `switch` statement checks the value of `enum KeyCode` and calls the corresponding method which just prints a hard-coded message. We'll implement them shortly, but the Q-key in the above `PingPongController` is fully functional. When the user presses the Q-key, the program invokes the method `exit` on the class `Platform`, which terminates the program.      
 
 === Step 3: Moving the Paddle
 
-Now let's teach the keys Up and Down to move the kid's paddle vertically. Pressing the Up-arrow should move the kid's paddle several pixels up according to the predefined moving increment. Pressing the Down-arrow should move the paddle down. We'll declare an movement increment as a `final` variable in `PingPongController`:
+Now let's teach the keys Up and Down to move the Kid's paddle vertically. Pressing the Up-arrow should move the Kid's paddle several pixels up according to the predefined moving increment. Pressing the Down-arrow should move the paddle down. We'll declare an movement increment as a `final` variable in `PingPongController`:
 
 [source, java]
 ----
@@ -455,7 +455,7 @@ public class PingPongController {
 <4> The method `initialize` in the controller is called only once and is the right place to initialize important variables. First, we initialize the property `currentKidPaddleY`, with the value of the `layoutY` property of the right paddle (the _kidPaddle_ component has an attribute `layoutY="98.0"` in the file _pingpong.fxml_). Then we bind `currentKidPaddleY` to the  `layoutY` property of the GUI component kidPaddle.
 
 <5> Here we set the limits for the paddle movements. We set the variable `allowedPaddleTopY=PADDLE_MOVEMENT_INCREMENT` to make sure that if the Kid keeps pressing the Up arrow, the paddle will never cross the top border of the table. The bottom restriction `allowedPaddleBottomY` is calculated by subtracting the height of the paddle and `PADDLE_MOVEMENT_INCREMENT` from the table height. 
-<6> The method `process_key_Up` gets the current y-coordinate of the top border of the paddle, and if it's far enough from the table top, the code decrements the value of the property `currentKidPaddleY` by `PADDLE_MOVEMENT_INCREMENT`. Because `currentKidPaddleY` is bound to the `layoutY` property of the GUI component `kidPaddle`, the latter moves up on stage. The movement stops if the `currentKidPaddleY` value is higher than `allowedPaddleTopY`. Remember, the y-coordinate increases from top down, so the higher y-coordinates means that it's physically lower on stage.
+<6> The method `process_key_Up` gets the current y-coordinate of the top border of the paddle, and if it's far enough from the table top, the code lowers the value of the property `currentKidPaddleY` by `PADDLE_MOVEMENT_INCREMENT`. Because `currentKidPaddleY` is bound to the `layoutY` property of the GUI component `kidPaddle`, the latter moves up on stage. The movement stops if the `currentKidPaddleY` value is higher than `allowedPaddleTopY`. Remember, the y-coordinate increases from top down, so the higher y-coordinates means that it's physically lower on stage.
 
 <7> The method `process_key_Down` works similarly to `process_key_Up` but ensures that the paddle won't cross the bottom border of the table.   	
 
@@ -473,7 +473,7 @@ The ball is represented by the shape `Circle`. From school math you should remem
 <Circle fx:id="ball" fill="#ff1f35" layoutX="191.0" layoutY="123.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
 ----
 
-But why the above tag `<Circle>` doesn't include `centerX` and `centerY`?  Actually we can and will replace the attributes `layoutX` and `layoutY` with `centerX` and `centerY` because we use the `Group` container that's not a part of any other layout (e.g. `BorderPane` or `GridPane`). But JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container. 
+But why doesn't the above tag `<Circle>` include `centerX` and `centerY`?  Actually we can and will replace the attributes `layoutX` and `layoutY` with `centerX` and `centerY` because we use the `Group` container that's not a part of any other layout (e.g. `BorderPane` or `GridPane`). JavaFX allows you to build complex scenes that can dynamically change sizes and reposition its child components.Hence the x and y coordinates of a component relative to a layout may not be the same as coordinates in the scene. For example, the actual x-coordinate of a component may be calculated by adding the x-coordinate of a container within a scene and the x-coordinate of the component within a container. 
 
 Let's modify the attributes of the tag `<Circle>` so it'll look like this:
 
@@ -522,9 +522,9 @@ image::images/fig_13_serve_ball.png[]
 
 ==== Serving the Ball Horizontally
 
-The ball is ready to start moving now. To make the movement smooth we'll use the class `javafx.animation.Timeline` that allows change the values of the GUI component's properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement we'll declare the variable `timeline` of the type `TimeLine`, which we'll use to display a set of snapshots of a ball at different positions along its trajectory.   
+The ball is ready to start moving now. To make the movement smooth, we'll use the class `javafx.animation.Timeline` that allows us to change the values of the GUI component's properties over a time interval. Similarly to a movie, the animation is a set of frames that are displayed over a specific period of time. Each frame is a snapshot of a GUI component at a certain state. For the ball movement we'll declare the variable `timeline` of the type `TimeLine`, which we'll use to display a set of snapshots of a ball at different positions along its trajectory.   
 
-Each frame is represented by a class `KeyFrame`. Each snapshot is a represented by the class `KeyValue`. Let's write a method `moveTheBall` that will move the ball horizontally all the way to the left until the `centerX` will become equal to zero.  If we'll be changing only the `centerX` property of the `Circle`, it'll be moving horizontally. 
+Each frame is represented by a class `KeyFrame`. Each snapshot is represented by the class `KeyValue`. Let's write a method `moveTheBall` that will move the ball horizontally all the way to the left until the `centerX` will become equal to zero.  If we change only the `centerX` property of the `Circle`, it'll be moving horizontally. 
 
 [source, java]
 ----
@@ -546,11 +546,11 @@ private void moveTheBall(){
 
 <2> Then we'll create the `KeyValue` object to specify which changing value to display in frames. In this case we want the animation to change the x-coordinate of the ball center from its current value `ballCenterX` to zero.	
 
-<3> We want the `KeyFrame` to reach the target (change the `centerX` specified in `KeyValue` from the current value to zero) over the period of 1000 milliseconds. The smaller the number, the faster the ball will move. The number of frames will be automatically calculated based on the duration and the target position of the ball. 
+<3> We want the `KeyFrame` to reach the target (change the `centerX` specified in `KeyValue` from the current value to zero) over a period of 1000 milliseconds. The smaller the number, the faster the ball will move. The number of frames will be automatically calculated based on the duration and the target position of the ball. 
 
-<4> Adding the our `KeyFrame` object to the timeline completes the preparations.
+<4> Adding the our `KeyFrame` object to the `timeline` completes the preparations.
 
-<5> The method `play` will play the timeline.	
+<5> The method `play` will play the `timeline`.	
 
 Now if you'll invoke the method `moveTheBall` from `process_key_S` the ball will move to the left and stop there. Here's what I've got after starting the game and pressing the S-key:
 
@@ -559,7 +559,7 @@ image::images/fig_13_ball_moved.png[]
 
 Our ball is not smart enough to notice that there was a left paddle on its way and went right through it. We'll take care of the GUI component collisions a bit later.
 
-Depending on the provided duration, the `Timeline` object will calculate how many snapshots (key frames) to create while the `KeyValue` is changing to reach the target. The `Timeline` class has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary[overloaded constructors], and one of the allows to specify the frames per second for the animation.
+Depending on the provided duration, the `Timeline` object will calculate how many snapshots (key frames) to create while the `KeyValue` is changing to reach the target. The `Timeline` class has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html#constructor.summary[overloaded constructors], and one of them allows you to specify the frames per second for the animation.
 
 The `KeyFrame` class also has several http://docs.oracle.com/javase/8/javafx/api/javafx/animation/KeyFrame.html#constructor.summary[overloaded constructors], and one of them allows you to specify the duration, the event handler for the `ActionEvent`, and optional key value(s). The handler for the `ActionEvent` can be implemented as a  lambda expression. 
 
@@ -595,15 +595,15 @@ private void moveTheBall(){
 
 <2> The lambda expression starts with checking if the current value of the x-coordinate of the ball center is larger than the value in `BALL_MOVEMENT_INCREMENT` to ensure that the ball will not cross the left border and will stay at the 0 coordinates. To make our game more realistic, we'll let the ball go off the table in the next version of the `moveTheBall`. 
 
-<3> Decrement the value of the `ballCenterX` by `BALL_MOVEMENT_INCREMENT`. Because of binding this will move the ball on the GUI.
+<3> Decrement the value of the `ballCenterX` by `BALL_MOVEMENT_INCREMENT`. Because of binding, this will move the ball on the GUI.
 
-<4> Stop the animation if the ball would fall off the table on the next move.	
+<4> Stop the animation if the ball were to fall off the table on the next move.	
 
-<5> Create the `Timeline` using our `KeyFrame` and play it. In this case I requested to play the animation indefinitely, because I don't want to calculate how many moves would it take to reach the target position. I'll stop the animation manually anyway as explained in step 4.
+<5> Create the `Timeline` using our `KeyFrame` and play it. In this case I requested to play the animation indefinitely because I don't want to calculate how many moves would it take to reach the target position. I'll stop the animation manually anyway as explained in step 4.
 
 ==== Serving the Ball in Random Directions
 
-The game that serves the ball horizontally is pretty boring, so let's change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let's change the y-coordinate in a random manner, so each ball serving sends the ball in a different direction. We'll create a ball serving machine.
+The game that serves the ball horizontally is pretty boring, so let's change not only the x-, but y-coordinate as well while the ball is moving. To add some fun, let's change the y-coordinate in a random manner, so that each ball serving sends the ball in a different direction. We'll create a ball serving machine.
 
 If the user moved the paddle to the upper half of the table, the ball should be moving either horizontally or down. If the ball is served from the lower half - the ball can move either horizontally or upward. To know the y-coordinate of the table center we'll declare the `double` variable `centerTableY` and set its value in the method `initialize` like this:
 
@@ -612,7 +612,7 @@ If the user moved the paddle to the upper half of the table, the ball should be 
 centerTableY = table.getHeight()/2;
 ----
 
-As the ball moves, we'll modified value of the y-coordinate of the ball center will be assigning it to the property `ballCenterY`.The following version version of the method `moveTheBall` implements the random ball servings.
+As the ball moves, the modified value of the y-coordinate of the ball center will be assigned to the property `ballCenterY`. The following version of the method `moveTheBall` implements the random ball servings.
 
 [source, java]
 ----
@@ -654,9 +654,9 @@ As the ball moves, we'll modified value of the y-coordinate of the ball center w
 
 <1>  We create an instance of the class `java.util.Random`. This class has methods to generate random numbers of different types. Invoking the method `nextInt` generates a random integer number in the range between zero and the value of the method argument. I decided to use the value of `BALL_MOVEMENT_INCREMENT` as a top limit. This random number will be used as an increment for the y-coordinate of the moving ball.
 
-<2>  Using the conditional operator (it's explained in Chapter 4) we set the variable `isServingFromTop` to true if the right paddle is located on the upper half of the table, or to false if the paddle is in the lower half.
+<2>  Using the conditional operator (as explained in Chapter 4) we set the variable `isServingFromTop` to true if the right paddle is located on the upper half of the table, or to false if the paddle is in the lower half.
 
-<3> In the previous version of the method `moveTheBall` we were keeping the ball on the table when it was reaching the left edge of the table. Now we let the ball fall off the table. The `-20` is just an arbitrary number - we stop the ball movement after the ball moved 20 pixels past the left table edge. In the final version of the game we'll enable the movement for the left paddle, and sometimes it'll bounce the ball back. 
+<3> In the previous version of the method `moveTheBall`, we were keeping the ball on the table when it was reaching the left edge of the table. Now we will let the ball fall off the table. The `-20` is just an arbitrary number - we stopped the ball movement after the ball moved 20 pixels past the left table edge. In the final version of the game we'll enable the movement for the left paddle, and sometimes it'll bounce the ball back. 
 
 <4>	If `isServingFromTop` is true, we're increasing the y-coordinate of the ball's center by `randomYincrement`, otherwise we're decreasing it by the same amount. Now the ball will be served in an unpredictable manner and will pretty often fall off the table crossing the top or bottom edge of the table. I took the following screen shot when the moving ball was about to cross the bottom edge of the table.
 
@@ -665,9 +665,9 @@ image::images/fig_13_ball_moved_down.png[]
 
 === Step 5: Moving the Computer's Paddle
 
-When the ball is served, the Computer needs to move its paddle in the right direction to bounce the ball. This is a pretty easy task since the computer knows that if the Kid's paddle served from the top, the ball will move down, and if the ball was served from the bottom it'll move up. So the moment the ball is served, the computer's paddle should also start moving.
+When the ball is served, the Computer needs to move its paddle in the right direction to bounce the ball. This is a pretty easy task since the computer knows that if the Kid's paddle served from the top, the ball would move down, and if the ball was served from the bottom it'll move up. So the moment the ball is served, the computer's paddle should also start moving.
 
-First of all, we'll declare the property `currentComputerPaddleY` to keep track of the y-coordinate of the Computer's paddle. We'll also need to store the initial y-coordinate of the Computer's paddle, because on each ball serving this paddle should be in the middle of the left side f the table:
+First of all, we'll declare the property `currentComputerPaddleY` to keep track of the y-coordinate of the Computer's paddle. We'll also need to store the initial y-coordinate of the Computer's paddle, because on each ball serving this paddle should be in the middle of the left side of the table:
 
 [source, java]
 ----
@@ -736,9 +736,9 @@ private void moveTheBall(){
 
 === Step 6: Bouncing the Ball
 
-There is no guarantee that the Computer's paddle will be advanced to the position to bounce the ball. Our Ping-Pong game doesn't implement the algorithm the adjust the movement of the Computer's paddle based on the trajectory of the ball's movement. But if the ball accidentally contacts the paddle we need to bounce the ball and send it from left to right.
+There is no guarantee that the Computer's paddle will advance to a position to bounce the ball. Our Ping-Pong game doesn't implement the algorithm that adjusts the movement of the Computer's paddle based on the trajectory of the ball's movement. But if the ball accidentally contacts the paddle, we need to bounce the ball and send it from left to right.
 
-Every JavaFX GUI component is a subclass of a `Node`, which has a special property `boundsInParent`. It's an invisible rectangle that encapsulates the component when it's places inside a layout. So our ball and paddles are is sitting inside of these invisible rectangle too. When the ball or paddles are being moved, the coordinates of their `boundsInParent` properties are being recalculated. If these invisible rectangles of the ball and the paddle intersect, we can say that there was a contact. The method `checkForBallPaddleContact` returns true if there was a contact, and false if not.
+Every JavaFX GUI component is a subclass of a `Node`, which has a special property `boundsInParent`. It's an invisible rectangle that encapsulates the component when it's placed inside a layout. So our ball and paddles are sitting inside of these invisible rectangles too. When the ball or paddles are being moved, the coordinates of their `boundsInParent` properties are being recalculated. If these invisible rectangles of the ball and the paddle intersect, we can say that there was a contact. The method `checkForBallPaddleContact` returns true if there was a contact, and false if not.
 
 [source, java]
 ----
@@ -802,13 +802,13 @@ private void moveTheBall(){
 
 <1> If there was a ball/paddle contact, we need to stop playing the current `timeline`, set the Computer's paddle to its initial position.
 
-<2>Then we'll need to call the method `bounceTheBall`, which we'll write next. 
+<2> Then we'll need to call the method `bounceTheBall`, which we'll write next. 
 
-According to step 6 in our game strategy, the computer can only serve the ball horizontally, so writing the `bounceTheBall` method seems like a pretty simple thing to do. We already wrote a version of the `moveTheBall` method that sends the ball horizontally from right to left, so just reversing the ball moving direction should be easy.
+According to step 6 in our game strategy, the computer can only serve the ball horizontally, so writing the `bounceTheBall` method seems like a pretty simple thing to do. We already wrote a version of the `moveTheBall` method that sends the ball horizontally from right to left, so reversing the ball moving direction should be easy.
 
-But what if the Kid will move his or her paddle to hit the ball back? OK, then we need to be checking if the ball contacts the Kid's paddle too. Can we reuse the method `checkForBallPaddleContact` for this? Not in its current form, because it's written specifically for the computer paddle. We can certainly write a similar method for the Kid's paddle and have two almost identical methods, but it's better to re-write `checkForBallPaddleContact` to work for both paddles. 
+But what if the Kid will move his or her paddle to hit the ball back? OK, then we need to be checking if the ball contacts the Kid's paddle as well. Can we reuse the method `checkForBallPaddleContact` for this? Not in its current form, because it's written specifically for the computer paddle. We can certainly write a similar method for the Kid's paddle and have two almost identical methods, but it's better to re-write `checkForBallPaddleContact` to work for both paddles. 
 
-In programmer's jargon re-writing an existing and working code is called _refactoring_. So let's refactor the method `checkForBallPaddleContact` by providing the paddle as an argument. Here's the refactored version that can be used for both p:
+In programmer's jargon re-writing an existing and working code is called _refactoring_. So let's refactor the method `checkForBallPaddleContact` by providing the paddle as an argument. Here's the refactored version that can be used for both paddles:
 
 [source, java]
 ----
@@ -836,7 +836,7 @@ To check for the ball contact with the Kid's paddle you'd write this line:
 checkForBallPaddleContact(kidPaddle);
 ----
 
-Now let's write the method `bounceTheBall`, which should be very similar to `moveTheBall`. The ball should move from left to write, if  you've been decreasing the x-coordinate in `moveTheBall`, you'll need to decrease it now. If you've been stopping the game where the coordinate of the ball was less than -20, now it has to be more that the table width plus 20. I could refactor the method `moveTheBall` to introduce these values as methods arguments, but let's keep it as a small project for you. As long as you understand how the code works, you should be able to do it on your own. Here's the code of the method `bounceTheBall`:
+Now let's write the method `bounceTheBall`, which should be very similar to `moveTheBall`. The ball should move from left to write, if  you've been decreasing the x-coordinate in `moveTheBall`, you'll need to decrease it now. If you've been stopping the game where the coordinate of the ball was less than -20, now it has to be more than the table width plus 20. I could refactor the method `moveTheBall` to introduce these values as methods arguments, but let's keep it as a small project for you. As long as you understand how the code works, you should be able to do it on your own. Here's the code of the method `bounceTheBall`:
 
 [source, java]
 ----
@@ -877,9 +877,9 @@ private void bounceTheBall() {
 <3> While the Computer bounces the ball, the Kid can press the up and down arrow keys to stop the ball. If the ball contacts the Kid's paddle, we call the `moveTheBall` method to start the random movement to the left again. 
 
 
-The basic functionality of the game is implemented except displaying the game score and starting the new game when one of the players gets 21 points. I leave this part for you to implement on your own.
+The basic functionality of the game is implemented aside from displaying the game score and starting the new game when one of the players gets 21 points. I'll leave this part for you to implement on your own.
 
-I've been showing and explaining various code fragments of the `PingPongController` as we've been implementing the game strategy one step at a time. Now I'll just show how the code of the `PingPongConroller` class looks without any additional explanations. You should be able to read and understand the code.
+I've been showing and explaining various code fragments of the `PingPongController` as we've been implementing the game strategy one step at a time. Now I'll just show how the code of the `PingPongConroller` class looks like without any additional explanations. You should be able to read and understand the code.
 
 [source, java]
 ----
@@ -939,11 +939,9 @@ public class PingPongController {
      ball.centerXProperty().bind(ballCenterX);
      ball.centerYProperty().bind(ballCenterY);
 
-
      initialComputerPaddleY = compPaddle.getLayoutY();
      currentComputerPaddleY.set(initialComputerPaddleY);
      compPaddle.layoutYProperty().bind(currentComputerPaddleY);
-
 
      allowedPaddleTopY = PADDLE_MOVEMENT_INCREMENT;
      allowedPaddleBottomY = table.getHeight() - kidPaddle.getHeight() - PADDLE_MOVEMENT_INCREMENT;
@@ -972,7 +970,6 @@ public class PingPongController {
              break;
      }
  }
-
 
  private void process_key_Up() {
 
@@ -1043,7 +1040,6 @@ public class PingPongController {
      timeline.play();
  }
 
-
  private boolean checkForBallPaddleContact(Rectangle paddle){
 
      if (ball.intersects(paddle.getBoundsInParent())){
@@ -1078,19 +1074,17 @@ public class PingPongController {
      timeline.setCycleCount(Timeline.INDEFINITE);
 
      timeline.play();
-
    }
 }
 ----
 
 === Project: Displaying the Game Score
 
-The goal of this project is to keep track and display the game score. I'll just show you how to print the score on the system console, but you'll need research how to display the text right on the ping-pong table.
+The goal of this project is to keep track and display the game score. I'll just show you how to print the score on the system console, but you'll need to research how to display the text right on the ping-pong table.
 
-If the Kid would serve the ball horizontally, he or she would score one point when the ball goes off the table and its x-coordinate is less than zero. But since the ball is served in a random direction, it can go off the table by crossing top or bottom table's borders. In this case the Kid loses the point. When the method _moveTheBall_ stops playing the timeline, the ball's x-coordinate is definitely less than zero. So we need to check the y-coordinate of the ball. 
+If the Kid would serve the ball horizontally, he or she would score one point when the ball goes off the table and its x-coordinate is less than zero. But since the ball is served in a random direction, it can go off the table by crossing top or bottom table's borders. In this case the Kid loses the point. When the method _moveTheBall_ stops playing the timeline, the ball's x-coordinate is definitely less than zero so you need to check the y-coordinate of the ball. 
 
-If the y-coordinate of the ball has a value between zero and the table height, we can assume that the ball crossed the left border of the table and the Kid scores one point. 
-Otherwise the ball crossed either top or bottom table's borders and the Kid should loose the point. 
+If the y-coordinate of the ball has a value between zero and the table height, you can assume that the ball crossed the left border of the table and the Kid scored one point. Otherwise the ball crossed either top or bottom table's borders and the Kid should loose the point. 
 
 The Computer scores one point if it bounces the ball and it crosses the right border of the table.
 
