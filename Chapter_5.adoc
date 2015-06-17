@@ -272,7 +272,7 @@ Beside method declarations, default and static methods you can add `static final
 ----
 public interface Swimmable {
     
-    static final MAX_DEPTH = 10; // in feet
+    static final int MAX_DEPTH = 10; // in feet
 
     public void swim(int howFar);
 
