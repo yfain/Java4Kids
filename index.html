@@ -2353,12 +2353,14 @@ Good night, see you tomorrow</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now add the following three lines to the method <code>main</code> of the class <code>FishMaster</code>:</p>
+<p>Now add the following three lines to the method <code>main</code> of the class <code>FishMaster</code> (after creating the instance of the <code>Fish</code>):</p>
 </div>
-<div class="paragraph">
-<p><code>String fishReaction;</code>
-<code>fishReaction = myFish.talk("Hello");</code>
-<code>System.out.println(fishReaction);</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="java"><span class="tok-n">String</span> <span class="tok-n">fishReaction</span><span class="tok-o">;</span>
+<span class="tok-n">fishReaction</span> <span class="tok-o">=</span> <span class="tok-n">myFish</span><span class="tok-o">.</span><span class="tok-na">talk</span><span class="tok-o">(</span><span class="tok-s">&quot;Hello&quot;</span><span class="tok-o">);</span>
+<span class="tok-n">System</span><span class="tok-o">.</span><span class="tok-na">out</span><span class="tok-o">.</span><span class="tok-na">println</span><span class="tok-o">(</span><span class="tok-n">fishReaction</span><span class="tok-o">);</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Run the program and it’ll print</p>
