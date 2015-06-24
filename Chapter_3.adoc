@@ -517,11 +517,14 @@ public String talk(String something){
 } 
 ----
 
-Now add the following three lines to the method `main` of the class `FishMaster`:
+Now add the following three lines to the method `main` of the class `FishMaster` (after creating the instance of the `Fish`):
 
-`String fishReaction;`
-`fishReaction = myFish.talk("Hello");`
-`System.out.println(fishReaction);`
+[source, java]
+----
+String fishReaction;
+fishReaction = myFish.talk("Hello");
+System.out.println(fishReaction);
+----
 
 Run the program and it’ll print 
 
