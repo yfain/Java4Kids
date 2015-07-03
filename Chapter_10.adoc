@@ -34,7 +34,7 @@ public class TicTacToe extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("tictactoe.fxml"));
         primaryStage.setTitle("Tic-Tac-Toe");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 300, 325));
         primaryStage.show();
     }
 
@@ -106,7 +106,7 @@ The grid has 9 cells and we want to add 9 buttons - each button will represent a
 
 <BorderPane xmlns="http://javafx.com/javafx/8" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="tictactoe.TicTacToeController">
+            fx:controller="mygame.TicTacToeController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
