@@ -528,6 +528,8 @@ Each frame is represented by a class `KeyFrame`. Each snapshot is represented by
 
 [source, java]
 ----
+Timeline timeline;
+
 private void moveTheBall(){  
   
   timeline = new Timeline();   // <1>
