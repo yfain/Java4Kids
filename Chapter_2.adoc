@@ -109,7 +109,7 @@ public static void main(String[] args) {
 
 Great job, IDEA! Such code completion minimizes typing and the number of typos you could make. At the end of this chapter in the section Additional Reading you'll find the link to a Web page showing more advanced features of code completion in IDEA. It may be a little early for you to understand everything that's explained there, but bookmark a link to this page for future reference.
 
-TIP: To become a real pro in IDEA, you should use the _hotkeys_, which are combinations of key-presses on the keyboard. With hotkeys you'll be able to navigate in your IDEA projects a lot faster than by clicking through menus. You can find the link to the document listing IDEA's hotkeys in the section Additional Reading at the end of this chapter.
+TIP: To become a real pro in IDEA, you should use the _hotkeys_, which are combinations of key-presses on the keyboard. With hotkeys you'll be able to navigate in your IDEA projects a lot faster than by clicking through menus. Here's https://resources.jetbrains.com/assets/products/intellij-idea/IntelliJIDEA_ReferenceCard.pdf[the link] to the document listing IDEA's hotkeys.
 
 Now we have the class `HelloWorld` with an empty _method_ `main`. The word _method_ means _action_. To run a Java class as a program, this class must have a method called `main`. Usually your applications will have many classes, but only one of them will have the method `main`. This class becomes the entry point in your application.
 
