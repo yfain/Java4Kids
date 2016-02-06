@@ -1470,7 +1470,7 @@ Here is the program that prints the words <em>Hello World!</em> on your computer
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are combinations of key-presses on the keyboard. With hotkeys you&#8217;ll be able to navigate in your IDEA projects a lot faster than by clicking through menus. You can find the link to the document listing IDEA&#8217;s hotkeys in the section Additional Reading at the end of this chapter.
+To become a real pro in IDEA, you should use the <em>hotkeys</em>, which are combinations of key-presses on the keyboard. With hotkeys you&#8217;ll be able to navigate in your IDEA projects a lot faster than by clicking through menus. Here&#8217;s <a href="https://resources.jetbrains.com/assets/products/intellij-idea/IntelliJIDEA_ReferenceCard.pdf">the link</a> to the document listing IDEA&#8217;s hotkeys.
 </td>
 </tr>
 </table>
@@ -6776,7 +6776,7 @@ public void validateOrder(ActionEvent evt){
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("tictactoe.fxml"));
         primaryStage.setTitle("Tic-Tac-Toe");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 300, 325));
         primaryStage.show();
     }
 
@@ -6872,7 +6872,7 @@ Change the preferred height of each row to 100 by selecting each row and enterin
 
 &lt;BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="tictactoe.TicTacToeController"&gt;
+            fx:controller="mygame.TicTacToeController"&gt;
    &lt;top&gt;
       &lt;MenuBar BorderPane.alignment="CENTER"&gt;
         &lt;menus&gt;
@@ -9562,7 +9562,9 @@ ball.centerYProperty().bind(ballCenterY);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">private void moveTheBall(){
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">Timeline timeline;
+
+private void moveTheBall(){
 
   timeline = new Timeline();   <i class="conum" data-value="1"></i><b>(1)</b>
   timeline.setCycleCount(1);
@@ -11000,7 +11002,7 @@ Maybe one day I&#8217;ll write a more advanced Java book for kids too. Thank you
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-05-02 16:27:41 EDT
+Last updated 2016-02-05 02:34:19 EST
 </div>
 </div>
 </body>
