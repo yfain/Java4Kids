@@ -189,7 +189,7 @@ I'll show you how to undo the last commit and remove the code changes in _PetMas
 
 [source, html]
 ----
-git reset HEAD
+git reset HEAD~1
 ----
 
 The _reset_ command will undo the last commit and will open a text editor containing the description of this  reverted commit, which can look as follows:
