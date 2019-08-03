@@ -335,7 +335,7 @@ NOTE: You can find more detailed explanations of all Git features in the free bo
 
 If you have a shared Git repository on a remote computer, you'll need to synchronize with it the content from your local Git repository. Usually I do it several times a day. Even if you work on the project alone, you may want to have a current copy of your Git repository in the remote computer.
 
-https://github.com/[GitHub] is a Web-based Git repository hosting service, where you can create a shared code repository free of charge as long as you don't mind keeping your code open to the public. People or organizations that want to create private repositories on GitHub can purchase a paid account. But we have nothing to hide. Moreover, programmers who have their code published on GitHub are treated with additional respect.
+https://github.com/[GitHub] is a Web-based Git repository hosting service, where you can create a shared code repository free of charge as long as you don't mind keeping your code open to the public. As of this writing private GitHub accounts are also free. But we have nothing to hide. Moreover, programmers who have their code published on GitHub are treated with additional respect.
 
 NOTE: GitHub is not the only hosting service for Git repositories on the Web. https://bitbucket.org/[Bitbucket] is yet another popular place for storing public and private Git repositories.  
 
