@@ -5,7 +5,7 @@
 
 In this chapter I'll focus on discussing how you can program _behavior_ in Java.  Classes have attributes (e.g. color, number of doors) and exhibit behavior (e.g. eat, sleep, or dive). There is a special group of programming languages that are called _functional_ (e.g. JavaScript, Scala et al). In these languages you can simply write functions like `eat`, `sleep`, or `dive`, and these functions can live their independent lives and don't have to be declared in classes. In _object-oriented_ languages behavior is implemented in methods defined in classes. 
 
-The phrase _to implement a method_ simply means _to write code in a method_. Starting from Java 8 you can also program behavior in so called _lambda expressions_ covered later in this chapter. 
+The phrase _to implement a method_ simply means _to write code in a method_. Starting from Java 8 you can also program behavior in so-called _lambda expressions_ covered later in this chapter.
 
 So far I was declaring and implementing behavior in methods located inside Java classes. But there is a way and a reason to separate the method declaration from its implementation. Such separation can be done using _interfaces_.
 
@@ -13,11 +13,11 @@ So far I was declaring and implementing behavior in methods located inside Java 
 
 While you can just create a Java class and implement all its methods there, a more formal way of declaring the behavior of the class in a separate `interface`. Then a class declaration would include the keyword `implements` followed by the name of the interface. This is a way to declare an application program interface (API) - what the class can do - so the programmer can quickly look at the short declaration of the interface rather than going through a longer code of the class.   
 
-For years, Java _interfaces_ were used mainly for holding method declarations and `final` `static` variables. For example, the interface `Talkable` contains the declaration of just one method `talk`:
+For years, Java _interfaces_ were used mainly for holding method declarations and `final` `static` variables. For example, the interface `Talkative` contains the declaration of just one method `talk`:
 
 [source, java]
 ----
-interface Talkable{
+interface Talkative {
 	public void talk();
 }
 ----
@@ -53,7 +53,7 @@ public class Cat implements Talkative {
 }
 ----
 
-These three classes use the Java keyword `implements`, which means they promise to implement all abstract methods in the interface(s) listed after the keyword `implements` otherwise the Java compiler will complain: "You promised to implement all abstract methods from `Talkable`, where are they? Keep your promise!" 
+These three classes use the Java keyword `implements`, which means they promise to implement all abstract methods in the interface(s) listed after the keyword `implements` otherwise the Java compiler will complain: "You promised to implement all abstract methods from `Talkative`, where are they? Keep your promise!"
 
 What if we need to create the class `Fish` that uses interfaces? Fish don't talk. But they swim. Dogs can talk (bark) and swim, right? Why won't we declare yet another interface `Swimmable` with the methods `swim` and `dive`?
 
@@ -512,7 +512,7 @@ public class CalculatorWithLambdas {
 
 The difference between `CalculatorWithAnonymousClasses` from the previous section and `CalculatorWithLambdas` is that the former implements the functional interface as anonymous classes and the latter as lambdas. Lambda expressions offer a concise way of implementation of functional interfaces. To write a lambda expression you need the play by the rules:
 
-1. Declare an the interface that has only one abstract method. 
+1. Declare an interface that has only one abstract method.
 2. Make sure that the arguments of your lambda expression match the arguments of the abstract method.
 3. Make sure that the return value of your lambda expression matches the return value of the abstract method.
 
@@ -603,11 +603,11 @@ In Chapter 9 I'll show you more lambda expressions while explaining how to proce
 
 2. Create a package named _pets_.
 
-3. In the package _pets_ recreate the final versions of classes `Dog`, `Fish` and interfaces `Swimmable` and `Talkable` from the section Interfaces. 
+3. In the package _pets_ recreate the final versions of classes `Dog`, `Fish` and interfaces `Swimmable` and `Talkative` from the section Interfaces.
 
 4. In the package _pets_ create a new class `Pet` with a constructor that will take the name of the pet (of type `String`) as an argument.
 
-5. Change the declarations of the classes `Dog` and `Fish` so each of them extend `Pet` while implementing `Talkable` and `Swimable` interfaces.
+5. Change the declarations of the classes `Dog` and `Fish` so each of them extend `Pet` while implementing `Talkative` and `Swimable` interfaces.
 
 6. Create the class `PetMaster` from the section "Interfaces", but give pets names while instantiating classes `Dog` and `Fish`.
 

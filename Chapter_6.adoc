@@ -3,7 +3,7 @@
 
 == Access Levels, Collections, Generics, and Multi-Threading 
 
-I'll start this chapter with the explanation of how to hide and protect data using so called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Then you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects. 
+I'll start this chapter with the explanation of how to hide and protect data using so-called access level qualifiers. After that we'll experiment with Java collections - the language elements that can store multiple objects of the same type. Remember arrays and their limitations? Java collections offer alternative ways of storing similar objects. Then you'll get familiar with the mechanism of _generics_ that allows Java compiler to ensure that you won't be using the wrong data types with data collections or other objects.
 
 Finally, I'll give you a very light introduction to parallel computing using multi-threading. 
 
@@ -137,7 +137,7 @@ theFish = (Fish) fishTank.get(i);
 
 Now let's see how to work with collections of data. Say you have a hundred songs in your MP3 player. It's a collection. If you'll create a class `Song` you can create a hundred of instances of this class (one for each song) and put it in a one of the special data structures called Java collections.
 
-Java packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection classes from the  package `java.util` are `ArrayList`,  `HashTable`, `HashMap`, and `List`. 
+Java packages `java.util` and `java.util.concurrent` include  classes that are quite handy when a program needs to store several instances of some objects in memory. There are dozens of collection classes in Java, but I'll just show you a couple of them. Some of the popular collection classes from the  package `java.util` are `ArrayList`,  `Hashtable`, `HashMap`, and `List`.
 
 The package `java.util.concurrent` has collections useful in programs that require concurrent (simultaneous) access to some data by different parts of a program (by multiple _threads_). I'll introduce you briefly to the concept of multi-threading later in this chapter, but the coverage of  concurrent collections doesn't belong to the introductory book like this one.
 
@@ -274,7 +274,7 @@ The `ArrayList` collection uses Java arrays internally and initially creates an 
 
 ==== The Class Hashtable
 
-While the `ArrayList` collection only allows referencing its elements by index (e.g. `fishTank.get(i)`), sometimes it would be easier to reference collection elements by names as _key/value_ pairs. I'll illustrate by storing my friends' contact information in a `HashTable` collection that allows accessing objects by key names. Let's declare a simple class `ContactDetail`, which can store contact details of one person.
+While the `ArrayList` collection only allows referencing its elements by index (e.g. `fishTank.get(i)`), sometimes it would be easier to reference collection elements by names as _key/value_ pairs. I'll illustrate by storing my friends' contact information in a `Hashtable` collection that allows accessing objects by key names. Let's declare a simple class `ContactDetail`, which can store contact details of one person.
 
 [source, java]
 ----
@@ -286,13 +286,13 @@ public class ContactDetail {
 }
 ----
 
-The program `HashTableDemo` will create and populate two instances of `ContactDetail`, will add them to the `Hashtable` collection by names (the keys), and then will print the phone number of the second contact.
+The program `HashtableDemo` will create and populate two instances of `ContactDetail`, will add them to the `Hashtable` collection by names (the keys), and then will print the phone number of the second contact.
 
 [source, java]
 ----
 import java.util.Hashtable;
 
-public class HashTableDemo {
+public class HashtableDemo {
     public static void main(String[] args) {
 
         ContactDetail friend1 = new ContactDetail();
@@ -326,13 +326,13 @@ In this example I used the first name as the key in the method `put` that adds e
 image::images/fig_6-04-1.png[]
 
 
-`HashTable` requires each key to be unique. Say you have another contact named `Art` and will create a new instance of the `ContactDetail` object. If you'll add it to the same collection under the same key - `friends.put("Art", friend3);`  it'll replace the contact details of the first Art with the data of the second one. This happens because Java `Hashtable` internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nickname like `ArtFromNYC` or use another Java collection like `ArrayList` to store your contacts. By the way, `ArrayList` even allows you to store duplicates (objects with the same values) while `Hashtable` doesn't. 
+`Hashtable` requires each key to be unique. Say you have another contact named `Art` and will create a new instance of the `ContactDetail` object. If you'll add it to the same collection under the same key - `friends.put("Art", friend3);`  it'll replace the contact details of the first Art with the data of the second one. This happens because Java `Hashtable` internally generates a hash key (the number) from your key and uses it as an index to find the element when need be.The same names will generate the same hash keys.  So either give the second Art a nickname like `ArtFromNYC` or use another Java collection like `ArrayList` to store your contacts. By the way, `ArrayList` even allows you to store duplicates (objects with the same values) while `Hashtable` doesn't.
 
 I'm not going to cover other Java collections here, but if you'd like to do your own research, read about such collections from the `java.util` package as `HashMap`, `HashSet`, and `LinkedList`. There is also a class `Collections` that has a bunch of useful static methods to operate on your data collections (e.g. `sort`, `copy`, `binarySearch` et al.). 
 
 === Introduction to Generics
 
-Java generics is a feature that allows you to create so called `parameterized data types`. For example, instead of just declaring a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. Instead of declaring and instantiating a general collection to store friends like this:
+Java generics is a feature that allows you to create so-called `parameterized data types`. For example, instead of just declaring a collection that can store any data you can pass it a parameter to allow only the objects of certain data types. Instead of declaring and instantiating a general collection to store friends like this:
 
 [source, java]
 ----
@@ -346,7 +346,7 @@ you can do it with a parameter so it can store only `String` objects like this:
   ArrayList<String> friends = new ArrayList<>();
 ----
 
-The parameter(s) goes in the angle brackets right after the data type. Note the so called _diamond operator <>_ on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It's also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you'll try to add an object of another type to `friends` the Java compiler will complain. 
+The parameter(s) goes in the angle brackets right after the data type. Note the so-called _diamond operator <>_ on the right. Since you already declared the required data type on the left, there is no need to repeat it on the right - compiler will guess the type. It's also an example of type inference introduced in the previous lesson about lambda expressions. Now, if by mistake you'll try to add an object of another type to `friends` the Java compiler will complain.
 
 I was able to specify a parameter for `ArrayList` only because it was created with this ability. If you'll read the http://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html[online documentation] for `ArrayList` you'll see that it's declared as follows:
 
@@ -369,13 +369,13 @@ implements Map<K,V>, Cloneable, Serializable
 
 But `<K,V>` simply means that you can specify two parameters: `K` is the the key data type, and `V` for value.
 
-Let's write a program that illustrates the advantages of using generics. I'll reuse the example from the previous section called `HashTableDemo` that stored `ContactDetail` instances. Actually, I'll create two new versions of this program. The first one will be called `HashTableBrokenDemo`, and I'll show how to break this program so it crashes during the runtime if we don't use generics. After that, I'll rewrite it as `HashTableGenericsDemo`, where I'll use generics to show how to prevent the runtime errors from happening. Here's the broken program:
+Let's write a program that illustrates the advantages of using generics. I'll reuse the example from the previous section called `HashtableDemo` that stored `ContactDetail` instances. Actually, I'll create two new versions of this program. The first one will be called `HashtableBrokenDemo`, and I'll show how to break this program so it crashes during the runtime if we don't use generics. After that, I'll rewrite it as `HashtableGenericsDemo`, where I'll use generics to show how to prevent the runtime errors from happening. Here's the broken program:
 
 [source, java]
 ----
 import java.util.Hashtable;
 
-public class HashTableBrokenDemo {
+public class HashtableBrokenDemo {
     public static void main(String[] args) {
 
         ContactDetail friend1 = new ContactDetail();
@@ -399,7 +399,7 @@ public class HashTableBrokenDemo {
 }
 ----
 
-The `HashTableBrokenDemo` adds the first object (for Jackie) of type `ContactDetail` to the `friends` collection, but the contact details for Art are added in the form of a `String`: 
+The `HashtableBrokenDemo` adds the first object (for Jackie) of type `ContactDetail` to the `friends` collection, but the contact details for Art are added in the form of a `String`:
 
 [source, java]
 ----
@@ -414,18 +414,18 @@ image::images/fig_6_06.png[]
 
 The program failed on line 24 with the error `ClassCastException`. The runtime errors are called exceptions in Java, and I'll explain error handling in Chapter 10. But my main point is that this program has crashed during the runtime just because I "forgot" that only the objects of type `ContactDetail` should be stored in the collection `friends`.
 
-Now I'll copy the code of `HashTableBrokenDemo` into the new class called `HashTableGenericsDemo`. I'll make a small change there - I will declare the collection `friends` with parameters:
+Now I'll copy the code of `HashtableBrokenDemo` into the new class called `HashtableGenericsDemo`. I'll make a small change there - I will declare the collection `friends` with parameters:
 
 [source, java]
 ----
 Hashtable<String, ContactDetail> friends = new Hashtable<>();
 ----
 
-Now I'm explicitly stating that my intention is to use the `String` objects for keys, and `ContactDetail` objects as values. The program `HashTableGenericsDemo` is shown next - it won't even compile! 
+Now I'm explicitly stating that my intention is to use the `String` objects for keys, and `ContactDetail` objects as values. The program `HashtableGenericsDemo` is shown next - it won't even compile!
 
 [source, java]
 ----
-public class HashTableGenericsDemo {
+public class HashtableGenericsDemo {
   public static void main(String[] args) {
 
       ContactDetail friend1 = new ContactDetail();
@@ -452,7 +452,7 @@ The compiler will complain about the line, where I'm trying to call the method `
 
 Another important thing to note is that there is no casting needed when the program gets the information about Jackie's phone. Now the `friends` collection knows from the very beginning that it stores not just some `Object` types, but the `ContactDetail` instances.
 
-What have we achieved? The program `HashTableBrokenDemo` allowed us to store anything in the collection but crashed during the runtime, but `HashTableGenericsDemo` prevented this error from happening. Having a compiler's error it's a lot better than getting surprises during the runtime, isn't it? Besides, with generics we've eliminated the need to cast objects.
+What have we achieved? The program `HashtableBrokenDemo` allowed us to store anything in the collection but crashed during the runtime, but `HashtableGenericsDemo` prevented this error from happening. Having a compiler's error it's a lot better than getting surprises during the runtime, isn't it? Besides, with generics we've eliminated the need to cast objects.
 
 I've been using the parameterized data type `Hashtable` that was conveniently offered by the creators of Java, but you can define your own classes with parameters too. Creating your own parameterized classes is one of the more advanced topics, and I won't be covering it in this book. Check out https://docs.oracle.com/javase/tutorial/java/generics/types.html[Oracle's tutorial] if interested. 
 
@@ -477,7 +477,7 @@ A good example of a program that creates multiple threads is a Web browser. For 
 
 ==== How to Create a Thread
 
-All Java applications that we've created so far (even Hello World) were running in so called _main thread_. We didn't need to do any special programming to create a main thread - Java runtime always creates one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.
+All Java applications that we've created so far (even Hello World) were running in so-called _main thread_. We didn't need to do any special programming to create a main thread - Java runtime always creates one thread to each program. But if you want your application code to run in parallel thread, you need to write code to request Java runtime to create a separate thread(s) and execute some code there in parallel with the main thread.
 
 There are different ways of creating threads. I won't be explaining details of each method because it's a pretty advanced topic and is not a good fit for this book. But I'll just list some of the ways of creating threads and will illustrate it with one simple example. These are the main methods of writing code to be executed in a separate thread:
 

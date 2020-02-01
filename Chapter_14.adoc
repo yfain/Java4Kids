@@ -13,7 +13,7 @@ Software developers make changes in their local copies of the application's code
 
 Now Joe has the latest Mary's code, but she doesn't have the latest Joe's code changes. When Joe decides to commit his latest code to the shared repository, Mary can check them out to her computer. 
 
-In this chapter I'll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCS's are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer gets lost or stolen you can always recover the code by _pulling_ it from GitHub.
+In this chapter I'll introduce you to a popular VCS called Git and to the code hosting facility called GitHub. VCSs are used by programmers writing code in any languages, not only in Java. As a matter of fact you can keep track of any files using Git and store them in GitHub or other hosts. If your computer gets lost or stolen you can always recover the code by _pulling_ it from GitHub.
 
 I was using Git as a VCS and GitHub as a shared repository of the drafts of all chapters of this book, and you can find them on the GitHub at https://github.com/yfain/Java4Kids[https://github.com/yfain/Java4Kids].  
 
@@ -85,7 +85,7 @@ Typically, my work with Git-controlled projects consists of the following activi
 
 ==== The status Command
 
-I always start working with Git by opening my project directory and typing _git status_ to see which files I've modified since the last time I've committed the changes to Git repository. Let's do it in the directory _gitIntro_. I havn't committed any files to my brand new code repository just yet, and Git will respond with the following status:
+I always start working with Git by opening my project directory and typing _git status_ to see which files I've modified since the last time I've committed the changes to Git repository. Let's do it in the directory _gitIntro_. I haven't committed any files to my brand new code repository just yet, and Git will respond with the following status:
 
 [[FIG14-4]]
 image::images/fig_14_git_status.png[] 
