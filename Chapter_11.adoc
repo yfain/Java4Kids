@@ -175,7 +175,7 @@ public class MyBufferedByteReader {
   }
 }
 ----
-<1> Here we use the try-with-resources syntax again. This time we create an instance of `FileInputReader` and then and instance of `BufferedInputReader` providing the `FileInputReader` as an argument. This is how we connect to fragments of the pipe that uses the file _abc.dat_ as the source of data.
+<1> Here we use the try-with-resources syntax again. This time we create an instance of `FileInputReader` and then an instance of `BufferedInputReader` providing the `FileInputReader` as an argument. This is how we connect to fragments of the pipe that uses the file _abc.dat_ as the source of data.
 
 <2> Under the hood the `BufferedInputReader` reads  bytes from the disk in chunks into a memory buffer, and then the method `read` reads one byte at time from memory.
 
@@ -254,7 +254,7 @@ If you want to read a text file into a collection, where each element contains o
 List<String> myFileLines = Files.readAllLines(Paths.get("abc.dat"));
 ----
 
-Both `readAllBytes` and `readAllLines` do not use buffers, but for small files is not important.  For more efficient reading you can ask the class `Files` to create a buffered stream. For example, the program `MyTextFileReader` uses the method `newBufferedReader` for more efficient reading. Here I used the same file _abc.dat_ located in the root directory of our IDEA project Chapter11. 
+Both `readAllBytes` and `readAllLines` do not use buffers, but for small files it is not important.  For more efficient reading you can ask the class `Files` to create a buffered stream. For example, the program `MyTextFileReader` uses the method `newBufferedReader` for more efficient reading. Here I used the same file _abc.dat_ located in the root directory of our IDEA project Chapter11.
 
 [source, java]
 ----
@@ -334,7 +334,7 @@ This output was produced by the `catch` section from `MyTextFileReader` where th
 
 ==== Writing Into a File
 
-Writing into a file is as reading one. Start with creating create an instance of the `Path` object.  If you want to write bytes, create a byte array, populate it with data and call the method `write` on the class `Files`. If you want to write some text into a file, just convert the text from a `String` into a byte array and then call the method `write`, for example:
+Writing into a file is as reading one. Start with creating an instance of the `Path` object. If you want to write bytes, create a byte array, populate it with data and call the method `write` on the class `Files`. If you want to write some text into a file, just convert the text from a `String` into a byte array and then call the method `write`, for example:
 
 [source, java]
 ----
@@ -539,10 +539,10 @@ The program will print the following:
 ----
 I've got Mary
 I've got Smith
-I've got 123
+I've got 123.5
 ---- 
 
-The JVM placed `Mary` into the array element `args[0]`, `Smith` into `args[1]`, and `123` into `args[2]`.
+The JVM placed `Mary` into the array element `args[0]`, `Smith` into `args[1]`, and `123.5` into `args[2]`.
 
 Command-line arguments are always being passed to a program as strings. It’s the responsibility of a program to convert the data to the appropriate data type, for example: 
 
@@ -587,7 +587,7 @@ public class FileCopy {
     if (args.length != 2) {
        System.out.println(
                "Please provide source and destination file names, for example:");
-        System.out.println("java FIleCopy abc.datcopyOfabc.dat");
+        System.out.println("java FileCopy abc.dat copyOfabc.dat");
 
         // Exit the program
        System.exit(0);

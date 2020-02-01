@@ -5,11 +5,11 @@
 
 In this chapter I'll explain to you how to handle run-time errors, which in Java are called _exceptions_.
 
-Say you forgot to write one closing curly brace in your Java code. This will result in a compilation error that can be fixed easily. But there are so called _run-time errors_, when your program stops working properly and prints error messages.
+Say you forgot to write one closing curly brace in your Java code. This will result in a compilation error that can be fixed easily. But there are so-called _run-time errors_, when your program stops working properly and prints error messages.
 
 For example, a Java class reads a file with the game scores. What’s going to happen if someone will delete this file? Will the program crash with a scary error message, or will it stay alive displaying a user friendly message like this one: _Dear friend, for some reason I could not read the file scores.txt. Please make sure that the file exists?_ This is an example of a situation when Java compiler won't be able to help - the Java syntax was written properly.
 
-You should make your programs ready for unexpected situations. you should foresee what might go wrong when the program will be running, and what to do if something went wrong. In many programming languages the programmer decides if he wants to add error processing code to a program. But in many cases Java forces you to include error processing code, otherwise the programs will not even compile.
+You should make your programs ready for unexpected situations. You should foresee what might go wrong when the program will be running, and what to do if something went wrong. In many programming languages the programmer decides if he wants to add error processing code to a program. But in many cases Java forces you to include error processing code, otherwise the programs will not even compile.
 
 Runtime errors in Java are called exceptions, and error processing is called _exception handling_. You have to place code that may produce errors in so-called `try/catch` block. It’s as if you’re saying to JVM the following: _Try to read the file with scores, but if something happens, catch the error and execute the code that will deal with it:_
 
@@ -29,7 +29,7 @@ The `ioe` in the above code fragment is a variable that represents the `IOExcept
 
 We’ll learn how to work with files in Chapter 11, but at this point I'd like to introduce a new term _I/O_ or _input/output_. Read and write operations (from/to disk or other device) are also known as I/O operations, and the class `IOException` is a class that contains information about input/output errors.
 
-In the Java world, a method _throws an exception_ in case of a runtime error. Different exceptions will be thrown for different type of errors.  If the `catch` block exists in the program for this particular type of an error, it will be caught and the program will jump into the `catch` block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.
+In the Java world, a method _throws an exception_ in case of a runtime error. Different exceptions will be thrown for different types of errors.  If the `catch` block exists in the program for this particular type of an error, it will be caught and the program will jump into the `catch` block  to execute the code located there. The program will stay alive, and this exception is considered to be taken care of.
 
 The print statement from the code above will be executed only in case of a file read error.
 
@@ -100,20 +100,20 @@ Of course you are welcome to read Java documentation that describes exceptions t
 
 There are five Java keywords that can be used for error handling: `try`, `catch`, `finally`, `throw`, and `throws`.
 
-After one `try` block you may put several `catch` blocks, if you believe that more than one error may happen. For example, when a program tries to read a file, the file may not be there, and you’ll get the `FileNotFoundException`, or the file is there, but the code keeps reading the file after reaching the end of  file – this generates `EOFException`. The next code fragment  will print messages in plain English if the program can’t find a file with game scores or reached the end of the file. For any other read errors it’ll print the message _Problem reading_ file and a technical description of the error.
+After one `try` block you may put several `catch` blocks, if you believe that more than one error may happen. For example, when a program tries to read a file, the file may not be there, and you’ll get the `FileNotFoundException`, or the file is there, but the code keeps reading the file after reaching the end of  file – this generates `EOFException`. The next code fragment  will print messages in plain English if the program can’t find a file with game scores or reached the end of the file. For any other read errors it’ll print the message _Problem reading file_ and a technical description of the error.
 
 [source, java]
 ----
 public void getScores(){
  try{
     fileScores.read();
-    System.out.println(“Scores loaded successfully”);
+    System.out.println("Scores loaded successfully");
  }catch(FileNotFoundException e){
-     System.out.println(“Can not find file Scores”);
+     System.out.println("Can not find file Scores");
  }catch(EOFException e1){
-      System.out.println(“Reached end of file”);
+      System.out.println("Reached end of file");
  }catch(IOException e2){
-      System.out.println(“Problem reading  file “ +
+      System.out.println("Problem reading  file " +
                                     e2.getMessage());
  }
 }
@@ -131,7 +131,7 @@ public void getScores(){
  try{
   fileScores.read();
  }catch(Exception e){
-  System.out.println(“Problem reading  file ”+
+  System.out.println("Problem reading file " +
                                       e.getMessage());
    }
 }
@@ -144,11 +144,11 @@ Catch blocks receive an instance of the object `Exception` that contains a short
 [source, java]
 ----
 catch(Exception e){
- System.out.println(“Problem reading file ”+ e.toString());
+ System.out.println("Problem reading file " + e.toString());
 }
 ----
 
-If you need more detailed information about the exception, use the method `printStackTrace`. It will print the sequence of  method calls that lead to this exception  similar to an example from  the section _Reading Stack Trace_.
+If you need more detailed information about the exception, use the method `printStackTrace`. It will print the sequence of method calls that lead to this exception similarly to an example from the section _Reading Stack Trace_.
 
 === The keyword `throws`
 
@@ -168,7 +168,7 @@ class MySuperGame{
 
   public static void main(String[] args){
     MySuperGame msg = new MySuperGame();
-    System.out.println(“List of Scores”);
+    System.out.println("List of Scores");
 
     try{
      // Since the  getAllScores()declares exception,
@@ -189,7 +189,7 @@ Imagine that the `MySuperGame` program invokes multiple methods that read or wri
 Any code within a `try/catch` block can end in one of the following ways:
 
 * The code inside the `try` block successfully ended and the program continues.
-* The code inside the `try` block runs into a `return` statement and the method is exited.For example, you may read a file line by line, and if the line contains a certain text, you may want to stop reading the file. Just write a return statement, and the method is exited, e.g.
+* The code inside the `try` block runs into a `return` statement and the method is exited. For example, you may read a file line by line, and if the line contains a certain text, you may want to stop reading the file. Just write a return statement, and the method is exited, e.g.
 +
 [source, java]
 ----
@@ -234,11 +234,11 @@ If the myMethod will throw an exception it will be handled in the calling method
 
 === The Keyword `throw`
 
-When you read in Java documentation that some methods may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The  `throw` keyword is used to throw Java objects, which  are throwable. You can only throw objects that are direct or indirect subclasses of the class `Throwable`. We can guess, that the author of the method that reads a file used the `throw` keyword in the method `read`. This could have been done as follows:
+When you read in Java documentation that some methods may throw an exception, it means that the programmer who wrote this method used a special throw keyword to do this. The `throw` keyword is used to throw Java objects, which are throwable. You can only throw objects that are direct or indirect subclasses of the class `Throwable`. We can guess, that the author of the method that reads a file used the `throw` keyword in the method `read`. This could have been done as follows:
 
 [source, java]
 ----
-throw new IOException(“The file scores.txt contains invalid characters”);
+throw new IOException("The file scores.txt contains invalid characters");
 ----
 
 The constructor of any exception should get a message that describes the error as an argument. When you’ll be invoking the `getMessage` method on the exception object in the catch block, it’ll print the message that was given to the constructor in the code that has thrown the exception.
@@ -248,11 +248,11 @@ The constructor of any exception should get a message that describes the error a
 .Throwing exceptions
 image::images/fig_9_02.png[]
 
-In the next section I’ll show you how create your own exception classes and throw them with the throw keyword.
+In the next section I’ll show you how to create your own exception classes and throw them with the throw keyword.
 
 === Creating Custom Exceptions
 
-Programmers could also create new  exception classes that did not exist in Java before.  Such classes have to derive from one of the Java exception classes.  Let’s say you are in business of selling bikes and need to _validate_ customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of `Exception` called `TooManyBikesException`, and if someone tries to order more than three of these bikes, throw this exception:
+Programmers could also create new exception classes that did not exist in Java before. Such classes have to derive from one of the Java exception classes. Let’s say you are in business of selling bikes and need to _validate_ customer orders. Different number of bikes can fit in your small truck depending on the model. For example, you can fit no more than three FireBird bikes in your truck. You can create a new subclass of `Exception` called `TooManyBikesException`, and if someone tries to order more than three of these bikes, throw this exception:
 
 [source, java]
 ----

@@ -120,7 +120,7 @@ On the left panel you can select containers, controls, menus, shapes and drag an
 .Adding a button to the scene
 image::images/fig_7_05.png[]
 
-The right panel allows you to change the properties of this button. These little boxes with the digit one represent so called row and column constraints - we'll discuss them shortly.
+The right panel allows you to change the properties of this button. These little boxes with the digit one represent so-called row and column constraints - we'll discuss them shortly.
 
 The Scene Builder's menu Preview | Show Preview in Window will show how your GUI will look during the runtime. So far our one-button screen is not too fancy, and this is how it's preview looks like:
 
@@ -373,12 +373,13 @@ If you want to apply a style to several components of the same type, you need to
 } 
 ----
 
-Note that CSS type selectors start with the dot. To create a _CSS class selector_ that can be applied to any component, define the selector with an arbitrary name and apply it programmatically to the components of your choice.  For example, you can specify the class selector `.blueLable`:
+Note that CSS type selectors start with the dot. To create a _CSS class selector_ that can be applied to any component, define the selector with an arbitrary name and apply it programmatically to the components of your choice.  For example, you can specify the class selector `.bluelabel`:
 
 [source, xml]
 ----
 .bluelabel{
    -fx-text-fill: blue;
+   -fx-font-weight: bold;
    -fx-font-family:verdana;
    -fx-font-style:italic;
 }

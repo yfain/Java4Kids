@@ -261,7 +261,7 @@ Java also has a special keyword `final`, and if it’s used in a declaration of 
 
 ==== How Much Memory is Needed 
 
-Variables are stored in a computer's memory and occupy more or less space depending on the data type. We measure memory in bits, bytes, kilobytes (1024 bytes), megabytes (1024 kilobytes or Kb), gigabytes (1024 Mb) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists of eight bits.
+Variables are stored in a computer's memory and occupy more or less space depending on the data type. We measure memory in bits, bytes, kibibytes (1024 bytes), mebibytes (1024 kibibytes or KiB), gibibytes (1024 MiB) and so on.  A bit is the smallest piece of data that can be stored in memory. It can hold either 1 or 0. A byte consists of eight bits.
 
 * A `char` variable occupies two bytes in memory.
 
